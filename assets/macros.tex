@@ -1,0 +1,245 @@
+% Enumerate
+%\setlist[enumerate]{topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex,label=(\arabic*)}
+
+\MakeOuterQuote{"}
+
+%%% Makra pro definice, věty, tvrzení, příklady, ... (vyžaduje baliček amsthm)
+
+\theoremstyle{plain}
+\newtheorem{thm}{Věta}[section]
+\newtheorem{lem}[theorem]{Lemma}
+\newtheorem{prop}[theorem]{Tvrzení}
+\newtheorem{cor}[theorem]{Důsledek}
+\newtheorem*{prop*}{Tvrzení}
+
+\theoremstyle{definition}
+\newtheorem{define}[theorem]{Definice}
+% \newtheorem{example}[theorem]{Příklad}
+% \newtheorem{remark}[theorem]{Poznámka}
+% \newtheorem{convention}[theorem]{Úmluva}
+% \newtheorem{denoting}[theorem]{Značení}
+
+% Colors
+\definecolor{lightblue}{HTML}{009AD4}
+\definecolor{lightgreen}{HTML}{68FF00}
+\definecolor{darkgreen}{HTML}{00B600}
+\definecolor{darkblue}{HTML}{0265b3}
+\definecolor{darkred}{HTML}{DA0707}
+\definecolor{lightred}{HTML}{FF5100}
+\definecolor{orange}{HTML}{FFE000}
+\definecolor{codeblue}{HTML}{007eed}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codebeige}{HTML}{D4A000}
+\definecolor{codepink}{HTML}{FF0055}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\definecolor{decproblemtitlefg}{HTML}{957300}
+\definecolor{decproblembg}{HTML}{F5F0DF}
+
+\definecolor{timportantboxcolor}{HTML}{A97100}
+\definecolor{talertboxcolor}{HTML}{B70000}
+\definecolor{tnoticeboxcolor}{HTML}{159C00}
+\definecolor{tinfoboxcolor}{HTML}{004DFF}
+
+\newcommand{\markred}[1]{\textcolor{lightred}{#1}}
+\newcommand{\markdarkred}[1]{\textcolor{darkred}{#1}}
+\newcommand{\markgreen}[1]{\textcolor{lightgreen}{#1}}
+\newcommand{\markdarkgreen}[1]{\textcolor{darkgreen}{#1}}
+\newcommand{\markorange}[1]{\textcolor{orange}{#1}}
+\newcommand{\markblue}[1]{\textcolor{lightblue}{#1}}
+\newcommand{\markdarkblue}[1]{\textcolor{darkblue}{#1}}
+
+% Inline images
+\newcommand{\inlineimgscale}{1.1}
+
+% X and check mark
+\newcommand{\cmark}{\markgreen{\ding{51}}}
+\newcommand{\xmark}{\markred{\ding{55}}}
+
+% Math
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+
+\newcommand{\T}[1]{#1^\top}                     % Tranpozice matice
+\newcommand{\compl}[1]{#1^\complement}
+\newcommand{\mapping}[3]{#1:#2 \rightarrow #3}
+\newcommand{\mapto}[3]{#1:#2 \mapsto #3}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\powset}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\code}[1]{\langle#1\rangle}
+
+\DeclareMathOperator{\mspan}{span}
+\DeclareMathOperator{\mrank}{rank}
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\rng}{rng}
+
+% Complexity classes
+\DeclareMathOperator{\classP}{P}
+\DeclareMathOperator{\classNP}{NP}
+\DeclareMathOperator{\classTime}{TIME}
+\DeclareMathOperator{\classNTime}{NTIME}
+\DeclareMathOperator{\classSpace}{SPACE}
+\DeclareMathOperator{\classNSpace}{NSPACE}
+
+\newenvironment{tnoticebox}[2][\linewidth]{%
+  \begin{center}
+    \begin{minipage}{#1}%
+      \begin{tcolorbox}[colback=tnoticeboxcolor!15, colframe=tnoticeboxcolor,
+                        title={#2}, width=\linewidth]
+}{%
+      \end{tcolorbox}
+    \end{minipage}
+  \end{center}
+}
+
+\newenvironment{tnoticeframe}[1][\linewidth]{%
+  \begin{center}
+    \begin{minipage}{#1}%
+      \begin{tcolorbox}[colback=tnoticeboxcolor!15, colframe=tnoticeboxcolor,
+                        width=\linewidth]
+}{%
+      \end{tcolorbox}
+    \end{minipage}
+  \end{center}
+}
+
+% Informační bloky (info)
+\newenvironment{tinfobox}[2][\linewidth]{%
+  \begin{center}
+    \begin{minipage}{#1}%
+      \begin{tcolorbox}[colback=tinfoboxcolor!15, colframe=tinfoboxcolor,
+                        title={#2}, width=\linewidth]
+}{%
+      \end{tcolorbox}
+    \end{minipage}
+  \end{center}
+}
+
+\newenvironment{tinfoframe}[1][\linewidth]{%
+  \begin{center}
+    \begin{minipage}{#1}%
+      \begin{tcolorbox}[colback=tinfoboxcolor!15, colframe=tinfoboxcolor,
+                        width=\linewidth]
+}{%
+      \end{tcolorbox}
+    \end{minipage}
+  \end{center}
+}
+
+% Důležité bloky (important)
+\newenvironment{timportantbox}[2][\linewidth]{%
+  \begin{center}
+    \begin{minipage}{#1}%
+      \begin{tcolorbox}[colback=timportantboxcolor!15, colframe=timportantboxcolor,
+                        title={#2}, width=\linewidth]
+}{%
+      \end{tcolorbox}
+    \end{minipage}
+  \end{center}
+}
+
+\newenvironment{timportantframe}[1][\linewidth]{%
+  \begin{center}
+    \begin{minipage}{#1}%
+      \begin{tcolorbox}[colback=timportantboxcolor!15, colframe=timportantboxcolor,
+                        width=\linewidth]
+}{%
+      \end{tcolorbox}
+    \end{minipage}
+  \end{center}
+}
+
+% Varovné bloky (alert)
+\newenvironment{talertbox}[2][\linewidth]{%
+  \begin{center}
+    \begin{minipage}{#1}%
+      \begin{tcolorbox}[colback=talertboxcolor!15, colframe=talertboxcolor,
+                        title={#2}, width=\linewidth]
+}{%
+      \end{tcolorbox}
+    \end{minipage}
+  \end{center}
+}
+
+\newenvironment{talertframe}[1][\linewidth]{%
+  \begin{center}
+    \begin{minipage}{#1}%
+      \begin{tcolorbox}[colback=talertboxcolor!15, colframe=talertboxcolor,
+                        width=\linewidth]
+}{%
+      \end{tcolorbox}
+    \end{minipage}
+  \end{center}
+}
+
+% Decision problem
+\newcommand{\decproblem}[3]{
+    \begin{center}
+        \begin{minipage}{.9\textwidth}
+            \begin{table}[!htbp]
+                \centering
+                \bgroup
+                \def\arraystretch{1.8}
+                \begin{tabularx}{\textwidth}{|rX|}
+                \hline
+                \rowcolor{decproblembg} \multicolumn{2}{|c|}{\textcolor{decproblemtitlefg}{\textsc{#1}}} \\ \hline
+                \markdarkred{\textbf{Vstup:}} & #2                \\ \hline
+                \rowcolor{decproblembg} \markdarkred{\textbf{Otázka:}} & #3               \\ \hline
+                \end{tabularx}
+                \egroup
+            \end{table}
+        \end{minipage}
+    \end{center}
+}
+\newcommand{\bigO}{\mathcal{O}}
+
+% TODO
+\newcommand{\todo}[1]{\textcolor{red}{(\noindent TODO: #1.)}}
+
+
+\newcommand{\hlcode}[1]{\colorbox{red}{#1}}
+
+% Algorithms
+\numberwithin{algocf}{section}
+\renewcommand{\algorithmcfname}{Algoritmus}
+\SetKwInput{KwIn}{Vstup}
+\SetKwInput{KwOut}{Výstup}
+\SetKwProg{Function}{Funkce}{}{end}
+\setlength{\algomargin}{25pt}
+\renewcommand{\thealgocf}{}     % Vypnutí číslování algoritmů
+
+% Definice stylů pro uzly
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black, fill=red!30]
+\tikzstyle{process}   = [rectangle, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision}  = [diamond, aspect=2, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow}     = [thick,->,>=stealth]
+
+% Frames
+\newcommand{\tableofcontentsframe}{
+    \begin{frame}{Obsah}
+        \tableofcontents
+    \end{frame}
+}
+
+% \definecolor{boxcolor}{HTML}{00820a}
+\newcommand{\titleframe}[1]{%
+  \begin{frame}[plain]
+    \begin{tikzpicture}[remember picture, overlay]
+      \node at (current page.center)
+        [draw=titleframeboxcolor, line width=1pt,
+         inner xsep=10mm, inner ysep=4mm, rounded corners=2mm]
+        {\Huge\markred{#1}\normalfont};
+    \end{tikzpicture}
+  \end{frame}
+  \addtocounter{framenumber}{-1}%
+}
+
+\newcommand{\icon}[1]{
+  \includegraphics[height=\fontcharht\font`\B]{#1}
+}

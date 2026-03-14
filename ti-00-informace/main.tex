@@ -1,0 +1,97 @@
+\documentclass[11pt,professionalfont,aspectratio=43]{beamer}
+
+% Assets
+\input{../assets/packages.tex}
+\input{../assets/theme.tex}
+\input{../assets/macros.tex}
+
+\def\presentationtitle{Informace k~předmětu}
+
+\begin{document}
+
+    \input{../titlepage.tex}
+
+    \section{Informace k~předmětu}
+
+    \subsection{Organizace předmětu}
+
+    \begin{frame}{Organizace předmětu}
+        \begin{itemize}
+            \onslide<2->{\item Během roku se \textbf{v každém pololetí} budou psát v~základu 4 testy (může jich být více podle situace)}
+            \onslide<3->{\item Známky budou též udělovány za}
+            \begin{itemize}
+                \onslide<4->{\item aktivitu v~hodině a}
+                \onslide<5->{\item prezentaci domácích cvičení z~Moodlu}
+            \end{itemize}
+            \onslide<6->{\item Odkaz na Moodle kurz zde} % TODO: Doplnit odkaz
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Sylabus}
+    
+    \begin{frame}{Sylabus}
+        \begin{enumerate}
+            \onslide<2->{\item \textbf{Grafové algoritmy}
+            \begin{itemize}
+                \item Opakování základních pojmů z~teorie grafů
+                \item Algoritmy BFS, DFS
+                \item Binární halda
+                \item Dijkstrův algoritmus a~algoritmus A$^{*}$
+            \end{itemize}}
+            \onslide<3->{\item \textbf{Algoritmicky těžké problémy}
+            \begin{itemize}
+                \item Opakování výrokové logiky
+                \item Problémy SAT, UNSAT
+                \item Algoritmus DPLL
+                \item Problém nezávislé množiny a~kliky
+                \item Třídy složitosti $\classP$, $\classNP$ a~$\classNP$-úplné problémy
+                \item Cookova-Levinova věta
+            \end{itemize}}
+            \onslide<4->{\item \textbf{Konečné automaty}
+            \begin{itemize}
+                \item Formální jazyky
+                \item Deterministický a~nedeterministický konečný automat
+                \item Regulární výrazy
+                \item Formální gramatiky
+            \end{itemize}}
+        \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Sylabus}
+        \begin{enumerate}
+            \setcounter{enumi}{3}
+            \onslide<2->{\item \textbf{Hardware a~assembler}
+            \begin{itemize}
+                \item Rychý přehled hardwarem
+                \item Vysokoúrovňové jazyky vs. assembler
+            \end{itemize}}
+            \onslide<3->{\item \textbf{Kryptografie}
+            \begin{itemize}
+                \item Symetrická a~asymetrická kryptografie
+                \item Algoritmus RSA
+                \item Krytografické hash funkce
+                \item Narozeninový paradox a~kolize
+            \end{itemize}}
+            \onslide<4->{\item \textbf{Umělá inteligence}
+            \begin{itemize}
+                \item Základní statistické pojmy
+                \item Chyby v~interpretaci dat
+                \item Strojové učení
+                \item Lineární regrese a~klasifikace
+                \item Neuronové sítě
+            \end{itemize}}
+        \end{enumerate}
+    \end{frame}
+
+    \subsection{Doporučené zdroje}
+
+    \begin{frame}{Doporučené zdroje}
+        \begin{itemize}
+            \item MAREŠ, Martin a~VALLA, Tomáš. \textit{Průvodce labyrintem algoritmů.} Druhé vydání. CZ.NIC. Praha: CZ.NIC, z.s.p.o., 2022. ISBN 978-80-88168-63-8.
+            \item CORMEN, Thomas H.; LEISERSON, Charles Eric; RIVEST, Ronald L. a~STEIN, Clifford. \textit{Introduction to algorithms.} Fourth edition. Cambridge: The MIT Press, 2022. ISBN 978-0-262-04630-5.
+            \item HOPCROFT, John E.; MOTWANI, Rajeev a~ULLMAN, Jeffrey D. \textit{Introduction to automata theory, languages, and computation.} 3rd ed. Boston: Pearson/Addison Wesley, c2007.
+            \item STUART J. RUSSELL a~NORVIG, Peter. \textit{Artificial intelligence: A~modern approach.} 3rd ed. Englewood Cliffs, N.J: Pearson, 2016. ISBN 8120323823.
+        \end{itemize}
+    \end{frame}
+
+\end{document}

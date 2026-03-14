@@ -1,0 +1,141 @@
+% Colors
+
+\def\maincolR{0} % červená složka (0–255)
+\def\maincolG{83} % zelená složka
+\def\maincolB{120} % modrá složka
+\definecolor{maincolor}{HTML}{B50000}
+
+% \pgfmathtruncatemacro{\authorfooterbgR}{1*\maincolR}
+% \pgfmathtruncatemacro{\authorfooterbgG}{1*\maincolG}
+% \pgfmathtruncatemacro{\authorfooterbgB}{1*\maincolB}
+% \definecolor{authorfooterbg}{RGB}{\authorfooterbgR,\authorfooterbgG,\authorfooterbgB}
+
+% \pgfmathtruncatemacro{\titlefooterbgR}{0.722*\maincolR}   
+% \pgfmathtruncatemacro{\titlefooterbgG}{0.974*\maincolG}   
+% \pgfmathtruncatemacro{\titlefooterbgB}{0.739*\maincolB}
+% \definecolor{titlefooterbg}{RGB}{\titlefooterbgR,\titlefooterbgG,\titlefooterbgB}
+
+% Beamer theme
+\colorlet{themecolor}{maincolor}
+\colorlet{authorfooterbg}{maincolor}
+\definecolor{titlefooterbg}{HTML}{FF9E9E}
+\definecolor{titlefooterfg}{HTML}{000000}
+\colorlet{titlecolorfg}{maincolor}
+\definecolor{titleboxbg}{HTML}{E7E7E7}
+\definecolor{datefooterbg}{HTML}{E3E3E3}
+\colorlet{titleframeboxcolor}{maincolor}
+
+% Background gradient
+\definecolor{gradMiddle}{RGB}{212,248,255}
+\definecolor{gradEnd}{RGB}{114,231,255}
+
+% Block theme
+\definecolor{blocktitlebg}{HTML}{F0DFA9}
+\definecolor{blocktitlefg}{HTML}{957300}
+\definecolor{blockbodybg}{HTML}{F5F0DF}
+
+\definecolor{alertblockbodybg}{HTML}{FFE4E4}
+\definecolor{alertblocktitlebg}{HTML}{ECA4A4}
+\definecolor{alertblocktitlefg}{HTML}{B11313}
+
+\definecolor{exampleblockbodybg}{HTML}{DAF0DA}
+\definecolor{exampleblocktitlebg}{HTML}{BBE0BB}
+\definecolor{exampleblocktitlefg}{HTML}{257A25}
+
+\definecolor{mathfg}{HTML}{00185E}
+
+\colorlet{bulletbg}{maincolor}
+% \definecolor{bulletbg}{HTML}{}
+
+% Beamer theme
+\usetheme{Madrid}
+\usecolortheme{seahorse}
+% \useoutertheme[subsection=false]{miniframes}
+
+\usecolortheme[named=themecolor]{structure}
+\setbeamertemplate{frame numbering}[fraction]
+\setbeamertemplate{navigation symbols}{}
+\setbeamercovered{transparent}
+
+% Header/footer
+\setbeamercolor{author in head/foot}{bg=authorfooterbg,fg=white}
+\setbeamercolor{title in head/foot}{bg=titlefooterbg,fg=titlefooterfg}
+\setbeamercolor{date in head/foot}{bg=datefooterbg,fg=black}
+% \setbeamercolor{title}{bg=datefooterbg}
+% \setbeamercolor{title}{fg=titlecolorfg}
+\setbeamerfont{title}{series=\bfseries}
+\setbeamercolor{frametitle}{bg=datefooterbg}
+% \setbeamercolor{section in head/foot}{bg=red,fg=cyan}
+% \setbeamercolor{subsection in head/foot}{bg=blue,fg=yellow}
+
+% Table of contents
+\setbeamercolor{section in toc}{fg=black}
+\setbeamercolor{subsection in toc}{fg=red}
+\setbeamercolor{section number projected}{fg=black}
+
+% Blocks
+\setbeamertemplate{blocks}[rounded][shadow=true]
+
+\setbeamercolor{block title}{bg=blocktitlebg, fg=blocktitlefg}
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=blockbodybg}
+
+\setbeamercolor{block body alerted}{bg=alertblockbodybg}
+\setbeamercolor{block title alerted}{bg=alertblocktitlebg,fg=alertblocktitlefg}
+
+\setbeamercolor{block body example}{bg=exampleblockbodybg}
+\setbeamercolor{block title example}{bg=exampleblocktitlebg,fg=exampleblocktitlefg}
+
+% Math
+\setbeamercolor{math text}{fg=mathfg}
+
+% Itemize a enumerate
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[circle]
+\setbeamercolor{itemize item}{fg=bulletbg,bg=white}
+\setbeamercolor{itemize subitem}{fg=bulletbg,bg=white}
+\setbeamercolor{itemize subsubitem}{fg=bulletbg,bg=white}
+
+\setbeamertemplate{enumerate items}[circle]
+\setbeamercolor{item projected}{bg=bulletbg}
+
+% Titlepage
+\defbeamertemplate*{title page}{customized}[1][]
+{
+    \vbox{}%
+    \vfill%
+    \begin{centering}
+        \begin{tikzpicture}
+            \node[thick, rectangle, rounded corners=5mm, drop shadow={shadow xshift=0mm, shadow yshift=2mm, opacity=0.2, blur shadow, shadow blur steps=10}, inner sep=5mm, fill=titleboxbg, fill opacity=1] {%
+                {\usebeamerfont{title}\textcolor{titlecolorfg}{\inserttitle}\par}%
+            };
+        \end{tikzpicture}
+        \vskip1em\par%
+        \ifx\insertsubtitle\@empty%
+        \else%
+            {\usebeamerfont{subtitle}\insertsubtitle\par}%
+        \fi%
+        \vskip1em\par%
+        \ifx\insertauthor\@empty%
+        \else%
+            {\usebeamerfont{author}\insertauthor}\\%
+            \texttt{\email}
+        \fi
+        \vskip0.3em\par%
+        % \ifx\insertinstitute\@empty%
+        % \else%
+        %     {\usebeamerfont{institute}\insertinstitute\par}%
+        % \fi%
+        \vskip1em\par%
+        \ifx\inserttitlegraphic\@empty%
+        \else%
+            \vskip1em\par%
+            \inserttitlegraphic\par%
+        \fi%
+        \vskip1em\par%
+        \ifx\insertdate\@empty%
+        \else%
+            {\usebeamerfont{date}\insertdate\par}%
+        \fi%
+    \end{centering}%
+    \vfill%
+}

@@ -1,0 +1,18 @@
+\title[\presentationtitle]{\textsc{Teoretická informatika}}
+\subtitle{\presentationtitle}
+\author{David Weber}
+\def\email{weber3@spsejecna.cz}
+\institute{SPŠE Ječná}
+\date{%
+    Rok 
+    \pgfmathsetmacro{\firstyear}{ifthenelse(\month<9, \year-1, \year)}%
+    \pgfmathsetmacro{\secondyear}{ifthenelse(\month<9, \year, \year+1)}%
+    \pgfmathtruncatemacro{\secondyearlasttwo}{mod(\secondyear,100)}%
+    \pgfmathprintnumber[fixed,precision=0,zerofill,1000 sep={}]{\firstyear}/%
+    \pgfmathprintnumber[fixed,precision=0,zerofill,1000 sep={}]{\secondyearlasttwo}%
+}
+\titlegraphic{\includegraphics[width=0.25\textwidth]{../images/SPSE-Jecna_Logo.pdf}}
+
+\begin{frame}[plain]
+    \titlepage
+\end{frame}
