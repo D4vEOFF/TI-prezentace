@@ -23,42 +23,38 @@
     \subsection{Kde se s grafy setkáváme}
 
     \begin{frame}{Kde se s grafy setkáváme}
-        \visible<2>{
-            Mapa města a cesty
-            \begin{figure}
-                \centering
-                \includegraphics[width=\textwidth]{images/city-map.jpg}
-            \end{figure}
-        }
+        Mapa města a cesty
+        \begin{figure}
+            \centering
+            \includegraphics[width=\textwidth]{images/city-map.jpg}
+        \end{figure}
     \end{frame}
 
     \begin{frame}{Kde se s grafy setkáváme}
-        \visible<2>{
-            Schéma počítačové sítě
-            \begin{figure}
-                \centering
-                \begin{tikzpicture}[scale=1]
+        Schéma počítačové sítě
+        \begin{figure}
+            \centering
+            \begin{tikzpicture}[scale=1]
 
-                \node[vertexplain] (R)   at (0,-0.5)   {\includegraphics[width=.1\textwidth]{images/router.png}};
-                \node[vertexplain] (S1)  at (-2,1) {\includegraphics[width=.1\textwidth]{images/workgroup-switch.png}};
-                \node[vertexplain] (S2)  at (2,1)  {\includegraphics[width=.1\textwidth]{images/workgroup-switch.png}};
-                \node[vertexplain] (PC1) at (-3.5,3) {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
-                \node[vertexplain] (PC2) at (-1,3)   {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
-                \node[vertexplain] (PC3) at (1,3)    {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
-                \node[vertexplain] (PC4) at (3.5,3)  {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
-                \node[vertexplain] (T)   at (0,-3)   {\includegraphics[width=.2\textwidth]{images/cloud.png}};
+            \node[vertexplain] (R)   at (0,-0.5)   {\includegraphics[width=.1\textwidth]{images/router.png}};
+            \node[vertexplain] (S1)  at (-2,1) {\includegraphics[width=.1\textwidth]{images/workgroup-switch.png}};
+            \node[vertexplain] (S2)  at (2,1)  {\includegraphics[width=.1\textwidth]{images/workgroup-switch.png}};
+            \node[vertexplain] (PC1) at (-3.5,3) {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
+            \node[vertexplain] (PC2) at (-1,3)   {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
+            \node[vertexplain] (PC3) at (1,3)    {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
+            \node[vertexplain] (PC4) at (3.5,3)  {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
+            \node[vertexplain] (T)   at (0,-3)   {\includegraphics[width=.2\textwidth]{images/cloud.png}};
 
-                \draw[edge] (R) -- (S1);
-                \draw[edge] (R) -- (S2);
-                \draw[edge] (R) -- (T);
-                \draw[edge] (S1) -- (PC1);
-                \draw[edge] (S1) -- (PC2);
-                \draw[edge] (S2) -- (PC3);
-                \draw[edge] (S2) -- (PC4);
+            \draw[edge] (R) -- (S1);
+            \draw[edge] (R) -- (S2);
+            \draw[edge] (R) -- (T);
+            \draw[edge] (S1) -- (PC1);
+            \draw[edge] (S1) -- (PC2);
+            \draw[edge] (S2) -- (PC3);
+            \draw[edge] (S2) -- (PC4);
 
-                \end{tikzpicture}
-            \end{figure}
-        }
+            \end{tikzpicture}
+        \end{figure}
     \end{frame}
 
     \subsection{Definice grafu}
@@ -81,81 +77,77 @@
     \end{frame}
 
     \begin{frame}{Příklad}{Neorientovaný graf}
-        \visible<2>{
-            \begin{figure}
-                \centering
-                \begin{tikzpicture}[scale=1]
+        \begin{figure}
+            \centering
+            \begin{tikzpicture}[scale=1]
 
-                \node[vertex,fill=red] (VI1)   at (-1,-1) {};
-                \node[vertex,fill=red] (VI2)   at (1,-1) {};
-                \node[vertex,fill=red] (VI3)   at (1,1) {};
-                \node[vertex,fill=red] (VI4)   at (-1,1) {};
+            \node[vertex,fill=red] (VI1)   at (-1,-1) {};
+            \node[vertex,fill=red] (VI2)   at (1,-1) {};
+            \node[vertex,fill=red] (VI3)   at (1,1) {};
+            \node[vertex,fill=red] (VI4)   at (-1,1) {};
 
-                \node[vertex,fill=red] (VO1)   at (-2,-2) {};
-                \node[vertex,fill=red] (VO2)   at (2,-2) {};
-                \node[vertex,fill=red] (VO3)   at (2,2) {};
-                \node[vertex,fill=red] (VO4)   at (-2,2) {};
+            \node[vertex,fill=red] (VO1)   at (-2,-2) {};
+            \node[vertex,fill=red] (VO2)   at (2,-2) {};
+            \node[vertex,fill=red] (VO3)   at (2,2) {};
+            \node[vertex,fill=red] (VO4)   at (-2,2) {};
 
-                \draw[edge] (VI1) -- (VI2);
-                \draw[edge] (VI2) -- (VI3);
-                \draw[edge] (VI3) -- (VI4);
-                \draw[edge] (VI4) -- (VI1);
-                \draw[edge] (VI4) -- (VI2);
-                \draw[edge] (VI3) -- (VI1);
+            \draw[edge] (VI1) -- (VI2);
+            \draw[edge] (VI2) -- (VI3);
+            \draw[edge] (VI3) -- (VI4);
+            \draw[edge] (VI4) -- (VI1);
+            \draw[edge] (VI4) -- (VI2);
+            \draw[edge] (VI3) -- (VI1);
 
-                \draw[edge] (VO4) -- (VI4);
-                \draw[edge] (VO3) -- (VI3);
-                \draw[edge] (VO2) -- (VI2);
-                \draw[edge] (VO1) -- (VI1);
+            \draw[edge] (VO4) -- (VI4);
+            \draw[edge] (VO3) -- (VI3);
+            \draw[edge] (VO2) -- (VI2);
+            \draw[edge] (VO1) -- (VI1);
 
 
-                \draw[edge] (VO1) -- (VO2);
-                \draw[edge] (VO2) -- (VO3);
-                \draw[edge] (VO3) -- (VO4);
-                \draw[edge] (VO4) -- (VO1);
+            \draw[edge] (VO1) -- (VO2);
+            \draw[edge] (VO2) -- (VO3);
+            \draw[edge] (VO3) -- (VO4);
+            \draw[edge] (VO4) -- (VO1);
 
-                \end{tikzpicture}
-            \end{figure}
-        }
+            \end{tikzpicture}
+        \end{figure}
     \end{frame}
 
     \begin{frame}{Příklad}{{Orientovaný graf}}
-        \visible<2>{
-            \begin{figure}
-                \centering
-                \begin{tikzpicture}[scale=1]
+        \begin{figure}
+            \centering
+            \begin{tikzpicture}[scale=1]
 
-                \node[vertex,fill=orange] (VI1)   at (-1,-1) {};
-                \node[vertex,fill=orange] (VI2)   at (1,-1) {};
-                \node[vertex,fill=orange] (VI3)   at (1,1) {};
-                \node[vertex,fill=orange] (VI4)   at (-1,1) {};
+            \node[vertex,fill=orange] (VI1)   at (-1,-1) {};
+            \node[vertex,fill=orange] (VI2)   at (1,-1) {};
+            \node[vertex,fill=orange] (VI3)   at (1,1) {};
+            \node[vertex,fill=orange] (VI4)   at (-1,1) {};
 
-                \node[vertex,fill=orange] (VO1)   at (-2,-2) {};
-                \node[vertex,fill=orange] (VO2)   at (2,-2) {};
-                \node[vertex,fill=orange] (VO3)   at (2,2) {};
-                \node[vertex,fill=orange] (VO4)   at (-2,2) {};
+            \node[vertex,fill=orange] (VO1)   at (-2,-2) {};
+            \node[vertex,fill=orange] (VO2)   at (2,-2) {};
+            \node[vertex,fill=orange] (VO3)   at (2,2) {};
+            \node[vertex,fill=orange] (VO4)   at (-2,2) {};
 
-                \draw[diredge] (VI1) -- (VI2);
-                \draw[diredge] (VI2) -- (VI3);
-                \draw[diredge] (VI3) -- (VI4);
-                \draw[diredge] (VI4) -- (VI1);
-                \draw[diredge] (VI4) -- (VI2);
-                \draw[diredge] (VI3) -- (VI1);
+            \draw[diredge] (VI1) -- (VI2);
+            \draw[diredge] (VI2) -- (VI3);
+            \draw[diredge] (VI3) -- (VI4);
+            \draw[diredge] (VI4) -- (VI1);
+            \draw[diredge] (VI4) -- (VI2);
+            \draw[diredge] (VI3) -- (VI1);
 
-                \draw[diredge] (VO4) -- (VI4);
-                \draw[diredge] (VO3) -- (VI3);
-                \draw[diredge] (VO2) -- (VI2);
-                \draw[diredge] (VO1) -- (VI1);
+            \draw[diredge] (VO4) -- (VI4);
+            \draw[diredge] (VO3) -- (VI3);
+            \draw[diredge] (VO2) -- (VI2);
+            \draw[diredge] (VO1) -- (VI1);
 
 
-                \draw[diredge] (VO1) -- (VO2);
-                \draw[diredge] (VO2) -- (VO3);
-                \draw[diredge] (VO3) -- (VO4);
-                \draw[diredge] (VO4) -- (VO1);
+            \draw[diredge] (VO1) -- (VO2);
+            \draw[diredge] (VO2) -- (VO3);
+            \draw[diredge] (VO3) -- (VO4);
+            \draw[diredge] (VO4) -- (VO1);
 
-                \end{tikzpicture}
-            \end{figure}
-        }
+            \end{tikzpicture}
+        \end{figure}
     \end{frame}
 
     \begin{frame}{Incidence}
@@ -448,6 +440,8 @@
 
     \titleframe{Princip sudosti}
 
+    \subsection{Stupeň vrcholu}
+
     \begin{frame}{Stupeň vrcholu}
         \begin{defblock}[Stupeň vrcholu]
             Nechť $G=(V,E)$ je graf a $v\in V$ jeho libovolný vrchol. Pak
@@ -594,10 +588,65 @@
         \end{figure}}
     \end{frame}
 
-    \section{Časová a paměťová složitost}
+    \section{Časová a prostorová složitost}
 
     \titleframe{Asymptotická složitost}
 
-    
+    \begin{frame}{Připomenutí}
+        \begin{itemize}
+            \visible<2->{\item \textbf{Časová} vs. \textbf{prostorová složitost}:}
+            \begin{itemize}
+                \visible<3->{\item \markdarkred{Časová složitost} udává, \textbf{jak se mění} doběš běhu algoritmu v závislosti na změně velikosti vstupních dat.}
+                \visible<4->{\item \markdarkred{Prostorová složitost} udává, \textbf{jak se mění} paměťové nároky algoritmu.}
+            \end{itemize}
+            \visible<5->{\item Málokdy jsme schopni uvést přesnou dobu běhu v časových jednotkách, či prostorové nároky v bytech.}
+            \visible<6->{\begin{timportantframe}[0.8\textwidth]
+                Závislé na používaném hardwaru, stavu operačního systému, aktuálních stavech mezipamětí a dalších jiných aspektech.
+            \end{timportantframe}}
+            \visible<7->{\item Proto používáme pouze odhad složitosti pomocí velké $\bigO$-notace (Landauova notace).}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Výpočet složitosti}
+        \begin{itemize}
+            \visible<2->{\item Při výpočtu zohledňujeme pouze "nejrychleji" rostoucí člen. Konstanty též zanedbáváme.}
+            \visible<3->{\item Například
+            \begin{multicols}{2}
+                \begin{itemize}
+                    \item $\bigO(5n)=\visible<4->{\bigO(n)}$,
+                    \item $\bigO(n^{2}+n)=\visible<5->{\bigO(n^{2})}$,
+                    \item $\bigO(4n^{3}+n^{2}+10)=\visible<6->{\bigO(n^{3})}$,
+                    \item $\bigO(2n\log{n}+n)=\visible<7->{\bigO(n\log{n})}$.
+                \end{itemize}
+            \end{multicols}}
+            \visible<8->{\item Srovnávací "škála" funkcí (posloupností):
+            \[c\preccurlyeq\log{n}\preccurlyeq n\log{n}\preccurlyeq n^{k}\preccurlyeq 2^{n},\]
+            kde zápis $f(n)\preccurlyeq g(n)$ zjednodušeně říká, že $f(n)$ roste "řádově pomaleji" než $g(n)$.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Prostorová složitost grafů}
+        \begin{itemize}
+            \item Uvažujme libovolný graf $G=(V,E)$ a označme $n=|V|$ a $m=|E|$.
+            \item \textbf{Prostorové nároky:}
+            \begin{itemize}
+                \item \markdarkred{Matice sousednosti} obsahuje $n$ řádků a $n$ sloupců, tzn.
+                \[\bigO(n\cdot n)=\bigO(n^{2}).\]
+                \item \markdarkred{Matice incidence} obsahuje $n$ řádků (vrcholy) a $m$ sloupců (hrany), tzn.
+                \[\bigO(nm).\]
+                \item \markdarkred{Seznamy sousedů} obsahují v případě každého vrcholu $v$ nejvýše $\deg{v}$ vrcholů. Zároveň potřebujeme uložit i vrcholy samotné, což dohromady dává
+                \[\bigO\left(n+\sum_{v\in V}\deg{v}\right)=\bigO\left(n+2m\right)=\bigO(n+m).\]
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \section{Zdroje}
+
+    \begin{frame}{Zdroje}
+        \begin{itemize}
+            \item MAREŠ, Martin a~VALLA, Tomáš. \textit{Průvodce labyrintem algoritmů.} Druhé vydání. CZ.NIC. Praha: CZ.NIC, z.s.p.o., 2022. ISBN 978-80-88168-63-8.
+            \item CORMEN, Thomas H.; LEISERSON, Charles Eric; RIVEST, Ronald L. a~STEIN, Clifford. \textit{Introduction to algorithms.} Fourth edition. Cambridge: The MIT Press, 2022. ISBN 978-0-262-04630-5.
+        \end{itemize}
+    \end{frame}
 
 \end{document}
