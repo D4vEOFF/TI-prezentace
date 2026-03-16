@@ -1,0 +1,603 @@
+\documentclass[11pt,professionalfont,aspectratio=43]{beamer}
+
+% Assets
+\input{../assets/packages.tex}
+\input{../assets/theme.tex}
+\input{../assets/macros.tex}
+
+\def\presentationtitle{Opakování z~teorie grafů}
+
+\begin{document}
+
+    \input{../titlepage.tex}
+
+    \section{Teorie grafů}
+
+    \begin{titleframeenv}{Teorie grafů}
+        \begin{figure}
+            \centering
+            \input{images/petersen.tex}
+        \end{figure}
+    \end{titleframeenv}
+
+    \subsection{Kde se s grafy setkáváme}
+
+    \begin{frame}{Kde se s grafy setkáváme}
+        \visible<2>{
+            Mapa města a cesty
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{images/city-map.jpg}
+            \end{figure}
+        }
+    \end{frame}
+
+    \begin{frame}{Kde se s grafy setkáváme}
+        \visible<2>{
+            Schéma počítačové sítě
+            \begin{figure}
+                \centering
+                \begin{tikzpicture}[scale=1]
+
+                \node[vertexplain] (R)   at (0,-0.5)   {\includegraphics[width=.1\textwidth]{images/router.png}};
+                \node[vertexplain] (S1)  at (-2,1) {\includegraphics[width=.1\textwidth]{images/workgroup-switch.png}};
+                \node[vertexplain] (S2)  at (2,1)  {\includegraphics[width=.1\textwidth]{images/workgroup-switch.png}};
+                \node[vertexplain] (PC1) at (-3.5,3) {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
+                \node[vertexplain] (PC2) at (-1,3)   {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
+                \node[vertexplain] (PC3) at (1,3)    {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
+                \node[vertexplain] (PC4) at (3.5,3)  {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
+                \node[vertexplain] (T)   at (0,-3)   {\includegraphics[width=.2\textwidth]{images/cloud.png}};
+
+                \draw[edge] (R) -- (S1);
+                \draw[edge] (R) -- (S2);
+                \draw[edge] (R) -- (T);
+                \draw[edge] (S1) -- (PC1);
+                \draw[edge] (S1) -- (PC2);
+                \draw[edge] (S2) -- (PC3);
+                \draw[edge] (S2) -- (PC4);
+
+                \end{tikzpicture}
+            \end{figure}
+        }
+    \end{frame}
+
+    \subsection{Definice grafu}
+
+    \begin{frame}{Grafy formálně}
+        \visible<2->{
+            \begin{defblock}[Neorientovaný graf]
+                \markdarkred{Neorientovaným grafem} $G$ nazveme uspořádanou dvojici $(V,E)$, kde
+                \begin{itemize}
+                    \item $V$ je množina \textbf{vrcholů} a
+                    \item $E\subseteq\set{\set{u,v}: u,v\in V}$ je množina \textbf{hran}.
+                \end{itemize}
+            \end{defblock}
+        }
+
+        \visible<3->{
+            Pokud chceme, aby hrany byly \markdarkred{orientované}, stačí v definici upravit množinu $E$ takto:
+            \[E\subseteq\set{(u,v): u,v\in V}.\]
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{Neorientovaný graf}
+        \visible<2>{
+            \begin{figure}
+                \centering
+                \begin{tikzpicture}[scale=1]
+
+                \node[vertex,fill=red] (VI1)   at (-1,-1) {};
+                \node[vertex,fill=red] (VI2)   at (1,-1) {};
+                \node[vertex,fill=red] (VI3)   at (1,1) {};
+                \node[vertex,fill=red] (VI4)   at (-1,1) {};
+
+                \node[vertex,fill=red] (VO1)   at (-2,-2) {};
+                \node[vertex,fill=red] (VO2)   at (2,-2) {};
+                \node[vertex,fill=red] (VO3)   at (2,2) {};
+                \node[vertex,fill=red] (VO4)   at (-2,2) {};
+
+                \draw[edge] (VI1) -- (VI2);
+                \draw[edge] (VI2) -- (VI3);
+                \draw[edge] (VI3) -- (VI4);
+                \draw[edge] (VI4) -- (VI1);
+                \draw[edge] (VI4) -- (VI2);
+                \draw[edge] (VI3) -- (VI1);
+
+                \draw[edge] (VO4) -- (VI4);
+                \draw[edge] (VO3) -- (VI3);
+                \draw[edge] (VO2) -- (VI2);
+                \draw[edge] (VO1) -- (VI1);
+
+
+                \draw[edge] (VO1) -- (VO2);
+                \draw[edge] (VO2) -- (VO3);
+                \draw[edge] (VO3) -- (VO4);
+                \draw[edge] (VO4) -- (VO1);
+
+                \end{tikzpicture}
+            \end{figure}
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{{Orientovaný graf}}
+        \visible<2>{
+            \begin{figure}
+                \centering
+                \begin{tikzpicture}[scale=1]
+
+                \node[vertex,fill=orange] (VI1)   at (-1,-1) {};
+                \node[vertex,fill=orange] (VI2)   at (1,-1) {};
+                \node[vertex,fill=orange] (VI3)   at (1,1) {};
+                \node[vertex,fill=orange] (VI4)   at (-1,1) {};
+
+                \node[vertex,fill=orange] (VO1)   at (-2,-2) {};
+                \node[vertex,fill=orange] (VO2)   at (2,-2) {};
+                \node[vertex,fill=orange] (VO3)   at (2,2) {};
+                \node[vertex,fill=orange] (VO4)   at (-2,2) {};
+
+                \draw[diredge] (VI1) -- (VI2);
+                \draw[diredge] (VI2) -- (VI3);
+                \draw[diredge] (VI3) -- (VI4);
+                \draw[diredge] (VI4) -- (VI1);
+                \draw[diredge] (VI4) -- (VI2);
+                \draw[diredge] (VI3) -- (VI1);
+
+                \draw[diredge] (VO4) -- (VI4);
+                \draw[diredge] (VO3) -- (VI3);
+                \draw[diredge] (VO2) -- (VI2);
+                \draw[diredge] (VO1) -- (VI1);
+
+
+                \draw[diredge] (VO1) -- (VO2);
+                \draw[diredge] (VO2) -- (VO3);
+                \draw[diredge] (VO3) -- (VO4);
+                \draw[diredge] (VO4) -- (VO1);
+
+                \end{tikzpicture}
+            \end{figure}
+        }
+    \end{frame}
+
+    \begin{frame}{Incidence}
+        \visible<2->{\begin{defblock}[Incidence]
+            Nechť $G=(V,E)$ je graf, $u\in V$ a $e\in E$. Pak říkáme, že $e$ je incidentní s vrcholem $u$, když je $u$ jedním z koncových vrcholů hrany $e$.
+        \end{defblock}}
+        \visible<3->{\begin{figure}
+            \centering
+            \begin{tikzpicture}[scale=1]
+
+                \node[vertex,fill=green] (V)   at (0,0) {$v$};
+                \node[vertexplain] (VP1)   at (2,1) {};
+                \node[vertexplain] (VP2)   at (2,0) {};
+                \node[vertexplain] (VP3)   at (2,-1) {};
+                \node[vertexplain] (VP4)   at (-2,1) {};
+                \node[vertexplain] (VP5)   at (-2,0) {};
+                \node[vertexplain] (VP6)   at (-2,-1) {};
+                
+                \node[vertexplain] (Vdots1)   at (-2.5,0) {$\dots$};
+                \node[vertexplain] (Vdots2)   at (2.5,0) {$\dots$};
+                \node[vertexplain] (Vdots1)   at (-2.5,-1) {$\dots$};
+                \node[vertexplain] (Vdots2)   at (2.5,-1) {$\dots$};
+                \node[vertexplain] (Vdots1)   at (-2.5,1) {$\dots$};
+                \node[vertexplain] (Vdots2)   at (2.5,1) {$\dots$};
+
+                \draw[edge] (V) -- (VP1);
+                \draw[edge] (V) -- (VP2);
+                \draw[edge] (V) -- (VP3);
+                \draw[edge] (V) -- (VP4);
+                \draw[edge] (V) -- (VP5);
+                \draw[edge] (V) -- (VP6);
+
+            \end{tikzpicture}
+        \end{figure}}
+    \end{frame}
+
+    \section{Reprezentace grafů}
+
+    \titleframe{Reprezentace grafů}
+
+    \subsection{Matice}
+
+    \begin{frame}{Matice}
+        \visible<2->{
+            \markdarkred{Maticí} $A$ typu $n\times m$ rozumíme blokové schéma
+            \[
+            \mathbf{A}=
+            \left(
+            \begin{matrix}
+                a_{11} & a_{12} & \ldots & a_{1m} \\
+                a_{21} & a_{22} & \ldots & a_{2m} \\
+                \vdots & \vdots & \ddots & \vdots \\
+                a_{n1} & a_{n2} & \ldots & a_{nm}
+            \end{matrix}
+            \right)
+            \]
+        }
+        \visible<3->{Prvek matice $\mathbf{A}$ na pozici $(i,j)$ značíme $\mathbf{A}_{ij}$.}
+
+        \visible<4->{\begin{exblock}
+        Matice
+        \[\mathbf{A}=\left(\begin{matrix}
+            1 & 2 & 3 \\
+            4 & 5 & 6 \\
+            7 & 8 & 9
+        \end{matrix}\right),\; \mathbf{B}=\left(\begin{matrix}
+            1 & -1 & 2 & -2 \\
+            3 & -3 & -4 & 4
+        \end{matrix}\right)\]
+        jsou po řadě typů $3\times 3$ a $2\times 4$.
+        \end{exblock}}
+    \end{frame}
+
+    \begin{frame}{Reprezentace grafu}
+        \visible<2->{Máme libovolný graf $G=(V,E)$. Rádi bych co nejrychleji zjistili pro zadaný vrchol $u\in V$, do jakých vrcholů se z něj můžeme dostat.}
+        \visible<3->{\begin{talertframe}[0.6\textwidth]
+            \begin{center}
+                Přímá definice není moc praktická.
+            \end{center}
+        \end{talertframe}}
+        \visible<4->{\begin{figure}
+                \centering
+                \input{images/graf-matice-sousednosti.tex}
+            \end{figure}}
+        \visible<5->{Grafy můžeme reprezentovat třemi způsoby:}
+        \visible<6->{\begin{itemize}
+            \visible<6->{\item \markdarkred{maticí sousednosti},}
+            \visible<7->{\item \markdarkred{maticí incidence} a}
+            \visible<8->{\item \markdarkred{seznamy sousedních vrcholů}.}
+        \end{itemize}}
+    \end{frame}
+
+    \subsection{Matice sousednosti}
+
+    \begin{frame}{Matice sousednosti}
+        \begin{itemize}
+            \item Mějme \textbf{orientovaný} nebo \textbf{neorientovaný} graf $G=(V,E)$, přičemž
+            \[V=\set{v_1,v_2,\dots,v_n}.\]
+            \item Definujeme prvky matice $\mathbf{A}$ typu $n\times n$ pro každé $i,j\in\set{1,\dots,n}$ předpisem
+            \[\mathbf{A}_{ij}=\begin{cases}
+                1 & \text{vede-li z vrcholu $v_i$ hrana do vrcholu $v_j$},\\
+                0 & \text{jinak}.
+            \end{cases}\]
+            Matice $\mathbf{A}$ je tzv. \markdarkred{maticí sousednosti} grafu $G$.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Matice sousednosti}{Příklad \textrm{I}}
+        \visible<2->{\begin{minipage}{0.45\textwidth}
+            Graf $G$
+            \begin{figure}
+                \centering
+                \input{images/graf-matice-sousednosti.tex}
+            \end{figure}
+        \end{minipage}}
+        \visible<3->{\begin{minipage}{0.45\textwidth}
+            \begin{table}
+                \centering
+                \begin{tabular}{c|cccccc}
+                    $\mathbf{A}_G$ & $v_1$ & $v_2$ & $v_3$ & $v_4$ & $v_5$ & $v_6$ \\ \hline
+                    $v_1$ & \visible<4->{$0$ & $1$ & $0$ & $0$ & $0$ & $0$ \\}
+                    $v_2$ & \visible<5->{$1$ & $0$ & $1$ & $1$ & $0$ & $1$ \\}
+                    $v_3$ & \visible<6->{$0$ & $1$ & $0$ & $1$ & $0$ & $0$ \\}
+                    $v_4$ & \visible<7->{$0$ & $1$ & $1$ & $0$ & $1$ & $0$ \\}
+                    $v_5$ & \visible<8->{$0$ & $0$ & $0$ & $1$ & $0$ & $1$ \\}
+                    $v_6$ & \visible<9->{$0$ & $1$ & $0$ & $0$ & $1$ & $0$}
+                \end{tabular}
+            \end{table}
+        \end{minipage}}
+        \visible<10->{Výsledná matice sousednosti grafu $G$:
+        \[\mathbf{A}_G=\left(\begin{matrix}
+            0 & 1 & 0 & 0 & 0 & 0 \\
+            1 & 0 & 1 & 1 & 0 & 1 \\
+            0 & 1 & 0 & 1 & 0 & 0 \\
+            0 & 1 & 1 & 0 & 1 & 0 \\
+            0 & 0 & 0 & 1 & 0 & 1 \\
+            0 & 1 & 0 & 0 & 1 & 0
+        \end{matrix}\right)\]}
+    \end{frame}
+
+    \begin{frame}{Matice sousednosti}{Příklad \textrm{II}}
+        \visible<2>{Graf $H$ (prasátko)
+        \begin{figure}
+            \centering
+            \input{images/graf-prasatko.tex}
+        \end{figure}}
+    \end{frame}
+
+    \begin{frame}{Matice sousednosti}{Příklad \textrm{II}}
+        \begin{table}
+            \centering
+            \begin{tabular}{c|cccccccccc}
+                $\mathbf{A}_H$ & $v_0$ & $v_1$ & $v_2$ & $v_3$ & $v_4$ & $v_5$ & $v_6$ & $v_7$ & $v_8$ & $v_9$ \\ \hline
+                $v_0$ & $0$ & $1$ & $0$ & $1$ & $0$ & $0$ & $0$ & $0$ & $0$ & $1$ \\
+                $v_1$ & $0$ & $0$ & $1$ & $1$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ \\
+                $v_2$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ \\
+                $v_3$ & $0$ & $0$ & $0$ & $0$ & $1$ & $0$ & $0$ & $0$ & $0$ & $0$ \\
+                $v_4$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ \\
+                $v_5$ & $0$ & $0$ & $0$ & $1$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ \\
+                $v_6$ & $1$ & $0$ & $0$ & $1$ & $0$ & $0$ & $0$ & $1$ & $0$ & $0$ \\
+                $v_7$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ \\
+                $v_8$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $1$ & $0$ & $0$ & $0$ \\
+                $v_9$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $1$ & $0$ & $0$ & $0$
+            \end{tabular}
+        \end{table}
+    \end{frame}
+
+    \begin{frame}{Matice sousednosti}{Příklad \textrm{II}}
+        Výsledná matice sousednosti grafu $H$:
+        \[\mathbf{A}_H=\left(\begin{matrix}
+            0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 \\
+            0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+            1 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0
+        \end{matrix}\right)\]
+    \end{frame}
+
+    \begin{frame}{Poznámka k matici sousednosti}
+        \visible<2->{Všimněme si, že matice sousednosti $A$ \textbf{neorientovaného grafu} je vždy \markdarkred{symetrická}, tzn. pro každé $i,j$ platí
+        \[\mathbf{A}_{ij}=\mathbf{A}_{ji}.\]}
+        \visible<3->{\begin{talertframe}[0.9\textwidth]
+            U neorientovaného grafu nám tedy stačí vyplnit horní polovinu matice $\implies$ zbytek vznikne "zrcadlením" podle hlavní diagonály.
+        \end{talertframe}}
+    \end{frame}
+
+    \subsection{Matice incidence}
+
+    \begin{frame}{Matice incidence}
+        \visible<2->{\begin{itemize}
+            \visible<2->{\item Mějme graf $G=(V,E)$, kde
+            \[V=\set{v_1,v_2,\dots,v_n}\quad\text{a}\quad E=\set{e_1,e_2,\dots,e_m}.\]}
+            \visible<3->{\item Definujeme prvky matice $\mathbf{I}$ typu $n\times m$ pro každé $i\in\set{1,\dots,n}$ a $j\in\set{1,\dots,m}$ následovně:}
+            \visible<4->{\begin{itemize}
+                \visible<4->{\item Je-li graf $G$ \markdarkred{orientovaný}, pak
+                \[\mathbf{I}_{ij}=\begin{cases}
+                    -1 & \text{vede-li \textbf{z} vrcholu $v_i$ hrana $e_j$}, \\
+                    1 & \text{vede-li \textbf{do} vrcholu $v_i$ hrana $e_j$}, \\
+                    0 & \text{jinak}.
+                \end{cases}\]}
+                \visible<5->{\item Je-li graf $G$ \markdarkred{neorientovaný}, pak
+                \[\mathbf{I}_{ij}=\begin{cases}
+                    1 & \text{je-li hrana $e_i$ incidentní s vrcholem $v_i$}, \\
+                    0 & \text{jinak}.
+                \end{cases}\]}
+            \end{itemize}}
+        \end{itemize}}
+        \visible<6->{Matice $\mathbf{I}$ je tzv. \markdarkred{maticí incidence} grafu $G$.}
+    \end{frame}
+
+    \begin{frame}{Matice incidence}{Příklad \textrm{I}}
+        \visible<2->{\begin{minipage}{0.45\textwidth}
+            Graf $G$
+            \begin{figure}
+                \centering
+                \input{images/graf-matice-incidence.tex}
+            \end{figure}
+        \end{minipage}}
+        \visible<3->{\begin{minipage}{0.45\textwidth}
+            \begin{table}
+                \centering
+                \begin{tabular}{c|cccccc}
+                    $\mathbf{I_G}$ & $e_1$ & $e_2$ & $e_3$ & $e_4$ & $e_5$ & $e_6$ \\ \hline
+                    $u_1$ & \visible<4->{$-1$ & $-1$ & $0$ & $0$ & $0$ & $0$ \\}
+                    $u_2$ & \visible<5->{$1$ & $0$ & $-1$ & $0$ & $0$ & $0$ \\}
+                    $u_3$ & \visible<6->{$0$ & $1$ & $1$ & $0$ & $0$ & $0$ \\}
+                    $u_4$ & \visible<7->{$0$ & $0$ & $0$ & $-1$ & $1$ & $0$ \\}
+                    $u_5$ & \visible<8->{$0$ & $0$ & $0$ & $1$ & $0$ & $-1$ \\}
+                    $u_6$ & \visible<9->{$0$ & $0$ & $0$ & $0$ & $-1$ & $1$}
+                \end{tabular}
+            \end{table}
+        \end{minipage}}
+        \visible<10->{Výsledná matice incidence grafu $G$:
+        \[\mathbf{I_G}=\left(\begin{matrix}
+            -1 & -1 & 0 & 0 & 0 & 0 \\
+            1 & 0 & -1 & 0 & 0 & 0 \\
+            0 & 1 & 1 & 0 & 0 & 0 \\
+            0 & 0 & 0 & -1 & 1 & 0 \\
+            0 & 0 & 0 & 1 & 0 & -1 \\
+            0 & 0 & 0 & 0 & -1 & 1
+        \end{matrix}\right)\]}
+    \end{frame}
+
+    \subsection{Seznamy sousedů}
+
+    \begin{frame}{Seznamy sousedů}
+        \begin{itemize}
+            \visible<2->{\item Patrně nejznámější způsob reprezentace grafu.}
+            \visible<2->{\item Pro graf $G=(V,E)$ definujeme \markdarkred{seznam sousedů} vrcholu $v\in V$ jako množinu
+            \[S[v]=\set{u\in V: \text{Z vrcholu $v$ vede hrana do $u$}}.\]}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Seznamy sousedů}{Příklad \textrm{II}}
+        \visible<2->{Prasátkový graf a seznamy sousedů jeho vrcholů
+        \begin{figure}
+            \centering
+            \input{images/graf-prasatko.tex}
+        \end{figure}}
+        \begin{minipage}{0.3\textwidth}
+            \begin{align*}
+                \visible<3->{S[v_0]&=\set{v_1,v_3} \\ }
+                \visible<4->{S[v_1]&=\set{v_2,v_3} \\ }
+                \visible<5->{S[v_2]&=\emptyset \\ }
+                \visible<6->{S[v_3]&=\set{v_4}}
+            \end{align*}
+        \end{minipage}
+        \begin{minipage}{0.3\textwidth}
+            \begin{align*}
+                \visible<7->{S[v_4]&=\emptyset \\}
+                \visible<8->{S[v_5]&=\set{v_3} \\ }
+                \visible<9->{S[v_6]&=\set{v_0,v_3,v_7} \\ }
+                \visible<10->{S[v_7]&=\emptyset}
+            \end{align*}
+        \end{minipage}
+        \begin{minipage}{0.3\textwidth}
+            \begin{align*}
+                \visible<11->{S[v_8]&=\set{v_6} \\}
+                \visible<12->{S[v_9]&=\set{v_6}}
+            \end{align*}
+        \end{minipage}
+    \end{frame}
+
+    \section{Stupeň vrcholu a princip sudosti}
+
+    \titleframe{Princip sudosti}
+
+    \begin{frame}{Stupeň vrcholu}
+        \begin{defblock}[Stupeň vrcholu]
+            Nechť $G=(V,E)$ je graf a $v\in V$ jeho libovolný vrchol. Pak
+            \begin{itemize}
+                \item definujeme \markdarkred{stupeň vrcholu $v$}
+                \[\deg{v}=|\set{e\in E: u\in e}|.\]
+                \item je-li $G$ orientovaný, definujeme navíc \markdarkred{vstupní stupeň vrcholu $v$}
+                \[\deg^{+}{v}=|\set{e\in E: \exists u\in V: e=(u,v)}|\]
+                a \markdarkred{výstupní stupeň vrcholu $v$}
+                \[\deg^{-}{v}=|\set{e\in E: \exists u\in V: e=(v,u)}|.\]
+            \end{itemize}
+        \end{defblock}
+    \end{frame}
+
+    \begin{frame}{Stupeň vrcholu}{Příklad}
+        \visible<2->{\begin{figure}
+            \centering
+            \begin{tikzpicture}[scale=1.2]
+
+            \node[vertex] (v1) at (0,2) {$v_1$};
+            \node[vertex] (v2) at (2,3) {$v_2$};
+            \node[vertex] (v3) at (2,1) {$v_3$};
+            \node[vertex] (v4) at (4,3) {$v_4$};
+            \node[vertex] (v5) at (4,1) {$v_5$};
+
+            \draw[edge] (v1) -- (v2);
+            \draw[edge] (v1) -- (v3);
+            \draw[edge] (v2) -- (v3);
+            \draw[edge] (v2) -- (v4);
+            \draw[edge] (v3) -- (v5);
+            \draw[edge] (v4) -- (v5);
+
+            \visible<3>{\node[above left=2mm and -1mm of v1] {\small $\deg{v_1}=2$};
+            \node[above=2mm of v2]               {\small $\deg{v_2}=3$};
+            \node[below=2mm of v3]               {\small $\deg{v_3}=3$};
+            \node[above=2mm of v4]               {\small $\deg{v_4}=2$};
+            \node[below=2mm of v5]               {\small $\deg{v_5}=2$};}
+
+            \end{tikzpicture}
+        \end{figure}}
+    \end{frame}
+
+    % \begin{frame}{Vstupní a výstupní stupeň vrcholu}{Příklad}
+    %     \visible<2->{\begin{figure}
+    %         \centering
+    %         \begin{tikzpicture}[scale=1.2]
+
+    %         \node[vertex] (v1) at (0,2) {$v_1$};
+    %         \node[vertex] (v2) at (2,3) {$v_2$};
+    %         \node[vertex] (v3) at (2,1) {$v_3$};
+    %         \node[vertex] (v4) at (4,3) {$v_4$};
+    %         \node[vertex] (v5) at (4,1) {$v_5$};
+
+    %         \draw[diredge] (v1) -- (v2);
+    %         \draw[diredge] (v1) -- (v3);
+    %         \draw[diredge] (v2) -- (v4);
+    %         \draw[diredge] (v3) -- (v2);
+    %         \draw[diredge] (v3) -- (v5);
+    %         \draw[diredge] (v4) -- (v5);
+    %         \draw[diredge] (v5) to[bend left=18] (v2);
+
+    %         \visible<3>{\node[above=2mm of v1] {\tiny $\deg^+(v_1)=2,\ \deg^-(v_1)=0$};
+    %         \node[above=4mm of v2]               {\tiny $\deg^+(v_2)=1,\ \deg^-(v_2)=3$};
+    %         \node[below=4mm of v3]               {\tiny $\deg^+(v_3)=2,\ \deg^-(v_3)=1$};
+    %         \node[above=1mm of v4]               {\tiny $\deg^+(v_4)=1,\ \deg^-(v_4)=1$};
+    %         \node[below=1mm of v5]               {\tiny $\deg^+(v_5)=1,\ \deg^-(v_5)=2$};}
+
+    %         \end{tikzpicture}
+    %     \end{figure}}
+    % \end{frame}
+
+    \begin{frame}{Poznámky k definici \textrm{I}}
+        \begin{itemize}
+            \visible<2->{\item Definice říká, že stupeň vrcholu $v$ je jednoduše počet hran incidentních s $v$.}
+            \visible<3->{\item Vstupní a výstupní stupeň vrcholu $v$ je počet všech hran vycházejících, resp. přicházejících do vrcholu $v$.}
+            \visible<4->{\item Z definice lze nahlédnout, že pro každý vrchol $v$ v orientovaném grafu je
+            \[\deg{v}=\deg^{+}{v}+\deg^{-}{v}.\]}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Poznámky k definici \textrm{II}}
+        \visible<2->{\begin{tinfobox}[\textwidth]{Pozorování}
+            Je-li $\mathbf{A}$ matice sousednosti, resp. $\mathbf{I}$ matice incidence, \textbf{neorientovaného} grafu $G$, pak pro libovolný jeho vrchol $v_i$ platí
+            \[\deg{v_i}=\sum_{j=1}^{n}\mathbf{A}_{ij}=\sum_{k=1}^{m}\mathbf{I}_{ik},\]
+            kde $n=|V|$ a $m=|E|$.
+        \end{tinfobox}}
+        \visible<3->{Tedy pro zvolený vrchol $v_i$ lze stanovit jeho stupeň jako součet jedniček v příslušném řádku matice sousednosti, resp. matici incidence}.
+    \end{frame}
+
+    \begin{frame}{Poznámky k definici \textrm{III}}
+        \visible<2->{Obdobné jednoduché pozorování lze učinit i pro \textbf{orientované} grafy.}
+        \visible<3->{\begin{tinfobox}[\textwidth]{Pozorování}
+            Je-li $G$ \textbf{orientovaný} graf, pak pro libovolný jeho vrchol $v_i$ platí
+            \begin{align*}
+                \deg^{-}{v_i}&=\sum_{j=1}^{n}\mathbf{A}_{ij}=-\sum_{k=1}^{m}\min\set{\mathbf{I}_{ik},0},\\
+                \deg^{+}{v_i}&=\sum_{j=1}^{n}\mathbf{A}_{ji}=\sum_{k=1}^{m}\max\set{\mathbf{I}_{ik},0},
+            \end{align*}
+            kde $n=|V|$ a $m=|E|$.
+        \end{tinfobox}}
+    \end{frame}
+
+    \subsection{Princip sudosti}
+
+    \begin{frame}{Princip sudosti}
+        \visible<2->{V angličtině nazývaný \textbf{Handshaking lemma}.}
+        \visible<3->{\begin{propblock}[Princip sudosti]
+            V každém grafu $G=(V,E)$ platí:
+            \[\sum_{v\in V}\deg{v}=2|E|.\]
+        \end{propblock}}
+        \visible<4->{Tvrzení plyne jednoduše ze skutečnosti, že každou hranu $uv$ započítáme dvakrát.}
+        \visible<5->{\begin{figure}
+            \centering
+            \begin{tikzpicture}[scale=1.2]
+
+            \node[vertex] (U) at (0,0.5) {$u$};
+            \node[vertex] (V) at (2,1) {$v$};
+
+            \node[vertexplain] (VP1) at (3,1) {};
+            \node[vertexplain] (VP2) at (3,2) {};
+            \node[vertexplain] (VP3) at (2,2) {};
+
+            \node[vertexplain] (VP4) at (-1,0.5) {};
+            \node[vertexplain] (VP5) at (-1,-0.5) {};
+            \node[vertexplain] (VP6) at (0,-0.5) {};
+
+            \node[vertexplain] (VP7) at (0.667,0.667) {};
+            \node[vertexplain] (VP8) at (1.333,0.822) {};
+
+            \draw[edge] (U) -- (V);
+
+            \draw[edge] (U) -- (VP4);
+            \draw[edge] (U) -- (VP5);
+            \draw[edge] (U) -- (VP6);
+
+            \draw[diredge,color=red] (U) -- (VP7);
+
+            \draw[edge] (V) -- (VP1);
+            \draw[edge] (V) -- (VP2);
+            \draw[edge] (V) -- (VP3);
+
+            \draw[diredge,color=red] (V) -- (VP8);
+
+            \end{tikzpicture}
+        \end{figure}}
+    \end{frame}
+
+    \section{Časová a paměťová složitost}
+
+    \titleframe{Asymptotická složitost}
+
+    
+
+\end{document}

@@ -1,0 +1,19 @@
+\begin{tikzpicture}[scale=1]
+
+\node[vertex,fill=white] (V1)   at (-2,0) {$u_1$};
+\node[vertex,fill=white] (V2)   at (0,0) {$u_2$};
+\node[vertex,fill=white] (V3)   at (0,2) {$u_3$};
+
+\node[vertex,fill=white] (V4)   at (1,0) {$u_4$};
+\node[vertex,fill=white] (V5)   at (3,0) {$u_5$};
+\node[vertex,fill=white] (V6)   at (1,2) {$u_6$};
+
+\draw[diredge] (V1) -- node[midway,above] {$e_1$} (V2);
+\draw[diredge] (V1) -- node[midway,above] {$e_2$} (V3);
+\draw[diredge] (V2) -- node[midway,right] {$e_3$} (V3);
+
+\draw[diredge] (V4) -- node[midway,above] {$e_4$} (V5);
+\draw[diredge] (V6) -- node[midway,right] {$e_5$} (V4);
+\draw[diredge] (V5) -- node[midway,above] {$e_6$} (V6);
+
+\end{tikzpicture}

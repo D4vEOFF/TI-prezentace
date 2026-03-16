@@ -19,6 +19,28 @@
 % \newtheorem{convention}[theorem]{Úmluva}
 % \newtheorem{denoting}[theorem]{Značení}
 
+\newenvironment{defblock}[1][]{
+  \begin{block}{\ifthenelse{\equal{#1}{}}
+  {Definice}
+  {Definice (#1)}}
+}{\end{block}}
+\newenvironment{thmblock}[1][]{
+  \begin{block}{\ifthenelse{\equal{#1}{}}
+  {Věta}
+  {Věta (#1)}}
+}{\end{block}}
+\newenvironment{propblock}[1][]{
+  \begin{block}{\ifthenelse{\equal{#1}{}}
+  {Tvrzení}
+  {Tvrzení (#1)}}
+}{\end{block}}
+\newenvironment{exblock}[1][]{
+  \begin{exampleblock}{\ifthenelse{\equal{#1}{}}
+  {Příklad}
+  {Příklad (#1)}}
+}{\end{exampleblock}}
+
+
 % Colors
 \definecolor{lightblue}{HTML}{009AD4}
 \definecolor{lightgreen}{HTML}{68FF00}
@@ -220,6 +242,15 @@
 \tikzstyle{decision}  = [diamond, aspect=2, text centered, draw=black, fill=green!30]
 \tikzstyle{arrow}     = [thick,->,>=stealth]
 
+\tikzstyle{vertex}    = [thick, draw, circle, minimum size=4mm, inner sep=1pt, outer sep=1pt, align=center]
+\tikzstyle{vertexplain}    = [minimum size=4mm, inner sep=1pt, outer sep=1pt, align=center]
+\tikzstyle{verteximg}    = [draw, circle, minimum size=4mm, inner sep=0pt, outer sep=1pt, align=center, clip]
+\tikzstyle{verteximgplain}    = [minimum size=4mm, inner sep=0pt, outer sep=1pt, align=center]
+\tikzstyle{task}    = [draw, rounded corners=2pt, minimum width=14mm, minimum height=8mm, inner sep=2pt, align=center]
+
+\tikzstyle{edge}    = [thick]
+\tikzstyle{diredge}    = [thick, ->, >=stealth]
+
 % Frames
 \newcommand{\tableofcontentsframe}{
     \begin{frame}{Obsah}
@@ -239,6 +270,15 @@
   \end{frame}
   \addtocounter{framenumber}{-1}%
 }
+
+\newenvironment{titleframeenv}[1]{
+    \begin{frame}[plain]
+        \begin{tcolorbox}[colback=white,boxrule=1pt]
+            \begin{center}
+                \Huge\markred{#1}\normalfont
+            \end{center}
+        \end{tcolorbox}
+}{\addtocounter{framenumber}{-1}\end{frame}}
 
 \newcommand{\icon}[1]{
   \includegraphics[height=\fontcharht\font`\B]{#1}

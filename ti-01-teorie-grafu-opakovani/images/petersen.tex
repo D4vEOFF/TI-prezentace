@@ -1,0 +1,38 @@
+\begin{tikzpicture}[scale=1.5]
+
+% vnější vrcholy
+\node[vertex, fill=red!35]         (v1) at (90:2)    {};
+\node[vertex, fill=orange!40]      (v2) at (18:2)    {};
+\node[vertex, fill=yellow!50]      (v3) at (-54:2)   {};
+\node[vertex, fill=green!35]       (v4) at (-126:2)  {};
+\node[vertex, fill=cyan!35]        (v5) at (162:2)   {};
+
+% vnitřní vrcholy
+\node[vertex, fill=blue!35]        (u1) at (90:0.9)    {};
+\node[vertex, fill=violet!35]      (u2) at (18:0.9)    {};
+\node[vertex, fill=magenta!35]     (u3) at (-54:0.9)   {};
+\node[vertex, fill=pink!45]        (u4) at (-126:0.9)  {};
+\node[vertex, fill=lime!45]        (u5) at (162:0.9)   {};
+
+% vnější pětiúhelník
+\draw[edge] (v1) -- (v2);
+\draw[edge] (v2) -- (v3);
+\draw[edge] (v3) -- (v4);
+\draw[edge] (v4) -- (v5);
+\draw[edge] (v5) -- (v1);
+
+% spojky mezi vnějším a vnitřním cyklem
+\draw[edge] (v1) -- (u1);
+\draw[edge] (v2) -- (u2);
+\draw[edge] (v3) -- (u3);
+\draw[edge] (v4) -- (u4);
+\draw[edge] (v5) -- (u5);
+
+% vnitřní hvězda
+\draw[edge] (u1) -- (u3);
+\draw[edge] (u3) -- (u5);
+\draw[edge] (u5) -- (u2);
+\draw[edge] (u2) -- (u4);
+\draw[edge] (u4) -- (u1);
+
+\end{tikzpicture}
