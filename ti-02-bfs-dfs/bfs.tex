@@ -1,0 +1,98 @@
+\definecolor{bfsundiscovered}{RGB}{190,190,190}
+\definecolor{bfsopen}{RGB}{255,230,120}
+\definecolor{bfsclosed}{RGB}{170,220,170}
+\definecolor{bfstree}{RGB}{60,120,220}
+
+\tikzset{
+    bfsvertex/.style={
+        circle,
+        draw=black,
+        thick,
+        minimum size=8mm,
+        inner sep=0pt,
+        font=\small
+    },
+    bfsedge/.style={
+        thick
+    },
+    bfstreeedge/.style={
+        very thick,
+        draw=bfstree
+    },
+    bfsbox/.style={
+        draw=black,
+        rounded corners=2mm,
+        fill=white,
+        inner sep=2mm,
+        font=\small
+    }
+}
+
+% #1  = titulek kroku
+% #2  = obsah fronty
+% #3..#9   = stavy vrcholů v1,...,v7
+% #10..#15 = zvyrazneni hran BFS stromu:
+%            e12, e13, e24, e25, e36, e47
+\newcommand{\BFSstate}[4]{%
+\begin{tikzpicture}[x=1.8cm,y=1.4cm]
+
+    % --- souřadnice vrcholů ---
+    \coordinate (v1) at (0,0);
+    \coordinate (v2) at (1,1);
+    \coordinate (v3) at (1,-1);
+    \coordinate (v4) at (2,1.6);
+    \coordinate (v5) at (2,0.2);
+    \coordinate (v6) at (2,-1.2);
+    \coordinate (v7) at (3,0.2);
+
+    % --- všechny hrany grafu ---
+    \draw[bfsedge] (v1)--(v2);
+    \draw[bfsedge] (v1)--(v3);
+    \draw[bfsedge] (v2)--(v4);
+    \draw[bfsedge] (v2)--(v5);
+    \draw[bfsedge] (v3)--(v5);
+    \draw[bfsedge] (v3)--(v6);
+    \draw[bfsedge] (v4)--(v7);
+    \draw[bfsedge] (v5)--(v7);
+    \draw[bfsedge] (v6)--(v7);
+
+    % --- zvýrazněné hrany BFS stromu ---
+    #3
+
+    % --- vrcholy ---
+    #4
+
+    % --- titulek kroku ---
+    \node[anchor=west, font=\bfseries] at (-0.2,2.3) {#1};
+
+    % --- legenda ---
+    \node[
+        bfsbox,
+        anchor=north west,
+        minimum width=4.2cm,
+        minimum height=3.5cm
+    ] (legend) at (4.0,2.2) {};
+
+    \node[bfsvertex, fill=bfsundiscovered, minimum size=4.5mm]
+        (leg1) at ([xshift=7mm,yshift=-7mm]legend.north west) {};
+    \node[anchor=west] at ([xshift=8mm]leg1.east) {nenalezený};
+
+    \node[bfsvertex, fill=bfsopen, minimum size=4.5mm]
+        (leg2) at ([yshift=-4mm]leg1.south) {};
+    \node[anchor=west] at ([xshift=8mm]leg2.east) {otevřený};
+
+    \node[bfsvertex, fill=bfsclosed, minimum size=4.5mm]
+        (leg3) at ([yshift=-4mm]leg2.south) {};
+    \node[anchor=west] at ([xshift=8mm]leg3.east) {uzavřený};
+
+    \draw[bfstreeedge] ([xshift=-2mm,yshift=-8mm]leg3.south west) -- ++(8mm,0);
+    \node[anchor=west] at ([xshift=10mm,yshift=-8mm]leg3.south west) {BFS strom};
+
+    % --- fronta otevřených vrcholů ---
+    \node[bfsbox, anchor=south west, text width=3.7cm, align=left] at (4.0,-1.8) {%
+        \textbf{Otevřené vrcholy:}\\[1mm]
+        #2
+    };
+
+\end{tikzpicture}%
+}

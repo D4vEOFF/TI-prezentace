@@ -6,6 +6,9 @@
 \input{../assets/macros.tex}
 \input{../assets/listing.tex}
 
+% BFS simulation
+\input{bfs.tex}
+
 \def\presentationtitle{Algoritmy BFS a DFS}
 
 \begin{document}
@@ -15,6 +18,8 @@
     \section{Prohledávání do šířky}
 
     \titleframe{Prohledávání do šířky}
+
+    \subsection{Grafové algoritmy a příklad}
 
     \begin{frame}{Prohledávání do šířky}
         \begin{itemize}
@@ -38,7 +43,185 @@
         \end{enumerate}
     \end{frame}
 
-    
+    \begin{frame}{Příklad}{BFS -- inicializace}
+        \centering
+        \BFSstate
+            {Krok 0: start v~$v_1$}
+            {$[\,v_1\,]$}
+            {}
+            {
+                \node[bfsvertex, fill=bfsopen]          at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsundiscovered]  at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsundiscovered]  at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsundiscovered]  at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsundiscovered]  at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsundiscovered]  at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsundiscovered]  at (v7) {$v_7$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{BFS -- po zpracování $v_1$}
+        \centering
+        \BFSstate
+            {Krok 1: zpracujeme $v_1$}
+            {$[\,v_2,\,v_3\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v1)--(v3);
+            }
+            {
+                \node[bfsvertex, fill=bfsclosed]        at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsopen]          at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsopen]          at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsundiscovered]  at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsundiscovered]  at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsundiscovered]  at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsundiscovered]  at (v7) {$v_7$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{BFS -- po zpracování $v_2$}
+        \centering
+        \BFSstate
+            {Krok 2: zpracujeme $v_2$}
+            {$[\,v_3,\,v_4,\,v_5\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v1)--(v3);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v2)--(v5);
+            }
+            {
+                \node[bfsvertex, fill=bfsclosed]        at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsclosed]        at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsopen]          at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsopen]          at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsopen]          at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsundiscovered]  at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsundiscovered]  at (v7) {$v_7$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{BFS -- po zpracování $v_3$}
+        \centering
+        \BFSstate
+            {Krok 3: zpracujeme $v_3$}
+            {$[\,v_4,\,v_5,\,v_6\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v1)--(v3);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v2)--(v5);
+                \draw[bfstreeedge] (v3)--(v6);
+            }
+            {
+                \node[bfsvertex, fill=bfsclosed]        at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsclosed]        at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsclosed]        at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsopen]          at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsopen]          at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsopen]          at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsundiscovered]  at (v7) {$v_7$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{BFS -- po zpracování $v_4$}
+        \centering
+        \BFSstate
+            {Krok 4: zpracujeme $v_4$}
+            {$[\,v_5,\,v_6,\,v_7\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v1)--(v3);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v2)--(v5);
+                \draw[bfstreeedge] (v3)--(v6);
+                \draw[bfstreeedge] (v4)--(v7);
+            }
+            {
+                \node[bfsvertex, fill=bfsclosed]        at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsclosed]        at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsclosed]        at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsclosed]        at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsopen]          at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsopen]          at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsopen]          at (v7) {$v_7$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{BFS -- po zpracování $v_5$}
+        \centering
+        \BFSstate
+            {Krok 5: zpracujeme $v_5$}
+            {$[\,v_6,\,v_7\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v1)--(v3);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v2)--(v5);
+                \draw[bfstreeedge] (v3)--(v6);
+                \draw[bfstreeedge] (v4)--(v7);
+            }
+            {
+                \node[bfsvertex, fill=bfsclosed]        at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsclosed]        at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsclosed]        at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsclosed]        at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsclosed]        at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsopen]          at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsopen]          at (v7) {$v_7$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{BFS -- po zpracování $v_6$}
+        \centering
+        \BFSstate
+            {Krok 6: zpracujeme $v_6$}
+            {$[\,v_7\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v1)--(v3);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v2)--(v5);
+                \draw[bfstreeedge] (v3)--(v6);
+                \draw[bfstreeedge] (v4)--(v7);
+            }
+            {
+                \node[bfsvertex, fill=bfsclosed]        at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsclosed]        at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsclosed]        at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsclosed]        at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsclosed]        at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsclosed]        at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsopen]          at (v7) {$v_7$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{BFS -- konec}
+        \centering
+        \BFSstate
+            {Krok 7: zpracujeme $v_7$}
+            {$[\,\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v1)--(v3);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v2)--(v5);
+                \draw[bfstreeedge] (v3)--(v6);
+                \draw[bfstreeedge] (v4)--(v7);
+            }
+            {
+                \node[bfsvertex, fill=bfsclosed]        at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsclosed]        at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsclosed]        at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsclosed]        at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsclosed]        at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsclosed]        at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsclosed]        at (v7) {$v_7$};
+            }
+    \end{frame}
+
+    \subsection{BFS strom}
 
     \section{Zdroje}
 
