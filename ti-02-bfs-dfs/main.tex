@@ -18,14 +18,27 @@
 
     \begin{frame}{Prohledávání do šířky}
         \begin{itemize}
-            \item Základním stavebním kamenem všech grafových algoritmů je určitý způsob procházení grafu od zadaného počátečního vrcholu.
-            \item My se zaměříme na dvojici nejjednodušších, a to
+            \visible<2->{\item Základním stavebním kamenem všech grafových algoritmů je určitý způsob procházení grafu od zadaného počátečního vrcholu.}
+            \visible<3->{\item My se zaměříme na dvojici nejjednodušších:}
             \begin{itemize}
-                \item \markdarkred{Prohledávání do šířky}, zkráceně \textbf{BFS} (Breadth-first search) a
-                \item \markdarkred{Prohledávání do hloubky}, zkráceně \text{DFS} (Depth-first search).
+                \visible<4->{\item \markdarkred{Prohledávání do šířky}, zkráceně \textbf{BFS} (Breadth-first search) a}
+                \visible<5->{\item \markdarkred{Prohledávání do hloubky}, zkráceně \textbf{DFS} (Depth-first search).}
             \end{itemize}
         \end{itemize}
     \end{frame}
+
+    \begin{frame}{Postup algoritmu BFS}
+        \begin{enumerate}
+            \visible<2->{\item Na vstupu máme graf $G=(V,E)$ a libovolný počáteční vrchol $v_0\in V$.}
+            \visible<3->{\item Všechny vrcholy z $V$ označíme jako \textbf{neprozkoumané}.}
+            \visible<4->{\item Vrchol $v_0$ označíme jako \textbf{otevřený}.}
+            \visible<5->{\item Prozkoumáme sousedy otevřených vrcholů (z počátku tedy sousedy $v_0$) a označíme je jako \textbf{otevřené}.}
+            \visible<6->{\item Vrcholy, u nichž jsme prozkoumávali sousedy, označíme jako \textbf{uzavřené}}
+            \visible<7->{\item Vrátíme se ke 4. kroku a postup opakujeme.}
+        \end{enumerate}
+    \end{frame}
+
+    
 
     \section{Zdroje}
 
