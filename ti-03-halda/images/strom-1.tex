@@ -1,0 +1,21 @@
+\begin{tikzpicture}[scale=1]
+
+\node[vertex,fill=white] (V1)   at (0,4) {$u_1$};
+
+\node[vertex,fill=white] (V2)   at (-2,2) {$u_2$};
+\node[vertex,fill=white] (V3)   at (2,2) {$u_3$};
+
+\node[vertex,fill=white] (V4)   at (-3,0) {$u_4$};
+\node[vertex,fill=white] (V5)   at (-1,0) {$u_5$};
+\node[vertex,fill=white] (V6)   at (1,0) {$u_6$};
+\node[vertex,fill=white] (V7)   at (3,0) {$u_7$};
+
+\draw[edge] (V1) -- (V2);
+\draw[edge] (V1) -- (V3);
+
+\draw[edge] (V2) -- (V4);
+\draw[edge] (V2) -- (V5);
+\draw[edge] (V3) -- (V6);
+\draw[edge] (V3) -- (V7);
+
+\end{tikzpicture}

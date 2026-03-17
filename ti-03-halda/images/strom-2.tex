@@ -1,0 +1,94 @@
+\begin{tikzpicture}[scale=1.2]
+
+% střed
+\node[vertex,fill=white] (c) at (0,0) {$v_1$};
+
+% směr 90°
+\node[vertex,fill=white] (a1) at (90:0.9) {$v_2$};
+\node[vertex,fill=white] (b1) at (90:1.8) {$v_3$};
+\node[vertex,fill=white] (l11) at ($(b1)+(90:1)$) {$v_3$};
+\node[vertex,fill=white] (l12) at ($(b1)+(130:1)$) {$v_4$};
+\node[vertex,fill=white] (l13) at ($(b1)+(50:1)$) {$v_5$};
+
+% směr 30°
+\node[vertex,fill=white] (a2) at (30:0.9) {$v_6$};
+\node[vertex,fill=white] (b2) at (30:1.8) {$v_7$};
+\node[vertex,fill=white] (l21) at ($(b2)+(30:1)$) {$v_8$};
+\node[vertex,fill=white] (l22) at ($(b2)+(70:1)$) {$v_9$};
+\node[vertex,fill=white] (l23) at ($(b2)+(-10:1)$) {$v_{10}$};
+
+% směr -30°
+\node[vertex,fill=white] (a3) at (-30:0.9) {$v_{11}$};
+\node[vertex,fill=white] (b3) at (-30:1.8) {$v_{12}$};
+\node[vertex,fill=white] (l31) at ($(b3)+(-30:1)$) {$v_{13}$};
+\node[vertex,fill=white] (l32) at ($(b3)+(10:1)$) {$v_{14}$};
+\node[vertex,fill=white] (l33) at ($(b3)+(-70:1)$) {$v_{15}$};
+
+% směr -90°
+\node[vertex,fill=white] (a4) at (-90:0.9) {$v_{16}$};
+\node[vertex,fill=white] (b4) at (-90:1.8) {$v_{17}$};
+\node[vertex,fill=white] (l41) at ($(b4)+(-90:1)$) {$v_{18}$};
+\node[vertex,fill=white] (l42) at ($(b4)+(-50:1)$) {$v_{19}$};
+\node[vertex,fill=white] (l43) at ($(b4)+(-130:1)$) {$v_{20}$};
+
+% směr -150°
+\node[vertex,fill=white] (a5) at (-150:0.9) {$v_{20}$};
+\node[vertex,fill=white] (b5) at (-150:1.8) {$v_{21}$};
+\node[vertex,fill=white] (l51) at ($(b5)+(-150:1)$) {$v_{22}$};
+\node[vertex,fill=white] (l52) at ($(b5)+(-110:1)$) {$v_{23}$};
+\node[vertex,fill=white] (l53) at ($(b5)+(-190:1)$) {$v_{24}$};
+
+% směr 150°
+\node[vertex,fill=white] (a6) at (150:0.9) {$v_{25}$};
+\node[vertex,fill=white] (b6) at (150:1.8) {$v_{26}$};
+\node[vertex,fill=white] (l61) at ($(b6)+(150:1)$) {$v_{27}$};
+\node[vertex,fill=white] (l62) at ($(b6)+(190:1)$) {$v_{28}$};
+\node[vertex,fill=white] (l63) at ($(b6)+(110:1)$) {$v_{29}$};
+
+% hrany od středu
+\draw[edge] (c) -- (a1);
+\draw[edge] (c) -- (a2);
+\draw[edge] (c) -- (a3);
+\draw[edge] (c) -- (a4);
+\draw[edge] (c) -- (a5);
+\draw[edge] (c) -- (a6);
+
+% hrany na hlavních ramenech
+\draw[edge] (a1) -- (b1);
+\draw[edge] (a2) -- (b2);
+\draw[edge] (a3) -- (b3);
+\draw[edge] (a4) -- (b4);
+\draw[edge] (a5) -- (b5);
+\draw[edge] (a6) -- (b6);
+
+% horní trojice
+\draw[edge] (b1) -- (l11);
+\draw[edge] (b1) -- (l12);
+\draw[edge] (b1) -- (l13);
+
+% pravá horní trojice
+\draw[edge] (b2) -- (l21);
+\draw[edge] (b2) -- (l22);
+\draw[edge] (b2) -- (l23);
+
+% pravá dolní trojice
+\draw[edge] (b3) -- (l31);
+\draw[edge] (b3) -- (l32);
+\draw[edge] (b3) -- (l33);
+
+% dolní trojice
+\draw[edge] (b4) -- (l41);
+\draw[edge] (b4) -- (l42);
+\draw[edge] (b4) -- (l43);
+
+% levá dolní trojice
+\draw[edge] (b5) -- (l51);
+\draw[edge] (b5) -- (l52);
+\draw[edge] (b5) -- (l53);
+
+% levá horní trojice
+\draw[edge] (b6) -- (l61);
+\draw[edge] (b6) -- (l62);
+\draw[edge] (b6) -- (l63);
+
+\end{tikzpicture}

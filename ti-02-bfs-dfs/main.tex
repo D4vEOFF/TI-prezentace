@@ -1,0 +1,39 @@
+\documentclass[11pt,professionalfont,aspectratio=43]{beamer}
+
+% Assets
+\input{../assets/packages.tex}
+\input{../assets/theme.tex}
+\input{../assets/macros.tex}
+\input{../assets/listing.tex}
+
+\def\presentationtitle{Algoritmy BFS a DFS}
+
+\begin{document}
+
+    \input{../titlepage.tex}
+
+    \section{Prohledávání do šířky}
+
+    \titleframe{Prohledávání do šířky}
+
+    \begin{frame}{Prohledávání do šířky}
+        \begin{itemize}
+            \item Základním stavebním kamenem všech grafových algoritmů je určitý způsob procházení grafu od zadaného počátečního vrcholu.
+            \item My se zaměříme na dvojici nejjednodušších, a to
+            \begin{itemize}
+                \item \markdarkred{Prohledávání do šířky}, zkráceně \textbf{BFS} (Breadth-first search) a
+                \item \markdarkred{Prohledávání do hloubky}, zkráceně \text{DFS} (Depth-first search).
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \section{Zdroje}
+
+    \begin{frame}{Zdroje}
+        \begin{itemize}
+            \item MAREŠ, Martin a~VALLA, Tomáš. \textit{Průvodce labyrintem algoritmů.} Druhé vydání. CZ.NIC. Praha: CZ.NIC, z.s.p.o., 2022. ISBN 978-80-88168-63-8.
+            \item CORMEN, Thomas H.; LEISERSON, Charles Eric; RIVEST, Ronald L. a~STEIN, Clifford. \textit{Introduction to algorithms.} Fourth edition. Cambridge: The MIT Press, 2022. ISBN 978-0-262-04630-5.
+        \end{itemize}
+    \end{frame}
+
+\end{document}
