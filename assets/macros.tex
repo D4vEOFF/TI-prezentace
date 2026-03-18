@@ -72,6 +72,12 @@
 \newcommand{\markblue}[1]{\textcolor{lightblue}{#1}}
 \newcommand{\markdarkblue}[1]{\textcolor{darkblue}{#1}}
 
+% Math mode settings
+% \AtBeginDocument{
+%     \setlength{\abovedisplayskip}{3pt}
+%     \setlength{\belowdisplayskip}{-4pt}
+% }
+
 % Inline images
 \newcommand{\inlineimgscale}{1.1}
 
@@ -100,6 +106,11 @@
 \DeclareMathOperator{\id}{id}
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\rng}{rng}
+\renewcommand{\emptyset}{\varnothing}
+
+% DFS in and out lists
+\DeclareMathOperator{\inlist}{in}
+\DeclareMathOperator{\outlist}{out}
 
 % Complexity classes
 \DeclareMathOperator{\classP}{P}

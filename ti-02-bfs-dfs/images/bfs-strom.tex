@@ -1,0 +1,44 @@
+\begin{tikzpicture}[scale=1]
+    
+    \node[vertex] (V0) at (0,0) {$0$};
+
+    \node[vertex] (V1) at (-1,1) {$1$};
+    \node[vertex] (V2) at (0,1) {$2$};
+    \node[vertex] (V3) at (1,1) {$3$};
+
+    \node[vertex] (V4) at (-1,2) {$4$};
+    \node[vertex] (V5) at (1,2) {$5$};
+
+    \node[vertex] (V6) at (-1,-1) {$6$};
+    \node[vertex] (V7) at (0,-1) {$7$};
+    \node[vertex] (V8) at (1,-1) {$8$};
+    \node[vertex] (V9) at (2,-1) {$9$};
+
+    \node[vertex] (V10) at (-1,-2) {$10$};
+    \node[vertex] (V11) at (0,-2) {$11$};
+    \node[vertex] (V12) at (1,-2) {$12$};
+    \node[vertex] (V13) at (2,-2) {$13$};
+
+    \draw[edge,color=red] (V0) -- (V1);
+    \draw[edge,color=red] (V0) -- (V2);
+    \draw[edge,color=red] (V0) -- (V3);
+
+    \draw[edge,color=red] (V0) -- (V6);
+    \draw[edge,color=red] (V0) -- (V7);
+    \draw[edge,color=red] (V0) -- (V8);
+    \draw[edge,color=red] (V0) -- (V9);
+
+    \draw[edge,color=red] (V1) -- (V4);
+    \draw[edge,color=red] (V3) -- (V5);
+
+    \draw[edge] (V6) -- (V10);
+    \draw[edge,color=red] (V7) -- (V11);
+    \draw[edge,color=red] (V8) -- (V12);
+    \draw[edge,color=red] (V9) -- (V13);
+    \draw[edge] (V7) -- (V12);
+    \draw[edge,color=red] (V8) -- (V10);
+
+    \draw[edge] (V9) -- (V3);
+    \draw[edge] (V1) -- (V6);
+
+\end{tikzpicture}

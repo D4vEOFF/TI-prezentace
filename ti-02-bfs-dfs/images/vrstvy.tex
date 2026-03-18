@@ -1,0 +1,39 @@
+\begin{tikzpicture}[scale=1]
+    
+    \node[vertex] (V0) at (0,0) {$0$};
+
+    \node[vertex] (V1) at (2,-1) {$1$};
+    \node[vertex] (V2) at (2,0) {$2$};
+    \node[vertex] (V3) at (2,1) {$4$};
+
+    \node[vertex] (V4) at (4,-1) {$5$};
+    \node[vertex] (V5) at (4,0) {$3$};
+    \node[vertex] (V6) at (4,1) {$7$};
+
+    \node[vertex] (V7) at (6,-1) {$4$};
+
+    \draw[diredge] (V0) -- (V1);
+    \draw[diredge] (V0) -- (V2);
+    \draw[diredge] (V0) -- (V3);
+
+    \draw[diredge] (V1) -- (V2);
+    \draw[diredge] (V1) -- (V4);
+    \draw[diredge] (V2) -- (V5);
+    \draw[diredge] (V3) -- (V6);
+
+    \draw[diredge] (V4) -- (V2);
+    \draw[diredge] (V4) to[out=210,in=300,looseness=1.35] (V0);
+    \draw[diredge] (V4) -- (V7);
+
+    \draw[dashed,rounded corners=5mm,thin] (-0.5,-1.5) rectangle (0.5,1.5);
+    \draw[dashed,rounded corners=5mm,thin] (1.5,-1.5) rectangle (2.5,1.5);
+    \draw[dashed,rounded corners=5mm,thin] (3.5,-1.5) rectangle (4.5,1.5);
+    \draw[dashed,rounded corners=5mm,thin] (5.5,-1.5) rectangle (6.5,1.5);
+
+    % popisky vrstev
+    \node at (0.0,2.0) {$V_0$};
+    \node at (2.0,2.0) {$V_1$};
+    \node at (4.0,2.0) {$V_2$};
+    \node at (6.0,2.0) {$V_3$};
+
+\end{tikzpicture}

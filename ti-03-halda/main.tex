@@ -12,64 +12,19 @@
 
     \input{../titlepage.tex}
 
-    \section{Stromy}
+    \section{Binární stromy}
 
-    \titleframe{Stromy}
-
-    \subsection{Souvislý graf a strom}
-
-    \begin{frame}{Souvislý graf a strom}
-        \visible<2->{\begin{defblock}[Souvislý graf]
-            Neorientovaný graf $G$ nazveme \markdarkred{souvislým}, pokud mezi každou jeho dvojicí vrcholů $u,v\in V$ existuje cesta.
-        \end{defblock}}
-        \visible<3->{\begin{defblock}[Strom]
-            Graf $T=(V,E)$ nazveme \markdarkred{stromem}, pokud je \textbf{souvislý} a \textbf{neobsahuje kružnici}.
-        \end{defblock}}
-    \end{frame}
-
-    \begin{frame}{Stromy}{Příklad \textrm{I}}
-        \begin{figure}
-            \centering
-            \input{images/strom-1.tex}
-        \end{figure}
-    \end{frame}
-
-    \begin{frame}{Stromy}{Příklad \textrm{II}}
-        \begin{figure}
-            \centering
-            \input{images/strom-2.tex}
-        \end{figure}
-    \end{frame}
-
-    \begin{frame}{Stromy}{Příklad grafu, který není stromem \textrm{I}}
-        \begin{figure}
-            \centering
-            \input{images/nestrom-1.tex}
-        \end{figure}
-    \end{frame}
-
-    \subsection{Charakterizace stromů}
-
-    \begin{frame}{Charakterizace stromů}
-        \begin{thmblock}[Charakterizace stromů]
-            Nechť $G=(V,E)$ je graf. Pak jsou následující výroky ekvivalentní:
-            \begin{enumerate}
-                \item $G$ je strom.
-                \item Pro každou dvojici vrcholů $u,v\in V$ existuje \textbf{právě jedna} cesta z $u$ do $v$.
-                \item Graf $G$ je souvislý a odebráním kterékoliv hrany z grafu $G$ vznikne nesouvislý graf.
-                \item Graf $G$ neobsahuje kružnici a přidáním jakékoliv hrany mezi libovolnou dvojicí vrcholů vznikne v grafu $G$ kružnice.
-                \item Graf $G$ je souvislý a platí $|E|=|V|-1$.
-            \end{enumerate}
-        \end{thmblock}
-    \end{frame}
-
-    \subsection{Binární stromy}
+    \titleframe{Binární stromy}
 
     \begin{frame}{Binární stromy}
         \begin{defblock}[Binární strom]
             Strom $T$ nazveme \markdarkred{binární}, pokud je \textbf{zakořeněný} a každý vrchol (rodič) má maximálně \textbf{dva syny}, u nichž rozlišujeme, který je levý a který pravý.
         \end{defblock}
     \end{frame}
+
+    \section{Binární halda}
+
+    \titleframe{Binární halda}
 
     \section{Zdroje}
 

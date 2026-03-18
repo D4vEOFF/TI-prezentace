@@ -8,6 +8,7 @@
 
 % BFS simulation
 \input{bfs.tex}
+\input{dfs.tex}
 
 \def\presentationtitle{Algoritmy BFS a DFS}
 
@@ -19,7 +20,7 @@
 
     \titleframe{Prohledávání do šířky}
 
-    \subsection{Grafové algoritmy a příklad}
+    \subsection{Grafové algoritmy}
 
     \begin{frame}{Prohledávání do šířky}
         \begin{itemize}
@@ -32,13 +33,15 @@
         \end{itemize}
     \end{frame}
 
+    \subsection{Postup BFS a příklad}
+
     \begin{frame}{Postup algoritmu BFS}
         \begin{enumerate}
             \visible<2->{\item Na vstupu máme graf $G=(V,E)$ a libovolný počáteční vrchol $v_0\in V$.}
             \visible<3->{\item Všechny vrcholy z $V$ označíme jako \textbf{neprozkoumané}.}
             \visible<4->{\item Vrchol $v_0$ označíme jako \textbf{otevřený}.}
             \visible<5->{\item Prozkoumáme sousedy otevřených vrcholů (z počátku tedy sousedy $v_0$) a označíme je jako \textbf{otevřené}.}
-            \visible<6->{\item Vrcholy, u nichž jsme prozkoumávali sousedy, označíme jako \textbf{uzavřené}}
+            \visible<6->{\item Vrcholy, u nichž jsme prozkoumávali sousedy, označíme jako \textbf{uzavřené}.}
             \visible<7->{\item Vrátíme se ke 4. kroku a postup opakujeme.}
         \end{enumerate}
     \end{frame}
@@ -221,7 +224,659 @@
             }
     \end{frame}
 
-    \subsection{BFS strom}
+    \subsection{Pseudokód BFS}
+
+    \begin{frame}{Pseudokód BFS}
+        \begin{center}
+            \begin{minipage}{0.9\textwidth}
+                \begin{algorithm}[H]
+                    \caption{BFS (prohledávání do šířky)}
+                    \KwIn{Graf $G=(V,E)$ a~počáteční vrchol $v_0\in V$}
+                    % \tcp{Inicializace}
+                    \ForEach{\textup{vrchol $v\in V$}}{
+                        $\operatorname{stav}(v)\gets\textit{nenalezený}$\\
+                        $D(v)\gets\infty$
+                    }
+                    $\operatorname{stav}(v_0)\gets\textit{otevřený},D(v_0)\gets 0$\\
+                    Založ frontu $Q$ a~přidej do ní vrchol $v_0$\\
+                    \While{\textup{fronta $Q$ je neprázdná}}{
+                        Odeber první vrtchol ve frontě $Q$ a označ jej $v$\\
+                        % \tcp{Prozkomáváme všechny dosud neobjevené sousedy}
+                        \ForEach{\textup{sousední vrchol $w$ vrcholu $v$}}{
+                            \If{$\operatorname{stav}(w)=\textit{nenalezený}$}{
+                                $\operatorname{stav}(w)\gets\textit{otevřený}$\\
+                                $D(w)\gets D(v)+1$\\
+                                Přidej $w$ do fronty $Q$
+                            }
+                        }
+                        $\operatorname{stav}(v)\gets\textit{uzavřený}$
+                    }
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+    \end{frame}
+
+    \subsection{Vrstvy a vzdálenosti}
+
+    \begin{frame}{Rozdělení vrcholů do vrstev}
+        \begin{itemize}
+            \visible<2->{\item BFS prochází vrcholy "po vrstvách"}
+            \visible<3->{\begin{itemize}
+                \item Nejdříve zpracuje počáteční vrchol.
+                \item Pak zpracuje jeho sousedy.
+                \item Pak sousedy jeho sousedů atd.
+            \end{itemize}}
+            \visible<4->{\item Tzn. kdykoliv uzavíráme vrtchol ve vrstvě $V_k$, pak jeho neprozkoumané sousedy umístíme do vrstvy $V_{k+1}$.}
+            \visible<5->{\begin{figure}
+                \centering
+                \input{images/vrstvy.tex}
+            \end{figure}}
+            \visible<6->{\item Pro libovolný vrchol $v$ ve vrstvě $V_k$ tedy platí, že $D(v)=k$.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Pole vzdáleností $D$}
+        \visible<2->{\begin{propblock}
+            Nechť je dán graf $G=(V,E)$, počáteční vrchol $v_0\in V$ a libovolný vrchol $v\in V$. Pak na konci výpočtu BFS platí $D(v)=d(v,v_0)$, nebo-li $D(v)$ odpovídá vzdálenosti vrcholu $v$ od počátečního vrcholu $v_0$.
+        \end{propblock}}
+        \visible<3->{Mějme libovolný vrchol $v$.}
+        \begin{itemize}
+            \visible<4->{\item Pokud je vrchol $v$ nedosažitelný z vrcholu $v_0$, pak $D(v)=d(v,v_0)=\infty$.}
+            \visible<5->{\item Pokud je $v$ dosažitelný, pak si rozdělíme zdůvodnění na dvě části:
+            \[\overbrace{D(v)\geqslant d(v,v_0)}^{\text{1. část}}\quad\text{a}\quad\underbrace{D(v)\leqslant d(v,v_0)}_\text{2. část}\]}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Zdůvodnění $D(v)\geqslant d(v,v_0)$}
+        \begin{itemize}
+            \visible<2->{\item Pokud je $v$ dosažitelný, algoritmus BFS jej musel během výpočtu nalézt.}
+            \visible<3->{\item $\implies$ $v$ musel zařazený do nějaké vrstvy $V_k$.}
+            \visible<4->{\item $\implies D(v)=k$.}
+            \visible<5->{\item $\implies$ Do vrcholu $v$ musí existovat nějaká cesty délky $k$, přičemž $d(v,v_0)$ je délka nekratší z nich.}
+            \visible<6->{\item $\implies D(v)=k\geqslant d(v,v_0)$.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Zdůvodnění $D(v)\leqslant d(v,v_0)$}
+        \begin{itemize}
+            \visible<2->{\item Předpokládejme pro spor, že existují nějaké \emph{špatné} vrcholy, pro které platí $D(u)>d(u,v_0)$.}
+            \visible<3->{\item Vybereme si \textbf{z nich} takový vrchol $s$, jehož skutečná vzdálenost $d(s,v_0)$ je nejmenší.}
+            \visible<3->{\item Tento vrchol musel algoritmus BFS objevit (otevřít) přes nějakého předchůdce, označme jej $p$.}
+            \visible<4->{\item Protože
+            \[d(p,v_0)=d(s,v_0)-1<d(s,v_0),\]
+            pak $p$ musí být \emph{dobrý} vrchol (vzhledem k volbě vrcholu $s$) $\implies D(p)=d(p,v_0)$}
+            \visible<5->{\item Vrchol $s$ musel být objeven jako následník $p$ a musel tedy padnout do vrstvy
+            \[D(s)=d(p,v_0)+1\]
+            a tedy $D(s)=d(s,v_0)$.}
+            \visible<6->{\item To je spor, neboť jsme předpokládali. že $D(s)>d(s,v_0)$.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Závěr tvrzení}
+        \visible<2->{Znázornění situace v důkazu
+        \begin{figure}
+            \centering
+            \input{images/dukaz-lemmatu.tex}
+        \end{figure}}
+        \visible<3->{Celkově jsme zdůvodnili dvě nerovnosti:
+        \[D(v)\geqslant d(v,v_0)\quad\text{a}\quad D(v)\leqslant d(v,v_0),\]
+        z čehož již plyne $D(v)=d(v,v_0)$, což jsme chtěli.}
+    \end{frame}
+
+    \subsection{Strom nejkratších cest}
+
+    \begin{frame}{Strom nejkratších cest}
+        \begin{minipage}{0.5\textwidth}
+            \begin{itemize}
+                \visible<2->{\item Průchodem algoritmu BFS vzniká tzv. \markdarkred{strom nejkratších cest}.}
+                \visible<3->{\begin{timportantframe}[\textwidth]
+                    Již víme, že hodnota $D(v)$ odpovídá délce nejkratší cesty z $v_0$ do $v$.
+                \end{timportantframe}}
+                \visible<5->{\item otevřením nového vrcholu vznikne nová hrana přidaná do tohoto stromu.}
+                \visible<6->{\item Protože uzavřené vrcholy již znovu neotvíráme, nemůže nám vzniknout takovém grafu kružnice.}
+            \end{itemize}
+        \end{minipage}
+        \qquad
+        \begin{minipage}{0.45\textwidth}
+            \visible<4->{\begin{figure}
+                \centering
+                \input{images/bfs-strom.tex}
+            \end{figure}}
+        \end{minipage}
+    \end{frame}
+
+    \subsection{Časová a prostorová složitost BFS}
+
+    \begin{frame}{Časová a prostorová složitost BFS}
+        \begin{itemize}
+            \visible<2->{\item Předpokládejme, že graf reprezentujeme pomocí seznamů sousedů.}
+            \visible<3->{\item Dále budeme značit $n=|V|$ a $m=|E|$.}
+        \end{itemize}
+        \visible<4->{\begin{propblock}
+            Algoritmus BFS doběhne v čase $\bigO(n+m)$ a spotřebuje paměť $\bigO(n+m)$.
+        \end{propblock}}
+        \begin{itemize}
+            \visible<5->{\item Inicializace algoritmu trvá $n$-kroků.}
+            \visible<6->{\item Každý vrchol otevřene a uzavřeme nejvýše jednou $\implies$ vnější cyklus proběhne maximálně $n$-krát.}
+            \visible<7->{\begin{itemize}
+                \item V každé iteraci spotřebuje konstantní čas na svou režii a dále konstantní čas na každého následníka.
+            \end{itemize}}
+            \visible<8->{\item Tedy celkově
+            \[\bigO\left(n+\sum_{i=1}^{n}\deg{v_i}\right)=\bigO(n+m),\]
+            kde $v_i\in V$.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Časová a prostorová složitost BFS}
+        \begin{itemize}
+            \visible<2->{\item Protože využíváme seznam sousedů pro reprezentaci grafu, tak určitě spotřebujeme alespoň $\bigO(n+m)$ paměti.}
+            \visible<3->{\item Zároveň spotřebujeme lineárně dlouhý prostor pro \textbf{uchování stavů vrcholů} a \textbf{seznam vzdáleností}.}
+            \visible<4->{\item Celkově spotřebujme
+            \[\bigO(\overbrace{n}^\text{stavy}+\underbrace{n}_\text{seznam $D$}+\overbrace{n+m}^\text{seznamy sousedů})=\bigO(3n+m)=\bigO(n+m)\]}
+        \end{itemize}
+    \end{frame}
+
+    \section{Prohledávání do hloubky}
+
+    \titleframe{Prohledávání do hloubky}
+
+    \subsection{Postup BFS a příklad}
+
+    \begin{frame}{Prohledávání do hloubky}
+        \begin{itemize}
+            \visible<2->{\item Postup algoritmu bude podobný jako u BFS, ale vrcholy budeme zpracovávat rekurzivně.}
+            \visible<4->{\item Později uvidíme, že časová i prostorová složitost vyjde stejně.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Postup algoritmu DFS}
+        \begin{enumerate}
+            \visible<2->{\item Na vstupu máme graf $G=(V,E)$ a libovolný počáteční vrchol $v_0\in V$.}
+            \visible<3->{\item Všechny vrcholy z $V$ označíme jako \textbf{neprozkoumané}.}
+            \visible<4->{\item Na vrchol $v_0$ aplikujeme proceduru níže}
+        \end{enumerate}
+        \visible<5->{\markdarkred{Procedura} (vstupní vrchol $v$)}
+        \begin{enumerate}
+            \visible<6->{\item Vrchol $v$ označíme jako \textbf{otevřený}.}
+            \visible<7->{\item Na každého \textbf{nenalezeného} souseda $w$ vrcholu $v$ aplikujeme \textbf{rekurzivně} stejnou proceduru.}
+            \visible<8->{\item Vrchol $v$ označíme jako \textbf{uzavřený}.}
+        \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- inicializace}
+        \centering
+        \DFSstate
+            {Krok 0: start v~$v_1$}
+            {$[\,v_1\,]$}
+            {}
+            {
+                \node[bfsvertex, fill=bfsopen]         at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- po objevení $v_2$}
+        \centering
+        \DFSstate
+            {Krok 1: z~$v_1$ jdeme do $v_2$}
+            {$[\,v_1,\,v_2\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+            }
+            {
+                \node[bfsvertex, fill=bfsopen]         at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsopen]         at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- po objevení $v_4$}
+        \centering
+        \DFSstate
+            {Krok 2: z~$v_2$ jdeme do $v_4$}
+            {$[\,v_1,\,v_2,\,v_4\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v2)--(v4);
+            }
+            {
+                \node[bfsvertex, fill=bfsopen]         at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsopen]         at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsopen]         at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- po objevení $v_7$}
+        \centering
+        \DFSstate
+            {Krok 3: z~$v_4$ jdeme do $v_7$}
+            {$[\,v_1,\,v_2,\,v_4,\,v_7\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v4)--(v7);
+            }
+            {
+                \node[bfsvertex, fill=bfsopen]         at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsopen]         at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsopen]         at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsopen]         at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- po objevení $v_5$}
+        \centering
+        \DFSstate
+            {Krok 4: z~$v_7$ jdeme do $v_5$}
+            {$[\,v_1,\,v_2,\,v_4,\,v_7,\,v_5\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v4)--(v7);
+                \draw[bfstreeedge] (v5)--(v7);
+            }
+            {
+                \node[bfsvertex, fill=bfsopen]         at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsopen]         at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsopen]         at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsopen]         at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsopen]         at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- po objevení $v_3$}
+        \centering
+        \DFSstate
+            {Krok 5: z~$v_5$ jdeme do $v_3$}
+            {$[\,v_1,\,v_2,\,v_4,\,v_7,\,v_5,\,v_3\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v4)--(v7);
+                \draw[bfstreeedge] (v5)--(v7);
+                \draw[bfstreeedge] (v3)--(v5);
+            }
+            {
+                \node[bfsvertex, fill=bfsopen]         at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsopen]         at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsopen]         at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsopen]         at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsopen]         at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsopen]         at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- po objevení $v_6$}
+        \centering
+        \DFSstate
+            {Krok 6: z~$v_3$ jdeme do $v_6$}
+            {$[\,v_1,\,v_2,\,v_4,\,v_7,\,v_5,\,v_3,\,v_6\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v4)--(v7);
+                \draw[bfstreeedge] (v5)--(v7);
+                \draw[bfstreeedge] (v3)--(v5);
+                \draw[bfstreeedge] (v3)--(v6);
+            }
+            {
+                \node[bfsvertex, fill=bfsopen]         at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsopen]         at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsopen]         at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsopen]         at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsopen]         at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsopen]         at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsopen]         at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsundiscovered] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- po objevení $v_8$}
+        \centering
+        \DFSstate
+            {Krok 7: z~$v_6$ jdeme do $v_8$}
+            {$[\,v_1,\,v_2,\,v_4,\,v_7,\,v_5,\,v_3,\,v_6,\,v_8\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v4)--(v7);
+                \draw[bfstreeedge] (v5)--(v7);
+                \draw[bfstreeedge] (v3)--(v5);
+                \draw[bfstreeedge] (v3)--(v6);
+                \draw[bfstreeedge] (v6)--(v8);
+            }
+            {
+                \node[bfsvertex, fill=bfsopen] at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsopen] at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsopen] at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsopen] at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsopen] at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsopen] at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsopen] at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsopen] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- uzavření $v_8$}
+        \centering
+        \DFSstate
+            {Krok 8: vracíme se z~$v_8$}
+            {$[\,v_1,\,v_2,\,v_4,\,v_7,\,v_5,\,v_3,\,v_6\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v4)--(v7);
+                \draw[bfstreeedge] (v5)--(v7);
+                \draw[bfstreeedge] (v3)--(v5);
+                \draw[bfstreeedge] (v3)--(v6);
+                \draw[bfstreeedge] (v6)--(v8);
+            }
+            {
+                \node[bfsvertex, fill=bfsopen]   at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsopen]   at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsopen]   at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsopen]   at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsopen]   at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsopen]   at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsopen]   at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsclosed] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- uzavření $v_6$}
+        \centering
+        \DFSstate
+            {Krok 9: vracíme se z~$v_6$}
+            {$[\,v_1,\,v_2,\,v_4,\,v_7,\,v_5,\,v_3\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v4)--(v7);
+                \draw[bfstreeedge] (v5)--(v7);
+                \draw[bfstreeedge] (v3)--(v5);
+                \draw[bfstreeedge] (v3)--(v6);
+                \draw[bfstreeedge] (v6)--(v8);
+            }
+            {
+                \node[bfsvertex, fill=bfsopen]   at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsopen]   at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsopen]   at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsopen]   at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsopen]   at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsclosed] at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsopen]   at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsclosed] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- uzavření $v_3$}
+        \centering
+        \DFSstate
+            {Krok 10: vracíme se z~$v_3$}
+            {$[\,v_1,\,v_2,\,v_4,\,v_7,\,v_5\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v4)--(v7);
+                \draw[bfstreeedge] (v5)--(v7);
+                \draw[bfstreeedge] (v3)--(v5);
+                \draw[bfstreeedge] (v3)--(v6);
+                \draw[bfstreeedge] (v6)--(v8);
+            }
+            {
+                \node[bfsvertex, fill=bfsopen]   at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsopen]   at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsclosed] at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsopen]   at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsopen]   at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsclosed] at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsopen]   at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsclosed] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- uzavření $v_5$}
+        \centering
+        \DFSstate
+            {Krok 11: vracíme se z~$v_5$}
+            {$[\,v_1,\,v_2,\,v_4,\,v_7\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v4)--(v7);
+                \draw[bfstreeedge] (v5)--(v7);
+                \draw[bfstreeedge] (v3)--(v5);
+                \draw[bfstreeedge] (v3)--(v6);
+                \draw[bfstreeedge] (v6)--(v8);
+            }
+            {
+                \node[bfsvertex, fill=bfsopen]   at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsopen]   at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsclosed] at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsopen]   at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsclosed] at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsclosed] at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsopen]   at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsclosed] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- uzavření $v_7$}
+        \centering
+        \DFSstate
+            {Krok 12: vracíme se z~$v_7$}
+            {$[\,v_1,\,v_2,\,v_4\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v4)--(v7);
+                \draw[bfstreeedge] (v5)--(v7);
+                \draw[bfstreeedge] (v3)--(v5);
+                \draw[bfstreeedge] (v3)--(v6);
+                \draw[bfstreeedge] (v6)--(v8);
+            }
+            {
+                \node[bfsvertex, fill=bfsopen]   at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsopen]   at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsclosed] at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsopen]   at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsclosed] at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsclosed] at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsclosed] at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsclosed] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- uzavření $v_4$}
+        \centering
+        \DFSstate
+            {Krok 13: vracíme se z~$v_4$}
+            {$[\,v_1,\,v_2\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v4)--(v7);
+                \draw[bfstreeedge] (v5)--(v7);
+                \draw[bfstreeedge] (v3)--(v5);
+                \draw[bfstreeedge] (v3)--(v6);
+                \draw[bfstreeedge] (v6)--(v8);
+            }
+            {
+                \node[bfsvertex, fill=bfsopen]   at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsopen]   at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsclosed] at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsclosed] at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsclosed] at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsclosed] at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsclosed] at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsclosed] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- uzavření $v_2$}
+        \centering
+        \DFSstate
+            {Krok 14: vracíme se z~$v_2$}
+            {$[\,v_1\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v4)--(v7);
+                \draw[bfstreeedge] (v5)--(v7);
+                \draw[bfstreeedge] (v3)--(v5);
+                \draw[bfstreeedge] (v3)--(v6);
+                \draw[bfstreeedge] (v6)--(v8);
+            }
+            {
+                \node[bfsvertex, fill=bfsopen]   at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsclosed] at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsclosed] at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsclosed] at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsclosed] at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsclosed] at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsclosed] at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsclosed] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- konec}
+        \centering
+        \DFSstate
+            {Krok 15: uzavřeme $v_1$}
+            {$[\,\,]$}
+            {
+                \draw[bfstreeedge] (v1)--(v2);
+                \draw[bfstreeedge] (v2)--(v4);
+                \draw[bfstreeedge] (v4)--(v7);
+                \draw[bfstreeedge] (v5)--(v7);
+                \draw[bfstreeedge] (v3)--(v5);
+                \draw[bfstreeedge] (v3)--(v6);
+                \draw[bfstreeedge] (v6)--(v8);
+            }
+            {
+                \node[bfsvertex, fill=bfsclosed] at (v1) {$v_1$};
+                \node[bfsvertex, fill=bfsclosed] at (v2) {$v_2$};
+                \node[bfsvertex, fill=bfsclosed] at (v3) {$v_3$};
+                \node[bfsvertex, fill=bfsclosed] at (v4) {$v_4$};
+                \node[bfsvertex, fill=bfsclosed] at (v5) {$v_5$};
+                \node[bfsvertex, fill=bfsclosed] at (v6) {$v_6$};
+                \node[bfsvertex, fill=bfsclosed] at (v7) {$v_7$};
+                \node[bfsvertex, fill=bfsclosed] at (v8) {$v_8$};
+            }
+    \end{frame}
+
+    \subsection{Pseudokód DFS}
+
+    \begin{frame}{Pseudokód DFS}
+        \begin{center}
+            \begin{minipage}{0.9\textwidth}
+                \begin{algorithm}[H]
+                    \caption{DFS (prohledávání do hloubky)}
+                    \KwIn{Graf $G=(V,E)$ a~počáteční vrchol $v_0\in V$}
+                    \ForEach{\textup{vrchol $v\in v$}}{
+                        $\operatorname{stav}(v)\gets\textit{nenalezený}$\\
+                        $\inlist(v),\outlist(v)\gets\textit{nedefinováno}$
+                    }
+                    $T\gets 0$\\
+                    Zavolej DFS2($v_0$)\\
+                    \Function{\textup{DFS2(vrchol $v\in V$)}}{
+                        $\operatorname{stav}(v)\gets\textit{otevřený}$\\
+                        $T\gets T+1,\,\inlist(v)\gets T$\\
+                        \ForEach{\textup{sousední vrchol $w$ vrcholu $v$}}{
+                            \If{$\operatorname{stav}(w)=\textit{nenalezený}$}{
+                                Zavolej DFS2($w$)
+                            }
+                        }
+                        $\operatorname{stav}(v)\gets\textit{uzavřený}$\\
+                        $T\gets T+1,\,\outlist(v)\gets T$
+                    }
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+    \end{frame}
+
+    \subsection{Časová a prostorová složitost DFS}
+
+    \begin{frame}{Časová a prostorová složitost DFS}
+        \visible<2->{Opět předpokládejme, že máme zadaný $G=(V,E)$ pomocí seznamu sousedů.}
+        \visible<3->{\begin{propblock}
+            Algoritmus DFS doběhne v čase $\bigO(n+m)$ a spotřebuje paměť $\bigO(n+m)$.
+        \end{propblock}}
+        \begin{itemize}
+            \visible<4->{\item Časová složitost plyne zcela triviálně ze skutečnosti, že DFS prochází vrcholy grafu pouze v jiném pořadí oproti BFS.}
+            \visible<5->{\item Dále spotřebujeme $\bigO(n+m)$ paměti na reprezentaci grafu.}
+            \visible<6->{\item Dále budeme potřebovat ještě lineární množiství paměti na zásobník rekurzivního volání funkce DFS2 a na pomocné seznamy (stavy vrcolů, seznamy $\inlist$ a $\outlist$).}
+            \visible<7->{\[\bigO(\underbrace{2n}_\text{seznamy $\inlist$ a $\outlist$}+\overbrace{n}^{\text{zásobník}}+\underbrace{n}_\text{stavy}+\overbrace{n+m}^{\text{seznamy sousedů}})=\bigO(n+m).\]}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{DFS strom}
+        \visible<2->{Stejně jako v případě BFS, i při průchodu grafem pomocí DFS vzniká \textbf{strom} jako podgraf původního grafu $G$.}
+        \visible<3->{\begin{talertframe}[0.6\textwidth]
+            \begin{center}
+                \textbf{Pozor!} Nalezené cesty už nemusí být nejkratší!
+            \end{center}}
+        \end{talertframe}
+        \visible<4->{\begin{figure}
+            \centering
+            \input{images/dfs-strom.tex}
+        \end{figure}}
+    \end{frame}
+
+    \begin{frame}{Vlastnost $\inlist$ a $\outlist$}
+        \begin{propblock}
+            Nechť $G=(V,E)$ je graf a $u,v\in V$. Po průchodu grafu $G$ pomocí DFS nastane vždy jedna z možností:
+            \begin{enumerate}
+                \item $\langle \inlist(u),\outlist(u)\rangle\cap\langle \inlist(v),\outlist(v)\rangle = \emptyset$,
+                \item $\langle \inlist(u),\outlist(u)\rangle\subseteq\langle \inlist(v),\outlist(v)\rangle$,
+                \item $\langle \inlist(v),\outlist(v)\rangle\subseteq\langle \inlist(u),\outlist(u)\rangle$.
+            \end{enumerate}
+        \end{propblock}
+        Tvrzení v podstatě popisuje možnou vzájemnou pozici vrcholů v DFS stromě.
+        \begin{itemize}
+            \item \markdarkred{Bod 1.} Vrcholy $u$ a $v$ náleží různým podstromům.
+            \item \markdarkred{Body 2 a 3.} Jeden z vrcholů $u,v$ náleží podstromu "druhého vrcholu".
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Případ $\langle \inlist(u),\outlist(u)\rangle\cap\langle \inlist(v),\outlist(v)\rangle = \emptyset$}
+        \begin{figure}
+            \centering
+            \input{images/u-v-disjunktni.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Případ $\langle \inlist(u),\outlist(u)\rangle\subseteq\langle \inlist(v),\outlist(v)\rangle$}
+        \begin{figure}
+            \centering
+            \input{images/u-podstrom-v.tex}
+        \end{figure}
+    \end{frame}
 
     \section{Zdroje}
 

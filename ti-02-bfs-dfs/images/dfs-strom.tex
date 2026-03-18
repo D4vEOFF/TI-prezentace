@@ -1,0 +1,47 @@
+\begin{tikzpicture}[
+    x=1.4cm,
+    y=1.2cm,
+    dfstree/.style={very thick, blue}
+]
+
+    % vrcholy
+    \node[vertex] (v1)  at (0,0)    {$v_1$};
+    \node[vertex] (v2)  at (1,1.2)  {$v_2$};
+    \node[vertex] (v3)  at (1,-1.2) {$v_3$};
+    \node[vertex] (v4)  at (2,2.0)  {$v_4$};
+    \node[vertex] (v5)  at (2,0.4)  {$v_5$};
+    \node[vertex] (v6)  at (2,-1.0) {$v_6$};
+    \node[vertex] (v7)  at (3,1.5)  {$v_7$};
+    \node[vertex] (v8)  at (3,0.0)  {$v_8$};
+    \node[vertex] (v9)  at (3,-1.5) {$v_9$};
+    \node[vertex] (v10) at (4,0.4)  {$v_{10}$};
+
+    % všechny hrany grafu
+    \draw[edge] (v1) -- (v2);
+    \draw[edge] (v1) -- (v3);
+    \draw[edge] (v2) -- (v4);
+    \draw[edge] (v2) -- (v5);
+    \draw[edge] (v3) -- (v5);
+    \draw[edge] (v3) -- (v6);
+    \draw[edge] (v4) -- (v7);
+    \draw[edge] (v5) -- (v7);
+    \draw[edge] (v5) -- (v8);
+    \draw[edge] (v6) -- (v8);
+    \draw[edge] (v6) -- (v9);
+    \draw[edge] (v7) -- (v10);
+    \draw[edge] (v8) -- (v10);
+    \draw[edge] (v9) -- (v10);
+
+    % vyznačený DFS strom
+    \draw[dfstree] (v1) -- (v2);
+    \draw[dfstree] (v2) -- (v4);
+    \draw[dfstree] (v4) -- (v7);
+    \draw[dfstree] (v7) -- (v5);
+    \draw[dfstree] (v5) -- (v8);
+    \draw[dfstree] (v3) -- (v6);
+    \draw[dfstree] (v6) -- (v3);
+    \draw[dfstree] (v6) -- (v9);
+    \draw[dfstree] (v9) -- (v10);
+    \draw[dfstree] (v8) -- (v6);
+
+\end{tikzpicture}

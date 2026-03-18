@@ -1,0 +1,49 @@
+\begin{tikzpicture}[
+    level/.style={draw, dashed, rounded corners=8pt},
+    shortest/.style={diredge, blue},
+    wrongpath/.style={diredge, red!70!black},
+    goodvertex/.style={vertex, fill=green!20},
+    badvertex/.style={vertex, fill=red!15}
+]
+
+    % vrstvy
+    \node at (0,1.8) {$V_0$};
+    \node at (2,1.8) {$V_1$};
+    \node at (4,1.8) {$\cdots$};
+    \node at (6,1.8) {$V_{d(s,v_0)-1}$};
+    \node at (8,1.8) {$V_{d(s,v_0)}$};
+    \node at (10,1.8) {$V_{D(s)}$};
+
+    \draw[level] (-0.5,-1.2) rectangle (0.5,1.2);
+    \draw[level] (1.5,-1.2) rectangle (2.5,1.2);
+    \draw[level] (3.5,-1.2) rectangle (4.5,1.2);
+    \draw[level] (5.5,-1.2) rectangle (6.5,1.2);
+    \draw[level] (7.5,-1.2) rectangle (8.5,1.2);
+    \draw[level] (9.5,-1.2) rectangle (10.5,1.2);
+
+    % vrcholy na nejkratší cestě
+    \node[vertex]     (v0) at (0,0) {$v_0$};
+    \node[vertex]     (u1) at (2,0) {};
+    \node[vertex]     (u2) at (4,0) {};
+    \node[goodvertex] (p)  at (6,0) {$p$};
+    \node[badvertex]  (s)  at (8,0) {$s$};
+
+    % nejkratší cesta do s
+    \draw[shortest] (v0) -- (u1);
+    \draw[shortest] (u1) -- (u2);
+    \draw[shortest] (u2) -- (p);
+    \draw[shortest] (p)  -- (s);
+
+    % symbolické "špatné" zařazení vrcholu s
+    \node[badvertex] (s2) at (10,0) {$s$};
+    \draw[wrongpath, bend right=15] (v0) to (s2);
+
+    % komentáře
+    \node[below=10mm] at (p.south) {\small $d(p,v_0)=d(s,v_0)-1$};
+    \node[below=10mm] at (s2.south) {\small $D(s)>d(s,v_0)$};
+    % \node[above=2mm] at (s.north) {\small správná vrstva};
+    % \node[above=2mm] at (s2.north) {\small údajná vrstva};
+
+    \draw[dashed, ->] (s) to[bend left=15] node[midway, above] {\small spor} (s2);
+
+\end{tikzpicture}
