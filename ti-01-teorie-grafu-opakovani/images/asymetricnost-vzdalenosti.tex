@@ -1,0 +1,11 @@
+\begin{tikzpicture}[scale=1.2]
+
+\node[vertex] (u) at (0,0) {$u$};
+\node[vertex] (a) at (2,1.5) {$w$};
+\node[vertex] (v) at (4,0) {$v$};
+
+\draw[diredge] (u) -- (a);
+\draw[diredge] (a) -- (v);
+\draw[diredge] (v) to[bend right=25] (u);
+
+\end{tikzpicture}

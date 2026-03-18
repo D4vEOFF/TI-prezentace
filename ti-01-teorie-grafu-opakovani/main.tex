@@ -185,6 +185,32 @@
         \end{figure}}
     \end{frame}
 
+    \subsection{Vzdálenosti}
+
+    \begin{frame}{Vzdálenosti vrcholů}
+        \visible<2->{\begin{defblock}[Dosažitelný vrchol]
+            Nechť \(G=(V,E)\) je graf a \(u,v\in V\). Řekneme, že $v$ je \markdarkred{dosažitelný} z vrcholu $u$, pokud \textbf{existuje cesta} z vrcholu $u$ do vrcholu $v$.
+        \end{defblock}}
+        \visible<3->{\begin{defblock}[Vzdálenost vrcholů]
+            Nechť \(G=(V,E)\) je graf a \(u,v\in V\). \markdarkred{Vzdálenost vrcholů} \(u\) a \(v\), značená \(d(u,v)\), je \textbf{délka nejkratší cesty} z vrcholu \(u\) do vrcholu \(v\) měřená počtem jejích hran, existuje-li taková cesta. Pokud cesta z \(u\) do \(v\) neexistuje, definujeme $d(u,v)=\infty$.
+        \end{defblock}}
+        \visible<4->{Pro neorientované grafy je vzdálenost symetrická, tzn.
+        \[d(u,v)=d(v,u).\]}
+        \visible<5->{\begin{talertframe}[0.8\textwidth]
+            \begin{center}
+                Pro \textbf{orientované grafy} to samé ale nemusí platit!
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \begin{frame}{Asymetričnost vzdálenosti vrcholů}{Příklad}
+        \begin{figure}
+            \centering
+            \input{images/asymetricnost-vzdalenosti.tex}
+        \end{figure}
+        \visible<2>{\[d(u,v)=2,\qquad d(v,u)=1.\]}
+    \end{frame}
+
     \section{Reprezentace grafů}
 
     \titleframe{Reprezentace grafů}
@@ -193,7 +219,7 @@
 
     \begin{frame}{Matice}
         \visible<2->{
-            \markdarkred{Maticí} $A$ typu $n\times m$ rozumíme blokové schéma
+            \markdarkred{Maticí} $\mathbf{A}$ typu $n\times m$ rozumíme blokové schéma
             \[
             \mathbf{A}=
             \left(
