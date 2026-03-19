@@ -1,0 +1,33 @@
+\begin{tikzpicture}[scale=1]
+
+\node[vertex,fill=white] (V0)   at (3,0)        {$v_0$};
+\node[vertex,fill=white] (V1)   at (0,0)        {$v_1$};
+\node[vertex,fill=white] (V2)   at (-1,0.5)     {$v_2$};
+\node[vertex,fill=white] (V3)   at (0,-2)       {$v_3$};
+\node[vertex,fill=white] (V4)   at (-0.5,-3)    {$v_4$};
+\node[vertex,fill=white] (V5)   at (0.5,-3) {$v_5$};
+\node[vertex,fill=white] (V6)   at (3,-2) {$v_6$};
+\node[vertex,fill=white] (V7)   at (2.5,-3) {$v_7$};
+\node[vertex,fill=white] (V8)   at (3.5,-3) {$v_8$};
+\node[vertex,fill=white] (V9)   at (4.5,-1) {$v_9$};
+
+\draw[diredge] (V0) -- (V1);
+\draw[diredge] (V0) -- (V9);
+\draw[diredge] (V0) -- (V3);
+
+\draw[diredge] (V1) -- (V3);
+\draw[diredge] (V1) -- (V2);
+
+\draw[diredge] (V3) -- (V4);
+
+\draw[diredge] (V5) -- (V3);
+
+\draw[diredge] (V6) -- (V0);
+\draw[diredge] (V6) -- (V3);
+\draw[diredge] (V6) -- (V7);
+
+\draw[diredge] (V8) -- (V6);
+
+\draw[diredge] (V9) -- (V6);
+
+\end{tikzpicture}

@@ -9,6 +9,7 @@
 % BFS simulation
 \input{bfs.tex}
 \input{dfs.tex}
+\input{dfs-in-out.tex}
 
 \def\presentationtitle{Algoritmy BFS a DFS}
 
@@ -848,6 +849,8 @@
         \end{figure}}
     \end{frame}
 
+    \subsection{Seznamy $\inlist$ a $\outlist$}
+
     \begin{frame}{Vlastnost $\inlist$ a $\outlist$}
         \begin{propblock}
             Nechť $G=(V,E)$ je graf a $u,v\in V$. Po průchodu grafu $G$ pomocí DFS nastane vždy jedna z možností:
@@ -865,17 +868,659 @@
     \end{frame}
 
     \begin{frame}{Případ $\langle \inlist(u),\outlist(u)\rangle\cap\langle \inlist(v),\outlist(v)\rangle = \emptyset$}
-        \begin{figure}
+        \visible<2->{\begin{figure}
             \centering
             \input{images/u-v-disjunktni.tex}
-        \end{figure}
+        \end{figure}}
+        \visible<3->{$T_u,T_v$ jsou (pod)stromy v grafu $G$, kde po řadě vrcholy $u$ a $v$ jsou jejich kořeny.}
     \end{frame}
 
     \begin{frame}{Případ $\langle \inlist(u),\outlist(u)\rangle\subseteq\langle \inlist(v),\outlist(v)\rangle$}
-        \begin{figure}
+        \visible<2->{\begin{minipage}{0.45\textwidth}
+            \begin{figure}
+                \centering
+                \input{images/u-podstrom-v.tex}
+            \end{figure}
+        \end{minipage}
+        \qquad
+        \begin{minipage}{0.45\textwidth}
+            \begin{figure}
+                \centering
+                \input{images/v-podstrom-u.tex}
+            \end{figure}
+        \end{minipage}}
+        \visible<3->{\begin{tinfoframe}[0.9\textwidth]
+            \begin{center}
+                Obě situace jsou symetrické (vrcholy si jen prohodí roli).
+            \end{center}
+        \end{tinfoframe}}
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 1}
+    \centering
+    \DFSstateTable
+        {Krok 1: objevíme $v_0$}
+        {}
+        {
+            \dfsv{V0}{dfsopen}{v_0}
+            \dfsv{V1}{dfsundiscovered}{v_1}
+            \dfsv{V2}{dfsundiscovered}{v_2}
+            \dfsv{V3}{dfsundiscovered}{v_3}
+            \dfsv{V4}{dfsundiscovered}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsundiscovered}{v_6}
+            \dfsv{V7}{dfsundiscovered}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsundiscovered}{v_9}
+        }
+        {
+            $v_0$ & $1$ & \na\\
+            $v_1$ & \na & \na\\
+            $v_2$ & \na & \na\\
+            $v_3$ & \na & \na\\
+            $v_4$ & \na & \na\\
+            $v_5$ & \na & \na\\
+            $v_6$ & \na & \na\\
+            $v_7$ & \na & \na\\
+            $v_8$ & \na & \na\\
+            $v_9$ & \na & \na
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 2}
+    \centering
+    \DFSstateTable
+        {Krok 2: z $v_0$ jdeme do $v_1$}
+        {
+            \draw[dfstreeedge] (V0) -- (V1);
+        }
+        {
+            \dfsv{V0}{dfsopen}{v_0}
+            \dfsv{V1}{dfsopen}{v_1}
+            \dfsv{V2}{dfsundiscovered}{v_2}
+            \dfsv{V3}{dfsundiscovered}{v_3}
+            \dfsv{V4}{dfsundiscovered}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsundiscovered}{v_6}
+            \dfsv{V7}{dfsundiscovered}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsundiscovered}{v_9}
+        }
+        {
+            $v_0$ & $1$ & \na\\
+            $v_1$ & $2$ & \na\\
+            $v_2$ & \na & \na\\
+            $v_3$ & \na & \na\\
+            $v_4$ & \na & \na\\
+            $v_5$ & \na & \na\\
+            $v_6$ & \na & \na\\
+            $v_7$ & \na & \na\\
+            $v_8$ & \na & \na\\
+            $v_9$ & \na & \na
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 3}
+    \centering
+    \DFSstateTable
+        {Krok 3: z $v_1$ jdeme do $v_3$}
+        {
+            \draw[dfstreeedge] (V0) -- (V1);
+            \draw[dfstreeedge] (V1) -- (V3);
+        }
+        {
+            \dfsv{V0}{dfsopen}{v_0}
+            \dfsv{V1}{dfsopen}{v_1}
+            \dfsv{V2}{dfsundiscovered}{v_2}
+            \dfsv{V3}{dfsopen}{v_3}
+            \dfsv{V4}{dfsundiscovered}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsundiscovered}{v_6}
+            \dfsv{V7}{dfsundiscovered}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsundiscovered}{v_9}
+        }
+        {
+            $v_0$ & $1$ & \na\\
+            $v_1$ & $2$ & \na\\
+            $v_2$ & \na & \na\\
+            $v_3$ & $3$ & \na\\
+            $v_4$ & \na & \na\\
+            $v_5$ & \na & \na\\
+            $v_6$ & \na & \na\\
+            $v_7$ & \na & \na\\
+            $v_8$ & \na & \na\\
+            $v_9$ & \na & \na
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 4}
+    \centering
+    \DFSstateTable
+        {Krok 4: z $v_3$ jdeme do $v_4$}
+        {
+            \draw[dfstreeedge] (V0) -- (V1);
+            \draw[dfstreeedge] (V1) -- (V3);
+            \draw[dfstreeedge] (V3) -- (V4);
+        }
+        {
+            \dfsv{V0}{dfsopen}{v_0}
+            \dfsv{V1}{dfsopen}{v_1}
+            \dfsv{V2}{dfsundiscovered}{v_2}
+            \dfsv{V3}{dfsopen}{v_3}
+            \dfsv{V4}{dfsopen}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsundiscovered}{v_6}
+            \dfsv{V7}{dfsundiscovered}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsundiscovered}{v_9}
+        }
+        {
+            $v_0$ & $1$ & \na\\
+            $v_1$ & $2$ & \na\\
+            $v_2$ & \na & \na\\
+            $v_3$ & $3$ & \na\\
+            $v_4$ & $4$ & \na\\
+            $v_5$ & \na & \na\\
+            $v_6$ & \na & \na\\
+            $v_7$ & \na & \na\\
+            $v_8$ & \na & \na\\
+            $v_9$ & \na & \na
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 5}
+    \centering
+    \DFSstateTable
+        {Krok 5: uzavřeme $v_4$}
+        {
+            \draw[dfstreeedge] (V0) -- (V1);
+            \draw[dfstreeedge] (V1) -- (V3);
+            \draw[dfstreeedge] (V3) -- (V4);
+        }
+        {
+            \dfsv{V0}{dfsopen}{v_0}
+            \dfsv{V1}{dfsopen}{v_1}
+            \dfsv{V2}{dfsundiscovered}{v_2}
+            \dfsv{V3}{dfsopen}{v_3}
+            \dfsv{V4}{dfsclosed}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsundiscovered}{v_6}
+            \dfsv{V7}{dfsundiscovered}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsundiscovered}{v_9}
+        }
+        {
+            $v_0$ & $1$ & \na\\
+            $v_1$ & $2$ & \na\\
+            $v_2$ & \na & \na\\
+            $v_3$ & $3$ & \na\\
+            $v_4$ & $4$ & $5$\\
+            $v_5$ & \na & \na\\
+            $v_6$ & \na & \na\\
+            $v_7$ & \na & \na\\
+            $v_8$ & \na & \na\\
+            $v_9$ & \na & \na
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 6}
+    \centering
+    \DFSstateTable
+        {Krok 6: uzavřeme $v_3$}
+        {
+            \draw[dfstreeedge] (V0) -- (V1);
+            \draw[dfstreeedge] (V1) -- (V3);
+            \draw[dfstreeedge] (V3) -- (V4);
+        }
+        {
+            \dfsv{V0}{dfsopen}{v_0}
+            \dfsv{V1}{dfsopen}{v_1}
+            \dfsv{V2}{dfsundiscovered}{v_2}
+            \dfsv{V3}{dfsclosed}{v_3}
+            \dfsv{V4}{dfsclosed}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsundiscovered}{v_6}
+            \dfsv{V7}{dfsundiscovered}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsundiscovered}{v_9}
+        }
+        {
+            $v_0$ & $1$ & \na\\
+            $v_1$ & $2$ & \na\\
+            $v_2$ & \na & \na\\
+            $v_3$ & $3$ & $6$\\
+            $v_4$ & $4$ & $5$\\
+            $v_5$ & \na & \na\\
+            $v_6$ & \na & \na\\
+            $v_7$ & \na & \na\\
+            $v_8$ & \na & \na\\
+            $v_9$ & \na & \na
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 7}
+    \centering
+    \DFSstateTable
+        {Krok 7: z $v_1$ jdeme do $v_2$}
+        {
+            \draw[dfstreeedge] (V0) -- (V1);
+            \draw[dfstreeedge] (V1) -- (V3);
+            \draw[dfstreeedge] (V3) -- (V4);
+            \draw[dfstreeedge] (V1) -- (V2);
+        }
+        {
+            \dfsv{V0}{dfsopen}{v_0}
+            \dfsv{V1}{dfsopen}{v_1}
+            \dfsv{V2}{dfsopen}{v_2}
+            \dfsv{V3}{dfsclosed}{v_3}
+            \dfsv{V4}{dfsclosed}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsundiscovered}{v_6}
+            \dfsv{V7}{dfsundiscovered}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsundiscovered}{v_9}
+        }
+        {
+            $v_0$ & $1$ & \na\\
+            $v_1$ & $2$ & \na\\
+            $v_2$ & $7$ & \na\\
+            $v_3$ & $3$ & $6$\\
+            $v_4$ & $4$ & $5$\\
+            $v_5$ & \na & \na\\
+            $v_6$ & \na & \na\\
+            $v_7$ & \na & \na\\
+            $v_8$ & \na & \na\\
+            $v_9$ & \na & \na
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 8}
+    \centering
+    \DFSstateTable
+        {Krok 8: uzavřeme $v_2$}
+        {
+            \draw[dfstreeedge] (V0) -- (V1);
+            \draw[dfstreeedge] (V1) -- (V3);
+            \draw[dfstreeedge] (V3) -- (V4);
+            \draw[dfstreeedge] (V1) -- (V2);
+        }
+        {
+            \dfsv{V0}{dfsopen}{v_0}
+            \dfsv{V1}{dfsopen}{v_1}
+            \dfsv{V2}{dfsclosed}{v_2}
+            \dfsv{V3}{dfsclosed}{v_3}
+            \dfsv{V4}{dfsclosed}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsundiscovered}{v_6}
+            \dfsv{V7}{dfsundiscovered}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsundiscovered}{v_9}
+        }
+        {
+            $v_0$ & $1$ & \na\\
+            $v_1$ & $2$ & \na\\
+            $v_2$ & $7$ & $8$\\
+            $v_3$ & $3$ & $6$\\
+            $v_4$ & $4$ & $5$\\
+            $v_5$ & \na & \na\\
+            $v_6$ & \na & \na\\
+            $v_7$ & \na & \na\\
+            $v_8$ & \na & \na\\
+            $v_9$ & \na & \na
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 9}
+    \centering
+    \DFSstateTable
+        {Krok 9: uzavřeme $v_1$}
+        {
+            \draw[dfstreeedge] (V0) -- (V1);
+            \draw[dfstreeedge] (V1) -- (V3);
+            \draw[dfstreeedge] (V3) -- (V4);
+            \draw[dfstreeedge] (V1) -- (V2);
+        }
+        {
+            \dfsv{V0}{dfsopen}{v_0}
+            \dfsv{V1}{dfsclosed}{v_1}
+            \dfsv{V2}{dfsclosed}{v_2}
+            \dfsv{V3}{dfsclosed}{v_3}
+            \dfsv{V4}{dfsclosed}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsundiscovered}{v_6}
+            \dfsv{V7}{dfsundiscovered}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsundiscovered}{v_9}
+        }
+        {
+            $v_0$ & $1$ & \na\\
+            $v_1$ & $2$ & $9$\\
+            $v_2$ & $7$ & $8$\\
+            $v_3$ & $3$ & $6$\\
+            $v_4$ & $4$ & $5$\\
+            $v_5$ & \na & \na\\
+            $v_6$ & \na & \na\\
+            $v_7$ & \na & \na\\
+            $v_8$ & \na & \na\\
+            $v_9$ & \na & \na
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 10}
+    \centering
+    \DFSstateTable
+        {Krok 10: z $v_0$ jdeme do $v_9$}
+        {
+            \draw[dfstreeedge] (V0) -- (V1);
+            \draw[dfstreeedge] (V1) -- (V3);
+            \draw[dfstreeedge] (V3) -- (V4);
+            \draw[dfstreeedge] (V1) -- (V2);
+            \draw[dfstreeedge] (V0) -- (V9);
+        }
+        {
+            \dfsv{V0}{dfsopen}{v_0}
+            \dfsv{V1}{dfsclosed}{v_1}
+            \dfsv{V2}{dfsclosed}{v_2}
+            \dfsv{V3}{dfsclosed}{v_3}
+            \dfsv{V4}{dfsclosed}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsundiscovered}{v_6}
+            \dfsv{V7}{dfsundiscovered}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsopen}{v_9}
+        }
+        {
+            $v_0$ & $1$ & \na\\
+            $v_1$ & $2$ & $9$\\
+            $v_2$ & $7$ & $8$\\
+            $v_3$ & $3$ & $6$\\
+            $v_4$ & $4$ & $5$\\
+            $v_5$ & \na & \na\\
+            $v_6$ & \na & \na\\
+            $v_7$ & \na & \na\\
+            $v_8$ & \na & \na\\
+            $v_9$ & $10$ & \na
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 11}
+    \centering
+    \DFSstateTable
+        {Krok 11: z $v_9$ jdeme do $v_6$}
+        {
+            \draw[dfstreeedge] (V0) -- (V1);
+            \draw[dfstreeedge] (V1) -- (V3);
+            \draw[dfstreeedge] (V3) -- (V4);
+            \draw[dfstreeedge] (V1) -- (V2);
+            \draw[dfstreeedge] (V0) -- (V9);
+            \draw[dfstreeedge] (V9) -- (V6);
+        }
+        {
+            \dfsv{V0}{dfsopen}{v_0}
+            \dfsv{V1}{dfsclosed}{v_1}
+            \dfsv{V2}{dfsclosed}{v_2}
+            \dfsv{V3}{dfsclosed}{v_3}
+            \dfsv{V4}{dfsclosed}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsopen}{v_6}
+            \dfsv{V7}{dfsundiscovered}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsopen}{v_9}
+        }
+        {
+            $v_0$ & $1$ & \na\\
+            $v_1$ & $2$ & $9$\\
+            $v_2$ & $7$ & $8$\\
+            $v_3$ & $3$ & $6$\\
+            $v_4$ & $4$ & $5$\\
+            $v_5$ & \na & \na\\
+            $v_6$ & $11$ & \na\\
+            $v_7$ & \na & \na\\
+            $v_8$ & \na & \na\\
+            $v_9$ & $10$ & \na
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 12}
+    \centering
+    \DFSstateTable
+        {Krok 12: z $v_6$ jdeme do $v_7$}
+        {
+            \draw[dfstreeedge] (V0) -- (V1);
+            \draw[dfstreeedge] (V1) -- (V3);
+            \draw[dfstreeedge] (V3) -- (V4);
+            \draw[dfstreeedge] (V1) -- (V2);
+            \draw[dfstreeedge] (V0) -- (V9);
+            \draw[dfstreeedge] (V9) -- (V6);
+            \draw[dfstreeedge] (V6) -- (V7);
+        }
+        {
+            \dfsv{V0}{dfsopen}{v_0}
+            \dfsv{V1}{dfsclosed}{v_1}
+            \dfsv{V2}{dfsclosed}{v_2}
+            \dfsv{V3}{dfsclosed}{v_3}
+            \dfsv{V4}{dfsclosed}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsopen}{v_6}
+            \dfsv{V7}{dfsopen}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsopen}{v_9}
+        }
+        {
+            $v_0$ & $1$ & \na\\
+            $v_1$ & $2$ & $9$\\
+            $v_2$ & $7$ & $8$\\
+            $v_3$ & $3$ & $6$\\
+            $v_4$ & $4$ & $5$\\
+            $v_5$ & \na & \na\\
+            $v_6$ & $11$ & \na\\
+            $v_7$ & $12$ & \na\\
+            $v_8$ & \na & \na\\
+            $v_9$ & $10$ & \na
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 13}
+    \centering
+    \DFSstateTable
+        {Krok 13: uzavřeme $v_7$}
+        {
+            \draw[dfstreeedge] (V0) -- (V1);
+            \draw[dfstreeedge] (V1) -- (V3);
+            \draw[dfstreeedge] (V3) -- (V4);
+            \draw[dfstreeedge] (V1) -- (V2);
+            \draw[dfstreeedge] (V0) -- (V9);
+            \draw[dfstreeedge] (V9) -- (V6);
+            \draw[dfstreeedge] (V6) -- (V7);
+        }
+        {
+            \dfsv{V0}{dfsopen}{v_0}
+            \dfsv{V1}{dfsclosed}{v_1}
+            \dfsv{V2}{dfsclosed}{v_2}
+            \dfsv{V3}{dfsclosed}{v_3}
+            \dfsv{V4}{dfsclosed}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsopen}{v_6}
+            \dfsv{V7}{dfsclosed}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsopen}{v_9}
+        }
+        {
+            $v_0$ & $1$ & \na\\
+            $v_1$ & $2$ & $9$\\
+            $v_2$ & $7$ & $8$\\
+            $v_3$ & $3$ & $6$\\
+            $v_4$ & $4$ & $5$\\
+            $v_5$ & \na & \na\\
+            $v_6$ & $11$ & \na\\
+            $v_7$ & $12$ & $13$\\
+            $v_8$ & \na & \na\\
+            $v_9$ & $10$ & \na
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 14}
+    \centering
+    \DFSstateTable
+        {Krok 14: uzavřeme $v_6$}
+        {
+            \draw[dfstreeedge] (V0) -- (V1);
+            \draw[dfstreeedge] (V1) -- (V3);
+            \draw[dfstreeedge] (V3) -- (V4);
+            \draw[dfstreeedge] (V1) -- (V2);
+            \draw[dfstreeedge] (V0) -- (V9);
+            \draw[dfstreeedge] (V9) -- (V6);
+            \draw[dfstreeedge] (V6) -- (V7);
+        }
+        {
+            \dfsv{V0}{dfsopen}{v_0}
+            \dfsv{V1}{dfsclosed}{v_1}
+            \dfsv{V2}{dfsclosed}{v_2}
+            \dfsv{V3}{dfsclosed}{v_3}
+            \dfsv{V4}{dfsclosed}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsclosed}{v_6}
+            \dfsv{V7}{dfsclosed}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsopen}{v_9}
+        }
+        {
+            $v_0$ & $1$ & \na\\
+            $v_1$ & $2$ & $9$\\
+            $v_2$ & $7$ & $8$\\
+            $v_3$ & $3$ & $6$\\
+            $v_4$ & $4$ & $5$\\
+            $v_5$ & \na & \na\\
+            $v_6$ & $11$ & $14$\\
+            $v_7$ & $12$ & $13$\\
+            $v_8$ & \na & \na\\
+            $v_9$ & $10$ & \na
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 15}
+    \centering
+    \DFSstateTable
+        {Krok 15: uzavřeme $v_9$}
+        {
+            \draw[dfstreeedge] (V0) -- (V1);
+            \draw[dfstreeedge] (V1) -- (V3);
+            \draw[dfstreeedge] (V3) -- (V4);
+            \draw[dfstreeedge] (V1) -- (V2);
+            \draw[dfstreeedge] (V0) -- (V9);
+            \draw[dfstreeedge] (V9) -- (V6);
+            \draw[dfstreeedge] (V6) -- (V7);
+        }
+        {
+            \dfsv{V0}{dfsopen}{v_0}
+            \dfsv{V1}{dfsclosed}{v_1}
+            \dfsv{V2}{dfsclosed}{v_2}
+            \dfsv{V3}{dfsclosed}{v_3}
+            \dfsv{V4}{dfsclosed}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsclosed}{v_6}
+            \dfsv{V7}{dfsclosed}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsclosed}{v_9}
+        }
+        {
+            $v_0$ & $1$ & \na\\
+            $v_1$ & $2$ & $9$\\
+            $v_2$ & $7$ & $8$\\
+            $v_3$ & $3$ & $6$\\
+            $v_4$ & $4$ & $5$\\
+            $v_5$ & \na & \na\\
+            $v_6$ & $11$ & $14$\\
+            $v_7$ & $12$ & $13$\\
+            $v_8$ & \na & \na\\
+            $v_9$ & $10$ & $15$
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad}{DFS -- krok 16}
+    \centering
+    \DFSstateTable
+        {Krok 16: uzavřeme $v_0$}
+        {
+            \draw[dfstreeedge] (V0) -- (V1);
+            \draw[dfstreeedge] (V1) -- (V3);
+            \draw[dfstreeedge] (V3) -- (V4);
+            \draw[dfstreeedge] (V1) -- (V2);
+            \draw[dfstreeedge] (V0) -- (V9);
+            \draw[dfstreeedge] (V9) -- (V6);
+            \draw[dfstreeedge] (V6) -- (V7);
+        }
+        {
+            \dfsv{V0}{dfsclosed}{v_0}
+            \dfsv{V1}{dfsclosed}{v_1}
+            \dfsv{V2}{dfsclosed}{v_2}
+            \dfsv{V3}{dfsclosed}{v_3}
+            \dfsv{V4}{dfsclosed}{v_4}
+            \dfsv{V5}{dfsundiscovered}{v_5}
+            \dfsv{V6}{dfsclosed}{v_6}
+            \dfsv{V7}{dfsclosed}{v_7}
+            \dfsv{V8}{dfsundiscovered}{v_8}
+            \dfsv{V9}{dfsclosed}{v_9}
+        }
+        {
+            $v_0$ & $1$ & $16$\\
+            $v_1$ & $2$ & $9$\\
+            $v_2$ & $7$ & $8$\\
+            $v_3$ & $3$ & $6$\\
+            $v_4$ & $4$ & $5$\\
+            $v_5$ & \na & \na\\
+            $v_6$ & $11$ & $14$\\
+            $v_7$ & $12$ & $13$\\
+            $v_8$ & \na & \na\\
+            $v_9$ & $10$ & $15$
+        }
+    \end{frame}
+
+    \subsection{Hledání mostů}
+
+    \begin{frame}{Mosty v grafu}
+        \visible<3->{Typický případem užití DFS je např. hledání mostů v grafu.}
+        \visible<3->{\begin{timportantframe}[0.45\textwidth]
+            \begin{center}
+                BFS zde použít nelze!
+            \end{center}
+        \end{timportantframe}}
+        \visible<4->{\begin{defblock}[Most]
+            Nechť $G=(V,E)$ je graf. Hrana $e\in E$ je \markdarkred{most}, pokud po jejím odebrání z grafu $G$ vznikne graf $G^{\prime}=(V^{\prime},E^{\prime})$ takový, že v něm existují vrcholy $u,v\in V^{\prime}$, mezi nimiž neexistuje cesta.
+        \end{defblock}}
+        \visible<5->{\begin{figure}
             \centering
-            \input{images/u-podstrom-v.tex}
-        \end{figure}
+            \input{images/mosty.tex}
+        \end{figure}}
+    \end{frame}
+
+    \begin{frame}{Idea algoritmu pro hledání mostů}
+        \visible<2->{\begin{figure}
+            \centering
+            \input{images/mosty-idea.tex}
+        \end{figure}}
+        \visible<3->{\begin{timportantframe}
+            \begin{center}
+                Pokud během výpočtu nalezneme hranu, která vede do již otevřeného vrcholu $t$, pak \textbf{$xy$ nemůže být most!}
+            \end{center}
+        \end{timportantframe}}
+    \end{frame}
+
+    \begin{frame}{Idea algoritmu pro hledání mostů}
+        \begin{itemize}
+            \visible<2->{\item Jak ale poznat, jestli $t$ leží "nad" vrcholem $y$?}
+            \visible<3->{\begin{talertframe}
+                \begin{center}
+                    $\implies$ To lze poznat podle hodnoty $\inlist$! V takovém případě totiž musí platit
+                    \[\inlist(t)<\inlist(y).\]
+                \end{center}
+            \end{talertframe}}
+            \visible<4->{\item Pro každý vrchol $v$ si budeme uchovávat, jak "vysoko" se z něj můžeme dostat v DFS stromu.}
+            \visible<5->{\begin{tinfoframe}
+                To lze zjistit tak, že vezmeme minimum z $\inlist$ů všech vrcholů, do který se můžeme dostat z podstromu $y$. 
+            \end{tinfoframe}}
+        \end{itemize}
     \end{frame}
 
     \section{Zdroje}

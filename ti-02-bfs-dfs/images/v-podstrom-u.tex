@@ -1,0 +1,16 @@
+\begin{tikzpicture}[scale=1]
+
+    \node[vertex] (V0) at (0,0) {$v_0$};
+
+    \node[vertex] (V) at (-1,-1) {$u$};
+    \node[vertex] (U) at (-0.5,-3) {$v$};
+    \node[vertexplain] (TV) at ($(V)+(0,-1.25)$) {};
+
+    \draw[dashed] (TV) to[bend right=30] (U);
+    \draw[dashed] (V0) to[bend right=20] (V);
+
+    % Podstromy
+    \draw[edge] (U) -- ++(-0.75,-1.25) -- node[midway,above] {$T_v$} ++(1.5,0) -- (U);
+    \draw[edge] (V) -- ++(-0.75,-1.25) -- node[midway,above] {$T_u$} ++(1.5,0) -- (V);
+
+\end{tikzpicture}

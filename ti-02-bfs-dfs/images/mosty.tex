@@ -1,0 +1,35 @@
+\begin{tikzpicture}[scale=1]
+
+    % vrcholy
+    \node[vertex, fill=white] (a1) at (0,0.5)   {};
+    \node[vertex, fill=white] (a2) at (0,-0.5)  {};
+    \node[vertex, fill=white] (b1) at (1,0)     {};
+    \node[vertex, fill=white] (b2) at (2,0)     {};
+    \node[vertex, fill=white] (c1) at (3,1)     {};
+    \node[vertex, fill=white] (c2) at (4,1)     {};
+    \node[vertex, fill=white] (c3) at (5,0)     {};
+    \node[vertex, fill=white] (c4) at (4,-1)    {};
+    \node[vertex, fill=white] (c5) at (3,-1)    {};
+    \node[vertex, fill=white] (d1) at (6,0.5)   {};
+    \node[vertex, fill=white] (d2) at (6,-0.5)  {};
+
+    % běžné hrany
+    \draw[edge] (a1) -- (a2);
+    \draw[edge] (a1) -- (b1);
+    \draw[edge] (a2) -- (b1);
+
+    \draw[edge] (b2) -- (c1);
+    \draw[edge] (c1) -- (c2);
+    \draw[edge] (c2) -- (c3);
+    \draw[edge] (c3) -- (c4);
+    \draw[edge] (c4) -- (c5);
+    \draw[edge] (c5) -- (b2);
+
+    \draw[edge] (c3) -- (d2);
+
+    % původně tučné černé hrany -> nyní červené
+    \draw[edge, red, very thick] (b1) -- (b2);
+    \draw[edge, red, very thick] (c3) -- (d2);
+    \draw[edge, red, very thick] (c3) -- (d1);
+
+\end{tikzpicture}

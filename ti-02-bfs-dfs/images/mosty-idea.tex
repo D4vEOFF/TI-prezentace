@@ -1,0 +1,17 @@
+\begin{tikzpicture}[scale=1]
+
+    \node[vertex] (U) at (0,0) {$u$};
+    \node[vertex] (T) at (1.5,-0.5) {$t$};
+    \node[vertex] (X) at (3,-1) {$x$};
+    \node[vertex] (Y) at (4,-3) {$y$};
+    \node[vertex] (S) at (4,-4.5) {$s$};
+
+    \draw[edge] (U) to[bend left=20] (T);
+    \draw[edge] (T) to[bend right=20] (X);
+    \draw[dashed] (S) to[bend left=20] (T);
+    \draw[edge,color=red] (X) -- (Y);
+
+    % Podstromy
+    \draw[edge] (Y) -- ++(-1.5,-2.5) -- node[midway,above] {$T_y$} ++(3,0) -- (Y);
+
+\end{tikzpicture}
