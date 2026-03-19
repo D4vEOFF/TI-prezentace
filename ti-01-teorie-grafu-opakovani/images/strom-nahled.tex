@@ -1,0 +1,40 @@
+\begin{tikzpicture}[scale=1.1]
+
+% svislá osa
+\node[vertex, fill=black, minimum size=1.8mm, inner sep=0pt] (v1) at (0,0) {};
+\node[vertex, fill=black, minimum size=1.8mm, inner sep=0pt] (v2) at (0,-0.9) {};
+\node[vertex, fill=black, minimum size=1.8mm, inner sep=0pt] (v3) at (0,-1.8) {};
+\node[vertex, fill=black, minimum size=1.8mm, inner sep=0pt] (v4) at (0,-2.7) {};
+\node[vertex, fill=black, minimum size=1.8mm, inner sep=0pt] (v5) at (0,-4.8) {};
+
+% levé větve
+\node[vertex, fill=black, minimum size=1.8mm, inner sep=0pt] (l1) at ($(v1)+(-0.85,-1.5)$) {};
+\node[vertex, fill=black, minimum size=1.8mm, inner sep=0pt] (l2) at ($(v2)+(-0.85,-1.5)$) {};
+\node[vertex, fill=black, minimum size=1.8mm, inner sep=0pt] (l3) at ($(v3)+(-0.85,-1.5)$) {};
+\node[vertex, fill=black, minimum size=1.8mm, inner sep=0pt] (l4) at ($(v4)+(-0.85,-1.5)$) {};
+
+% pravé větve
+\node[vertex, fill=black, minimum size=1.8mm, inner sep=0pt] (r1) at ($(v1)+(0.85,-1.5)$) {};
+\node[vertex, fill=black, minimum size=1.8mm, inner sep=0pt] (r2) at ($(v2)+(0.85,-1.5)$) {};
+\node[vertex, fill=black, minimum size=1.8mm, inner sep=0pt] (r3) at ($(v3)+(0.85,-1.5)$) {};
+\node[vertex, fill=black, minimum size=1.8mm, inner sep=0pt] (r4) at ($(v4)+(0.85,-1.5)$) {};
+
+% hlavní svislá cesta
+\draw[edge] (v1) -- (v2);
+\draw[edge] (v2) -- (v3);
+\draw[edge] (v3) -- (v4);
+\draw[edge] (v4) -- (v5);
+
+\draw[edge] (v1) -- (l1);
+\draw[edge] (v1) -- (r1);
+
+\draw[edge] (v2) -- (l2);
+\draw[edge] (v2) -- (r2);
+
+\draw[edge] (v3) -- (l3);
+\draw[edge] (v3) -- (r3);
+
+\draw[edge] (v4) -- (l4);
+\draw[edge] (v4) -- (r4);
+
+\end{tikzpicture}

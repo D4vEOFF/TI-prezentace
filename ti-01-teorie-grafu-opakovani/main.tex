@@ -700,7 +700,7 @@
         Ukázka v~jazyce Python
         \begin{lstlisting}[style=python]
 def has_edge_incidence(i: int, j: int) -> bool:
-    return bool(A[i,j])
+    return bool(A[i][j])
         \end{lstlisting}
     \end{frame}
 
@@ -742,14 +742,14 @@ def has_edge_incidence(i: int, j: int) -> bool:
         \begin{lstlisting}[style=python]
 def has_edge_incidence(i: int, j: int) -> bool:
     """
-    Vrati True, pokud v~neorientovanem grafu existuje hrana mezi vrcholy v_i a~v_j.
+    Vrati True, pokud v neorientovanem grafu existuje hrana mezi vrcholy v_i a v_j.
     
-    I~... matice incidence (n x m), seznam seznamu
+    I ... matice incidence (n x m), seznam seznamu
     i, j ... indexy vrcholu
     """
     m = len(I[0])  # pocet hran = pocet sloupcu
 
-    for k~in range(m):
+    for k in range(m):
         if I[i][k] == 1 and I[j][k] == 1:
             return True
 
@@ -771,10 +771,10 @@ def has_edge_incidence(i: int, j: int) -> bool:
         \begin{lstlisting}[style=python]
 def has_edge_incidence(i: int, j: int) -> bool:
     """
-    Vrati True, pokud v~grafu existuje hrana mezi vrcholy v_i a~v_j.
+    Vrati True, pokud v~grafu existuje hrana mezi vrcholy v_i a v_j.
 
     adj ... seznamy sousedu vsech vrcholu
-    V~... seznam vrcholu grafu G
+    V ... seznam vrcholu grafu G
     i, j ... indexy vrcholu
     """
     for neighbor in adj[V[i]]:
@@ -806,7 +806,14 @@ def has_edge_incidence(i: int, j: int) -> bool:
 
     \section{Stromy}
 
-    \titleframe{Stromy}
+    % \titleframe{Stromy}
+
+    \begin{titleframeenv}{Stromy}
+        \begin{figure}
+            \centering
+            \input{images/strom-nahled.tex}
+        \end{figure}
+    \end{titleframeenv}
 
     \subsection{Souvislý graf a strom}
 
@@ -861,6 +868,7 @@ def has_edge_incidence(i: int, j: int) -> bool:
         \begin{itemize}
             \item MAREŠ, Martin a~VALLA, Tomáš. \textit{Průvodce labyrintem algoritmů.} Druhé vydání. CZ.NIC. Praha: CZ.NIC, z.s.p.o., 2022. ISBN 978-80-88168-63-8.
             \item CORMEN, Thomas H.; LEISERSON, Charles Eric; RIVEST, Ronald L. a~STEIN, Clifford. \textit{Introduction to algorithms.} Fourth edition. Cambridge: The MIT Press, 2022. ISBN 978-0-262-04630-5.
+            \item MATOUŠEK, Jiří a NEŠETŘIL, Jaroslav. \textit{Kapitoly z diskrétní matematiky.} 4., upr. a dopl. vyd. V Praze: Karolinum, 2009. ISBN 978-80-246-1740-4.
         \end{itemize}
     \end{frame}
 
