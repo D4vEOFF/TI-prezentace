@@ -16,10 +16,29 @@
 
     \titleframe{Binární stromy}
 
-    \begin{frame}{Binární stromy}
-        \begin{defblock}[Binární strom]
+    \begin{frame}{Binární strom}
+        \visible<2->{\begin{defblock}[Binární strom]
             Strom $T$ nazveme \markdarkred{binární}, pokud je \textbf{zakořeněný} a každý vrchol (rodič) má maximálně \textbf{dva syny}, u nichž rozlišujeme, který je levý a který pravý.
+        \end{defblock}}
+        \visible<3->{\begin{figure}
+            \centering
+            \input{images/binarni-strom.tex}
+        \end{figure}}
+    \end{frame}
+
+    \begin{frame}{Hladiny v binárním stromě}
+        \begin{defblock}[Hladina]
+            Nechť $T=(V,E)$ je binární strom, $v_0$ jeho kořen a číslo $k\in\N_0$. Pak $k$-tou hladinou stromu $T$ rozumíme množinu vrcholů
+            \[L_k=\set{v\in V: d(v,v_0)=k}.\]
+            Tedy hladina $L_k$ je množina všech vrcholů, které mají stejnou vzdálenost od kořene.
         \end{defblock}
+    \end{frame}
+
+    \begin{frame}{Znázornění hladiny}
+        \begin{figure}
+            \centering
+            \input{images/hladiny.tex}
+        \end{figure}
     \end{frame}
 
     \section{Binární halda}

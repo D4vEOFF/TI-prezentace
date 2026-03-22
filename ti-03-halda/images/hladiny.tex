@@ -1,0 +1,73 @@
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+% souřadnice hladin
+\def\yzero{0}
+\def\yone{-1.4}
+\def\ytwo{-2.8}
+\def\ydots{-4.1}
+\def\yk{-5.5}
+
+% vrcholy
+\node[vertex] (r) at (0,\yzero) {};
+
+\node[vertex] (a1) at (-2,\yone) {};
+\node[vertex] (a2) at ( 2,\yone) {};
+
+\node[vertex] (b1) at (-3,\ytwo) {};
+\node[vertex] (b2) at (-1,\ytwo) {};
+\node[vertex] (b3) at ( 1,\ytwo) {};
+\node[vertex] (b4) at ( 3,\ytwo) {};
+
+\node[vertexplain] (d1) at (-3.6,\ydots) {$\vdots$};
+\node[vertexplain] (d2) at (-1.2,\ydots) {$\vdots$};
+\node[vertexplain] (d3) at ( 1.2,\ydots) {$\vdots$};
+\node[vertexplain] (d4) at ( 3.6,\ydots) {$\vdots$};
+
+\node[vertex] (k1) at (-4.2,\yk) {};
+\node[vertex] (k2) at (-3.0,\yk) {};
+\node[vertexplain] (kd1) at (-1.4,\yk) {$\cdots$};
+\node[vertex] (k3) at (0,\yk) {};
+\node[vertexplain] (kd2) at (1.4,\yk) {$\cdots$};
+\node[vertex] (k4) at (3.0,\yk) {};
+\node[vertex] (k5) at (4.2,\yk) {};
+
+% hrany
+\draw[edge] (r) -- (a1);
+\draw[edge] (r) -- (a2);
+
+\draw[edge] (a1) -- (b1);
+\draw[edge] (a1) -- (b2);
+\draw[edge] (a2) -- (b3);
+\draw[edge] (a2) -- (b4);
+
+% naznačení pokračování
+\draw[edge, dashed] (b1) -- (-3.6,\ydots+0.25);
+\draw[edge, dashed] (b2) -- (-1.2,\ydots+0.25);
+\draw[edge, dashed] (b3) -- ( 1.2,\ydots+0.25);
+\draw[edge, dashed] (b4) -- ( 3.6,\ydots+0.25);
+
+\draw[edge, dashed] (-3.6,\ydots-0.25) -- (k1);
+\draw[edge, dashed] (-3.6,\ydots-0.25) -- (k2);
+
+\draw[edge, dashed] (-1.2,\ydots-0.25) -- ++(-0.3,-0.9);
+\draw[edge, dashed] (-1.2,\ydots-0.25) -- ++( 0.3,-0.9);
+
+\draw[edge, dashed] ( 1.2,\ydots-0.25) -- ++(-0.3,-0.9);
+\draw[edge, dashed] ( 1.2,\ydots-0.25) -- ++( 0.3,-0.9);
+
+\draw[edge, dashed] ( 3.6,\ydots-0.25) -- (k4);
+\draw[edge, dashed] ( 3.6,\ydots-0.25) -- (k5);
+
+% popisky hladin vlevo
+\node[left] at (-5.2,\yzero) {$0$};
+\node[left] at (-5.2,\yone)  {$1$};
+\node[left] at (-5.2,\ytwo)  {$2$};
+\node[left] at (-5.2,\ydots) {$\vdots$};
+\node[left] at (-5.2,\yk)    {$k$};
+
+% svislá závorka pro hladiny
+\draw[decorate, decoration={brace, amplitude=5pt}]
+    (-4.8,\yk) -- (-4.8,\yzero)
+    node[midway, left=8pt] {hladina};
+
+\end{tikzpicture}

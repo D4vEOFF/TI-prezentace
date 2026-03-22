@@ -1,0 +1,20 @@
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+% vrcholy
+\node[vertex, label=above:{kořen}] (r) at (0,0) {};
+\node[vertex, label=above left:{levý syn}]  (l) at (-1.8,-1.4) {};
+\node[vertex, label=above right:{pravý syn}] (p) at (1.8,-1.4) {};
+
+% plné hrany
+\draw[edge] (r) -- (l);
+\draw[edge] (r) -- (p);
+
+% naznačení pokračování levého podstromu
+\draw[edge, dashed] (l) -- ++(-0.9,-1.0);
+\draw[edge, dashed] (l) -- ++(0.9,-1.0);
+
+% naznačení pokračování pravého podstromu
+\draw[edge, dashed] (p) -- ++(-0.9,-1.0);
+\draw[edge, dashed] (p) -- ++(0.9,-1.0);
+
+\end{tikzpicture}
