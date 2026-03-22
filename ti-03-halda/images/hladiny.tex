@@ -4,8 +4,8 @@
 \def\yzero{0}
 \def\yone{-1.4}
 \def\ytwo{-2.8}
-\def\ydots{-4.1}
-\def\yk{-5.5}
+\def\ydots{-4.6}
+\def\yk{-6.0}
 
 % vrcholy
 \node[vertex] (r) at (0,\yzero) {};
@@ -41,10 +41,10 @@
 \draw[edge] (a2) -- (b4);
 
 % naznačení pokračování
-\draw[edge, dashed] (b1) -- (-3.6,\ydots+0.25);
-\draw[edge, dashed] (b2) -- (-1.2,\ydots+0.25);
-\draw[edge, dashed] (b3) -- ( 1.2,\ydots+0.25);
-\draw[edge, dashed] (b4) -- ( 3.6,\ydots+0.25);
+\draw[edge, dashed] (b1) -- (-3.6,\ydots+0.4);
+\draw[edge, dashed] (b2) -- (-1.2,\ydots+0.4);
+\draw[edge, dashed] (b3) -- ( 1.2,\ydots+0.4);
+\draw[edge, dashed] (b4) -- ( 3.6,\ydots+0.4);
 
 \draw[edge, dashed] (-3.6,\ydots-0.25) -- (k1);
 \draw[edge, dashed] (-3.6,\ydots-0.25) -- (k2);
@@ -67,7 +67,6 @@
 
 % svislá závorka pro hladiny
 \draw[decorate, decoration={brace, amplitude=5pt}]
-    (-4.8,\yk) -- (-4.8,\yzero)
-    node[midway, left=8pt] {hladina};
+    (-4.8,\yk) -- (-4.8,\yzero);
 
 \end{tikzpicture}

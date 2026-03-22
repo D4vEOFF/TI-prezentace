@@ -34,7 +34,7 @@
         \end{defblock}
     \end{frame}
 
-    \begin{frame}{Znázornění hladiny}
+    \begin{frame}{Znázornění hladin}
         \begin{figure}
             \centering
             \input{images/hladiny.tex}
@@ -44,6 +44,136 @@
     \section{Binární halda}
 
     \titleframe{Binární halda}
+
+    \subsection{Minimová binární halda}
+
+    \begin{frame}{Příklad na začátek \dots}
+        \begin{itemize}
+            \visible<2->{\item Máme zadaný soubor čísel, v němž chceme rychle najít \textbf{minimum}, resp. \textbf{maximum}.}
+            \visible<3->{\item Prvky lze uložit do seznamu/pole.}
+            \visible<4->{\begin{center}
+                \begin{minipage}{0.8\textwidth}
+                    \begin{algorithm}[H]
+                        \caption{Minimum}
+                        \KwIn{Seznam prvků $x_1,x_2,\dots,x_n$}
+                        $\textup{min}\gets x_1$\;
+                        \For{$i=1,2,\dots,n$}{
+                            \lIf{$\textup{min}<x_i$}{$\textup{min}\gets x_i$}
+                        }
+                        \Return{$\textup{min}$}
+                    \end{algorithm}
+                \end{minipage}
+            \end{center}}
+            \visible<5->{\item Časová složitost bude zjevně lineární, tj. $\bigO(n)$.}
+            \visible<6->{\item Rychlejšího algoritmu lze dosáhnout pomocí tzv. \markdarkred{binární haldy}.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Minimová binární halda}
+        \begin{itemize}
+            \visible<2->{\item Budeme pracovat s binárním stromem $T=(V,E)$.}
+            \visible<3->{\item Každému vrcholu $v$ přiřadíme tzv. \markdarkred{klíč}, který bude v našem případě představovat libovolné celé číslo. Tuto hodnotu budeme značit $\key(v)$.}
+            \visible<4->{\begin{tinfoframe}[0.8\textwidth]
+                \begin{center}
+                    Formálně se jedná o zobrazení $\mapping{\key}{V}{\Z}$.
+                \end{center}
+            \end{tinfoframe}}
+        \end{itemize}
+        \visible<5->{\begin{defblock}[Minimová binární halda]
+            \markdarkred{Minimová binární halda} je datová struktura tvaru binárního stromu, v jehož každém vrcholu je uložen jeden prvek. Přitom platí:
+            \begin{enumerate}
+                \item \textbf{Tvar haldy:} Všechny hladiny kromě poslední jsou plně obsazené. Poslední hladina je zaplněna zleva.
+                \item \textbf{Haldové uspořádání:} Je-li $v$ vrchol a $s$ jeho syn, pak platí $\key(v)\leqslant \key(s)$.
+            \end{enumerate}
+        \end{defblock}}
+    \end{frame}
+
+    \begin{frame}{Maximová binární halda}
+        \begin{defblock}[Maximová binární halda]
+            \markdarkred{Minimová binární halda} je datová struktura tvaru binárního stromu, v jehož každém vrcholu je uložen jeden prvek. Přitom platí:
+            \begin{enumerate}
+                \item \textbf{Tvar haldy:} Všechny hladiny kromě poslední jsou plně obsazené. Poslední hladina je zaplněna zleva.
+                \item \textbf{Haldové uspořádání:} Je-li $v$ vrchol a $s$ jeho syn, pak platí $\key(v)\geqslant \key(s)$.
+            \end{enumerate}
+        \end{defblock}
+    \end{frame}
+
+    \begin{frame}{Minimová binární halda}{Příklad \textrm{I}}
+        \begin{figure}
+            \centering
+            \input{images/binarni-halda-1.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Minimová binární halda}{Příklad \textrm{II}}
+        \begin{figure}
+            \centering
+            \input{images/binarni-halda-2.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Maximová binární halda}{Příklad}
+        \begin{figure}
+            \centering
+            \input{images/max-binarni-halda.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Minimová binární halda}{Protipříklad \textrm{I}}
+        \begin{figure}
+            \centering
+            \input{images/binarni-halda-3.tex}
+        \end{figure}
+        \visible<2>{\begin{talertframe}[0.75\textwidth]
+            \begin{center}
+                Strom porušuje podmínku na \textbf{tvar haldy}.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \begin{frame}{Minimová binární halda}{Protipříklad \textrm{II}}
+        \begin{figure}
+            \centering
+            \input{images/binarni-halda-4.tex}
+        \end{figure}
+        \visible<2>{\begin{talertframe}[0.75\textwidth]
+            \begin{center}
+                Strom porušuje \textbf{haldové uspořádání}.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \begin{frame}{Pozorování}
+        \visible<2->{\begin{figure}
+            \centering
+            \input{images/binarni-halda-min.tex}
+        \end{figure}}
+        \visible<3->{\begin{tnoticeframe}[0.9\textwidth]
+            \begin{center}
+                V kořeni je vždy ulořen \textbf{vrchol s minimálním klíčem}. Podobně v maximové binární haldě je v kořeni vždy uloženo maximum.
+            \end{center}
+        \end{tnoticeframe}}
+        \visible<4->{\begin{timportantframe}[0.9\textwidth]
+            \begin{center}
+                To má jednu zřejmou výhodu: nalezení minima/maxima v takové struktuře je \textbf{velmi rychlé}.
+            \end{center}
+        \end{timportantframe}}
+    \end{frame}
+
+    \begin{frame}{Operace s minimovou binární haldou}
+        \visible<2->{\begin{talertframe}[0.9\textwidth]
+            \begin{center}
+                \textbf{To nám ale nestačí!} Haldu musíme nějak udržovat.
+            \end{center}
+        \end{talertframe}}
+        \visible<3->{Rádi bychom v haldě uměli provádět následující operace:}
+        \begin{enumerate}
+            \visible<4->{\item $\textsc{Min}$ = vrátí minimální hodnotu klíče uloženou v haldě.}
+            \visible<5->{\item $\textsc{Insert}(x)$ = vloží nový prvek $x$ do haldy.}
+            \visible<6->{\item $\textsc{ExtractMin}$ = odebere vrchol s nejmenším klíčem a vrátí jej.}
+        \end{enumerate}
+        \visible<7->{V případě \textbf{maximové binární haldy} bude situace obdobná -- budeme chtít operace $\textsc{Max}$ a $\textsc{ExtractMax}$}
+    \end{frame}
 
     \section{Zdroje}
 
