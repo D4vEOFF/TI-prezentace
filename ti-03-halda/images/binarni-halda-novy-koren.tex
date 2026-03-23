@@ -1,0 +1,72 @@
+\begin{tikzpicture}[x=0.85cm,y=0.9cm]
+
+%--------------------------------
+% vlevo: před odstraněním kořene
+%--------------------------------
+\begin{scope}[shift={(-4.2,0)}]
+
+\node at (0,0.7) {\small před odstraněním};
+
+\node[vertex] (r1) at (0,0) {$r$};
+
+\node[vertex] (a1) at (-1.4,-1.2) {$\ell$};
+\node[vertex] (a2) at ( 1.4,-1.2) {$p$};
+
+\node[vertexplain] (b1) at (-2.2,-2.4) {$\cdots$};
+\node[vertexplain] (b2) at (-0.6,-2.4) {$\cdots$};
+\node[vertexplain] (b3) at ( 0.6,-2.4) {$\cdots$};
+\node[vertexplain] (b4) at ( 2.2,-2.4) {$\cdots$};
+
+\node[vertexplain] (c1) at (1.6,-3.6) {$\cdots$};
+\node[vertex]      (v1) at (2.8,-3.6) {$v$};
+
+\draw[edge] (r1) -- (a1);
+\draw[edge] (r1) -- (a2);
+
+\draw[edge,dashed] (a1) -- (b1);
+\draw[edge,dashed] (a1) -- (b2);
+\draw[edge,dashed] (a2) -- (b3);
+\draw[edge,dashed] (a2) -- (b4);
+
+\draw[edge,dashed] (b4) -- (c1);
+\draw[edge]        (b4) -- (v1);
+
+\end{scope}
+
+% šipka mezi obrázky
+\draw[diredge] (-0.9,-1.7) -- (0.9,-1.7);
+\node[above] at (0,-1.7) {\small přesun $v$ do kořene};
+
+%--------------------------------
+% vpravo: po nahrazení kořene
+%--------------------------------
+\begin{scope}[shift={(4.2,0)}]
+
+\node at (0,0.7) {\small po nahrazení};
+
+\node[vertex] (r2) at (0,0) {$v$};
+
+\node[vertex] (a3) at (-1.4,-1.2) {$\ell$};
+\node[vertex] (a4) at ( 1.4,-1.2) {$p$};
+
+\node[vertexplain] (b5) at (-2.2,-2.4) {$\cdots$};
+\node[vertexplain] (b6) at (-0.6,-2.4) {$\cdots$};
+\node[vertexplain] (b7) at ( 0.6,-2.4) {$\cdots$};
+\node[vertexplain] (b8) at ( 2.2,-2.4) {$\cdots$};
+
+\node[vertexplain] (c2) at (1.6,-3.6) {$\cdots$};
+\node[vertexplain] (e2) at (2.8,-3.6) {$\varnothing$};
+
+\draw[edge] (r2) -- (a3);
+\draw[edge] (r2) -- (a4);
+
+\draw[edge,dashed] (a3) -- (b5);
+\draw[edge,dashed] (a3) -- (b6);
+\draw[edge,dashed] (a4) -- (b7);
+\draw[edge,dashed] (a4) -- (b8);
+
+\draw[edge,dashed] (b8) -- (c2);
+
+\end{scope}
+
+\end{tikzpicture}

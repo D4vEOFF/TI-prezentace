@@ -6,6 +6,10 @@
 \input{../assets/macros.tex}
 \input{../assets/listing.tex}
 
+% Animace
+\input{bubbleup.tex}
+\input{bubbledown.tex}
+
 \def\presentationtitle{Binární halda}
 
 \begin{document}
@@ -88,6 +92,8 @@
         \end{defblock}}
     \end{frame}
 
+    \subsection{Maximová binární halda}
+
     \begin{frame}{Maximová binární halda}
         \begin{defblock}[Maximová binární halda]
             \markdarkred{Minimová binární halda} je datová struktura tvaru binárního stromu, v jehož každém vrcholu je uložen jeden prvek. Přitom platí:
@@ -160,6 +166,8 @@
         \end{timportantframe}}
     \end{frame}
 
+    \subsection{Operace s minimovou binární haldou}
+
     \begin{frame}{Operace s minimovou binární haldou}
         \visible<2->{\begin{talertframe}[0.9\textwidth]
             \begin{center}
@@ -174,6 +182,228 @@
         \end{enumerate}
         \visible<7->{V případě \textbf{maximové binární haldy} bude situace obdobná -- budeme chtít operace $\textsc{Max}$ a $\textsc{ExtractMax}$}
     \end{frame}
+
+    \subsection{Tvrzení a počtu hladin}
+
+    \begin{frame}{Počet hladin haldy}
+        \visible<2->{\begin{propblock}
+            Binární halda s $n$ prvky má $\lceil\log_2(n+1)\rceil$ hladin.
+        \end{propblock}}
+        \begin{itemize}
+            \visible<3->{\item Předpokládejme, že uvažovaná halda má všechny hladiny plně obsazené. Jejich počet si označme $h$ a počet vrcholů $n$.}
+            \visible<4->{\item Pak počet vrcholů lze spočítat jako
+            \[n=2^{0}+2^{1}+2^{2}+\dots+2^{h-1}=2^{h}-1.\]}
+            \visible<5->{\item Úpravou získáme
+            \[n=2^{h}-1\iff n+1=2^{h}\iff h=\log_2(n+1).\]}
+            \visible<6->{\item Pokud poslední hladina není zcela zaplněná, bude pak nebude $h$ celé číslo. To lze "opravit" přidáním zaokrouhlení nahoru:
+            \[h=\lceil\log_2(n+1)\rceil.\]}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Operace Insert}
+
+    \begin{frame}{Operace $\textsc{Insert}$ -- vkládání vrcholu}
+        \begin{itemize}
+            \visible<2->{\item Prázdnou nebo jednoprvkovou haldu lze vytvořit snadno.}
+            \visible<3->{\item Uvažujme, že do obecné (minimové) haldy chceme přidat nový prvek.}
+            \visible<4->{\item Z podmínky na \textbf{tvar haldy} plyne, že nový vrchol buď}
+            \begin{itemize}
+                \visible<5->{\item přidáme na konec poslední hladiny, nebo}
+                \visible<6->{\item založíme novou hladinu a vrchol přidáme úplně vlevo, pokud je poslední hladina plná.}
+            \end{itemize}
+        \end{itemize}
+        \visible<7->{\begin{talertframe}[0.8\textwidth]
+            \begin{center}
+                \textbf{Problém:} Tímto krokem může dojít k porušení haldového uspořádání, neboť pro nový vrchol $v$ a jeho rodiče $r$ může nastat, že $\key(v)<\key(r)$.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \subsection{Procedura BubbleUp}
+
+    \begin{frame}{Procedura $\textsc{BubbleUp}$}
+        \begin{itemize}
+            \visible<2->{\item Po vložení nového vrcholu musíme haldu upravit tak, aby platilo haldové uspořádání, není-li splněno.}
+            \visible<3->{\item Jako první prohodíme nový vrchol $v$ s jeho rodičem $r$, pokud $\key(v)<\key(r)$.}
+            \visible<4->{\item Prohozením vrcholů jsme opravili uvedenou nerovnost, ale mohli jsme způsobit chybu o hladinu výš.}
+            \visible<5->{\item V takovém případě postup opakujeme pro vrchol $v$ a jeho rodičem $r^{\prime}$ atd.}
+            \visible<6->{\item Takový procedura se někdy nazývá $\textsc{BubbleUp}$, neboť vrchol postupně "probublá" nahoru (potenciálně až do kořene, kde se procedura zastaví).}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Znázornění $\textsc{BubbleUp}$}
+        \begin{figure}
+            \centering
+            \input{images/binarni-halda-novy-vrchol.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Procedura $\textsc{BubbleUp}$}{1. krok}
+        \centering
+        \BubbleUpFrame{1}
+    \end{frame}
+
+    \begin{frame}{Procedura $\textsc{BubbleUp}$}{2. krok}
+        \centering
+        \BubbleUpFrame{2}
+    \end{frame}
+
+    \begin{frame}{Procedura $\textsc{BubbleUp}$}{3. krok}
+        \centering
+        \BubbleUpFrame{3}
+    \end{frame}
+
+    \begin{frame}{Procedura $\textsc{BubbleUp}$}{4. krok}
+        \centering
+        \BubbleUpFrame{4}
+    \end{frame}
+
+    \begin{frame}{Procedura $\textsc{BubbleUp}$}{5. krok}
+        \centering
+        \BubbleUpFrame{5}
+    \end{frame}
+
+    \begin{frame}{Pseudokód $\textsc{BubbleUp}$}
+        \begin{center}
+            \begin{minipage}{0.8\textwidth}
+                \begin{algorithm}[H]
+                    \caption{$\textsc{BubbleUp}$ (oprava haldy směrem nahorů)}
+                    \KwIn{Vrchol $v$ v minimové binární haldě}
+                    \While{\textup{$v$ má rodiče $r$ a $\key(v) < \key(r)$}}{
+                        \textup{prohoď klíče ve vrcholech $v$ a $r$}\;
+                        $v \gets r$\;
+                    }
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+        \visible<2->{V případě maximové binární haldy bychom zkrátka jen uvedli opačnou nerovnost:
+        \[\key(v) > \key(r).\]}
+    \end{frame}
+
+    \begin{frame}{Zpět k operaci $\textsc{Insert}$}
+        \visible<2->{\begin{tinfoframe}
+            \begin{center}
+                Stačí nám tedy přidal vrchol $v$ na první volné místo na poslední hladině, popř. vytvořit novou hladinu, a následně zavolat $\textsc{BubbleUp}$.
+            \end{center}
+        \end{tinfoframe}}
+        \visible<3->{\begin{center}
+            \begin{minipage}{0.8\textwidth}
+                \begin{algorithm}[H]
+                    \caption{Operace $\textsc{Insert}$}
+                    \KwIn{Nový vrchol $v$}
+                    $n\gets n+1$\;
+                    \If{\textup{\textup{poslední hladina je plná}}}{
+                        \textup{vlož $v$ do nové hladiny co nejvíce vlevo}
+                    }
+                    \Else{\textup{vlož $v$ do poslední hladiny zleva}}
+                    \textup{Zavolej $\textsc{BubbleUp}(v)$.}
+                \end{algorithm}
+            \end{minipage}
+        \end{center}}
+    \end{frame}
+
+    \subsection{Operace ExtractMin}
+
+    \begin{frame}{Operace $\textsc{ExtractMin}$ -- odstranění minima}
+        \begin{itemize}
+            \visible<2->{\item Již víme, že přečtení minima zvládneme v konstantním čase (stačí se podívat na klíč v kořeni haldy a vrátit jej).}
+            \visible<3->{\item Pokud budeme ale chtít odstranit minimum, bude situace již o trochu složitější.}
+        \end{itemize}
+        \visible<4->{\begin{tnoticeframe}
+            Musíme vyřešit dvě otázky:
+            \begin{itemize}
+                \visible<5->{\item Co bude náš nový kořen?}
+                \visible<6->{\item Jak opravit haldu, aby platilo haldové uspořádání?}
+            \end{itemize}
+        \end{tnoticeframe}}
+    \end{frame}
+
+    \begin{frame}{Operace $\textsc{ExtractMin}$}
+        \begin{itemize}
+            \item Abychom zachovali tvar haldy, přemístíme \textbf{nejpravější vrchol z poslední hladiny} a umístíme jej na pozici kořene.
+            \item Tím však může dojít k porušení haldového uspořádání.
+            \item Idea opravy bude podobná jako v případě operace $\textsc{Insert}$, ale nový kořen bude tentokrát "probublávat" směrem dolů.
+            \begin{itemize}
+                \item Pokud klíč v novém kořeni $v$ je větší než než klíč jedom z jeho synů, prohodíme je.
+                \item Pokud je hodnota klíče v novém kořeni větším než klíče v obou jeho synech, prohodíme jej s tím, jehož klíč je menší.
+                \item Pokud stále není splněno haldové uspořádání, tak postup opakujeme.
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Nahrazení původního kořene}
+        \begin{figure}
+            \centering
+            \input{images/binarni-halda-novy-koren.tex}
+        \end{figure}
+    \end{frame}
+
+    \subsection{Operace BubbleDown}
+
+    \begin{frame}{Procedura $\textsc{BubbleDown}$}{1. krok}
+        \centering
+        \BubbleDownFrame{1}
+    \end{frame}
+
+    \begin{frame}{Procedura $\textsc{BubbleDown}$}{2. krok}
+        \centering
+        \BubbleDownFrame{2}
+    \end{frame}
+
+    \begin{frame}{Procedura $\textsc{BubbleDown}$}{3. krok}
+        \centering
+        \BubbleDownFrame{3}
+    \end{frame}
+
+    \begin{frame}{Procedura $\textsc{BubbleDown}$}{4. krok}
+        \centering
+        \BubbleDownFrame{4}
+    \end{frame}
+
+    \begin{frame}{Pseudoḱod $\textsc{BubbleDown}$}
+        \begin{center}
+            \begin{minipage}{0.8\textwidth}
+                \begin{algorithm}[H]
+                    \caption{$\textsc{BubbleDown}$ (oprava haldy směrem dolů)}
+                    \KwIn{Vrchol $v$ v minimové binární haldě}
+                    \While{\textup{$v$ má alespoň jednoho syna}}{
+                        $s \gets$ syn vrcholu $v$ s nejmenší hodnotou\;
+                        \If{$\key(v) \leqslant \key(s)$}{
+                            \textbf{break}\;
+                        }
+                        prohoď klíče ve vrcholech $v$ a $u$\;
+                        $v \gets s$\;
+                    }
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+        \visible<2->{V případě maximové binární haldy bychom opět jen použili opačnou nerovnost:
+        \[\key(v) \geqslant \key(s).\]}
+    \end{frame}
+
+    \begin{frame}{Pseudokód $\textsc{ExtractMin}$}
+        \begin{center}
+            \begin{minipage}{0.8\textwidth}
+                \begin{algorithm}[H]
+                    \caption{Operace $\textsc{ExtractMin}$}
+                    Odeber kořen $r$\;
+                    $r\gets$ nejpravější vrchol $v$ na poslední hladině\;
+                    Smaž vrchol $v$\;
+                    Zavolej $\textsc{BubbleDown}(r)$
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+    \end{frame}
+
+    \subsection{Rozbor časové složitosti}
+
+    \section{Implementace haldy pomocí pole}
+
+    \titleframe{Halda jako pole}
+
+    \section{Další operace na haldě}
+
+    \titleframe{Další operace}
 
     \section{Zdroje}
 

@@ -1,0 +1,192 @@
+\newcommand{\BubbleUpFrame}[1]{%
+\begin{tikzpicture}[x=0.78cm,y=0.95cm]
+
+    %--------------------------------------------------
+    % souřadnice vrcholů (užší strom)
+    %--------------------------------------------------
+    \coordinate (n1)  at (0,0);
+    \coordinate (n2)  at (-3.2,-1.5);
+    \coordinate (n3)  at ( 3.2,-1.5);
+
+    \coordinate (n4)  at (-4.8,-3.0);
+    \coordinate (n5)  at (-1.6,-3.0);
+    \coordinate (n6)  at ( 1.6,-3.0);
+    \coordinate (n7)  at ( 4.8,-3.0);
+
+    \coordinate (n8)  at (-5.6,-4.5);
+    \coordinate (n9)  at (-4.0,-4.5);
+    \coordinate (n10) at (-2.4,-4.5);
+    \coordinate (n11) at (-0.8,-4.5);
+    \coordinate (n12) at ( 0.8,-4.5);
+    \coordinate (n13) at ( 2.4,-4.5);
+    \coordinate (n14) at ( 4.0,-4.5);
+    \coordinate (n15) at ( 5.6,-4.5);
+
+    %--------------------------------------------------
+    % styl hran mimo středy vrcholů
+    %--------------------------------------------------
+    \tikzset{heapedge/.style={edge, shorten <=2pt, shorten >=2pt}}
+
+    %--------------------------------------------------
+    % společné hrany
+    %--------------------------------------------------
+    \draw[heapedge] (n1) -- (n2);
+    \draw[heapedge] (n1) -- (n3);
+
+    \draw[heapedge] (n2) -- (n4);
+    \draw[heapedge] (n2) -- (n5);
+    \draw[heapedge] (n3) -- (n6);
+    \draw[heapedge] (n3) -- (n7);
+
+    \draw[heapedge] (n4) -- (n8);
+    \draw[heapedge] (n4) -- (n9);
+    \draw[heapedge] (n5) -- (n10);
+    \draw[heapedge] (n5) -- (n11);
+    \draw[heapedge] (n6) -- (n12);
+    \draw[heapedge] (n6) -- (n13);
+
+    %--------------------------------------------------
+    % stav 1 : původní halda
+    %--------------------------------------------------
+    \ifnum#1=1
+        \node[vertex,fill=white] at (n1)  {$4$};
+        \node[vertex,fill=white] at (n2)  {$6$};
+        \node[vertex,fill=white] at (n3)  {$9$};
+
+        \node[vertex,fill=white] at (n4)  {$8$};
+        \node[vertex,fill=white] at (n5)  {$12$};
+        \node[vertex,fill=white] at (n6)  {$10$};
+        \node[vertex,fill=white] at (n7)  {$17$};
+
+        \node[vertex,fill=white] at (n8)  {$14$};
+        \node[vertex,fill=white] at (n9)  {$15$};
+        \node[vertex,fill=white] at (n10) {$13$};
+        \node[vertex,fill=white] at (n11) {$16$};
+        \node[vertex,fill=white] at (n12) {$11$};
+        \node[vertex,fill=white] at (n13) {$18$};
+
+        \node[vertexplain] at (n14) {$\varnothing$};
+        \node[vertexplain] at (n15) {$\varnothing$};
+
+        \node[above=2mm] at (n1) {\small původní minimová halda};
+    \fi
+
+    %--------------------------------------------------
+    % stav 2 : vložení nového vrcholu
+    %--------------------------------------------------
+    \ifnum#1=2
+        \draw[heapedge] (n7) -- (n14);
+
+        \node[vertex,fill=white] at (n1)  {$4$};
+        \node[vertex,fill=white] at (n2)  {$6$};
+        \node[vertex,fill=white] at (n3)  {$9$};
+
+        \node[vertex,fill=white] at (n4)  {$8$};
+        \node[vertex,fill=white] at (n5)  {$12$};
+        \node[vertex,fill=white] at (n6)  {$10$};
+        \node[vertex, fill=red!20] at (n7)  {$17$};
+
+        \node[vertex,fill=white] at (n8)  {$14$};
+        \node[vertex,fill=white] at (n9)  {$15$};
+        \node[vertex,fill=white] at (n10) {$13$};
+        \node[vertex,fill=white] at (n11) {$16$};
+        \node[vertex,fill=white] at (n12) {$11$};
+        \node[vertex,fill=white] at (n13) {$18$};
+        \node[vertex, fill=green!25] at (n14) {$1$};
+
+        \node[vertexplain] at (n15) {$\varnothing$};
+
+        \draw[diredge, very thick, color=red, shorten <=8pt, shorten >=8pt] (n14) to[bend right=60] (n7);
+        \node[right] at ($(n14)!0.45!(n7)$) {\small $1<17$};
+
+        \node[above=2mm] at (n1) {\small vložení nového vrcholu};
+    \fi
+
+    %--------------------------------------------------
+    % stav 3 : první prohození
+    %--------------------------------------------------
+    \ifnum#1=3
+        \draw[heapedge] (n7) -- (n14);
+
+        \node[vertex,fill=white] at (n1)  {$4$};
+        \node[vertex,fill=white] at (n2)  {$6$};
+        \node[vertex, fill=red!20] at (n3)  {$9$};
+
+        \node[vertex,fill=white] at (n4)  {$8$};
+        \node[vertex,fill=white] at (n5)  {$12$};
+        \node[vertex,fill=white] at (n6)  {$10$};
+        \node[vertex, fill=green!25] at (n7)  {$1$};
+
+        \node[vertex,fill=white] at (n8)  {$14$};
+        \node[vertex,fill=white] at (n9)  {$15$};
+        \node[vertex,fill=white] at (n10) {$13$};
+        \node[vertex,fill=white] at (n11) {$16$};
+        \node[vertex,fill=white] at (n12) {$11$};
+        \node[vertex,fill=white] at (n13) {$18$};
+        \node[vertex,fill=white] at (n14) {$17$};
+
+        \draw[diredge, very thick, color=red, shorten <=8pt, shorten >=8pt] (n7) to[bend right=60] (n3);
+        \node[right] at ($(n7)!0.48!(n3)$) {\small $1<9$};
+
+        \node[above=2mm] at (n1) {\small 1. prohození};
+    \fi
+
+    %--------------------------------------------------
+    % stav 4 : druhé prohození
+    %--------------------------------------------------
+    \ifnum#1=4
+        \draw[heapedge] (n7) -- (n14);
+
+        \node[vertex, fill=red!20] at (n1)  {$4$};
+        \node[vertex,fill=white] at (n2)  {$6$};
+        \node[vertex, fill=green!25] at (n3)  {$1$};
+
+        \node[vertex,fill=white] at (n4)  {$8$};
+        \node[vertex,fill=white] at (n5)  {$12$};
+        \node[vertex,fill=white] at (n6)  {$10$};
+        \node[vertex,fill=white] at (n7)  {$9$};
+
+        \node[vertex,fill=white] at (n8)  {$14$};
+        \node[vertex,fill=white] at (n9)  {$15$};
+        \node[vertex,fill=white] at (n10) {$13$};
+        \node[vertex,fill=white] at (n11) {$16$};
+        \node[vertex,fill=white] at (n12) {$11$};
+        \node[vertex,fill=white] at (n13) {$18$};
+        \node[vertex,fill=white] at (n14) {$17$};
+
+        \draw[diredge, very thick, color=red, shorten <=8pt, shorten >=8pt] (n3) to[bend right=60] (n1);
+        \node[right] at ($(n3)!0.48!(n1)$) {\small $1<4$};
+
+        \node[above=2mm] at (n1) {\small 2. prohození};
+    \fi
+
+    %--------------------------------------------------
+    % stav 5 : výsledná halda
+    %--------------------------------------------------
+    \ifnum#1=5
+        \draw[heapedge] (n7) -- (n14);
+
+        \node[vertex, fill=green!25] at (n1)  {$1$};
+        \node[vertex,fill=white] at (n2)  {$6$};
+        \node[vertex,fill=white] at (n3)  {$4$};
+
+        \node[vertex,fill=white] at (n4)  {$8$};
+        \node[vertex,fill=white] at (n5)  {$12$};
+        \node[vertex,fill=white] at (n6)  {$10$};
+        \node[vertex,fill=white] at (n7)  {$9$};
+
+        \node[vertex,fill=white] at (n8)  {$14$};
+        \node[vertex,fill=white] at (n9)  {$15$};
+        \node[vertex,fill=white] at (n10) {$13$};
+        \node[vertex,fill=white] at (n11) {$16$};
+        \node[vertex,fill=white] at (n12) {$11$};
+        \node[vertex,fill=white] at (n13) {$18$};
+        \node[vertex,fill=white] at (n14) {$17$};
+
+        \node[vertexplain] at (n15) {$\varnothing$};
+
+        \node[above=2mm] at (n1) {\small výsledná minimová halda};
+    \fi
+
+\end{tikzpicture}%
+}

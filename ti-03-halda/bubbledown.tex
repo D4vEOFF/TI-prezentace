@@ -1,0 +1,164 @@
+\newcommand{\BubbleDownFrame}[1]{%
+\begin{tikzpicture}[x=0.78cm,y=0.95cm]
+
+    %--------------------------------------------------
+    % souřadnice vrcholů
+    %--------------------------------------------------
+    \coordinate (n1)  at (0,0);
+    \coordinate (n2)  at (-3.2,-1.5);
+    \coordinate (n3)  at ( 3.2,-1.5);
+
+    \coordinate (n4)  at (-4.8,-3.0);
+    \coordinate (n5)  at (-1.6,-3.0);
+    \coordinate (n6)  at ( 1.6,-3.0);
+    \coordinate (n7)  at ( 4.8,-3.0);
+
+    \coordinate (n8)  at (-5.6,-4.5);
+    \coordinate (n9)  at (-4.0,-4.5);
+    \coordinate (n10) at (-2.4,-4.5);
+    \coordinate (n11) at (-0.8,-4.5);
+    \coordinate (n12) at ( 0.8,-4.5);
+    \coordinate (n13) at ( 2.4,-4.5);
+    \coordinate (n14) at ( 4.0,-4.5);
+    \coordinate (n15) at ( 5.6,-4.5);
+
+    %--------------------------------------------------
+    % styl hran
+    %--------------------------------------------------
+    \tikzset{heapedge/.style={edge, shorten <=2pt, shorten >=2pt}}
+
+    %--------------------------------------------------
+    % společné hrany
+    %--------------------------------------------------
+    \draw[heapedge] (n1) -- (n2);
+    \draw[heapedge] (n1) -- (n3);
+
+    \draw[heapedge] (n2) -- (n4);
+    \draw[heapedge] (n2) -- (n5);
+    \draw[heapedge] (n3) -- (n6);
+    \draw[heapedge] (n3) -- (n7);
+
+    \draw[heapedge] (n4) -- (n8);
+    \draw[heapedge] (n4) -- (n9);
+    \draw[heapedge] (n5) -- (n10);
+    \draw[heapedge] (n5) -- (n11);
+    \draw[heapedge] (n6) -- (n12);
+    \draw[heapedge] (n6) -- (n13);
+    \draw[heapedge] (n7) -- (n14);
+
+    %--------------------------------------------------
+    % stav 1 : počáteční situace
+    %--------------------------------------------------
+    \ifnum#1=1
+        \node[vertex, fill=red!20]   at (n1)  {$20$};
+        \node[vertex, fill=white]    at (n2)  {$4$};
+        \node[vertex, fill=white]    at (n3)  {$6$};
+
+        \node[vertex, fill=white]    at (n4)  {$8$};
+        \node[vertex, fill=white]    at (n5)  {$9$};
+        \node[vertex, fill=white]    at (n6)  {$10$};
+        \node[vertex, fill=white]    at (n7)  {$11$};
+
+        \node[vertex, fill=white]    at (n8)  {$21$};
+        \node[vertex, fill=white]    at (n9)  {$22$};
+        \node[vertex, fill=white]    at (n10) {$13$};
+        \node[vertex, fill=white]    at (n11) {$14$};
+        \node[vertex, fill=white]    at (n12) {$12$};
+        \node[vertex, fill=white]    at (n13) {$18$};
+        \node[vertex, fill=white]    at (n14) {$15$};
+
+        \node[vertexplain] at (n15) {$\varnothing$};
+
+        \draw[diredge, color=red, shorten <=8pt, shorten >=8pt] (n1) to[bend right=60] (n2);
+        \node[left] at ($(n1)!0.5!(n2)$) {\small $4<20$};
+
+        \node[above=2mm] at (n1) {\small počáteční situace};
+    \fi
+
+    %--------------------------------------------------
+    % stav 2 : první prohození
+    %--------------------------------------------------
+    \ifnum#1=2
+        \node[vertex, fill=green!25] at (n1)  {$4$};
+        \node[vertex, fill=red!20]   at (n2)  {$20$};
+        \node[vertex, fill=white]    at (n3)  {$6$};
+
+        \node[vertex, fill=white]    at (n4)  {$8$};
+        \node[vertex, fill=white]    at (n5)  {$9$};
+        \node[vertex, fill=white]    at (n6)  {$10$};
+        \node[vertex, fill=white]    at (n7)  {$11$};
+
+        \node[vertex, fill=white]    at (n8)  {$21$};
+        \node[vertex, fill=white]    at (n9)  {$22$};
+        \node[vertex, fill=white]    at (n10) {$13$};
+        \node[vertex, fill=white]    at (n11) {$14$};
+        \node[vertex, fill=white]    at (n12) {$12$};
+        \node[vertex, fill=white]    at (n13) {$18$};
+        \node[vertex, fill=white]    at (n14) {$15$};
+
+        \node[vertexplain] at (n15) {$\varnothing$};
+
+        \draw[diredge, color=red, shorten <=8pt, shorten >=8pt] (n2) to[bend right=60] (n4);
+        \node[left] at ($(n2)!0.5!(n4)$) {\small $8<20$};
+
+        \node[above=2mm] at (n1) {\small 1. prohození};
+    \fi
+
+    %--------------------------------------------------
+    % stav 3 : druhé prohození
+    %--------------------------------------------------
+    \ifnum#1=3
+        \node[vertex, fill=white]    at (n1)  {$4$};
+        \node[vertex, fill=green!25] at (n2)  {$8$};
+        \node[vertex, fill=white]    at (n3)  {$6$};
+
+        \node[vertex, fill=red!20]   at (n4)  {$20$};
+        \node[vertex, fill=white]    at (n5)  {$9$};
+        \node[vertex, fill=white]    at (n6)  {$10$};
+        \node[vertex, fill=white]    at (n7)  {$11$};
+
+        \node[vertex, fill=white]    at (n8)  {$21$};
+        \node[vertex, fill=white]    at (n9)  {$22$};
+        \node[vertex, fill=white]    at (n10) {$13$};
+        \node[vertex, fill=white]    at (n11) {$14$};
+        \node[vertex, fill=white]    at (n12) {$12$};
+        \node[vertex, fill=white]    at (n13) {$18$};
+        \node[vertex, fill=white]    at (n14) {$15$};
+
+        \node[vertexplain] at (n15) {$\varnothing$};
+
+        % \draw[diredge, color=red, shorten <=8pt, shorten >=8pt] (n4) to[bend right=60] (n8);
+        \node[left] at ($(n4)!0.5!(n8)$) {\small $21>20$};
+        \node[right] at ($(n4)!0.5!(n9)$) {\small $22>20$};
+
+        \node[above=2mm] at (n1) {\small 2. prohození};
+    \fi
+
+    %--------------------------------------------------
+    % stav 4 : výsledná halda
+    %--------------------------------------------------
+    \ifnum#1=4
+        \node[vertex, fill=white]    at (n1)  {$4$};
+        \node[vertex, fill=white]    at (n2)  {$8$};
+        \node[vertex, fill=white]    at (n3)  {$6$};
+
+        \node[vertex, fill=green!25] at (n4)  {$20$};
+        \node[vertex, fill=white]    at (n5)  {$9$};
+        \node[vertex, fill=white]    at (n6)  {$10$};
+        \node[vertex, fill=white]    at (n7)  {$11$};
+
+        \node[vertex, fill=white]    at (n8)  {$21$};
+        \node[vertex, fill=white]    at (n9)  {$22$};
+        \node[vertex, fill=white]    at (n10) {$13$};
+        \node[vertex, fill=white]    at (n11) {$14$};
+        \node[vertex, fill=white]    at (n12) {$12$};
+        \node[vertex, fill=white]    at (n13) {$18$};
+        \node[vertex, fill=white]    at (n14) {$15$};
+
+        \node[vertexplain] at (n15) {$\varnothing$};
+
+        \node[above=2mm] at (n1) {\small výsledná minimová halda};
+    \fi
+
+\end{tikzpicture}%
+}
