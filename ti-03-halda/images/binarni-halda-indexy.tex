@@ -1,0 +1,22 @@
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+% vrcholy
+\node[vertex, label=above:{$i$}] (r) at (0,0) {};
+\node[vertex, label=above left:{$2i$}]  (l) at (-1.0,-1.4) {};
+\node[vertex, label=above right:{$2i+1$}] (p) at (1.0,-1.4) {};
+
+% plné hrany
+\draw[edge] (r) -- (l);
+\draw[edge] (r) -- (p);
+
+\draw[edge, dashed] (r) -- ++(-1.8,1.4);
+
+% naznačení pokračování levého podstromu
+\draw[edge, dashed] (l) -- ++(-0.7,-1.0);
+\draw[edge, dashed] (l) -- ++(0.7,-1.0);
+
+% naznačení pokračování pravého podstromu
+\draw[edge, dashed] (p) -- ++(-0.7,-1.0);
+\draw[edge, dashed] (p) -- ++(0.7,-1.0);
+
+\end{tikzpicture}

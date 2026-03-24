@@ -1,0 +1,52 @@
+\begin{tikzpicture}[x=1cm,y=0.8cm]
+
+% vrcholy
+\node[vertex, fill=white] (v1)  at (0,0)      {$1$};
+
+\node[vertex, fill=white] (v2)  at (-2.2,-1.4) {$2$};
+\node[vertex, fill=white] (v3)  at ( 2.2,-1.4) {$1$};
+
+\node[vertex, fill=white] (v4)  at (-3.3,-2.8) {$3$};
+\node[vertex, fill=white] (v5)  at (-1.1,-2.8) {$4$};
+\node[vertex, fill=white] (v6)  at ( 1.1,-2.8) {$3$};
+\node[vertex, fill=white] (v7)  at ( 3.3,-2.8) {$2$};
+
+\node[vertex, fill=white] (v8)  at (-4.1,-4.2) {$9$};
+\node[vertex, fill=white] (v9)  at (-2.5,-4.2) {$6$};
+\node[vertex, fill=white] (v10) at (-1.7,-4.2) {$7$};
+\node[vertex, fill=white] (v11) at (-0.6,-4.2) {$8$};
+\node[vertex, fill=white] (v12) at ( 0.7,-4.2) {$4$};
+
+% hrany
+\draw[edge] (v1) -- (v2);
+\draw[edge] (v1) -- (v3);
+
+\draw[edge] (v2) -- (v4);
+\draw[edge] (v2) -- (v5);
+\draw[edge] (v3) -- (v6);
+\draw[edge] (v3) -- (v7);
+
+\draw[edge] (v4) -- (v8);
+\draw[edge] (v4) -- (v9);
+\draw[edge] (v5) -- (v10);
+\draw[edge] (v5) -- (v11);
+\draw[edge] (v6) -- (v12);
+
+% horni popisky vrcholu
+\node[vertexplain] at ($(v1)+(0,0.6)$) {$1$};
+
+\node[vertexplain] at ($(v2)+(-0.18,0.6)$) {$2$};
+\node[vertexplain] at ($(v3)+( 0.18,0.6)$) {$3$};
+
+\node[vertexplain] at ($(v4)+(-0.18,0.6)$) {$4$};
+\node[vertexplain] at ($(v5)+( 0.18,0.6)$) {$5$};
+\node[vertexplain] at ($(v6)+(-0.18,0.6)$) {$6$};
+\node[vertexplain] at ($(v7)+( 0.18,0.6)$) {$7$};
+
+\node[vertexplain] at ($(v8)+(-0.10,0.6)$) {$8$};
+\node[vertexplain] at ($(v9)+( 0.10,0.6)$) {$9$};
+\node[vertexplain] at ($(v10)+(-0.18,0.6)$) {$10$};
+\node[vertexplain] at ($(v11)+( 0.18,0.6)$) {$11$};
+\node[vertexplain] at ($(v12)+(-0.10,0.6)$) {$12$};
+
+\end{tikzpicture}

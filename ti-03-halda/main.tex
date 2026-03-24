@@ -397,13 +397,131 @@
 
     \subsection{Rozbor časové složitosti}
 
+    \begin{frame}{Rozbor časové složitosti}
+        \begin{itemize}
+            \visible<2->{\item Rozebereme časovou složitost operací $\textsc{Insert}$ a $\textsc{ExtractMin}$.}
+            \visible<3->{\item Operace $\textsc{Min}$ má zjevně složitost konstantní.}
+            \visible<4->{\item Největší roli budou hrát procedury $\textsc{BubbleUp}$ a $\textsc{BubbleDown}$. Zbylé operace stihneme v konstantním čase.}
+            \visible<5->{\begin{timportantframe}[0.8\textwidth]
+                \begin{center}
+                    Každý vrchol "probublá" v nejhorším případě \textbf{všemi hladinami}.
+                \end{center}
+            \end{timportantframe}}
+            \visible<6->{\item Podle dokázaného tvrzení víme, že binární halda má celkově $\lceil\log_2(n+1)\rceil$ hladin.}
+            \visible<7->{\item Pak celková časová složitost činí
+            \begin{align*}
+                \bigO(\log_2(n+1))&=\bigO(\log_2(n+n))=\bigO(\log_2{2}+\log_2{n})=\bigO(\log_2{n}) \\
+                &=\bigO\left(\frac{1}{\log{2}}\cdot\log{n}\right)=\bigO(\log{n})
+            \end{align*}
+            }
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Rozdíl oproti poli}
+        \visible<2->{\begin{talertframe}[0.8\textwidth]
+            \begin{center}
+                Vylepšili jsme časovou složitost z \textbf{lineární} na \textbf{logaritmickou}!
+            \end{center}
+        \end{talertframe}}
+        \visible<3->{\begin{tnoticeframe}[0.8\textwidth]
+            \begin{center}
+                Nicméně jak můžeme efektivně haldu implementovat?
+            \end{center}
+        \end{tnoticeframe}}
+    \end{frame}
+
     \section{Implementace haldy pomocí pole}
 
     \titleframe{Halda jako pole}
 
+    \begin{frame}{Halda jako pole}
+        \begin{itemize}
+            \visible<2->{\item Binární haldu lze jistě implementovat jako graf.}
+            \visible<3->{\item Nicméně díky "pravidelnosti" haldy (díky haldovému uspořádání a tvaru) lze využít jednodušší strukturu $\implies$ \markdarkred{pole}.}
+            \visible<4->{\item Představme si, že vrcholy budeme číslovat od $1$ do $n$, přičemž začínáme od kořene a postupujeme po hladinách zleva doporava.}
+        \end{itemize}
+        \visible<5->{\begin{figure}
+            \centering
+            \input{images/binarni-halda-ocislovani.tex}
+        \end{figure}}
+    \end{frame}
+
+    \begin{frame}{Indexy dětí a rodiče}
+        \visible<2->{\begin{tnoticeframe}
+            \begin{center}
+                Všimněme si, že když rodič má index $i$, pak jeho levý syn má index $2i$ a pravý syn $2i+1$.
+            \end{center}
+        \end{tnoticeframe}}
+        \visible<3->{\begin{figure}
+            \centering
+            \input{images/binarni-halda-indexy.tex}
+        \end{figure}}
+        \visible<4->{\begin{tinfoframe}
+            \begin{center}
+                Resp. indexy dětí budou $2i+1$ a $2i+2$ v případě indexace od nuly.
+            \end{center}
+        \end{tinfoframe}}
+    \end{frame}
+
     \section{Další operace na haldě}
 
     \titleframe{Další operace}
+
+    \begin{frame}{Změna klíče ve vrcholu}
+        \begin{itemize}
+            \visible<2->{\item Ještě se nabízí otázka, jak zařídit udržování haldy v případě, že budeme chtít upravovat klíče ve vrcholech.}
+            \visible<3->{\item K tomu se nám opět budou operace $\textsc{BubbleUp}$ a $\textsc{BubbleDown}$.}
+            \visible<4->{\item Opět uvažujme, že pracujeme s minimovou binární haldou (pro maximovou bude postup analogický).}
+            \visible<5->{\item Budeme chtít přídat následující operace:}
+            \begin{itemize}
+                \visible<6->{\item $\textsc{Increase}(v,x)$ = zvýší hodnotu klíče $\key(v)$ o $x>0$.}
+                \visible<7->{\item $\textsc{Decrease}(v,x)$ = sníží hodnotu klíče $\key(v)$ o $x>0$.}
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Operace $\textsc{Increase}$ a $\textsc{Decrease}$}
+        \begin{itemize}
+            \visible<2->{\item Když budeme chtít zvýšit hodnotu klíče ve vrcholu $v$ o hodnotu $x$, opět se musíme zamyslet, jak se může strom "pokazit".}
+            \visible<3->{\item Pokud zvýšíme hodnotu klíče vrcholu $v$, pak v rodiči $r$ hodnota klíče stále splňuje požadovanou nerovnost:
+            \[\key(r)<\key(v)<\key(v)+x.\]}
+            \visible<4->{\item Ovšem mohlo se pokazit haldové uspořádání v synech upraveného vrcholu $v$.}
+            \visible<5->{\begin{talertframe}
+                \begin{center}
+                    To však již umíme vyřešit procedurou $\textsc{BubbleDown}$! Stačí nám tedy zavolat $\textsc{BubbleDown}(v)$ a jsme hotovi.
+                \end{center}
+            \end{talertframe}}
+            \visible<6->{\item Podobně budeme postupovat v případě operace $\textsc{Decrease}\implies$ zavoláme $\textsc{BubbleUp}(v)$.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Složitost operací $\textsc{Increase}$ a $\textsc{Decrease}$}
+        \visible<2->{Je zjevné, že nejdéle potrvájí procedury $\textsc{BubbleUp}$ a $\textsc{BubbleDown}$, o nicž víme, že trvají $\bigO(\log{n})$.}
+        \visible<3->{\begin{timportantframe}[0.8\textwidth]
+            \begin{center}
+                Tzn. i tyto operace mají \textbf{logaritmickou časovou složitost}.
+            \end{center}
+        \end{timportantframe}}
+    \end{frame}
+
+    \begin{frame}{Shrnutí}
+        \visible<2->{\begin{table}
+            \centering
+            \begin{tabular}{r|cc}
+                Operace                 & Pole          & Binární halda     \\ \hline
+                $\textsc{Min}$          & $\bigO(n)$    & $\bigO(\log{n})$  \\
+                $\textsc{Max}$          & $\bigO(n)$    & $\bigO(\log{n})$  \\
+                $\textsc{Insert}$       & $\bigO(1)$    & $\bigO(\log{n})$  \\
+                $\textsc{ExtractMin}$   & $\bigO(n)$    & $\bigO(\log{n})$  \\
+                $\textsc{ExtractMax}$   & $\bigO(n)$    & $\bigO(\log{n})$
+            \end{tabular}
+        \end{table}}
+        \visible<3->{\begin{tinfoframe}[\textwidth]
+            \begin{center}
+                Vidíme, že jsme si \markdarkred{polepšili} v případě \textbf{hledání minima/maxima} a jeho \textbf{odstranění}, ale na druhou stranu jsme si \markdarkred{pohoršili} při \textbf{vkládání nového vrcholu}.
+            \end{center}
+        \end{tinfoframe}}
+    \end{frame}
 
     \section{Zdroje}
 
@@ -411,7 +529,6 @@
         \begin{itemize}
             \item MAREŠ, Martin a~VALLA, Tomáš. \textit{Průvodce labyrintem algoritmů.} Druhé vydání. CZ.NIC. Praha: CZ.NIC, z.s.p.o., 2022. ISBN 978-80-88168-63-8.
             \item CORMEN, Thomas H.; LEISERSON, Charles Eric; RIVEST, Ronald L. a~STEIN, Clifford. \textit{Introduction to algorithms.} Fourth edition. Cambridge: The MIT Press, 2022. ISBN 978-0-262-04630-5.
-            \item MATOUŠEK, Jiří a NEŠETŘIL, Jaroslav. \textit{Kapitoly z diskrétní matematiky.} 4., upr. a dopl. vyd. V Praze: Karolinum, 2009. ISBN 978-80-246-1740-4.
         \end{itemize}
     \end{frame}
 
