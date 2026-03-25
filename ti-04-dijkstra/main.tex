@@ -466,6 +466,35 @@
         \end{itemize}
     \end{frame}
 
+    \begin{frame}{Nezápornost vah}
+        \visible<2->{\begin{talertframe}
+            \begin{center}
+                Všimněte si, že právě díky \textbf{nezápornosti vah} hran grafu na vstupu algoritmus funnguje!
+            \end{center}
+        \end{talertframe}}
+        \visible<3->{\begin{tnoticeframe}[\textwidth]
+            \begin{center}
+                Kdyby hrany mohly mít i záporné váhy, nejkratší sled mezi některými dvojicemi vrcholů vůbec nemusí existovat!
+            \end{center}
+        \end{tnoticeframe}}
+        \visible<4->{\begin{figure}
+            \centering
+            \input{images/zaporny-cyklus.tex}
+        \end{figure}}
+    \end{frame}
+
+    \begin{frame}{Nezápornost vah}
+        \visible<2->{\begin{talertframe}
+            \begin{center}
+                Dále se také může stát, že hledání nejkratší cesty přejde na problém hledání \textbf{Hamiltonovské cesty} $\implies$ $\classNP$-úplný problém.
+            \end{center}
+        \end{talertframe}}
+        \visible<3->{\begin{figure}
+            \centering
+            \input{images/hamilton.tex}
+        \end{figure}}
+    \end{frame}
+
     \section{Časová a prostorová složitost}
 
     \titleframe{Složitost algoritmu}
