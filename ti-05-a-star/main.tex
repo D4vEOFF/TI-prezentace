@@ -16,22 +16,55 @@
 
     \titleframe{Heuristická funkce}
 
+    \subsection{Motivace k použití heuristiky}
+
     \begin{frame}{Motivace k použití heuristiky}
         \begin{itemize}
-            \item Velmi často se stává, že hledáme nejkratší cestu pouze do jednoho vrcholu.
-            \item Tzn. máme graf ohodnocený graf $G=(V,E,w)$, počáteční vrchol $v_0\in V$ a nově \markdarkred{cílový vrchol $g\in V$}.
-            \item V \textbf{nezáporně ohodnoceném grafu} lze použít Dijkstrův algoritmus.
+            \visible<2->{\item Velmi často se stává, že hledáme nejkratší cestu pouze do jednoho vrcholu.}
+            \visible<3->{\item Tzn. máme graf ohodnocený graf $G=(V,E,w)$, počáteční vrchol $v_0\in V$ a nově \markdarkred{cílový vrchol $g\in V$}.}
+            \visible<4->{\item V \textbf{nezáporně ohodnoceném grafu} lze použít Dijkstrův algoritmus.}
         \end{itemize}
-        \begin{timportantframe}
+        \visible<5->{\begin{timportantframe}
             \begin{center}
                 Dijkstrův algoritmus nevyužívá znalosti cílového vrcholu $\implies$ všechny vrcholy "preferuje" stejně.
             \end{center}
-        \end{timportantframe}
-        \begin{tnoticeframe}
+        \end{timportantframe}}
+        \visible<6->{\begin{tnoticeframe}
             \begin{center}
                 Máme-li o cílovém vrcholu nějakou dodatečnou informaci, lze ji využít k \textbf{odhadu} vzdálenosti z libovolného vrcholu $v$ do $g$.
             \end{center}
-        \end{tnoticeframe}
+        \end{tnoticeframe}}
+    \end{frame}
+
+    \begin{frame}{Bludiště}
+        Např. v bludišti, kde vrcholy představují jednotlivá pole známe navíc i jejich souřadnice $(x,y)$.
+        \begin{figure}
+            \centering
+            \input{images/bludiste.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Eukleidovská vzdálenost}
+        \begin{figure}
+            \centering
+            \input{images/bludiste-euklid.tex}
+        \end{figure}
+        \begin{itemize}
+            \item Předpokládejme, že máme pole se souřadnicemi $(x,y)$ a cíl má souřadnice $(x_g,y_g)$.
+            \item \markdarkred{Eukleidovskou vzdáleností} těchto dvou polí se rozumí hodnota
+            \[\psi_e(x,y)=\sqrt{(x_g-x)^{2}+(y_g-y)^{2}}.\]
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Manhattanská vzdálenost}
+        \begin{figure}
+            \centering
+            \input{images/bludiste-manhattan.tex}
+        \end{figure}
+        \begin{itemize}
+            \item Vzdálenost ale můžeme měřit i jinak -- třeba tzn. \markdarkred{manhattanskou vzdáleností}:
+            \[\psi_m(x,y)=|x_g-x|+|y_g-y|.\]
+        \end{itemize}
     \end{frame}
 
     \section{Zdroje}

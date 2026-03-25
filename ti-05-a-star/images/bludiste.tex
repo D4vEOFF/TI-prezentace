@@ -1,0 +1,104 @@
+\begin{tikzpicture}[scale=0.4]
+
+    % rozměry mřížky
+    \def\W{18}
+    \def\H{14}
+
+    % styl jedné buňky
+    \tikzset{
+        cell/.style={draw=black, very thick, minimum size=6mm, inner sep=0pt}
+    }
+
+    % pomocné makro pro vyplnění buňky
+    % souřadnice: levý dolní roh je (0,0)
+    \newcommand{\fillcell}[3]{%
+        \fill[#3] (#1,#2) rectangle ++(1,1);
+        \draw[black, very thick] (#1,#2) rectangle ++(1,1);
+    }
+
+    % pozadí
+    \fill[gray!50] (0,0) rectangle (\W,\H);
+
+    % --- bílé průchozí buňky ---
+    % řádek 13
+    \foreach \x in {2,3,4,5,6,7,8,9,10,11,12,13,14,15,17} {
+        \fillcell{\x}{13}{white}
+    }
+
+    % řádek 12
+    \foreach \x in {0,3,5,7,10,15,16,17} {
+        \fillcell{\x}{12}{white}
+    }
+
+    % řádek 11
+    \foreach \x in {0,1,2,4,5,7,9,10,11,12,13,14,16} {
+        \fillcell{\x}{11}{white}
+    }
+
+    % řádek 10
+    \foreach \x in {1,2,3,5,7,9,13,15,16} {
+        \fillcell{\x}{10}{white}
+    }
+
+    % řádek 9
+    \foreach \x in {0,1,2,3,4,6,7,9,13,15,17} {
+        \fillcell{\x}{9}{white}
+    }
+
+    % řádek 8
+    \foreach \x in {1,3,5,6,7,9,10,11,12,13,14,15,17} {
+        \fillcell{\x}{8}{white}
+    }
+
+    % řádek 7
+    \foreach \x in {0,1,3,5,7,9,14,16} {
+        \fillcell{\x}{7}{white}
+    }
+
+    % řádek 6
+    \foreach \x in {0,6,7,8,9,15,16} {
+        \fillcell{\x}{6}{white}
+    }
+
+    % řádek 5
+    \foreach \x in {0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16} {
+        \fillcell{\x}{5}{white}
+    }
+
+    % řádek 4
+    \foreach \x in {0,3,10,11,13,15,16} {
+        \fillcell{\x}{4}{white}
+    }
+
+    % řádek 3
+    \foreach \x in {0,1,3,4,5,6,7,9,13,17} {
+        \fillcell{\x}{3}{white}
+    }
+
+    % řádek 2
+    \foreach \x in {0,3,7,8,9,10,11,12,13,14,15,17} {
+        \fillcell{\x}{2}{white}
+    }
+
+    % řádek 1
+    \foreach \x in {0,3,8,9,10,11,12,13,14,15,16} {
+        \fillcell{\x}{1}{white}
+    }
+
+    % řádek 0
+    \foreach \x in {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16} {
+        \fillcell{\x}{0}{white}
+    }
+
+    % start a cíl
+    \fillcell{0}{13}{green}
+    \fillcell{17}{0}{red}
+
+    % oranžový bod
+    \fill[orange] (7.5,7.5) circle (0.32);
+
+    % popisky os
+    \node at (\W/2,-0.9) {$x$};
+    \node at (-0.9,\H/2) {$y$};
+
+\end{tikzpicture}
