@@ -1,0 +1,136 @@
+\definecolor{dijunknown}{RGB}{190,190,190}
+\definecolor{dijopen}{RGB}{255,230,120}
+\definecolor{dijclosed}{RGB}{170,220,170}
+\definecolor{dijtree}{RGB}{255,0,0}
+
+\tikzset{
+    dijvertex/.style={
+        circle,
+        draw=black,
+        thick,
+        minimum size=10mm,
+        inner sep=0pt,
+        font=\scriptsize,
+        align=center
+    },
+    dijedge/.style={
+        thick
+    },
+    dijtreeedge/.style={
+        very thick,
+        draw=dijtree
+    },
+    dijbox/.style={
+        draw=black,
+        rounded corners=2mm,
+        fill=white,
+        inner sep=2mm,
+        font=\small
+    },
+    dijweight/.style={
+        fill=white,
+        inner sep=1pt,
+        font=\scriptsize
+    }
+}
+
+% vrchol s popiskem a aktuální vzdáleností
+% #1 = jméno souřadnice (v1,...,v10)
+% #2 = barva výplně
+% #3 = popisek vrcholu
+% #4 = aktuální odhad vzdálenosti
+\newcommand{\dijnode}[4]{%
+    \node[dijvertex, fill=#2] at (#1) {#3\\[1.2mm]#4};
+}
+
+% #1 = titulek kroku
+% #2 = obsah priority queue
+% #3 = zvýrazněné hrany stromu nejkratších cest
+% #4 = vrcholy
+\newcommand{\DijkstraState}[4]{%
+\begin{tikzpicture}[scale=0.8,x=1.55cm,y=1.2cm]
+
+    % --- souřadnice vrcholů ---
+    \coordinate (v1)  at (0,0);
+    \coordinate (v2)  at (1.9,1.6);
+    \coordinate (v3)  at (1.9,-1.8);
+    \coordinate (v4)  at (4.0,2.4);
+    \coordinate (v5)  at (4.0,0.8);
+    \coordinate (v6)  at (4.0,-0.9);
+    \coordinate (v7)  at (4.0,-2.6);
+    \coordinate (v8)  at (6.3,1.6);
+    \coordinate (v9)  at (6.3,-0.2);
+    \coordinate (v10) at (8.5,0.8);
+
+    % --- všechny hrany grafu ---
+    \draw[dijedge] (v1)-- node[dijweight] {$4$} (v2);
+    \draw[dijedge] (v1)-- node[dijweight] {$2$} (v3);
+    \draw[dijedge] (v1)-- node[dijweight] {$7$} (v5);
+
+    \draw[dijedge] (v2)-- node[dijweight] {$1$} (v3);
+    \draw[dijedge] (v2)-- node[dijweight] {$5$} (v4);
+    \draw[dijedge] (v2)-- node[dijweight] {$2$} (v5);
+    \draw[dijedge] (v2)-- node[dijweight] {$6$} (v6);
+
+    \draw[dijedge] (v3)-- node[dijweight] {$3$} (v5);
+    \draw[dijedge] (v3)-- node[dijweight] {$8$} (v6);
+    \draw[dijedge] (v3)-- node[dijweight] {$10$} (v7);
+
+    \draw[dijedge] (v4)-- node[dijweight] {$2$} (v5);
+    \draw[dijedge] (v4)-- node[dijweight] {$4$} (v8);
+
+    \draw[dijedge] (v5)-- node[dijweight] {$2$} (v6);
+    \draw[dijedge] (v5)-- node[dijweight] {$5$} (v8);
+    \draw[dijedge] (v5)-- node[dijweight] {$6$} (v9);
+
+    \draw[dijedge] (v6)-- node[dijweight] {$3$} (v7);
+    \draw[dijedge] (v6)-- node[dijweight] {$2$} (v9);
+
+    \draw[dijedge] (v7)-- node[dijweight] {$4$} (v9);
+
+    \draw[dijedge] (v8)-- node[dijweight] {$1$} (v9);
+    \draw[dijedge] (v8)-- node[dijweight] {$3$} (v10);
+
+    \draw[dijedge] (v9)-- node[dijweight] {$2$} (v10);
+
+    % --- zvýrazněné hrany stromu nejkratších cest ---
+    #3
+
+    % --- vrcholy ---
+    #4
+
+    % --- titulek kroku ---
+    \node[anchor=west, font=\bfseries] at (-0.2,3.3) {#1};
+
+    % --- legenda ---
+    % \node[
+    %     dijbox,
+    %     anchor=north west,
+    %     minimum width=4.8cm,
+    %     minimum height=3.7cm
+    % ] (legend) at (9.4,3.0) {};
+
+    % \node[dijvertex, fill=dijunknown, minimum size=4.5mm]
+    %     (leg1) at ([xshift=7mm,yshift=-7mm]legend.north west) {};
+    % \node[anchor=west] at ([xshift=8mm]leg1.east) {nezpracovaný};
+
+    % \node[dijvertex, fill=dijopen, minimum size=4.5mm]
+    %     (leg2) at ([yshift=-4mm]leg1.south) {};
+    % \node[anchor=west] at ([xshift=8mm]leg2.east) {odhadnutý};
+
+    % \node[dijvertex, fill=dijclosed, minimum size=4.5mm]
+    %     (leg3) at ([yshift=-4mm]leg2.south) {};
+    % \node[anchor=west] at ([xshift=8mm]leg3.east) {uzavřený};
+
+    % \draw[dijtreeedge] ([xshift=-2mm,yshift=-8mm]leg3.south west) -- ++(8mm,0);
+    % \node[anchor=west] at ([xshift=10mm,yshift=-8mm]leg3.south west)
+    %     {strom nejkratších cest};
+
+    % % --- priority queue ---
+    % \node[dijbox, anchor=north west, text width=4.8cm, align=left] at (9.4,-0.5) {%
+    %     \textbf{Priority queue:}\\[1mm]
+    %     #2
+    % };
+
+\end{tikzpicture}%
+}

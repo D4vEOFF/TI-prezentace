@@ -1,0 +1,29 @@
+\begin{tikzpicture}[scale=1.1]
+    % graph
+    \node[vertex] (a) at (0,0) {$v_1$};
+    \node[vertex] (b) at (2,1.5) {$v_2$};
+    \node[vertex] (c) at (4,0) {$v_3$};
+    \node[vertex] (d) at (1.2,-2) {$v_4$};
+    \node[vertex] (e) at (3.6,-2) {$v_5$};
+
+    \draw[edge] (a) -- node[above left] {$2$} (b);
+    \draw[edge] (b) -- node[above right] {$4$} (c);
+    \draw[edge] (a) -- node[left] {$5$} (d);
+    \draw[edge] (b) -- node[left] {$1$} (d);
+    \draw[edge] (b) -- node[right] {$3$} (e);
+    \draw[edge] (c) -- node[right] {$6$} (e);
+    \draw[edge] (d) -- node[below] {$2$} (e);
+
+    % mapping description
+    \node[anchor=west, align=left] at (5.3,0.0) {%
+        $\begin{aligned}
+        w(\set{v_1,v_2}) &= w(v_1,v_2) = 2,\\
+        w(\set{v_2,v_3}) &= w(v_2,v_3) = 4,\\
+        w(\set{v_1,v_4}) &= w(v_1,v_4) = 5,\\
+        w(\set{v_2,v_4}) &= w(v_2,v_4) = 1,\\
+        w(\set{v_2,v_5}) &= w(v_2,v_5) = 3,\\
+        w(\set{v_3,v_5}) &= w(v_3,v_5) = 6,\\
+        w(\set{v_4,v_5}) &= w(v_4,v_5) = 2
+        \end{aligned}$
+    };
+\end{tikzpicture}

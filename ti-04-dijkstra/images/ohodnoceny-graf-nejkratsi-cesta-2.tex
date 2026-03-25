@@ -1,0 +1,13 @@
+\begin{tikzpicture}[scale=1]
+    
+    \node[vertex] (U1) at (0.0,0.0) {$u_1$};
+    \node[vertex] (U2) at (1.5,1.5) {$u_2$};
+    \node[vertex] (U3) at (3.0,0.0) {$u_3$};
+    \node[vertex] (U4) at (4.5,0.0) {$u_4$};
+
+    \draw[edge,color=red] (U1) -- node[above,midway] {$1$} (U2);
+    \draw[edge,color=red] (U2) -- node[above,midway] {$1$} (U3);
+    \draw[edge,color=red] (U3) -- node[above,midway] {$4$} (U4);
+    \draw[edge] (U1) -- node[above,midway] {$3$} (U3);
+
+\end{tikzpicture}
