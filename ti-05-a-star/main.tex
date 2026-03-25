@@ -6,10 +6,41 @@
 \input{../assets/macros.tex}
 \input{../assets/listing.tex}
 
-\def\presentationtitle{Algoritmus A$^{*}$}
+\def\presentationtitle{Algoritmus $\textcolor{black}{\textup{A}^{*}}$}
 
 \begin{document}
 
     \input{../titlepage.tex}
+
+    \section{Heuristická funkce}
+
+    \titleframe{Heuristická funkce}
+
+    \begin{frame}{Motivace k použití heuristiky}
+        \begin{itemize}
+            \item Velmi často se stává, že hledáme nejkratší cestu pouze do jednoho vrcholu.
+            \item Tzn. máme graf ohodnocený graf $G=(V,E,w)$, počáteční vrchol $v_0\in V$ a nově \markdarkred{cílový vrchol $g\in V$}.
+            \item V \textbf{nezáporně ohodnoceném grafu} lze použít Dijkstrův algoritmus.
+        \end{itemize}
+        \begin{timportantframe}
+            \begin{center}
+                Dijkstrův algoritmus nevyužívá znalosti cílového vrcholu $\implies$ všechny vrcholy "preferuje" stejně.
+            \end{center}
+        \end{timportantframe}
+        \begin{tnoticeframe}
+            \begin{center}
+                Máme-li o cílovém vrcholu nějakou dodatečnou informaci, lze ji využít k \textbf{odhadu} vzdálenosti z libovolného vrcholu $v$ do $g$.
+            \end{center}
+        \end{tnoticeframe}
+    \end{frame}
+
+    \section{Zdroje}
+
+    \begin{frame}{Zdroje}
+        \begin{itemize}
+            \item MAREŠ, Martin a~VALLA, Tomáš. \textit{Průvodce labyrintem algoritmů.} Druhé vydání. CZ.NIC. Praha: CZ.NIC, z.s.p.o., 2022. ISBN 978-80-88168-63-8.
+            \item STUART J. RUSSELL a~NORVIG, Peter. \textit{Artificial intelligence: A~modern approach.} 3rd ed. Englewood Cliffs, N.J: Pearson, 2016. ISBN 8120323823.
+        \end{itemize}
+    \end{frame}
 
 \end{document}
