@@ -67,6 +67,32 @@
         \end{itemize}
     \end{frame}
 
+    \begin{frame}{Idea heuristiké funkce}
+        \begin{itemize}
+            \item Předpokládejme, že máme libovolný \textbf{nezáporně ohodnocený graf $G=(V,E,w)$} a libovolný vrchol $v\in V$ a cílový vrchol $g\in V$.
+            \item Zavedeme si tzv. \markdarkred{heuristickou funkci} $\mapping{\psi}{V}{\R_0^{+}}$ (nebo zkráceně jen \markdarkred{heuristika}).
+            \item $\psi(v)$ = odhad délky cesty z vrcholu $v$ do cíle $g$.
+        \end{itemize}
+        \begin{tnoticeframe}[0.8\textwidth]
+            \begin{center}
+                Pro cílový vrchol $g$ předpokládáme, že $\psi(g)=0$.
+            \end{center}
+        \end{tnoticeframe}
+    \end{frame}
+
+    \begin{frame}{Znázornění heuristiky}
+        \begin{figure}
+            \centering
+            \input{images/heuristika.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Heuristická funkce}
+        \begin{defblock}{Heuristická funkce}
+            Nechť $G=(V,E,w)$ je libovolný ohodnocený graf. Heuristická funkce je zobrazení $\mapping{f}{V}{\R_0^{+}}$, která je \markdarkred{přípustná} a \markdarkred{konzistentní}.
+        \end{defblock}
+    \end{frame}
+
     \section{Zdroje}
 
     \begin{frame}{Zdroje}
