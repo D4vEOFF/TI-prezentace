@@ -6,7 +6,7 @@
 \input{../assets/macros.tex}
 \input{../assets/listing.tex}
 
-\def\presentationtitle{Algoritmus $\textcolor{black}{\textup{A}^{*}}$}
+\def\presentationtitle{Algoritmus \Astar}
 
 \begin{document}
 
@@ -36,48 +36,52 @@
         \end{tnoticeframe}}
     \end{frame}
 
+    \subsection{Příklady heuristik}
+
     \begin{frame}{Bludiště}
-        Např. v bludišti, kde vrcholy představují jednotlivá pole známe navíc i jejich souřadnice $(x,y)$.
-        \begin{figure}
+        \visible<2->{Např. v bludišti, kde vrcholy představují jednotlivá pole známe navíc i jejich souřadnice $(x,y)$.}
+        \visible<3->{\begin{figure}
             \centering
             \input{images/bludiste.tex}
-        \end{figure}
+        \end{figure}}
     \end{frame}
 
     \begin{frame}{Eukleidovská vzdálenost}
-        \begin{figure}
+        \visible<2->{\begin{figure}
             \centering
             \input{images/bludiste-euklid.tex}
-        \end{figure}
+        \end{figure}}
         \begin{itemize}
-            \item Předpokládejme, že máme pole se souřadnicemi $(x,y)$ a cíl má souřadnice $(x_g,y_g)$.
-            \item \markdarkred{Eukleidovskou vzdáleností} těchto dvou polí se rozumí hodnota
-            \[\psi_e(x,y)=\sqrt{(x_g-x)^{2}+(y_g-y)^{2}}.\]
+            \visible<3->{\item Předpokládejme, že máme pole se souřadnicemi $(x,y)$ a cíl má souřadnice $(x_g,y_g)$.}
+            \visible<4->{\item \markdarkred{Eukleidovskou vzdáleností} těchto dvou polí se rozumí hodnota
+            \[\psi_e(x,y)=\sqrt{(x_g-x)^{2}+(y_g-y)^{2}}.\]}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Manhattanská vzdálenost}
-        \begin{figure}
+        \visible<2->{\begin{figure}
             \centering
             \input{images/bludiste-manhattan.tex}
-        \end{figure}
+        \end{figure}}
         \begin{itemize}
-            \item Vzdálenost ale můžeme měřit i jinak -- třeba tzn. \markdarkred{manhattanskou vzdáleností}:
-            \[\psi_m(x,y)=|x_g-x|+|y_g-y|.\]
+            \visible<3->{\item Vzdálenost ale můžeme měřit i jinak -- třeba tzn. \markdarkred{manhattanskou vzdáleností}:
+            \[\psi_m(x,y)=|x_g-x|+|y_g-y|.\]}
         \end{itemize}
     \end{frame}
 
+    \subsection{Idea heuristiké funkce}
+
     \begin{frame}{Idea heuristiké funkce}
         \begin{itemize}
-            \item Předpokládejme, že máme libovolný \textbf{nezáporně ohodnocený graf $G=(V,E,w)$} a libovolný vrchol $v\in V$ a cílový vrchol $g\in V$.
-            \item Zavedeme si tzv. \markdarkred{heuristickou funkci} $\mapping{\psi}{V}{\R_0^{+}}$ (nebo zkráceně jen \markdarkred{heuristika}).
-            \item $\psi(v)$ = odhad délky cesty z vrcholu $v$ do cíle $g$.
+            \visible<2->{\item Předpokládejme, že máme libovolný \textbf{nezáporně ohodnocený graf $G=(V,E,w)$} a libovolný vrchol $v\in V$ a cílový vrchol $g\in V$.}
+            \visible<3->{\item Zavedeme si tzv. \markdarkred{heuristickou funkci} $\mapping{\psi}{V}{\R_0^{+}}$ (nebo zkráceně jen \markdarkred{heuristika}).}
+            \visible<4->{\item $\psi(v)$ = odhad délky cesty z vrcholu $v$ do cíle $g$.}
         \end{itemize}
-        \begin{tnoticeframe}[0.8\textwidth]
+        \visible<5->{\begin{tnoticeframe}[0.8\textwidth]
             \begin{center}
                 Pro cílový vrchol $g$ předpokládáme, že $\psi(g)=0$.
             \end{center}
-        \end{tnoticeframe}
+        \end{tnoticeframe}}
     \end{frame}
 
     \begin{frame}{Znázornění heuristiky}
@@ -87,10 +91,100 @@
         \end{figure}
     \end{frame}
 
+    \subsection{Požadavky na heuristiku}
+
+    \begin{frame}{Co musí heuritika splňovat?}
+        \begin{itemize}
+            \visible<2->{\item \textbf{Přípustnost}}
+            \begin{itemize}
+                \visible<3->{\item Heuristika $\psi$ \markdarkred{nesmí nadhodnocovat} reálnou vzdálenost cesty do cílového vrcholu.}
+                \visible<4->{\item Symbolicky to znamená, že je-li $v$ aktuální vrchol a $g$ cílový vrchol, pak
+                \[\psi(s)\leqslant d(v,s).\]}
+            \end{itemize}
+            \visible<5->{\item \textbf{Konzistence}}
+            \begin{itemize}
+                \visible<6->{\item Mějme dvojici sousedních vrcholů $u$ a $v$ propojených hranou $uv$. Pak musí platit
+                \[\psi(u)\leqslant w(u,v)+\psi(v).\]}
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Konzitence heuristiky $\psi$}
+        \begin{figure}
+            \centering
+            \input{images/heuristika-konzitence.tex}
+        \end{figure}
+    \end{frame}
+
+    \subsection{Definice heuristiky}
+
     \begin{frame}{Heuristická funkce}
-        \begin{defblock}{Heuristická funkce}
-            Nechť $G=(V,E,w)$ je libovolný ohodnocený graf. Heuristická funkce je zobrazení $\mapping{f}{V}{\R_0^{+}}$, která je \markdarkred{přípustná} a \markdarkred{konzistentní}.
+        \begin{defblock}
+            Nechť $G=(V,E,w)$ je libovolný ohodnocený graf. Heuristická funkce je zobrazení $\mapping{\psi}{V}{\R_0^{+}}$, která je \markdarkred{přípustná} a \markdarkred{konzistentní}.
         \end{defblock}
+        \begin{talertframe}[0.8\textwidth]
+            \begin{center}
+                
+            \end{center}
+        \end{talertframe}
+    \end{frame}
+
+    \section{Algoritmus \Astar}
+
+    \begin{frame}{Idea algoritmu}
+        \begin{itemize}
+            \item Po vzoru Dijkstrova algoritmu budeme používat prioritní frontu pro následné vybírání vrcholů.
+            \begin{timportantframe}[0.8\textwidth]
+                \begin{center}
+                    Vrcholy však nebudeme vybírat podle hodnoty $D$, ale podle tzv. \textbf{$f$-skóre}.
+                \end{center}
+            \end{timportantframe}
+            \item Pro vrchol $v$ definujeme jeho $f$-skóre následovně:
+            \[f(v)=D(v)+\psi(v).\]
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Postup algoritmu \Astar}
+        \begin{itemize}
+            \visible<2->{\item Opět pracujeme se vzdálenostmi $D$.}
+            \visible<3->{\item A dále si nově musíme uchovávat i $f$-skóre všech vrcholů.}
+        \end{itemize}
+        \begin{enumerate}
+            \visible<4->{\item Inicializujeme hodnoty vzdáleností $D$ a $f$-skóre všech vrcholů na $\infty$ a stavy vrcholů označíme jako \textbf{nenalezené}.}
+            \visible<5->{\item \textbf{Otevřeme} počáteční vrchol $v_0$ a spočítáme $D(v_0),f(v_0)$.}
+            \visible<6->{\item Vybereme vrchol $v$ s nejmenším $f$-skóre (pokud nějaké existují). Pokud se jedná o cílový vrchol $g$, tak skončíme.}
+            \visible<7->{\item Pro každého souseda $s$ vrcholu $v$ se podíváme, zda jsme do něj nenašli kratší cestu. Pokud ano, \textbf{otevřeme} vrchol $s$ a aktualizujeme hodnoty $D(s)$, $f(s)$.}
+            \visible<8->{\item \textbf{Uzavíráme} vrchol $v$, vracíme se ke kroku 3 a postup opakujeme.}
+        \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Pseudokód algoritmu \Astar}
+        \begin{center}
+            \begin{minipage}{0.9\textwidth}
+                \begin{algorithm}[H]
+                    \caption{A*}
+                    \KwIn{Nezáporně ohodnocený graf $G=(V,E)$ a počáteční a cílový vrchol $v_0,g\in V$}
+                    % \tcp{Inicializace}
+                    \ForEach{\textup{vrchol $v\in V$}}{
+                        $stav(v)\gets\textit{nenalezený},\, D(v)\gets\infty,\,f(v)\gets\infty$
+                    }
+                    $stav(v_0)\gets\textit{otevřený},\, D(v_0)\gets 0,\,f(v_0)\gets\psi(v_0)$\\
+                    \While{\textup{existují otevřené vrcholy}}{
+                        $v\gets$ otevřený vrchol s~nejmenším $f$-skóre\\
+                        \lIf{$v=g$}{\Return{$D(v_G)$}}
+                        \ForEach{\textup{soused $s$ vrcholu $v$}}{
+                            % \tcp{Našli jsme lepší cestu}
+                            \If{$D(v)+w(v,w)<D(s)$}{
+                                $D(s)\gets D(v)+w(v,s)$\\
+                                $f(s)\gets D(v)+w(v,s)+\psi(s)$\\
+                                $stav(s)\gets\textit{otevřený}$
+                            }
+                        }
+                        $stav(v)\gets\textit{uzavřený}$
+                    }
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
     \end{frame}
 
     \section{Zdroje}
