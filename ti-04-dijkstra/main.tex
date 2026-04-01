@@ -18,13 +18,13 @@
 
     \begin{frame}{Co již známe\dots}
         \begin{itemize}
-            \item Již známe algoritmy BFS a DFS.
-            \item Algoritmus BFS nalezne vždy nejkratší cestu do všech \textbf{dosažitelných vrcholů} v \textbf{neohodnoceném grafu}.
-            \item Časová i prostorová složitost činí $\bigO(n+m)$.
+            \visible<2->{\item Již známe algoritmy BFS a DFS.}
+            \visible<3->{\item Algoritmus BFS nalezne vždy nejkratší cestu do všech \textbf{dosažitelných vrcholů} v \textbf{neohodnoceném grafu}.}
+            \visible<4->{\item Časová i prostorová složitost činí $\bigO(n+m)$.}
         \end{itemize}
-        \begin{tnoticeframe}
+        \visible<5->{\begin{tnoticeframe}
             Co když budeme hledat cestu v \textbf{ohodnoceném grafu}?
-        \end{tnoticeframe}
+        \end{tnoticeframe}}
     \end{frame}
 
     \section{Ohodnocené grafy}
@@ -52,15 +52,15 @@
     \subsection{Vzdálenost vrcholů v ohodnoceném grafu}
 
     \begin{frame}{Vzdálenost vrcholů v ohodnoceném grafu}
-        \begin{defblock}
+        \visible<2->{\begin{defblock}
             Nechť $G=(V,E,w)$ je ohodnocený graf, vrcholy $u,v\in V$. Pak vzdáleností vrcholů $u,v$ rozumíme hodnotu
             \[d(u,v)=\min\set{\sum_{e\in P,e\in E}w(e):\text{$P$ je cesta z $u$ do $v$}}.\]
             Pokud $v$ není z $u$ dosažitelný, pak definujeme $d(u,v)=\infty$.
-        \end{defblock}
-        \begin{figure}
+        \end{defblock}}
+        \visible<3->{\begin{figure}
             \centering
             \input{images/ohodnoceny-graf-vzdalenost-vrcholu.tex}
-        \end{figure}
+        \end{figure}}
     \end{frame}
 
     \subsection{Hledání cest v ohodnocených grafech}
