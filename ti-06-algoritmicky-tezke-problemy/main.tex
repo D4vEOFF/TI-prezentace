@@ -12,4 +12,55 @@
 
     \input{../titlepage.tex}
 
+    \section{Těžké problémy}
+
+    \begin{frame}{S čím jsme se již setkali\dots}
+        \begin{itemize}
+            \visible<2->{\item Řazení prvků v poli $\implies\bigO(n\log{n})$.}
+            \visible<3->{\item Hledání nejkratší cesty v neohodnoceném grafu $\implies\bigO(n+m)$.}
+            \visible<4->{\item Hledání nejkratší cesty v nezáporně ohodnoceném grafu $\implies\bigO((n+m)\log{n})$.}
+            \visible<5->{\item Sekvenční vyhledávání v poli $\implies\bigO(n)$.}
+            \visible<6->{\item Binární vyhledávání v poli $\implies\bigO(\log{n})$.}
+            \visible<7->{\item Vyhledávání v textu $\implies\bigO((n-m)m)$, kde $m$ je délka hledaného slova.}
+        \end{itemize}
+        \visible<8->{\begin{tnoticeframe}[0.9\textwidth]
+            \begin{center}
+                Všechny tyto problémy umíme řešit obecně v čase $\bigO(n^{k})$, kde $k\in\N$.
+            \end{center}
+        \end{tnoticeframe}}
+    \end{frame}
+
+    \begin{frame}{Formální pojetí problémů}
+        \begin{itemize}
+            \visible<2->{\item Omezíme se na tzv. \markdarkred{rozhodovací problémy}.}
+            \visible<3->{\begin{tinfoframe}[0.9\textwidth]
+                \begin{center}
+                    Rozhodovací problém je takový problém, na jehož výstupní hodnoty jsou \textbf{ANO} a \textbf{NE}.
+                \end{center}
+            \end{tinfoframe}}
+            \visible<4->{\item Označme si $\set{0,1}^{*}$ \textbf{všechny konečné posloupnosti nul a jedniček}.}
+            \visible<5->{\item Rozhodovacím problémem formálně rozumíme zobrazení
+            \[\mapping{L}{\set{0,1}^{*}}{\set{0,1}}.\]}
+            \visible<6->{\begin{timportantframe}[0.9\textwidth]
+                \begin{center}
+                    Tzn. vstupní data kódujeme \textbf{binárně}, tj. pomocí nul a jedniček.
+                \end{center}
+            \end{timportantframe}}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Efektivně řešitelné problémy}
+        \begin{tnoticeframe}
+            S jistou rezervou lze říci, že problémy, které lze řešit algoritmem, který běží v polynomiálním čase vzhledem k délce vstupu, jsou \textbf{"efektivně řešitelné"}.
+        \end{tnoticeframe}
+        Co představuje zmíněnou rezervu?
+        \begin{itemize}
+            \item Algoritmus běžící v čase $\bigO(n^{1000})$ je polynomiální, ale v praxi nejspíše jen sotva použitelný.
+            \item Naopak algoritmus se složitostí $\bigO(0{,}001^{n})$ je sice exponenciálním, ale je jistě použitelný.
+        \end{itemize}
+        \begin{talertframe}[0.8\textwidth]
+            
+        \end{talertframe}
+    \end{frame}
+
 \end{document}
