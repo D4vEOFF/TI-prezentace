@@ -415,22 +415,22 @@
     \begin{frame}{Správnost algoritmu \Astar}
         \begin{columns}
             \column{40mm}
-            \begin{figure}
+            \visible<2->{\begin{figure}
                 \centering
                 \input{images/spravnost-astar.tex}
-            \end{figure}
+            \end{figure}}
             
             \column{\dimexpr\linewidth-40mm-5mm}
             \begin{itemize}
-                \item Protože heuristika $\psi$ je konzistentní, musí platit
-                \[\psi(v^{\prime})\leqslant w(v,v^{\prime})+\psi(v).\]
-                \item Pro $f(v^{\prime})$ tedy platí následující:
+                \visible<3->{\item Protože heuristika $\psi$ je konzistentní, musí platit
+                \[\psi(v^{\prime})\leqslant w(v,v^{\prime})+\psi(v).\]}
+                \visible<4->{\item Pro $f(v^{\prime})$ tedy platí následující:
                 \begin{align*}
                     f(v^{\prime})&=D(v^{\prime})+\psi(v^{\prime})\leqslant D(v^{\prime})+w(v,v^{\prime})+\psi(v) \\
                     &=D(v)+\psi(v)=f(v).
-                \end{align*}
-                \item Celkově $f(v^{\prime})<f(v)$.
-                \item To však znamená, že algoritmus by upřednostnil buď $v^{\prime}$, a nebo jiný vrchol různý od $v$, což je \markdarkred{spor}.
+                \end{align*}}
+                \visible<5->{\item Celkově $f(v^{\prime})<f(v)$.}
+                \visible<6->{\item To však znamená, že algoritmus by upřednostnil buď $v^{\prime}$, a nebo jiný vrchol různý od $v$, což je \markdarkred{spor}.}
             \end{itemize}
         \end{columns}
     \end{frame}
