@@ -1,0 +1,358 @@
+\definecolor{astarunknown}{RGB}{190,190,190}
+\definecolor{astaropen}{RGB}{255,230,120}
+\definecolor{astarclosed}{RGB}{170,220,170}
+\definecolor{astartree}{RGB}{255,0,0}
+
+\tikzset{
+    astarmazevertex/.style={
+        rectangle,
+        draw=black,
+        thick,
+        minimum size=8.5mm,
+        inner sep=0pt,
+        font=\scriptsize,
+        align=center
+    },
+    astarmazewall/.style={
+        rectangle,
+        draw=black,
+        thick,
+        fill=black,
+        minimum size=8.5mm,
+        inner sep=0pt
+    },
+    astarmazeedge/.style={
+        very thick,
+        draw=astartree
+    },
+    astarmazeinfo/.style={
+        draw=black,
+        rounded corners=2mm,
+        fill=white,
+        inner sep=2mm,
+        font=\small
+    }
+}
+
+% obecná buňka
+% #1 = x
+% #2 = y
+% #3 = výplň
+% #4 = obsah
+\newcommand{\astarcell}[4]{%
+    \node[astarmazevertex, fill=#3] at (#1,#2) {#4};
+}
+
+% zeď
+\newcommand{\astarwall}[2]{%
+    \node[astarmazewall] at (#1,#2) {};
+}
+
+% zvýrazněná hrana aktuálního stromu
+\newcommand{\astargridedge}[4]{%
+    \draw[astarmazeedge] (#1,#2) -- (#3,#4);
+}
+
+% běžná označená buňka s g|f
+% #1 = x, #2 = y, #3 = barva, #4 = text nahoře, #5 = g, #6 = f
+\newcommand{\astarstatecell}[6]{%
+    \astarcell{#1}{#2}{#3}{#4\\[-1.0mm]\tiny $#5\,|\,#6$}
+}
+
+% neoznačený vrchol jen s g|f
+% #1 = x, #2 = y, #3 = barva, #4 = g, #5 = f
+\newcommand{\astarplaincell}[5]{%
+    \astarcell{#1}{#2}{#3}{\tiny $#4\,|\,#5$}
+}
+
+% jedna scéna animace
+% #1 = titulek
+% #2 = obsah open množiny
+% #3 = zvýrazněné hrany
+% #4 = barevně zvýrazněné buňky
+\newcommand{\AStarMazeState}[4]{%
+\begin{tikzpicture}[x=9mm,y=9mm]
+
+    % -------------------------------------------------
+    % základní mřížka 6 x 5
+    % -------------------------------------------------
+    \foreach \x in {0,...,5}{
+        \foreach \y in {0,...,4}{
+            \node[astarmazevertex, fill=astarunknown] at (\x,\y) {};
+        }
+    }
+
+    % zdi
+    \astarwall{0}{1}
+    \astarwall{1}{1}
+    \astarwall{3}{0}
+    \astarwall{3}{1}
+    \astarwall{1}{3}
+    \astarwall{2}{3}
+    \astarwall{3}{3}
+    \astarwall{4}{3}
+
+    % souřadnicové popisky
+    \foreach \x in {0,...,5}{
+        \node[font=\scriptsize] at (\x,-0.75) {$\x$};
+    }
+    \foreach \y in {0,...,4}{
+        \node[font=\scriptsize] at (-0.75,\y) {$\y$};
+    }
+
+    % titulek
+    \node[anchor=west, font=\bfseries] at (-0.8,5.1) {#1};
+
+    % info box
+    \node[
+        astarmazeinfo,
+        anchor=north west,
+        text width=5.2cm,
+        align=left
+    ] at (6.2,4.7) {%
+        \textbf{Start:} $s=(0,0)$\\
+        \textbf{Cíl:} $g=(5,4)$\\[1mm]
+        \textbf{Heuristika:}\\
+        $\psi_m(x,y)=|x-5|+|y-4|$\\[1mm]
+        \textbf{V buňce:} $D\,|\, f$\\[1mm]
+        \textbf{Otevřené:}\\
+        #2
+    };
+
+    % aktuální strom
+    #3
+
+    % zvýrazněné buňky
+    #4
+
+\end{tikzpicture}%
+}
+
+% ---------------------------------
+% Stav 1: inicializace
+% ---------------------------------
+\newcommand{\AStarMazeTreeA}{}
+
+\newcommand{\AStarMazeNodesA}{%
+    \astarstatecell{0}{0}{astaropen}{$s$}{0}{9}
+    \astarcell{5}{4}{astarunknown}{\scriptsize $g$}
+}
+
+% ---------------------------------
+% Stav 2: po zpracování (0,0)
+% ---------------------------------
+\newcommand{\AStarMazeTreeB}{%
+    \astargridedge{0}{0}{1}{0}
+}
+
+\newcommand{\AStarMazeNodesB}{%
+    \astarstatecell{0}{0}{astarclosed}{$s$}{0}{9}
+    \astarplaincell{1}{0}{astaropen}{1}{9}
+    \astarcell{5}{4}{astarunknown}{\scriptsize $g$}
+}
+
+% ---------------------------------
+% Stav 3: po zpracování (1,0)
+% ---------------------------------
+\newcommand{\AStarMazeTreeC}{%
+    \astargridedge{0}{0}{1}{0}
+    \astargridedge{1}{0}{2}{0}
+}
+
+\newcommand{\AStarMazeNodesC}{%
+    \astarstatecell{0}{0}{astarclosed}{$s$}{0}{9}
+    \astarplaincell{1}{0}{astarclosed}{1}{9}
+    \astarplaincell{2}{0}{astaropen}{2}{9}
+    \astarcell{5}{4}{astarunknown}{\scriptsize $g$}
+}
+
+% ---------------------------------
+% Stav 4: po zpracování (2,0)
+% ---------------------------------
+\newcommand{\AStarMazeTreeD}{%
+    \astargridedge{0}{0}{1}{0}
+    \astargridedge{1}{0}{2}{0}
+    \astargridedge{2}{0}{2}{1}
+}
+
+\newcommand{\AStarMazeNodesD}{%
+    \astarstatecell{0}{0}{astarclosed}{$s$}{0}{9}
+    \astarplaincell{1}{0}{astarclosed}{1}{9}
+    \astarplaincell{2}{0}{astarclosed}{2}{9}
+    \astarplaincell{2}{1}{astaropen}{3}{9}
+    \astarcell{5}{4}{astarunknown}{\scriptsize $g$}
+}
+
+% ---------------------------------
+% Stav 5: po zpracování (2,1)
+% ---------------------------------
+\newcommand{\AStarMazeTreeE}{%
+    \astargridedge{0}{0}{1}{0}
+    \astargridedge{1}{0}{2}{0}
+    \astargridedge{2}{0}{2}{1}
+    \astargridedge{2}{1}{2}{2}
+}
+
+\newcommand{\AStarMazeNodesE}{%
+    \astarstatecell{0}{0}{astarclosed}{$s$}{0}{9}
+    \astarplaincell{1}{0}{astarclosed}{1}{9}
+    \astarplaincell{2}{0}{astarclosed}{2}{9}
+    \astarplaincell{2}{1}{astarclosed}{3}{9}
+    \astarplaincell{2}{2}{astaropen}{4}{9}
+    \astarcell{5}{4}{astarunknown}{\scriptsize $g$}
+}
+
+% ---------------------------------
+% Stav 6: po zpracování (2,2)
+% ---------------------------------
+\newcommand{\AStarMazeTreeF}{%
+    \astargridedge{0}{0}{1}{0}
+    \astargridedge{1}{0}{2}{0}
+    \astargridedge{2}{0}{2}{1}
+    \astargridedge{2}{1}{2}{2}
+    \astargridedge{2}{2}{3}{2}
+    \astargridedge{2}{2}{1}{2}
+}
+
+\newcommand{\AStarMazeNodesF}{%
+    \astarstatecell{0}{0}{astarclosed}{$s$}{0}{9}
+    \astarplaincell{1}{0}{astarclosed}{1}{9}
+    \astarplaincell{2}{0}{astarclosed}{2}{9}
+    \astarplaincell{2}{1}{astarclosed}{3}{9}
+    \astarplaincell{2}{2}{astarclosed}{4}{9}
+    \astarplaincell{3}{2}{astaropen}{5}{9}
+    \astarplaincell{1}{2}{astaropen}{5}{11}
+    \astarcell{5}{4}{astarunknown}{\scriptsize $g$}
+}
+
+% ---------------------------------
+% Stav 7: po zpracování (3,2)
+% ---------------------------------
+\newcommand{\AStarMazeTreeG}{%
+    \astargridedge{0}{0}{1}{0}
+    \astargridedge{1}{0}{2}{0}
+    \astargridedge{2}{0}{2}{1}
+    \astargridedge{2}{1}{2}{2}
+    \astargridedge{2}{2}{3}{2}
+    \astargridedge{2}{2}{1}{2}
+    \astargridedge{3}{2}{4}{2}
+}
+
+\newcommand{\AStarMazeNodesG}{%
+    \astarstatecell{0}{0}{astarclosed}{$s$}{0}{9}
+    \astarplaincell{1}{0}{astarclosed}{1}{9}
+    \astarplaincell{2}{0}{astarclosed}{2}{9}
+    \astarplaincell{2}{1}{astarclosed}{3}{9}
+    \astarplaincell{2}{2}{astarclosed}{4}{9}
+    \astarplaincell{3}{2}{astarclosed}{5}{9}
+    \astarplaincell{4}{2}{astaropen}{6}{9}
+    \astarplaincell{1}{2}{astaropen}{5}{11}
+    \astarcell{5}{4}{astarunknown}{\scriptsize $g$}
+}
+
+% ---------------------------------
+% Stav 8: po zpracování (4,2)
+% ---------------------------------
+\newcommand{\AStarMazeTreeH}{%
+    \astargridedge{0}{0}{1}{0}
+    \astargridedge{1}{0}{2}{0}
+    \astargridedge{2}{0}{2}{1}
+    \astargridedge{2}{1}{2}{2}
+    \astargridedge{2}{2}{3}{2}
+    \astargridedge{2}{2}{1}{2}
+    \astargridedge{3}{2}{4}{2}
+    \astargridedge{4}{2}{5}{2}
+    \astargridedge{4}{2}{4}{1}
+}
+
+\newcommand{\AStarMazeNodesH}{%
+    \astarstatecell{0}{0}{astarclosed}{$s$}{0}{9}
+    \astarplaincell{1}{0}{astarclosed}{1}{9}
+    \astarplaincell{2}{0}{astarclosed}{2}{9}
+    \astarplaincell{2}{1}{astarclosed}{3}{9}
+    \astarplaincell{2}{2}{astarclosed}{4}{9}
+    \astarplaincell{3}{2}{astarclosed}{5}{9}
+    \astarplaincell{4}{2}{astarclosed}{6}{9}
+    \astarplaincell{5}{2}{astaropen}{7}{9}
+    \astarplaincell{4}{1}{astaropen}{7}{11}
+    \astarplaincell{1}{2}{astaropen}{5}{11}
+    \astarcell{5}{4}{astarunknown}{\scriptsize $g$}
+}
+
+% ---------------------------------
+% Stav 9: po zpracování (5,2)
+% ---------------------------------
+\newcommand{\AStarMazeTreeI}{%
+    \astargridedge{0}{0}{1}{0}
+    \astargridedge{1}{0}{2}{0}
+    \astargridedge{2}{0}{2}{1}
+    \astargridedge{2}{1}{2}{2}
+    \astargridedge{2}{2}{3}{2}
+    \astargridedge{2}{2}{1}{2}
+    \astargridedge{3}{2}{4}{2}
+    \astargridedge{4}{2}{5}{2}
+    \astargridedge{4}{2}{4}{1}
+    \astargridedge{5}{2}{5}{3}
+    \astargridedge{5}{2}{5}{1}
+}
+
+\newcommand{\AStarMazeNodesI}{%
+    \astarstatecell{0}{0}{astarclosed}{$s$}{0}{9}
+    \astarplaincell{1}{0}{astarclosed}{1}{9}
+    \astarplaincell{2}{0}{astarclosed}{2}{9}
+    \astarplaincell{2}{1}{astarclosed}{3}{9}
+    \astarplaincell{2}{2}{astarclosed}{4}{9}
+    \astarplaincell{3}{2}{astarclosed}{5}{9}
+    \astarplaincell{4}{2}{astarclosed}{6}{9}
+    \astarplaincell{5}{2}{astarclosed}{7}{9}
+    \astarplaincell{5}{3}{astaropen}{8}{9}
+    \astarplaincell{5}{1}{astaropen}{8}{11}
+    \astarplaincell{4}{1}{astaropen}{7}{11}
+    \astarplaincell{1}{2}{astaropen}{5}{11}
+    \astarcell{5}{4}{astarunknown}{\scriptsize $g$}
+}
+
+% ---------------------------------
+% Stav 10: po zpracování (5,3)
+% ---------------------------------
+\newcommand{\AStarMazeTreeJ}{%
+    \astargridedge{0}{0}{1}{0}
+    \astargridedge{1}{0}{2}{0}
+    \astargridedge{2}{0}{2}{1}
+    \astargridedge{2}{1}{2}{2}
+    \astargridedge{2}{2}{3}{2}
+    \astargridedge{2}{2}{1}{2}
+    \astargridedge{3}{2}{4}{2}
+    \astargridedge{4}{2}{5}{2}
+    \astargridedge{4}{2}{4}{1}
+    \astargridedge{5}{2}{5}{3}
+    \astargridedge{5}{2}{5}{1}
+    \astargridedge{5}{3}{5}{4}
+}
+
+\newcommand{\AStarMazeNodesJ}{%
+    \astarstatecell{0}{0}{astarclosed}{$s$}{0}{9}
+    \astarplaincell{1}{0}{astarclosed}{1}{9}
+    \astarplaincell{2}{0}{astarclosed}{2}{9}
+    \astarplaincell{2}{1}{astarclosed}{3}{9}
+    \astarplaincell{2}{2}{astarclosed}{4}{9}
+    \astarplaincell{3}{2}{astarclosed}{5}{9}
+    \astarplaincell{4}{2}{astarclosed}{6}{9}
+    \astarplaincell{5}{2}{astarclosed}{7}{9}
+    \astarplaincell{5}{3}{astarclosed}{8}{9}
+    \astarplaincell{5}{1}{astaropen}{8}{11}
+    \astarplaincell{4}{1}{astaropen}{7}{11}
+    \astarplaincell{1}{2}{astaropen}{5}{11}
+    \astarstatecell{5}{4}{astaropen}{$g$}{9}{9}
+}
+
+% ---------------------------------
+% Stav 11: vybereme cíl a končíme
+% ---------------------------------
+\newcommand{\AStarMazeTreeK}{%
+    \AStarMazeTreeJ
+}
+
+\newcommand{\AStarMazeNodesK}{%
+    \AStarMazeNodesJ
+}

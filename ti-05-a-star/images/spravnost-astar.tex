@@ -1,9 +1,9 @@
-\begin{tikzpicture}[scale=1.0, line cap=round, line join=round]
+\begin{tikzpicture}[scale=0.7, line cap=round, line join=round]
     % vertices
-    \node[vertex] at (0.6,4.0)   (g)  {$g$};
+    \node[vertex] at (0.6,5.0)   (g)  {$g$};
     \node[vertex] at (-0.7,1.55) (v)  {$v$};
-    \node[vertex] at (3.2,2.25)  (u)  {$u$};
-    \node[vertex] at (3.2,-0.35) (s0) {$v_0$};
+    \node[vertex] at (3.2,2.25)  (u)  {$v^{\prime}$};
+    \node[vertex] at (3.2,-1.35) (s0) {$v_0$};
 
     % black curves D(v), D(u)
     \draw
@@ -17,12 +17,12 @@
         (u) .. controls (2.65,1.95) and (2.75,1.45) .. (3.10,1.20)
             .. controls (3.55,0.90) and (3.55,0.35) .. (3.05,0.10)
             .. controls (2.70,-0.05) and (2.85,-0.25) .. (s0);
-    \node[right=0.35cm] at (3.28,1.20) {$D(u)$};
+    \node[right=0.35cm] at (0.78,1.20) {$D(v^{\prime})$};
 
     % red edge from u to v
     \draw[edge, darkred]
         (u) .. controls (2.25,2.05) and (1.15,1.80) .. (v);
-    \node[darkred, above] at (1.35,2.00) {$w(u,v)$};
+    \node[darkred, above] at (1.35,2.00) {$w(v,v^{\prime})$};
 
     % red dashed psi(v) -- corrected to end in g
     \draw[edge, darkred, dashed]
@@ -38,13 +38,6 @@
             .. controls (2.80,3.25) and (2.30,2.75) .. (1.95,2.45)
             .. controls (2.30,2.65) and (2.75,2.95) .. (3.05,3.00)
             .. controls (3.45,3.05) and (3.50,2.65) .. (3.15,2.35);
-    \node[darkblue, above] at (2.55,3.55) {$\psi(u)$};
+    \node[darkblue, above] at (2.55,3.55) {$\psi(v^{\prime})$};
 
-    % large red consistency arc
-    %   \draw[edge, darkred]
-    %     (4.85,2.95)
-    %       .. controls (4.35,2.15) and (4.15,1.65) .. (3.45,1.95)
-    %       .. controls (2.60,2.35) and (1.95,3.70) .. (0.95,3.95)
-    %       .. controls (0.25,4.10) and (-0.10,3.65) .. (-0.55,2.95);
-    \node[darkred, right] at (4.00,2.90) {$\psi(u)\leqslant \ell(u,v)+\psi(v)$};
 \end{tikzpicture}

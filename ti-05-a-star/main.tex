@@ -6,6 +6,9 @@
 \input{../assets/macros.tex}
 \input{../assets/listing.tex}
 
+\input{astar.tex}
+\input{astar2.tex}
+
 \def\presentationtitle{Algoritmus \Astar}
 
 \begin{document}
@@ -119,17 +122,19 @@
     \subsection{Definice heuristiky}
 
     \begin{frame}{Heuristická funkce}
-        \begin{defblock}
-            Nechť $G=(V,E,w)$ je libovolný ohodnocený graf. Heuristická funkce je zobrazení $\mapping{\psi}{V}{\R_0^{+}}$, která je \markdarkred{přípustná} a \markdarkred{konzistentní}.
-        \end{defblock}
-        \begin{talertframe}[0.8\textwidth]
-            \begin{center}
-                
-            \end{center}
-        \end{talertframe}
+        \visible<2->{\begin{defblock}
+            Nechť $G=(V,E,w)$ je libovolný ohodnocený graf a $g\in V$ cílový vrchol. Heuristická funkce je zobrazení $\mapping{\psi}{V}{\R_0^{+}}$, která je \markdarkred{přípustná}, \markdarkred{konzistentní} a navíc $\psi(g)=0$.
+        \end{defblock}}
+        \visible<3->{\begin{talertframe}[0.8\textwidth]
+            Speciálně, když položíme $\psi(v)=0$ pro každý vrchol $v\in V$, tak dostaneme původní Dijkstrův algoritmus.
+        \end{talertframe}}
     \end{frame}
 
     \section{Algoritmus \Astar}
+
+    \titleframe{Algoritmus \Astar}
+
+    \subsection{Idea algoritmu}
 
     \begin{frame}{Idea algoritmu}
         \begin{itemize}
@@ -143,6 +148,8 @@
             \[f(v)=D(v)+\psi(v).\]
         \end{itemize}
     \end{frame}
+
+    \subsection{Postup algoritmu \Astar}
 
     \begin{frame}{Postup algoritmu \Astar}
         \begin{itemize}
@@ -158,11 +165,13 @@
         \end{enumerate}
     \end{frame}
 
+    \subsection{Pseudokód algoritmu \Astar}
+
     \begin{frame}{Pseudokód algoritmu \Astar}
         \begin{center}
             \begin{minipage}{0.9\textwidth}
                 \begin{algorithm}[H]
-                    \caption{A*}
+                    \caption{\Astar}
                     \KwIn{Nezáporně ohodnocený graf $G=(V,E)$ a počáteční a cílový vrchol $v_0,g\in V$}
                     % \tcp{Inicializace}
                     \ForEach{\textup{vrchol $v\in V$}}{
@@ -185,6 +194,245 @@
                 \end{algorithm}
             \end{minipage}
         \end{center}
+    \end{frame}
+
+    \subsection{Příklad na bludišti}
+
+    \begin{frame}{Algoritmus \Astar}{Bludiště}
+    \centering
+    \AStarMazeState
+        {Inicializace}
+        {$(0,0):(0,9)$}
+        {\AStarMazeTreeA}
+        {\AStarMazeNodesA}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Bludiště}
+    \centering
+    \AStarMazeState
+        {Po zpracování $(0,0)$}
+        {$(1,0):(1,9)$}
+        {\AStarMazeTreeB}
+        {\AStarMazeNodesB}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Bludiště}
+    \centering
+    \AStarMazeState
+        {Po zpracování $(1,0)$}
+        {$(2,0):(2,9)$}
+        {\AStarMazeTreeC}
+        {\AStarMazeNodesC}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Bludiště}
+    \centering
+    \AStarMazeState
+        {Po zpracování $(2,0)$}
+        {$(2,1):(3,9)$}
+        {\AStarMazeTreeD}
+        {\AStarMazeNodesD}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Bludiště}
+    \centering
+    \AStarMazeState
+        {Po zpracování $(2,1)$}
+        {$(2,2):(4,9)$}
+        {\AStarMazeTreeE}
+        {\AStarMazeNodesE}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Bludiště}
+    \centering
+    \AStarMazeState
+        {Po zpracování $(2,2)$}
+        {$(3,2):(5,9)$,\ $(1,2):(5,11)$}
+        {\AStarMazeTreeF}
+        {\AStarMazeNodesF}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Bludiště}
+    \centering
+    \AStarMazeState
+        {Po zpracování $(3,2)$}
+        {$(4,2):(6,9)$,\ $(1,2):(5,11)$}
+        {\AStarMazeTreeG}
+        {\AStarMazeNodesG}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Bludiště}
+    \centering
+    \AStarMazeState
+        {Po zpracování $(4,2)$}
+        {$(5,2):(7,9)$,\ $(4,1):(7,11)$,\\[0.5mm]
+        $(1,2):(5,11)$}
+        {\AStarMazeTreeH}
+        {\AStarMazeNodesH}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Bludiště}
+    \centering
+    \AStarMazeState
+        {Po zpracování $(5,2)$}
+        {$(5,3):(8,9)$,\ $(5,1):(8,11)$,\\[0.5mm]
+        $(4,1):(7,11)$,\ $(1,2):(5,11)$}
+        {\AStarMazeTreeI}
+        {\AStarMazeNodesI}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Bludiště}
+    \centering
+    \AStarMazeState
+        {Po zpracování $(5,3)$}
+        {$(5,4):(9,9)$,\ $(5,1):(8,11)$,\\[0.5mm]
+        $(4,1):(7,11)$,\ $(1,2):(5,11)$}
+        {\AStarMazeTreeJ}
+        {\AStarMazeNodesJ}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Bludiště}
+    \centering
+    \AStarMazeState
+        {Vybereme cíl $(5,4)$ a končíme}
+        {$(5,4):(9,9)$,\ $(5,1):(8,11)$,\\[0.5mm]
+        $(4,1):(7,11)$,\ $(1,2):(5,11)$}
+        {\AStarMazeTreeK}
+        {\AStarMazeNodesK}
+    \end{frame}
+
+    \subsection{Příklad na obecném grafu}
+
+    \begin{frame}{Algoritmus \Astar}{Obecný graf}
+    \centering
+    \AStarGraphState
+        {Inicializace}
+        {$v_1:(0,8)$}
+        {\AStarGraphTreeA}
+        {\AStarGraphNodesA}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Obecný graf}
+    \centering
+    \AStarGraphState
+        {Po zpracování $v_1$}
+        {$v_3:(2,8)$,\ $v_2:(4,10)$,\\[0.5mm]
+        $v_5:(7,11)$}
+        {\AStarGraphTreeB}
+        {\AStarGraphNodesB}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Obecný graf}
+    \centering
+    \AStarGraphState
+        {Po zpracování $v_3$}
+        {$v_5:(5,9)$,\ $v_2:(3,9)$,\\[0.5mm]
+        $v_6:(10,14)$,\ $v_7:(12,16)$}
+        {\AStarGraphTreeC}
+        {\AStarGraphNodesC}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Obecný graf}
+    \centering
+    \AStarGraphState
+        {Po zpracování $v_5$}
+        {$v_2:(3,9)$,\ $v_4:(7,11)$,\ $v_6:(7,11)$,\\[0.5mm]
+        $v_8:(10,12)$,\ $v_9:(11,13)$,\ $v_7:(12,16)$}
+        {\AStarGraphTreeD}
+        {\AStarGraphNodesD}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Obecný graf}
+    \centering
+    \AStarGraphState
+        {Po zpracování $v_2$}
+        {$v_4:(7,11)$,\ $v_6:(7,11)$,\\[0.5mm]
+        $v_8:(10,12)$,\ $v_9:(11,13)$,\ $v_7:(12,16)$}
+        {\AStarGraphTreeE}
+        {\AStarGraphNodesE}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Obecný graf}
+    \centering
+    \AStarGraphState
+        {Po zpracování $v_4$}
+        {$v_6:(7,11)$,\ $v_8:(10,12)$,\\[0.5mm]
+        $v_9:(11,13)$,\ $v_7:(12,16)$}
+        {\AStarGraphTreeF}
+        {\AStarGraphNodesF}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Obecný graf}
+    \centering
+    \AStarGraphState
+        {Po zpracování $v_6$}
+        {$v_9:(9,11)$,\ $v_8:(10,12)$,\\[0.5mm]
+        $v_7:(10,14)$}
+        {\AStarGraphTreeG}
+        {\AStarGraphNodesG}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Obecný graf}
+    \centering
+    \AStarGraphState
+        {Po zpracování $v_9$}
+        {$v_{10}:(11,11)$,\ $v_8:(10,12)$,\\[0.5mm]
+        $v_7:(10,14)$}
+        {\AStarGraphTreeH}
+        {\AStarGraphNodesH}
+    \end{frame}
+
+    \begin{frame}{Algoritmus \Astar}{Obecný graf}
+    \centering
+    \AStarGraphState
+        {Vybereme cíl $v_{10}$ a končíme}
+        {$v_{10}:(11,11)$,\ $v_8:(10,12)$,\\[0.5mm]
+        $v_7:(10,14)$}
+        {\AStarGraphTreeI}
+        {\AStarGraphNodesI}
+    \end{frame}
+
+    \subsection{Správnost algoritmu \Astar}
+
+    \begin{frame}{Správnost algoritmu \Astar}
+        \visible<2->{\begin{propblock}
+            Když algoritmus \Astar otevírá vrchol $v$, pak platí, že $D(v)=d(v,v_0)$, je-li heuristika $\psi$ konzistentní.
+        \end{propblock}}
+        \begin{itemize}
+            \visible<3->{\item Mějme libovolný nezáporně ohodnocený graf $G=(V,E,w)$ a konzistentní heuristiku $\mapping{\psi}{V}{\R_0^{+}}$}
+            \visible<4->{\item Předpokládejme pro \textbf{spor}, že naopak algoritmus vrchol $v$, pro který platí
+            \[d(v_0,v)<D(v)\]
+            $\implies$ $D(v)$ neodpovídá délce nejkratší cesty do $v$.}
+            \visible<5->{\item Pak optimální cesta $v$ musí vést přes nějaký jeho sousední vrchol $v^{\prime}$, tj.
+            \[D(v)>D(v^{\prime})+w(v,v^{\prime})=d(v_0,v).\]}
+            \visible<6->{\item Podobně jako u Dijkstrova algoritmu ukážeme, že \Astar by měl správně upřednostnit jiný vrchol než $v$.}
+        \end{itemize}
+        % \begin{propblock}
+        %     Nechť je dán nezáporně ohodnocený graf $G=(V,E,w)$, počáteční vrchol $v_0\in V$, cílový vrchol $g\in V$ a~libovolný vrchol $v\in V$. Pak na konci výpočtu \Astar platí $D(v)=d(v,v_0)$. Speciálně $D(g)=d(v_0,g)$.
+        % \end{propblock}
+    \end{frame}
+
+    \begin{frame}{Správnost algoritmu \Astar}
+        \begin{columns}
+            \column{40mm}
+            \begin{figure}
+                \centering
+                \input{images/spravnost-astar.tex}
+            \end{figure}
+            
+            \column{\dimexpr\linewidth-40mm-5mm}
+            \begin{itemize}
+                \item Protože heuristika $\psi$ je konzistentní, musí platit
+                \[\psi(v^{\prime})\leqslant w(v,v^{\prime})+\psi(v).\]
+                \item Pro $f(v^{\prime})$ tedy platí následující:
+                \begin{align*}
+                    f(v^{\prime})&=D(v^{\prime})+\psi(v^{\prime})\leqslant D(v^{\prime})+w(v,v^{\prime})+\psi(v) \\
+                    &=D(v)+\psi(v)=f(v).
+                \end{align*}
+                \item Celkově $f(v^{\prime})<f(v)$.
+                \item To však znamená, že algoritmus by upřednostnil buď $v^{\prime}$, a nebo jiný vrchol různý od $v$, což je \markdarkred{spor}.
+            \end{itemize}
+        \end{columns}
     \end{frame}
 
     \section{Zdroje}

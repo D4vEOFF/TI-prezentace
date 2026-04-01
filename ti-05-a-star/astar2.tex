@@ -1,0 +1,349 @@
+% -------------------------------------------------
+% A* na obecném nezáporně ohodnoceném grafu
+% -------------------------------------------------
+
+\definecolor{astarunknown}{RGB}{190,190,190}
+\definecolor{astaropen}{RGB}{255,230,120}
+\definecolor{astarclosed}{RGB}{170,220,170}
+\definecolor{astartree}{RGB}{255,0,0}
+
+\tikzset{
+    astarvertex/.style={
+        circle,
+        draw=black,
+        thick,
+        minimum size=8.6mm,
+        inner sep=0pt,
+        font=\scriptsize,
+        align=center
+    },
+    astaredge/.style={
+        thick
+    },
+    astartreeedge/.style={
+        very thick,
+        draw=astartree
+    },
+    astarbox/.style={
+        draw=black,
+        rounded corners=2mm,
+        fill=white,
+        inner sep=1.3mm,
+        font=\scriptsize
+    },
+    astarweight/.style={
+        fill=white,
+        inner sep=0.8pt,
+        font=\scriptsize
+    },
+    astarheur/.style={
+        fill=white,
+        inner sep=0.6pt,
+        font=\tiny,
+        text=darkblue
+    }
+}
+
+% vrchol s popiskem a dvojicí D|f
+% #1 = jméno souřadnice
+% #2 = barva výplně
+% #3 = text vrcholu
+% #4 = D(v)
+% #5 = f(v)
+\newcommand{\astargraphnode}[5]{%
+    \node[astarvertex, fill=#2] at (#1) {$#3$\\[-0.8mm]\tiny $#4\,|\,#5$};
+}
+
+% zvýrazněná hrana aktuálního stromu
+\newcommand{\astargraphedge}[2]{%
+    \draw[astartreeedge] (#1)--(#2);
+}
+
+% #1 = titulek
+% #2 = obsah open množiny
+% #3 = zvýrazněné hrany
+% #4 = vrcholy
+\newcommand{\AStarGraphState}[4]{%
+\begin{tikzpicture}[scale=0.61,x=1.08cm,y=0.96cm]
+
+    % --- souřadnice vrcholů ---
+    \coordinate (v1)  at (0,0);
+    \coordinate (v2)  at (1.9,1.6);
+    \coordinate (v3)  at (1.9,-1.8);
+
+    % třetí sloupec -- zvětšené vertikální rozestupy
+    \coordinate (v4)  at (4.0,3.75);
+    \coordinate (v5)  at (4.0,0.85);
+    \coordinate (v6)  at (4.0,-2.25);
+    \coordinate (v7)  at (4.0,-5.35);
+
+    \coordinate (v8)  at (6.3,1.6);
+    \coordinate (v9)  at (6.3,-0.2);
+    \coordinate (v10) at (8.5,0.8);
+
+    % --- všechny hrany grafu ---
+    \draw[astaredge] (v1)-- node[astarweight] {$4$} (v2);
+    \draw[astaredge] (v1)-- node[astarweight] {$2$} (v3);
+    \draw[astaredge] (v1)-- node[astarweight] {$7$} (v5);
+
+    \draw[astaredge] (v2)-- node[astarweight] {$1$} (v3);
+    \draw[astaredge] (v2)-- node[astarweight] {$5$} (v4);
+    \draw[astaredge] (v2)-- node[astarweight] {$2$} (v5);
+    \draw[astaredge] (v2)-- node[astarweight] {$6$} (v6);
+
+    \draw[astaredge] (v3)-- node[astarweight] {$3$} (v5);
+    \draw[astaredge] (v3)-- node[astarweight] {$8$} (v6);
+    \draw[astaredge] (v3)-- node[astarweight] {$10$} (v7);
+
+    \draw[astaredge] (v4)-- node[astarweight] {$2$} (v5);
+    \draw[astaredge] (v4)-- node[astarweight] {$4$} (v8);
+
+    \draw[astaredge] (v5)-- node[astarweight] {$2$} (v6);
+    \draw[astaredge] (v5)-- node[astarweight] {$5$} (v8);
+    \draw[astaredge] (v5)-- node[astarweight] {$6$} (v9);
+
+    \draw[astaredge] (v6)-- node[astarweight] {$3$} (v7);
+    \draw[astaredge] (v6)-- node[astarweight] {$2$} (v9);
+
+    \draw[astaredge] (v7)-- node[astarweight] {$4$} (v9);
+
+    \draw[astaredge] (v8)-- node[astarweight] {$1$} (v9);
+    \draw[astaredge] (v8)-- node[astarweight] {$3$} (v10);
+
+    \draw[astaredge] (v9)-- node[astarweight] {$2$} (v10);
+
+    % --- heuristiky ---
+    % \node[astarheur] at (-0.40,0.38) {$\psi=8$};
+    % \node[astarheur] at (1.00,1.95) {$\psi=6$};
+    % \node[astarheur] at (0.98,-2.15) {$\psi=6$};
+
+    % \node[astarheur] at (4.02,3.15) {$\psi=4$};
+    % \node[astarheur] at (4.02,1.22) {$\psi=4$};
+    % \node[astarheur] at (4.02,-1.65) {$\psi=4$};
+    % \node[astarheur] at (4.02,-3.72) {$\psi=4$};
+
+    % \node[astarheur] at (6.12,1.98) {$\psi=2$};
+    % \node[astarheur] at (6.10,-0.66) {$\psi=2$};
+    % \node[astarheur] at (8.78,0.70) {$\psi=0$};
+
+    % --- zvýrazněné hrany stromu ---
+    #3
+
+    % --- vrcholy ---
+    #4
+
+    % --- titulek ---
+    \node[anchor=west, font=\bfseries] at (-1.50,5.35) {#1};
+
+    % --- informační box ---
+    \node[astarbox, anchor=north west, text width=3.55cm, align=left] at (9.85,2.95) {%
+        \textbf{Start:} $v_1$\\
+        \textbf{Cíl:} $v_{10}$\\[0.6mm]
+        \textbf{Heuristika:}\\
+        $\psi(v)=2(4-\lambda(v))$\\[0.4mm]
+        $\lambda(v)$ = číslo sloupce\\
+        zleva doprava\\[0.6mm]
+        \textbf{Ve vrcholu:} $D\,|\, f$\\[0.6mm]
+        \textbf{Otevřené:}\\
+        #2
+    };
+
+\end{tikzpicture}%
+}
+
+% -------------------------------------------------
+% Stav A: inicializace
+% -------------------------------------------------
+\newcommand{\AStarGraphTreeA}{}
+
+\newcommand{\AStarGraphNodesA}{%
+    \astargraphnode{v1}{astaropen}{v_1}{0}{8}
+    \astargraphnode{v2}{astarunknown}{v_2}{\infty}{\infty}
+    \astargraphnode{v3}{astarunknown}{v_3}{\infty}{\infty}
+    \astargraphnode{v4}{astarunknown}{v_4}{\infty}{\infty}
+    \astargraphnode{v5}{astarunknown}{v_5}{\infty}{\infty}
+    \astargraphnode{v6}{astarunknown}{v_6}{\infty}{\infty}
+    \astargraphnode{v7}{astarunknown}{v_7}{\infty}{\infty}
+    \astargraphnode{v8}{astarunknown}{v_8}{\infty}{\infty}
+    \astargraphnode{v9}{astarunknown}{v_9}{\infty}{\infty}
+    \astargraphnode{v10}{astarunknown}{v_{10}}{\infty}{\infty}
+}
+
+% -------------------------------------------------
+% Stav B: po zpracování v1
+% -------------------------------------------------
+\newcommand{\AStarGraphTreeB}{%
+    \astargraphedge{v1}{v2}
+    \astargraphedge{v1}{v3}
+    \astargraphedge{v1}{v5}
+}
+
+\newcommand{\AStarGraphNodesB}{%
+    \astargraphnode{v1}{astarclosed}{v_1}{0}{8}
+    \astargraphnode{v2}{astaropen}{v_2}{4}{10}
+    \astargraphnode{v3}{astaropen}{v_3}{2}{8}
+    \astargraphnode{v4}{astarunknown}{v_4}{\infty}{\infty}
+    \astargraphnode{v5}{astaropen}{v_5}{7}{11}
+    \astargraphnode{v6}{astarunknown}{v_6}{\infty}{\infty}
+    \astargraphnode{v7}{astarunknown}{v_7}{\infty}{\infty}
+    \astargraphnode{v8}{astarunknown}{v_8}{\infty}{\infty}
+    \astargraphnode{v9}{astarunknown}{v_9}{\infty}{\infty}
+    \astargraphnode{v10}{astarunknown}{v_{10}}{\infty}{\infty}
+}
+
+% -------------------------------------------------
+% Stav C: po zpracování v3
+% -------------------------------------------------
+\newcommand{\AStarGraphTreeC}{%
+    \astargraphedge{v1}{v3}
+    \astargraphedge{v3}{v2}
+    \astargraphedge{v3}{v5}
+    \astargraphedge{v3}{v6}
+    \astargraphedge{v3}{v7}
+}
+
+\newcommand{\AStarGraphNodesC}{%
+    \astargraphnode{v1}{astarclosed}{v_1}{0}{8}
+    \astargraphnode{v2}{astaropen}{v_2}{3}{9}
+    \astargraphnode{v3}{astarclosed}{v_3}{2}{8}
+    \astargraphnode{v4}{astarunknown}{v_4}{\infty}{\infty}
+    \astargraphnode{v5}{astaropen}{v_5}{5}{9}
+    \astargraphnode{v6}{astaropen}{v_6}{10}{14}
+    \astargraphnode{v7}{astaropen}{v_7}{12}{16}
+    \astargraphnode{v8}{astarunknown}{v_8}{\infty}{\infty}
+    \astargraphnode{v9}{astarunknown}{v_9}{\infty}{\infty}
+    \astargraphnode{v10}{astarunknown}{v_{10}}{\infty}{\infty}
+}
+
+% -------------------------------------------------
+% Stav D: po zpracování v5
+% -------------------------------------------------
+\newcommand{\AStarGraphTreeD}{%
+    \astargraphedge{v1}{v3}
+    \astargraphedge{v3}{v2}
+    \astargraphedge{v3}{v5}
+    \astargraphedge{v5}{v4}
+    \astargraphedge{v5}{v6}
+    \astargraphedge{v3}{v7}
+    \astargraphedge{v5}{v8}
+    \astargraphedge{v5}{v9}
+}
+
+\newcommand{\AStarGraphNodesD}{%
+    \astargraphnode{v1}{astarclosed}{v_1}{0}{8}
+    \astargraphnode{v2}{astaropen}{v_2}{3}{9}
+    \astargraphnode{v3}{astarclosed}{v_3}{2}{8}
+    \astargraphnode{v4}{astaropen}{v_4}{7}{11}
+    \astargraphnode{v5}{astarclosed}{v_5}{5}{9}
+    \astargraphnode{v6}{astaropen}{v_6}{7}{11}
+    \astargraphnode{v7}{astaropen}{v_7}{12}{16}
+    \astargraphnode{v8}{astaropen}{v_8}{10}{12}
+    \astargraphnode{v9}{astaropen}{v_9}{11}{13}
+    \astargraphnode{v10}{astarunknown}{v_{10}}{\infty}{\infty}
+}
+
+% -------------------------------------------------
+% Stav E: po zpracování v2
+% -------------------------------------------------
+\newcommand{\AStarGraphTreeE}{%
+    \AStarGraphTreeD
+}
+
+\newcommand{\AStarGraphNodesE}{%
+    \astargraphnode{v1}{astarclosed}{v_1}{0}{8}
+    \astargraphnode{v2}{astarclosed}{v_2}{3}{9}
+    \astargraphnode{v3}{astarclosed}{v_3}{2}{8}
+    \astargraphnode{v4}{astaropen}{v_4}{7}{11}
+    \astargraphnode{v5}{astarclosed}{v_5}{5}{9}
+    \astargraphnode{v6}{astaropen}{v_6}{7}{11}
+    \astargraphnode{v7}{astaropen}{v_7}{12}{16}
+    \astargraphnode{v8}{astaropen}{v_8}{10}{12}
+    \astargraphnode{v9}{astaropen}{v_9}{11}{13}
+    \astargraphnode{v10}{astarunknown}{v_{10}}{\infty}{\infty}
+}
+
+% -------------------------------------------------
+% Stav F: po zpracování v4
+% -------------------------------------------------
+\newcommand{\AStarGraphTreeF}{%
+    \AStarGraphTreeD
+}
+
+\newcommand{\AStarGraphNodesF}{%
+    \astargraphnode{v1}{astarclosed}{v_1}{0}{8}
+    \astargraphnode{v2}{astarclosed}{v_2}{3}{9}
+    \astargraphnode{v3}{astarclosed}{v_3}{2}{8}
+    \astargraphnode{v4}{astarclosed}{v_4}{7}{11}
+    \astargraphnode{v5}{astarclosed}{v_5}{5}{9}
+    \astargraphnode{v6}{astaropen}{v_6}{7}{11}
+    \astargraphnode{v7}{astaropen}{v_7}{12}{16}
+    \astargraphnode{v8}{astaropen}{v_8}{10}{12}
+    \astargraphnode{v9}{astaropen}{v_9}{11}{13}
+    \astargraphnode{v10}{astarunknown}{v_{10}}{\infty}{\infty}
+}
+
+% -------------------------------------------------
+% Stav G: po zpracování v6
+% -------------------------------------------------
+\newcommand{\AStarGraphTreeG}{%
+    \astargraphedge{v1}{v3}
+    \astargraphedge{v3}{v2}
+    \astargraphedge{v3}{v5}
+    \astargraphedge{v5}{v4}
+    \astargraphedge{v5}{v6}
+    \astargraphedge{v6}{v7}
+    \astargraphedge{v5}{v8}
+    \astargraphedge{v6}{v9}
+}
+
+\newcommand{\AStarGraphNodesG}{%
+    \astargraphnode{v1}{astarclosed}{v_1}{0}{8}
+    \astargraphnode{v2}{astarclosed}{v_2}{3}{9}
+    \astargraphnode{v3}{astarclosed}{v_3}{2}{8}
+    \astargraphnode{v4}{astarclosed}{v_4}{7}{11}
+    \astargraphnode{v5}{astarclosed}{v_5}{5}{9}
+    \astargraphnode{v6}{astarclosed}{v_6}{7}{11}
+    \astargraphnode{v7}{astaropen}{v_7}{10}{14}
+    \astargraphnode{v8}{astaropen}{v_8}{10}{12}
+    \astargraphnode{v9}{astaropen}{v_9}{9}{11}
+    \astargraphnode{v10}{astarunknown}{v_{10}}{\infty}{\infty}
+}
+
+% -------------------------------------------------
+% Stav H: po zpracování v9
+% -------------------------------------------------
+\newcommand{\AStarGraphTreeH}{%
+    \astargraphedge{v1}{v3}
+    \astargraphedge{v3}{v2}
+    \astargraphedge{v3}{v5}
+    \astargraphedge{v5}{v4}
+    \astargraphedge{v5}{v6}
+    \astargraphedge{v6}{v7}
+    \astargraphedge{v5}{v8}
+    \astargraphedge{v6}{v9}
+    \astargraphedge{v9}{v10}
+}
+
+\newcommand{\AStarGraphNodesH}{%
+    \astargraphnode{v1}{astarclosed}{v_1}{0}{8}
+    \astargraphnode{v2}{astarclosed}{v_2}{3}{9}
+    \astargraphnode{v3}{astarclosed}{v_3}{2}{8}
+    \astargraphnode{v4}{astarclosed}{v_4}{7}{11}
+    \astargraphnode{v5}{astarclosed}{v_5}{5}{9}
+    \astargraphnode{v6}{astarclosed}{v_6}{7}{11}
+    \astargraphnode{v7}{astaropen}{v_7}{10}{14}
+    \astargraphnode{v8}{astaropen}{v_8}{10}{12}
+    \astargraphnode{v9}{astarclosed}{v_9}{9}{11}
+    \astargraphnode{v10}{astaropen}{v_{10}}{11}{11}
+}
+
+% -------------------------------------------------
+% Stav I: vybereme cíl a končíme
+% -------------------------------------------------
+\newcommand{\AStarGraphTreeI}{%
+    \AStarGraphTreeH
+}
+
+\newcommand{\AStarGraphNodesI}{%
+    \AStarGraphNodesH
+}
