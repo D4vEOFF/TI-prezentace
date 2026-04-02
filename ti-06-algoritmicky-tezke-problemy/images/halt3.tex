@@ -1,0 +1,92 @@
+% potřeba:
+% \usetikzlibrary{arrows.meta,positioning}
+
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    every node/.style={font=\small},
+    box/.style={
+        draw,
+        rounded corners=2pt,
+        align=center,
+        minimum height=7mm
+    },
+    decision/.style={
+        draw,
+        diamond,
+        aspect=2.0,
+        align=center,
+        inner xsep=0.8ex,
+        inner ysep=0.6ex
+    }
+]
+
+% definice D
+\node[box, fill=yellow!15, text width=5.9cm] (diagdef) at (0,0)
+{
+\small program $D(P)$\\[0.4mm]
+\scriptsize pokud $\textsc{Halt}(P,P)=\text{ANO}$, pak cyklí\\
+\scriptsize pokud $\textsc{Halt}(P,P)=\text{NE}$, pak skončí
+};
+
+% dosazení
+\node[box, fill=orange!15, text width=1.6cm] (self) at (0,-1.45)
+{$D(D)$};
+
+\draw[->, thick] (diagdef) -- node[right] {\scriptsize dosadíme $P=D$} (self);
+
+% rozhodnutí
+\node[decision] (haltdd) at (0,-2.75) {\scriptsize $\textsc{Halt}(D,D)$?};
+
+\draw[->, thick] (self) -- (haltdd);
+
+% levá větev
+\node[box, fill=green!10, text width=2.9cm] (yes) at (-3.45,-4.15)
+{
+\scriptsize $\textsc{Halt}(D,D)=\text{ANO}$\\
+\scriptsize tedy $D(D)$ se zastaví
+};
+
+\node[box, fill=red!10, text width=3.2cm] (yescontr) at (-3.45,-5.55)
+{
+\scriptsize ale podle definice $D$\\
+\scriptsize pak $D(D)$ cyklí
+};
+
+% pravá větev
+\node[box, fill=green!10, text width=3.2cm] (no) at (3.45,-4.15)
+{
+\scriptsize $\textsc{Halt}(D,D)=\text{NE}$\\
+\scriptsize tedy $D(D)$ se nezastaví
+};
+
+\node[box, fill=red!10, text width=3.2cm] (nocontr) at (3.45,-5.55)
+{
+\scriptsize ale podle definice $D$\\
+\scriptsize pak $D(D)$ skončí
+};
+
+% pomocné body
+\path (haltdd.west) ++(-1,0) coordinate (auxL);
+\path (haltdd.east) ++(1,0) coordinate (auxR);
+
+% šipky
+\draw[->, thick]
+    (haltdd.west) -- (auxL) -- (auxL -| yes.north) -- (yes.north)
+    node[pos=0.25, above left] {\scriptsize ANO};
+
+\draw[->, thick]
+    (haltdd.east) -- (auxR) -- (auxR -| no.north) -- (no.north)
+    node[pos=0.25, above right] {\scriptsize NE};
+
+\draw[->, thick] (yes) -- (yescontr);
+\draw[->, thick] (no) -- (nocontr);
+
+% závěr
+\node[align=center] at (0,-6.65)
+{
+V obou případech vznikne spor $\implies$ Algoritmus pro $\textsc{Halt}$ neexistuje.
+};
+
+\end{tikzpicture}
+\end{center}

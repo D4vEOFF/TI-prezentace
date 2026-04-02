@@ -14,14 +14,18 @@
 
     \section{Těžké problémy}
 
+    \titleframe{Těžké problémy}
+
+    \subsection{Opakování}
+
     \begin{frame}{S čím jsme se již setkali\dots}
         \begin{itemize}
             \visible<2->{\item Řazení prvků v poli $\implies\bigO(n\log{n})$.}
-            \visible<3->{\item Hledání nejkratší cesty v neohodnoceném grafu $\implies\bigO(n+m)$.}
+            \visible<3->{\item Hledání nejkratší cesty v neohodnoceném grafu $\implies\bigO(n+m)$, přičemž $m\leqslant \frac{n(n-1)}{2}$}
             \visible<4->{\item Hledání nejkratší cesty v nezáporně ohodnoceném grafu $\implies\bigO((n+m)\log{n})$.}
             \visible<5->{\item Sekvenční vyhledávání v poli $\implies\bigO(n)$.}
             \visible<6->{\item Binární vyhledávání v poli $\implies\bigO(\log{n})$.}
-            \visible<7->{\item Vyhledávání v textu $\implies\bigO((n-m)m)$, kde $m$ je délka hledaného slova.}
+            \visible<7->{\item Vyhledávání v textu $\implies\bigO((n-m)m)$, kde $m\leqslant n$ je délka hledaného slova.}
         \end{itemize}
         \visible<8->{\begin{tnoticeframe}[0.9\textwidth]
             \begin{center}
@@ -29,6 +33,8 @@
             \end{center}
         \end{tnoticeframe}}
     \end{frame}
+
+    \subsection{Formální pojetí problémů}
 
     \begin{frame}{Formální pojetí problémů}
         \begin{itemize}
@@ -49,18 +55,195 @@
         \end{itemize}
     \end{frame}
 
+    \subsection{Polynomiální čas}
+
     \begin{frame}{Efektivně řešitelné problémy}
-        \begin{tnoticeframe}
-            S jistou rezervou lze říci, že problémy, které lze řešit algoritmem, který běží v polynomiálním čase vzhledem k délce vstupu, jsou \textbf{"efektivně řešitelné"}.
-        \end{tnoticeframe}
-        Co představuje zmíněnou rezervu?
+        \visible<2->{\begin{tnoticeframe}
+            \begin{center}
+                S jistou rezervou lze říci, že problémy, které lze řešit algoritmem, který běží v polynomiálním čase vzhledem k délce vstupu, jsou \textbf{"efektivně řešitelné"}.
+            \end{center}
+        \end{tnoticeframe}}
+        \visible<3->{Co představuje zmíněnou rezervu?}
         \begin{itemize}
-            \item Algoritmus běžící v čase $\bigO(n^{1000})$ je polynomiální, ale v praxi nejspíše jen sotva použitelný.
-            \item Naopak algoritmus se složitostí $\bigO(0{,}001^{n})$ je sice exponenciálním, ale je jistě použitelný.
+            \visible<4->{\item Algoritmus běžící v čase $\bigO(n^{1000})$ je polynomiální, ale v praxi nejspíše jen sotva použitelný.}
+            \visible<5->{\item Naopak algoritmus se složitostí $\bigO(0{,}001^{n})$ je sice exponenciální, ale je jistě použitelný na "rozumná" data.}
         \end{itemize}
-        \begin{talertframe}[0.8\textwidth]
-            
-        \end{talertframe}
+        \visible<6->{\begin{talertframe}[0.8\textwidth]
+            \begin{center}
+                Takové případy ale můžeme zanedbat, neboť jsou \textbf{velmi řídké}.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \begin{frame}{Proč zrovna polynomy?}
+        \begin{enumerate}
+            \visible<2->{\item Polynomy jsou tzv. \textbf{uzavřeny} na sčítání, násobení a skládání. Mějme polynomy $p_1(x)$ a $p_2(y)$. Pak
+            \begin{itemize}
+                \item $p_1(x)+p_2(x)$ je polynom
+                \item $p_1(x)\cdot p_2(x)$ je polynom
+                \item $p_1(p_2(x))$ je polynom
+            \end{itemize}}
+            \visible<3->{\item Polynomy obvykle nerostou "příliš rychle".}
+        \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Proč zrovna polynomy?}{Příklad}
+        \centering
+        \visible<2->{\begin{tikzpicture}
+            \node[fill=green,opacity=0.2,text opacity=1] at (-3,0) {$p_1(x)=x^{2}-x-6$};
+            \node[fill=red,opacity=0.2,text opacity=1] at (3,0) {$p_2(x)=3x^{2}+5$};
+        \end{tikzpicture}}
+        \vspace{1.5em}
+        \begin{itemize}
+            \visible<3->{\item $p_1(x)+p_2(x)=(x^{2}-x-6)+(3x^{2}+5)=4x^{2}-x-1$}
+            \visible<4->{\item $p_1(x)\cdot p_2(x)=(x^{2}-x-6)\cdot(3x^{2}+5)=3x^{4}-3x^{3}-13x^{2}-5x-30$}
+            \visible<5->{\item $p_1(p_2(x))=((3x^{2}+5)^{2}-(3x^{2}+5)-6)=9x^{4}+27x^{2}+14$}
+        \end{itemize}
+        \vspace{1.5em}
+        \visible<6->{\begin{timportantframe}[0.55\textwidth]
+            \begin{center}
+                Výsledkem je zase polynom.
+            \end{center}
+        \end{timportantframe}}
+    \end{frame}
+
+    \subsection{Obecnější pohled}
+
+    \begin{frame}{Obecnější pohled}
+        \visible<2->{\begin{talertframe}[0.9\textwidth]
+            \begin{center}
+                Je každý problém řešitelný polynomiálním algoritmem?
+            \end{center} 
+        \end{talertframe}}
+        \begin{itemize}
+            \visible<3->{\item \textbf{Nikoliv!} Existují dokonce problémy, které nejsou řešitelné žádným algoritmem.}
+            \visible<4->{\item Např. Hanojské věže nelze řešit lépe než exponenciálním algoritmem.}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Hanojské věže}
+
+    \begin{frame}{Hanojské věže}
+        \visible<2->{\begin{figure}
+            \centering
+            \input{images/hanoj.tex}
+        \end{figure}}
+        \vspace{1.5em}
+        \visible<3->{\textbf{Pravidla:}}
+        \begin{itemize}
+            \visible<4->{\item V každém kroku můžeme přesunout jen jeden disk.}
+            \visible<5->{\item Větší disk nesmí ležet na menším.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Algoritmus pro Hanojské věže}
+        \begin{center}
+            \begin{minipage}{0.9\textwidth}
+                \begin{algorithm}[H]
+                    \caption{\textsc{Hanoj}}
+                    \KwIn{Výška věže $n$; sloupy $A$ (zdrojový), $B$ (cílový), $C$ (pomocný)}
+                    \lIf{$n=1$}{přesuň disk $1$ z $A$ na $B$}
+                    \Else{
+                        Zavolej $\textsc{Hanoj}(n-1,A,C,B)$\\
+                        Přesuneme disk $n$ z $A$ na $B$\\
+                        Zavolej $\textsc{Hanoj}(n-1,C,B,A)$
+                    }
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+    \end{frame}
+
+    \begin{frame}{Znázornění algoritmu}
+        \begin{figure}
+            \centering
+            \input{images/hanoj2.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Časová složitost algoritmu}
+        \begin{itemize}
+            \visible<2->{\item Označme si počet kroků algorimu $T(n)$.}
+            \visible<3->{\item Zjevně pro $n=1$ stačí jen přesunout disk z počítečního na cílový kolík, tzn. $T(1)=1$.}
+            \visible<4->{\item Jinak rekurzivně voláme dvakrát $T(n)$ a navíc provedeme přesun největšího disku.
+            \[T(n)=2\cdot T(n-1)+1.\]}
+            \visible<5->{\begin{table}
+                \centering
+                \begin{tabular}{c|cccccc}
+                    $n$     & $1$   & $2$   & $3$   & $4$   & $5$   & $\cdots$ \\ \hline
+                    $T(n)$  & $1$   & $3$   & $7$   & $15$  & $31$  & $\cdots$
+                \end{tabular}
+            \end{table}}
+            \visible<6->{\item Lze odvodit explicitní vzorec $T(n)=2^{n}-1$.}
+            \visible<7->{\item Algoritmus je tedy exponenciální, tj. $\bigO(2^{n})$.}
+            \visible<8->{\begin{talertframe}[0.55\textwidth]
+                \begin{center}
+                    Lépe to ani nelze provést!
+                \end{center}
+            \end{talertframe}}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Rozhodovací Hanojské věže}
+
+    \begin{frame}{Rozhodovací Hanojské věže}
+        \visible<2->{\begin{talertframe}[0.9\textwidth]
+            \begin{center}
+                Hanojské věže ale nepředstavují rozhodovací problém (nikde není výstupem \textbf{ANO} nebo \textbf{NE}).
+            \end{center}
+        \end{talertframe}}
+        \begin{itemize}
+            \visible<3->{\item Zkusíme mírně změnit zadání: Ke vstupu přídáme ještě číslo $k\in\N$.}
+            \visible<4->{\item \textbf{Otázka:} Lze přemístit celou věž ze sloupu $A$ na sloup $B$ v nejvýše $k$ tazích?}
+            \visible<5->{\item K rozhodnutí odpovědi použijeme upravený původní algoritmus.}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Problém zastavení}
+
+    \begin{frame}{Problém zastavení}
+        \begin{itemize}
+            \item Máme na vstupu program $P$ a jeho vstup $x$.
+            \item Uvažujme problém $\textsc{Halt}(P,x)$, který rozhodne, zdali se program $P$ nad vstupem $x$ \markdarkred{zastaví}, a nebo se \markdarkred{zacyklí}.
+        \end{itemize}
+        \begin{figure}
+            \centering
+            \input{images/halt1.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Problém $\textsc{Halt}$ nelze rozhodnout}
+        \begin{figure}
+            \centering
+            \input{images/halt2.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Problém $\textsc{Halt}$ nelze rozhodnout}
+        \begin{figure}
+            \centering
+            \input{images/halt3.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Co z toho plyne?}
+        \begin{itemize}
+            \visible<2->{\item Existence "rychlého" (polynomiálního) řešení problému není vždy samozřejmostí.}
+            \visible<3->{\item Některé problémy dokonce nelze řešit vůbec!}
+        \end{itemize}
+        \visible<4->{\begin{tinfoframe}[0.8\textwidth]
+            \begin{center}
+                Mezi různými problémy však lze nalézt zajímavé vztahy.
+            \end{center}
+        \end{tinfoframe}}
+    \end{frame}
+
+    \section{Zdroje}
+
+    \begin{frame}{Zdroje}
+        \begin{itemize}
+            \item PAPADIMITRIOU, Christos H. \textit{Computational complexity.} Reading: Addison-Wesley, 1994. ISBN 0-201-53082-1.
+            \item MAREŠ, Martin a~VALLA, Tomáš. \textit{Průvodce labyrintem algoritmů.} Druhé vydání. CZ.NIC. Praha: CZ.NIC, z.s.p.o., 2022. ISBN 978-80-88168-63-8.
+        \end{itemize}
     \end{frame}
 
 \end{document}

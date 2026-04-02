@@ -1,0 +1,57 @@
+\begin{tikzpicture}[x=1cm,y=1cm,>=stealth, every node/.style={font=\small}]
+\tikzset{
+  peg/.style={line width=1pt},
+  base/.style={line width=1pt}
+}
+
+% disk: x-stred, y-spodek, sirka, barva, popisek
+\newcommand{\diskrect}[5]{%
+  \draw[draw=black, fill=#4, rounded corners=1pt]
+    ({#1-#3/2},{#2}) rectangle ({#1+#3/2},{#2+0.36});
+  \node at (#1,{#2+0.18}) {\scriptsize #5};
+}
+
+%---------------------------------
+% počáteční konfigurace
+%---------------------------------
+\begin{scope}[shift={(0,0)}]
+  \draw[base] (-1.7,0) -- (1.7,0);
+  \draw[peg] (-1,0) -- (-1,2.2);
+  \draw[peg] ( 0,0) -- ( 0,2.2);
+  \draw[peg] ( 1,0) -- ( 1,2.2);
+
+  \diskrect{-1}{0.00}{1.60}{blue!30}{4}
+  \diskrect{-1}{0.36}{1.25}{orange!45}{3}
+  \diskrect{-1}{0.72}{0.90}{green!35}{2}
+  \diskrect{-1}{1.08}{0.55}{red!35}{1}
+
+  \node[below] at (-1,-0.08) {$A$};
+  \node[below] at ( 0,-0.08) {$B$};
+  \node[below] at ( 1,-0.08) {$C$};
+  \node[above] at (0,2.35) {počáteční stav};
+\end{scope}
+
+% šipka mezi konfiguracemi
+\draw[->,thick] (2.1,1.1) -- (4.1,1.1);
+\node[above] at (3.1,1.1) {přesuň všechny disky};
+
+%---------------------------------
+% cílová konfigurace
+%---------------------------------
+\begin{scope}[shift={(6.2,0)}]
+  \draw[base] (-1.7,0) -- (1.7,0);
+  \draw[peg] (-1,0) -- (-1,2.2);
+  \draw[peg] ( 0,0) -- ( 0,2.2);
+  \draw[peg] ( 1,0) -- ( 1,2.2);
+
+  \diskrect{1}{0.00}{1.60}{blue!30}{4}
+  \diskrect{1}{0.36}{1.25}{orange!45}{3}
+  \diskrect{1}{0.72}{0.90}{green!35}{2}
+  \diskrect{1}{1.08}{0.55}{red!35}{1}
+
+  \node[below] at (-1,-0.08) {$A$};
+  \node[below] at ( 0,-0.08) {$B$};
+  \node[below] at ( 1,-0.08) {$C$};
+  \node[above] at (0,2.35) {cílový stav};
+\end{scope}
+\end{tikzpicture}
