@@ -49,16 +49,16 @@
         \begin{enumerate}
             \visible<2->{\item \textbf{De Morganovy zákony}}
             \begin{itemize}
-                \visible<3->{\item $\left[\neg (x\land y)\right]\iff \left[\neg x\lor \neg y\right]$
-                \item $\left[\neg (x_1\land x_2\land \dots\land x_n)\right]\iff \left[\neg x_1 \lor \neg x_2 \lor \dots \lor \neg x_n\right]$}
-                \visible<4->{\item $\left[\neg (x\lor y)\right]\iff \left[\neg x\land \neg y\right]$
-                \item $\left[\neg (x_1\lor x_2\lor \dots\lor x_n)\right]\iff \left[\neg x_1 \land \neg x_2 \land \dots \land \neg x_n\right]$}
+                \visible<3->{\item $\neg (x\land y) = \left[\neg x\lor \neg y\right]$
+                \item $\neg (x_1\land x_2\land \dots\land x_n)=\neg x_1 \lor \neg x_2 \lor \dots \lor \neg x_n$}
+                \visible<4->{\item $\neg (x\lor y)=\neg x\land \neg y$
+                \item $\neg (x_1\lor x_2\lor \dots\lor x_n)=\neg x_1 \land \neg x_2 \land \dots \land \neg x_n$}
             \end{itemize}
             \visible<5->{\item \textbf{Vztahy mezi implikací, konjunkcí a disjunkcí}}
             \begin{itemize}
-                \visible<6->{\item $[x\implies y]\iff[\neg x\lor y]$}
-                \visible<7->{\item $[x\iff y]\iff\left[(x\implies y)\land (y\implies x)\right]$, nebo-li
-                \[[x\iff y]\iff\left[(\neg x\lor y)\land (\neg y\lor x)\right]\]}
+                \visible<6->{\item $x\implies y=\neg x\lor y$}
+                \visible<7->{\item $x\iff y=(x\implies y)\land (y\implies x)$, nebo-li
+                \[x\iff y=(\neg x\lor y)\land (\neg y\lor x)\]}
             \end{itemize}
         \end{enumerate}
         \visible<8->{\begin{talertframe}[0.9\textwidth]
@@ -68,8 +68,28 @@
         \end{talertframe}}
     \end{frame}
 
+    \begin{frame}{Logická formule}
+        \begin{itemize}
+            \visible<2->{\item \markdarkred{Logická formule} je pro nás libovolný logický výraz obsahující \textbf{volné logické proměnné}.}
+            \visible<3->{\item Např.
+            \[\varphi(x,y)=(x\land y)\lor \neg y.\]}
+        \end{itemize}
+    \end{frame}
+
     \section{Splnitelnost}
 
     \titleframe{Splnitelnost}
+
+    \begin{frame}{Úvod do problému}
+        \begin{itemize}
+            \visible<2->{\item Máme \textbf{libovolnou logickou formuli $\varphi$} s proměnnými $x_1,x_2,\dots,x_n$.}
+            \visible<3->{\item Zajímá nás, zdali existuje ohodnocení proměnných $x_1,x_2,\dots,x_n$ takové, že $\varphi$ je pravdivá, tj.
+            \[\varphi(x_1,\dots,x_n)=1.\]}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Splnitelnost}{Příklad}
+        
+    \end{frame}
 
 \end{document}
