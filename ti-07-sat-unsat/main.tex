@@ -12,4 +12,64 @@
 
     \input{../titlepage.tex}
 
+    \section{Výroková logika}
+
+    \titleframe{Výroková logika}
+
+    \subsection{Logické operace}
+
+    \begin{frame}{Logické operace}
+        \visible<2->{Mějme logické proměnné $x,y\in\set{0,1}$.}
+        \begin{itemize}
+            \visible<3->{\item $x \land y$ = \textbf{konjunkce (AND)}}
+            \visible<4->{\item $x\lor y$ = \textbf{disjunkce (OR)}}
+            \visible<5->{\item $x\implies y$ = \textbf{implikace}}
+            \visible<6->{\item $x\iff y$ = \textbf{ekvivalence}}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Tabulka logických operací}
+
+    \begin{frame}{Tabulka logických operací}
+        \begin{table}
+            \centering
+            \begin{tabular}{cc|ccccc}
+                $x$ & $y$ & $\neg x$ & $x\land y$  & $x\lor y$ & $x\implies y$ & $x\iff y$ \\ \hline
+                $1$ & $1$ & $0$      & $1$         & $1$       & $1$           & $1$       \\
+                $1$ & $0$ & $0$      & $0$         & $1$       & $0$           & $0$       \\
+                $0$ & $1$ & $1$      & $0$         & $1$       & $1$           & $0$       \\
+                $0$ & $0$ & $1$      & $0$         & $0$       & $1$           & $1$
+            \end{tabular}
+        \end{table}
+    \end{frame}
+
+    \subsection{Základní vztahy}
+
+    \begin{frame}{Základní vztahy}
+        \begin{enumerate}
+            \visible<2->{\item \textbf{De Morganovy zákony}}
+            \begin{itemize}
+                \visible<3->{\item $\left[\neg (x\land y)\right]\iff \left[\neg x\lor \neg y\right]$
+                \item $\left[\neg (x_1\land x_2\land \dots\land x_n)\right]\iff \left[\neg x_1 \lor \neg x_2 \lor \dots \lor \neg x_n\right]$}
+                \visible<4->{\item $\left[\neg (x\lor y)\right]\iff \left[\neg x\land \neg y\right]$
+                \item $\left[\neg (x_1\lor x_2\lor \dots\lor x_n)\right]\iff \left[\neg x_1 \land \neg x_2 \land \dots \land \neg x_n\right]$}
+            \end{itemize}
+            \visible<5->{\item \textbf{Vztahy mezi implikací, konjunkcí a disjunkcí}}
+            \begin{itemize}
+                \visible<6->{\item $[x\implies y]\iff[\neg x\lor y]$}
+                \visible<7->{\item $[x\iff y]\iff\left[(x\implies y)\land (y\implies x)\right]$, nebo-li
+                \[[x\iff y]\iff\left[(\neg x\lor y)\land (\neg y\lor x)\right]\]}
+            \end{itemize}
+        \end{enumerate}
+        \visible<8->{\begin{talertframe}[0.9\textwidth]
+            \begin{center}
+                Implikaci a ekvivalenci můžeme nahradit pomocí $\land$ a $\lor$.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \section{Splnitelnost}
+
+    \titleframe{Splnitelnost}
+
 \end{document}
