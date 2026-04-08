@@ -312,13 +312,15 @@
     \end{frame}
 
     \begin{frame}{Rozbor Tseitinovy transformace}
-        \visible<2->{\begin{tnoticeframe}
-            Tseitinova transformace je \textbf{podstatně rychlejší} oproti "tabulkové" metodě.
+        \visible<2->{\begin{tnoticeframe}[0.9\textwidth]
+            \begin{center}
+                Tseitinova transformace je \textbf{podstatně rychlejší} oproti "tabulkové" metodě.
+            \end{center}
         \end{tnoticeframe}}
         \begin{itemize}
-            \visible<3->{\item Lze ukázat, že Tseitinova transformace má \textbf{lineární časovou složitost} vzhledem k počtu literálů ve formuli $\varphi$.}
+            \visible<3->{\item Lze ukázat, že Tseitinova transformace má \textbf{lineární časovou složitost} $\bigO(n)$ vzhledem k počtu literálů ve formuli $\varphi$.}
             \visible<4->{\item Podformulí vznikne nejvýše lineárně mnoho.}
-            \visible<5->{\item Nad každou podformulí $\varphi_i$ konstantní počet operací při úpravě do CNF.}
+            \visible<5->{\item Nad každou podformulí $\varphi_i$ provedeme konstantní počet operací při úpravě do CNF.}
         \end{itemize}
     \end{frame}
 
@@ -326,10 +328,61 @@
 
     \titleframe{Problémy SAT a UNSAT}
 
-    \subsection{Formulace problému}
+    \subsection{Problém SAT}
 
     \begin{frame}{Problém SAT}
-        
+        \begin{itemize}
+            \visible<2->{\item Máme již způsob, jak rychle (tj. v pollynomiálním čase) převést formuli $\varphi$ na formuli $\varphi^{\prime}$, která je splnitělná právě tehdy, když je splnitelná i původní formule $\varphi$.}
+            \visible<3->{\item Proto se odteď zaměříme pouze na formule, které jsou v tomto speciálním tvaru.}
+            \visible<4->{\item Bude nás zajímat, zdali je zadaná formule v CNF splnitelná, nebo ne.}
+            \visible<5->{\item \emph{SATisfiability (splnitelnost)}}
+        \end{itemize}
+        \visible<6->{\decproblem{Splnitelnost formule v CNF ($\SAT$)}{
+            Logická formule $\varphi$ v CNF.
+        }{Je formule $\varphi$ splnitelná?}}
+    \end{frame}
+
+    \subsection{Problém UNSAT}
+
+    \begin{frame}{Problém UNSAT}
+        \visible<2->{Podobně se můžeme ptát, zdali je zadaná formule $\varphi$ \textbf{neplsnitelná}, tzn. pro každé ohodnocení jejích proměnných je $\varphi=0$.}
+        \visible<3->{\decproblem{Nesplnitelnost formule v CNF ($\UNSAT$)}{
+            Logická formule $\varphi$ v CNF.
+        }{Je formule $\varphi$ nesplnitelná?}}
+        \visible<4->{\begin{tinfoframe}[0.8\textwidth]
+            \begin{center}
+                Je nejspíše zjevné, že $\SAT(\varphi)=\neg \UNSAT(\varphi)$.
+            \end{center}
+        \end{tinfoframe}}
+        \visible<5->{\begin{talertframe}[0.9\textwidth]
+            \begin{center}
+                Formule $\varphi$ je splnitelná právě tehdy, když $\neg\varphi$ je nesplnitelná, tzn. $\SAT(\varphi)=\UNSAT(\neg\varphi)$.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \subsection{Proč je SAT důležitý?}
+
+    \begin{frame}{Proč je SAT důležitý?}
+        \visible<2->{\begin{timportantframe}
+            \begin{center}
+                Mnoho rozhodovacích problémů lze zredukovat na problém splnitelnosti nějaké vhodné formule $\varphi$ v CNF.
+            \end{center}
+        \end{timportantframe}}
+        \visible<3->{\begin{tinfoframe}
+            \begin{center}
+                Později uvidíme, že dokonce lze na SAT v jistém smyslu "převést" každý rozhodovací problém z \textbf{určité třídy problémů}.
+            \end{center}
+        \end{tinfoframe}}
+    \end{frame}
+    
+    \section{Zdroje}
+
+    \begin{frame}{Zdroje}
+        \begin{itemize}
+            \item PAPADIMITRIOU, Christos H. \textit{Computational complexity.} Reading: Addison-Wesley, 1994. ISBN 0-201-53082-1.
+            \item MAREŠ, Martin a~VALLA, Tomáš. \textit{Průvodce labyrintem algoritmů.} Druhé vydání. CZ.NIC. Praha: CZ.NIC, z.s.p.o., 2022. ISBN 978-80-88168-63-8.
+        \end{itemize}
     \end{frame}
 
 \end{document}
