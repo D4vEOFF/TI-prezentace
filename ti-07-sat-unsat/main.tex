@@ -54,14 +54,19 @@
                 \visible<4->{\item $\neg (x\lor y)=\neg x\land \neg y$
                 \item $\neg (x_1\lor x_2\lor \dots\lor x_n)=\neg x_1 \land \neg x_2 \land \dots \land \neg x_n$}
             \end{itemize}
-            \visible<5->{\item \textbf{Vztahy mezi implikací, konjunkcí a disjunkcí}}
+            \visible<5->{\item \textbf{Distributivita konjunkce a disjunkce}}
             \begin{itemize}
-                \visible<6->{\item $x\implies y=\neg x\lor y$}
-                \visible<7->{\item $x\iff y=(x\implies y)\land (y\implies x)$, nebo-li
+                \visible<6->{\item $x\land(y\lor z)=(x\land y)\lor (x\land z)$}
+                \visible<7->{\item $x\lor(y\land z)=(x\lor y)\land(x\lor z)$}
+            \end{itemize}
+            \visible<8->{\item \textbf{Vztahy mezi implikací, konjunkcí a disjunkcí}}
+            \begin{itemize}
+                \visible<9->{\item $x\implies y=\neg x\lor y$}
+                \visible<10->{\item $x\iff y=(x\implies y)\land (y\implies x)$, nebo-li
                 \[x\iff y=(\neg x\lor y)\land (\neg y\lor x)\]}
             \end{itemize}
         \end{enumerate}
-        \visible<8->{\begin{talertframe}[0.9\textwidth]
+        \visible<11->{\begin{talertframe}[0.9\textwidth]
             \begin{center}
                 Implikaci a ekvivalenci můžeme nahradit pomocí $\land$ a $\lor$.
             \end{center}
@@ -143,6 +148,187 @@
     \subsection{Převod do CNF pomocí tabulky}
 
     \begin{frame}{Převod do CNF pomocí tabulky}
+        \begin{itemize}
+            \item Mějme libovolnou logickou formuli $\varphi$ s proměnnými $x_1,\dots,x_n$.
+            \item Sestavíme si tabulku pravdivostních hodnot $\varphi$ a podíváme se, pro jaká ohodnocení není $\varphi$ splněna.
+            \item Pro každé \textbf{nesplňující ohodnocení} vytvoříme novou klauzuli, kde obecně $i$-tý literál je
+            \begin{itemize}
+                \item $x_i$, pokud v daném ohodnocení je $x_i=0$.
+                \item $\neg x_i$, pokud v daném ohodnocení je $x_i=1$.
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Převod do CNF pomocí tabulky}{Příklad}
+        \visible<2->{Uvažujme formuli $\varphi(x,y,z)=(x\implies y)\implies z$.}
+        \visible<3->{\begin{table}
+            \centering
+            \begin{tabular}{ccc|cc}
+            $x$     & $y$   & $z$   & $x\implies y$     & $(x\implies y)\implies z$ \\ \hline
+            $0$     & $0$   & $0$   & $1$               & $\markdarkred{0}$                         \\
+            $0$     & $0$   & $1$   & $1$               & $1$                         \\
+            $0$     & $1$   & $0$   & $1$               & $\markdarkred{0}$                         \\
+            $0$     & $1$   & $1$   & $1$               & $1$                         \\
+            $1$     & $0$   & $0$   & $0$               & $1$                         \\
+            $1$     & $0$   & $1$   & $0$               & $1$                         \\
+            $1$     & $1$   & $0$   & $1$               & $\markdarkred{0}$                         \\
+            $1$     & $1$   & $1$   & $1$               & $1$
+            \end{tabular}
+        \end{table}}
+        \visible<4->{Formule $\varphi$ je nepravdivá pro
+        \begin{itemize}
+            \item $x=0,y=0,z=0$,
+            \item $x=0,y=1,z=0$ a
+            \item $x=1,y=1,z=0$.
+        \end{itemize}}
+    \end{frame}
+
+    \begin{frame}{Převod do CNF pomocí tabulky}{Příklad}
+        \visible<2->{Tedy celkově sestavíme 3~klauzule:}
+        \begin{itemize}
+            \visible<3->{\item \((\overbrace{x}^{x=0}\lor \underbrace{y}_{y=0}\lor \overbrace{z}^{z=0})\),}
+            \visible<4->{\item \((x\lor\underbrace{\neg y}_{y=1}\lor z)\),}
+            \visible<5->{\item \((\neg x\lor\neg y\lor z)\).}
+        \end{itemize}
+        \visible<6->{Výsledná formule v~CNF bude mít tvar:
+        \[\varphi^\prime(x,y,z)=(x\lor y\lor z)\land (x\lor \neg y\lor z)\land (\neg x\lor \neg y\lor z).\]}
+        \visible<7->{\begin{talertframe}
+            \begin{center}
+                Problém! Tento postup vyžaduje \textbf{exponenciálně mnoho kroků!} Výsledná formule v CNF může být velmi dlouhá.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \subsection{Tseitinova transformace}
+
+    \begin{frame}{Tseitinova transformace}
+        \visible<2->{\begin{timportantframe}[0.9\textwidth]
+            \begin{center}
+                Převod do CNF nás může výrazně zdržet, pokud se budeme snažit za každou cenu \textbf{zachovat stejné proměnné}.
+            \end{center}
+        \end{timportantframe}}
+        \visible<3->{Zkusíme nyní trochu jiný postup, kdy do nové formule přidáme pomocné proměnné. Výsledkem však bude \textbf{podstatně rychlejší algoritmus}.}
+    \end{frame}
+
+    \begin{frame}{Tseitinova transformace}
+        \visible<2->{Mějme opět logickou formuli $\varphi$ s proměnnými $x_1,\dots,x_n$.}
+        \begin{enumerate}
+            \visible<3->{\item Formuli $\varphi$ si rozdělíme na jednotlivé podformule $\varphi_1,\varphi_2,\dots,\varphi_k$ (až na jednotlivé literály), přičemž $\varphi_1=\varphi$.}
+            \visible<4->{\item Pro každou podformuli $\varphi_i$ si zavedeme \textbf{novou proměnnou $y_i$}.}
+            \visible<5->{\item Sestavíme novou formuli
+            \[\varphi^{\prime}(x_1,\dots,x_n,y_1,\dots,y_k)=y_1\land (y_1\iff\varphi_1)\land\dots\land(y_k\iff\varphi_k).\]}
+            \visible<6->{\item Každý z výrazů $y_i\iff\varphi_i$ převedeme pomocí identity
+            \[y_i\iff\varphi_i=(\neg y_i\lor \varphi_i)\land(\neg\varphi_i\lor y_i),\]
+            a užitím dalších vztahů ještě můžeme upravit $\varphi_i$, čímž dostaneme formuli v CNF.}
+        \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Nastavení pomocných proměnných $y_i$}
+        \begin{itemize}
+            \visible<2->{\item Nové proměnné $y_1,\dots,y_k$ budou závislé na volbě ohodnocení proměnných $x_1,\dots,x_n$.}
+            \visible<3->{\item Obecně pokud podformule $\varphi_i$ je v daném ohodnocení \textbf{pravdivá}, pak nastavíme $y_i=1$, jinak $y_i=0$.}
+            \visible<4->{\item Pak $y_1$ bude odpovídat pravdivostní hodnotě celé formule $\varphi$.}
+        \end{itemize}
+        \visible<5->{\begin{tinfoframe}[0.9\textwidth]
+            \begin{center}
+                Není těžké si rozmyslet, že původní formule $\varphi$ je splnitelná právě tehdy, když je splnitelná i nově vzniklá formule $\varphi^{\prime}$ v CNF.
+            \end{center}
+        \end{tinfoframe}}
+    \end{frame}
+
+    \begin{frame}{Tseitinova transformace}{Příklad}
+        \visible<2->{Mějme logickou formuli $\psi(p,q,r) = ((p \lor q) \land r) \implies \neg p$.} \visible<3->{Pak její podformule jsou}
+        \begin{itemize}
+            \visible<3->{\item $\neg p$,}
+            \visible<4->{\item $p\lor q$,}
+            \visible<5->{\item $(p\lor q)\land r$ a}
+            \visible<6->{\item $((p \lor q) \land r) \implies \neg p$.}
+        \end{itemize}
+        \visible<7->{Pro jednotlivé podformule zavedeme proměnné $y_1,y_2,y_3,y_4$ a sestavíme výrazy:}
+        \begin{itemize}
+            \visible<7->{\item $y_4\iff \neg p$,}
+            \visible<8->{\item $y_3\iff [p\lor q]$,}
+            \visible<9->{\item $y_2\iff [\underbrace{(p\lor q)}_{y_2}\land r] = y_2\iff [y_3\land r]$,}
+            \visible<10->{\item $y_1\iff [\underbrace{((p \lor q) \land r)}_{y_2} \implies \overbrace{\neg p}^{y_4}]=y_1\iff [y_2\implies y_4]$.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Tseitinova transformace}{Příklad}
+        \visible<2->{Všechny výrazy nyní upravíme logickými identitami a jsme hotovi:}
+        \begin{itemize}
+            \visible<3->{\item Výraz $y_4\iff\varphi_4$:
+            \begin{align*}
+                y_4\iff\neg p &= (\neg y_4\lor \neg p)\land (\neg(\neg p)\lor y_4)\\
+                &=\markdarkred{(\neg y_4\lor \neg p)\land (p\lor y_4)}.
+            \end{align*}}
+            \visible<4->{\item Výraz $y_3\iff\varphi_3$:
+            \begin{align*}
+                y_3\iff[p\lor q] &= (\neg y_3\lor p\lor q)\land (\overbrace{(\neg p\land \neg q)}^{\neg(p\lor q)}\lor y_3)\\
+                &=\markdarkred{(\neg y_3\lor p\lor q)\land (\neg p\lor y_3)\land (\neg q\lor y_3)}.
+            \end{align*}}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Tseitinova transformace}{Příklad}
+        \begin{itemize}
+            \visible<2->{\item Výraz $y_2\iff\varphi_2$:
+            \begin{align*}
+                y_2\iff [y_3\land r] &= (\neg y_2\lor (y_3\land r)) \land (\overbrace{\neg y_3\lor \neg r}^{\neg(y_3\land r)}\lor y_2)\\
+                &=\markdarkred{(\neg y_2\lor y_3)\land (\neg y_2\lor r) \land (\neg y_3\lor \neg r\lor y_2)}.
+            \end{align*}}
+            \visible<3->{\item Výraz $y_1\iff\varphi_1$:
+            \begin{align*}
+                y_1\iff (y_2\implies y_4) &= y_1\iff (\neg y_2\lor y_4) \\
+                &=(\neg y_1 \lor \neg y_2 \lor y_4) \land ((y_2\land\neg y_4)\lor y_1) \\
+                &=\markdarkred{(\neg y_1 \lor \neg y_2 \lor y_4) \land (y_2 \lor y_1) \land (\neg y_4 \lor y_1)}.
+            \end{align*}}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Tseitinova transformace}{Příklad}
+        Výsledná formule $\varphi^{\prime}$ v CNF:
+        \begin{align*}
+            \varphi^{\prime}&=y_1\land\overbrace{(\neg y_1 \lor \neg y_2 \lor y_4) \land (y_2 \lor y_1) \land (\neg y_4 \lor y_1)}^{y_1\iff \varphi_1} \\
+            &\land\overbrace{(\neg y_2\lor y_3)\land (\neg y_2\lor r) \land (\neg y_3\lor \neg r\lor y_2)}^{y_2\iff\varphi_2} \\
+            &\land\overbrace{(\neg y_3\lor p\lor q)\land (\neg p\lor y_3)\land (\neg q\lor y_3)}^{y_3\iff\varphi_3} \\
+            &\land\overbrace{(\neg y_4\lor \neg p)\land (p\lor y_4)}^{y_4\iff\varphi_4}.
+        \end{align*}
+    \end{frame}
+
+    \begin{frame}{Tseitinova transformace}{Příklad}
+        \visible<2->{Zkusíme vyhodnotit $\varphi$ pro ohodnocení $p=1,q=0,r=0$:}
+        \visible<3->{\begin{align*}
+            \varphi(1,0,0)&=((1 \lor 0) \land 0) \implies \neg 1=(1\land 0) \implies 0=0 \implies 0=1.
+        \end{align*}}
+        \visible<4->{Hodnoty nových proměnných:}
+        \begin{itemize}
+            \visible<5->{\item $y_4=0$,~protože $\neg p=0$,}
+            \visible<6->{\item $y_3=1$,~protože $p\lor q=1$,}
+            \visible<7->{\item $y_2=0$,~protože $y_3\land r=0$ a}
+            \visible<8->{\item $y_1=1$,~protože $y_2\implies y_4=1$.}
+        \end{itemize}
+        \visible<9->{Nová formule $\varphi^{\prime}$ bude mít v tomto ohodnocení též pravdivostní hodnotu $1$, resp.
+        \[\varphi^{\prime}(\underbrace{1,0,0}_{p,q,r},\overbrace{1,0,1,0}^{y_1,y_2,y_3,y_4})=1.\]}
+    \end{frame}
+
+    \begin{frame}{Rozbor Tseitinovy transformace}
+        \visible<2->{\begin{tnoticeframe}
+            Tseitinova transformace je \textbf{podstatně rychlejší} oproti "tabulkové" metodě.
+        \end{tnoticeframe}}
+        \begin{itemize}
+            \visible<3->{\item Lze ukázat, že Tseitinova transformace má \textbf{lineární časovou složitost} vzhledem k počtu literálů ve formuli $\varphi$.}
+            \visible<4->{\item Podformulí vznikne nejvýše lineárně mnoho.}
+            \visible<5->{\item Nad každou podformulí $\varphi_i$ konstantní počet operací při úpravě do CNF.}
+        \end{itemize}
+    \end{frame}
+
+    \section{Problémy SAT a UNSAT}
+
+    \titleframe{Problémy SAT a UNSAT}
+
+    \subsection{Formulace problému}
+
+    \begin{frame}{Problém SAT}
         
     \end{frame}
 
