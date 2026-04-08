@@ -76,9 +76,11 @@
         \end{itemize}
     \end{frame}
 
-    \section{Splnitelnost}
+    \section{Splnitelnost a CNF}
 
-    \titleframe{Splnitelnost}
+    \titleframe{Splnitelnost a CNF}
+
+    \subsection{Úvod do problému a příklady}
 
     \begin{frame}{Úvod do problému}
         \begin{itemize}
@@ -88,7 +90,59 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Splnitelnost}{Příklad}
+    \begin{frame}{Splnitelnost}{Příklady}
+        \begin{itemize}
+            \visible<2->{\item Formule $\varphi_1(x)=x\lor\neg x$ je \markdarkgreen{splnitelná \cmark}.}
+            \visible<3->{\item Formule $\varphi_2(x)=x\land\neg x$ je \markdarkred{nesplnitelná \xmark}.}
+            \visible<4->{\item Formule $\varphi_3(x,y,z)=(x\lor y)\land(\neg x\lor z)\land(\neg z\lor y)$ je \markdarkgreen{splnitelná \cmark}.}
+            \visible<5->{\item Formule $\varphi_4(x,y)=(x \iff y) \land (x \land \neg y)$ je \markdarkred{nesplnitelná \xmark}.}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Literály a klauzule}
+
+    \begin{frame}{Literály a klauzule}
+        \visible<2->{\begin{tnoticeframe}[0.9\textwidth]
+            \begin{center}
+                Nás budou zajímat logické výrazy v tzv. \textbf{konjunktivní normální formě} (zkráceně \textbf{CNF}, z anglického \emph{conjuctive normal form}).
+            \end{center}
+        \end{tnoticeframe}}
+        \visible<3->{\begin{defblock}[Literál a klauzule]
+            \visible<3->{Mějme logické proměnnýmé $x_1,x_2,\dots,x_n$. Pak definujeme následující:}
+            \begin{itemize}
+                \visible<4->{\item \markdarkred{Literál} je jakákoliv \textbf{proměnná $x_i$, nebo její negace $\neg x_i$}.}
+                \visible<5->{\item \markdarkred{Klauzule} sestavá z jednoho nebo více literálů oddělených buď spojkou $\land$, nebo $\lor$.}
+            \end{itemize}
+        \end{defblock}}
+    \end{frame}
+
+    \subsection{Konjunktivní normální forma}
+
+    \begin{frame}{Konjunktivní normální forma}
+        \visible<2->{\begin{defblock}[Konjunktivní normální forma]
+            Mějme logickou formuli $\varphi$ s proměnnými $x_1,x_2,\dots,x_n$. Pak řekneme, že $\varphi$ je v \markdarkred{konjunktivní normální formě} (CNF), pokud sestává z klauzulí oddělených spojkou $\land$ a literály v každé klauzuli jsou odděleny spojkou $\lor$.
+        \end{defblock}}
+        \visible<3->{Tzn. každá formule v CNF je tvaru
+        \[\varphi(x_1,\dots,x_n)=\overbrace{(\ell^{1}_1\lor\underbrace{\ell^{1}_2}_\text{literál} \dots \lor \ell^{1}_{m_1})}^{\text{klauzule}}\land\dots\land(\ell^{k}_1\lor\dots\lor\ell^{k}_{m_k}).\]}
+        \visible<4->{\begin{timportantframe}[0.9\textwidth]
+            S formulemi v CNF se lépe pracuje než s obecnými logickými výrazy. Aby to však mělo smysl, musíme umět každou obecnou formuli do CNF nějak rychle převést.
+        \end{timportantframe}}
+    \end{frame}
+
+    \begin{frame}{Konjunktivní normální forma}{Příklady}
+        \begin{itemize}
+            \visible<2->{\item $\varphi(x,y)=(\neg x\lor y)\land (\neg y\lor x)$ \markdarkgreen{je v CNF \cmark}}
+            \visible<3->{\item $\psi(x,y)=(\neg x\land y)\land (\neg y\land x)$ \markdarkred{není v CNF \xmark}}
+            \visible<4->{\item $\omega(x)=x$ \markdarkgreen{je v CNF \cmark}}
+            \visible<5->{\item $\tau(a,b)=a\land b$ \markdarkgreen{je v CNF \cmark}}
+            \visible<6->{\item $\zeta(a,b)=a\lor b$ \markdarkgreen{je v CNF \xmark}}
+            \visible<7->{\item $\chi (z,w)=(z\lor (\neg z\land w)\lor w)\land \neg w$ \markdarkred{není v CNF \xmark}}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Převod do CNF pomocí tabulky}
+
+    \begin{frame}{Převod do CNF pomocí tabulky}
         
     \end{frame}
 
