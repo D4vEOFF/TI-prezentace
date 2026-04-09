@@ -78,6 +78,8 @@
             \visible<2->{\item \markdarkred{Logická formule} je pro nás libovolný logický výraz obsahující \textbf{volné logické proměnné}.}
             \visible<3->{\item Např.
             \[\varphi(x,y)=(x\land y)\lor \neg y.\]}
+            \visible<4->{\item Zápisem $\varphi=\psi$ rozumíme, že výrazy $\varphi$ a $\psi$ jsou shodné.}
+            \visible<5->{\item Zápisem $\varphi\equiv\psi$ rozumíme, že výrazy jsou logicky ekvivalentní (nemusí být nutně stejné).}
         \end{itemize}
     \end{frame}
 
@@ -218,7 +220,7 @@
             \visible<5->{\item Sestavíme novou formuli
             \[\varphi^{\prime}(x_1,\dots,x_n,y_1,\dots,y_k)=y_1\land (y_1\iff\varphi_1)\land\dots\land(y_k\iff\varphi_k).\]}
             \visible<6->{\item Každý z výrazů $y_i\iff\varphi_i$ převedeme pomocí identity
-            \[y_i\iff\varphi_i=(\neg y_i\lor \varphi_i)\land(\neg\varphi_i\lor y_i),\]
+            \[y_i\iff\varphi_i\equiv(\neg y_i\lor \varphi_i)\land(\neg\varphi_i\lor y_i),\]
             a užitím dalších vztahů ještě můžeme upravit $\varphi_i$, čímž dostaneme formuli v CNF.}
         \end{enumerate}
     \end{frame}
@@ -248,8 +250,8 @@
         \begin{itemize}
             \visible<7->{\item $y_4\iff \neg p$,}
             \visible<8->{\item $y_3\iff [p\lor q]$,}
-            \visible<9->{\item $y_2\iff [\underbrace{(p\lor q)}_{y_2}\land r] = y_2\iff [y_3\land r]$,}
-            \visible<10->{\item $y_1\iff [\underbrace{((p \lor q) \land r)}_{y_2} \implies \overbrace{\neg p}^{y_4}]=y_1\iff [y_2\implies y_4]$.}
+            \visible<9->{\item $y_2\iff [\underbrace{(p\lor q)}_{y_2}\land r] \equiv y_2\iff [y_3\land r]$,}
+            \visible<10->{\item $y_1\iff [\underbrace{((p \lor q) \land r)}_{y_2} \implies \overbrace{\neg p}^{y_4}]\equiv y_1\iff [y_2\implies y_4]$.}
         \end{itemize}
     \end{frame}
 
@@ -258,13 +260,13 @@
         \begin{itemize}
             \visible<3->{\item Výraz $y_4\iff\varphi_4$:
             \begin{align*}
-                y_4\iff\neg p &= (\neg y_4\lor \neg p)\land (\neg(\neg p)\lor y_4)\\
-                &=\markdarkred{(\neg y_4\lor \neg p)\land (p\lor y_4)}.
+                y_4\iff\neg p &\equiv (\neg y_4\lor \neg p)\land (\neg(\neg p)\lor y_4)\\
+                &\equiv\markdarkred{(\neg y_4\lor \neg p)\land (p\lor y_4)}.
             \end{align*}}
             \visible<4->{\item Výraz $y_3\iff\varphi_3$:
             \begin{align*}
-                y_3\iff[p\lor q] &= (\neg y_3\lor p\lor q)\land (\overbrace{(\neg p\land \neg q)}^{\neg(p\lor q)}\lor y_3)\\
-                &=\markdarkred{(\neg y_3\lor p\lor q)\land (\neg p\lor y_3)\land (\neg q\lor y_3)}.
+                y_3\iff[p\lor q] &\equiv (\neg y_3\lor p\lor q)\land (\overbrace{(\neg p\land \neg q)}^{\neg(p\lor q)}\lor y_3)\\
+                &\equiv\markdarkred{(\neg y_3\lor p\lor q)\land (\neg p\lor y_3)\land (\neg q\lor y_3)}.
             \end{align*}}
         \end{itemize}
     \end{frame}
@@ -273,14 +275,14 @@
         \begin{itemize}
             \visible<2->{\item Výraz $y_2\iff\varphi_2$:
             \begin{align*}
-                y_2\iff [y_3\land r] &= (\neg y_2\lor (y_3\land r)) \land (\overbrace{\neg y_3\lor \neg r}^{\neg(y_3\land r)}\lor y_2)\\
-                &=\markdarkred{(\neg y_2\lor y_3)\land (\neg y_2\lor r) \land (\neg y_3\lor \neg r\lor y_2)}.
+                y_2\iff [y_3\land r] &\equiv (\neg y_2\lor (y_3\land r)) \land (\overbrace{\neg y_3\lor \neg r}^{\neg(y_3\land r)}\lor y_2)\\
+                &\equiv\markdarkred{(\neg y_2\lor y_3)\land (\neg y_2\lor r) \land (\neg y_3\lor \neg r\lor y_2)}.
             \end{align*}}
             \visible<3->{\item Výraz $y_1\iff\varphi_1$:
             \begin{align*}
-                y_1\iff (y_2\implies y_4) &= y_1\iff (\neg y_2\lor y_4) \\
-                &=(\neg y_1 \lor \neg y_2 \lor y_4) \land ((y_2\land\neg y_4)\lor y_1) \\
-                &=\markdarkred{(\neg y_1 \lor \neg y_2 \lor y_4) \land (y_2 \lor y_1) \land (\neg y_4 \lor y_1)}.
+                y_1\iff (y_2\implies y_4) &\equiv y_1\iff (\neg y_2\lor y_4) \\
+                &\equiv(\neg y_1 \lor \neg y_2 \lor y_4) \land ((y_2\land\neg y_4)\lor y_1) \\
+                &\equiv\markdarkred{(\neg y_1 \lor \neg y_2 \lor y_4) \land (y_2 \lor y_1) \land (\neg y_4 \lor y_1)}.
             \end{align*}}
         \end{itemize}
     \end{frame}
