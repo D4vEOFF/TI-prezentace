@@ -44,7 +44,39 @@
 
     \begin{frame}{Úvod}
         \begin{itemize}
-            \item 
+            \visible<2->{\item Algoritmus řešící $\SAT$ (tzv. \textbf{SAT solver})}
+            \visible<3->{\item Martin \markdarkred{D}avis, Hilary \markdarkred{P}utnam, George \markdarkred{L}ogemann, Donald W. \markdarkred{L}oveland (1961)}
+            \visible<4->{\item Postup založený na rekurzivním "zkracování" logické formule v CNF.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Jednotková klauzule, polarita a čisté literály}
+        \visible<2->{\begin{defblock}[Polarita literálu]
+            Je-li literál buď proměnná $x$, nebo její negace $\neg x$, pak říkáme, že
+            \begin{itemize}
+                \item $x$ má \markdarkred{kladnou polaritu} a
+                \item $\neg x$ má \markdarkred{zápornou polaritu}.
+            \end{itemize}
+        \end{defblock}}
+        \visible<3->{\begin{defblock}[Jednotková klauzule]
+            Klauzule se nazývá \markdarkred{jednotková}, pokud obsahuje \textbf{právě jeden literál}.
+        \end{defblock}}
+        \visible<4->{\begin{defblock}[Čistý literál]
+            Literál $\ell$ v logické formuli $\varphi$ nazveme \markdarkred{čistý}, pokud se v ní vyskytuje \textbf{pouze v jedné polaritě}.
+        \end{defblock}}
+    \end{frame}
+
+    \begin{frame}{Princip algoritmu DPLL}
+        \begin{itemize}
+            \visible<2->{\item Na vstupu máme logickou formuli $\varphi$ v CNF.}
+            \visible<3->{\item Chceme zjistit, zdali je $\varphi$ splnitelná.}
+            \visible<4->{\item Algoritmus \textbf{opakovaně} aplikuje na $\varphi$ postupně dvojici procedur:}
+            \begin{itemize}
+                \visible<5->{\item \markdarkred{unit propagation} (jednotková propagace) a}
+                \visible<6->{\item \markdarkred{pure literal elimination} (eliminace čistých literálů).}
+            \end{itemize}
+            \visible<7->{\item Ze vzniklé formule $\varphi^{\prime}$ zkusíme určit, zdali \textbf{je či není splnitelná}.}
+            \visible<8->{\item Pokud to nepůjde, formuli "vhodně" upravíme a znovu aplikujeme stejný postup.}
         \end{itemize}
     \end{frame}
 
