@@ -186,7 +186,7 @@
         \end{center}
     \end{frame}
 
-    \begin{frame}{Příklad výpočtu algoritmu DPLL}
+    \begin{frame}{Algoritmus DPLL}{Příklad}
         Mějme zadanou formuli
         \[
         \varphi=
@@ -194,7 +194,7 @@
         \]
     \end{frame}
 
-    \begin{frame}{Příklad výpočtu algoritmu DPLL}
+    \begin{frame}{Algoritmus DPLL}{Příklad}
         \centering
         \DPLLstate
         {Krok 1: start}
@@ -213,7 +213,7 @@
         }
     \end{frame}
 
-    \begin{frame}{Příklad výpočtu algoritmu DPLL}
+    \begin{frame}{Algoritmus DPLL}{Příklad}
     \centering
     \DPLLstate
     {Krok 2: po \textsc{UnitPropagation}}
@@ -233,7 +233,7 @@
     }
     \end{frame}
 
-    \begin{frame}{Příklad výpočtu algoritmu DPLL}
+    \begin{frame}{Algoritmus DPLL}{Příklad}
     \centering
     \DPLLstate
     {Krok 3: po \textsc{PureLiteralElimination}}
@@ -259,7 +259,7 @@
     }
     \end{frame}
 
-    \begin{frame}{Příklad výpočtu algoritmu DPLL}
+    \begin{frame}{Algoritmus DPLL}{Příklad}
     \centering
     \DPLLstate
     {Krok 4: větev $c=0$}
@@ -285,7 +285,7 @@
     }
     \end{frame}
 
-    \begin{frame}{Příklad výpočtu algoritmu DPLL}
+    \begin{frame}{Algoritmus DPLL}{Příklad}
     \centering
     \DPLLstate
     {Krok 5: větev $c=1$}
@@ -299,7 +299,7 @@
         \DPLLclause{(c6)}{dpllremovedclause}{(c \lor \neg d)}
     }
     {Po dosazení $c=1$ vznikne jednotková klauzule $(d)$.\\
-    Po \textsc{UnitPropagation} dostaneme $\varphi=\emptyset$, tedy SAT.}
+    Po \textsc{UnitPropagation} dostaneme prázdnou formuli, tedy $\varphi$ je splnitelná.}
     {
         \node[dpllplainnode] at (root) {};
         \draw[dplltreeedge] (root) -- (left)
@@ -309,6 +309,26 @@
         \node[dpllunsatnode] at (left) {};
         \node[dpllsatnode] at (right) {};
     }
+    \end{frame}
+
+    \subsection{Časová složitost}
+
+    \begin{frame}{Časová složitost DPLL}
+        \begin{itemize}
+            \item Nejhorší případ nastane, pokud při žádném volání $\operatorname{DPLL}$ neexituje v příslušné formuli \textbf{žádná jednotková klauzule} vyjma té, kterou jsme vytvořili při sestavení formule $\varphi\land\ell$, resp. $\varphi\land\neg\ell$, ani \textbf{čistý literál}.
+            \item Máme-li formuli ve tvaru $\varphi\land\ell$, resp. $\varphi\land\neg\ell$, pak literál $\ell$ eliminujeme v dalším volání a všechny ostatní zůstanou zachované
+            \begin{timportantframe}[0.8\textwidth]
+                \begin{center}
+                    Formule se tedy zkrátí pouze o \textbf{jeden literál}.
+                \end{center}
+            \end{timportantframe}
+            \item Označme si $n$ počet literálů vstupní formule $\varphi$.
+            \item Dále si označme:
+            \begin{itemize}
+                \item $T(n)$ = počet kroků algoritmu nad formulí o $n$ literálech,
+                \item $r(n)$ = režie jednoho volání.
+            \end{itemize}
+        \end{itemize}
     \end{frame}
 
     \section{Zdroje}
