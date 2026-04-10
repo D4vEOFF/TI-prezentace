@@ -50,6 +50,8 @@
         \end{itemize}
     \end{frame}
 
+    \subsection{Jednotková klauzule, polarita a čisté literály}
+
     \begin{frame}{Jednotková klauzule, polarita a čisté literály}
         \visible<2->{\begin{defblock}[Polarita literálu]
             Je-li literál buď proměnná $x$, nebo její negace $\neg x$, pak říkáme, že
@@ -66,19 +68,52 @@
         \end{defblock}}
     \end{frame}
 
+    \subsection{Princip algoritmu DPLL}
+
     \begin{frame}{Princip algoritmu DPLL}
         \begin{itemize}
-            \visible<2->{\item Na vstupu máme logickou formuli $\varphi$ v CNF.}
+            \visible<2->{\item Na vstupu máme logickou formuli $\varphi$ v CNF s proměnnými $x_1,\dots,x_n$.}
             \visible<3->{\item Chceme zjistit, zdali je $\varphi$ splnitelná.}
             \visible<4->{\item Algoritmus \textbf{opakovaně} aplikuje na $\varphi$ postupně dvojici procedur:}
             \begin{itemize}
-                \visible<5->{\item \markdarkred{unit propagation} (jednotková propagace) a}
-                \visible<6->{\item \markdarkred{pure literal elimination} (eliminace čistých literálů).}
+                \visible<5->{\item \markdarkred{jednotková propagace} (unit propagation) a}
+                \visible<6->{\item \markdarkred{eliminace čistých literálů} (pure literal elimination).}
             \end{itemize}
             \visible<7->{\item Ze vzniklé formule $\varphi^{\prime}$ zkusíme určit, zdali \textbf{je či není splnitelná}.}
             \visible<8->{\item Pokud to nepůjde, formuli "vhodně" upravíme a znovu aplikujeme stejný postup.}
         \end{itemize}
+        \visible<9->{\begin{timportantframe}[0.9\textwidth]
+            \begin{center}
+                Má-li být formule $\varphi$ splnitelná, pak musíme být schopni splnit \textbf{každou její klauzuli}. 
+            \end{center}
+        \end{timportantframe}}
     \end{frame}
+
+    \subsection{Jednotková propagace}
+
+    \begin{frame}{Jednotková propagace}
+        \visible<2->{Nachází-li se ve formuli jednotková klauzule, tj.
+        \[\ldots\land(\ldots)\land(\ell)\land(\ldots)\land\ldots,\]
+        pak nutně musí být $\ell=1$.}
+        \begin{itemize}
+            \visible<3->{\item Na vstupu máme formuli $\varphi$ a nějaký její literál $\ell$.}
+            \visible<4->{\item Pokud je $\ell=x_i$, pak $x_i=1$. Naopak pokud $\ell=\neg x_i$, pak $x_i=0$.}
+            \visible<5->{\item V takovém případě můžeme odstranit všechny ostatní klauzule obsahující $\ell$.}
+            \visible<6->{\begin{tnoticeframe}[0.9\textwidth]
+                \begin{center}
+                    Klauzule ve tvaru $(\ldots\land \ell \land \ldots)$ jsou splněny a dále není třeba je uvažovat (můžeme je odstranit).
+                \end{center}
+            \end{tnoticeframe}}
+            \visible<7->{\item Naopak pokud nějaká klauzule obsahuje $\ell$ \textbf{v opačné polaritě} (tj. $\neg\ell$), pak jeho hodnota je $0$.}
+            \visible<8->{\begin{tnoticeframe}[0.9\textwidth]
+                \begin{center}
+                    Takový literál můžeme z formule odstranit. Hodnota klauzule je závislá pouze na zbylých literálech.
+                \end{center}
+            \end{tnoticeframe}}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Eliminace čistých literálů}
 
     \section{Zdroje}
 
