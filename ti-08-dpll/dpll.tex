@@ -1,0 +1,92 @@
+\definecolor{dpllunit}{RGB}{255,230,120}
+\definecolor{dpllpure}{RGB}{190,220,255}
+\definecolor{dpllremoved}{RGB}{225,225,225}
+\definecolor{dpllconflict}{RGB}{255,190,190}
+\definecolor{dpllsat}{RGB}{180,230,180}
+
+\tikzset{
+    dpllclause/.style={
+        draw=black,
+        rounded corners=1.5mm,
+        fill=white,
+        inner sep=1.2mm,
+        minimum width=31mm,
+        minimum height=5.8mm,
+        font=\small,
+        align=center
+    },
+    dpllunitclause/.style={dpllclause, fill=dpllunit},
+    dpllpureclause/.style={dpllclause, fill=dpllpure},
+    dpllremovedclause/.style={dpllclause, fill=dpllremoved, text=black!60},
+    dpllconflictclause/.style={dpllclause, fill=dpllconflict},
+    dpllbox/.style={
+        draw=black,
+        rounded corners=2mm,
+        fill=white,
+        inner sep=2mm,
+        font=\small
+    },
+    dplltreenode/.style={
+        circle,
+        draw=black,
+        thick,
+        fill=white,
+        minimum size=5mm,
+        inner sep=0pt
+    },
+    dpllcurrentnode/.style={dplltreenode, fill=dpllunit},
+    dpllunsatnode/.style={dplltreenode, fill=dpllconflict},
+    dpllsatnode/.style={dplltreenode, fill=dpllsat},
+    dpllplainnode/.style={dplltreenode},
+    dplltreeedge/.style={thick}
+}
+
+\newcommand{\DPLLclause}[3]{%
+    \node[#2, anchor=west] at #1 {$#3$};
+}
+
+\newcommand{\DPLLstate}[5]{%
+\begin{tikzpicture}[x=1cm,y=1cm,scale=0.95,transform shape]
+
+    % titulek
+    \node[anchor=west,font=\bfseries] at (-0.1,5.15) {#1};
+
+    % levý horní box: pracovní formule
+    \node[dpllbox, anchor=north west, minimum width=5.9cm, minimum height=4.25cm] (formbox) at (0,4.75) {};
+    \node[anchor=west,font=\bfseries] at ([xshift=2mm,yshift=-2mm]formbox.north west) {Pracovní formule};
+
+    % pevné pozice klauzulí
+    \coordinate (c1) at (0.25,4.00);
+    \coordinate (c2) at (0.25,3.42);
+    \coordinate (c3) at (0.25,2.84);
+    \coordinate (c4) at (0.25,2.26);
+    \coordinate (c5) at (0.25,1.68);
+    \coordinate (c6) at (0.25,1.10);
+
+    #3
+
+    % pravý horní box: aktuální ohodnocení + komentář
+    \node[dpllbox, anchor=north west, minimum width=4.9cm, minimum height=4.25cm] (infobox) at (6.25,4.75) {};
+    \node[anchor=north west] at ([xshift=2mm,yshift=-2mm]infobox.north west) {%
+        \begin{minipage}[t]{4.45cm}
+        \raggedright
+        \textbf{Aktuální ohodnocení:}\\[1mm]
+        #2\\[2mm]
+        \textbf{Komentář:}\\[1mm]
+        #4
+        \end{minipage}
+    };
+
+    % dolní box: rekurze pod pracovní formulí
+    \node[dpllbox, anchor=north west, minimum width=5.9cm, minimum height=1.95cm] (treebox) at (0,0.15) {};
+    \node[anchor=west,font=\bfseries] at ([xshift=2mm,yshift=-2mm]treebox.north west) {Rekurze};
+
+    % pevné pozice stromu uvnitř spodního boxu
+    \coordinate (root)  at (2.95,-0.55);
+    \coordinate (left)  at (2.00,-1.30);
+    \coordinate (right) at (3.90,-1.30);
+
+    #5
+
+\end{tikzpicture}%
+}

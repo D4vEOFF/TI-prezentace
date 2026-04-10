@@ -1,0 +1,55 @@
+\begin{tikzpicture}[
+    node distance=7mm and 14mm,
+    every node/.style={font=\small},
+    scale=0.74,
+    transform shape
+]
+
+    % Uzly
+    \node[task, minimum width=22mm] (input) {$\varphi$ v CNF};
+
+    \node[task, minimum width=26mm, below=of input] (unit) {Jednotková\\ propagace};
+
+    \node[task, minimum width=28mm, below=of unit] (pure) {Eliminace\\čistých literálů};
+
+    \node[task, minimum width=22mm, below=of pure] (testempty) {Je $\varphi$ prázdná?};
+
+    \node[task, minimum width=18mm, right=18mm of testempty] (sat) {$\varphi$ je splnitelná};
+
+    \node[task, minimum width=28mm, below=of testempty] (testclause) {Obsahuje $\varphi$\\prázdnou klauzuli?};
+
+    \node[task, minimum width=18mm, right=18mm of testclause] (unsat) {$\varphi$ je nesplnitelná};
+
+    \node[task, minimum width=30mm, below=of testclause] (branch) {Rekurzivní krok:\\
+    zvol $\ell$, opakuj pro\\
+    $\varphi\land\ell$ a $\varphi\land\neg \ell$};
+
+    % Hlavní tok
+    \draw[diredge] (input) -- (unit);
+
+    % Smyčka pro UnitPropagation
+    \draw[diredge] (unit.east) .. controls +(14mm,7mm) and +(14mm,-7mm) .. (unit.east);
+    \node[vertexplain, right=12mm of unit, align=center] {\scriptsize existuje jednotková klauzule};
+
+    \draw[diredge] (unit) -- node[right, xshift=1mm, align=center] {\scriptsize žádná jednotková klauzule} (pure);
+
+    % Smyčka pro eliminaci čistých literálů
+    \draw[diredge] (pure.east) .. controls +(14mm,7mm) and +(14mm,-7mm) .. (pure.east);
+    \node[vertexplain, right=12mm of pure, align=center] {\scriptsize existuje čistý literál};
+
+    \draw[diredge] (pure) -- node[right, xshift=1mm, align=center] {\scriptsize žádný čistý literál} (testempty);
+
+    % Test prázdné formule
+    \draw[diredge] (testempty) -- node[above] {\scriptsize ano} (sat);
+    \draw[diredge] (testempty) -- node[right] {\scriptsize ne} (testclause);
+
+    % Test prázdné klauzule
+    \draw[diredge] (testclause) -- node[above] {\scriptsize ano} (unsat);
+    \draw[diredge] (testclause) -- node[right] {\scriptsize ne} (branch);
+
+    % Rekurzivní návrat
+    \draw[diredge] (branch.west) to[out=180,in=-120]
+        node[pos=0.5, left, align=right] {\scriptsize rekurzivně na nové instanci}
+        (unit.south west);
+
+\end{tikzpicture}

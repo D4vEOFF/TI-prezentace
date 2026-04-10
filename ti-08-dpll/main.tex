@@ -8,6 +8,8 @@
 
 \def\presentationtitle{Algoritmus DPLL}
 
+\input{dpll.tex}
+
 \begin{document}
 
     \input{../titlepage.tex}
@@ -101,7 +103,7 @@
             \visible<5->{\item V takovém případě můžeme odstranit všechny ostatní klauzule obsahující $\ell$.}
             \visible<6->{\begin{tnoticeframe}[0.9\textwidth]
                 \begin{center}
-                    Klauzule ve tvaru $(\ldots\land \ell \land \ldots)$ jsou splněny a dále není třeba je uvažovat (můžeme je odstranit).
+                    Klauzule ve tvaru $(\ldots\lor \ell \lor \ldots)$ jsou splněny a dále není třeba je uvažovat (můžeme je odstranit).
                 \end{center}
             \end{tnoticeframe}}
             \visible<7->{\item Naopak pokud nějaká klauzule obsahuje $\ell$ \textbf{v opačné polaritě} (tj. $\neg\ell$), pak jeho hodnota je $0$.}
@@ -114,6 +116,200 @@
     \end{frame}
 
     \subsection{Eliminace čistých literálů}
+
+    \begin{frame}{Eliminace čistých literálů}
+        \visible<2->{Pokud se vyskytuje nějaký literál $\ell$ ve formuli $\varphi$ \textbf{pouze v jedné polaritě}, tj.
+        \[\ldots(\ldots\lor\ell\lor\ldots)\land\ldots\land(\ldots\land\ell\land\ldots)\land\ldots\]
+        Formule $\varphi$ tedy neobsahuje $\neg\ell$.}
+        \begin{itemize}
+            \visible<3->{\item Na vstupu máme formuli $\varphi$ a její literál $\ell$.}
+            \visible<4->{\item V takovém případě existuje jednoznačné ohodnocení literálu $\ell$ takové, že všechny klauzule jej obsahující jsou splněny.}
+            \visible<5->{\item Resp. pokud $\ell=x_i$, pak nastavíme $x_i=1$. Jinak pokud $\ell=\neg x_i$, pak nastavíme $x_i=0$.}
+        \end{itemize}
+        \visible<6->{\begin{tnoticeframe}[0.8\textwidth]
+            \begin{center}
+                Takové obsahující $\ell$ můžeme z $\varphi$ odstranit, protože už jsou splněny.
+            \end{center}
+        \end{tnoticeframe}}
+    \end{frame}
+
+    \begin{frame}{Jak nám procedury pomůžou?}
+        \begin{itemize}
+            \item 
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Postup algoritmu}
+        \visible<2->{Na vstupu dostaneme formuli $\varphi$ v CNF.}
+        \begin{enumerate}
+            \visible<3->{\item Opakovaně aplikujeme \textbf{jednotkovou eliminaci} na formuli $\varphi$, dokud v ní existují jednotkové klauzule.}
+            \visible<4->{\item Opakovaně aplikujeme \textbf{eliminaci čistých literálů} na formuli $\varphi$, dokud v ní existují čisté literály.}
+            \visible<5->{\item Pokud je výsledná formule $\varphi^{\prime}$ prázdná (tzn. splnili jsme všechny klauzule), pak \textbf{prohlásíme $\varphi$ za splnitelnou} a skončíme.}
+            \visible<6->{\item Jinak pokud výsledná formule $\varphi^{\prime}$ obsahuje prázdnou klauzuli, pak \textbf{prohlásíme $\varphi$ za nesplnitelnou} a skončíme.}
+            \visible<7->{\item Vybereme náhodně literál $\ell$ ve formuli $\varphi^{\prime}$ a zavoláme rekurzivně DPLL na formule $\varphi^{\prime}\land\ell$ a $\varphi^{\prime}\land\neg\ell$.}
+            \visible<8->{\item Je-li $\varphi^{\prime}\land\ell$ nebo $\varphi^{\prime}\land\neg\ell$ splnitelná, je i $\varphi$ splnitelná.}
+        \end{enumerate}
+    \end{frame}
+
+    \subsection{Znázornění a pseudokód algoritmu}
+
+    \begin{frame}{Znázornění algoritmu}
+        \begin{figure}
+            \centering
+            \input{images/dpll-automat.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Pseudokód algoritmu}
+        \begin{center}
+            \begin{minipage}{0.9\textwidth}
+                \begin{algorithm}[H]
+                    \caption{DPLL}
+                    \KwIn{Formule $\varphi$ v~CNF}
+                    \While{\textup{existuje jednotková klauzule $(\ell)$ ve formuli $\varphi$}}{
+                        $\varphi\gets\textsc{UnitPropagation}(\ell,~\varphi)$
+                    }
+                    \While{\textup{existuje literál $\ell$ v~jediné polaritě ve $\varphi$}}{
+                        $\varphi\gets\textsc{PureLiteralElimination}(\ell,\varphi)$
+                    }
+                    \tcp{Všechny klauzule jsou pravdivé}
+                    \lIf{\textup{je $\varphi$ prázdná}}{\Return{$1$}}
+
+                    \tcp{Všechny literály v~klauzuli jsou nepravdivé}
+                    \lIf{\textup{obsahuje $\varphi$ prázdnou klauzuli}}{\Return{$0$}}
+                    \tcp{Zkusíme ohodnocení pro $\ell=0$ a~$\ell=1$}
+                    Vyber náhodně literál $\ell$\\
+
+                    \Return{$\textup{DPLL}(\varphi\land\ell)\lor\textup{DPLL}(\varphi\land\neg\ell)$}
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+    \end{frame}
+
+    \begin{frame}{Příklad výpočtu algoritmu DPLL}
+        Mějme zadanou formuli
+        \[
+        \varphi=
+        (a)\land(\neg a\lor b)\land(e\lor c)\land(c\lor d)\land(\neg c\lor d)\land(c\lor \neg d).
+        \]
+    \end{frame}
+
+    \begin{frame}{Příklad výpočtu algoritmu DPLL}
+        \centering
+        \DPLLstate
+        {Krok 1: start}
+        {žádné přiřazení}
+        {
+            \DPLLclause{(c1)}{dpllunitclause}{(a)}
+            \DPLLclause{(c2)}{dpllclause}{(\neg a \lor b)}
+            \DPLLclause{(c3)}{dpllclause}{(e \lor c)}
+            \DPLLclause{(c4)}{dpllclause}{(c \lor d)}
+            \DPLLclause{(c5)}{dpllclause}{(\neg c \lor d)}
+            \DPLLclause{(c6)}{dpllclause}{(c \lor \neg d)}
+        }
+        {Jednotková klauzule $(a)$ spustí \textsc{UnitPropagation}.}
+        {
+            \node[dpllcurrentnode] at (root) {};
+        }
+    \end{frame}
+
+    \begin{frame}{Příklad výpočtu algoritmu DPLL}
+    \centering
+    \DPLLstate
+    {Krok 2: po \textsc{UnitPropagation}}
+    {$a=1,\; b=1$}
+    {
+        \DPLLclause{(c1)}{dpllremovedclause}{(a)}
+        \DPLLclause{(c2)}{dpllremovedclause}{(\neg a \lor b)}
+        \DPLLclause{(c3)}{dpllpureclause}{(e \lor c)}
+        \DPLLclause{(c4)}{dpllclause}{(c \lor d)}
+        \DPLLclause{(c5)}{dpllclause}{(\neg c \lor d)}
+        \DPLLclause{(c6)}{dpllclause}{(c \lor \neg d)}
+    }
+    {Po propagaci už nezbývá žádná jednotková klauzule.\\
+    Literál $e$ je čistý.}
+    {
+        \node[dpllcurrentnode] at (root) {};
+    }
+    \end{frame}
+
+    \begin{frame}{Příklad výpočtu algoritmu DPLL}
+    \centering
+    \DPLLstate
+    {Krok 3: po \textsc{PureLiteralElimination}}
+    {$a=1,\; b=1,\; e=1$}
+    {
+        \DPLLclause{(c1)}{dpllremovedclause}{(a)}
+        \DPLLclause{(c2)}{dpllremovedclause}{(\neg a \lor b)}
+        \DPLLclause{(c3)}{dpllremovedclause}{(e \lor c)}
+        \DPLLclause{(c4)}{dpllclause}{(c \lor d)}
+        \DPLLclause{(c5)}{dpllclause}{(\neg c \lor d)}
+        \DPLLclause{(c6)}{dpllclause}{(c \lor \neg d)}
+    }
+    {Nejsou jednotkové klauzule ani čisté literály.\\
+    Větvíme podle proměnné $c$.}
+    {
+        \node[dpllcurrentnode] at (root) {};
+        \draw[dplltreeedge] (root) -- (left)
+            node[pos=0.45, above left] {\scriptsize $c=0$};
+        \draw[dplltreeedge] (root) -- (right)
+            node[pos=0.45, above right] {\scriptsize $c=1$};
+        \node[dpllplainnode] at (left) {};
+        \node[dpllplainnode] at (right) {};
+    }
+    \end{frame}
+
+    \begin{frame}{Příklad výpočtu algoritmu DPLL}
+    \centering
+    \DPLLstate
+    {Krok 4: větev $c=0$}
+    {$a=1,\; b=1,\; e=1,\; c=0$}
+    {
+        \DPLLclause{(c1)}{dpllremovedclause}{(a)}
+        \DPLLclause{(c2)}{dpllremovedclause}{(\neg a \lor b)}
+        \DPLLclause{(c3)}{dpllremovedclause}{(e \lor c)}
+        \DPLLclause{(c4)}{dpllunitclause}{(d)}
+        \DPLLclause{(c5)}{dpllremovedclause}{(\neg c \lor d)}
+        \DPLLclause{(c6)}{dpllunitclause}{(\neg d)}
+    }
+    {Po dosazení $c=0$ vzniknou klauzule $(d)$ a $(\neg d)$,\\
+    tedy konflikt. Tato větev je nesplnitelná.}
+    {
+        \node[dpllplainnode] at (root) {};
+        \draw[dplltreeedge] (root) -- (left)
+            node[pos=0.45, above left] {\scriptsize $c=0$};
+        \draw[dplltreeedge] (root) -- (right)
+            node[pos=0.45, above right] {\scriptsize $c=1$};
+        \node[dpllunsatnode] at (left) {};
+        \node[dpllplainnode] at (right) {};
+    }
+    \end{frame}
+
+    \begin{frame}{Příklad výpočtu algoritmu DPLL}
+    \centering
+    \DPLLstate
+    {Krok 5: větev $c=1$}
+    {$a=1,\; b=1,\; e=1,\; c=1,\; d=1$}
+    {
+        \DPLLclause{(c1)}{dpllremovedclause}{(a)}
+        \DPLLclause{(c2)}{dpllremovedclause}{(\neg a \lor b)}
+        \DPLLclause{(c3)}{dpllremovedclause}{(e \lor c)}
+        \DPLLclause{(c4)}{dpllremovedclause}{(c \lor d)}
+        \DPLLclause{(c5)}{dpllremovedclause}{(\neg c \lor d)}
+        \DPLLclause{(c6)}{dpllremovedclause}{(c \lor \neg d)}
+    }
+    {Po dosazení $c=1$ vznikne jednotková klauzule $(d)$.\\
+    Po \textsc{UnitPropagation} dostaneme $\varphi=\emptyset$, tedy SAT.}
+    {
+        \node[dpllplainnode] at (root) {};
+        \draw[dplltreeedge] (root) -- (left)
+            node[pos=0.45, above left] {\scriptsize $c=0$};
+        \draw[dplltreeedge] (root) -- (right)
+            node[pos=0.45, above right] {\scriptsize $c=1$};
+        \node[dpllunsatnode] at (left) {};
+        \node[dpllsatnode] at (right) {};
+    }
+    \end{frame}
 
     \section{Zdroje}
 
