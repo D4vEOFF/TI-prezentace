@@ -12,4 +12,83 @@
 
     \input{../titlepage.tex}
 
+    \section{Problém 3SAT}
+
+    \titleframe{Problém $\THREESAT$}
+
+    \begin{frame}{Problém $\THREESAT$}
+        \begin{itemize}
+            \visible<2->{\item Problém $\SAT$ neumíme řešit v polynomiálním čase.}
+            \visible<3->{\item Zkusíme proto původní problém trochu zjednodušit, a to tak, že budeme uvažovat formule v CNF, kde každá klauzule má maximálně 3 literály.}
+        \end{itemize}
+        \visible<4->{\begin{defblock}[3-CNF]
+            Formule $\varphi$ je v 3-CNF právě tehdy, když je v CNF a každá klauzule obsahuje maximálně 3 literály.
+        \end{defblock}}
+        \visible<5->{\decproblem{Problém $\THREESAT$}{
+            Formule $\varphi$ v 3-CNF.
+        }{
+            Je $\varphi$ splnitelná?
+        }}
+    \end{frame}
+
+    \begin{frame}{Problém $\THREESAT$}
+        \visible<2->{\begin{tinfoframe}[0.9\textwidth]
+            \begin{center}
+                Ukážeme, že problém $\THREESAT$ je "stejně těžký" jako původní $\SAT$.
+            \end{center}
+        \end{tinfoframe}}
+        \begin{itemize}
+            \visible<3->{\item Jeden problém jsme schopni "převést" na druhý.}
+            \visible<4->{\item Přesněji k zadané formuli $\varphi$ v CNF jsme schopni najít formuli $\psi$ v 3-CNF, která je splnitelná právě tehdy, když je i původní formule $\varphi$ splnitelná.}
+        \end{itemize}
+        \visible<5->{\begin{timportantframe}[0.9\textwidth]
+            \begin{center}
+                Převod mezi formulemi však musíme umět provést \textbf{rychle}!
+            \end{center}
+        \end{timportantframe}}
+    \end{frame}
+
+    \titleframe{Polynomiální převoditelnost}
+
+    \begin{frame}{Polynomiální převoditelnost}
+        \begin{itemize}
+            \visible<2->{\item Formálně lze problém chápat jako zobrazení binárního kódování vstupu do množiny $\set{0,1}$.}
+            \visible<3->{\item Existuje celá řada problémů, avšak lze mezi nimi najít zajímavé vztahy.}
+            \visible<4->{\item Resp. některé problémy nemusíme nutně umět řešit přímo $\implies$ místo toho je převedeme na ty, které řešit umíme!}
+        \end{itemize}
+        \visible<5->{\begin{defblock}[Polynomiální převoditelnost]
+            Nechť $A,B$ jsou rozhodovací problémy. Říkáme, že $A$ lze \markdarkred{převést} na $B$, píšeme $A\rightarrow B$, právě tehdy, když existuje zobrazení $\mapping{f}{\set{0,1}^{*}}{\set{0,1}}$ takové, že
+            \[\forall x\in\set{0,1}^{*}: A(x)=B(f(x)),\]
+            a navíc $f(x)$ lze spočítat v polynomiálním čase. Funkci $f$ říkáme \markdarkred{převod} nebo také \markdarkred{redukce}.
+        \end{defblock}}
+    \end{frame}
+
+    \begin{frame}{Co to znamená?}
+        \begin{itemize}
+            \visible<2->{\item Problém $A$ je převoditelný na problém $B$, pokud každý vstup $x$ pro $A$ jsme schopni \textbf{rychle sestrojit} odpovídající vstup $f(x)$ pro $B$.}
+            \visible<3->{\item Přitom musí platit, že odpověď $A$ na $x$ musí být stejná jako odpověď $B$ na $f(x)$.}
+            \visible<4->{\item V našem případě: Máme $\varphi$ v CNF a chceme v polynomiálím čase zkonstruovat formuli $\psi$ v 3-CNF takovou, aby
+            \[\SAT(\varphi)=\THREESAT(\psi).\]}
+            \visible<5->{\item Tato konstrukce představuje ono zobrazení $f$, tj. $f(\varphi)=\psi$, nebo-li
+            \[\SAT(\varphi)=\THREESAT(f(\varphi)).\]}
+        \end{itemize}
+    \end{frame}
+
+    \section{Problém nezávislé množiny}
+
+    \titleframe{Problém nezávislé množiny}
+
+    \section{Problém kliky}
+
+    \titleframe{Problém kliky}
+
+    \section{Zdroje}
+
+    \begin{frame}{Zdroje}
+        \begin{itemize}
+            \item PAPADIMITRIOU, Christos H. \textit{Computational complexity.} Reading: Addison-Wesley, 1994. ISBN 0-201-53082-1.
+            \item MAREŠ, Martin a~VALLA, Tomáš. \textit{Průvodce labyrintem algoritmů.} Druhé vydání. CZ.NIC. Praha: CZ.NIC, z.s.p.o., 2022. ISBN 978-80-88168-63-8.
+        \end{itemize}
+    \end{frame}
+
 \end{document}
