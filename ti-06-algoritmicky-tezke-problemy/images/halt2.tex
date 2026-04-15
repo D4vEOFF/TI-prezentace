@@ -12,12 +12,12 @@
 
 % horní řada
 \node[box, fill=blue!10, text width=2.7cm] (halt) at (0,0)
-    {$\textsc{Halt}(P,P)$};
+    {$\HALT(P,P)$};
 
 \node[box, fill=yellow!15, text width=5.9cm] (diag) at (6.9,0)
     {program $D(P)$\\[0.8mm]
-     pokud $\textsc{Halt}(P,P)=\text{ANO}$, pak cyklí\\
-     pokud $\textsc{Halt}(P,P)=\text{NE}$, pak skončí};
+     pokud $\HALT(P,P)=\text{ANO}$, pak cyklí\\
+     pokud $\HALT(P,P)=\text{NE}$, pak skončí};
 
 % dolní blok
 \node[box, fill=orange!15, text width=1.9cm] (self) at (6.9,-2.3)

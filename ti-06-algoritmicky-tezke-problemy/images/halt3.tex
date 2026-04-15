@@ -25,8 +25,8 @@
 \node[box, fill=yellow!15, text width=5.9cm] (diagdef) at (0,0)
 {
 \small program $D(P)$\\[0.4mm]
-\scriptsize pokud $\textsc{Halt}(P,P)=\text{ANO}$, pak cyklí\\
-\scriptsize pokud $\textsc{Halt}(P,P)=\text{NE}$, pak skončí
+\scriptsize pokud $\HALT(P,P)=\text{ANO}$, pak cyklí\\
+\scriptsize pokud $\HALT(P,P)=\text{NE}$, pak skončí
 };
 
 % dosazení
@@ -36,14 +36,14 @@
 \draw[->, thick] (diagdef) -- node[right] {\scriptsize dosadíme $P=D$} (self);
 
 % rozhodnutí
-\node[decision] (haltdd) at (0,-2.75) {\scriptsize $\textsc{Halt}(D,D)$?};
+\node[decision] (haltdd) at (0,-2.75) {\scriptsize $\HALT(D,D)$?};
 
 \draw[->, thick] (self) -- (haltdd);
 
 % levá větev
 \node[box, fill=green!10, text width=2.9cm] (yes) at (-3.45,-4.15)
 {
-\scriptsize $\textsc{Halt}(D,D)=\text{ANO}$\\
+\scriptsize $\HALT(D,D)=\text{ANO}$\\
 \scriptsize tedy $D(D)$ se zastaví
 };
 
@@ -56,7 +56,7 @@
 % pravá větev
 \node[box, fill=green!10, text width=3.2cm] (no) at (3.45,-4.15)
 {
-\scriptsize $\textsc{Halt}(D,D)=\text{NE}$\\
+\scriptsize $\HALT(D,D)=\text{NE}$\\
 \scriptsize tedy $D(D)$ se nezastaví
 };
 
@@ -85,7 +85,7 @@
 % závěr
 \node[align=center] at (0,-6.65)
 {
-V obou případech vznikne spor $\implies$ Algoritmus pro $\textsc{Halt}$ neexistuje.
+V obou případech vznikne spor $\implies$ Algoritmus pro $\HALT$ neexistuje.
 };
 
 \end{tikzpicture}

@@ -202,23 +202,23 @@
 
     \begin{frame}{Problém zastavení}
         \begin{itemize}
-            \item Máme na vstupu program $P$ a jeho vstup $x$.
-            \item Uvažujme problém $\textsc{Halt}(P,x)$, který rozhodne, zdali se program $P$ nad vstupem $x$ \markdarkred{zastaví}, a nebo se \markdarkred{zacyklí}.
+            \visible<2->{\item Máme na vstupu program $P$ a jeho vstup $x$.}
+            \visible<3->{\item Uvažujme problém $\HALT(P,x)$, který rozhodne, zdali se program $P$ nad vstupem $x$ \markdarkred{zastaví}, a nebo se \markdarkred{zacyklí}.}
         \end{itemize}
-        \begin{figure}
+        \visible<4->{\begin{figure}
             \centering
             \input{images/halt1.tex}
-        \end{figure}
+        \end{figure}}
     \end{frame}
 
-    \begin{frame}{Problém $\textsc{Halt}$ nelze rozhodnout}
+    \begin{frame}{Problém $\HALT$ nelze rozhodnout}
         \begin{figure}
             \centering
             \input{images/halt2.tex}
         \end{figure}
     \end{frame}
 
-    \begin{frame}{Problém $\textsc{Halt}$ nelze rozhodnout}
+    \begin{frame}{Problém $\HALT$ nelze rozhodnout}
         \begin{figure}
             \centering
             \input{images/halt3.tex}
