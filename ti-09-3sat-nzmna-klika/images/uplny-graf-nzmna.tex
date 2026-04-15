@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+    \coordinate (v1) at (90:2);
+    \coordinate (v2) at (18:2);
+    \coordinate (v3) at (-54:2);
+    \coordinate (v4) at (-126:2);
+    \coordinate (v5) at (162:2);
+
+    \draw[edge] (v1)--(v2);
+    \draw[edge] (v1)--(v3);
+    \draw[edge] (v1)--(v4);
+    \draw[edge] (v1)--(v5);
+    \draw[edge] (v2)--(v3);
+    \draw[edge] (v2)--(v4);
+    \draw[edge] (v2)--(v5);
+    \draw[edge] (v3)--(v4);
+    \draw[edge] (v3)--(v5);
+    \draw[edge] (v4)--(v5);
+
+    \node[vertex, fill=white, label=above:{$v_1$}] at (v1) {};
+    \node[vertex, fill=white, label=right:{$v_2$}] at (v2) {};
+    \node[vertex, fill=red, label=below right:{$v_3$}] at (v3) {};
+    \node[vertex, fill=white, label=below left:{$v_4$}] at (v4) {};
+    \node[vertex, fill=white, label=left:{$v_5$}] at (v5) {};
+\end{tikzpicture}

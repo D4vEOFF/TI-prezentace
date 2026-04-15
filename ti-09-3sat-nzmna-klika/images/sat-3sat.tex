@@ -1,0 +1,16 @@
+\begin{tikzpicture}[>=stealth, thick, scale=1.2]
+    \node[vertex,minimum width=1.5cm] (sat) at (0,0) {$\SAT$};
+    \node[vertex,minimum width=1.5cm] (threesat) at (5,0) {$3$-$\SAT$};
+
+    \draw[diredge, bend left=25]
+        (sat) to
+        node[midway, above, align=center]
+        {$\mathcal{O}(n)$\\\footnotesize převod na formuli v 3-CNF}
+        (threesat);
+
+    \draw[diredge, bend left=25]
+        (threesat) to
+        node[midway, below, align=center]
+        {$\mathcal{O}(1)$\\\footnotesize identita}
+        (sat);
+\end{tikzpicture}
