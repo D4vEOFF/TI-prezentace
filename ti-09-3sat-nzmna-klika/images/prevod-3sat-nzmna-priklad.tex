@@ -1,0 +1,32 @@
+\begin{tikzpicture}
+    
+    \node[vertex,minimum width=0.7cm] (y1) at (-5.0,0) {$y$};
+    \node[vertex,minimum width=0.7cm] (x1) at (-4.0,2) {$x$};
+    \node[vertex,minimum width=0.7cm] (negz1) at (-3.0,0) {$\neg z$};
+
+    \node[vertex,minimum width=0.7cm] (y2) at (-1.0,0) {$y$};
+    \node[vertex,minimum width=0.7cm] (negx2) at (0.0,2) {$\neg x$};
+
+    \node[vertex,minimum width=0.7cm] (negy3) at (2.0,0.0) {$\neg y$};
+    \node[vertex,minimum width=0.7cm] (negz3) at (3.0,2.0) {$\neg z$};
+    \node[vertex,minimum width=0.7cm] (x3) at (4.0,0.0) {$x$};
+
+    \draw[edge] (y1) -- (x1);
+    \draw[edge] (y1) -- (negz1);
+    \draw[edge] (x1) -- (negz1);
+
+    \draw[edge] (y2) -- (negx2);
+
+    \draw[edge] (negy3) -- (negz3);
+    \draw[edge] (negy3) -- (x3);
+    \draw[edge] (negz3) -- (x3);
+
+    % negace
+    \draw[edge,color=red] (y1) to[bend right=30] (negy3);
+    \draw[edge,color=red] (x1) to[bend left=30] (negx2);
+    \draw[edge,color=red] (negx2) .. controls (4.5,3.5) .. (x3);
+    \draw[edge,color=red] (y2) to[bend left=30] (negy3);
+
+    \node[vertexplain,fill=green,opacity=0.2,text opacity=1,inner sep=0.2cm] at (-0.5,-2) {$\varphi=(x\lor y\lor \neg z)\land(\neg x \lor y)\land(\neg z\lor \neg y\lor x)$};
+
+\end{tikzpicture}

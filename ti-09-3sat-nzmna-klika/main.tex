@@ -370,11 +370,50 @@
 
     \begin{frame}{Převod $\THREESAT\rightarrow\NZMNA$}
         \begin{itemize}
-            \item Máme zadanou formuli $\varphi$ v 3-CNF. Chceme pro ni sestrojit graf $G$ a číslo $k$ takové, že
+            \visible<2->{\item Máme zadanou formuli $\varphi$ v 3-CNF s $n$ literály. Chceme pro ni sestrojit graf $G$ a číslo $k$ takové, že platí:
             \begin{center}
-                $\varphi$ je splnitelná $\iff$ V grafu $G$ existuje nzávislá množina velikosti alespoň $k$.
-            \end{center}
+                $\varphi$ je splnitelná $\implies$ V grafu $G$ existuje nezávislá množina velikosti alespoň $k$.
+            \end{center}}
+            \visible<3->{\item Označme si jako $k$ počet klauzulí formule $\varphi$.}
+            \visible<4->{\item Z každé klauzule vybereme jeden literál, který ji bude splňovat.}
+            \visible<5->{\begin{talertframe}
+                \begin{center}
+                    \textbf{Pozor! Literály nesmíme vybírat konfliktně}. Když vybereme z jedné klauzule literál $\ell$, nemůžeme pak z jiné vybrat $\neg\ell$.
+                \end{center}
+            \end{talertframe}}
         \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Převod klazulí na trojcykly}
+        \begin{itemize}
+            \visible<2->{\item Každou klauzuli s $i$ literály, kde $i=\set{1,2,3}$, převedeme na graf úplný graf $K_i$. Tzn. pro každý literál $\ell$ zavedeme jeden vrchol.}
+            \visible<3->{\begin{figure}
+                \centering
+                \input{images/prevod-3sat-nzmna.tex}
+            \end{figure}}
+            \visible<4->{\item Nakonec spojíme hranou ještě všechny literály (příslušné vrcholy) s jejich negacemi.}
+            \visible<5->{\item Tím jsme sestrojili příslušný graf $G$.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Převod klazulí na trojcykly}{Příklad}
+        \begin{figure}
+            \centering
+            \input{images/prevod-3sat-nzmna-priklad.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Korektnost převodu}
+        \begin{itemize}
+            \visible<2->{\item Uvažujme, že existuje splňující ohodnocení formule $\varphi$.}
+            \visible<3->{\item Vybereme z každé klauzule \textbf{jeden literál}, který ji splňuje.}
+        \end{itemize}
+        \visible<4->{\begin{tnoticeframe}[0.9\textwidth]
+            \begin{center}
+                Příslušné vrcholy vybraných literálů tvoří nezávislou množinu velikosti $k$ v grafu $G$.
+            \end{center}
+        \end{tnoticeframe}}
+        \visible<5->{Polynomialita převodu je zřejmá: Graf $G$ má maximálně $n$ vrcholů a hran může mít maximálně \textbf{kvadraticky mnoho}.}
     \end{frame}
 
     \section{Problém kliky v grafu}

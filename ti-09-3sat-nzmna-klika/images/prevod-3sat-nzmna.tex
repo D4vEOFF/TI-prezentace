@@ -1,0 +1,28 @@
+\begin{tikzpicture}
+
+    \coordinate (I1)  at (-4,0);
+    \coordinate (I2)  at (-1,0);
+    \coordinate (I3)  at (2,0);
+    
+    % i=1
+    \node[vertex] (l) at (I1) {$\ell$};
+    \node[vertexplain] at ($(I1)+(0,-1)$) {$i=1$};
+
+    % i=2
+    \node[vertex] (l1) at (I2) {$\ell_1$};
+    \node[vertex] (l2) at ($(I2)+(1,2)$) {$\ell_2$};
+    \node[vertexplain] at ($(I2)+(0.5,-1)$) {$i=2$};
+
+    % i=3
+    \node[vertex] (ll1) at (I3) {$\ell_1$};
+    \node[vertex] (ll2) at ($(I3)+(1,2)$) {$\ell_2$};
+    \node[vertex] (ll3) at ($(I3)+(2,0)$) {$\ell_3$};
+    \node[vertexplain] at ($(I3)+(1,-1)$) {$i=3$};
+
+    \draw[edge] (l1) -- (l2);
+    
+    \draw[edge] (ll1) -- (ll2);
+    \draw[edge] (ll1) -- (ll3);
+    \draw[edge] (ll2) -- (ll3);
+
+\end{tikzpicture}
