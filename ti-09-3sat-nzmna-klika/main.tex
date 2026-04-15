@@ -303,6 +303,21 @@
         \end{tinfoframe}}
     \end{frame}
 
+    \begin{frame}{Tranzitivita převoditelnosti}
+        \visible<2->{\begin{propblock}
+            Nechť $A,B,C$ jsou rozhodovací problémy, přičemž $A\rightarrow B$ a $B\rightarrow C$. Pak platí $A\rightarrow C$.
+        \end{propblock}}
+        \begin{itemize}
+            \visible<3->{\item Z definice máme, že existují polynomiálně vyčíslitelná zobrazení $f,g$ taková, že
+            \[A(x)=B(f(x))\quad\text{a}\quad B(x)=C(g(x))\;,\; x\in\set{0,1}^{*}.\]}
+            \visible<4->{\item Z toho tedy plyne, že $A(x)=B(f(g(x)))$.}
+            \visible<5->{\item Definujeme zobrazení $h$ jako $h(x)=f(g(x))$.}
+            \visible<6->{\item Jsme-li schopni spočítat $f$ v čase $\bigO(a^{k})$ a $g$ v čase $\bigO(b^{\ell})$, kde $a,b$ jsou délky vstupů a $k,\ell\in\R^{+}$, pak zobrazení $h$ spočítáme v čase
+            \[\bigO((a^{k})^{\ell})=\bigO(a^{k\ell}),\]
+            což je polynom v délce původního vstupu $x$.}
+        \end{itemize}
+    \end{frame}
+
     \section{Problém nezávislé množiny}
 
     \titleframe{Problém nezávislé množiny}
