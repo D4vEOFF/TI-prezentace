@@ -1,4 +1,10 @@
-\title[\presentationtitle]{\textsc{Teoretická informatika}}
+\makeatletter
+\@ifundefined{presentationtitlefooter}{%
+  \let\presentationtitlefooter\presentationtitle
+}{}
+\makeatother
+
+\title[\presentationtitlefooter]{\textsc{Teoretická informatika}}
 \subtitle{\presentationtitle}
 \author{David Weber}
 \def\email{weber3@spsejecna.cz}
