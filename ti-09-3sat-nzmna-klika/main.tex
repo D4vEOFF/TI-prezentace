@@ -48,7 +48,11 @@
         \end{timportantframe}}
     \end{frame}
 
-    \titleframe{Polynomiální převoditelnost}
+    \section{Polynomiální převoditelnost problémů}
+
+    \titleframe{Převoditelnost problémů}
+
+    \subsection{Zavedení polynomiální převoditelnosti}
 
     \begin{frame}{Polynomiální převoditelnost}
         \begin{itemize}
@@ -63,6 +67,8 @@
         \end{defblock}}
     \end{frame}
 
+    \subsection{Význam}
+
     \begin{frame}{Co to znamená?}
         \begin{itemize}
             \visible<2->{\item Problém $A$ je převoditelný na problém $B$, pokud každý vstup $x$ pro $A$ jsme schopni \textbf{rychle sestrojit} odpovídající vstup $f(x)$ pro $B$.}
@@ -71,6 +77,84 @@
             \[\SAT(\varphi)=\THREESAT(\psi).\]}
             \visible<5->{\item Tato konstrukce představuje ono zobrazení $f$, tj. $f(\varphi)=\psi$, nebo-li
             \[\SAT(\varphi)=\THREESAT(f(\varphi)).\]}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Poznámky k převoditelnosti}
+
+    \begin{frame}{Poznámky k převoditelnosti}
+        \begin{itemize}
+            \visible<2->{\item Nemusí nutně platit, že problémy $A$ a $B$ jsou na sebe \textbf{vzájemne} převoditelné.}
+            \visible<3->{\begin{center}
+                Tj. $A\rightarrow B$ nutně ještě neznamená, že i $B\rightarrow A$.
+            \end{center}}
+            \visible<4->{\item Např. uvažujme dvojici jednoduchých problémů $K,L$ definovaných následovně:}
+            \begin{align*}
+                \visible<5->{K(x)&=0\qquad\text{Na každý vstup odpověz nulou},\\}
+                \visible<6->{L(x)&=1\qquad\text{Na každý vstup odpověz jedničkou}.}
+            \end{align*}
+            \visible<7->{\begin{talertframe}[0.9\textwidth]
+                \begin{center}
+                    Takovou dvojici problémů na sebe nepřevedeme \textbf{ani jedním směrem}.
+                \end{center}
+            \end{talertframe}}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Příklad: Převod mezi $\SAT$ a $\HALT$}
+
+    \begin{frame}{Převod $\SAT\rightarrow\HALT$}
+        Převod $\SAT$ na $\HALT$ lze provést jednoduše: Sestrojíme program $P$ se vstupem $\varphi$, který
+        \begin{enumerate}
+            \item postupně zkouší všechna ohodnocení proměnných formule $\varphi$,
+            \item pokud najde splňující ohodnocení, \textbf{zastaví se},
+            \item jinak vstoupí do nekonečného cyklu.
+        \end{enumerate}
+        Text programu jsme schopni sestrojit \textbf{v konstantním čase}.
+
+        Tedy skutečně platí, že
+        \[\varphi\;\text{je splnitelná} \implies \text{program $P$ se nad $\varphi$ zastaví},\]
+        nebo-li $\SAT(\varphi)=1\implies \HALT(P,\varphi)=1$. 
+    \end{frame}
+
+    \begin{frame}{Převod $\HALT\rightarrow\SAT$ není možný}
+        \begin{itemize}
+            \item Už jsme si zdůvodnili, že ne pro všechny páry $(P,x)$ lze rozhodnout, zda se program $P$ nad $x$ zastaví.
+            \item Konkrétně myšlenka byla založena na konstrukci programu $D$, který invertoval výstup $\HALT$.
+            \item Pro spor předpokládejme, že umíme přesvést \textbf{problém zastavení} na pro \textbf{problém splnitelnosti formule v CNF}.
+            \begin{enumerate}
+                \item Instanci $(P,x)$ převedeme polynomiálně na formuli $\varphi=f(P,x)$.
+                \item Následně rozhodneme, zda $\SAT(f(P,x))=1$, tj. zdali je formule $f(P,x)$ splnitelná.
+            \end{enumerate}
+        \end{itemize}
+        \begin{talertframe}[0.9\textwidth]
+            \begin{center}
+                Jenže pro $P=D$ nelze problém zastavení rozhodnout, zatímco v tomto případě bychom jednoduše mohli sestrojit formuli $\psi=f(D,D)$ a rozhodnout, zdali $\HALT(\psi)=1$. \textbf{To je spor!}
+            \end{center}
+        \end{talertframe}
+    \end{frame}
+
+    \section{Převod mezi SAT a 3-SAT}
+
+    \titleframe{Převod mezi $\SAT$ a $\THREESAT$}
+
+    \subsection{Převod 3-SAT na SAT}
+
+    \begin{frame}{Převod $\THREESAT\rightarrow\SAT$}
+        \begin{itemize}
+            \item Na začátku máme formuli $\varphi$ v 3-CNF a chceme k ní sestrojit formuli $\psi$ v CNF, která je splnitelná právě tehdy, když je splnitelná i $\varphi$.
+            \begin{talertframe}[\textwidth]
+                Každá formule ve 3-CNF je zároveň i v CNF $\implies$ ponecháme původní formuli $\varphi$.
+            \end{talertframe}
+            \item Za převodní zobrazení $f$ stačí zvolit identitu, tj. $f(x)=x$.
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Převod SAT na 3-SAT}
+
+    \begin{frame}{Převod $\SAT\rightarrow\THREESAT$}
+        \begin{itemize}
+            \item 
         \end{itemize}
     \end{frame}
 
