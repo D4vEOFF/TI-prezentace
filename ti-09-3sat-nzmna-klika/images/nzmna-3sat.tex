@@ -1,0 +1,26 @@
+\begin{tikzpicture}[>=stealth, thick, scale=0.8]
+    \node[vertex,minimum width=1.5cm] (nzmna) at (0,0) {$\NZMNA$};
+    \node[vertex,minimum width=1.5cm] (sat) at (5,0) {$\SAT$};
+    \node[vertex,minimum width=1.5cm] (threesat) at (10,0) {$\THREESAT$};
+
+    \draw[diredge, bend left=25, color=green]
+        (nzmna) to (sat);
+
+    \draw[diredge, bend left=25]
+        (threesat) to
+        node[midway, below, align=center]
+        {$\mathcal{O}(n^{2})$}
+        (nzmna);
+
+    \draw[diredge, bend left=25, color=green]
+        (sat) to
+        node[midway, above, align=center]
+        {$\mathcal{O}(n)$}
+        (threesat);
+
+    \draw[diredge, bend left=25]
+        (threesat) to
+        node[midway, above, align=center]
+        {$\mathcal{O}(1)$}
+        (sat);
+\end{tikzpicture}

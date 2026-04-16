@@ -1,0 +1,96 @@
+\begin{tikzpicture}[
+    cliquev/.style={vertex, fill=red!25, draw=red, very thick},
+    cliquee/.style={edge, draw=red, very thick}
+]
+
+%------------------------------------------------
+% G_1  (nejvetsi klika velikosti 3)
+%------------------------------------------------
+\begin{scope}[xshift=0cm,yshift=0cm]
+
+    \coordinate (a1) at (0,1.9);
+    \coordinate (a2) at (-1.4,0.8);
+    \coordinate (a3) at (1.4,0.8);
+    \coordinate (a4) at (-1.9,-0.7);
+    \coordinate (a5) at (0,-0.4);
+    \coordinate (a6) at (1.9,-0.7);
+    \coordinate (a7) at (0,-1.7);
+
+    % klika K3
+    \draw[cliquee] (a1)--(a2);
+    \draw[cliquee] (a1)--(a3);
+    \draw[cliquee] (a2)--(a3);
+
+    % ostatni hrany
+    \draw[edge] (a2)--(a4);
+    \draw[edge] (a2)--(a5);
+    \draw[edge] (a3)--(a5);
+    \draw[edge] (a3)--(a6);
+    \draw[edge] (a4)--(a5);
+    \draw[edge] (a5)--(a6);
+    \draw[edge] (a5)--(a7);
+    \draw[edge] (a4)--(a7);
+    \draw[edge] (a6)--(a7);
+
+    % vrcholy
+    \node[cliquev, label=above:{$v_1$}] at (a1) {};
+    \node[cliquev, label=left:{$v_2$}]  at (a2) {};
+    \node[cliquev, label=right:{$v_3$}] at (a3) {};
+    \node[vertex, fill=white,  label=left:{$v_4$}]  at (a4) {};
+    \node[vertex, fill=white,  label=above:{$v_5$}] at (a5) {};
+    \node[vertex, fill=white,  label=right:{$v_6$}] at (a6) {};
+    \node[vertex, fill=white,  label=below:{$v_7$}] at (a7) {};
+
+    \node at (0,-2.75) {$G_1$};
+
+\end{scope}
+
+%------------------------------------------------
+% G_2  (nejvetsi klika velikosti 4)
+%------------------------------------------------
+\begin{scope}[xshift=5.9cm,yshift=0cm]
+
+    \coordinate (b1) at (-0.95,1.5);
+    \coordinate (b2) at (0.95,1.5);
+    \coordinate (b3) at (-0.95,-0.2);
+    \coordinate (b4) at (0.95,-0.2);
+
+    \coordinate (b5) at (-2.2,0.7);
+    \coordinate (b6) at (2.2,0.7);
+    \coordinate (b7) at (-1.8,-1.5);
+    \coordinate (b8) at (1.8,-1.5);
+
+    % klika K4
+    \draw[cliquee] (b1)--(b2);
+    \draw[cliquee] (b1)--(b3);
+    \draw[cliquee] (b1)--(b4);
+    \draw[cliquee] (b2)--(b3);
+    \draw[cliquee] (b2)--(b4);
+    \draw[cliquee] (b3)--(b4);
+
+    % ostatni hrany
+    \draw[edge] (b5)--(b1);
+    \draw[edge] (b5)--(b3);
+    \draw[edge] (b6)--(b2);
+    \draw[edge] (b6)--(b4);
+    \draw[edge] (b7)--(b3);
+    \draw[edge] (b7)--(b4);
+    \draw[edge] (b8)--(b3);
+    \draw[edge] (b8)--(b4);
+    \draw[edge] (b7)--(b8);
+
+    % vrcholy
+    \node[cliquev, label=above left:{$u_1$}]  at (b1) {};
+    \node[cliquev, label=above right:{$u_2$}] at (b2) {};
+    \node[cliquev, label=left:{$u_3$}]  at (b3) {};
+    \node[cliquev, label=right:{$u_4$}] at (b4) {};
+    \node[vertex, fill=white,  label=left:{$u_5$}]        at (b5) {};
+    \node[vertex, fill=white,  label=right:{$u_6$}]       at (b6) {};
+    \node[vertex, fill=white,  label=below left:{$u_7$}]  at (b7) {};
+    \node[vertex, fill=white,  label=below right:{$u_8$}] at (b8) {};
+
+    \node at (0,-2.75) {$G_2$};
+
+\end{scope}
+
+\end{tikzpicture}

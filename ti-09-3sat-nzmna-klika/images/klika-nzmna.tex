@@ -1,0 +1,87 @@
+\begin{tikzpicture}[
+    markedv/.style={vertex, fill=white, fill=red!25, draw=red, very thick},
+    markede/.style={edge, draw=red, very thick}
+]
+
+%================================================
+% G
+%================================================
+\begin{scope}[xshift=0cm,yshift=0cm]
+
+    \coordinate (a1) at (0,1.9);
+    \coordinate (a2) at (-1.4,0.8);
+    \coordinate (a3) at (1.4,0.8);
+    \coordinate (a4) at (-1.9,-0.7);
+    \coordinate (a5) at (0,-0.4);
+    \coordinate (a6) at (1.9,-0.7);
+    \coordinate (a7) at (0,-1.7);
+
+    % nejvetsi klika
+    \draw[markede] (a1)--(a2);
+    \draw[markede] (a1)--(a3);
+    \draw[markede] (a2)--(a3);
+
+    % ostatni hrany
+    \draw[edge] (a2)--(a4);
+    \draw[edge] (a2)--(a5);
+    \draw[edge] (a3)--(a5);
+    \draw[edge] (a3)--(a6);
+    \draw[edge] (a4)--(a5);
+    \draw[edge] (a5)--(a6);
+    \draw[edge] (a5)--(a7);
+    \draw[edge] (a4)--(a7);
+    \draw[edge] (a6)--(a7);
+
+    % vrcholy
+    \node[markedv] at (a1) {};
+    \node[markedv] at (a2) {};
+    \node[markedv] at (a3) {};
+    \node[vertex, fill=white]  at (a4) {};
+    \node[vertex, fill=white]  at (a5) {};
+    \node[vertex, fill=white]  at (a6) {};
+    \node[vertex, fill=white]  at (a7) {};
+
+    \node at (0,-2.35) {$G$};
+    \node at (0,-2.85) {největší klika};
+
+\end{scope}
+
+%================================================
+% complement \bar G
+%================================================
+\begin{scope}[xshift=5.8cm,yshift=0cm]
+
+    \coordinate (b1) at (0,1.9);
+    \coordinate (b2) at (-1.4,0.8);
+    \coordinate (b3) at (1.4,0.8);
+    \coordinate (b4) at (-1.9,-0.7);
+    \coordinate (b5) at (0,-0.4);
+    \coordinate (b6) at (1.9,-0.7);
+    \coordinate (b7) at (0,-1.7);
+
+    % hrany doplnku
+    \draw[edge] (b1)--(b4);
+    \draw[edge] (b1)--(b5);
+    \draw[edge] (b1)--(b6);
+    \draw[edge] (b1)--(b7);
+    \draw[edge] (b2)--(b6);
+    \draw[edge] (b2)--(b7);
+    \draw[edge] (b3)--(b4);
+    \draw[edge] (b3)--(b7);
+    \draw[edge] (b4)--(b6);
+
+    % stejne vyznacene vrcholy = nezavisla mnozina
+    \node[markedv] at (b1) {};
+    \node[markedv] at (b2) {};
+    \node[markedv] at (b3) {};
+    \node[vertex, fill=white]  at (b4) {};
+    \node[vertex, fill=white]  at (b5) {};
+    \node[vertex, fill=white]  at (b6) {};
+    \node[vertex, fill=white]  at (b7) {};
+
+    \node at (0,-2.35) {$\overline{G}$};
+    \node at (0,-2.85) {nezávislá množina};
+
+\end{scope}
+
+\end{tikzpicture}

@@ -1,0 +1,154 @@
+\begin{tikzpicture}[
+    cliquev/.style={vertex, fill=white, fill=red!30, draw=red, very thick},
+    cliquee/.style={edge, draw=red, very thick},
+    scale=0.8
+]
+
+%------------------------------------------------
+% Vrcholy kliky K9
+%------------------------------------------------
+\coordinate (c1) at (90:1.8);
+\coordinate (c2) at (50:1.8);
+\coordinate (c3) at (10:1.8);
+\coordinate (c4) at (-30:1.8);
+\coordinate (c5) at (-70:1.8);
+\coordinate (c6) at (-110:1.8);
+\coordinate (c7) at (-150:1.8);
+\coordinate (c8) at (170:1.8);
+\coordinate (c9) at (130:1.8);
+
+%------------------------------------------------
+% Vnější vrcholy
+%------------------------------------------------
+\coordinate (u1)  at (90:4.2);
+\coordinate (u2)  at (58:4.2);
+\coordinate (u3)  at (26:4.2);
+\coordinate (u4)  at (-6:4.2);
+\coordinate (u5)  at (-38:4.2);
+\coordinate (u6)  at (-70:4.2);
+\coordinate (u7)  at (-102:4.2);
+\coordinate (u8)  at (-134:4.2);
+\coordinate (u9)  at (-166:4.2);
+\coordinate (u10) at (162:4.2);
+\coordinate (u11) at (126:4.2);
+
+%------------------------------------------------
+% Hrany maximální kliky K9
+%------------------------------------------------
+\draw[cliquee] (c1)--(c2);
+\draw[cliquee] (c1)--(c3);
+\draw[cliquee] (c1)--(c4);
+\draw[cliquee] (c1)--(c5);
+\draw[cliquee] (c1)--(c6);
+\draw[cliquee] (c1)--(c7);
+\draw[cliquee] (c1)--(c8);
+\draw[cliquee] (c1)--(c9);
+
+\draw[cliquee] (c2)--(c3);
+\draw[cliquee] (c2)--(c4);
+\draw[cliquee] (c2)--(c5);
+\draw[cliquee] (c2)--(c6);
+\draw[cliquee] (c2)--(c7);
+\draw[cliquee] (c2)--(c8);
+\draw[cliquee] (c2)--(c9);
+
+\draw[cliquee] (c3)--(c4);
+\draw[cliquee] (c3)--(c5);
+\draw[cliquee] (c3)--(c6);
+\draw[cliquee] (c3)--(c7);
+\draw[cliquee] (c3)--(c8);
+\draw[cliquee] (c3)--(c9);
+
+\draw[cliquee] (c4)--(c5);
+\draw[cliquee] (c4)--(c6);
+\draw[cliquee] (c4)--(c7);
+\draw[cliquee] (c4)--(c8);
+\draw[cliquee] (c4)--(c9);
+
+\draw[cliquee] (c5)--(c6);
+\draw[cliquee] (c5)--(c7);
+\draw[cliquee] (c5)--(c8);
+\draw[cliquee] (c5)--(c9);
+
+\draw[cliquee] (c6)--(c7);
+\draw[cliquee] (c6)--(c8);
+\draw[cliquee] (c6)--(c9);
+
+\draw[cliquee] (c7)--(c8);
+\draw[cliquee] (c7)--(c9);
+
+\draw[cliquee] (c8)--(c9);
+
+%------------------------------------------------
+% Další hrany grafu
+%------------------------------------------------
+\draw[edge] (u1)--(c1);
+\draw[edge] (u1)--(c9);
+\draw[edge] (u1)--(c2);
+
+\draw[edge] (u2)--(c2);
+\draw[edge] (u2)--(c3);
+\draw[edge] (u2)--(c1);
+
+\draw[edge] (u3)--(c3);
+\draw[edge] (u3)--(c4);
+\draw[edge] (u3)--(c2);
+
+\draw[edge] (u4)--(c3);
+\draw[edge] (u4)--(c4);
+\draw[edge] (u4)--(c5);
+
+\draw[edge] (u5)--(c4);
+\draw[edge] (u5)--(c5);
+
+\draw[edge] (u6)--(c5);
+\draw[edge] (u6)--(c6);
+\draw[edge] (u6)--(c4);
+
+\draw[edge] (u7)--(c6);
+\draw[edge] (u7)--(c7);
+\draw[edge] (u7)--(c5);
+
+\draw[edge] (u8)--(c7);
+\draw[edge] (u8)--(c8);
+\draw[edge] (u8)--(c6);
+
+\draw[edge] (u9)--(c7);
+\draw[edge] (u9)--(c8);
+
+\draw[edge] (u10)--(c8);
+\draw[edge] (u10)--(c9);
+\draw[edge] (u10)--(c1);
+
+\draw[edge] (u11)--(c9);
+\draw[edge] (u11)--(c1);
+\draw[edge] (u11)--(c2);
+
+%------------------------------------------------
+% Vrcholy
+%------------------------------------------------
+\node[cliquev] at (c1) {};
+\node[cliquev] at (c2) {};
+\node[cliquev] at (c3) {};
+\node[cliquev] at (c4) {};
+\node[cliquev] at (c5) {};
+\node[cliquev] at (c6) {};
+\node[cliquev] at (c7) {};
+\node[cliquev] at (c8) {};
+\node[cliquev] at (c9) {};
+
+\node[vertex, fill=white] at (u1)  {};
+\node[vertex, fill=white] at (u2)  {};
+\node[vertex, fill=white] at (u3)  {};
+\node[vertex, fill=white] at (u4)  {};
+\node[vertex, fill=white] at (u5)  {};
+\node[vertex, fill=white] at (u6)  {};
+\node[vertex, fill=white] at (u7)  {};
+\node[vertex, fill=white] at (u8)  {};
+\node[vertex, fill=white] at (u9)  {};
+\node[vertex, fill=white] at (u10) {};
+\node[vertex, fill=white] at (u11) {};
+
+% \node at (0,-5.1) {$\omega(G)=9$};
+
+\end{tikzpicture}

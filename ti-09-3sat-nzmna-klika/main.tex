@@ -356,7 +356,7 @@
             \centering
             \input{images/cyklus-nzmna.tex}
         \end{figure}
-        \visible<3->{\begin{center}
+        \visible<2->{\begin{center}
             Největší nezávislá množina v cyklu $C_n$ má velikost $\lfloor n/2\rfloor$.
         \end{center}}
     \end{frame}
@@ -366,7 +366,7 @@
             \centering
             \input{images/strom-nzmna.tex}
         \end{figure}
-        \visible<4->{V obecném stromu $T$ na $n$ vrcholech platí pro největší nezávislá množina $N$ následující odhad:
+        \visible<2->{V obecném stromu $T$ na $n$ vrcholech platí pro největší nezávislá množina $N$ následující odhad:
         \[\left\lceil\frac{n}{2}\right\rceil\leqslant|N|\leqslant n-1.\]}
     \end{frame}
 
@@ -431,9 +431,79 @@
         \visible<5->{Polynomialita převodu je zřejmá: Graf $G$ má maximálně $n$ vrcholů a hran může mít maximálně \textbf{kvadraticky mnoho}.}
     \end{frame}
 
+    \begin{frame}{Převod $\NZMNA\rightarrow\THREESAT$}
+        \begin{itemize}
+            \visible<2->{\item Tento převod je již trochu složitější $\implies$ vynecháme.}
+            \visible<3->{\item Myšlenka je taková, že problém převedeme na $\SAT$ a pak využijeme nám již známý převod $\SAT$ na $\THREESAT$.}
+        \end{itemize}
+        \visible<4->{\begin{figure}
+            \centering
+            \input{images/nzmna-3sat.tex}
+        \end{figure}}
+    \end{frame}
+
     \section{Problém kliky v grafu}
 
     \titleframe{Problém kliky v grafu}
+
+    \begin{frame}{Klika v grafu}
+        \visible<2->{\begin{defblock}[Klika]
+            Nechť $G=(V,E)$ je libovolný graf. Pak \markdarkred{klikou} nazveme libovolný úplný podgraf $H=(V^{\prime},E^{\prime})$ grafu $G$, tzn. $V^{\prime}\subseteq V$ a $E^{\prime}\subseteq E$.
+        \end{defblock}}
+        \visible<3->{\begin{figure}
+            \centering
+            \input{images/klika.tex}
+        \end{figure}}
+    \end{frame}
+
+    \begin{frame}{Ještě jeden příklad}
+        \begin{figure}
+            \centering
+            \input{images/klika-2.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Doplněk grafu}
+        \visible<2->{\begin{defblock}[Doplněk grafu]
+            \markdarkred{Doplňkem} grafu $G=(V,E)$ je graf $\bar{G}=\left(V,\binom{E}{2}\setminus E\right)$.
+        \end{defblock}}
+        \visible<3->{Tzn. doplněk grafu $G$ obsahuje všechny hrany, které nejsou obsaženy v $G$.}
+        \visible<4->{\begin{figure}
+            \centering
+            \input{images/doplnek.tex}
+        \end{figure}}
+    \end{frame}
+
+    \begin{frame}{Problém kliky v grafu}
+        \visible<2->{\decproblem{Problém kliky v grafu ($\KLIKA$)}{
+            Graf $G$ a číslo $k\in\N$.
+        }{
+            Obsahuje $G$ kliku o alespoň $k$ vrcholech?
+        }}
+        \visible<3->{\begin{talertframe}[0.9\textwidth]
+            \begin{center}
+                Problém kliky v grafu \textbf{je komplementární} k problému nezávislo množiny v grafu.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \begin{frame}{Převody mezi $\KLIKA$ a $\NZMNA$}
+        \begin{itemize}
+            \visible<2->{\item Jeden problém lze převést na druhý jednoduše sestrojením \textbf{doplňku grafu}.}
+            \visible<3->{\item Jsou-li libovolné vrcholy spojeny v $G$ hranou, pak v $\bar{G}$ již nejsou spojeny hranou.}
+            \visible<4->{\begin{tnoticeframe}[0.9\textwidth]
+                \begin{center}
+                    Z kliky vznikne nezávislá množina stejné velikosti a naopak.
+                \end{center}
+            \end{tnoticeframe}}
+            \begin{figure}
+                \centering
+                \input{images/klika-nzmna.tex}
+            \end{figure}
+        \end{itemize}
+    \end{frame}
+
+    \section{Aplikace}
 
     \section{Zdroje}
 
