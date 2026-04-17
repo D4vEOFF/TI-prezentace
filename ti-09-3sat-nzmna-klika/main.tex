@@ -102,7 +102,7 @@
         \end{itemize}
     \end{frame}
 
-    \subsection{Příklad: Převod mezi $\SAT$ a $\HALT$}
+    \subsection{Příklad: Převod mezi SAT a HALT}
 
     \begin{frame}{Převod $\SAT\rightarrow\HALT$}
         \visible<2->{Převod $\SAT$ na $\HALT$ lze provést jednoduše: Sestrojíme program $P$ se vstupem $\varphi$, který}
@@ -332,6 +332,8 @@
         \end{figure}}
     \end{frame}
 
+    \subsection{Existence nezávislé množiny}
+
     \begin{frame}{Existence nezávislé množiny}
         \visible<2->{Na samotnou existenci nezávislé množiny nemá moc smysl se ptát $\implies$ stačí zkrátka vzít \textbf{jednovrcholovou} nebo \textbf{prázdnou} množinu.}
         \visible<3->{\begin{timportantframe}[0.9\textwidth]
@@ -370,6 +372,8 @@
         \[\left\lceil\frac{n}{2}\right\rceil\leqslant|N|\leqslant n-1.\]}
     \end{frame}
 
+    \subsection{Problém nezávislé množiny v grafu}
+
     \begin{frame}{Problém nezávislé množiny v grafu}
         \visible<2->{\decproblem{Problém nezávislé množiny v grafu ($\NZMNA$)}{
             Graf $G$ a číslo $k\in\N$.
@@ -382,6 +386,8 @@
             \end{center}
         \end{talertframe}}
     \end{frame}
+
+    \subsection{Převod 3-SAT na NzMna}
 
     \begin{frame}{Převod $\THREESAT\rightarrow\NZMNA$}
         \begin{itemize}
@@ -431,6 +437,8 @@
         \visible<5->{Polynomialita převodu je zřejmá: Graf $G$ má maximálně $n$ vrcholů a hran může mít maximálně \textbf{kvadraticky mnoho}.}
     \end{frame}
 
+    \subsection{Převod NzMna na 3-SAT}
+
     \begin{frame}{Převod $\NZMNA\rightarrow\THREESAT$}
         \begin{itemize}
             \visible<2->{\item Tento převod je již trochu složitější $\implies$ vynecháme.}
@@ -445,6 +453,8 @@
     \section{Problém kliky v grafu}
 
     \titleframe{Problém kliky v grafu}
+
+    \subsection{Klika v grafu}
 
     \begin{frame}{Klika v grafu}
         \visible<2->{\begin{defblock}[Klika]
@@ -463,9 +473,12 @@
         \end{figure}
     \end{frame}
 
+    \subsection{Doplněk grafu}
+
     \begin{frame}{Doplněk grafu}
         \visible<2->{\begin{defblock}[Doplněk grafu]
-            \markdarkred{Doplňkem} grafu $G=(V,E)$ je graf $\bar{G}=\left(V,\binom{E}{2}\setminus E\right)$.
+            \markdarkred{Doplňkem} grafu $G=(V,E)$ je graf $\bar{G}=(V,E^{\prime})$, kde pro každé $u,v\in V$ platí, že
+            \[uv\in E^{\prime}\iff uv\notin E.\]
         \end{defblock}}
         \visible<3->{Tzn. doplněk grafu $G$ obsahuje všechny hrany, které nejsou obsaženy v $G$.}
         \visible<4->{\begin{figure}
@@ -473,6 +486,8 @@
             \input{images/doplnek.tex}
         \end{figure}}
     \end{frame}
+
+    \subsection{Problém kliky v grafu}
 
     \begin{frame}{Problém kliky v grafu}
         \visible<2->{\decproblem{Problém kliky v grafu ($\KLIKA$)}{
@@ -482,10 +497,12 @@
         }}
         \visible<3->{\begin{talertframe}[0.9\textwidth]
             \begin{center}
-                Problém kliky v grafu \textbf{je komplementární} k problému nezávislo množiny v grafu.
+                Problém kliky v grafu \textbf{je komplementární} k problému nezávislé množiny v grafu.
             \end{center}
         \end{talertframe}}
     \end{frame}
+
+    \subsection{Převody mezi Klika a NzMna}
 
     \begin{frame}{Převody mezi $\KLIKA$ a $\NZMNA$}
         \begin{itemize}
@@ -496,14 +513,50 @@
                     Z kliky vznikne nezávislá množina stejné velikosti a naopak.
                 \end{center}
             \end{tnoticeframe}}
-            \begin{figure}
+            \visible<5->{\begin{figure}
                 \centering
                 \input{images/klika-nzmna.tex}
-            \end{figure}
+            \end{figure}}
         \end{itemize}
     \end{frame}
 
-    \section{Aplikace}
+    \begin{frame}{Převody mezi $\KLIKA$ a $\NZMNA$}
+        \begin{itemize}
+            \visible<2->{\item Máme zadaný graf $G$ a číslo $k\in\N$.}
+            \visible<3->{\item Sestrojíme doplněk $\bar{G}$ grafu $G$ a ponecháme číslo $k$.}
+            \visible<4->{\item Pak v grafu $G$ existuje klika velikosti alespoň $k$ právě tehdy, když v $\bar{G}$ existuje nezávislá množina velikosti alespoň $k$.}
+        \end{itemize}
+        \visible<5->{\begin{tinfoframe}[0.9\textwidth]
+            \begin{center}
+                Formálně jsme sestrojili převod $f$ definovaný předpisem $f(G,k)=(\bar{G},k)$.
+            \end{center}
+        \end{tinfoframe}}
+        \visible<6->{Zjevně platí
+        \[\KLIKA(G,k)=\NZMNA(\bar{G},k),\;\text{resp.}\;\NZMNA(G,k)=\KLIKA(\bar{G},k).\]}
+    \end{frame}
+
+    \begin{frame}{Převod je polynomiální}
+        \visible<2->{Vrcholy původního grafu ponecháváme, přičemž hran má graf maximálně $\bigO(n^{2})$, kde $n$ je počet vrcholů.}
+        \visible<3->{\begin{tnoticeframe}[0.9\textwidth]
+            \begin{center}
+                Tzn. převod "oběma směry" potrvá \textbf{polynomiálně dlouho}.
+            \end{center}
+        \end{tnoticeframe}}
+    \end{frame}
+
+    \section{Shrnutí}
+
+    \begin{frame}{Shrnutí}
+        \begin{figure}
+            \centering
+            \input{images/shrnuti.tex}
+        \end{figure}
+        \begin{talertframe}[0.7\textwidth]
+            \begin{center}
+                Převod $\NZMNA\rightarrow\SAT$ jsme si pouze naznačili.
+            \end{center}
+        \end{talertframe}
+    \end{frame}
 
     \section{Zdroje}
 
