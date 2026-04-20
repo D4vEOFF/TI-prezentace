@@ -1,0 +1,72 @@
+\begin{tikzpicture}[
+    x=0.7cm,y=0.7cm,
+    vertex/.style={
+        draw=darkblue,
+        thick,
+        circle,
+        minimum size=9mm,
+        inner sep=1pt,
+        font=\tiny,
+        fill=white
+    },
+    selvertex/.style={
+        draw=darkgreen,
+        thick,
+        circle,
+        minimum size=9mm,
+        inner sep=1pt,
+        font=\tiny,
+        fill=lightgreen!35
+    },
+    edge/.style={thick}
+]
+
+% -------------------------------------------------
+% Zvýrazněná největší nezávislá množina
+% -------------------------------------------------
+
+\node[selvertex] (v1) at (0,0)   {$(0,1)$};
+\node[selvertex] (v2) at (2.4,0) {$(1,2)$};
+\node[selvertex] (v3) at (4.8,0) {$(2,3)$};
+\node[selvertex] (v4) at (7.2,0) {$(3,4)$};
+\node[selvertex] (v5) at (9.6,0) {$(4,5)$};
+
+% -------------------------------------------------
+% Ostatní vrcholy
+% -------------------------------------------------
+
+\node[vertex] (v6)  at (1.2,1.8) {$(0.6,1.4)$};
+\node[vertex] (v7)  at (3.6,2.4) {$(1.6,2.4)$};
+\node[vertex] (v8)  at (6.0,2.4) {$(2.6,3.4)$};
+\node[vertex] (v9)  at (8.4,1.8) {$(3.6,4.4)$};
+\node[vertex] (v10) at (4.8,4.6) {$(1.2,3.8)$};
+
+% -------------------------------------------------
+% Hrany bez křížení
+% -------------------------------------------------
+
+% "lokální" překryvy
+\draw[edge] (v6) -- (v1);
+\draw[edge] (v6) -- (v2);
+
+\draw[edge] (v7) -- (v2);
+\draw[edge] (v7) -- (v3);
+
+\draw[edge] (v8) -- (v3);
+\draw[edge] (v8) -- (v4);
+
+\draw[edge] (v9) -- (v4);
+\draw[edge] (v9) -- (v5);
+
+% hrany z vrcholu v10 k dolním vrcholům
+\draw[edge] (v10) to[out=215,in=90] (v2);
+\draw[edge] (v10) -- (v3);
+\draw[edge] (v10) to[out=325,in=90] (v4);
+
+% hrany z vrcholu v10 k prostřední vrstvě
+\draw[edge] (v10) to[out=210,in=85] (v6);
+\draw[edge] (v10) to[out=235,in=95] (v7);
+\draw[edge] (v10) to[out=305,in=85] (v8);
+\draw[edge] (v10) to[out=330,in=95] (v9);
+
+\end{tikzpicture}

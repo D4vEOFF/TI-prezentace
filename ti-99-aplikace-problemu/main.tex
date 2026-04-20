@@ -1,0 +1,126 @@
+\documentclass[11pt,professionalfont,aspectratio=43]{beamer}
+
+% Assets
+\input{../assets/packages.tex}
+\input{../assets/theme.tex}
+\input{../assets/macros.tex}
+\input{../assets/listing.tex}
+
+\def\presentationtitle{Aplikace nezávislé množiny a dalších problémů}
+\def\presentationtitlefooter{Aplikace $\NZMNA$ a dalších}
+
+\begin{document}
+
+    \input{../titlepage.tex}
+
+    \section{Aplikace nezávislé množiny}
+
+    \titleframe{Aplikace $\NZMNA$}
+
+    \begin{frame}{Aplikace nezávislé množiny}
+        \begin{itemize}
+            \visible<2->{\item V mnoha praktických situacích máme k dispozici jediný sdílený zdroj a několik aktivit, které chtějí tento zdroj využívat v různých časových intervalech.}
+            \visible<3->{\item Např. sestavování rozvrhu pro jednu učebnu, plánování schůzek jedné osoby nebo rezervace jednoho zařízení.}
+            \visible<4->{\item Každá aktivita je určena začátkem a koncem svého trvání.}
+            \visible<5->{\item Pokud se dvě aktivity časově překrývají, \textbf{nemohou být realizovány současně}.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Rozvrhování}
+        \begin{itemize}
+            \visible<2->{\item Máme $n$ aktivit s přiděleným časovým intervalem.}
+            \visible<3->{\item Časové intervaly budeme modelovat jako \textbf{intervaly reálných čísel}, tj. každá aktivita má interval
+            \[I_j=(a_j,b_j)\; ,\; a_j,b_j\in\R,a_j<b_j,\]
+            pro $j\in\set{1,\dots,n}$.}
+        \end{itemize}
+        \visible<4->{\begin{timportantframe}[0.8\textwidth]
+            \begin{center}
+                Které aktivity lze vybrat tak, aby si vzájemně časově nekolidovaly?
+            \end{center}
+        \end{timportantframe}}
+    \end{frame}
+
+    \begin{frame}{Formální pojetí problému}
+        \begin{itemize}
+            \visible<2->{\item Na vstupu máme množinu otevřených intervalů
+            \[\mathcal{I}=\set{I_1,I_2,\dots,I_n},\]}
+            \visible<3->{\item Pokud spolu dvě úlohy s intervaly $I_k$ a $I_\ell$ kolidují, pak $I_k\cap I_\ell\neq\emptyset$.}
+            \visible<4->{\item Zde se nám hodí, že jsou intervaly otevřené, neboť pokud dvojice aktivit na sebe přímo navazuje, tj.
+            \[I=(a,b)\quad\text{a}\quad J=(b,c),\]
+            pak je jejich \textbf{průnik prázdný}, což dává smysl.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Formální pojetí problému}
+        \visible<2->{\decproblem{Rozvrhování}{
+            Systém otevřených intervalů $\mathcal{I}=\set{I_1,I_2,\dots,I_n}$ a číslo $k\in\N$.
+        }{
+            Existuje podsystém $\mathcal{J}\subseteq\mathcal{I}$ takový, že $|\mathcal{J}|\geqslant k$ a pro každou dvojici intervalů $I,J\in\mathcal{J}$ platí $I\cap J=\emptyset$?
+        }}
+    \end{frame}
+
+    \begin{frame}{Intervalový graf}
+        \visible<2->{\begin{defblock}[Intervalový graf]
+            Mějme systém otevřených intervalů $\mathcal{I}=\set{I_1,I_2,\dots,I_n}$. Pak \markdarkred{intervalový graf} $G_\mathcal{I}=(V,E)$, kde $V=\set{v_1,v_2,\dots,v_n}$ je graf splňující:
+            \begin{itemize}
+                \item vrchol $v_j$ odpovídá intervalu $I_j$,
+                \item pro každé $k,\ell$ platí $v_kv_\ell\in E\iff I_k\cap I_\ell\neq\emptyset$.
+            \end{itemize}
+        \end{defblock}}
+    \end{frame}
+
+    \begin{frame}{Intervalový graf}{Příklad}
+        \begin{figure}
+            \centering
+            \input{images/int-graf.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Intervalový graf}{Příklad: Největší množina nekolidujících aktivit}
+        \begin{figure}
+            \centering
+            \input{images/int-graf-2.tex}
+        \end{figure}
+        \begin{talertframe}[0.9\textwidth]
+            \begin{center}
+                Nekolidující aktivity tvoří v intervalovém grafu \textbf{nezávislou množinu}.
+            \end{center}
+        \end{talertframe}
+    \end{frame}
+
+    \begin{frame}{Převod $\ROZVRH\rightarrow\NZMNA$}
+        \begin{itemize}
+            \visible<2->{\item Na vstupu máme systém otevřených intervalů $\mathcal{I}$ a číslo $k\in\N$.}
+            \visible<3->{\item Sestrojíme intervalový graf $G_\mathcal{I}$.}
+            \visible<4->{\begin{timportantframe}[0.8\textwidth]
+                \begin{center}
+                    V grafu $G_\mathcal{I}$ existuje nezávislá množina velikosti alespoň $k$ právě tehdy, když lze vybrat alespoň $k$ vzájemně disjunktních intervalů z $\mathcal{I}$.
+                \end{center}
+            \end{timportantframe}}
+            \visible<5->{\item Převod je zjevně polynomiální, neboť graf $G_\mathcal{I}$ má maximálně $\bigO(n^{2})$ hran.}
+            \visible<6->{\item Celkově
+            \[\ROZVRH(\mathcal{I},k)=\NZMNA(G_\mathcal{I},k).\]}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Převod $\NZMNA\rightarrow\ROZVRH$}
+        \begin{itemize}
+            \visible<2->{\item Převod $\NZMNA\rightarrow\ROZVRH$ nelze provést.}
+            \visible<3->{\item Obecný graf $G$ totiž \textbf{nemusí nutně představovat} nějaký intervalový graf.}
+            \visible<4->{\item Např. cyklus $C_4$ nemůže představovat intervalový graf.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{$C_4$ není intervalový graf}
+        \visible<2->{\begin{figure}
+            \centering
+            \input{images/cyklus-c4.tex}
+        \end{figure}}
+        \visible<3->{\begin{talertframe}[0.8\textwidth]
+            \begin{center}
+                Interval $I_c$ má \textbf{neprázdný průnik} s $I_a$, ale v $C_4$ hrana $ac$ chybí.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+\end{document}

@@ -1,0 +1,65 @@
+\begin{tikzpicture}[x=0.7cm,y=0.7cm]
+
+% -------------------------------------------------
+% Vlevo: graf C_4
+% -------------------------------------------------
+
+\node at (2,5.6) {\small Graf $C_4$};
+
+\node[draw=darkblue, circle, thick, minimum size=9mm, inner sep=0pt] (a) at (2,4) {$a$};
+\node[draw=darkblue, circle, thick, minimum size=9mm, inner sep=0pt] (b) at (0,2) {$b$};
+\node[draw=darkblue, circle, thick, minimum size=9mm, inner sep=0pt] (c) at (2,0) {$c$};
+\node[draw=darkblue, circle, thick, minimum size=9mm, inner sep=0pt] (d) at (4,2) {$d$};
+
+\draw[thick] (a) -- (b);
+\draw[thick] (b) -- (c);
+\draw[thick] (c) -- (d);
+\draw[thick] (d) -- (a);
+
+% chybějící hrany
+% \draw[darkred, dashed, thick] (a) -- (c);
+% \draw[darkred, dashed, thick] (b) -- (d);
+
+% \node[darkred] at (1,2) {\small není hrana};
+% \node[darkred] at (3,2) {\small není hrana};
+
+% -------------------------------------------------
+% Vpravo: pokus o intervalovou reprezentaci
+% -------------------------------------------------
+
+\node at (11,5.6) {\small Pokus o reprezentaci intervaly};
+
+% osa
+\draw[arrow] (6,0) -- (16,0);
+
+% I_a
+\node[left] at (8,1.2) {$I_a$};
+\draw[darkblue, line width=1.4pt] (8,1.2) -- (14,1.2);
+\draw[darkblue, line width=1pt, fill=white] (8,1.2) circle (2pt);
+\draw[darkblue, line width=1pt, fill=white] (13,1.2) circle (2pt);
+
+% I_b
+\node[left] at (7,2.4) {$I_b$};
+\draw[darkblue, line width=1.4pt] (7,2.4) -- (9.8,2.4);
+\draw[darkblue, line width=1pt, fill=white] (7,2.4) circle (2pt);
+\draw[darkblue, line width=1pt, fill=white] (9.8,2.4) circle (2pt);
+
+% I_d
+\node[left] at (11.3,3.6) {$I_d$};
+\draw[darkblue, line width=1.4pt] (11.3,3.6) -- (14.2,3.6);
+\draw[darkblue, line width=1pt, fill=white] (11.3,3.6) circle (2pt);
+\draw[darkblue, line width=1pt, fill=white] (14.2,3.6) circle (2pt);
+
+% I_c -- vede ke sporu
+\node[left] at (9.2,4.8) {$I_c$};
+\draw[darkred, line width=1.4pt] (9.2,4.8) -- (12.1,4.8);
+\draw[darkred, line width=1pt, fill=white] (9.2,4.8) circle (2pt);
+\draw[darkred, line width=1pt, fill=white] (12.1,4.8) circle (2pt);
+
+% svislé pomocné čáry
+\draw[densely dashed, gray] (9.2,0.2) -- (9.2,5.1);
+\draw[densely dashed, gray] (9.8,0.2) -- (9.8,5.1);
+\draw[densely dashed, gray] (11.3,0.2) -- (11.3,5.1);
+\draw[densely dashed, gray] (12.1,0.2) -- (12.1,5.1);
+
+\end{tikzpicture}

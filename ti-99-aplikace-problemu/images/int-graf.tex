@@ -1,0 +1,67 @@
+\begin{tikzpicture}[x=0.7cm,y=0.7cm]
+
+% -------------------------------------------------
+% Intervaly vlevo
+% -------------------------------------------------
+
+\node at (4,5.9) {\small Intervaly};
+
+% osa
+\draw[arrow] (0,0) -- (8.3,0);
+\foreach \x in {0,1,...,8}
+{
+    \draw (\x,0.12) -- (\x,-0.12);
+    \node[below] at (\x,-0.12) {\small \x};
+}
+
+% interval I_1 = (0.5,2.5)
+\node[left] at (0.5,1) {$I_1$};
+\draw[darkblue, line width=1.4pt] (0.5,1) -- (2.5,1);
+\draw[darkblue, line width=1pt, fill=white] (0.5,1) circle (2pt);
+\draw[darkblue, line width=1pt, fill=white] (2.5,1) circle (2pt);
+
+% interval I_2 = (1.5,4.2)
+\node[left] at (1.5,2) {$I_2$};
+\draw[darkblue, line width=1.4pt] (1.5,2) -- (4.2,2);
+\draw[darkblue, line width=1pt, fill=white] (1.5,2) circle (2pt);
+\draw[darkblue, line width=1pt, fill=white] (4.2,2) circle (2pt);
+
+% interval I_3 = (3.2,5.4)
+\node[left] at (3.2,3) {$I_3$};
+\draw[darkblue, line width=1.4pt] (3.2,3) -- (5.4,3);
+\draw[darkblue, line width=1pt, fill=white] (3.2,3) circle (2pt);
+\draw[darkblue, line width=1pt, fill=white] (5.4,3) circle (2pt);
+
+% interval I_4 = (5.0,7.0)
+\node[left] at (5.0,4) {$I_4$};
+\draw[darkblue, line width=1.4pt] (5.0,4) -- (7.0,4);
+\draw[darkblue, line width=1pt, fill=white] (5.0,4) circle (2pt);
+\draw[darkblue, line width=1pt, fill=white] (7.0,4) circle (2pt);
+
+% interval I_5 = (2.2,6.3)
+\node[left] at (2.2,5) {$I_5$};
+\draw[darkred, line width=1.4pt] (2.2,5) -- (6.3,5);
+\draw[darkred, line width=1pt, fill=white] (2.2,5) circle (2pt);
+\draw[darkred, line width=1pt, fill=white] (6.3,5) circle (2pt);
+
+% -------------------------------------------------
+% Intervalový graf vpravo
+% -------------------------------------------------
+
+\node at (12.2,5.9) {\small Intervalový graf};
+
+\node[draw=darkblue, circle, thick, minimum size=8mm, inner sep=0pt] (v1) at (10.0,4.1) {$I_1$};
+\node[draw=darkblue, circle, thick, minimum size=8mm, inner sep=0pt] (v2) at (12.1,5.0) {$I_2$};
+\node[draw=darkblue, circle, thick, minimum size=8mm, inner sep=0pt] (v3) at (14.1,4.1) {$I_3$};
+\node[draw=darkblue, circle, thick, minimum size=8mm, inner sep=0pt] (v4) at (14.0,2.0) {$I_4$};
+\node[draw=darkred, circle, thick, minimum size=8mm, inner sep=0pt] (v5) at (11.7,2.0) {$I_5$};
+
+\draw[thick] (v1) -- (v2);
+\draw[thick] (v1) -- (v5);
+\draw[thick] (v2) -- (v3);
+\draw[thick] (v2) -- (v5);
+\draw[thick] (v3) -- (v4);
+\draw[thick] (v3) -- (v5);
+\draw[thick] (v4) -- (v5);
+
+\end{tikzpicture}
