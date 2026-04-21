@@ -7,6 +7,7 @@
 \input{../assets/listing.tex}
 
 \def\presentationtitle{Třídy problémů P a NP}
+\def\presentationtitlefooter{Třídy problémů $\classP$ a $\classNP$}
 
 \begin{document}
 
@@ -16,6 +17,8 @@
 
     \titleframe{Optimalizační problémy}
 
+    \subsection{Proč rozhodovací problémy?}
+
     \begin{frame}{Proč rozhodovací problémy?}
         \visible<2->{\begin{tnoticeframe}[0.8\textwidth]
             \begin{center}
@@ -24,13 +27,72 @@
         \end{tnoticeframe}}
         \begin{itemize}
             \visible<3->{\item V praxi nás přecijen běžně zajímá optimalizační varianta problému.}
-            \visible<4->{\item Např. typicky nás nezájímá, jestli v grafu $G$ existuje klika velikosti alespoň $k$, ale jaká je \textbf{největší klika v grafu $G$}.}
+            \visible<4->{\item Např. typicky nás nezajímá, jestli v grafu $G$ existuje klika velikosti alespoň $k$, ale jaká je \textbf{největší klika v grafu $G$}.}
         \end{itemize}
         \visible<5->{\begin{talertframe}[0.9\textwidth]
             \begin{center}
                 Optimalizační problémy však dokážeme snadno řešit pomocí těch rozhodovacích.
             \end{center}
         \end{talertframe}}
+    \end{frame}
+
+    \subsection{Optimalizační varianta NzMna}
+
+    \begin{frame}{Optimalizační $\NZMNA$}
+        \visible<2->{\begin{tnoticeframe}[0.9\textwidth]
+            \begin{center}
+                Pokud bychom uměli řešit rychle rozhodovací variantu problému nezávislé množiny v grafu, uměli bychom řešit i optimalizační variantu.
+            \end{center}
+        \end{tnoticeframe}}
+        \visible<3->{\begin{center}
+            \begin{minipage}{0.9\textwidth}
+                \begin{algorithm}[H]
+                    \caption{\textsc{Optimalizační $\NZMNA$}}
+                    \KwIn{Graf $G=(V,E)$}
+                    \For{$j=n,n-1,\dots,1$}{
+                        \lIf{$\NZMNA(G,j)=1$}{\Return{$j$}}
+                    }
+                \end{algorithm}
+            \end{minipage}
+        \end{center}}
+        \visible<4->{Pokud algorimus pro rozhodovací problém nezávislé množiny v grafu umíme řešit v čase $\bigO(n^{k})$ pro nějaké $k\in\R^{+}$, pak algoritmus výše poběží v čase
+        \[\bigO(n\cdot n^{k})=\bigO(n^{k+1}).\]}
+    \end{frame}
+
+    \section{Třídy problémů P a NP}
+
+    \titleframe{Třídy problémů $\classP$ a $\classNP$}
+
+    \subsection{Třída problémů P}
+
+    \begin{frame}{Třída problémů $\classP$}
+        \visible<2->{\begin{defblock}[Třída problémů $\classP$]
+            Třída (množina) $\classP$ obsahuje rozhodovací problémy, které jsou řešitelné v polynomiálním čase. Tzn. $L\in\classP$, pokud existuje algoritmus $A$ a polynom $p$ takový, že pro každý vstup $x$ doběhne $A$ nejvýše v čase $p(|x|)$ a $A(x)=L(x)$.
+        \end{defblock}}
+        \visible<3->{\begin{talertframe}[0.9\textwidth]
+            \begin{center}
+                Třída $\classP$ představuje všechny problémy, které jsme schopni "efektivně" řešit.
+            \end{center}
+        \end{talertframe}}
+        \visible<4->{Patří sem například problémy:}
+        \begin{itemize}
+            \visible<5->{\item Existuje v grafu $G$ cesta z vrcholu $s$ do vrcholu $t$?}
+            \visible<6->{\item Je zadaný seznam $S$ setříděný?}
+            \visible<7->{\item Je zadaný graf $G$ acyklický?}
+            \visible<8->{\item Je zadaný graf $G$ bipartitní?}
+            \visible<9->{\item Obsahuje zadaný řetězec $s$ podřetězec $x$?}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Třída problémů NP}
+
+    \begin{frame}{Třída problémů $\classNP$}
+        \begin{defblock}[Třída problémů $\classNP$]
+            $\classNP$ je třída rozhodovacích problémů, v níž problém $L$ leží právě tehdy, pokud existuje nějaký problém $K\in\classP$ a polynom $g$, přičemž pro každý vstup $x$ je $L(x) = 1$ právě tehdy, pokud pro nějaký řetězec $y$ délky nejvýše $g(|x|)$ platí $K(x, y) = 1$.
+        \end{defblock}
+        \begin{tinfobox}[0.9\textwidth]{Co to znamená?}
+            Algoritmus $K$ řeší problém $L$, ale kromě vstupu $x$ má k dispozici ještě \textbf{polynomiálně dlouhou nápovědu $y$}. Přitom má platit, že je-li $L(x) = 1$, musí existovat alespoň jedna nápověda, kterou algoritmus K schválí. Pokud ovšem $L(x) = 0$, nesmí ho přesvědčit žádná nápověda.
+        \end{tinfobox}
     \end{frame}
 
 \end{document}
