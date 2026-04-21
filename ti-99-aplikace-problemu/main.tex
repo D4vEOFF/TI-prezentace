@@ -26,6 +26,8 @@
         \end{itemize}
     \end{frame}
 
+    \subsection{Rozvrhování}
+
     \begin{frame}{Rozvrhování}
         \begin{itemize}
             \visible<2->{\item Máme $n$ aktivit s přiděleným časovým intervalem.}
@@ -59,6 +61,8 @@
         }}
     \end{frame}
 
+    \subsection{Intervalový graf}
+
     \begin{frame}{Intervalový graf}
         \visible<2->{\begin{defblock}[Intervalový graf]
             Mějme systém otevřených intervalů $\mathcal{I}=\set{I_1,I_2,\dots,I_n}$. Pak \markdarkred{intervalový graf} $G_\mathcal{I}=(V,E)$, kde $V=\set{v_1,v_2,\dots,v_n}$ je graf splňující:
@@ -88,6 +92,8 @@
         \end{talertframe}
     \end{frame}
 
+    \subsection{Převod Rozvrhování na NzMna}
+
     \begin{frame}{Převod $\ROZVRH\rightarrow\NZMNA$}
         \begin{itemize}
             \visible<2->{\item Na vstupu máme systém otevřených intervalů $\mathcal{I}$ a číslo $k\in\N$.}
@@ -102,6 +108,8 @@
             \[\ROZVRH(\mathcal{I},k)=\NZMNA(G_\mathcal{I},k).\]}
         \end{itemize}
     \end{frame}
+
+    \subsection{Převod NzMna na Rozvrhování}
 
     \begin{frame}{Převod $\NZMNA\rightarrow\ROZVRH$}
         \begin{itemize}
@@ -121,6 +129,76 @@
                 Interval $I_c$ má \textbf{neprázdný průnik} s $I_a$, ale v $C_4$ hrana $ac$ chybí.
             \end{center}
         \end{talertframe}}
+    \end{frame}
+
+    \begin{frame}{Intervalové grafy a rozvrhování}
+        \visible<2->{\begin{figure}
+            \centering
+            \input{images/vstupy-rozvrh-nzmna.tex}
+        \end{figure}}
+        \visible<3->{\begin{timportantframe}
+            \begin{center}
+                Pomocí rozvrhování jsme schopni řešit problém nezávislé množiny pouze pro \textbf{intervalové grafy}.
+            \end{center}
+        \end{timportantframe}}
+    \end{frame}
+
+    \subsection{Algoritmus pro rozvrhování}
+
+    \begin{frame}{Algoritmus pro rozvrhování}
+        \visible<2->{Rozvrhování lze oproti nezávislé množině řešit \textbf{polynomiálním algoritmem}.}
+        \begin{enumerate}
+            \visible<2->{\item Seřadíme intervaly $I_j=(a_j,b_j)$ podle hodnot $a_j$ vzestupně:
+            \[a_1\leqslant a_2\leqslant\dots\leqslant a_n.\]}
+            \visible<3->{\item Udržujeme si počet nekolidujících aktivit $c$, který inicializujeme na nulu, tj. $c\gets 0$, a také poslední největší koncovou hodnotu intervalu $b_j$, kterou inicializujeme na $\ell\gets -\infty$.}
+            \visible<4->{\item Vezmeme následující interval $I=(a,b)$ v seřazeném seznamu z kroku 1. Pokud $a>\ell$, pak jsme našli nový nekolidující interval (aktivitu) a zvýšíme počítadlo $c$ a $\ell\gets b$.}
+            \visible<5->{\item Vracíme se ke kroku 3 a postup opakujeme.}
+            \visible<6->{\item Určíme, zdali platí $c\geqslant k$ a končíme.}
+        \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Pseudokód algoritmu}
+        \begin{center}
+            \begin{minipage}{0.9\textwidth}
+                \begin{algorithm}[H]
+                    \caption{\textsc{Rozvrhování}}
+                    \KwIn{Systém otevřených intervalů $\mathcal{I}=\set{I_1,\dots,I_n}$ a číslo $k\in\N$}
+                    Seřadíme intervaly v $\mathcal{I}$ podle $a_j$\;
+                    $c\gets 0,\ell\gets 0$\;
+                    \ForEach{\textup{inteval $I=(a,b)\in\mathcal{I}$}}{
+                        \If{$a\geqslant\ell$}{
+                            $c\gets c+1$\;
+                            $\ell\gets b$\;
+                        }
+                    }
+                    \lIf{$c\geqslant k$}{\Return{\textup{\textbf{true}}}}
+                    \Return{\textup{\textbf{false}}}
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+    \end{frame}
+
+    \begin{frame}{Rozbor algoritmu}
+        \begin{itemize}
+            \visible<2->{\item Algoritmus je zcela zjevně polynomiální.}
+            \visible<3->{\item Seřazení stihneme v čase $\bigO(n\log{n})$.}
+            \visible<4->{\item Následně procházíme všechny intevaly, což potrvá $\bigO(n)$.}
+        \end{itemize}
+        \visible<5->{\begin{talertframe}[0.9\textwidth]
+            \begin{center}
+                To znamená, že v případě intervalových grafů umíme rozhodnout problém $\NZMNA$ rychle.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \section{Zdroje}
+
+    \begin{frame}{Zdroje}
+        \begin{itemize}
+            \item MAREŠ, Martin a~VALLA, Tomáš. \textit{Průvodce labyrintem algoritmů.} Druhé vydání. CZ.NIC. Praha: CZ.NIC, z.s.p.o., 2022. ISBN 978-80-88168-63-8.
+            \item PAPADIMITRIOU, Christos H. \textit{Computational complexity.} Reading: Addison-Wesley, 1994. ISBN 0-201-53082-1.
+            \item CORMEN, Thomas H.; LEISERSON, Charles Eric; RIVEST, Ronald L. a~STEIN, Clifford. \textit{Introduction to algorithms.} Fourth edition. Cambridge: The MIT Press, 2022. ISBN 978-0-262-04630-5.
+        \end{itemize}
     \end{frame}
 
 \end{document}

@@ -1,0 +1,49 @@
+\begin{tikzpicture}[x=0.6cm,y=0.6cm]
+
+% -------------------------------------------------
+% Levá množina: vstupy pro Rozvrh
+% -------------------------------------------------
+
+\fill[thick,gray!30] (0,0) ellipse (2.2 and 4.0);
+\draw[thick] (0,0) ellipse (2.2 and 4.0);
+
+\node[above=2mm, darkred] at (0,4.0) {\small \textbf{Vstupy pro $\ROZVRH$}};
+\node[align=center] at (0,0) {\small Dvojice\\$(\mathcal{I},k)$};
+
+% -------------------------------------------------
+% Pravá množina: vstupy pro NzMna
+% -------------------------------------------------
+
+\fill[thick,gray!30] (10,0) ellipse (2.6 and 4.6);
+\draw[thick] (10,0) ellipse (2.6 and 4.6);
+
+\node[above=2mm, darkred] at (10,4.6) {\small \textbf{Vstupy pro $\NZMNA$}};
+\node[align=center] at (10,3) {\small Dvojice\\$(G,k)$};
+
+% -------------------------------------------------
+% Podmnožina intervalových grafů
+% -------------------------------------------------
+
+\fill[darkred!30, thick] (10,-1) ellipse (1.7 and 2.5);
+\draw[darkred, thick] (10,-1) ellipse (1.7 and 2.5);
+
+\node[darkred, align=center] at (10,-1) {\small Intervalové\\ grafy\\ $(G_\mathcal{I},k)$};
+
+% -------------------------------------------------
+% Znázornění převodu f
+% -------------------------------------------------
+
+% body na levém oválu
+\coordinate (L1) at (0,4);
+\coordinate (L2) at (0,-4);
+
+% body na červeném oválu
+\coordinate (R1) at (10.0,1.5);
+\coordinate (R2) at (10.0,-3.5);
+
+\draw[lightred, line width=1.2pt] (L1) -- (R1);
+\draw[lightred, line width=1.2pt] (L2) -- (R2);
+
+\node[lightred] at (5.2,3.3) {$f$};
+
+\end{tikzpicture}
