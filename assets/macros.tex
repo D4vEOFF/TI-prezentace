@@ -107,6 +107,7 @@
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\rng}{rng}
 \renewcommand{\emptyset}{\varnothing}
+\newcommand{\binary}[1]{\ensuremath{\left\langle #1\right\rangle}_B}
 
 % DFS in and out lists
 \DeclareMathOperator{\inlist}{in}
@@ -275,6 +276,47 @@
 
 \tikzstyle{edge}    = [thick,>=stealth]
 \tikzstyle{diredge}    = [thick, ->, >=stealth]
+
+%% Automaty
+\tikzstyle{state}=[%
+    draw,
+    circle,
+    thick,
+    minimum size=10mm,
+    inner sep=0pt,
+    outer sep=0pt
+]
+
+\tikzstyle{acceptstate}=[%
+    state,
+    double,
+    double distance=1pt
+]
+
+\tikzstyle{transition}=[%
+    ->,
+    >=stealth,
+    thick
+]
+
+\newcommand{\state}[4][]{%
+    \node[state,#1] (#2) at #3 {#4};
+}
+
+\newcommand{\acceptingstate}[4][]{%
+    \node[acceptstate,#1] (#2) at #3 {#4};
+}
+
+\newcommand{\transitionarrow}[5][]{%
+    \path (#2) edge[transition,#1] node[#3] {#4} (#5);
+}
+
+\newcommand{\initialstate}[6][]{%
+    \node[state,#1] (#2) at #3 {#4};
+    \draw[transition] #5 -- (#2.#6);
+}
+
+%%%%%
 
 % Frames
 \newcommand{\tableofcontentsframe}{

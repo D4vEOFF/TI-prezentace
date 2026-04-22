@@ -1,0 +1,21 @@
+\begin{tikzpicture}[
+    >=stealth,
+    thick,
+    every node/.style={font=\Large}
+]
+    % Blok automatu
+    \node[
+        draw,
+        rectangle,
+        minimum width=3.2cm,
+        minimum height=1.8cm
+    ] (A) at (0,0) {Automat};
+
+    % Vstupní šipka
+    \node[text=purple] (input) at (-4.0,0) {Vstup};
+    \draw[->] (input) -- (A.west);
+
+    % Výstupní šipka
+    \node[text= red] (output) at (4.5,0) {Přijal/odmítl?};
+    \draw[->] (A.east) -- (output);
+\end{tikzpicture}

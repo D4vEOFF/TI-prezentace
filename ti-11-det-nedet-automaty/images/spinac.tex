@@ -1,0 +1,7 @@
+\begin{tikzpicture}[scale=1.4]
+    \initialstate{on}{(0,0)}{On}{(-1.2,0)}{west}
+    \acceptingstate{off}{(3.2,0)}{Off}
+
+    \transitionarrow[bend left=25]{on}{above}{{\small Push}}{off}
+    \transitionarrow[bend left=25]{off}{below}{{\small Push}}{on}
+\end{tikzpicture}

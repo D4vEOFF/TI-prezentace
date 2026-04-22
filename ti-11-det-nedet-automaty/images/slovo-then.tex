@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+    \initialstate[font=\ttfamily]{q0}{(0,0)}{$\lambda$}{(-1.2,0)}{west}
+    \state[font=\ttfamily]{q1}{(2.2,0)}{t}
+    \state[font=\ttfamily]{q2}{(4.4,0)}{th}
+    \state[font=\ttfamily]{q3}{(6.6,0)}{the}
+    \acceptingstate[font=\ttfamily , minimum size=11mm]{q4}{(8.8,0)}{then}
+
+    \transitionarrow[font=\ttfamily]{q0}{above}{t}{q1}
+    \transitionarrow[font=\ttfamily]{q1}{above}{h}{q2}
+    \transitionarrow[font=\ttfamily]{q2}{above}{e}{q3}
+    \transitionarrow[font=\ttfamily]{q3}{above}{n}{q4}
+\end{tikzpicture}

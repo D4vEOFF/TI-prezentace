@@ -16,9 +16,101 @@
 
     \titleframe{Úvod k automatům}
 
+    \begin{frame}{Úvod k automatům}
+        \visible<2->{Mnoho situací lze za běhu programu prezentovat jako určité \textbf{stavy} během výpočtu.}
+        \begin{itemize}
+            \visible<3->{\item \textbf{Spínač}
+            \begin{figure}
+                \centering
+                \input{images/spinac.tex}
+            \end{figure}}
+            \visible<4->{\item \textbf{Automat rozpoznávající slovo \texttt{then}}
+            \begin{figure}
+                \centering
+                \input{images/slovo-then.tex}
+            \end{figure}}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Jak automaty fungují?}
+        \visible<2->{Obecně konečné automaty pracují se vstupem, který se skládá z konečného počtu znaků, tzn. \textbf{slovo}.}
+        \visible<3->{\begin{figure}
+            \centering
+            \input{images/automat-obecne.tex}
+        \end{figure}}
+        \visible<4->{Na konci výpočtu vydá automat odpověď, zdali slovo bylo \textbf{přijato}, či \textbf{odmítnuto}.}
+    \end{frame}
+
     \section{Formální jazyky}
 
     \titleframe{Formální jazyky}
+
+    \begin{frame}{Formální jazyky}
+        \visible<2->{\begin{defblock}
+            \visible<2->{Mějme konečnou množinu znaků $\Sigma\neq\emptyset$, kterou budeme nazývat \markdarkred{abeceda}. Pak}
+            \begin{itemize}
+                \visible<3->{\item \markdarkred{slovo (řetězec)} je libovolná posloupnost znaků z abecedy $\Sigma$.}
+                \visible<4->{\item \markdarkred{prázdné slovo} je slovo neobsahující žádné znaky. Značíme jej $\lambda$.}
+                \visible<5->{\item \markdarkred{množina všech slov v abecedě $\Sigma$} značíme $\Sigma^{*}$.}
+                \visible<6->{\item \markdarkred{množina všech neprázdných slov v abecedě $\Sigma$} se značí $\Sigma^{+}=\Sigma^{*}\setminus\set{\lambda}$.}
+                \visible<7->{\item \markdarkred{jazyk nad abecedou $\Sigma$} je libovolná podmnožina slov $L\subseteq\Sigma^{*}$.}
+                \visible<8->{\item \markdarkred{délka slova $w$} se značí $|w|$ (počet znaků ve slově $w$).}
+                \visible<9->{\item \markdarkred{počet výskytů znaku $z$ ve slově $w$} značíme $|w|_z$.}
+            \end{itemize}
+        \end{defblock}}
+    \end{frame}
+
+    \begin{frame}{Operace nad slovy}
+        \visible<2->{\begin{defblock}[Operace nad slovy]
+            \visible<2->{Nechť $u=u_1\dots u_n,v=v_1\dots v_m$ jsou slova nad abecedou $\Sigma$. Pak definujeme}
+            \begin{itemize}
+                \visible<3->{\item \markdarkred{konkantenaci (zřetězení)} slov $u$ a $v$ jako slovo
+                \[uv=u_1\dots u_nv_1\dots v_m.\]}
+                \visible<4->{\item \markdarkred{mocninu slova $u$} následovně:
+                \begin{itemize}
+                    \item $u^{0}=\lambda$,
+                    \item $u^{k+1}=u^{k}u$,
+                \end{itemize}
+                kde $k\in\N_0$. Tzn. $u^{k}=\overbrace{\underbrace{u_1\dots u_n}_u\underbrace{u_1\dots u_n}_u\dots\underbrace{u_1\dots u_n}_u}^{\text{$k$-krát}}$.}
+            \end{itemize}
+        \end{defblock}}
+    \end{frame}
+
+    \begin{frame}{Formální jazyky}{Příklady}
+        \visible<2->{Mějme abecedu znaků $\Sigma=\set{\texttt{a},\texttt{b}}$.}
+        \begin{itemize}
+            \visible<3->{\item Slovo $w=\texttt{abba}$ má délku $|w|=4$.}
+            \visible<4->{\item $w^{5}=\texttt{abba} \texttt{abba} \texttt{abba} \texttt{abba} \texttt{abba}$.}
+            \visible<5->{\item Množina všech slov $\Sigma^{*}=\set{\lambda,\texttt{a},\texttt{b},\texttt{aa},\texttt{ab},\texttt{ba},\texttt{bb},\texttt{aaa},\texttt{aab},\texttt{aba},\texttt{abb},\texttt{baa},\dots}$.}
+            \visible<6->{\item Příklady \textbf{triviálních} jazyků nad abecedou: $\emptyset$, $\set{\lambda}$, $\Sigma^{*}$, $\set{\texttt{aa},\texttt{bb}}$.}
+            \visible<7->{\item Další příklady}
+            \begin{align*}
+                \visible<8->{L_1&=\set{a^{2n}: n\in\N}=\set{\lambda,\texttt{aa},\texttt{aaaa},\texttt{aaaaaa},\dots}}\\
+                \visible<9->{L_2&=\set{w\in\Sigma^{*}: \text{$w$ končí na $\texttt{ab}$}}=\set{w\in\Sigma^{*}: \exists u\in\Sigma^{*}: w=u\texttt{ab}}\\
+                &=\set{\texttt{\markdarkred{ab}},\texttt{a\markdarkred{ab}},\texttt{b\markdarkred{ab}},\texttt{aa\markdarkred{ab}},\texttt{ab\markdarkred{ab}},\texttt{ba\markdarkred{ab}},\dots}}\\
+                \visible<10->{L_3&=\set{w\in\Sigma^{*}: \text{$w$ neobsahuje jako podslovo $\texttt{bb}$}}\\
+                &=\set{w\in\Sigma^{*}: \forall u,v\in\Sigma^{*}: w\neq u\texttt{bb}v}\\
+                &=\set{\lambda,\texttt{a},\texttt{b},\texttt{aa},\texttt{ab},\texttt{ba},\xcancel{\texttt{\markdarkred{bb}}},\texttt{aaa},\texttt{aab},\texttt{aba},\xcancel{\texttt{a\markdarkred{bb}}},\dots}}
+            \end{align*}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Poznámka k rozhodovacím problémům}
+        \visible<2->{U rozhodovacích problémů jsme kódovali vstupy pomocí $0$ a $1$.}
+        \begin{itemize}
+            \visible<3->{\item Mějme \textbf{binární} abecedu $\Sigma=\set{0,1}$.}
+            \visible<4->{\item Rozhodovací problémy lze chápat jako jazyky nad $\set{0,1}^{*}$.}
+            \visible<5->{\item Označme si $\binary{x}$ binární zakódování libovolného objektu $x$.}
+            \visible<6->{\item Pak např. $\SAT$ lze chápat jako množinu všech \textbf{binárních řetězců} reprezentující takové logické formule $\varphi$, které jsou v CNF a jsou splnitelné. Tzn.
+            \[\SAT=\set{\binary{\varphi}: \text{$\varphi$ je v CNF a je splnitelná}}.\]}
+            \visible<7->{\item Podobně:}
+            \begin{align*}
+                \visible<8->{\THREESAT&=\set{\binary{\varphi}: \text{$\varphi$ je v 3-CNF a je splnitelná}},\\}
+                \visible<9->{\NZMNA&=\set{\binary{(G,k)}: \text{V grafu $G$ existuje nez. mn. velikosti aspoň $k$}},\\}
+                \visible<10->{\KLIKA&=\set{\binary{(G,k)}: \text{V grafu $G$ existuje klika velikosti aspoň $k$}}.}
+            \end{align*}
+        \end{itemize}
+    \end{frame}
 
     \section{Deterministické automaty}
 
