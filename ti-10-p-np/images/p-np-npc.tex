@@ -1,0 +1,22 @@
+\begin{tikzpicture}[scale=1.2]
+
+    % NP
+    \draw[very thick,purple] (0,0) ellipse (3.2 and 2.0);
+    \fill[purple!30] (0,0) ellipse (3.2 and 2.0);
+    \node[font=\large] at (0,1.6) {$\classNP$};
+
+    % P
+    \draw[very thick,red] (-1.2,-0.3) ellipse (1.4 and 0.9);
+    \fill[red!30] (-1.2,-0.3) ellipse (1.4 and 0.9);
+    \node[font=\large] at (-1.2,-0.3) {$\classP$};
+
+    % NP-complete
+    \draw[very thick,orange!90!black] (1.4,0.2) ellipse (1.2 and 0.85);
+    \fill[orange!30] (1.4,0.2) ellipse (1.2 and 0.85);
+    \node[font=\large,align=center] at (1.4,0) {$\classNP$-úplné};
+
+    \node[vertex,fill=black,label=left:$A$,minimum size=1mm] (A) at (0,1) {};
+    \node[vertex,fill=black,label=right:$L$,minimum size=1mm] (L) at (1.4,0.5) {};
+    \draw[thick,->] (A) to[out=0,in=135] (L);
+
+\end{tikzpicture}

@@ -76,23 +76,308 @@
         \end{talertframe}}
         \visible<4->{Patří sem například problémy:}
         \begin{itemize}
-            \visible<5->{\item Existuje v grafu $G$ cesta z vrcholu $s$ do vrcholu $t$?}
-            \visible<6->{\item Je zadaný seznam $S$ setříděný?}
-            \visible<7->{\item Je zadaný graf $G$ acyklický?}
-            \visible<8->{\item Je zadaný graf $G$ bipartitní?}
-            \visible<9->{\item Obsahuje zadaný řetězec $s$ podřetězec $x$?}
+            \visible<5->{\item "Existuje v grafu $G$ cesta z vrcholu $s$ do vrcholu $t$?"}
+            \visible<6->{\item "Je zadaný seznam $S$ setříděný?"}
+            \visible<7->{\item "Je zadaný graf $G$ acyklický?"}
+            \visible<8->{\item Problém rozvrhování}
+            \visible<9->{\item "Obsahuje zadaný řetězec $s$ podřetězec $x$?"}
         \end{itemize}
     \end{frame}
 
     \subsection{Třída problémů NP}
 
     \begin{frame}{Třída problémů $\classNP$}
-        \begin{defblock}[Třída problémů $\classNP$]
+        \visible<2->{\begin{defblock}[Třída problémů $\classNP$]
             $\classNP$ je třída rozhodovacích problémů, v níž problém $L$ leží právě tehdy, pokud existuje nějaký problém $K\in\classP$ a polynom $g$, přičemž pro každý vstup $x$ je $L(x) = 1$ právě tehdy, pokud pro nějaký řetězec $y$ délky nejvýše $g(|x|)$ platí $K(x, y) = 1$.
-        \end{defblock}
-        \begin{tinfobox}[0.9\textwidth]{Co to znamená?}
+        \end{defblock}}
+        \visible<3->{\begin{tinfobox}[0.9\textwidth]{Co to znamená?}
             Algoritmus $K$ řeší problém $L$, ale kromě vstupu $x$ má k dispozici ještě \textbf{polynomiálně dlouhou nápovědu $y$}. Přitom má platit, že je-li $L(x) = 1$, musí existovat alespoň jedna nápověda, kterou algoritmus K schválí. Pokud ovšem $L(x) = 0$, nesmí ho přesvědčit žádná nápověda.
-        \end{tinfobox}
+        \end{tinfobox}}
+    \end{frame}
+
+    \subsection{Hra Sudoku}
+
+    \begin{frame}{Třída problémů $\classNP$}{Příklad: Sudoku}
+        \begin{figure}
+            \centering
+            \input{images/sudoku.tex}
+        \end{figure}
+        \decproblem{Sudoku}{
+            Počáteční tabulku, kde některá pole jsou již vyplněna. 
+        }{
+            Lze vyplnit prázdná pole tak, aby se v žádném \textbf{řádku, sloupci} ani \textbf{skupině} číslice neopakovaly?
+        }
+    \end{frame}
+
+    \begin{frame}{Třída problémů $\classNP$}{Příklad: Sudoku}
+        \begin{figure}
+            \centering
+            \input{images/sudoku-solved.tex}
+        \end{figure}
+        \begin{itemize}
+            \item Sudoku zde představuje problém $L$ a hrací pole vstup $x$.
+            \item Zbylá červeně vyplněná pole představují nápovědu $y$.
+            \item Máme-li nápovědu $y$, stačí nám jen ověřit, že je $y$ skutečně řešením $\implies$ to představuje náš problém $K\in\classP$.
+            \item Pokud je $y$ řešením, tzn. $K(x,y)=1$, pak zadaná instance Sudoku má řešení, tedy $L(x)=1$.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Porovnání $\classP$ a $\classNP$}
+        \begin{figure}
+            \centering
+            \input{images/porovnani-p-np.tex}
+        \end{figure}
+    \end{frame}
+
+    \subsection{Problémy SAT, NzMna a Klika}
+
+    \begin{frame}{Problémy $\SAT$, $\NZMNA$ a $\KLIKA$}
+        \begin{itemize}
+            \visible<2->{\item $\SAT,\THREESAT\in\classNP$
+            \begin{itemize}
+                \item Určit, zdali je logická formule $\varphi$ v CNF splnitelná v obecném případě \textbf{těžké}.
+                \item Nicméně pokud nám někdo poskytne ohodnocení proměnných (což je naše nápověda $y$), pak nám stačí formuli vyhodnotit a přesvědčit se, zdali $\varphi(y)=1$.
+            \end{itemize}}
+            \visible<3->{\item $\NZMNA\in\classNP$
+            \begin{itemize}
+                \item Jako nápověda $y$ zde poslouží nějaká podmnožina vrcholů $M\subseteq V$.
+                \item Stačí nám ověřit, zdali $M$ je nezávislá a $|M|\geqslant k$.
+            \end{itemize}}
+            \visible<4->{\item $\KLIKA\in\classNP$
+            \begin{itemize}
+                \item Stejně jako u nezávislé množiny zde poslouží jako nápověda podmnožina vrcholů $M\subseteq V$.
+                \item Stačí se přesvědčit, že vrcholy z $M$ tvoří kliku a $|M|\geqslant k$.
+            \end{itemize}}
+        \end{itemize}
+        \visible<5->{\begin{talertframe}[0.9\textwidth]
+            \begin{center}
+                Řešení s nápovědou $y$ ve všech případech lze provést \textbf{v polynomiálním čase}.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \subsection{Další problémy z NP}
+    
+    \begin{frame}{Další příklady $\classNP$ problémů}
+        \begin{itemize}
+            \visible<2->{\item \textbf{Problém Hamiltonovské kružnice:} "Existuje v grafu $G$ Hamiltonovská kružnice?"}
+            \visible<3->{\item \textbf{Problém součtu podmnožiny:} "Existuje v množině celých čísel $M$ podmnožina se součtem $S$?"}
+            \visible<4->{\item \textbf{Problém loupežníků:} "Lze rozdělit množinu přirozených čísel $M$ na dvě části $P$ a $M\setminus P$ tak, aby měly stejný součet?"}
+            \visible<5->{\item \textbf{Problém batohu:} Jsou dány předměty s váhami a cenami a kapacita batohu, chceme najít co nejdražší podmnožinu předmětů, jejíž váha nepřesáhne kapacitu batohu. Aby se jednalo o rozhodovací problém, ptáme se, zda existuje podmnožina s cenou větší nebo rovnou zadanému číslu.}
+        \end{itemize}
+        \visible<5->{\begin{timportantframe}[0.8\textwidth]
+            \begin{center}
+                Všechny tyto problémy lze polynomiálně převést na $\SAT,\THREESAT,\NZMNA,\KLIKA$.
+            \end{center}
+        \end{timportantframe}}
+    \end{frame}
+
+    \subsection{Vztah tříd P a NP}
+
+    \begin{frame}{Vztah tříd $\classP$ a $\classNP$}
+        \begin{tnoticeframe}[0.4\textwidth]
+            \begin{center}
+                Triválně platí $\classP\subseteq\classNP$
+            \end{center}
+        \end{tnoticeframe}
+        \begin{figure}
+            \centering
+            \input{images/p-np.tex}
+        \end{figure}
+        Když je schopni problém $L$ řešit \textbf{polynomiálně bez nápovědy} (tj. je ve třídě $\classP$), pak jej umíme řešit \textbf{polynomiálně i s nápovědou} (tj. je i ve třídě $\classNP$).
+        \begin{talertframe}[0.8\textwidth]
+            \begin{center}
+                Nápovědu $y$ zkrátka můžeme při řešení ignorovat.
+            \end{center}
+        \end{talertframe}
+    \end{frame}
+
+    \begin{frame}{A co varianta $\classP=\classNP$?}
+        \visible<2->{\begin{talertframe}[0.6\textwidth]
+            \begin{center}
+                Dodnes \textbf{není známo}, zdali $\classP=\classNP$
+            \end{center}
+        \end{talertframe}}
+        \begin{itemize}
+            \visible<3->{\item Taková skutečnost by měla řadu jak \textbf{příjemných}, tak i \textbf{nepříjemných} důsledků.}
+            \visible<4->{\item Všechny $\classNP$ problémy by byly řešitelné v~polynomiálním čase.}
+            \visible<5->{\item Skutečnost, že umíme řešení jakéhokoliv $\classNP$ problému rychle ověřit by automaticky znamenala, že je i rychle řešitelný (a dost možná i efektivně).}
+            \visible<6->{\item Nicméně přišli bychom náhle o veškeré efektivní šifrování. Ke každé šifrovací funkci $f$ bychom uměli \textbf{rychle spočítat} i její inverzní funkci $f^{-1}$.}
+        \end{itemize}
+    \end{frame}
+
+    \section{NP-úplné problémy}
+
+    \titleframe{$\classNP$-úplné problémy}
+
+    \begin{frame}{$\classNP$-úplné problémy}
+        \begin{itemize}
+            \visible<2->{\item Žádný problém z $\classNP$ dodnes neumíme řešit polynomiálním algoritmem.}
+            \visible<3->{\item Nicméně již víme, že je lze mezi sebou vzájemně převádět.}
+            \visible<4->{\item Proto dává věnovat smysl pozornost tzv. $\classNP$-úplným problémům.}
+        \end{itemize}
+        \visible<5->{\begin{defblock}[$\classNP$-úplnost]
+            Řekneme, že problém $L$ je $\classNP$-úplný, pokud $L\in\classNP$ a zároveň pro každý problém $A\in\classNP$ platí $A\rightarrow L$.
+        \end{defblock}}
+        \visible<6->{\begin{talertframe}[\textwidth]
+            \begin{center}
+                $\classNP$-úplné problémy v jistém smyslu představují ty "nejtěžší" problémy z $\classNP$, protože kdybychom uměli řešit kterýkoliv z nich rychle, umíme řešit \textbf{všechny problémy} z $\classNP$ rychle.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \begin{frame}{$\classNP$-úplné problémy v kontextu}
+        \begin{figure}
+            \centering
+            \input{images/p-np-npc.tex}
+        \end{figure}        
+    \end{frame}
+
+    \subsection{Cookova-Levinova věta}
+
+    \begin{frame}{Cookova-Levinova věta}
+        \begin{itemize}
+            \visible<2->{\item Jak ale víme, že nějaký $\classNP$-úplný problém z $\classNP$ vůbec existuje?}
+            \visible<3->{\item V roce 1971 dokázal \textsc{Stephen Cook} (a později nezávisle i \textsc{Leonid Levin} v roce 1973) následující překvapivý fakt.}
+        \end{itemize}
+        \visible<4->{\begin{thmblock}[Cookova-Levinova]
+            $\SAT$ je $\classNP$-úplný problém.
+        \end{thmblock}}
+        \visible<5->{\begin{tinfoframe}[\textwidth]
+            \begin{center}
+                Každý vstup $x$ pro problém $L\in\classNP$ lze polynomiálně převést na nějakou logickou formuli $\varphi$, pro kterou platí $L(x)=\SAT(\varphi)$.
+            \end{center}
+        \end{tinfoframe}}
+    \end{frame}
+
+    \subsection{Převod Sudoku na SAT}
+
+    \begin{frame}{Převod $\SUDOKU\rightarrow\SAT$}
+        \begin{itemize}
+            \visible<2->{\item Na vstupu máme tabulku velikosti $9\times 9$, kde určitá pole jsou již vyplněná.}
+            \visible<3->{\item Zavedeme si pro každé $1\leqslant r,c,d\leqslant 9$ proměnnou
+            \begin{center}
+                $x_{r,c,d}$ = v řádku $r$ a sloupci $c$ je zapsána číslice $d$.
+            \end{center}}
+            \visible<4->{\item Potřebujeme vyřešit následující:}
+            \begin{enumerate}
+                \visible<5->{\item Každá buňka obsahuje \textbf{alespoň} jednu číslici}
+                \visible<6->{\item Každá buňka obsahuje \textbf{nejvýše} jednu číslici}
+                \visible<7->{\item V každém \textbf{řádku} se každá číslice objeví právě jednou}
+                \visible<8->{\item V každém \textbf{sloupci} se každá číslice objeví právě jednou}
+                \visible<9->{\item V každém \textbf{bloku} se každá číslice objeví právě jednou}
+                \visible<10->{\item V učených blocích jsou zadány číslice z počáteční tabulky}
+            \end{enumerate}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Převod $\SUDOKU\rightarrow\SAT$}
+        \visible<2->{\begin{center}
+            \markdarkred{Každá buňka obsahuje \textbf{alespoň} jednu číslici}
+        \end{center}}
+        \visible<3->{K tomu si pořídíme klauzule
+        \[(x_{r,c,1}\lor x_{r,c,2}\lor\dots\lor x_{r,c,9})\]
+        pro každou dvojici $(r,c)$.}
+        \visible<4->{\begin{center}
+            \markdarkred{Každá buňka obsahuje \textbf{nejvýše} jednu číslici}
+        \end{center}}
+        \begin{itemize}
+            \visible<5->{\item Musíme zařídit, že je-li v buňce $(r,c)$ číslice $d$, pak ostatní číslice tam již být nemohou.}
+            \visible<6->{\item Pro každé $r,c,d\in\set{1,\dots,9}$ si pořídíme výrazy s klauzulemi
+            \[\bigwedge_{\substack{1\leqslant d^{\prime}\leqslant 9\\ d^{\prime}\neq d}}(x_{r,c,d}\implies \neg x_{r,c,d^{\prime}})\]}
+            \visible<7->{\item Výraz $x_{r,c,d}\implies \neg x_{r,c,d^{\prime}}$ můžeme zapsat jako $\neg x_{r,c,d}\lor \neg x_{r,c,d^{\prime}}$}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Převod $\SUDOKU\rightarrow\SAT$}
+        \visible<2->{\begin{center}
+            \markdarkred{V každém \textbf{řádku} se každá číslice objeví právě jednou}
+        \end{center}}
+        \begin{itemize}
+            \visible<3->{\item Pro každý řádek $r$ chceme, aby se v něm každá číslice $d$ objevila \textbf{alespoň} a \textbf{právě jednou}.}
+            \visible<4->{\item \textit{Alespoň jednou:} Pro každý řádek $r$ a každou číslici $d$ si pořídíme klauzuli
+            \[(x_{r,1,d}\lor x_{r,2,d}\lor\dots\lor x_{r,9,d}).\]}
+            \visible<5->{\item \textit{Nejvýše jednou:} Pro $r,c$ a $d$ přidáme
+            \[\bigwedge_{\substack{1\leqslant c^{\prime}\leqslant 9\\ c^{\prime}\neq c}}(x_{r,c,d}\implies \neg x_{r,c^{\prime},d})\]}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Převod $\SUDOKU\rightarrow\SAT$}
+        \visible<2->{\begin{center}
+            \markdarkred{V každém \textbf{sloupci} se každá číslice objeví právě jednou}
+        \end{center}}
+        \visible<3->{Podobně i zde přidáme pro každé $r,c$ a $d$ klauzule
+        \[(x_{1,c,d}\lor x_{2,c,d}\lor\dots\lor x_{9,c,d})\quad\text{a}\quad\bigwedge_{\substack{1\leqslant r^{\prime}\leqslant 9\\ r^{\prime}\neq r}}(x_{r,c,d}\implies\neg x_{r^{\prime},c,d})\]}
+        \visible<4->{\begin{center}
+            \markdarkred{V každém \textbf{bloku} se každá číslice objeví právě jednou}
+        \end{center}}
+        \visible<5->{Pro každý blok $B$ (celkově jich je 9) a číslici $d$ si pořídíme klauzule
+        \[\bigvee_{(r,c)\in B}x_{r,c,d}\quad\text{a}\quad \bigwedge_{\substack{(r,c),(r^{\prime},c^{\prime})\in B\\ (r,c)\neq(r^{\prime},c^{\prime})}}(x_{r,c,d}\implies \neg x_{r^{\prime},c^{\prime},d})\]}
+    \end{frame}
+
+    \begin{frame}{Převod $\SUDOKU\rightarrow\SAT$}
+        \visible<2->{\begin{center}
+            \markdarkred{Zadané cifry}
+        \end{center}}
+        \visible<2->{Jsou-li v některých buňkách $(r,c)$ již \textbf{zadány cifry}, pak přidáme ještě \textbf{jednotkové klauzule} $x_{r,c,d}$, kde $d$ je zadaná číslice.}
+        \begin{itemize}
+            \visible<3->{\item Celkově bude formule obsahovat $26244+p$ literálů, kde $p$ je počet předvyplněných políček.}
+            \visible<4->{\item Převod jako takový je však \textbf{polynomiální}.}
+            \visible<5->{\item Pro takto sestrojenou formuli $\varphi$ skutečně platí, že
+            \[\text{$\varphi$ je splnitelná}\iff\text{zadaná instance Sudoku má řešení}.\]}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{NP-úplnost a převoditelnost}
+
+    \begin{frame}{$\classNP$-úplnost a převoditelnost}
+        \visible<2->{\begin{propblock}
+            Nechť $L$ je $\classNP$-úplný problém a $K\in\classNP$ takový, že $L\rightarrow K$. Pak i $K$ je $\classNP$-úplný.
+        \end{propblock}}
+        \begin{itemize}
+            \visible<3->{\item Mějme libovolný problém $A\in\classNP$.}
+            \visible<4->{\item Protože $L$ je $\classNP$-úplný, platí z definice $A\rightarrow L$.}
+            \visible<5->{\item Zároveň však $L\rightarrow K$, z čeho plyne $A\rightarrow K$.}
+            \visible<6->{\item Tedy i $K$ je $\classNP$-úplný, neboť $A$ jsme volili libovolně.}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Důsledek Cookovy-Levinovy věty}
+
+    \begin{frame}{Důsledek Cookovy-Levinovy věty}
+        \visible<2->{\begin{figure}
+            \centering
+            \input{images/cook-levin-dusledek.tex}
+        \end{figure}}
+        \visible<3->{\begin{talertframe}[0.9\textwidth]
+            \begin{center}
+                Všechny uvedené problémy jsou také $\classNP$-úplné podle předchozího tvrzení.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \subsection{Proč je to důležité?}
+
+    \begin{frame}{Proč je to důležité?}
+        \begin{itemize}
+            \visible<2->{\item Pokud by se nám podařilo pro kterýkoliv z uvedených problémů najít polynomiální algoritmus, pak $P=\classNP$.}
+            \visible<3->{\begin{tnoticeframe}[0.9\textwidth]
+                \begin{center}
+                    Např. pokud $\classNP$-úplný problém $L$ umíme vyřešit v polynomiálním čase, pak libovolný problém $A\in\classNP$ vyřešíme polynomiálním převodem $A\rightarrow L$.
+                \end{center}
+            \end{tnoticeframe}}
+            \visible<4->{\item Obecně se spíše přijímá hypotéza, že $\classP\neq\classNP$.}
+            \visible<5->{\item Mnoho speciálních instancí uvedených (i jiných) problémů umíme řešit v polynomiálním čase, nebo exponenciálními algoritmy s nízkým základem, např. $\bigO((1+\varepsilon)^{n})$, kde $\varepsilon>0$ je libovolně malé reálné číslo.}
+        \end{itemize}
+    \end{frame}
+
+    \section{Zdroje}
+
+    \begin{frame}{Zdroje}
+        \begin{itemize}
+            \item PAPADIMITRIOU, Christos H. \textit{Computational complexity.} Reading: Addison-Wesley, 1994. ISBN 0-201-53082-1.
+            \item MAREŠ, Martin a~VALLA, Tomáš. \textit{Průvodce labyrintem algoritmů.} Druhé vydání. CZ.NIC. Praha: CZ.NIC, z.s.p.o., 2022. ISBN 978-80-88168-63-8.
+        \end{itemize}
     \end{frame}
 
 \end{document}
