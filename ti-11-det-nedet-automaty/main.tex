@@ -6,6 +6,10 @@
 \input{../assets/macros.tex}
 \input{../assets/listing.tex}
 
+\input{anim-det-automat-1.tex}
+\input{anim-det-automat-2.tex}
+\input{anim-nedet-automat-1.tex}
+
 \def\presentationtitle{Konečné automaty}
 
 \begin{document}
@@ -112,12 +116,725 @@
         \end{itemize}
     \end{frame}
 
-    \section{Deterministické automaty}
+    \section{Deterministické konečné automaty}
 
-    \titleframe{Deterministické automaty}
+    \titleframe{Deterministické\\ konečné automaty}
 
-    \section{Nedeterministické automaty}
+    \begin{frame}{Deterministický konečný automat}
+        \visible<2->{\begin{defblock}[Deterministický konečný automat]
+            \markdarkred{Deterministický konečný automat (DFA)} je uspořádaná pětice $A=(Q,\Sigma,\delta,q_0,F)$, kde
+            \begin{itemize}
+                \visible<3->{\item $Q$ je \textbf{množina stavů},}
+                \visible<4->{\item $\Sigma$ je \textbf{abeceda}, z niž sestávají slova na vstupu,}
+                \visible<5->{\item $\mapping{\delta}{Q\times\Sigma}{Q}$ je tzv. \textbf{přechodová funkce} značící přechody mezi stavy,}
+                \visible<6->{\item $q_0\in Q$ je \textbf{počáteční stav} a}
+                \visible<7->{\item $F\subseteq Q$ je \textbf{množina přijímajících stavů}.}
+            \end{itemize}
+        \end{defblock}}
+        \visible<8->{Automaty zakreslujeme jako orientovaný graf, kde}
+        \begin{itemize}
+            \visible<9->{\item \textbf{vrcholy} představují jednotlivé stavy a}
+            \visible<10->{\item \textbf{hrany} přechody mezi nimi.}
+        \end{itemize}
+    \end{frame}
 
-    \titleframe{Nedeterministické automaty}
+    \begin{frame}{Deterministický konečný automat}{Příklad}
+        \visible<2->{\begin{figure}
+            \centering
+            \input{images/det-automat-1.tex}
+        \end{figure}}
+        \begin{itemize}
+            \visible<3->{\item \textbf{Počáteční stav $q_0$} značíme šipkou vedoucí "odnikud".}
+            \visible<4->{\item \textbf{Přijímající stav(y)} zvýrazňujeme dvojitým okrajem.}
+        \end{itemize}
+        \visible<5->{\begin{minipage}{0.45\textwidth}
+            \begin{align*}
+                \delta(q_0,0)&=q_1\\
+                \delta(q_1,1)&=q_2\\
+                \delta(q_2,0)&=q_2\\
+                \delta(q_2,1)&=q_2
+            \end{align*}
+        \end{minipage}}
+        \qquad
+        \visible<6->{\begin{minipage}{0.45\textwidth}
+            \begin{table}
+                \centering
+                \begin{tabular}{c|cc}
+                            & $0$   & $1$   \\\hline
+                    $q_0$   & $q_1$ &       \\
+                    $q_1$   &       & $q_2$ \\
+                    $q_2$   & $q_2$ & $q_2$
+                \end{tabular}
+            \end{table}
+        \end{minipage}}
+    \end{frame}
+
+    \begin{frame}{Výpočet deterministického automatu}
+        \visible<2->{Automat $A=(Q,\Sigma,\delta,q_0,F)$ dostane na vstupu slovo $w\in\Sigma^{*}$.}
+        \begin{enumerate}
+            \visible<3->{\item Na začátku se automat nachází v počátečním stavu $q_0$.}
+            \visible<4->{\item Vstupní slovo $w$ čte $A$ zprava doleva po jednotlivých znacích.}
+            \visible<5->{\item Nachází-li se obecně automat ve stavu $q\in Q$, pak podle přečteného znaku $a$ určí podle přechodové funkce stav $s$, do kterého se ná přesunout:
+            \[\delta(q,a)=s.\]}
+            \visible<6->{\item Pokud pro přečtený znak neexistuje žádný odpovídající stav, kam se má výpočet automatu přesunout, pak automat slovo $w$ \markdarkred{odmítá}.}
+            \visible<7->{\item Pokud automat po přečtení celého slova $w$ skončil v přijímajícím stavu, pak slovo $w$ \markdarkred{přijímá}. V opačném připadě jej odmítá.}
+        \end{enumerate}
+    \end{frame}
+
+    % -------------------------------------------------
+    % 1. Počáteční konfigurace
+    % -------------------------------------------------
+    \AutomatonComputationFrame
+        {faactive}
+        {}
+        {}
+        {\FAInput{}{0}{\,1\,1\,0}}
+        {
+            \CompNode[compactive]{c0}{(0.4,-2.0)}{(q_0,0110)};
+        }
+
+    % -------------------------------------------------
+    % 2. Po přečtení 0
+    % -------------------------------------------------
+    \AutomatonComputationFrame
+        {}
+        {faactive}
+        {}
+        {\FAInput{0\,}{1}{\,1\,0}}
+        {
+            \CompNode{c0}{(0.4,-2.0)}{(q_0,0110)};
+            \CompNode[compactive]{c1}{(2.1,-2.9)}{(q_1,110)};
+            \CompEdge{c0}{0}{c1};
+        }
+
+    % -------------------------------------------------
+    % 3. Po přečtení 01
+    % -------------------------------------------------
+    \AutomatonComputationFrame
+        {}
+        {}
+        {faactive}
+        {\FAInput{0\,1\,}{1}{\,0}}
+        {
+            \CompNode{c0}{(0.4,-2.0)}{(q_0,0110)};
+            \CompNode{c1}{(2.1,-2.9)}{(q_1,110)};
+            \CompNode[compactive]{c2}{(3.8,-3.8)}{(q_2,10)};
+            \CompEdge{c0}{0}{c1};
+            \CompEdge{c1}{1}{c2};
+        }
+
+    % -------------------------------------------------
+    % 4. Po přečtení 011
+    % -------------------------------------------------
+    \AutomatonComputationFrame
+        {}
+        {}
+        {faactive}
+        {\FAInput{0\,1\,1\,}{0}{}}
+        {
+            \CompNode{c0}{(0.4,-2.0)}{(q_0,0110)};
+            \CompNode{c1}{(2.1,-2.9)}{(q_1,110)};
+            \CompNode{c2}{(3.8,-3.8)}{(q_2,10)};
+            \CompNode[compactive]{c3}{(5.5,-4.7)}{(q_2,0)};
+            \CompEdge{c0}{0}{c1};
+            \CompEdge{c1}{1}{c2};
+            \CompEdge{c2}{1}{c3};
+        }
+
+    % -------------------------------------------------
+    % 5. Po přečtení 0110
+    % -------------------------------------------------
+    \AutomatonComputationFrame
+        {}
+        {}
+        {faactive}
+        {\FAInputFinished{0\,1\,1\,0}}
+        {
+            \CompNode{c0}{(0.4,-2.0)}{(q_0,0110)};
+            \CompNode{c1}{(2.1,-2.9)}{(q_1,110)};
+            \CompNode{c2}{(3.8,-3.8)}{(q_2,10)};
+            \CompNode{c3}{(5.5,-4.7)}{(q_2,0)};
+            \CompNode[compactive]{c4}{(7.2,-5.6)}{(q_2,\lambda)};
+
+            \CompEdge{c0}{0}{c1};
+            \CompEdge{c1}{1}{c2};
+            \CompEdge{c2}{1}{c3};
+            \CompEdge{c3}{0}{c4};
+
+            \FAResult{Automat slovo přijal.}
+        }
+    
+    % -------------------------------------------------
+    % 1. Počáteční konfigurace
+    % -------------------------------------------------
+    \AutomatonComputationFrame
+        {faactive}
+        {}
+        {}
+        {\FAInput{}{0}{\,0\,1}}
+        {
+            \CompNode[compactive]{c0}{(0.4,-2.0)}{(q_0,001)};
+        }
+
+    % -------------------------------------------------
+    % 2. Po přečtení prvního 0
+    % -------------------------------------------------
+    \AutomatonComputationFrame
+        {}
+        {faactive}
+        {}
+        {\FAInput{0\,}{0}{\,1}}
+        {
+            \CompNode{c0}{(0.4,-2.0)}{(q_0,001)};
+            \CompNode[compactive]{c1}{(2.1,-2.9)}{(q_1,01)};
+            \CompEdge{c0}{0}{c1};
+        }
+
+    % -------------------------------------------------
+    % 3. Výpočet se zablokuje na druhém symbolu 0
+    % -------------------------------------------------
+    \AutomatonComputationFrame
+        {}
+        {faactive}
+        {}
+        {\FAInput{0\,}{0}{\,1}}
+        {
+            \CompNode{c0}{(0.4,-2.0)}{(q_0,001)};
+            \CompNode[compactive]{c1}{(2.1,-2.9)}{(q_1,01)};
+            \CompEdge{c0}{0}{c1};
+
+            \FAResult[fill=red!20]{Automat slovo odmítl.}
+        }
+    
+    \begin{frame}{Co všechno automat přijme?}
+        \visible<2->{Pro obecný automat $A$ dává smysl se ptát, jak vypadají \textbf{všechna slova}, která automat přijme.}
+        \visible<3->{\begin{defblock}[Jazyk automatu]
+            Nechť je dán automat $A$ nad abecedou $\Sigma$. Pak \markdarkred{jazykem automatu $A$} rozumíme množinu slov
+            \[L(A)=\set{w\in\Sigma^{*}: \text{$A$ přijme slovo $w$}}.\]
+        \end{defblock}}
+        \visible<4->{\begin{tnoticeframe}[0.8\textwidth]
+            \begin{center}
+                Jak vypadá $L(A)$ automatu z minulého příkladu?
+            \end{center}
+        \end{tnoticeframe}}
+    \end{frame}
+
+    \begin{frame}{Jazyk automatu $A$}
+        \visible<2->{\begin{figure}
+            \centering
+            \input{images/det-automat-1-bez-pozn.tex}
+        \end{figure}}
+        \begin{itemize}
+            \visible<3->{\item Abychom se dostali do přijímajícího stavu $q_2$, musíme nejprve na začátku přečíst znaky $0$ a $1$.}
+            \visible<4->{\item Když se výpočet dostane do $q_2$, pak už na zbytku slova nezáleží (smyčka pro oba znaky $0,1$).}
+            \visible<5->{\item Tzn. vstupní slovo $w$ musí obsahovat na začátku znaky $01$.}
+        \end{itemize}
+        \visible<6->{Celkově tedy jazyk automatu $A$ je množina
+        \begin{align*}
+            L(A)&=\set{w\in\set{0,1}^{*}: \text{$w$ začíná na $01$}}\\
+            &=\set{w\in\set{0,1}^{*}: \exists u\in\set{0,1}^{*}: w=01u}.
+        \end{align*}}
+    \end{frame}
+
+    % -------------------------------------------------
+    % Přijímající výpočet pro w = 1101
+    % -------------------------------------------------
+
+    % 1. počáteční konfigurace
+    \SubstringAutomatonFrame
+        {faactive}
+        {}
+        {}
+        {}
+        {\FAInputWide{}{1}{\,1\,0\,1}}
+        {
+            \CompNode[compactive]{c0}{(0.4,-2.6)}{(q_0,1101)};
+        }
+
+    % 2. po přečtení prvního 1
+    \SubstringAutomatonFrame
+        {}
+        {faactive}
+        {}
+        {}
+        {\FAInputWide{1\,}{1}{\,0\,1}}
+        {
+            \CompNode{c0}{(0.4,-2.1)}{(q_0,1101)};
+            \CompNode[compactive]{c1}{(2.2,-2.85)}{(q_1,101)};
+            \CompEdge{c0}{1}{c1};
+        }
+
+    % 3. po přečtení 11
+    \SubstringAutomatonFrame
+        {}
+        {faactive}
+        {}
+        {}
+        {\FAInputWide{1\,1\,}{0}{\,1}}
+        {
+            \CompNode{c0}{(0.4,-2.1)}{(q_0,1101)};
+            \CompNode[compactive]{c1}{(2.2,-2.85)}{(q_1,101)};
+            \CompNode[compactive]{c2}{(4.0,-3.6)}{(q_1,01)};
+            \CompEdge{c0}{1}{c1};
+            \CompEdge{c1}{1}{c2};
+        }
+
+    % 4. po přečtení 110
+    \SubstringAutomatonFrame
+        {}
+        {}
+        {faactive}
+        {}
+        {\FAInputWide{1\,1\,0\,}{1}{}}
+        {
+            \CompNode{c0}{(0.4,-2.1)}{(q_0,1101)};
+            \CompNode{c1}{(2.2,-2.85)}{(q_1,101)};
+            \CompNode{c2}{(4.0,-3.6)}{(q_1,01)};
+            \CompNode[compactive]{c3}{(5.8,-4.35)}{(q_2,1)};
+            \CompEdge{c0}{1}{c1};
+            \CompEdge{c1}{1}{c2};
+            \CompEdge{c2}{0}{c3};
+        }
+
+    % 5. po přečtení 1101
+    \SubstringAutomatonFrame
+        {}
+        {}
+        {}
+        {faactive}
+        {\FAInputWideFinished{1\,1\,0\,1}}
+        {
+            \CompNode{c0}{(0.4,-2.1)}{(q_0,1101)};
+            \CompNode{c1}{(2.2,-2.85)}{(q_1,101)};
+            \CompNode{c2}{(4.0,-3.6)}{(q_1,01)};
+            \CompNode[compactive]{c3}{(5.8,-4.35)}{(q_2,1)};
+            \CompNode[compactive]{c4}{(7.6,-5.1)}{(q_3,\lambda)};
+
+            \CompEdge{c0}{1}{c1};
+            \CompEdge{c1}{1}{c2};
+            \CompEdge{c2}{0}{c3};
+            \CompEdge{c3}{1}{c4};
+
+            \FAResult{Automat slovo přijal.}
+        }
+    
+    % -------------------------------------------------
+    % Odmítající výpočet pro w = 1001
+    % -------------------------------------------------
+
+    % 1. počáteční konfigurace
+    \SubstringAutomatonFrame
+        {faactive}
+        {}
+        {}
+        {}
+        {\FAInputWide{}{1}{\,0\,0\,1}}
+        {
+            \CompNode[compactive]{d0}{(0.4,-2.1)}{(q_0,1001)};
+        }
+
+    % 2. po přečtení prvního 1
+    \SubstringAutomatonFrame
+        {}
+        {faactive}
+        {}
+        {}
+        {\FAInputWide{1\,}{0}{\,0\,1}}
+        {
+            \CompNode{d0}{(0.4,-2.1)}{(q_0,1001)};
+            \CompNode[compactive]{d1}{(2.2,-2.85)}{(q_1,001)};
+            \CompEdge{d0}{1}{d1};
+        }
+
+    % 3. po přečtení 10
+    \SubstringAutomatonFrame
+        {}
+        {}
+        {faactive}
+        {}
+        {\FAInputWide{1\,0\,}{0}{\,1}}
+        {
+            \CompNode{d0}{(0.4,-2.1)}{(q_0,1001)};
+            \CompNode{d1}{(2.2,-2.85)}{(q_1,001)};
+            \CompNode[compactive]{d2}{(4.0,-3.6)}{(q_2,01)};
+            \CompEdge{d0}{1}{d1};
+            \CompEdge{d1}{0}{d2};
+        }
+
+    % 4. po přečtení 100
+    \SubstringAutomatonFrame
+        {faactive}
+        {}
+        {}
+        {}
+        {\FAInputWide{1\,0\,0\,}{1}{}}
+        {
+            \CompNode{d0}{(0.4,-2.1)}{(q_0,1001)};
+            \CompNode{d1}{(2.2,-2.85)}{(q_1,001)};
+            \CompNode{d2}{(4.0,-3.6)}{(q_2,01)};
+            \CompNode[compactive]{d3}{(5.8,-4.35)}{(q_0,1)};
+            \CompEdge{d0}{1}{d1};
+            \CompEdge{d1}{0}{d2};
+            \CompEdge{d2}{0}{d3};
+        }
+
+    % 5. po přečtení 1001
+    \SubstringAutomatonFrame
+        {}
+        {faactive}
+        {}
+        {}
+        {\FAInputWideFinished{1\,0\,0\,1}}
+        {
+            \CompNode{d0}{(0.4,-2.1)}{(q_0,1001)};
+            \CompNode{d1}{(2.2,-2.85)}{(q_1,001)};
+            \CompNode{d2}{(4.0,-3.6)}{(q_2,01)};
+            \CompNode{d3}{(5.8,-4.35)}{(q_0,1)};
+            \CompNode[compactive]{d4}{(7.6,-5.1)}{(q_1,\lambda)};
+
+            \CompEdge{d0}{1}{d1};
+            \CompEdge{d1}{0}{d2};
+            \CompEdge{d2}{0}{d3};
+            \CompEdge{d3}{1}{d4};
+
+            \FAResult[fill=red!20]{Automat slovo odmítl.}
+        }
+
+    \section{Nedeterministické konečné automaty}
+
+    \titleframe{Nedeterministické\\ konečné automaty}
+
+    \begin{frame}{Nedeterministické konečné automaty}
+        \begin{itemize}
+            \visible<2->{\item Ne vždy je výhodné pro nás konstruovat automat pro nějaký jazyk přímo.}
+            \visible<3->{\item Pokud bychom chtěli sestrojit automat např. pro rozpoznání slov $w$ obsahující podslovo $u$, pak jednodušší přístup by mohl být následující.}
+            \visible<4->{\begin{timportantframe}[0.9\textwidth]
+                \begin{center}
+                    V každém kroku výpočtu budeme "hádat", zdali jsme už nalezli \textbf{první znak} podslova $u$.
+                \end{center}
+            \end{timportantframe}}
+            \visible<5->{\item Co to znamená? V jednom stav budeme mít \textbf{více přechodů} pro jeden znak.}
+            \visible<6->{\begin{talertframe}[0.9\textwidth]
+                \begin{center}
+                    Pokud budeme mít více vyhovujících přechodů pro jeden znak, automat spustí \textbf{více paralelních výpočtů najednou}.
+                \end{center}
+            \end{talertframe}}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Hledáme podslovo $u$}
+        \begin{itemize}
+            \visible<2->{\item Navrhnout přechody pro takový automat nemusí být úplně jednoduché.}
+            \visible<3->{\item Zkusíme proto následující strategii:}
+            \begin{itemize}
+                \visible<4->{\item Označme si první znak (pod)slova $u$ jako $a\in\Sigma$.}
+                \visible<5->{\item Pokud uvidíme znak $a$, spustíme dva paralelní výpočty: první bude odpovídat situaci, kdy jsme \textbf{nenašli podslovo $u$} a druhý \textbf{situaci, kdy ano}.}
+                \visible<6->{\item Pokud jeden z těchto výpočtů přijme slovo $w$ na vstupu, pak výpočet \textbf{prohlásíme za přijímající}.}
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Návrh automatu}
+        \begin{figure}
+            \centering
+            \input{images/nedet-automat-podslovo-u.tex}
+        \end{figure}\
+        Konkrétní automat pro podslovo $u=101$ nad abecedou $\Sigma=\set{0,1}$:
+        \begin{figure}
+            \centering
+            \input{images/nedet-automat-podslovo-101.tex}
+        \end{figure}
+    \end{frame}
+
+    % -------------------------------------------------
+    % 1. Počáteční konfigurace
+    % -------------------------------------------------
+    \SubstringNFAFrame
+        {faactive}{}{}{}
+        {\NFAInputWide{}{0}{1101}}
+        {
+            \CompNode[compactive]{a0}{(0.6,-2.3)}{(q_0,01101)};
+        }
+
+    % -------------------------------------------------
+    % 2. Po přečtení prvního symbolu 0
+    % -------------------------------------------------
+    \SubstringNFAFrame
+        {faactive}{}{}{}
+        {\NFAInputWide{0}{1}{101}}
+        {
+            \CompNode{a0}{(0.6,-2.3)}{(q_0,01101)};
+            \CompNode[compactive]{a1}{(2.2,-3.3)}{(q_0,1101)};
+
+            \CompEdge{a0}{0}{a1};
+        }
+
+    % -------------------------------------------------
+    % 3. Po přečtení symbolu 1: výpočet se větví
+    % -------------------------------------------------
+    \SubstringNFAFrame
+        {faactive}{faactive}{}{}
+        {\NFAInputWide{01}{1}{01}}
+        {
+            \CompNode{a0}{(0.6,-2.3)}{(q_0,01101)};
+            \CompNode{a1}{(2.2,-3.3)}{(q_0,1101)};
+
+            \CompNode[compactive]{b1}{(3.9,-2.3)}{(q_0,101)};
+            \CompNode[compactive]{b2}{(3.9,-4.2)}{(q_1,101)};
+
+            \CompEdge{a0}{0}{a1};
+            \CompEdge{a1}{1}{b1};
+            \CompEdge{a1}{1}{b2};
+        }
+
+    % -------------------------------------------------
+    % 4. Po přečtení dalšího symbolu 1
+    % Větev (q_1,101) zaniká, protože z q_1 není přechod na 1.
+    % -------------------------------------------------
+    \SubstringNFAFrame
+        {faactive}{faactive}{}{}
+        {\NFAInputWide{011}{0}{1}}
+        {
+            \CompNode{a0}{(0.6,-2.3)}{(q_0,01101)};
+            \CompNode{a1}{(2.2,-3.3)}{(q_0,1101)};
+
+            \CompNode{b1}{(3.9,-2.3)}{(q_0,101)};
+            \CompNode{b2}{(3.9,-4.2)}{(q_1,101)};
+
+            \CompNode[compactive]{c1}{(6.2,-2.0)}{(q_0,01)};
+            \CompNode[compactive]{c2}{(6.2,-3.6)}{(q_1,01)};
+
+            \CompEdge{a0}{0}{a1};
+            \CompEdge{a1}{1}{b1};
+            \CompEdge{a1}{1}{b2};
+
+            \CompEdge{b1}{1}{c1};
+            \CompEdge{b1}{1}{c2};
+        }
+
+    % -------------------------------------------------
+    % 5. Po přečtení symbolu 0
+    % -------------------------------------------------
+    \SubstringNFAFrame
+        {faactive}{}{faactive}{}
+        {\NFAInputWide{0110}{1}{}}
+        {
+            \CompNode{a0}{(0.6,-2.3)}{(q_0,01101)};
+            \CompNode{a1}{(2.2,-3.3)}{(q_0,1101)};
+
+            \CompNode{b1}{(3.9,-2.3)}{(q_0,101)};
+            \CompNode{b2}{(3.9,-4.2)}{(q_1,101)};
+
+            \CompNode{c1}{(6.2,-2.0)}{(q_0,01)};
+            \CompNode{c2}{(6.2,-3.6)}{(q_1,01)};
+
+            \CompNode[compactive]{d1}{(7.9,-2.0)}{(q_0,1)};
+            \CompNode[compactive]{d2}{(7.9,-3.6)}{(q_2,1)};
+
+            \CompEdge{a0}{0}{a1};
+            \CompEdge{a1}{1}{b1};
+            \CompEdge{a1}{1}{b2};
+
+            \CompEdge{b1}{1}{c1};
+            \CompEdge{b1}{1}{c2};
+
+            \CompEdge{c1}{0}{d1};
+            \CompEdge{c2}{0}{d2};
+        }
+
+    % -------------------------------------------------
+    % 6. Po přečtení celého slova
+    % Aktivní jsou konfigurace (q_0,\lambda), (q_1,\lambda), (q_3,\lambda).
+    % Protože jedna z nich je v přijímajícím stavu q_3, automat slovo přijme.
+    % -------------------------------------------------
+    \SubstringNFAFrame
+        {faactive}{faactive}{}{faactive}
+        {\NFAInputWideFinished{01101}}
+        {
+            \CompNode{a0}{(0.6,-2.3)}{(q_0,01101)};
+            \CompNode{a1}{(2.2,-3.3)}{(q_0,1101)};
+
+            \CompNode{b1}{(3.9,-2.3)}{(q_0,101)};
+            \CompNode{b2}{(3.9,-4.2)}{(q_1,101)};
+
+            \CompNode{c1}{(6.2,-2.0)}{(q_0,01)};
+            \CompNode{c2}{(6.2,-3.6)}{(q_1,01)};
+
+            \CompNode{d1}{(7.9,-2.0)}{(q_0,1)};
+            \CompNode{d2}{(7.9,-3.6)}{(q_2,1)};
+
+            \CompNode[compactive]{e1}{(9.7,-1.8)}{(q_0,\lambda)};
+            \CompNode[compactive]{e2}{(9.7,-3.0)}{(q_1,\lambda)};
+            \CompNode[compactive]{e3}{(9.7,-4.4)}{(q_3,\lambda)};
+
+            \CompEdge{a0}{0}{a1};
+            \CompEdge{a1}{1}{b1};
+            \CompEdge{a1}{1}{b2};
+
+            \CompEdge{b1}{1}{c1};
+            \CompEdge{b1}{1}{c2};
+
+            \CompEdge{c1}{0}{d1};
+            \CompEdge{c2}{0}{d2};
+
+            \CompEdge{d1}{1}{e1};
+            \CompEdge{d1}{1}{e2};
+            \CompEdge{d2}{1}{e3};
+
+            \FAResult[xshift=1.25cm,yshift=1.0cm]{Automat slovo přijal.}
+        }
+    
+    \begin{frame}{Jak nedeterministický automat funguje?}
+        \begin{itemize}
+            \visible<2->{\item Pro jeden znak $a\in\Sigma$ můžeme mít ze stavu $q$ \textbf{více přechodů}.}
+            \visible<3->{\item V případě, že existuje pro $a$ více přechodů, automat spustí \textbf{více paralelních výpočtů najednou} (každý pro jeden přecho).}
+            \visible<4->{\item Nedekterministický konečná automat budeme značit NFA (\textit{nondeterministic finite automaton})}
+        \end{itemize}
+        \visible<5->{\begin{tnoticeframe}[0.9\textwidth]
+            \begin{center}
+                Pokud \textbf{alespoň jeden} výpočet přijal vstupní slovo $w$, pak automat $w$ \markdarkred{přijímá}.
+            \end{center}
+        \end{tnoticeframe}}
+        \visible<6->{\begin{talertframe}[0.9\textwidth]
+            \begin{center}
+                Pokud všechny výpočty slovo $w$ odmítnou, pak automat $w$ také \markdarkred{odmítá}.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \begin{frame}{Formální definice NFA}
+        \visible<2->{\begin{defblock}[Nedeterministický konečný automat]
+            \markdarkred{Nedeterministický konečný automat (NFA)} je pětice $A = (Q,\Sigma,\delta,q_0,F)$, kde
+            \begin{itemize}
+                \item $Q$ je konečná množina stavů,
+                \item $\Sigma$ je vstupní abeceda,
+                \item $\mapping{\delta}{Q\times\Sigma}{\powset(Q)}$ je přechodová funkce,
+                \item $q_0 \in Q$ je počáteční stav a
+                \item $F \subseteq Q$ je množina přijímajících stavů.
+            \end{itemize}
+        \end{defblock}}
+        \visible<3->{$\powset(X)$ = potenční množina množiny $X$. Obsahuje \textbf{všechny podmnožiny} množiny $X$.}
+        \visible<4->{\[\powset(X)=\set{A: A\subseteq X}\]}
+    \end{frame}
+
+    \begin{frame}{Čísla s konečným desetinným rozvojem}
+        \visible<2->{Mějme automat $D$ níže nad abecedou $\Sigma=\set{0,1,\dots,9,.}$:}
+        \visible<3->{\begin{figure}
+            \centering
+            \input{images/des-rozvoj.tex}
+        \end{figure}}
+        \visible<4->{\begin{align*}
+            L(D)&=\set{d_1\dots d_k: k\geqslant 1,d_i\in\set{0,\dots,9}}\\
+            &\cup\set{d_1\dots d_k.d_{k+1}\dots d_n:k\geqslant 1,n>k,d_i\in\set{0,\dots,9}}.
+        \end{align*}}
+    \end{frame}
+
+    \begin{frame}{Vztah DFA a NFA}
+        \begin{itemize}
+            \item NFA $N$ \textbf{lze vždy převést} na DFA $A$ takový, že
+            \[L(N)=L(A),\]
+            tzn. $A$ a $N$ přijímají stejné jazyky.
+            \item Triválně každý DFA je zároveň i NFA.
+        \end{itemize}
+        \begin{tnoticeframe}
+            \begin{center}
+                Algoritmus pro převod se nazývá \textbf{podmnožinová konstrukce}, ale tu pro jednoduchost vynecháme.
+            \end{center}
+        \end{tnoticeframe}
+    \end{frame}
+
+    \section{Regulární jazyky}
+
+    \titleframe{Regulární jazyky}
+
+    \begin{frame}{Co všechno DFA "rozpozná"?}
+        \visible<2->{\begin{tnoticeframe}[0.9\textwidth]
+            \begin{center}
+                Lze pro každý jazyk sestrojit deterministický automat?
+            \end{center}
+        \end{tnoticeframe}}
+        \visible<3->{\begin{talertframe}[0.9\textwidth]
+            \textbf{Bohužel ne.} Dokonce existují takové jazyky, které nelze zpracovat žádným výpočetním modelem.
+        \end{talertframe}}
+    \end{frame}
+
+    \begin{frame}{DFA neumí počítat}
+        \visible<2->{Uvažujme jazyk
+        \[L_\text{eq}=\set{w\in\set{0,1}^{*}: |w|_0=|w|_1}.\]}
+        \visible<3->{\begin{talertframe}[0.9\textwidth]
+            \begin{center}
+                Pro jazyk $L_\text{eq}$ nelze sestrojit žádný DFA, který by jej přijímal.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \begin{frame}{Pro jazyk $L_\text{eq}$ neexistuje DFA}
+        \begin{itemize}
+            \visible<2->{\item Zkusme pro spor předpokládat, že pro jazyk $L_\text{eq}$ existuje nějaký DFA $A$, tzn.
+            \[L(A)=L_\text{eq}.\]}
+            \visible<3->{\begin{talertframe}[0.6\textwidth]
+                \begin{center}
+                    Tento předpoklad povede ke sporu.
+                \end{center}
+            \end{talertframe}}
+            \visible<4->{\item Označme si \textbf{počet stavů} automatu $A$ jako $m=|Q|$.}
+            \visible<5->{\item Pokusíme se najít takové slovo $w$, které automat $A$ přijme, \textbf{i když by neměl}.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Pro jazyk $L_\text{eq}$ neexistuje DFA}
+        \begin{itemize}
+            \visible<2->{\item Uvažujme $m+1$ slov tvaru
+            \[\lambda,0,00,\dots,0^{m}.\]}
+            \item Protože těchto slov je $m+1$ a stavů automatu $A$ je jen $m$, musí nutně z těchto slov existovat slova
+            \[0^{i}\quad\text{a}\quad 0^{j},\]
+            kde $0\leqslant i<j\leqslant m$, po jejichž přečtení skončí automat ve stejném stavu $q\in Q$.
+            \item Uvažujme slova
+            \[u=0^{i}1^{i}\quad\text{a}\quad v=0^{j}1^{i}.\]
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Pro jazyk $L_\text{eq}$ neexistuje DFA}
+        \centering
+        \begin{tikzpicture}
+            \node[fill=green,opacity=0.2,text opacity=1] (u) at (-3,0) {\Large $u=0^{i}1^{i}$};
+            \node[fill=red,opacity=0.2,text opacity=1] at (3,0) {\Large $v=0^{j}1^{i}$};
+        \end{tikzpicture}
+        \begin{itemize}
+            \item Automat $A$ skočí po přečtení prvních $i$ znaků slova $u$ ve stavu $q$
+            \item Podobně po přečtení prvních $j$ znaků slova $v$ skončí ve stejném stavu $q$.
+            \item To znamená, že po přečtení podslova $1^{i}$ by měl pro $u$ a $v$ na konci výpočtu být $A$ ve stejném stavu $r\in Q$.
+            \item Protože $u\in L(A)$, tak $A$ slovo $u$ musí přijmout a tedy přijme i slovo $v$.
+        \end{itemize}
+        \begin{talertframe}[0.9\textwidth]
+            \begin{center}
+                Jenže $v\notin L(A)$, což znamená, že $A$ přijmul slovo, \textbf{které není v jazyce $L_\text{eq}$!}
+            \end{center}
+        \end{talertframe}
+    \end{frame}
+
+    \begin{frame}{Znázornění situace}
+        \begin{figure}
+            \centering
+            \input{images/jazyk-Leq.tex}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Regulární jazyky}
+        \begin{defblock}[Regulární jazyk]
+            Jazyk $L$ nazveme \markdarkred{regulární}, pokud existuje DFA, který jej přijímá.
+        \end{defblock}
+        \begin{figure}
+            \centering
+            \input{images/reg-jazyky.tex}
+        \end{figure}
+    \end{frame}
+    
+    \begin{frame}{Příklady (ne)regulárních jazyků}
+        Regulární jazyky:
+        \begin{itemize}
+            \item 
+        \end{itemize}
+    \end{frame}
 
 \end{document}

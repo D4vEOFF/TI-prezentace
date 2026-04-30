@@ -1,0 +1,45 @@
+\begin{tikzpicture}[
+    note/.style={
+        draw,
+        rounded corners=2pt,
+        thick,
+        align=center,
+        inner xsep=3mm,
+        inner ysep=2mm,
+        font=\small
+    }
+]
+
+    % Stavy automatu
+    \initialstate{q0}{(0,0)}{$q_0$}{(-1.2,0)}{west}
+    \state{p}{(3.0,0)}{$q$}
+    \acceptingstate{r}{(6.2,0)}{$r$}
+
+    % Přechody
+    \transitionarrow[bend left=20]{q0}{above}{$0^i$}{p}
+    \transitionarrow[bend right=20]{q0}{below}{$0^j$}{p}
+    \transitionarrow{p}{above}{$1^i$}{r}
+
+    % Poznámka ke stejnému stavu
+    \node[note] (same) at (2.0,-2.0)
+    {Po $0^i$ i $0^j$ jsme ve stejném stavu $q$};
+
+    \draw[->,thick,dashed] (same.north) -- (p);
+
+    % Dvě slova s různým členstvím v jazyce
+    \node[note] (w1) at (4.7,-3.9) {$0^i1^i \in L_\text{eq}$};
+    \node[note] (w2) at (7.7,-3.9) {$0^j1^i \notin L_\text{eq}$};
+
+    \draw[->,thick,dashed] (r) -- (w1.north);
+    \draw[->,thick,dashed] (r) -- (w2.north);
+
+    % Spor
+    \node[note,fill=red!10] (contr) at (6.2,-5.7)
+    {Stejný stav $q$ a stejné pokračování $1^i$\\
+     musí vést ke stejnému výsledku.\\
+     To je spor.};
+
+    % \draw[->,thick] (w1.south) -- (contr.north west);
+    % \draw[->,thick] (w2.south) -- (contr.north east);
+
+\end{tikzpicture}

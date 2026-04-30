@@ -1,0 +1,75 @@
+\begin{tikzpicture}[
+    langset/.style={
+        draw,
+        very thick,
+        ellipse,
+        align=center
+    },
+    outerset/.style={
+        langset,
+        minimum width=10.4cm,
+        minimum height=5.0cm,
+        fill=blue!8,
+        draw=blue!70!black
+    },
+    innerset/.style={
+        langset,
+        minimum width=5.0cm,
+        minimum height=2.5cm,
+        fill=green!18,
+        draw=green!50!black
+    },
+    witness/.style={
+        draw,
+        circle,
+        fill=red!25,
+        inner sep=1.5pt
+    },
+    note/.style={
+        draw,
+        rounded corners=2pt,
+        thick,
+        fill=orange!15,
+        align=center,
+        inner xsep=3mm,
+        inner ysep=2mm,
+        font=\small
+    }
+]
+
+    % Množina všech jazyků nad Sigma
+    \node[outerset] (all) at (0,0) {};
+    \node[font=\large] at (0,2.00)
+        {$\mathcal{P}(\Sigma^*)$};
+
+    \node[font=\small,align=center] at (0,1.62)
+        {množina všech jazyků nad abecedou $\Sigma$};
+
+    % Regulární jazyky
+    \node[innerset] (reg) at (-1.15,-0.35) {};
+    \node[font=\large] at (-1.15,-0.15)
+        {$\mathrm{Reg}(\Sigma)$};
+
+    \node[font=\small,align=center] at (-1.15,-0.60)
+        {regulární jazyky};
+
+    % % Neregulární jazyk jako svědek vlastní inkluze
+    % \node[witness] (nonreg) at (3.15,-0.45) {};
+    % \node[note,right=3mm of nonreg] (nonreglabel)
+    %     {jazyk, který není\\ regulární};
+
+    % \draw[->,thick] (nonreglabel.west) -- (nonreg.east);
+
+    % % Formální vztah
+    % \node[
+    %     draw,
+    %     rounded corners=2pt,
+    %     thick,
+    %     fill=white,
+    %     inner xsep=4mm,
+    %     inner ysep=2mm,
+    %     font=\large
+    % ] at (0,-3.45)
+    % {$\mathrm{REG}_{\Sigma} \subsetneq \mathcal{P}(\Sigma^*)$};
+
+\end{tikzpicture}

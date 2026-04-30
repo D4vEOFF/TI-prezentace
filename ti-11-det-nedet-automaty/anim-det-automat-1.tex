@@ -1,0 +1,108 @@
+% \usetikzlibrary{arrows.meta}
+
+% -------------------------------------------------
+% Styly
+% -------------------------------------------------
+\tikzstyle{faactive}=[fill=red!20]
+
+\tikzstyle{compnode}=[%
+    draw,
+    rounded corners=2pt,
+    thick,
+    inner xsep=2mm,
+    inner ysep=1mm,
+    font=\small
+]
+
+\tikzstyle{compactive}=[%
+    compnode,
+    fill=red!20
+]
+
+\tikzstyle{compedge}=[thick]
+
+\tikzstyle{resultbox}=[
+    draw,
+    rounded corners=2pt,
+    thick,
+    fill=green!20,
+    inner xsep=3mm,
+    inner ysep=2mm,
+    font=\small
+]
+
+\newcommand{\FAResult}[2][]{%
+    \node[resultbox,#1] at (7.8,-1.2) {#2};
+}
+
+% -------------------------------------------------
+% Pomocná makra pro zobrazení vstupního slova
+% -------------------------------------------------
+
+% #1 ... přečtená část
+% #2 ... aktuálně čtený znak
+% #3 ... zbytek slova
+\newcommand{\FAInput}[3]{%
+    \node[font=\large] at (2.4,1.45) {$#1\textcolor{red}{#2}#3$};
+}
+
+% Varianta po dočtení celého slova
+% #1 ... celé přečtené slovo
+\newcommand{\FAInputFinished}[1]{%
+    \node[font=\large] at (2.4,1.45) {$#1\;\textcolor{red}{\lambda}$};
+}
+
+% -------------------------------------------------
+% Uzly a hrany stromu výpočtu
+% -------------------------------------------------
+
+% #1 ... volitelné tikz volby
+% #2 ... jméno uzlu
+% #3 ... souřadnice
+% #4 ... obsah uzlu
+\newcommand{\CompNode}[4][]{%
+    \node[compnode,#1] (#2) at #3 {$#4$};
+}
+
+% #1 ... volitelné tikz volby
+% #2 ... odkud
+% #3 ... popisek hrany
+% #4 ... kam
+\newcommand{\CompEdge}[4][]{%
+    \draw[compedge,#1] (#2) -- node[midway,font=\scriptsize,fill=white,inner sep=1pt] {$#3$} (#4);
+}
+
+% -------------------------------------------------
+% Makro pro jeden slide animace
+% -------------------------------------------------
+% #1 ... styl stavu q0
+% #2 ... styl stavu q1
+% #3 ... styl stavu q2
+% #4 ... kód zobrazující vstupní slovo
+% #5 ... kód stromu výpočtu
+\newcommand{\AutomatonComputationFrame}[5]{%
+\begin{frame}{Výpočet deterministického automatu}{Příklad}
+% \centering
+\begin{tikzpicture}[>=stealth]
+
+    % Vstupní slovo
+    #4
+
+    % Automat
+    \initialstate[#1]{q0}{(0,0)}{$q_0$}{(-1.2,0)}{west}
+    \state[#2]{q1}{(2.4,0)}{$q_1$}
+    \acceptingstate[#3]{q2}{(4.8,0)}{$q_2$}
+
+    \transitionarrow{q0}{above}{$0$}{q1}
+    \transitionarrow{q1}{above}{$1$}{q2}
+    \transitionarrow[loop above]{q2}{above}{$0,1$}{q2}
+
+    % Popisek stromu
+    \node[anchor=west,font=\normalsize] at (-0.4,-1.15) {Strom výpočtu:};
+
+    % Strom výpočtu
+    #5
+
+\end{tikzpicture}
+\end{frame}
+}

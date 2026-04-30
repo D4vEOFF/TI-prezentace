@@ -1,0 +1,21 @@
+\begin{tikzpicture}[
+    note/.style={orange!70!black, ->, thick},
+    notetext/.style={orange!70!black, font=\small}
+]
+    % Stavy
+    \initialstate{q0}{(0,0)}{$q_0$}{(-1.2,0)}{west}
+    \state{q1}{(2.2,0)}{$q_1$}
+    \acceptingstate{q2}{(4.7,0)}{$q_2$}
+
+    % Přechody
+    \transitionarrow{q0}{above}{$0$}{q1}
+    \transitionarrow{q1}{above}{$1$}{q2}
+    \transitionarrow[loop above]{q2}{above}{$0,1$}{q2}
+
+    % Oranžové poznámky
+    \node[notetext] (startnote) at (-0.7,1.0) {Počáteční stav};
+    \draw[note] (startnote.south) to[out=-70,in=120] (q0.north west);
+
+    \node[notetext] (accnote) at (7.0,0.45) {přijímající stav};
+    \draw[note] (accnote.west) to[out=180,in=20] (q2.east);
+\end{tikzpicture}

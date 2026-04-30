@@ -1,0 +1,58 @@
+% -------------------------------------------------
+% Vstupní slovo pro širší automat
+% -------------------------------------------------
+\newcommand{\FAInputWide}[3]{%
+    \node[font=\large] at (3.2,1.9) {$#1\textcolor{red}{#2}#3$};
+}
+
+\newcommand{\FAInputWideFinished}[1]{%
+    \node[font=\large] at (3.2,1.9) {$#1\textcolor{red}{\lambda}$};
+}
+
+% -------------------------------------------------
+% Jeden slide animace pro automat rozpoznávající podslovo 101
+% #1 ... styl q0
+% #2 ... styl q1
+% #3 ... styl q2
+% #4 ... styl q3
+% #5 ... kód pro vstupní slovo
+% #6 ... kód stromu výpočtu (+ případně výsledek)
+% -------------------------------------------------
+% -------------------------------------------------
+% Jeden slide animace pro automat rozpoznávající podslovo 101
+% #1 ... styl q0
+% #2 ... styl q1
+% #3 ... styl q2
+% #4 ... styl q3
+% #5 ... kód pro vstupní slovo
+% #6 ... kód stromu výpočtu (+ případně výsledek)
+% -------------------------------------------------
+\newcommand{\SubstringAutomatonFrame}[6]{%
+\begin{frame}{Výpočet deterministického automatu}{Příklad}
+\begin{tikzpicture}[>=stealth]
+
+    % vstup
+    #5
+
+    % automat
+    \initialstate[#1]{q0}{(0,0)}{$q_0$}{(-1.2,0)}{west}
+    \state[#2]{q1}{(2.1,0)}{$q_1$}
+    \state[#3]{q2}{(4.2,0)}{$q_2$}
+    \acceptingstate[#4]{q3}{(6.3,0)}{$q_3$}
+
+    % přechody
+    \transitionarrow[loop above]{q0}{above}{$0$}{q0}
+    \transitionarrow{q0}{above}{$1$}{q1}
+    \transitionarrow[loop above]{q1}{above}{$1$}{q1}
+    \transitionarrow{q1}{above}{$0$}{q2}
+    \transitionarrow[out=130,in=50,looseness=1.5]{q2}{above}{$0$}{q0}
+    \transitionarrow{q2}{above}{$1$}{q3}
+    \transitionarrow[loop above]{q3}{above}{$0,1$}{q3}
+
+    % strom výpočtu
+    \node[anchor=west,font=\normalsize] at (-0.3,-1.45) {Strom výpočtu:};
+    #6
+
+\end{tikzpicture}
+\end{frame}
+}

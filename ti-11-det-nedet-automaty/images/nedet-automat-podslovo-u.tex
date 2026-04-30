@@ -1,0 +1,25 @@
+\begin{tikzpicture}[
+    every node/.style={font=\normalsize},
+    x=1cm, y=1cm
+]
+    % Stavy
+    \initialstate{q0}{(0,0)}{$q_0$}{(-0.9,0)}{west}
+    \state{q1}{(1.8,0)}{$q_1$}
+    \state{q2}{(3.6,0)}{$q_2$}
+    \state{qm1}{(7.2,0)}{$q_{m-1}$}
+    \acceptingstate{qm}{(9.0,0)}{$q_m$}
+
+    % Tečky
+    \node (threedots) at (5.4,0) {$\cdots$};
+
+    % Hlavní řetěz
+    \transitionarrow{q0}{above}{$u_1$}{q1}
+    \transitionarrow{q1}{above}{$u_2$}{q2}
+    \draw[transition] (q2) -- node[above] {$u_3$} (threedots);
+    \draw[transition] (threedots) -- node[above] {$u_{m-1}$} (qm1);
+    \transitionarrow{qm1}{above}{$u_m$}{qm}
+
+    % Smyčky
+    \transitionarrow[loop below]{q0}{below}{$a \in \Sigma$}{q0}
+    \transitionarrow[loop above]{qm}{above}{$a \in \Sigma$}{qm}
+\end{tikzpicture}

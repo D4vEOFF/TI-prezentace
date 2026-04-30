@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+    % Stavy
+    \initialstate{q0}{(0,0)}{$q_0$}{(-1.2,0)}{west}
+    \state{q1}{(2.2,0)}{$q_1$}
+    \acceptingstate{q2}{(4.7,0)}{$q_2$}
+
+    % Přechody
+    \transitionarrow{q0}{above}{$0$}{q1}
+    \transitionarrow{q1}{above}{$1$}{q2}
+    \transitionarrow[loop right]{q2}{right}{$0,1$}{q2}
+    
+\end{tikzpicture}

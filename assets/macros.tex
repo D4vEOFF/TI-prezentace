@@ -97,7 +97,7 @@
 \newcommand{\mapping}[3]{#1:#2 \rightarrow #3}
 \newcommand{\mapto}[3]{#1:#2 \mapsto #3}
 \newcommand{\set}[1]{\left\{#1\right\}}
-\newcommand{\powset}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\powset}{\mathcal{P}}
 \newcommand{\code}[1]{\langle#1\rangle}
 
 \DeclareMathOperator{\mspan}{span}
@@ -331,7 +331,9 @@
     \begin{tikzpicture}[remember picture, overlay]
       \node at (current page.center)
         [draw=titleframeboxcolor, line width=1pt,
-         inner xsep=10mm, inner ysep=4mm, rounded corners=2mm]
+         inner xsep=10mm, inner ysep=4mm, rounded corners=2mm,
+         text width=0.8\textwidth, align=center,
+         execute at begin node=\setlength{\baselineskip}{2.2em}]
         {\Huge\markred{#1}\normalfont};
     \end{tikzpicture}
   \end{frame}
