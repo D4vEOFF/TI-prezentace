@@ -49,6 +49,8 @@
 
     \titleframe{Formální jazyky}
 
+    \subsection{Definice jazyka}
+
     \begin{frame}{Formální jazyky}
         \visible<2->{\begin{defblock}
             \visible<2->{Mějme konečnou množinu znaků $\Sigma\neq\emptyset$, kterou budeme nazývat \markdarkred{abeceda}. Pak}
@@ -63,6 +65,8 @@
             \end{itemize}
         \end{defblock}}
     \end{frame}
+
+    \subsection{Operace nad slovy}
 
     \begin{frame}{Operace nad slovy}
         \visible<2->{\begin{defblock}[Operace nad slovy]
@@ -99,6 +103,8 @@
         \end{itemize}
     \end{frame}
 
+    \subsection{Rozhodovací problém vs. jazyk}
+
     \begin{frame}{Poznámka k rozhodovacím problémům}
         \visible<2->{U rozhodovacích problémů jsme kódovali vstupy pomocí $0$ a $1$.}
         \begin{itemize}
@@ -119,6 +125,8 @@
     \section{Deterministické konečné automaty}
 
     \titleframe{Deterministické\\ konečné automaty}
+
+    \subsection{Úvod k NFA}
 
     \begin{frame}{Deterministický konečný automat}
         \visible<2->{\begin{defblock}[Deterministický konečný automat]
@@ -168,6 +176,8 @@
             \end{table}
         \end{minipage}}
     \end{frame}
+
+    \subsection{Výpočet DFA}
 
     \begin{frame}{Výpočet deterministického automatu}
         \visible<2->{Automat $A=(Q,\Sigma,\delta,q_0,F)$ dostane na vstupu slovo $w\in\Sigma^{*}$.}
@@ -504,6 +514,8 @@
 
     \titleframe{Nedeterministické\\ konečné automaty}
 
+    \subsection{Definice NFA}
+
     \begin{frame}{Nedeterministické konečné automaty}
         \begin{itemize}
             \visible<2->{\item Ne vždy je výhodné pro nás konstruovat automat pro nějaký jazyk přímo.}
@@ -521,6 +533,8 @@
             \end{talertframe}}
         \end{itemize}
     \end{frame}
+
+    \subsection{Hledání podslova pomocí NFA}
 
     \begin{frame}{Hledáme podslovo $u$}
         \begin{itemize}
@@ -684,6 +698,8 @@
             \FAResult[xshift=1.25cm,yshift=1.0cm]{Automat slovo přijal.}
         }
     
+    \subsection{Jak NFA funguje?}
+    
     \begin{frame}{Jak nedeterministický automat funguje?}
         \begin{itemize}
             \visible<2->{\item Pro jeden znak $a\in\Sigma$ můžeme mít ze stavu $q$ \textbf{více přechodů}.}
@@ -701,6 +717,8 @@
             \end{center}
         \end{talertframe}}
     \end{frame}
+
+    \subsection{Definice DFA}
 
     \begin{frame}{Formální definice NFA}
         \visible<2->{\begin{defblock}[Nedeterministický konečný automat]
@@ -729,6 +747,8 @@
         \end{align*}}
     \end{frame}
 
+    \subsection{Vztah DFA a NFA}
+
     \begin{frame}{Vztah DFA a NFA}
         \begin{itemize}
             \item NFA $N$ \textbf{lze vždy převést} na DFA $A$ takový, že
@@ -746,6 +766,8 @@
     \section{Regulární jazyky}
 
     \titleframe{Regulární jazyky}
+
+    \subsection{"Rozpoznávací" schopnost DFA}
 
     \begin{frame}{Co všechno DFA "rozpozná"?}
         \visible<2->{\begin{tnoticeframe}[0.9\textwidth]
@@ -767,6 +789,8 @@
             \end{center}
         \end{talertframe}}
     \end{frame}
+
+    \subsection{Důkaz neexistence DFA}
 
     \begin{frame}{Pro jazyk $L_\text{eq}$ neexistuje DFA}
         \begin{itemize}
@@ -820,6 +844,8 @@
         \end{figure}
     \end{frame}
 
+    \subsection{Definice regulárního jazyka}
+
     \begin{frame}{Regulární jazyky}
         \begin{defblock}[Regulární jazyk]
             Jazyk $L$ nazveme \markdarkred{regulární}, pokud existuje DFA, který jej přijímá.
@@ -829,11 +855,32 @@
             \input{images/reg-jazyky.tex}
         \end{figure}
     \end{frame}
+
+    \subsection{Další příklady (ne)regulárních jazyků}
     
     \begin{frame}{Příklady (ne)regulárních jazyků}
-        Regulární jazyky:
+        \visible<2->{Regulární jazyky nad binární abecedou $\Sigma=\set{0,1}$:}
         \begin{itemize}
-            \item 
+            \visible<3->{\item $L_\text{pref}=\set{01u: u\in\Sigma^{*}}$}
+            \visible<4->{\item $L_\text{suff}=\set{u01: u\in\Sigma^{*}}$}
+            \visible<5->{\item $L_\text{dec}=\set{d\in\set{0,\dots,9,.}^{*}:\text{$d$ je číslo s konečným desetinným rozvojem}}$}
+            \visible<6->{\item $L_\text{prev}\cap L_\text{suff}$}
+            \visible<7->{\item $L_\text{prev}\cup L_\text{suff}$}
+        \end{itemize}
+        \visible<8->{Jazyky, které nejsou regulární:}
+        \begin{itemize}
+            \visible<9->{\item $L_{01}=\set{0^n1^n: n\in\N}$}
+            \visible<10->{\item $L_{ww}=\set{ww: w\in\Sigma^{*}}$}
+            \visible<11->{\item $L_{s}=\set{w\in\Sigma^*: |w|_0=|w|_1}$}
+        \end{itemize}
+    \end{frame}
+
+    \section{Zdroje}
+
+    \begin{frame}{Zdroje}
+        \begin{itemize}
+            \item PAPADIMITRIOU, Christos H. Computational complexity. Reading: Addison-Wesley, 1994. ISBN 0-201-53082-1.
+            \item HOPCROFT, John E.; MOTWANI, Rajeev a ULLMAN, Jeffrey D. Introduction to automata theory, languages, and computation. 3rd ed. Boston: Pearson/Addison Wesley, c2007.
         \end{itemize}
     \end{frame}
 
