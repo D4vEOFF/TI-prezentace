@@ -12,4 +12,34 @@
 
     \input{../titlepage.tex}
 
+    \begin{frame}{Rekapitulace}
+        \begin{itemize}
+            \item Již víme, že formální jazyky lze popsat
+            \begin{itemize}
+                \item charakteristickou vlastností a
+                \item (ne)deterministickým konečným automatem.
+            \end{itemize}
+            \begin{tinfoframe}
+                Strukturu jazyka lze popsat tzv. \textbf{regulárním výrazem}.
+            \end{tinfoframe}
+            \item Zkratka \textbf{RegEx} = \textit{regular expression}.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Regulární výrazy formálně}
+        \begin{defblock}[Regulární výrazy a jejich hodnoty]
+            Mějme konečnou abecedu $\Sigma$. Pak \textbf{množinu všech regulárních výrazů nad abecedou $\Sigma$} značíme $\regex(\Sigma)$ a~definujeme ji následoně:
+            \begin{itemize}
+                \item $\lambda,a$, kde $a\in\Sigma$, jsou regulární výrazy, tj. $\lambda,a\in\regex(\Sigma)$. Jejich hodnoty jsou $L(\lambda)=\set{\lambda}$ a~$L(a)=\set{a}$.
+                \item Jsou-li $\alpha,\beta\in\regex(\Sigma)$, pak také
+                \[\alpha+\beta,\quad\alpha\beta,\quad \alpha^{*}\quad\text{a}\quad (\alpha)\]
+                jsou v~$\regex(\Sigma)$ a platí
+                \begin{align*}
+                    L(\alpha+\beta)&=L(\alpha)\cup L(\beta),\quad L(\alpha\beta)=L(\alpha)L(\beta)\\
+                    L(\alpha^{*})&=L(\alpha)^{*},\quad L((\alpha))=L(\alpha).
+                \end{align*}
+            \end{itemize}
+        \end{defblock}
+    \end{frame}
+
 \end{document}
