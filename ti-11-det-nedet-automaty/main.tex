@@ -704,7 +704,7 @@
         \begin{itemize}
             \visible<2->{\item Pro jeden znak $a\in\Sigma$ můžeme mít ze stavu $q$ \textbf{více přechodů}.}
             \visible<3->{\item V případě, že existuje pro $a$ více přechodů, automat spustí \textbf{více paralelních výpočtů najednou} (každý pro jeden přecho).}
-            \visible<4->{\item Nedekterministický konečná automat budeme značit NFA (\textit{nondeterministic finite automaton})}
+            \visible<4->{\item Nedeterministický konečný automat budeme značit NFA (\textit{nondeterministic finite automaton})}
         \end{itemize}
         \visible<5->{\begin{tnoticeframe}[0.9\textwidth]
             \begin{center}
@@ -810,31 +810,31 @@
         \begin{itemize}
             \visible<2->{\item Uvažujme $m+1$ slov tvaru
             \[\lambda,0,00,\dots,0^{m}.\]}
-            \item Protože těchto slov je $m+1$ a stavů automatu $A$ je jen $m$, musí nutně z těchto slov existovat slova
+            \visible<3->{\item Protože těchto slov je $m+1$ a stavů automatu $A$ je jen $m$, musí nutně z těchto slov existovat slova
             \[0^{i}\quad\text{a}\quad 0^{j},\]
-            kde $0\leqslant i<j\leqslant m$, po jejichž přečtení skončí automat ve stejném stavu $q\in Q$.
-            \item Uvažujme slova
-            \[u=0^{i}1^{i}\quad\text{a}\quad v=0^{j}1^{i}.\]
+            kde $0\leqslant i<j\leqslant m$, po jejichž přečtení skončí automat ve stejném stavu $q\in Q$.}
+            \visible<4->{\item Uvažujme slova
+            \[u=0^{i}1^{i}\quad\text{a}\quad v=0^{j}1^{i}.\]}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Pro jazyk $L_\text{eq}$ neexistuje DFA}
         \centering
-        \begin{tikzpicture}
+        \visible<2->{\begin{tikzpicture}
             \node[fill=green,opacity=0.2,text opacity=1] (u) at (-3,0) {\Large $u=0^{i}1^{i}$};
             \node[fill=red,opacity=0.2,text opacity=1] at (3,0) {\Large $v=0^{j}1^{i}$};
-        \end{tikzpicture}
+        \end{tikzpicture}}
         \begin{itemize}
-            \item Automat $A$ skočí po přečtení prvních $i$ znaků slova $u$ ve stavu $q$
-            \item Podobně po přečtení prvních $j$ znaků slova $v$ skončí ve stejném stavu $q$.
-            \item To znamená, že po přečtení podslova $1^{i}$ by měl pro $u$ a $v$ na konci výpočtu být $A$ ve stejném stavu $r\in Q$.
-            \item Protože $u\in L(A)$, tak $A$ slovo $u$ musí přijmout a tedy přijme i slovo $v$.
+            \visible<3->{\item Automat $A$ skočí po přečtení prvních $i$ znaků slova $u$ ve stavu $q$.}
+            \visible<4->{\item Podobně po přečtení prvních $j$ znaků slova $v$ skončí ve stejném stavu $q$.}
+            \visible<5->{\item To znamená, že po přečtení podslova $1^{i}$ by měl pro $u$ a $v$ na konci výpočtu být $A$ ve stejném stavu $r\in Q$.}
+            \visible<6->{\item Protože $u\in L(A)$, tak $A$ slovo $u$ musí přijmout a tedy přijme i slovo $v$.}
         \end{itemize}
-        \begin{talertframe}[0.9\textwidth]
+        \visible<7->{\begin{talertframe}[0.9\textwidth]
             \begin{center}
                 Jenže $v\notin L(A)$, což znamená, že $A$ přijmul slovo, \textbf{které není v jazyce $L_\text{eq}$!}
             \end{center}
-        \end{talertframe}
+        \end{talertframe}}
     \end{frame}
 
     \begin{frame}{Znázornění situace}
@@ -847,13 +847,13 @@
     \subsection{Definice regulárního jazyka}
 
     \begin{frame}{Regulární jazyky}
-        \begin{defblock}[Regulární jazyk]
+        \visible<2->{\begin{defblock}[Regulární jazyk]
             Jazyk $L$ nazveme \markdarkred{regulární}, pokud existuje DFA, který jej přijímá.
-        \end{defblock}
-        \begin{figure}
+        \end{defblock}}
+        \visible<3->{\begin{figure}
             \centering
             \input{images/reg-jazyky.tex}
-        \end{figure}
+        \end{figure}}
     \end{frame}
 
     \subsection{Další příklady (ne)regulárních jazyků}

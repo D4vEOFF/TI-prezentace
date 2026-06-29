@@ -44,4 +44,107 @@
         \end{defblock}}
     \end{frame}
 
+    \begin{frame}{Příklady regulárních jazyků}
+        \visible<2->{\begin{tinfoframe}
+            \begin{center}
+                Operace $*$ má nejvyšší prioritu, nižší konkatenace (zřetězení) a nejnižší sjednocení $+$.
+            \end{center}
+        \end{tinfoframe}}
+
+        \visible<3->{Mějme abecedu $\Sigma=\set{0,1}$.}
+
+        \visible<4->{\begin{center}
+            \begin{tabular}{c|c}
+            Jazyk & Regulární výraz \\
+            \hline
+            \visible<5->{všechna slova nad $\Sigma$} & \visible<6->{$(0+1)^*$ \\}
+            \visible<6->{slova končící na $01$} & \visible<8->{$(0+1)^*01$ \\}
+            \visible<7->{slova obsahující právě jednu $1$} & \visible<10->{$0^*10^*$ \\}
+            \visible<11->{slova se sudým počtem jedniček} & \visible<12->{$0^*(10^*10^*)^*$ \\}
+            \visible<13->{slova bez dvou sousedních jedniček} & \visible<14->{$(0+10)^*(\lambda+1)$}
+            \end{tabular}
+        \end{center}}
+    \end{frame}
+
+    \begin{frame}{Kleeneho věta}
+        \visible<2->{\begin{thmblock}[Kleeneho]
+            \begin{enumerate}
+                \visible<3->{\item Každý jazyk reprezentovaný konečným automatem lze zapsat jako regulární výraz.}
+                \visible<4->{\item Každý jazyk popsaný regulárním výrazem můžeme zapsat jako NFA (a tedy i~DFA).}
+            \end{enumerate}
+        \end{thmblock}}
+
+        \visible<5->{Jinými slovy: regulární výrazy a konečné automaty popisují tutéž třídu jazyků.}
+    \end{frame}
+
+    \begin{frame}{Kleeneho věta: náznak důkazu}
+        \visible<2->{Důkaz má dvě části:}
+
+        \visible<3->{\begin{enumerate}
+            \visible<4->{\item Každý regulární výraz lze převést na konečný automat.}
+            \begin{itemize}
+                \visible<5->{\item Pro $\lambda$ a $a\in\Sigma$ umíme sestrojit jednoduchý automat.}
+                \visible<6->{\item Operace $+$, zřetězení a $^*$ odpovídají konstrukcím nad automaty (viz další snímek).}
+            \end{itemize}
+
+            \visible<7->{\item Každý konečný automat lze převést na regulární výraz.}
+            \begin{itemize}
+                \visible<8->{\item Postupně eliminujeme stavy automatu.}
+                \visible<9->{\item Hrany označujeme regulárními výrazy.}
+                \visible<10->{\item Nakonec zůstane výraz popisující všechna přijímaná slova.}
+            \end{itemize}
+        \end{enumerate}}
+    \end{frame}
+
+    \begin{frame}{Kleeneho věta}
+    \begin{center}
+    \begin{tikzpicture}[
+        >=stealth,
+        every node/.style={font=\large},
+        box/.style={
+            draw,
+            rounded corners,
+            thick,
+            align=center,
+            minimum width=3.2cm,
+            minimum height=1.8cm
+        },
+        smallbox/.style={
+            draw,
+            rounded corners,
+            thick,
+            align=center,
+            minimum width=2.5cm,
+            minimum height=1.5cm
+        }
+    ]
+
+    % Horní řada
+    \node[box] (re) at (0,0) {Regulární\\výrazy};
+    \node[smallbox] (nfa) at (4.2,0) {NFA};
+    \node[smallbox] (dfa) at (8.4,0) {DFA};
+
+    % Dolní uzel
+    \node[box] (lang) at (4.0,-3.6) {Regulární\\jazyky};
+
+    % Šipky nahoře
+    \draw[->, thick] (re.east) -- (nfa.west);
+    \draw[->, thick] (nfa.east) -- (dfa.west);
+
+    % Šipky dolů
+    \draw[->, thick] (re.south east) -- node[left] {popisuje} (lang.north west);
+    \draw[->, thick] (dfa.south west) -- node[right] {rozpoznává} (lang.north east);
+
+    \end{tikzpicture}
+    \end{center}
+
+    \end{frame}
+
+        \begin{frame}{Zdroje}
+        \begin{itemize}
+            \item PAPADIMITRIOU, Christos H. Computational complexity. Reading: Addison-Wesley, 1994. ISBN 0-201-53082-1.
+            \item HOPCROFT, John E.; MOTWANI, Rajeev a ULLMAN, Jeffrey D. Introduction to automata theory, languages, and computation. 3rd ed. Boston: Pearson/Addison Wesley, c2007.
+        \end{itemize}
+    \end{frame}
+
 \end{document}
