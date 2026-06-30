@@ -12,4 +12,57 @@
 
     \input{../titlepage.tex}
 
+    \section{Formální gramatiky}
+
+    \titleframe{Formální gramatiky}
+
+    \subsection{Rekapitulace}
+
+    \begin{frame}{Rekapitulace}
+        \begin{itemize}
+            \visible<2->{\item Již víme, že jazyky můžeme popsat pomocí}
+            \begin{itemize}
+                \visible<3->{\item \textbf{(ne)deterministického konečného automatu} a}
+                \visible<4->{\item \textbf{regulárního výrazu}.}
+            \end{itemize}
+            \visible<4->{\item Hodilo by se nám ale vědět, jak jazyk "vzniká".}
+        \end{itemize}
+        \medskip
+        \visible<5->{\begin{timportantframe}[.9\textwidth]
+            \begin{center}
+                K tomu se nám budou hodit právě tzv. \textbf{formální gramatiky}.
+            \end{center}
+        \end{timportantframe}}
+        \medskip
+        \visible<6->{\begin{tnoticebox}[.9\textwidth]{Hlavní myšlenka}
+            \begin{center}
+                Automat slova rozpoznává, gramatika slova generuje.
+            \end{center}
+        \end{tnoticebox}}
+    \end{frame}
+
+    \subsection{Proč gramatiky?}
+
+    \begin{frame}{Proč gramatiky?}
+        \begin{itemize}
+            \visible<2->{\item popisují, jak vznikají správně utvořená slova / věty / programy.}
+            \visible<3->{\item používají se v překladačích, syntaktické analýze a zpracování jazyka}
+            \visible<4->{\item navazují na regulární výrazy, ale jsou obecnější}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Definice gramatiky}
+
+    \begin{frame}{Definice formální gramatiky}
+        \begin{defblock}[Formální gramatika]
+            \markdarkred{Formální gramatikou} nazýváme uspořádanou čtveřici $G=(V,T,P,S)$, kde
+            \begin{itemize}
+                \item $V$ je množina tzv. \textbf{neterminálů},
+                \item $T$ je množina tzv. \textbf{terminálů},
+                \item $S\in V$ je počáteční symbol a
+                \item $P$ je množina \textbf{přepisovacích pravidel} tvaru $\alpha\to\omega$ (řetězec $\alpha$ se přepíše na řetězec $\omega$), přičemž $\alpha$ obsahuje alespoň jeden neterminál. 
+            \end{itemize}
+        \end{defblock}
+    \end{frame}
+
 \end{document}
