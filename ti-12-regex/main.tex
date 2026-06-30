@@ -12,6 +12,12 @@
 
     \input{../titlepage.tex}
 
+    \section{Regulární výrazy}
+
+    \titleframe{Regulární výrazy}
+
+    \subsection{Rekapitulace}
+
     \begin{frame}{Rekapitulace}
         \begin{itemize}
             \visible<2->{\item Již víme, že formální jazyky lze popsat}
@@ -28,6 +34,8 @@
         \end{itemize}
     \end{frame}
 
+    \subsection{Formální definice RegExu}
+
     \begin{frame}{Regulární výrazy formálně}
         \visible<2->{\begin{defblock}[Regulární výrazy a jejich hodnoty]
             \visible<3->{Mějme konečnou abecedu $\Sigma$. Pak \textbf{množinu všech regulárních výrazů nad abecedou $\Sigma$} značíme $\regex(\Sigma)$ a~definujeme ji následoně:}
@@ -43,6 +51,8 @@
             \end{itemize}
         \end{defblock}}
     \end{frame}
+
+    \subsection{Příklady regulárních jazyků}
 
     \begin{frame}{Příklady regulárních jazyků}
         \visible<2->{\begin{tinfoframe}
@@ -66,6 +76,12 @@
         \end{center}}
     \end{frame}
 
+    \section{Kleeneho věta}
+
+    \titleframe{Kleeneho věta}
+
+    \subsection{Formulace Kleenoho věty}
+
     \begin{frame}{Kleeneho věta}
         \visible<2->{\begin{thmblock}[Kleeneho]
             \begin{enumerate}
@@ -76,6 +92,8 @@
 
         \visible<5->{Jinými slovy: regulární výrazy a konečné automaty popisují tutéž třídu jazyků.}
     \end{frame}
+
+    \subsection{Náznak důkazu}
 
     \begin{frame}{Kleeneho věta: náznak důkazu}
         \visible<2->{Důkaz má dvě části:}
@@ -96,51 +114,47 @@
         \end{enumerate}}
     \end{frame}
 
-    \begin{frame}{Kleeneho věta}
-    \begin{center}
-    \begin{tikzpicture}[
-        >=stealth,
-        every node/.style={font=\large},
-        box/.style={
-            draw,
-            rounded corners,
-            thick,
-            align=center,
-            minimum width=3.2cm,
-            minimum height=1.8cm
-        },
-        smallbox/.style={
-            draw,
-            rounded corners,
-            thick,
-            align=center,
-            minimum width=2.5cm,
-            minimum height=1.5cm
-        }
-    ]
+    \section{Další příklady regulárních výrazů}
 
-    % Horní řada
-    \node[box] (re) at (0,0) {Regulární\\výrazy};
-    \node[smallbox] (nfa) at (4.2,0) {NFA};
-    \node[smallbox] (dfa) at (8.4,0) {DFA};
+    \begin{frame}{Další příklady regulárních výrazů}
+    \visible<2->{Mějme abecedu $\Sigma=\{0,1\}$.}
 
-    % Dolní uzel
-    \node[box] (lang) at (4.0,-3.6) {Regulární\\jazyky};
+    \small
+    \begin{itemize}
+        \item \visible<3->{$\alpha_1=0^*1^*$}
+        \visible<4->{\[
+            L(\alpha_1)=\set{0^m1^n : m,n\geq 0}
+        \]
+        slova, ve kterých jsou nejdříve nuly a potom jedničky.}
 
-    % Šipky nahoře
-    \draw[->, thick] (re.east) -- (nfa.west);
-    \draw[->, thick] (nfa.east) -- (dfa.west);
+        \item \visible<5->{$\alpha_2=(0+1)^*01$}
+        \visible<6->{\[
+            L(\alpha_2)=\set{w01 : w\in\Sigma^*}
+        \]
+        slova končící na $01$.}
 
-    % Šipky dolů
-    \draw[->, thick] (re.south east) -- node[left] {popisuje} (lang.north west);
-    \draw[->, thick] (dfa.south west) -- node[right] {rozpoznává} (lang.north east);
+        \item \visible<7->{$\alpha_3=(0+1)^*00(0+1)^*$}
+        \visible<8->{\[
+            L(\alpha_3)=\set{u00v : u,v\in\Sigma^*}
+        \]
+        slova obsahující podslovo $00$.}
 
-    \end{tikzpicture}
-    \end{center}
+        \item \visible<9->{$\alpha_4=0^*10^*10^*$}
+        \visible<10->{\[
+            L(\alpha_4)=\set{w\in\Sigma^* : |w|_1=2}
+        \]
+        slova obsahující právě dvě jedničky.}
 
+        \item \visible<11->{$\alpha_5=((0+1)(0+1))^*$}
+        \visible<12->{\[
+            L(\alpha_5)=\set{w\in\Sigma^* : |w| \text{ je sudé}}
+        \]}
+    \end{itemize}
     \end{frame}
 
-        \begin{frame}{Zdroje}
+    \section{Zdroje}
+
+    \begin{frame}{Zdroje}
         \begin{itemize}
             \item PAPADIMITRIOU, Christos H. Computational complexity. Reading: Addison-Wesley, 1994. ISBN 0-201-53082-1.
             \item HOPCROFT, John E.; MOTWANI, Rajeev a ULLMAN, Jeffrey D. Introduction to automata theory, languages, and computation. 3rd ed. Boston: Pearson/Addison Wesley, c2007.
