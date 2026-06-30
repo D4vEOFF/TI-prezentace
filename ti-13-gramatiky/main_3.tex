@@ -1,4 +1,4 @@
-\documentclass[11pt,professionalfont,aspectratio=43]{beamer}
+\documentclass[11pt,professionalfont,aspectratio=3] {beamer}
 
 % Assets
 \input{../assets/packages.tex}
@@ -77,35 +77,7 @@
         \end{talertframe}}
     \end{frame}
 
-    \begin{frame}{Derivace}
-        \begin{itemize}
-            \pause
-            \item Pokud lze slovo \(\alpha\) jedním použitím pravidla z $P$ přepsat na slovo \(\beta\),
-            píšeme
-            \[
-                \alpha \Rightarrow \beta.
-            \]
-            \pause 
-
-            \item Pokud lze \(\alpha\) přepsat na \(\omega\) v~několika krocích, píšeme
-            \[
-                \alpha \Rightarrow^* \omega.
-            \]
-            tzn. $\alpha = \beta_1 \Rightarrow \beta_2 \Rightarrow \cdots \Rightarrow \beta_n = \omega$ pro nějaké řetězce $\beta_1, \beta_2, \ldots, \beta_n\in(V\cup T)^*$.
-            \pause
-            \item Posloupnost $\beta_1, \beta_2, \ldots, \beta_n$ nazýváme \textbf{derivací}.
-        \end{itemize}
-    \end{frame}
-
-    \begin{frame}{Příklad gramatiky}
-        \pause
-        Mějme gramatiku $G=(V,T,P,S)$, kde
-        \[
-        V = \set{S}, \quad T = \set{a, b}\quad\text{a}\quad P = \set{S \to aS, S \to abS, S \to abb}.
-        \]
-
-        \pause
-        
+    \begin{frame}{Princip gramatiky}
         Začneme počátečním symbolem a postupně přepisujeme podle pravidel.
 
         \[
@@ -114,25 +86,15 @@
 
         \pause
 
+        Například pravidla mohla být:
+
+        \[
+            S \to aS \mid abS \mid abb
+        \]
+
+        \pause
+
         Výsledkem je slovo složené pouze z terminálních symbolů.
-    \end{frame}
-
-    \begin{frame}{Jazyk generovaný gramatikou}
-        \pause
-        \begin{defblock}[Jazyk generovaný gramatikou]
-            Jazyk generovaný gramatikou \(G=(V,T,P,S)\) je množina
-            \[
-                L(G)=\set{w\in T^* : S\Rightarrow_G^* w}.
-            \]
-        \end{defblock}
-
-        \pause
-
-        Tedy $L(G)$ obsahuje \textbf{všechny řetězce složené z terminálních symbolů}, které lze odvodit z počátečního symbolu $S$ pomocí pravidel z $P$.
-    \end{frame}
-
-    \begin{frame}{}
-        
     \end{frame}
 
 \end{document}
