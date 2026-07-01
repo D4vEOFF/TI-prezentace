@@ -80,7 +80,7 @@
 
     \titleframe{Kleeneho věta}
 
-    \subsection{Formulace Kleenoho věty}
+    \subsection{Formulace Kleeneho věty}
 
     \begin{frame}{Kleeneho věta}
         \visible<2->{\begin{thmblock}[Kleeneho]
@@ -90,7 +90,7 @@
             \end{enumerate}
         \end{thmblock}}
 
-        \visible<5->{Jinými slovy: regulární výrazy a konečné automaty popisují tutéž třídu jazyků.}
+        \visible<5->{\textbf{Jinými slovy:} regulární výrazy a konečné automaty popisují tutéž třídu jazyků.}
     \end{frame}
 
     \subsection{Náznak důkazu}
@@ -150,6 +150,39 @@
             L(\alpha_5)=\set{w\in\Sigma^* : |w| \text{ je sudé}}
         \]}
     \end{itemize}
+    \end{frame}
+
+    \section{RegEx v praxi}
+
+    \begin{frame}{Pozor: RegEx v praxi}
+        \pause
+        Formální regulární výrazy popisují \textbf{právě regulární jazyky}.
+
+        \pause
+        \medskip
+        Praktické RegEx enginy ale často obsahují rozšíření, například
+        \textbf{zpětné reference}.
+
+        \[
+        \texttt{\^{}([01]*)\#\textbackslash 1\$}
+        \]
+
+        popisuje jazyk
+        \[
+        L=\set{w\#w : w\in\{0,1\}^*}.
+        \]
+
+        \pause
+        \markdarkred{Tento jazyk ale není regulární!}
+
+        \pause
+        \medskip
+        Proto platí:
+        \[
+        \text{formální regulární výrazy}
+        \quad \subsetneq \quad
+        \text{praktické "regexy" v programovacích jazycích}.
+        \]
     \end{frame}
 
     \section{Zdroje}
