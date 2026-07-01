@@ -77,19 +77,21 @@
         \end{talertframe}}
     \end{frame}
 
+    \subsection{Derivace a jazyk generovaný gramatikou}
+
     \begin{frame}{Derivace}
         \begin{itemize}
             \pause
             \item Pokud lze slovo \(\alpha\) jedním použitím pravidla z $P$ přepsat na slovo \(\beta\),
             píšeme
             \[
-                \alpha \Rightarrow \beta.
+                \alpha \Rightarrow_G \beta.
             \]
             \pause 
 
             \item Pokud lze \(\alpha\) přepsat na \(\omega\) v~několika krocích, píšeme
             \[
-                \alpha \Rightarrow^* \omega.
+                \alpha \Rightarrow_G^* \omega.
             \]
             tzn. $\alpha = \beta_1 \Rightarrow \beta_2 \Rightarrow \cdots \Rightarrow \beta_n = \omega$ pro nějaké řetězce $\beta_1, \beta_2, \ldots, \beta_n\in(V\cup T)^*$.
             \pause
@@ -97,7 +99,7 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Příklad gramatiky}
+    \begin{frame}{Příklad gramatiky a derivace slova}
         \pause
         Mějme gramatiku $G=(V,T,P,S)$, kde
         \[
@@ -131,8 +133,438 @@
         Tedy $L(G)$ obsahuje \textbf{všechny řetězce složené z terminálních symbolů}, které lze odvodit z počátečního symbolu $S$ pomocí pravidel z $P$.
     \end{frame}
 
-    \begin{frame}{}
-        
+    \subsection{Příklady}
+
+    \begin{frame}{Příklad}{všechna binární slova}
+
+        \pause
+        Mějme gramatiku
+
+        \[
+            S\to 0S\mid 1S\mid \lambda.
+        \]
+
+        \pause
+
+        Potom $L(G)=\{0,1\}^*$.
+
+        \pause
+        \medskip
+        Ukázka derivace:
+
+        \[
+            S\Rightarrow 1S\Rightarrow 10S\Rightarrow 101S\Rightarrow 101.
+        \]
+    \end{frame}
+
+    \begin{frame}{Příklad}{jazyk \texorpdfstring{\(0^n1^n\)}{0n1n}}
+        \pause
+        Mějme gramatiku
+
+        \[
+            S\to 0S1\mid \lambda.
+        \]
+
+        \pause
+
+        Potom
+
+        \[
+            L(G)=\set{0^n1^n : n\geqslant 0}.
+        \]
+
+        \pause
+
+        Například:
+
+        \[
+            S \Rightarrow 0S1 \Rightarrow 00S11 \Rightarrow 0011.
+        \]
+
+        Tento jazyk není regulární.
+    \end{frame}
+
+    \begin{frame}{Příklad}{jazyk \texorpdfstring{\(a^nb^m\)}{anbm}}
+        \pause
+        Uvažujme gramatiku
+        \[
+            G=(V,T,P,S),
+        \]
+        kde
+        \[
+            V=\set{S,A,B}, \qquad T=\set{a,b}
+        \]
+        a pravidla jsou
+        \[
+        \begin{aligned}
+            S &\to AB,\\
+            A &\to aA \mid a,\\
+            B &\to bB \mid b.
+        \end{aligned}
+        \]
+
+        \pause
+
+        Tato gramatika generuje jazyk $L(G)=\set{a^n b^m : n,m\geqslant 1}$.
+
+        \pause
+
+        Například:
+        \[
+            S \Rightarrow AB \Rightarrow aAB \Rightarrow aaB
+            \Rightarrow aabB \Rightarrow aabb.
+        \]
+
+        \pause
+
+        Neterminál \(A\) generuje blok písmen \(a\), zatímco neterminál \(B\)
+        generuje blok písmen \(b\).
+    \end{frame}
+
+    \subsection{Gramatiky a přirozený jazyk}
+
+    \begin{frame}{Gramatiky a přirozený jazyk}
+        \pause
+        Gramatiky vznikly také jako pokus formálně popsat strukturu přirozeného jazyka.
+
+        \pause
+
+        Například jednoduchá anglická (formální) gramatika může obsahovat pravidla:
+        \begin{align*}
+            \text{sentence}&\to \text{noun phrase}\mid\text{verb phrase}\\
+            \text{noun phrase}&\to \text{article}\mid\text{noun}\\
+            \text{verb phrase}&\to \text{verb}\mid\text{noun phrase}\\
+            \text{article}&\to \text{the}\\
+            \text{noun}&\to \text{dog}\mid \text{bone},\\
+            \text{verb}&\to \text{ate}
+        \end{align*}
+
+        \pause
+
+        Tato gramatika například generuje větu:
+
+        \[
+            \text{the dog ate the bone}
+        \]
+
+        \pause
+
+        Gramatika ale popisuje strukturu, nikoli význam.
+    \end{frame}
+
+    \begin{frame}{Příklad gramatiky pro anglickou větu}
+    \centering
+    \begin{tikzpicture}[
+        x=0.72cm, y=0.92cm,
+        >=stealth,
+        arr/.style={->, thick, draw=black!75},
+        ntbox/.style={draw=none, fill=orange!85, minimum width=2.15cm,
+            minimum height=0.8cm, align=center, font=\scriptsize},
+        topbox/.style={draw=none, fill=yellow!80, rounded corners=3pt,
+            minimum width=2.4cm, minimum height=0.85cm, align=center, font=\scriptsize},
+        termbox/.style={draw=none, fill=green!70, minimum width=1.65cm,
+            minimum height=0.75cm, align=center, font=\scriptsize},
+        rulelabel/.style={font=\tiny, fill=white, inner sep=1pt,
+            text=black!75, align=center}
+    ]
+
+    \node[topbox] (sentence) at (10.5,7.25) {sentence};
+
+    \node[ntbox] (np1) at (7.2,5.55) {noun phrase};
+    \node[ntbox] (vp)  at (13.8,5.55) {verb phrase};
+
+    \node[ntbox] (art1)  at (4.6,3.75) {article};
+    \node[ntbox] (noun1) at (7.9,3.75) {noun};
+    \node[ntbox] (verb)  at (12.3,3.75) {verb};
+    \node[ntbox] (np2)   at (15.8,3.75) {noun phrase};
+
+    \node[ntbox] (art2)  at (14.2,2.0) {article};
+    \node[ntbox] (noun2) at (17.6,2.0) {noun};
+
+    \node[termbox] (the1) at (4.6,0.25) {the};
+    \node[termbox] (dog)  at (7.9,0.25) {dog};
+    \node[termbox] (ate)  at (12.3,0.25) {ate};
+    \node[termbox] (the2) at (14.2,0.25) {the};
+    \node[termbox] (bone) at (17.6,0.25) {bone};
+
+    \draw[arr] (sentence) -- (np1);
+    \draw[arr] (sentence) -- (vp);
+
+    \draw[arr] (np1) -- (art1);
+    \draw[arr] (np1) -- (noun1);
+
+    \draw[arr] (vp) -- (verb);
+    \draw[arr] (vp) -- (np2);
+
+    \draw[arr] (np2) -- (art2);
+    \draw[arr] (np2) -- (noun2);
+
+    \draw[arr] (art1) -- (the1);
+    \draw[arr] (noun1) -- (dog);
+    \draw[arr] (verb) -- (ate);
+    \draw[arr] (art2) -- (the2);
+    \draw[arr] (noun2) -- (bone);
+
+    %------------------------------------------------
+    % Popisky pravidel
+    %------------------------------------------------
+    \node[rulelabel] at (10.5,6.45)
+        {sentence \(\to\) noun phrase verb phrase};
+
+    \node[rulelabel] at (6.25,4.75)
+        {noun phrase \(\to\) article noun};
+
+    \node[rulelabel] at (14.0,4.75)
+        {verb phrase \(\to\) verb noun phrase};
+
+    \node[rulelabel] at (15.9,3.0)
+        {noun phrase \(\to\) article noun};
+
+    % spodní popisky – zarovnané se svislými hranami
+    \node[rulelabel] at (4.6,1.35)
+        {article \(\to\) the};
+
+    \node[rulelabel] at (7.9,1.35)
+        {noun \(\to\) dog};
+
+    \node[rulelabel] at (12.3,1.35)
+        {verb \(\to\) ate};
+
+    \node[rulelabel] at (14.2,1.12)
+        {article \(\to\) the};
+
+    \node[rulelabel] at (17.6,1.12)
+    {noun \(\to\) bone};
+
+    \end{tikzpicture}
+    \end{frame}
+
+    \section{Regulární gramatiky}
+
+    \titleframe{Regulární gramatiky}
+
+    \begin{frame}{Regulární gramatiky}
+        \pause
+        \begin{defblock}[Regulární gramatika]
+            Gramatika $G=(V,T,P,S)$ je \markdarkred{regulární}, pokud každé přepisovací pravidlo z $P$ má tvar
+            \[A\to \omega B\quad\text{nebo}\quad A\to\omega,\]
+            kde $A,B\in V$ a $\omega\in T^*$.
+        \end{defblock}
+        \pause
+        Příklady:
+        \begin{itemize}
+            \pause
+            \item $S\to aS\mid bS\mid \lambda$ \markdarkgreen{je} regulární gramatika.
+            \pause
+            \item $S\to aSb\mid \lambda$ \markdarkred{není} regulární gramatika.
+            \pause
+            \item $S\to aA\mid bB,\ A\to aS\mid bA\mid \lambda,\ B\to bS\mid aB\mid \lambda$ \markdarkgreen{je} regulární gramatika.
+            \pause
+            \item $S\to aA\mid bB,\ A\to aS\mid bA,\ B\to bS\mid aB$ \markdarkred{není} regulární gramatika.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Regulární gramatiky a regulární jazyky}
+        \pause
+        \begin{thmblock}
+            Jazyk $L$ je regulární právě tehdy, když existuje regulární gramatika $G$ taková, že $L=L(G)$.
+        \end{thmblock}
+        \pause
+        Náznak důkazu:
+        \pause
+        \begin{enumerate}
+            \item konečný automat $\Rightarrow$ regulární gramatika.
+            \item regulární gramatika $\Rightarrow$ konečný automat,\\
+        \end{enumerate}
+        \pause
+        \begin{timportantframe}[.9\textwidth]
+            \begin{center}
+                Tedy regulární gramatiky generují právě regulární jazyky.
+            \end{center}
+        \end{timportantframe}
+        \pause
+        \begin{tinfoframe}[.8\textwidth]
+            \begin{center}
+                Ukážeme pouze první bod, druhý je analogický.
+            \end{center}
+        \end{tinfoframe}
+    \end{frame}
+
+    \begin{frame}{Konečný automat \(\Rightarrow\) regulární gramatika}
+        Mějme DFA $A=(Q,\Sigma,\delta,q_0,F)$. \pause Sestrojíme gramatiku $G=(V,T,P,S)$, kde
+        \[
+            V=Q,\qquad T=\Sigma,\qquad S=q_0.
+        \]
+
+        \pause
+
+        Pravidla \(P\) definujeme takto:
+        \begin{align*}
+            \delta(p,a)=q
+            \quad &\Longrightarrow \quad
+            p\to aq\\
+            p\in F
+            \quad &\Longrightarrow \quad
+            p\to \lambda.
+        \end{align*}
+
+        \pause
+
+        Přijímající výpočet automatu
+        \[
+            q_0 \xrightarrow{a_1} q_1
+            \xrightarrow{a_2} \cdots
+            \xrightarrow{a_n} q_n,\qquad q_n\in F
+        \]
+        odpovídá derivaci
+        \[
+            q_0 \Rightarrow a_1q_1
+            \Rightarrow a_1a_2q_2
+            \Rightarrow \cdots
+            \Rightarrow a_1\cdots a_nq_n
+            \Rightarrow a_1\cdots a_n.
+        \]
+
+        \pause
+
+        Tedy $L(A)=L(G)$.
+    \end{frame}
+
+    \begin{frame}{Znázornění převodu automatu na regulární gramatiku}
+    \centering
+    \begin{tikzpicture}[scale=0.9, every node/.style={font=\small}]
+
+        % levé popisky
+        \node[anchor=west] at (-4.8,2.3) {\textbf{Konečný automat}};
+        \node[anchor=west] at (-4.8,-2.6) {\textbf{Regulární gramatika}};
+
+        %------------------------------------------------
+        % Automat vpravo nahoře
+        %------------------------------------------------
+        \initialstate{q0}{(1.0,2.3)}{$q_0$}{(0.0,2.3)}{west}
+        \state{q1}{(3.0,2.3)}{$q_1$}
+        \acceptingstate{q2}{(5.0,2.3)}{$q_2$}
+
+        \transitionarrow[loop above]{q0}{above}{$a$}{q0}
+        \transitionarrow[bend left=15]{q0}{above}{$b$}{q1}
+
+        \transitionarrow[loop above]{q1}{above}{$b$}{q1}
+        \transitionarrow[bend left=15]{q1}{above}{$a$}{q2}
+
+        \transitionarrow[loop above]{q2}{above}{$a,b$}{q2}
+
+        %------------------------------------------------
+        % Šipka převodu mezi oběma částmi
+        %------------------------------------------------
+        \draw[transition, line width=1.1pt] (3.0,1.25) -- (3.0,0.25);
+        \node[anchor=west] at (3.15,0.75) {\small převod};
+
+        %------------------------------------------------
+        % Gramatika vpravo dole
+        %------------------------------------------------
+        \node[anchor=north west, align=left, text width=7.7cm] at (-1.1,-0.05) {%
+            \[
+                G=(V,T,P,S)
+            \]
+            \[
+                V=\{q_0,q_1,q_2\},\qquad
+                T=\{a,b\},\qquad
+                S=q_0
+            \]
+            \[
+            \begin{aligned}
+                P=\{&
+                q_0 \to aq_0 \mid bq_1,\\
+                &
+                q_1 \to bq_1 \mid aq_2,\\
+                &
+                q_2 \to aq_2 \mid bq_2 \mid \lambda
+                \}
+            \end{aligned}
+            \]
+        };
+
+    \end{tikzpicture}
+    \end{frame}
+
+    \begin{frame}{Jeden jazyk třemi způsoby}
+        Uvažujme jazyk $L=\set{w\in\{a,b\}^* \mid w \text{ končí na } ab}$.
+
+        \vspace{0.3cm}
+
+        \begin{columns}[T]
+            %----------------------------------------
+            % Levý sloupec
+            %----------------------------------------
+            \begin{column}{0.52\textwidth}
+                \textbf{Regulární výraz:}
+                \[
+                    (a\mid b)^*ab
+                \]
+
+                \vspace{0.4cm}
+
+                \textbf{Regulární gramatika:}
+
+                \[
+                    G=(V,T,P,S),
+                \]
+                kde $V=\set{S,A,B}, T=\set{a,b}$ a~pravidla jsou
+                \[
+                \begin{aligned}
+                    S &\to aA \mid bS,\\
+                    A &\to aA \mid bB,\\
+                    B &\to aA \mid bS \mid \lambda.
+                \end{aligned}
+                \]
+
+                \vspace{0.2cm}
+
+                \textbf{Příklad slov z jazyka:}
+                \[
+                    ab,\quad aab,\quad bab,\quad bbab.
+                \]
+            \end{column}
+
+            %----------------------------------------
+            % Pravý sloupec
+            %----------------------------------------
+            \begin{column}{0.48\textwidth}
+                \textbf{Konečný automat:}
+
+                \begin{center}
+                \begin{tikzpicture}[scale=0.95, every node/.style={font=\small}]
+                    \initialstate{q0}{(0,0)}{$q_0$}{(-1.0,0)}{west}
+                    \state{q1}{(2.0,0)}{$q_1$}
+                    \acceptingstate{q2}{(4.0,0)}{$q_2$}
+
+                    \transitionarrow[loop above]{q0}{above}{$b$}{q0}
+                    \transitionarrow[bend left=15]{q0}{above}{$a$}{q1}
+
+                    \transitionarrow[loop above]{q1}{above}{$a$}{q1}
+                    \transitionarrow[bend left=15]{q1}{above}{$b$}{q2}
+
+                    \transitionarrow[bend left=20]{q2}{below}{$a$}{q1}
+                    \transitionarrow[bend left=50]{q2}{above}{$b$}{q0}
+                \end{tikzpicture}
+                \end{center}
+
+                \begin{itemize}
+                    \item \(q_0\): zatím nic podstatného
+                    \item \(q_1\): poslední symbol je \(a\)
+                    \item \(q_2\): poslední dva symboly jsou \(ab\)
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{frame}
+
+    \section{Zdroje}
+
+    \begin{frame}{Zdroje}
+        \begin{itemize}
+            \item PAPADIMITRIOU, Christos H. Computational complexity. Reading: Addison-Wesley, 1994. ISBN 0-201-53082-1.
+            \item HOPCROFT, John E.; MOTWANI, Rajeev a ULLMAN, Jeffrey D. Introduction to automata theory, languages, and computation. 3rd ed. Boston: Pearson/Addison Wesley, c2007.
+        \end{itemize}
     \end{frame}
 
 \end{document}
