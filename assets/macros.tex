@@ -301,21 +301,21 @@
     thick
 ]
 
-\newcommand{\state}[4][]{%
-    \node[state,#1] (#2) at #3 {#4};
+\newcommand<>{\state}[4][]{%
+    \node#5[state,#1] (#2) at #3 {#4};
 }
 
-\newcommand{\acceptingstate}[4][]{%
-    \node[acceptstate,#1] (#2) at #3 {#4};
+\newcommand<>{\acceptingstate}[4][]{%
+    \node#5[acceptstate,#1] (#2) at #3 {#4};
 }
 
-\newcommand{\transitionarrow}[5][]{%
-    \path (#2) edge[transition,#1] node[#3] {#4} (#5);
+\newcommand<>{\transitionarrow}[5][]{%
+    \path#6 (#2) edge[transition,#1] node[#3] {#4} (#5);
 }
 
-\newcommand{\initialstate}[6][]{%
-    \node[state,#1] (#2) at #3 {#4};
-    \draw[transition] #5 -- (#2.#6);
+\newcommand<>{\initialstate}[6][]{%
+    \node#7[state,#1] (#2) at #3 {#4};
+    \draw#7[transition] #5 -- (#2.#6);
 }
 
 %%%%%

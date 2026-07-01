@@ -12,4 +12,628 @@
 
     \input{../titlepage.tex}
 
+    \section{Kompilátory}
+
+    \titleframe{Kompilátory}
+
+    \subsection{Úvod}
+
+    \begin{frame}{Co je kompilátor?}
+
+        \begin{itemize}
+            \visible<2->{\item \textbf{Kompilátor} je program, který překládá jiný program.}
+            \visible<3->{\item Vstupem je obvykle \textbf{zdrojový kód}.}
+            \visible<4->{\item Výstupem je \textbf{cílový kód} -- např. assembler, mezikód nebo strojový kód.}
+        \end{itemize}
+
+        \vspace{0.25cm}
+
+        \centering
+        \begin{tikzpicture}[
+            box/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                minimum width=2.6cm,
+                minimum height=0.8cm
+            },
+            arrow/.style={->, thick},
+            node distance=0.75cm
+        ]
+
+            \visible<3->{\node[box] (src) {zdrojový\\kód};}
+            \visible<2->{\node[box, right=of src] (comp) {kompilátor};}
+            \visible<4->{\node[box, right=of comp] (out) {cílový\\kód};}
+
+            \visible<3->{\draw[arrow] (src) -- (comp);}
+            \visible<4->{\draw[arrow] (comp) -- (out);}
+
+            \visible<5->{
+                \node[below=0.25cm of src, align=center] {
+                    \scriptsize
+                    \shortstack{
+                        \texttt{C}\\[-0.5mm]
+                        \texttt{Java}\\[-0.5mm]
+                        \texttt{C\#}
+                    }
+                };
+
+                \node[below=0.25cm of out, align=center] {
+                    \scriptsize
+                    \shortstack{
+                        assembler\\[-0.5mm]
+                        mezikód\\[-0.5mm]
+                        strojový kód
+                    }
+                };
+            }
+
+        \end{tikzpicture}
+
+        \vspace{0.3cm}
+
+        \visible<6->{
+            \begin{tinfoframe}[0.88\linewidth]
+                Program, který napíše člověk, se musí převést do podoby,
+                se kterou dokáže pracovat počítač nebo běhové prostředí.
+            \end{tinfoframe}
+        }
+
+    \end{frame}
+
+    \subsection{Od zdrojového kódu ke spustitelnému souboru}
+
+    \begin{frame}{Od zdrojového kódu ke spustitelnému souboru}
+
+        \begin{itemize}
+            \visible<2->{\item Překlad programu často neprobíhá v jednom kroku.}
+            \visible<3->{\item Například u jazyka C může mít překladový řetězec několik částí.}
+        \end{itemize}
+
+        \vspace{0.15cm}
+
+        \centering
+        \begin{tikzpicture}[
+            file/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                font=\scriptsize,
+                minimum width=1.25cm,
+                minimum height=0.65cm
+            },
+            tool/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                font=\scriptsize,
+                minimum width=1.55cm,
+                minimum height=0.65cm
+            },
+            arrow/.style={->, thick}
+        ]
+
+            \node<3->[file] (c) at (0,0) {\texttt{hello.c}};
+            \node<3->[tool] (pre) at (1.8,0) {preprocesor};
+            \node<3->[file] (i) at (3.6,0) {\texttt{hello.i}};
+
+            \draw<3->[arrow] (c) -- (pre);
+            \draw<3->[arrow] (pre) -- (i);
+
+            \node<4->[tool] (comp) at (5.4,0) {kompilátor};
+            \node<4->[file] (s) at (7.2,0) {\texttt{hello.s}};
+
+            \draw<4->[arrow] (i) -- (comp);
+            \draw<4->[arrow] (comp) -- (s);
+
+            \node<5->[tool] (asm) at (5.4,-1.25) {assembler};
+            \node<5->[file] (o) at (3.6,-1.25) {\texttt{hello.o}};
+
+            \draw<5->[arrow] (s.south) -- ++(0,-0.35) -- (asm.east);
+            \draw<5->[arrow] (asm) -- (o);
+
+            \node<6->[tool] (link) at (1.8,-1.25) {linker};
+            \node<6->[file] (exe) at (0,-1.25) {\texttt{hello}};
+
+            \draw<6->[arrow] (o) -- (link);
+            \draw<6->[arrow] (link) -- (exe);
+
+        \end{tikzpicture}
+
+        \vspace{0.15cm}
+
+        \begin{columns}[T,onlytextwidth]
+            \begin{column}{0.48\textwidth}
+                \begin{itemize}
+                    \visible<3->{\item \textbf{Preprocesor}: zpracuje např. \texttt{\#include}.}
+                    \visible<4->{\item \textbf{Kompilátor}: vytvoří assembler.}
+                \end{itemize}
+            \end{column}
+
+            \begin{column}{0.48\textwidth}
+                \begin{itemize}
+                    \visible<5->{\item \textbf{Assembler}: vytvoří objektový soubor.}
+                    \visible<6->{\item \textbf{Linker}: spojí části programu a knihovny.}
+                \end{itemize}
+            \end{column}
+        \end{columns}
+
+    \end{frame}
+
+    \subsection{Mezikód a strojový kód}
+
+    \begin{frame}{Mezikód a strojový kód}
+        \pause
+        \begin{columns}[T,onlytextwidth]
+            \begin{column}{0.49\textwidth}
+                \textbf{Strojový kód}
+                \begin{itemize}
+                    \visible<3->{\item je určen pro konkrétní procesor,}
+                    \visible<4->{\item procesor jej umí přímo vykonat,}
+                    \visible<5->{\item je závislý na dané platformě.}
+                \end{itemize}
+            \end{column}
+
+            \begin{column}{0.49\textwidth}
+                \textbf{Mezikód}
+                \begin{itemize}
+                    \visible<6->{\item je mezilehlá reprezentace programu,}
+                    \visible<7->{\item zpracuje jej virtuální stroj nebo JIT,}
+                    \visible<8->{\item usnadňuje přenositelnost programu.}
+                \end{itemize}
+            \end{column}
+        \end{columns}
+
+        \vspace{0.1cm}
+
+        \centering
+        \begin{tikzpicture}[
+            box/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                font=\scriptsize,
+                minimum width=1.35cm,
+                minimum height=0.6cm
+            },
+            widebox/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                font=\scriptsize,
+                minimum width=1.65cm,
+                minimum height=0.6cm
+            },
+            arrow/.style={->, thick}
+        ]
+
+            \visible<4->{
+                \node[box] (c) at (0,0) {\texttt{C/C++}};
+                \node[widebox] (comp1) at (1.9,0) {kompilátor};
+                \node[widebox] (mc1) at (3.9,0) {strojový\\kód};
+                \node[box] (cpu1) at (5.8,0) {procesor};
+
+                \draw[arrow] (c) -- (comp1);
+                \draw[arrow] (comp1) -- (mc1);
+                \draw[arrow] (mc1) -- (cpu1);
+
+                \node[font=\scriptsize, align=right] at (-1.8,0) {přímá\\kompilace};
+            }
+
+            \visible<7->{
+                \node[box] (java) at (0,-1.25) {\texttt{Java}\\\texttt{C\#}};
+                \node[widebox] (comp2) at (1.9,-1.25) {kompilátor};
+                \node[box] (ir) at (3.9,-1.25) {mezikód};
+                \node[box] (jit) at (5.8,-1.25) {VM/JIT};
+                \node[widebox] (mc2) at (7.65,-1.25) {strojový\\kód};
+
+                \draw[arrow] (java) -- (comp2);
+                \draw[arrow] (comp2) -- (ir);
+                \draw[arrow] (ir) -- (jit);
+                \draw[arrow] (jit) -- (mc2);
+
+                \node[font=\scriptsize, align=right] at (-1.8,-1.25) {překlad přes\\mezikód};
+            }
+
+        \end{tikzpicture}
+
+        \vspace{0.15cm}
+
+        \visible<9->{
+            \begin{tinfoframe}
+                Mezikód umožňuje přeložit program do společné podoby,
+                která se na konkrétním počítači převede až později.
+            \end{tinfoframe}
+        }
+
+    \end{frame}
+
+    \subsection{Fáze překladače}
+
+    \begin{frame}{Fáze překladače}
+
+        \begin{itemize}
+            \visible<2->{\item Překladač nezpracovává program najednou.}
+            \visible<3->{\item Zdrojový kód postupně převádí do jednodušších reprezentací.}
+            \visible<4->{\item Jednotlivé fáze se obvykle dělí na}
+            \visible<5->{
+                \begin{itemize}
+                    \item \textbf{přední část} -- závisí hlavně na zdrojovém jazyce,
+                    \item \textbf{koncovou část} -- závisí hlavně na cílovém počítači.
+                \end{itemize}
+            }
+        \end{itemize}
+
+        \vspace{0.15cm}
+
+        \centering
+        \begin{tikzpicture}[
+            phase/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                font=\scriptsize,
+                minimum width=1.75cm,
+                minimum height=0.65cm
+            },
+            lang/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                font=\scriptsize,
+                minimum width=1.45cm,
+                minimum height=0.65cm
+            },
+            arrow/.style={->, thick}
+        ]
+            % vnější obdélník
+            \visible<2->{
+                \draw[thick, rounded corners] (-1.3,1.5) rectangle (7.8,-2.5);
+                \node[draw, fill=white, font=\small\bfseries, inner xsep=6pt, inner ysep=2pt]
+                    at (3.125,1.5) {Překladač};
+            }
+
+            \node<2->[lang,fill=red!40!white]  (src) at (0,0) {zdrojový\\kód};
+            \node<3->[phase,fill=red!40!white] (lex) at (2.05,0) {lexikální\\analýza};
+            \node<4->[phase,fill=red!40!white] (syn) at (4.10,0) {syntaktická\\analýza};
+            \node<5->[phase,fill=red!40!white] (sem) at (6.15,0) {sémantická\\analýza};
+
+            \node<6->[lang,fill=orange!40!white]  (ir)  at (6.15,-1.15) {mezikód};
+            \node<7->[phase,fill=orange!40!white] (opt) at (4.10,-1.15) {optimalizace};
+            \node<8->[phase,fill=orange!40!white] (gen) at (2.05,-1.15) {generování\\kódu};
+            \node<9->[lang,fill=orange!40!white]  (tgt) at (0,-1.15) {cílový\\kód};
+
+            \draw<3->[arrow] (src) -- (lex);
+            \draw<4->[arrow] (lex) -- (syn);
+            \draw<5->[arrow] (syn) -- (sem);
+            \draw<6->[arrow] (sem) -- (ir);
+            \draw<7->[arrow] (ir) -- (opt);
+            \draw<8->[arrow] (opt) -- (gen);
+            \draw<9->[arrow] (gen) -- (tgt);
+
+            \node<5->[font=\scriptsize] at (3.1,0.85) {\textbf{přední část (front end)}};
+            \node<8->[font=\scriptsize] at (3.1,-2.0) {\textbf{koncová část (back end)}};
+
+        \end{tikzpicture}
+
+    \end{frame}
+
+    \section{Lexikální analýza}
+
+    \titleframe{Lexikální analýza}
+
+    \subsection{Hlavní činnost}
+
+    \begin{frame}{Lexikální analýza}
+
+        \begin{itemize}
+            \visible<2->{\item \textbf{Lexikální analýza} je první analytická fáze překladače, kterou zařizuje tzv. \textbf{lexer}.}
+            \visible<3->{\item Vstupem je posloupnost znaků zdrojového programu.}
+            \visible<4->{\item Výstupem je posloupnost \textbf{lexikálních symbolů}.}
+            \visible<5->{\item Těmto symbolům se také říká \textbf{tokeny}.}
+        \end{itemize}
+
+        \vspace{0.15cm}
+
+        \centering
+        \begin{tikzpicture}[
+            box/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                font=\scriptsize,
+                minimum width=2.15cm,
+                minimum height=0.75cm
+            },
+            arrow/.style={->, thick}
+        ]
+
+            \node<3->[box] (src) at (0,0) {zdrojový\\program};
+            \node<2->[box] (lex) at (3.25,0) {lexikální\\analyzátor};
+            \node<4->[box] (tok) at (6.50,0) {posloupnost\\tokenů};
+
+            \draw<3->[arrow] (src) -- (lex);
+            \draw<4->[arrow] (lex) -- (tok);
+
+            \node<6->[font=\scriptsize, align=center] at (0,-0.9)
+                {\texttt{position = speed * 60;}};
+
+            \node<6->[font=\scriptsize, align=center] at (6.50,-0.9)
+                {\texttt{id = id * num ;}};
+
+        \end{tikzpicture}
+
+    \end{frame}
+
+    \subsection{Lexémy a tokeny}
+
+    \begin{frame}{Lexém a token}
+
+        \begin{itemize}
+            \visible<2->{\item \textbf{Lexém} je konkrétní část zdrojového textu.}
+            \visible<3->{\item \textbf{Token} je informace, kterou dostane další část překladače.}
+            \visible<4->{\item Token často zapisujeme jako dvojici}
+        \end{itemize}
+
+        \visible<4->{
+            \[
+                \langle \text{typ tokenu}, \text{hodnota} \rangle
+            \]
+        }
+
+        \vspace{-0.1cm}
+
+        \centering
+        \begin{tikzpicture}
+            \node<5->[
+                draw,
+                thick,
+                rounded corners,
+                fill=blue!20!white,
+                inner xsep=8pt,
+                inner ysep=6pt
+            ] {\texttt{position = speed * 60;}};
+        \end{tikzpicture}
+
+        \vspace{0.25cm}
+
+        \visible<5->{
+            \begin{center}
+                \scriptsize
+                \renewcommand{\arraystretch}{1.25}
+                \begin{tabular}{|c|c|c|}
+                    \hline
+                    \textbf{lexém} & \textbf{typ tokenu} & \textbf{token} \\
+                    \hline
+                    \visible<6->{\texttt{position}} & \visible<6->{identifikátor} & \visible<6->{\texttt{<id, position>}} \\
+                    \hline
+                    \visible<7->{\texttt{=}} & \visible<7->{operátor přiřazení} & \visible<7->{\texttt{<=>}} \\
+                    \hline
+                    \visible<8->{\texttt{speed}} & \visible<8->{identifikátor} & \visible<8->{\texttt{<id, speed>}} \\
+                    \hline
+                    \visible<9->{\texttt{*}} & \visible<9->{operátor} & \visible<9->{\texttt{<*>}} \\
+                    \hline
+                    \visible<10->{\texttt{60}} & \visible<10->{číslo} & \visible<10->{\texttt{<num, 60>}} \\
+                    \hline
+                    \visible<11->{\texttt{;}} & \visible<11->{oddělovač} & \visible<11->{\texttt{<;>}} \\
+                    \hline
+                \end{tabular}
+            \end{center}
+        }
+
+    \end{frame}
+
+    \begin{frame}{Od regulárního výrazu k~lexeru}
+
+        \begin{itemize}
+            \visible<2->{\item Každý typ tokenu popíšeme jako \textbf{regulární jazyk}.}
+            \visible<3->{\item Pro tyto jazyky lze sestrojit \textbf{konečné automaty}.}
+            \visible<4->{\item Výsledný automat pak čte zdrojový program znak po znaku.}
+        \end{itemize}
+
+        \vspace{0.05cm}
+
+        \centering
+        \begin{tikzpicture}[
+            box/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                font=\scriptsize,
+                minimum height=0.72cm
+            },
+            smallbox/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                font=\scriptsize,
+                minimum width=1.45cm,
+                minimum height=0.62cm
+            },
+            arrow/.style={->, thick}
+        ]
+
+            % horní řada: regulární výrazy tokenů
+            \node<2->[box, minimum width=2.45cm] (re1) at (0,0)
+                {identifikátor\\\texttt{[a-zA-Z][a-zA-Z0-9]*}};
+
+            \node<2->[box, minimum width=1.95cm] (re2) at (3.05,0)
+                {číslo\\\texttt{[0-9]+}};
+
+            \node<2->[box, minimum width=2.15cm] (re3) at (5.80,0)
+                {operátor\\\texttt{= \;|\; + \;|\; *}};
+
+            % mezikrok: společný regulární popis
+            \node<3->[box, minimum width=5.9cm] (combined) at (2.90,-1.45)
+                {společný regulární popis\\
+                \texttt{id \;|\; num \;|\; op}};
+
+            \draw<3->[arrow] (re1.south) -- (combined.north);
+            \draw<3->[arrow] (re2.south) -- (combined.north);
+            \draw<3->[arrow] (re3.south) -- (combined.north);
+
+            % konstrukce automatů
+            \node<4->[smallbox] (nfa) at (0.60,-2.95) {NKA};
+            \node<5->[smallbox] (dfa) at (3.50,-2.95) {DKA};
+            \node<6->[box, minimum width=2.05cm] (lexer) at (6.00,-2.95)
+                {lexikální\\analyzátor};
+
+            \draw<4->[arrow] (combined.south) -- ++(0,-0.225) -| (nfa.north);
+            \draw<5->[arrow] (nfa) -- node[above, font=\scriptsize, yshift=1mm] {determin.} (dfa);
+            \draw<6->[arrow] (dfa) -- (lexer);
+
+            % spodní ukázka
+            \node<7->[box, minimum width=2.4cm] (src) at (0.65,-4.15)
+                {\texttt{position = 60;}};
+
+            \node<7->[box, minimum width=3.3cm] (tok) at (5.35,-4.15)
+                {\texttt{<id, position>}\\
+                \texttt{<=> <num, 60> <;>}};
+
+            \draw<7->[arrow] (src) -- node[above, font=\scriptsize, yshift=1mm] {čtení znaků} (tok);
+
+        \end{tikzpicture}
+
+    \end{frame}
+
+    \begin{frame}{Obecná konstrukce lexeru}
+
+        \small
+        \begin{itemize}
+            \visible<2->{\item Pro každý typ tokenu sestrojíme automat \(T_1,\dots,T_n\).}
+            \visible<3->{\item Přidáme společný počáteční stav \(s\) a \(\lambda\)-přechody;
+            mezery a komentáře pouze přeskočíme.}
+        \end{itemize}
+
+        \vspace{-0.05cm}
+
+        \centering
+        \begin{tikzpicture}[scale=0.82, every node/.style={font=\scriptsize}]
+
+            %-------------------------------------------------
+            % společný počáteční stav
+            %-------------------------------------------------
+            \initialstate<2->{S}{(-1,0)}{$s$}{(-2.0,0.0)}{west}
+            \transitionarrow<3->[loop above]{S}{above}{\scriptsize mezera, tab, EOL}{S}
+
+            %-------------------------------------------------
+            % větev pro komentář
+            %-------------------------------------------------
+            % \draw<3->[green!60!black, thick, rounded corners]
+            %     (-1.15,-2.55) rectangle (1.20,-1.75);
+
+            \state<3->{C1}{(-1.0,-1.80)}{$c_1$}
+            \acceptingstate<3->{C2}{(-1.0,-3.60)}{$c_2$}
+
+            \transitionarrow<3->{S}{left}{\scriptsize zač. komentáře}{C1}
+            \transitionarrow<3->[loop right]{C1}{below}{\scriptsize obsah}{C1}
+            \transitionarrow<3->{C1}{right}{\scriptsize konec}{C2}
+            \transitionarrow<3->[bend left=70]{C2}{left}{\scriptsize přeskočit}{S}
+
+            %-------------------------------------------------
+            % T1
+            %-------------------------------------------------
+            \draw<2->[cyan!70!black, thick, rounded corners]
+                (3.00,0.8) rectangle (10.20,-0.80);
+
+            \node<2->[text=cyan!50!black]
+                at (10.60,0.0) {$T_1$};
+
+            \state<2->{Q1}{(4.10,0)}{$q_1$}
+            \node (T1dots) at (6.60,0) {\(\cdots\)};
+            \acceptingstate<2->{F1}{(9.10,0)}{$f_1$}
+
+            \transitionarrow<2->{S}{above}{\scriptsize \(\lambda\)}{Q1}
+            \transitionarrow<2->{Q1}{above}{}{T1dots}
+            \transitionarrow<2->{T1dots}{above}{}{F1}
+
+            %-------------------------------------------------
+            % T2
+            %-------------------------------------------------
+            \draw<2->[cyan!70!black, thick, rounded corners]
+                (3.00,-1.25) rectangle (10.20,-2.85);
+
+            \node<2->[text=cyan!50!black]
+                at (10.60,-2.05) {$T_2$};
+
+            \state<2->{Q2}{(4.10,-2.05)}{$q_2$}
+            \node (T2dots) at (6.60,-2.05) {\(\cdots\)};
+            \acceptingstate<2->{F2}{(9.10,-2.05)}{$f_2$}
+
+            \transitionarrow<2->{S}{above}{\scriptsize \(\lambda\)}{Q2}
+            \transitionarrow<2->{Q2}{above}{}{T2dots}
+            \transitionarrow<2->{T2dots}{above}{}{F2}
+
+            %-------------------------------------------------
+            % Tn
+            %-------------------------------------------------
+            \draw<2->[cyan!70!black, thick, rounded corners]
+                (3.00,-3.40) rectangle (10.20,-5.00);
+
+            \node<2->[text=cyan!50!black]
+                at (10.60,-4.20) {$T_n$};
+
+            \state<2->{Qn}{(4.10,-4.25)}{$q_n$}
+            \node (Tndots) at (6.60,-4.25) {\(\cdots\)};
+            \acceptingstate<2->{Fn}{(9.10,-4.25)}{$f_n$}
+
+            \transitionarrow<2->{S}{above}{\scriptsize \(\lambda\)}{Qn}
+            \transitionarrow<2->{Qn}{above}{}{Tndots}
+            \transitionarrow<2->{Tndots}{above}{}{Fn}
+
+            %-------------------------------------------------
+            % naznačení dalších větví
+            %-------------------------------------------------
+            \node<2->[font=\Large] at (4.05,-3.15) {\(\vdots\)};
+
+        \end{tikzpicture}
+
+    \end{frame}
+
+    \begin{frame}{Jak lexer vybere správný token?}
+
+        \begin{itemize}
+            \visible<2->{\item Lexer čte vstup zleva doprava a hledá nejdelší prefix,
+            který tvoří platný lexém.}
+            \visible<3->{\item Pokud může vytvořit delší lexém, pokračuje ve čtení.}
+            \visible<4->{\item Pokud se na stejný lexém hodí více pravidel,
+            rozhodne \textbf{priorita pravidel}.}
+        \end{itemize}
+
+        \vspace{0.05cm}
+
+        \centering
+        \renewcommand{\arraystretch}{1.25}
+        \visible<5->{
+            \begin{tabular}{|c|c|c|}
+                \hline
+                \textbf{vstup} & \textbf{během čtení lze přijmout} & \textbf{výsledek lexeru} \\
+                \hline
+                \visible<5->{\texttt{==}} &
+                \visible<5->{\texttt{=} i \texttt{==}} &
+                \visible<5->{\texttt{==}} \\
+                \hline
+                \visible<6->{\texttt{abc123}} &
+                \visible<6->{\texttt{a}, \texttt{ab}, \dots, \texttt{abc123}} &
+                \visible<6->{\texttt{<id, abc123>}} \\
+                \hline
+                \visible<7->{\texttt{then}} &
+                \visible<7->{klíčové slovo i identifikátor} &
+                \visible<7->{klíčové slovo} \\
+                \hline
+            \end{tabular}
+        }
+
+    \end{frame}
+
 \end{document}
