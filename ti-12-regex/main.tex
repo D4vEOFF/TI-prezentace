@@ -42,10 +42,10 @@
             \begin{itemize}
                 \visible<4->{\item $\lambda,a$, kde $a\in\Sigma$, jsou regulární výrazy, tj. $\lambda,a\in\regex(\Sigma)$. Jejich hodnoty jsou $L(\lambda)=\set{\lambda}$ a~$L(a)=\set{a}$.}
                 \visible<5->{\item Jsou-li $\alpha,\beta\in\regex(\Sigma)$, pak také
-                \[\alpha+\beta,\quad\alpha\beta,\quad \alpha^{*}\quad\text{a}\quad (\alpha)\]
+                \[\alpha\mid\beta,\quad\alpha\beta,\quad \alpha^{*}\quad\text{a}\quad (\alpha)\]
                 jsou v~$\regex(\Sigma)$ a platí
                 \begin{align*}
-                    L(\alpha+\beta)&=L(\alpha)\cup L(\beta),\quad L(\alpha\beta)=L(\alpha)L(\beta)\\
+                    L(\alpha\mid\beta)&=L(\alpha)\cup L(\beta),\quad L(\alpha\beta)=L(\alpha)L(\beta)\\
                     L(\alpha^{*})&=L(\alpha)^{*},\quad L((\alpha))=L(\alpha).
                 \end{align*}}
             \end{itemize}
@@ -57,7 +57,7 @@
     \begin{frame}{Příklady regulárních jazyků}
         \visible<2->{\begin{tinfoframe}
             \begin{center}
-                Operace $*$ má nejvyšší prioritu, nižší konkatenace (zřetězení) a nejnižší sjednocení $+$.
+                Operace $*$ má nejvyšší prioritu, nižší konkatenace (zřetězení) a nejnižší sjednocení $\mid$.
             \end{center}
         \end{tinfoframe}}
 
@@ -67,11 +67,11 @@
             \begin{tabular}{c|c}
             Jazyk & Regulární výraz \\
             \hline
-            \visible<5->{všechna slova nad $\Sigma$} & \visible<6->{$(0+1)^*$ \\}
-            \visible<7->{slova končící na $01$} & \visible<8->{$(0+1)^*01$ \\}
+            \visible<5->{všechna slova nad $\Sigma$} & \visible<6->{$(0\mid1)^*$ \\}
+            \visible<7->{slova končící na $01$} & \visible<8->{$(0\mid1)^*01$ \\}
             \visible<9->{slova obsahující právě jednu $1$} & \visible<10->{$0^*10^*$ \\}
             \visible<11->{slova se sudým počtem jedniček} & \visible<12->{$0^*(10^*10^*)^*$ \\}
-            \visible<13->{slova bez dvou sousedních jedniček} & \visible<14->{$(0+10)^*(\lambda+1)$}
+            \visible<13->{slova bez dvou sousedních jedniček} & \visible<14->{$(0\mid10)^*(\lambda\mid1)$}
             \end{tabular}
         \end{center}}
     \end{frame}
@@ -102,7 +102,7 @@
             \visible<4->{\item Každý regulární výraz lze převést na konečný automat.}
             \begin{itemize}
                 \visible<5->{\item Pro $\lambda$ a $a\in\Sigma$ umíme sestrojit jednoduchý automat.}
-                \visible<6->{\item Operace $+$, zřetězení a $^*$ odpovídají konstrukcím nad automaty (viz další snímek).}
+                \visible<6->{\item Operace $\mid$, zřetězení a $^*$ odpovídají konstrukcím nad automaty (viz další snímek).}
             \end{itemize}
 
             \visible<7->{\item Každý konečný automat lze převést na regulární výraz.}
@@ -127,13 +127,13 @@
         \]
         slova, ve kterých jsou nejdříve nuly a potom jedničky.}
 
-        \item \visible<5->{$\alpha_2=(0+1)^*01$}
+        \item \visible<5->{$\alpha_2=(0\mid1)^*01$}
         \visible<6->{\[
             L(\alpha_2)=\set{w01 : w\in\Sigma^*}
         \]
         slova končící na $01$.}
 
-        \item \visible<7->{$\alpha_3=(0+1)^*00(0+1)^*$}
+        \item \visible<7->{$\alpha_3=(0\mid1)^*00(0\mid1)^*$}
         \visible<8->{\[
             L(\alpha_3)=\set{u00v : u,v\in\Sigma^*}
         \]
@@ -145,7 +145,7 @@
         \]
         slova obsahující právě dvě jedničky.}
 
-        \item \visible<11->{$\alpha_5=((0+1)(0+1))^*$}
+        \item \visible<11->{$\alpha_5=((0\mid1)(0\mid1))^*$}
         \visible<12->{\[
             L(\alpha_5)=\set{w\in\Sigma^* : |w| \text{ je sudé}}
         \]}
@@ -174,15 +174,6 @@
 
         \pause
         \markdarkred{Tento jazyk ale není regulární!}
-
-        \pause
-        \medskip
-        Proto platí:
-        \[
-        \text{formální regulární výrazy}
-        \quad \subsetneq \quad
-        \text{praktické "regexy" v programovacích jazycích}.
-        \]
     \end{frame}
 
     \section{Zdroje}
