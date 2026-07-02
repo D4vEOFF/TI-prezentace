@@ -12,4 +12,317 @@
 
     \input{../titlepage.tex}
 
+    \section{Základní části počítače}
+
+    \titleframe{Základní části počítače}
+
+    \subsection{CPU}
+
+    \begin{frame}{Základní části počítače}
+
+        \begin{itemize}
+            \visible<2->{\item \textbf{Datová část} provádí výpočty a zpracovává data.}
+
+            \visible<3->{\item \textbf{Řídicí část} určuje, co se má kdy stát.}
+
+            \visible<4->{\item \textbf{Paměť} uchovává programy, instrukce a~data.}
+
+            \visible<5->{\item \textbf{Vstupní zařízení} předávají počítači data z~okolí.}
+
+            \visible<6->{\item \textbf{Výstupní zařízení} předávají výsledky zpět uživateli nebo jinému zařízení.}
+        \end{itemize}
+
+        \vspace{4mm}
+
+        \visible<7->{
+            \begin{tinfoframe}
+                \footnotesize
+                V této prezentaci se zaměříme hlavně na
+                \textbf{procesor} a \textbf{paměťový subsystém},
+                tedy na části, které přímo souvisejí s vykonáváním programu.
+            \end{tinfoframe}
+        }
+
+    \end{frame}
+
+    \begin{frame}{Základní části počítače}
+
+        \centering
+
+        \begin{tikzpicture}[
+            x=1cm, y=1cm,
+            every node/.style={font=\small},
+            unit/.style={
+                draw,
+                thick,
+                rounded corners,
+                align=center,
+                minimum width=2.15cm,
+                minimum height=0.75cm
+            },
+            subunit/.style={
+                draw,
+                rounded corners,
+                align=center,
+                fill=black!5,
+                minimum width=2.75cm,
+                minimum height=0.45cm,
+                font=\small
+            },
+            arr/.style={->, thick},
+            barr/.style={<->, thick}
+        ]
+
+            % CPU
+            \node[
+                unit,
+                fill=blue!8,
+                minimum width=4.05cm,
+                minimum height=3.50cm
+            ] (cpu) at (0,0) {};
+
+            \node[font=\Large\bfseries] at (0,1.30) {Procesor};
+            \node[font=\large] at (0,0.70) {(CPU)};
+
+            \node[subunit] at (0,0) {ALU};
+            \node[subunit] at (0,-0.65) {řadič};
+            \node[subunit] at (0,-1.30) {registry};
+
+            % Memory
+            \node[
+                unit,
+                fill=green!10,
+                minimum width=2.75cm,
+                minimum height=1.00cm,
+                font=\large
+            ] (mem) at (0,-3.00) {Paměť};
+
+            % I/O
+            \node[
+                unit,
+                fill=orange!12,
+                minimum width=2.10cm,
+                minimum height=0.90cm,
+                font=\large
+            ] (inputnode) at (-3.75,0) {Vstup};
+
+            \node[
+                unit,
+                fill=orange!12,
+                minimum width=2.10cm,
+                minimum height=0.90cm,
+                font=\large
+            ] (outputnode) at (3.75,0) {Výstup};
+
+            % Arrows
+            \draw[arr] (inputnode.east) -- (cpu.west);
+            \draw[arr] (cpu.east) -- (outputnode.west);
+
+            \draw[barr] (cpu.south) -- node[right, font=\small] {
+                data / instrukce
+            } (mem.north);
+
+        \end{tikzpicture}
+
+        \vspace{4mm}
+
+        {\small
+        Program, data a instrukce se přesouvají mezi procesorem,
+        pamětí a~vstupně/výstupními zařízeními.
+        }
+
+    \end{frame}
+
+    \subsection{Von Neumannova architektura}
+
+    \begin{frame}{Von Neumannova architektura}
+
+        \small
+        \begin{itemize}
+            \visible<2->{\item Program i data jsou uloženy ve \textbf{společné paměti}.}
+
+            \visible<3->{\item Procesor postupně načítá \textbf{instrukce} z paměti.}
+
+            \visible<4->{\item Instrukce určují, jaká data se mají zpracovat a kam uložit výsledek.}
+
+            \visible<5->{\item Základní cyklus: $\text{fetch} \rightarrow \text{decode} \rightarrow \text{execute}$.}
+        \end{itemize}
+
+        \vspace{1mm}
+
+        \visible<6->{
+            \begin{tinfoframe}
+                \footnotesize
+                Paměť zde nerozlišuje, zda uložené bity představují
+                \textbf{data}, nebo \textbf{instrukce}. Rozhoduje až způsob,
+                jakým je procesor použije.
+            \end{tinfoframe}
+        }
+
+        \centering
+        \begin{tikzpicture}[
+            x=1cm, y=1cm,
+            every node/.style={font=\small},
+            unit/.style={
+                draw,
+                thick,
+                rounded corners,
+                align=center,
+                minimum width=2.55cm,
+                minimum height=0.80cm
+            },
+            subunit/.style={
+                draw,
+                rounded corners,
+                align=center,
+                fill=black!5,
+                minimum width=2.25cm,
+                minimum height=0.43cm,
+                font=\scriptsize
+            },
+            arr/.style={->, thick},
+            barr/.style={<->, thick}
+        ]
+
+            % CPU
+            \node[
+                unit,
+                fill=blue!8,
+                minimum width=3.00cm,
+                minimum height=1.00cm,
+                font=\bfseries
+            ] (cpu) at (0,0) {Procesor};
+
+            % Memory
+            \node[
+                unit,
+                fill=green!10,
+                minimum width=3.30cm,
+                minimum height=1.20cm
+            ] (memory) at (0,-2.00) {Společná paměť\\ instrukce i data};
+
+            % I/O
+            \node[
+                unit,
+                fill=orange!12,
+                minimum width=1.65cm,
+                minimum height=0.65cm,
+                font=\scriptsize
+            ] (inputnode) at (-2.85,0) {Vstup};
+
+            \node[
+                unit,
+                fill=orange!12,
+                minimum width=1.65cm,
+                minimum height=0.65cm,
+                font=\scriptsize
+            ] (outputnode) at (2.85,0) {Výstup};
+
+            % Arrows
+            \draw[arr] (inputnode.east) -- (cpu.west);
+            \draw[arr] (cpu.east) -- (outputnode.west);
+
+            \draw[barr] (cpu.south) -- node[right, font=\scriptsize] {
+                data / instrukce
+            } (memory.north);
+
+        \end{tikzpicture}
+
+    \end{frame}
+
+    \begin{frame}{Von Neumannova vs. harvardská architektura}
+
+        \small
+
+        \begin{itemize}
+            \visible<2->{\item \textbf{Von Neumannova architektura} používá \textbf{společnou paměť} pro instrukce i data.}
+
+            \visible<3->{\item \textbf{Harvardská architektura} má \textbf{oddělenou paměť} pro instrukce a pro data.}
+
+            \visible<4->{\item Oddělení pamětí umožňuje načítat \textbf{instrukce a data současně}.}
+
+            \visible<5->{\item V praxi se často používá \textbf{kombinace obou přístupů}.}
+        \end{itemize}
+
+        \vspace{2mm}
+
+        \visible<6->{
+            \begin{tinfoframe}
+                \footnotesize
+                Navenek se dnešní počítače obvykle chovají jako
+                \textbf{von Neumannovy}, ale uvnitř procesoru mohou mít
+                například \textbf{oddělenou instrukční a datovou cache}.
+            \end{tinfoframe}
+        }
+
+    \end{frame}
+
+    \begin{frame}{Von Neumannova vs. harvardská architektura}
+        \centering
+        \begin{tikzpicture}[
+            x=1cm, y=1cm,
+            every node/.style={font=\small},
+            title/.style={font=\bfseries},
+            unit/.style={
+                draw,
+                thick,
+                rounded corners,
+                align=center,
+                minimum width=2.25cm,
+                minimum height=0.72cm
+            },
+            arr/.style={<->, thick}
+        ]
+
+            % Left title
+            \node[title] at (-3.0, 1.35) {Von Neumannova architektura};
+
+            % Left diagram
+            \node[
+                unit,
+                fill=blue!8,
+                minimum width=2.30cm,
+                minimum height=0.82cm
+            ] (cpuA) at (-3.0, 0.45) {Procesor};
+
+            \node[
+                unit,
+                fill=green!10,
+                minimum width=2.90cm,
+                minimum height=0.95cm
+            ] (memA) at (-3.0, -1.05) {Společná paměť\\ instrukce i data};
+
+            \draw[arr] (cpuA.south) -- node[right, font=\scriptsize] {jedna cesta} (memA.north);
+
+            % Right title
+            \node[title] at (3.0, 1.35) {Harvardská architektura};
+
+            % Right diagram
+            \node[
+                unit,
+                fill=blue!8,
+                minimum width=2.30cm,
+                minimum height=0.82cm
+            ] (cpuB) at (3.0, 0.45) {Procesor};
+
+            \node[
+                unit,
+                fill=green!10,
+                minimum width=1.95cm,
+                minimum height=0.95cm
+            ] (imem) at (1.75, -1.05) {Paměť\\ instrukcí};
+
+            \node[
+                unit,
+                fill=green!10,
+                minimum width=1.95cm,
+                minimum height=0.95cm
+            ] (dmem) at (4.25, -1.05) {Paměť\\ dat};
+
+            \draw[arr] (cpuB.south west) -- node[left, font=\scriptsize] {instr.} (imem.north);
+            \draw[arr] (cpuB.south east) -- node[right, font=\scriptsize] {data} (dmem.north);
+
+        \end{tikzpicture}
+    \end{frame}
+
 \end{document}
