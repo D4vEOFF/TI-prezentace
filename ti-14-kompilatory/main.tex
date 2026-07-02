@@ -474,13 +474,13 @@
                 {operátor\\\texttt{= \;|\; + \;|\; *}};
 
             % mezikrok: společný regulární popis
-            \node<3->[box, minimum width=5.9cm] (combined) at (2.90,-1.45)
+            \node<3->[box, minimum width=4.8cm] (combined) at (2.90,-1.45)
                 {společný regulární popis\\
                 \texttt{id \;|\; num \;|\; op}};
 
-            \draw<3->[arrow] (re1.south) -- (combined.north);
+            \draw<3->[arrow] (re1.south) -- (combined.north west);
             \draw<3->[arrow] (re2.south) -- (combined.north);
-            \draw<3->[arrow] (re3.south) -- (combined.north);
+            \draw<3->[arrow] (re3.south) -- (combined.north east);
 
             % konstrukce automatů
             \node<4->[smallbox] (nfa) at (0.60,-2.95) {NKA};
@@ -550,7 +550,7 @@
                 at (10.60,0.0) {$T_1$};
 
             \state<2->{Q1}{(4.10,0)}{$q_1$}
-            \node (T1dots) at (6.60,0) {\(\cdots\)};
+            \node<2-> (T1dots) at (6.60,0) {\(\cdots\)};
             \acceptingstate<2->{F1}{(9.10,0)}{$f_1$}
 
             \transitionarrow<2->{S}{above}{\scriptsize \(\lambda\)}{Q1}
@@ -567,7 +567,7 @@
                 at (10.60,-2.05) {$T_2$};
 
             \state<2->{Q2}{(4.10,-2.05)}{$q_2$}
-            \node (T2dots) at (6.60,-2.05) {\(\cdots\)};
+            \node<2-> (T2dots) at (6.60,-2.05) {\(\cdots\)};
             \acceptingstate<2->{F2}{(9.10,-2.05)}{$f_2$}
 
             \transitionarrow<2->{S}{above}{\scriptsize \(\lambda\)}{Q2}
@@ -584,7 +584,7 @@
                 at (10.60,-4.20) {$T_n$};
 
             \state<2->{Qn}{(4.10,-4.25)}{$q_n$}
-            \node (Tndots) at (6.60,-4.25) {\(\cdots\)};
+            \node<2-> (Tndots) at (6.60,-4.25) {\(\cdots\)};
             \acceptingstate<2->{Fn}{(9.10,-4.25)}{$f_n$}
 
             \transitionarrow<2->{S}{above}{\scriptsize \(\lambda\)}{Qn}
@@ -634,6 +634,1351 @@
             \end{tabular}
         }
 
+    \end{frame}
+
+    \section{Syntaktická analýza}
+
+    \titleframe{Syntaktická analýza}
+
+    \subsection{Co je to parser?}
+
+    \begin{frame}{Syntaktická analýza}
+
+        \begin{itemize}
+            \visible<2->{\item \textbf{Syntaktický analyzátor} neboli \textbf{parser}
+            kontroluje, zda posloupnost tokenů tvoří syntakticky správný program.}
+            \visible<3->{\item Vstupem parseru jsou \textbf{tokeny} od lexikálního analyzátoru (lexeru).}
+            \visible<4->{\item Parser se řídí \textbf{gramatikou} daného programovacího jazyka.}
+            \visible<5->{\item Výsledkem je typicky informace}
+            \visible<6->{
+                \begin{itemize}
+                    \item že je vstup syntakticky správný,
+                    \item nebo že obsahuje syntaktickou chybu,
+                    \item případně také derivační strom.
+                \end{itemize}
+            }
+        \end{itemize}
+
+        \vspace{0.1cm}
+
+        \centering
+        \begin{tikzpicture}[
+            box/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                minimum width=2.2cm,
+                minimum height=0.8cm,
+                font=\scriptsize
+            },
+            arrow/.style={->, thick}
+        ]
+            \node<3->[box] (lex) at (0,0) {tokeny};
+            \node<2->[box] (parser) at (3.2,0) {syntaktický\\analyzátor};
+            \node<5->[box] (out) at (6.4,0) {správný vstup\\/ chyba / strom};
+
+            \draw<3->[arrow] (lex) -- (parser);
+            \draw<5->[arrow] (parser) -- (out);
+        \end{tikzpicture}
+
+    \end{frame}
+
+    \subsection{Jak parser pracuje s tokeny?}
+
+    \begin{frame}{Jak parser pracuje s tokeny?}
+
+        \begin{itemize}
+            \visible<2->{\item Lexer už rozdělil zdrojový text na tokeny.}
+            \visible<3->{\item Parser už nepracuje s jednotlivými znaky,
+            ale s \textbf{posloupností tokenů}.}
+            \visible<4->{\item Snaží se zjistit, zda tuto posloupnost lze odvodit
+            z počátečního symbolu gramatiky.}
+        \end{itemize}
+
+        \vspace{0.1cm}
+
+        \centering
+        \begin{tikzpicture}[
+            tok/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                minimum width=1.1cm,
+                minimum height=0.65cm,
+                font=\scriptsize
+            },
+            box/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                minimum width=2.1cm,
+                minimum height=0.8cm,
+                font=\scriptsize
+            },
+            arrow/.style={->, thick}
+        ]
+            \node<2->[tok] (t1) at (0,0) {\texttt{<id>}};
+            \node<2->[tok] (t2) at (1.5,0) {\texttt{<+>}};
+            \node<2->[tok] (t3) at (3.0,0) {\texttt{<id>}};
+            \node<2->[tok] (t4) at (4.5,0) {\texttt{<*>}};
+            \node<2->[tok] (t5) at (6.0,0) {\texttt{<num>}};
+
+            \node<3->[box] (parser) at (3.0,-1.2) {parser};
+
+            \draw<3->[arrow] (t1.south) -- ++(0,-0.35) -- (parser.north west);
+            \draw<3->[arrow] (t2.south) -- ++(0,-0.30) -- (parser.north west);
+            \draw<3->[arrow] (t3.south) -- (parser.north);
+            \draw<3->[arrow] (t4.south) -- ++(0,-0.30) -- (parser.north east);
+            \draw<3->[arrow] (t5.south) -- ++(0,-0.35) -- (parser.north east);
+
+            \node<4->[font=\scriptsize, align=center] at (3.0,-2.1)
+                {např. ověří, že jde o aritmetický výraz};
+        \end{tikzpicture}
+
+    \end{frame}
+
+    \subsection{Bezkontextové gramatiky}
+
+    \begin{frame}{Bezkontextové gramatiky}
+
+        Syntaxi programovacího jazyka obvykle popisujeme pomocí \textbf{bezkontextové gramatiky}.
+        \begin{defblock}[Bezkontextová gramatika]
+            Gramatika $G=(V,T,P,S)$ se nazývá \markdarkred{bezkontextová}, pokud $P$ obsahuje pouze pravidla tvaru \(A \to \alpha\), kde \(A \in V\) a~\(\alpha \in (V \cup T)^*\).
+        \end{defblock}
+
+    \end{frame}
+
+    \begin{frame}{Příklad bezkontextové gramatiky}{Jazyk $a^n b^n$}
+
+        \visible<2->{
+            Uvažujme gramatiku $G=(V,T,P,S)$, kde $V=\set{S},T=\set{a,b}$ a pravidla jsou
+            \[
+                S \to aSb \mid \lambda.
+            \]
+        }
+        \visible<3->{Pak $G$ generuje jazyk $L(G)=\set{a^n b^n \mid n \geqslant 0}$.}
+
+        \[
+            \visible<4->{S}
+            \visible<5->{\Rightarrow aSb}
+            \visible<6->{\Rightarrow aaSbb}
+            \visible<7->{\Rightarrow aa\lambda bb}
+            \visible<8->{= aabb}
+        \]
+
+    \end{frame}
+
+    \subsection{Derivační strom}
+
+    \begin{frame}{Derivační strom}
+
+        \begin{itemize}
+            \visible<2->{\item Derivační strom názorně ukazuje,
+            jak byl řetězec odvozen z gramatiky.}
+            \visible<3->{\item Vnitřní vrcholy odpovídají neterminálům,}
+            \visible<4->{\item listy odpovídají terminálům výsledného řetězce.}
+        \end{itemize}
+
+        \vspace{0.15cm}
+
+        \centering
+        \begin{tikzpicture}[
+            node distance=0.8cm,
+            every node/.style={font=\scriptsize},
+            nt/.style={draw, circle, thick, minimum size=7mm},
+            t/.style={draw, rounded corners, thick, minimum width=6mm, minimum height=5mm}
+        ]
+            \node<5->[nt] (S) at (0,0) {$S$};
+            \node<6->[t] (a1) at (-1.4,-1.1) {$a$};
+            \node<6->[nt] (S2) at (0,-1.1) {$S$};
+            \node<6->[t] (b1) at (1.4,-1.1) {$b$};
+
+            \node<7->[t] (a2) at (-0.9,-2.2) {$a$};
+            \node<7->[nt] (S3) at (0,-2.2) {$S$};
+            \node<7->[t] (b2) at (0.9,-2.2) {$b$};
+
+            \node<8->[t] (eps) at (0,-3.2) {$\lambda$};
+
+            \draw<6->[thick] (S) -- (a1);
+            \draw<6->[thick] (S) -- (S2);
+            \draw<6->[thick] (S) -- (b1);
+
+            \draw<7->[thick] (S2) -- (a2);
+            \draw<7->[thick] (S2) -- (S3);
+            \draw<7->[thick] (S2) -- (b2);
+
+            \draw<8->[thick] (S3) -- (eps);
+        \end{tikzpicture}
+
+        \vspace{0.05cm}
+
+        \visible<9->{
+            \begin{center}
+                \scriptsize
+                Derivační strom slova $aabb$ podle předchozí gramatiky $G$.
+            \end{center}
+        }
+
+    \end{frame}
+
+    \subsection{Aritmetické výrazy}
+
+    \begin{frame}{Gramatika aritmetických výrazů}
+
+        \begin{columns}[T,onlytextwidth]
+            \begin{column}{0.48\textwidth}
+                \visible<2->{Definujeme gramatiku generující aritmetické výrazy s~operátory \(+,-,*,/\) a~závorkami.
+                    \[
+                    \begin{aligned}
+                        E &\to E + T \mid E - T \mid T \\
+                        T &\to T * F \mid T / F \mid F \\
+                        F &\to (E) \mid \mathtt{id} \mid \mathtt{num}
+                    \end{aligned}
+                    \]
+                }
+            \end{column}
+
+            \begin{column}{0.48\textwidth}
+                \begin{itemize}
+                    \visible<3->{\item \(E\) = výraz}
+                    \visible<4->{\item \(T\) = term}
+                    \visible<5->{\item \(F\) = faktor}
+                    \visible<6->{\item gramatika zachycuje prioritu operátorů}
+                    \visible<7->{\item násobení a dělení mají vyšší prioritu než sčítání a odčítání}
+                \end{itemize}
+            \end{column}
+        \end{columns}
+
+        \vspace{0.4cm}
+
+        \onslide<8->
+        \textbf{Příklady správných výrazů:} \texttt{a + b}, \texttt{a * (b + 3)}, \texttt{(a + b) * c}
+
+    \end{frame}
+
+    \begin{frame}{Příklad derivačního stromu}{Výraz \texttt{id + id * id}}
+
+        \begin{columns}[T,onlytextwidth]
+            \begin{column}{0.3\textwidth}
+                \pause
+                \[
+                \begin{aligned}
+                    E &\to E + T \mid E - T \mid T \\
+                    T &\to T * F \mid T / F \mid F \\
+                    F &\to (E) \mid \mathtt{id} \mid \mathtt{num}
+                \end{aligned}
+                \]
+            \end{column}
+
+            \begin{column}{0.7\textwidth}
+                \centering
+                \begin{tikzpicture}[
+                    every node/.style={font=\scriptsize},
+                    nt/.style={draw, circle, thick, minimum size=7mm},
+                    t/.style={draw, rounded corners, thick, minimum width=6mm, minimum height=5mm}
+                ]
+                    \node<2->[nt] (E0) at (0,0) {$E$};
+
+                    \node<3->[nt] (E1) at (-2.2,-1.1) {$E$};
+                    \node<3->[t]  (plus) at (0,-1.1) {$+$};
+                    \node<3->[nt] (T1) at (2.2,-1.1) {$T$};
+
+                    \draw<3->[thick] (E0) -- (E1);
+                    \draw<3->[thick] (E0) -- (plus);
+                    \draw<3->[thick] (E0) -- (T1);
+
+                    \node<4->[nt] (Tleft) at (-2.2,-2.2) {$T$};
+                    \node<4->[nt] (T2) at (1.2,-2.2) {$T$};
+                    \node<4->[t]  (times) at (2.2,-2.2) {$*$};
+                    \node<4->[nt] (F3) at (3.2,-2.2) {$F$};
+
+                    \draw<4->[thick] (E1) -- (Tleft);
+                    \draw<4->[thick] (T1) -- (T2);
+                    \draw<4->[thick] (T1) -- (times);
+                    \draw<4->[thick] (T1) -- (F3);
+
+                    \node<5->[nt] (Fleft) at (-2.2,-3.3) {$F$};
+                    \node<5->[nt] (F2) at (1.2,-3.3) {$F$};
+
+                    \draw<5->[thick] (Tleft) -- (Fleft);
+                    \draw<5->[thick] (T2) -- (F2);
+
+                    \node<6->[t] (a1) at (-2.2,-4.2) {$\mathtt{id}$};
+                    \node<6->[t] (a2) at (1.2,-4.2) {$\mathtt{id}$};
+                    \node<6->[t] (a3) at (3.2,-4.2) {$\mathtt{id}$};
+
+                    \draw<6->[thick] (Fleft) -- (a1);
+                    \draw<6->[thick] (F2) -- (a2);
+                    \draw<6->[thick] (F3) -- (a3);
+                \end{tikzpicture}
+            \end{column}
+        \end{columns}
+
+        \vspace{0.2cm}
+
+        \onslide<7->
+        \begin{timportantframe}[0.6\textwidth]
+            \begin{center}
+                Strom odpovídá slovu $\mathtt{id} + \mathtt{id} * \mathtt{id}$.
+            \end{center}
+        \end{timportantframe}
+
+    \end{frame}
+
+    \begin{frame}{Příklad derivačního stromu}{Výraz \texttt{(id + num) * id}}
+
+        \begin{columns}[T,onlytextwidth]
+            \begin{column}{0.4\textwidth}
+                \centering
+                \begin{tikzpicture}[
+                    scale=0.78,
+                    every node/.style={font=\scriptsize},
+                    nt/.style={draw, circle, thick, minimum size=7mm},
+                    t/.style={draw, rounded corners, thick, minimum width=7mm, minimum height=5mm}
+                ]
+
+                    \node<2->[nt] (E0) at (0,0) {$E$};
+
+                    \node<3->[nt] (T0) at (0,-1.0) {$T$};
+                    \draw<3->[thick] (E0) -- (T0);
+
+                    \node<4->[nt] (T1) at (-1.3,-2.0) {$T$};
+                    \node<4->[t]  (times) at (0,-2.0) {$*$};
+                    \node<4->[nt] (F3) at (1.3,-2.0) {$F$};
+
+                    \draw<4->[thick] (T0) -- (T1);
+                    \draw<4->[thick] (T0) -- (times);
+                    \draw<4->[thick] (T0) -- (F3);
+
+                    \node<5->[nt] (F1) at (-1.3,-3.0) {$F$};
+                    \node<5->[t]  (id3) at (1.3,-3.0) {$\mathtt{id}$};
+
+                    \draw<5->[thick] (T1) -- (F1);
+                    \draw<5->[thick] (F3) -- (id3);
+
+                    \node<6->[t]  (lpar) at (-2.7,-4.0) {$($};
+                    \node<6->[nt] (E1) at (-1.3,-4.0) {$E$};
+                    \node<6->[t]  (rpar) at (0.1,-4.0) {$)$};
+
+                    \draw<6->[thick] (F1) -- (lpar);
+                    \draw<6->[thick] (F1) -- (E1);
+                    \draw<6->[thick] (F1) -- (rpar);
+
+                    \node<7->[nt] (E2) at (-2.3,-5.0) {$E$};
+                    \node<7->[t]  (plus) at (-1.3,-5.0) {$+$};
+                    \node<7->[nt] (T2) at (-0.3,-5.0) {$T$};
+
+                    \draw<7->[thick] (E1) -- (E2);
+                    \draw<7->[thick] (E1) -- (plus);
+                    \draw<7->[thick] (E1) -- (T2);
+
+                    \node<8->[nt] (T3) at (-2.3,-6.0) {$T$};
+                    \node<8->[nt] (F2) at (-0.3,-6.0) {$F$};
+
+                    \draw<8->[thick] (E2) -- (T3);
+                    \draw<8->[thick] (T2) -- (F2);
+
+                    \node<9->[nt] (F4) at (-2.3,-7.0) {$F$};
+                    \node<9->[t] (num1) at (-0.3,-7.0) {$\mathtt{num}$};
+
+                    \draw<9->[thick] (T3) -- (F4);
+                    \draw<9->[thick] (F2) -- (num1);
+
+                    \node<10->[t] (id1) at (-2.3,-7.9) {$\mathtt{id}$};
+                    \draw<10->[thick] (F4) -- (id1);
+
+                \end{tikzpicture}
+            \end{column}
+
+            \begin{column}{0.58\textwidth}
+                \begin{align*}
+                    \small
+                    E
+                    &\visible<3->{\Rightarrow T}
+                    \visible<4->{\Rightarrow T * F}
+                    \visible<5->{\Rightarrow F * F} \\
+                    &\visible<6->{\Rightarrow (E) * F}
+                    \visible<7->{\Rightarrow (E + T) * F} \\
+                    &\visible<8->{\Rightarrow (T + F) * F}
+                    \visible<9->{\Rightarrow (F + \mathtt{num}) * F} \\
+                    &\visible<10->{\Rightarrow (\mathtt{id} + \mathtt{num}) * F}
+                    \visible<11->{\Rightarrow (\mathtt{id} + \mathtt{num}) * \mathtt{id}}
+                \end{align*}
+
+                \onslide<12->
+                \begin{timportantframe}
+                    Strom odpovídá například zdrojovému výrazu \texttt{(a + 3) * b},
+                    který lexer převede na
+                    \((\mathtt{id} + \mathtt{num}) * \mathtt{id}\).
+                \end{timportantframe}
+            \end{column}
+        \end{columns}
+
+    \end{frame}
+
+    \begin{frame}{Gramatika jednoduchého příkazu v C\#}
+        \centering
+        \begin{tikzpicture}
+            \node[
+                draw,
+                thick,
+                rounded corners,
+                fill=blue!20!white,
+                inner xsep=8pt,
+                inner ysep=6pt
+            ] {\texttt{float posX = currPosX + stepsX * directionX * speedX;}};
+        \end{tikzpicture}
+        \begin{columns}[T,onlytextwidth]
+            \begin{column}{0.52\textwidth}
+                \[
+                \begin{aligned}
+                    S &\to \mathit{Type}\ \mathtt{id}\ \mathtt{=}\ E\ \mathtt{;} \\
+                    \mathit{Type} &\to \mathtt{int} \mid \mathtt{double} \mid \mathtt{float} \\
+                    E &\to E\ \mathtt{+}\ T \mid E\ \mathtt{-}\ T \mid T \\
+                    T &\to T\ \mathtt{*}\ F \mid T\ \mathtt{/}\ F \mid F \\
+                    F &\to \mathtt{id} \mid \mathtt{num} \mid \mathtt{(}E\mathtt{)}
+                \end{aligned}
+                \]
+            \end{column}
+
+            \begin{column}{0.46\textwidth}
+                \textbf{Tokeny pro parser:}
+                \[
+                \begin{aligned}
+                    &\mathtt{float}\ \mathtt{id}\ \mathtt{=}\\
+                    &\mathtt{id}\ \mathtt{+}\ \mathtt{id}\ \mathtt{*}\\
+                    &\mathtt{id}\ \mathtt{*}\ \mathtt{id}\ \mathtt{;}
+                \end{aligned}
+                \]
+            \end{column}
+        \end{columns}
+
+    \end{frame}
+
+    \begin{frame}{Derivační strom}{Příkaz \texttt{float posX = currPosX + stepsX * directionX * speedX;}}
+
+        \centering
+        \begin{tikzpicture}[
+            scale=0.85,
+            transform shape,
+            every node/.style={font=\scriptsize},
+            nt/.style={draw, circle, thick, minimum size=8mm},
+            t/.style={draw, rounded corners, thick, minimum width=8mm, minimum height=6mm}
+        ]
+
+            % vrcholy
+            \node[nt] (S) at (0,0) {$S$};
+
+            \node[nt] (Type) at (-5.6,-1.3) {$Type$};
+            \node[t]  (id0)  at (-3.2,-1.3) {$\mathtt{id}$};
+            \node[t]  (eq)   at (-1.5,-1.3) {$=$};
+            \node[nt] (E0)   at (1.0,-1.3) {$E$};
+            \node[t]  (semi) at (5.8,-1.3) {$;$};
+
+            \node[t]  (float)   at (-5.6,-2.5) {$\mathtt{float}$};
+
+            \node[nt] (E1)    at (-0.8,-2.5) {$E$};
+            \node[t]  (plus)  at (1.0,-2.5) {$+$};
+            \node[nt] (T0)    at (3.0,-2.5) {$T$};
+
+            \node[nt] (Tleft)  at (-0.8,-3.7) {$T$};
+
+            \node[nt] (T1)     at (1.6,-3.7) {$T$};
+            \node[t]  (mul2)   at (3.0,-3.7) {$*$};
+            \node[nt] (Fspeed) at (4.4,-3.7) {$F$};
+
+            \node[nt] (Fleft)   at (-0.8,-4.9) {$F$};
+
+            \node[nt] (T2)      at (0.2,-4.9) {$T$};
+            \node[t]  (mul1)    at (1.6,-4.9) {$*$};
+            \node[nt] (Fdir)    at (3.0,-4.9) {$F$};
+
+            \node[t]  (idSpeed) at (4.4,-4.9) {$\mathtt{id}$};
+
+            \node[t]  (idCurr)  at (-0.8,-6.1) {$\mathtt{id}$};
+
+            \node[nt] (Fsteps)  at (0.2,-6.1) {$F$};
+            \node[t]  (idDir)   at (3.0,-6.1) {$\mathtt{id}$};
+
+            \node[t]  (idSteps) at (0.2,-7.3) {$\mathtt{id}$};
+
+            % hrany
+            \draw[thick] (S) -- (Type);
+            \draw[thick] (S) -- (id0);
+            \draw[thick] (S) -- (eq);
+            \draw[thick] (S) -- (E0);
+            \draw[thick] (S) -- (semi);
+
+            \draw[thick] (Type) -- (float);
+
+            \draw[thick] (E0) -- (E1);
+            \draw[thick] (E0) -- (plus);
+            \draw[thick] (E0) -- (T0);
+
+            \draw[thick] (E1) -- (Tleft);
+            \draw[thick] (Tleft) -- (Fleft);
+            \draw[thick] (Fleft) -- (idCurr);
+
+            \draw[thick] (T0) -- (T1);
+            \draw[thick] (T0) -- (mul2);
+            \draw[thick] (T0) -- (Fspeed);
+
+            \draw[thick] (T1) -- (T2);
+            \draw[thick] (T1) -- (mul1);
+            \draw[thick] (T1) -- (Fdir);
+
+            \draw[thick] (T2) -- (Fsteps);
+            \draw[thick] (Fsteps) -- (idSteps);
+
+            \draw[thick] (Fdir) -- (idDir);
+            \draw[thick] (Fspeed) -- (idSpeed);
+
+        \end{tikzpicture}
+
+    \end{frame}
+
+    \subsection{Analýza shora dolů}
+
+    \begin{frame}{Analýza shora dolů}
+
+        \begin{itemize}
+            \visible<2->{\item Parser začíná počátečním symbolem gramatiky.}
+            \visible<3->{\item Postupně rozvíjí neterminály tak,
+            aby odvodil vstupní posloupnost tokenů.}
+            \visible<4->{\item Strom tedy vzniká \textbf{od kořene k listům}.}
+        \end{itemize}
+
+        \vspace{0.2cm}
+
+        \centering
+        \begin{tikzpicture}[
+            box/.style={
+                draw,
+                rounded corners,
+                thick,
+                minimum width=1.4cm,
+                minimum height=0.6cm,
+                align=center,
+                font=\scriptsize
+            },
+            arrow/.style={->, thick}
+        ]
+            \node<5->[box] (s1) at (0,0) {$E$};
+            \node<6->[box] (s2) at (2.0,0) {$E + T$};
+            \node<7->[box] (s3) at (4.4,0) {$T + T$};
+            \node<8->[box] (s4) at (6.8,0) {$F + F$};
+            \node<9->[box] (s5) at (9.2,0) {$a + a$};
+
+            \draw<6->[arrow] (s1) -- (s2);
+            \draw<7->[arrow] (s2) -- (s3);
+            \draw<8->[arrow] (s3) -- (s4);
+            \draw<9->[arrow] (s4) -- (s5);
+        \end{tikzpicture}
+
+        \vspace{0.2cm}
+
+        \onslide<10->
+        \begin{tinfoframe}
+            Shora dolů tedy "předpovídáme", jaká pravidla bude třeba použít.
+        \end{tinfoframe}
+
+    \end{frame}
+
+    \subsection{Analýza zdola nahorů}
+
+    \begin{frame}{Analýza zdola nahoru}
+
+        \begin{itemize}
+            \visible<2->{\item Parser začíná vstupní posloupností tokenů.}
+            \visible<3->{\item Postupně hledá části vstupu, které odpovídají pravým stranám pravidel,
+            a nahrazuje je levými stranami.}
+            \visible<4->{\item Strom tedy vzniká \textbf{od listů ke kořeni}.}
+        \end{itemize}
+
+        \vspace{0.3cm}
+
+        \centering
+        \begin{tikzpicture}[
+            box/.style={
+                draw,
+                rounded corners,
+                thick,
+                minimum width=1.4cm,
+                minimum height=0.6cm,
+                align=center,
+                font=\scriptsize
+            },
+            arrow/.style={->, thick}
+        ]
+            \node<5->[box] (s1) at (0,0) {$a + a$};
+            \node<6->[box] (s2) at (2.2,0) {$F + F$};
+            \node<7->[box] (s3) at (4.6,0) {$T + T$};
+            \node<8->[box] (s4) at (7.0,0) {$E + T$};
+            \node<9->[box] (s5) at (9.4,0) {$E$};
+
+            \draw<6->[arrow] (s1) -- (s2);
+            \draw<7->[arrow] (s2) -- (s3);
+            \draw<8->[arrow] (s3) -- (s4);
+            \draw<9->[arrow] (s4) -- (s5);
+        \end{tikzpicture}
+
+        \vspace{0.3cm}
+
+        \onslide<10->
+        \begin{tinfoframe}
+            Zdola nahoru tedy postupně \textbf{redukujeme} vstup až na počáteční symbol.
+        \end{tinfoframe}
+
+    \end{frame}
+
+    \section{Sémantická analýza}
+
+    \titleframe{Sémantická analýza}
+
+    \begin{frame}{Sémantická analýza}
+
+        \begin{itemize}
+            \visible<2->{\item Parser ověří, zda má program správnou \textbf{syntaxi}.}
+            \visible<3->{\item \textbf{Sémantická analýza} ověřuje, zda má program správný \textbf{význam}.}
+            \visible<4->{\item Kontroluje například deklarace proměnných, typy výrazů a platnost operací.}
+        \end{itemize}
+
+        \vspace{0.3cm}
+
+        \visible<5->{\centering
+        \begin{tikzpicture}[
+            box/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                font=\scriptsize,
+                minimum width=2.1cm,
+                minimum height=0.75cm
+            },
+            arrow/.style={->, thick}
+        ]
+
+            \node[box] (parser) at (0,0) {parser};
+            \node[box] (tree) at (2.7,0) {syntaktický\\strom};
+            \node[box] (sem) at (5.4,0) {sémantická\\analýza};
+            \node[box] (out) at (8.1,0) {anotovaný strom\\nebo chyba};
+
+            \draw[arrow] (parser) -- (tree);
+            \draw[arrow] (tree) -- (sem);
+            \draw[arrow] (sem) -- (out);
+
+        \end{tikzpicture}}
+
+    \end{frame}
+
+    \begin{frame}{Syntaxe vs. sémantika}
+
+        \begin{itemize}
+            \visible<2->{\item \textbf{Syntaktická chyba}: program porušuje pravidla zápisu.}
+            \visible<3->{\item \textbf{Sémantická chyba}: program je zapsán správně, ale nedává smysl.}
+        \end{itemize}
+
+        \vspace{0.3cm}
+
+        \centering\small
+        \renewcommand{\arraystretch}{1.2}
+        \begin{tabular}{|c|c|c|}
+            \hline
+            \textbf{příkaz} & \textbf{syntaxe} & \textbf{sémantika} \\
+            \hline
+            \visible<4->{\texttt{int x = 5;}} &
+            \visible<4->{správně} &
+            \visible<4->{správně} \\
+            \hline
+            \visible<5->{\texttt{int x = ;}} &
+            \visible<5->{chyba} &
+            \visible<5->{--} \\
+            \hline
+            \visible<6->{\texttt{string s = 5;}} &
+            \visible<6->{správně} &
+            \visible<6->{chyba typu} \\
+            \hline
+            \visible<7->{\texttt{x = y + 1;}} &
+            \visible<7->{správně} &
+            \visible<7->{chyba, pokud \(x\) nebo \(y\) nejsou deklarované} \\
+            \hline
+        \end{tabular}
+
+        \vspace{0.15cm}
+
+        \onslide<8->
+        \begin{timportantframe}
+            Syntaxe říká, \textbf{jak má být program zapsán}.  
+            Sémantika říká, \textbf{zda tento zápis dává smysl}.
+        \end{timportantframe}
+
+    \end{frame}
+
+    \begin{frame}{Tabulka symbolů}
+
+        \begin{itemize}
+            \visible<2->{\item Sémantická analýza pracuje s \textbf{tabulkou symbolů}.}
+            \visible<3->{\item Ukládá si do ní informace o proměnných, funkcích a jejich typech.}
+        \end{itemize}
+
+        \vspace{0.1cm}
+
+        \visible<4->{
+            \centering
+            \begin{tikzpicture}
+                \node[
+                    draw,
+                    thick,
+                    rounded corners,
+                    fill=blue!20!white,
+                    inner xsep=8pt,
+                    inner ysep=6pt
+                ] {\texttt{float posX = currPosX + stepsX * directionX * speedX;}};
+            \end{tikzpicture}
+        }
+
+        \vspace{0.3cm}
+
+        \centering
+        \visible<5->{
+            \small
+            \renewcommand{\arraystretch}{1.2}
+            \begin{tabular}{|c|c|c|}
+                \hline
+                \textbf{identifikátor} & \textbf{typ} & \textbf{poznámka} \\
+                \hline
+                \texttt{posX} & \texttt{int} & deklarovaná proměnná \\
+                \hline
+                \texttt{currPosX} & \texttt{int} & musí být deklarována dříve \\
+                \hline
+                \texttt{stepsX} & \texttt{int} & musí být deklarována dříve \\
+                \hline
+                \texttt{directionX} & \texttt{int} & musí být deklarována dříve \\
+                \hline
+                \texttt{speedX} & \texttt{int} & musí být deklarována dříve \\
+                \hline
+            \end{tabular}
+        }
+
+    \end{frame}
+
+    \begin{frame}{Typová kontrola výrazu}
+
+        \begin{itemize}
+            \visible<2->{\item Sémantická analýza přiřazuje částem výrazu typy.}
+            \visible<3->{\item Operace je validní jen tehdy, pokud odpovídají typy operandů.}
+        \end{itemize}
+
+        \vspace{0.1cm}
+
+        \centering
+        \begin{tikzpicture}[
+            every node/.style={font=\scriptsize},
+            box/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                minimum width=1.8cm,
+                minimum height=0.55cm
+            },
+            arrow/.style={->, thick}
+        ]
+
+            \node<4->[box] (a) at (0,0) {\texttt{stepsX}\\\texttt{int}};
+            \node<4->[box] (b) at (2.2,0) {\texttt{directionX}\\\texttt{int}};
+            \node<5->[box] (mul1) at (1.1,-1.0) {\texttt{*}\\výsledek \texttt{int}};
+
+            \draw<5->[arrow] (a) -- (mul1);
+            \draw<5->[arrow] (b) -- (mul1);
+
+            \node<6->[box] (c) at (4.2,0) {\texttt{speedX}\\\texttt{float}};
+            \node<6->[box] (mul2) at (2.7,-2.0) {\texttt{*}\\výsledek \texttt{float}};
+
+            \draw<6->[arrow] (mul1) -- (mul2);
+            \draw<6->[arrow] (c) -- (mul2);
+
+            \node<6->[box] (d) at (-1.2,-2.0) {\texttt{currPosX}\\\texttt{float}};
+            \node<7->[box] (plus) at (0.8,-3.0) {\texttt{+}\\výsledek \texttt{float}};
+
+            \draw<7->[arrow] (d) -- (plus);
+            \draw<7->[arrow] (mul2) -- (plus);
+
+            \node<8->[box] (assign) at (0.8,-4.0) {\texttt{posX = ...}\\\texttt{float = float}};
+
+            \draw<8->[arrow] (plus) -- (assign);
+
+        \end{tikzpicture}
+
+        \vspace{0.1cm}
+
+        \onslide<8->
+        \begin{timportantframe}
+            \begin{center}
+                Výraz má typ \texttt{float}, takže jej lze přiřadit do proměnné
+                \texttt{posX} typu \texttt{float}.
+            \end{center}
+        \end{timportantframe}
+
+    \end{frame}
+
+    \section{Optimalizace}
+
+    \titleframe{Optimalizace}
+
+    \subsection{Optimalizace kódu}
+
+    \begin{frame}{Optimalizace kódu}
+
+        \begin{itemize}
+            \visible<2->{\item Optimalizace navazuje na \textbf{přední část překladače}.}
+            \visible<3->{\item Nejprve vznikne \textbf{mezikód}, nad kterým lze provádět úpravy.}
+        \end{itemize}
+
+        \vspace{0.1cm}
+
+        \centering
+        \begin{tikzpicture}[
+            box/.style={
+                draw,
+                rounded corners,
+                thick,
+                align=center,
+                font=\scriptsize,
+                minimum width=1.75cm,
+                minimum height=0.6cm
+            },
+            arrow/.style={->, thick}
+        ]
+
+            \node<2->[box, fill=red!35] (src) at (0,0) {zdrojový\\kód};
+            \node<2->[box, fill=red!35] (lex) at (2.0,0) {lexikální\\analýza};
+            \node<2->[box, fill=red!35] (syn) at (4.0,0) {syntaktická\\analýza};
+            \node<2->[box, fill=red!35] (sem) at (6.0,0) {sémantická\\analýza};
+            \node<3->[box, fill=yellow!45] (ir) at (6.0,-1.0) {mezikód};
+
+            \draw<2->[arrow] (src) -- (lex);
+            \draw<2->[arrow] (lex) -- (syn);
+            \draw<2->[arrow] (syn) -- (sem);
+            \draw<3->[arrow] (sem) -- (ir);
+
+            \node<2->[font=\scriptsize\bfseries] at (3.0,0.65) {přední část překladače};
+
+        \end{tikzpicture}
+
+        \vspace{0.15cm}
+
+        \begin{itemize}
+            \visible<4->{\item \textbf{Optimalizace} upravuje mezikód tak,
+            aby byl výsledný kód efektivnější.}
+            \visible<5->{\item Může odstranit zbytečné výpočty, spočítat konstanty
+            nebo nepočítat stejný výraz vícekrát.}
+            \visible<6->{\item Nesmí ale změnit význam programu.}
+        \end{itemize}
+
+    \end{frame}
+
+    \subsection{Lokální a globální optimalizace}
+
+    \begin{frame}{Lokální a~globální optimalizace}
+
+        \begin{itemize}
+            \visible<2->{\item Některé optimalizace pracují pouze s krátkým úsekem kódu.}
+            \visible<3->{\item Takovému úseku se často říká \textbf{základní blok}.}
+
+            \visible<4->{\item \textbf{Lokální optimalizace} řeší jeden základní blok.}
+            \visible<5->{
+                \begin{itemize}
+                    \item constant folding,
+                    \item propagace kopií,
+                    \item odstranění mrtvého kódu v bloku,
+                    \item odstranění společných podvýrazů.
+                \end{itemize}
+            }
+
+            \visible<6->{\item \textbf{Globální optimalizace} potřebují znát tok řízení programu.}
+            \visible<7->{
+                \begin{itemize}
+                    \item analýza živých proměnných,
+                    \item optimalizace přes větve programu,
+                    \item optimalizace cyklů.
+                \end{itemize}
+            }
+        \end{itemize}
+
+    \end{frame}
+
+    \subsection{Constant folding}
+
+    \begin{frame}{Constant folding}
+
+        \begin{itemize}
+            \visible<2->{\item Pokud výraz závisí pouze na konstantách,
+            může jej překladač spočítat už při překladu.}
+
+            \visible<3->{\item Program za běhu potom nemusí provádět zbytečný výpočet.}
+        \end{itemize}
+
+        \vspace{0.3cm}
+
+        \visible<4->{
+            \centering
+            \begin{tikzpicture}[
+                box/.style={
+                    draw,
+                    rounded corners,
+                    thick,
+                align=center,
+                font=\scriptsize,
+                minimum width=2.0cm,
+                minimum height=0.6cm
+            }
+        ]
+            \node[box] (src) at (0,0) {\texttt{x := 2 * 60}\\ \texttt{y := x + 5}};
+            \node[box] (res) at (6,0) {\texttt{y := 125}};
+            \draw[->, thick] (src) -- (res);
+        \end{tikzpicture}}
+
+    \end{frame}
+
+    \subsection{Mrtvý kód a společné podvýrazy}
+
+    \begin{frame}{Mrtvý kód a společné podvýrazy}
+
+        \visible<2->{\textbf{Odstranění mrtvého kódu}
+
+        \[
+        \begin{aligned}
+            \mathtt{t1}\ &\mathtt{:= a * b}\\
+            \mathtt{t2}\ &\mathtt{:= c + d}\\
+            \mathtt{x}\  &\mathtt{:= t1}
+        \end{aligned}
+        \qquad
+        \Longrightarrow
+        \qquad
+        \begin{aligned}
+            \mathtt{t1} &\mathtt{:= a * b}\\
+            \mathtt{x}  &\mathtt{:= t1}
+        \end{aligned}
+        \]}
+
+        \vspace{0.25cm}
+
+        \visible<3->{
+            \textbf{Společný podvýraz}
+
+            \[
+            \begin{aligned}
+                \mathtt{t1} &\mathtt{:= a * b}\\
+                \mathtt{x}  &\mathtt{:= t1 + c}\\
+                \mathtt{t2} &\mathtt{:= a * b}\\
+                \mathtt{y}  &\mathtt{:= t2 + d}
+            \end{aligned}
+            \quad
+            \Longrightarrow
+            \quad
+            \begin{aligned}
+                \mathtt{t1} &\mathtt{:= a * b}\\
+                \mathtt{x}  &\mathtt{:= t1 + c}\\
+                \mathtt{y}  &\mathtt{:= t1 + d}
+            \end{aligned}
+            \]
+        }
+
+    \end{frame}
+
+    \begin{frame}{Globální optimalizace}
+
+        \begin{itemize}
+            \visible<2->{\item Globální optimalizace už nestačí provádět v jednom bloku.}
+            \visible<3->{\item Překladač musí znát \textbf{tok řízení programu}.}
+            \visible<4->{\item Program se proto často reprezentuje jako graf základních bloků.}
+        \end{itemize}
+
+        \vspace{0.1cm}
+
+        \centering
+        \begin{tikzpicture}
+
+            \node<4->[task] (b1) at (0,0) {$B_1$};
+            \node<4->[task] (b2) at (-1.8,-1.2) {$B_2$};
+            \node<4->[task] (b3) at (1.8,-1.2) {$B_3$};
+            \node<4->[task] (b4) at (0,-2.4) {$B_4$};
+
+            \draw<4->[diredge] (b1) -- (b2);
+            \draw<4->[diredge] (b1) -- (b3);
+            \draw<4->[diredge] (b2) -- (b4);
+            \draw<4->[diredge] (b3) -- (b4);
+
+        \end{tikzpicture}
+
+        \vspace{0.1cm}
+
+        \visible<5->{
+            \begin{center}
+                \scriptsize
+                Globální optimalizace řeší například živost proměnných,
+                optimalizace přes větve programu a optimalizace cyklů.
+            \end{center}
+        }
+
+    \end{frame}
+
+    \begin{frame}{Živé a mrtvé bloky programu}
+
+        \begin{itemize}
+            \visible<2->{\item Hrana \((B_i, B_j)\) znamená, že po vykonání bloku \(B_i\)
+            může program pokračovat blokem \(B_j\).}
+            \visible<3->{\item Blok je \textbf{živý}, pokud je dosažitelný z počátečního bloku.}
+            \visible<4->{\item Blok, do kterého se program nikdy nemůže dostat, je \textbf{mrtvý}.}
+        \end{itemize}
+
+        \vspace{0.05cm}
+
+        \visible<5->{\scriptsize
+        \begin{center}
+            \begin{minipage}{0.9\textwidth}
+                \begin{algorithm}[H]
+                    \caption{Detekce mrtvých bloků}
+                    \KwIn{Graf toku řízení \(G=(B,E)\), počáteční blok \(B_0\)}
+                    \KwOut{Rozdělení bloků na živé a mrtvé}
+
+                    \ForEach{\textup{blok \(B_i\in B\)}}{
+                        $\operatorname{stav}(B_i)\gets\textit{mrtvý}$
+                    }
+
+                    Založ zásobník \(S\) a vlož do něj \(B_0\)\\
+                    $\operatorname{stav}(B_0)\gets\textit{živý}$\\
+
+                    \While{\textup{zásobník \(S\) není prázdný}}{
+                        Odeber blok \(B_i\) ze zásobníku\\
+
+                        \ForEach{\textup{hrana \(B_i\to B_j\)}}{
+                            \If{$\operatorname{stav}(B_j)=\textit{mrtvý}$}{
+                                $\operatorname{stav}(B_j)\gets\textit{živý}$\\
+                                Vlož \(B_j\) do zásobníku
+                            }
+                        }
+                    }
+                \end{algorithm}
+            \end{minipage}
+        \end{center}}
+
+    \end{frame}
+
+    \begin{frame}{Analýza živých proměnných}
+
+        \begin{itemize}
+            \visible<2->{\item Proměnná je \textbf{živá}, pokud se její hodnota může ještě použít.}
+            \visible<3->{\item Pokud hodnota proměnné už nikdy nebude potřeba,
+            lze některá přiřazení odstranit.}
+        \end{itemize}
+
+        \vspace{0.1cm}
+
+        \visible<4->{\scriptsize
+        \begin{center}
+            \begin{minipage}{0.9\textwidth}
+                \begin{algorithm}[H]
+                    \caption{Zjednodušená analýza živých proměnných}
+                    \KwIn{Základní blok instrukcí}
+                    \KwOut{Množiny živých proměnných před a za instrukcemi}
+
+                    $L\gets$ proměnné živé na konci bloku\\
+
+                    \ForEach{\textup{instrukce $I$ procházené odzadu}}{
+                        \tcp{\(\operatorname{liveAfter}(I)\) jsou proměnné, jejichž hodnoty mohou být potřeba po vykonání instrukce \(I\).}
+                        $\operatorname{liveAfter}(I)\gets L$\\
+
+                        Odstraň z $L$ proměnnou, do které instrukce $I$ zapisuje\\
+                        Přidej do $L$ proměnné, které instrukce $I$ čte\\
+
+                        \tcp{\(\operatorname{liveBefore}(I)\) jsou proměnné, jejichž hodnoty musí být známy před vykonáním instrukce \(I\).}
+                        $\operatorname{liveBefore}(I)\gets L$
+                    }
+                \end{algorithm}
+            \end{minipage}
+        \end{center}}
+
+    \end{frame}
+
+    \section{Interpretované jazyky}
+
+    \titleframe{Interpretované jazyky}
+
+    \subsection{Kompilovaný vs. interpretovaný překlad}
+
+    \begin{frame}{Kompilovaný a interpretovaný překlad}
+
+        \begin{columns}[T,onlytextwidth]
+            \begin{column}{0.49\textwidth}
+                \centering
+                \textbf{Kompilovaný překlad}
+
+                \vspace{0.1cm}
+
+                \begin{tikzpicture}[
+                    scale=0.75,
+                    transform shape,
+                    box/.style={
+                        draw,
+                        thick,
+                        minimum width=18mm,
+                        minimum height=10mm,
+                        align=center,
+                        font=\scriptsize
+                    },
+                    arrow/.style={->, thick, >=stealth}
+                ]
+                    \node[box] (src) at (0,0) {zdrojový\\program};
+                    \node[box] (comp) at (2.1,0) {překladač};
+                    \node[box] (target) at (4.2,0) {cílový\\program};
+                    \node[box] (data) at (4.2,1.25) {data};
+                    \node[box] (out) at (6.3,0) {výsledky};
+
+                    \draw[arrow] (src) -- (comp);
+                    \draw[arrow] (comp) -- (target);
+                    \draw[arrow] (target) -- (out);
+                    \draw[arrow] (data) -- (target);
+                \end{tikzpicture}
+            \end{column}
+
+            \begin{column}{0.49\textwidth}
+                \centering
+                \textbf{Interpretovaný překlad}
+
+                \vspace{0.1cm}
+
+                \begin{tikzpicture}[
+                    scale=0.75,
+                    transform shape,
+                    box/.style={
+                        draw,
+                        thick,
+                        minimum width=18mm,
+                        minimum height=10mm,
+                        align=center,
+                        font=\scriptsize
+                    },
+                    arrow/.style={->, thick, >=stealth}
+                ]
+                    \node[box] (src) at (0,0) {zdrojový\\program};
+                    \node[box] (interp) at (2.1,0) {interpret};
+                    \node[box] (data) at (2.1,1.25) {data};
+                    \node[box] (out) at (4.2,0) {výsledky};
+
+                    \draw[arrow] (src) -- (interp);
+                    \draw[arrow] (data) -- (interp);
+                    \draw[arrow] (interp) -- (out);
+                \end{tikzpicture}
+            \end{column}
+        \end{columns}
+
+        \vspace{0.3cm}
+
+        \begin{itemize}
+            \visible<2->{\item U kompilovaného jazyka nejprve vznikne \textbf{cílový program}.}
+            \visible<3->{\item U interpretovaného jazyka program vykonává přímo \textbf{interpret}.}
+        \end{itemize}
+
+    \end{frame}
+
+    \subsection{Jak funguje interpret?}
+
+    \begin{frame}{Jak funguje interpret?}
+
+        \begin{itemize}
+            \visible<2->{\item \textbf{Interpret} je program, který čte zdrojový program a rovnou jej vykonává.}
+            \visible<3->{\item Obvykle postupuje po jednotlivých příkazech nebo instrukcích.}
+            \visible<4->{\item Nepřekládá celý program předem do samostatného spustitelného souboru.}
+        \end{itemize}
+
+        \vspace{0.3cm}
+
+        \centering
+        \begin{tikzpicture}[
+            box/.style={
+                draw,
+                rounded corners,
+                thick,
+                minimum width=22mm,
+                minimum height=8mm,
+                align=center,
+                font=\scriptsize
+            },
+            arrow/.style={->, thick, >=stealth}
+        ]
+            \node<2->[box] (src) at (0,0) {zdrojový\\program};
+            \node<3->[box] (read) at (2.5,0) {načtení\\příkazu};
+            \node<4->[box] (exec) at (5.0,0) {vykonání};
+            \node<5->[box] (next) at (7.5,0) {další\\příkaz};
+
+            \draw<3->[arrow] (src) -- (read);
+            \draw<4->[arrow] (read) -- (exec);
+            \draw<5->[arrow] (exec) -- (next);
+            \draw<5->[arrow] (next.south) to[out=-90,in=-90] (read.south);
+        \end{tikzpicture}
+
+    \end{frame}
+
+    \subsection{Výhody a nevýhody}
+
+    \begin{frame}{Výhody a nevýhody}
+
+        \begin{columns}[T,onlytextwidth]
+            \begin{column}{0.48\textwidth}
+                \begin{timportantbox}{Výhody}
+                    \begin{itemize}
+                        \visible<2->{\item jednodušší spuštění programu,}
+                        \visible<3->{\item dobrá přenositelnost mezi platformami,}
+                        \visible<4->{\item snadnější ladění a testování,}
+                        \visible<5->{\item rychlejší vývoj a úpravy programu.}
+                    \end{itemize}
+                \end{timportantbox}
+            \end{column}
+
+            \begin{column}{0.48\textwidth}
+                \begin{talertbox}{Nevýhody}
+                    \begin{itemize}
+                        \visible<6->{\item obvykle pomalejší běh programu,}
+                        \visible<7->{\item interpret musí být přítomen při spuštění,}
+                        \visible<8->{\item část práce se opakuje při každém běhu.}
+                    \end{itemize}
+                \end{talertbox}
+            \end{column}
+        \end{columns}
+
+    \end{frame}
+
+    \begin{frame}{Co zpomaluje interpretované jazyky?}
+
+        \begin{itemize}
+            \visible<2->{\item Interpret obvykle vykonává program \textbf{postupně za běhu}.}
+
+            \visible<3->{\item Při každém spuštění se může znovu opakovat část práce:}
+            \visible<4->{
+                \begin{itemize}
+                    \item načítání a rozbor programu,
+                    \item převod příkazů na vnitřní reprezentaci,
+                    \item kontrola typů za běhu,
+                    \item vyhledávání proměnných a funkcí,
+                    \item rozhodování, jakou operaci právě provést.
+                \end{itemize}
+            }
+
+            \visible<5->{\item Místo přímého vykonávání strojových instrukcí běží
+            \textbf{interpretační smyčka}.}
+        \end{itemize}
+
+        \vspace{0.1cm}
+
+        \onslide<6->
+        \begin{tinfoframe}
+            \textbf{Zjednodušeně:} U~kompilovaného programu mnoho rozhodnutí proběhne už při překladu.
+            U~interpretovaného programu se část těchto rozhodnutí přesouvá až do běhu programu.
+        \end{tinfoframe}
+
+    \end{frame}
+
+    \subsection{JIT kompilace}
+
+    \begin{frame}{JIT kompilace}
+
+        \begin{itemize}
+            \visible<2->{\item \textbf{JIT} = \emph{Just-In-Time compilation}.}
+            \visible<3->{\item Program se nepřekládá celý dopředu, ale \textbf{za běhu}.}
+            \visible<4->{\item Často se nejprve vytvoří \textbf{mezikód} nebo \textbf{bytecode}.}
+            \visible<5->{\item Ten je potom při spuštění překládán do strojového kódu.}
+        \end{itemize}
+
+        \vspace{0.3cm}
+
+        \centering
+        \begin{tikzpicture}[
+            box/.style={
+                draw,
+                rounded corners,
+                thick,
+                minimum width=20mm,
+                minimum height=8mm,
+                align=center,
+                font=\scriptsize
+            },
+            arrow/.style={->, thick, >=stealth}
+        ]
+            \node<3->[box] (src) at (0,0) {zdrojový\\kód};
+            \node<4->[box] (bc) at (2.6,0) {bytecode\\/ mezikód};
+            \node<5->[box] (jit) at (5.2,0) {JIT\\kompilátor};
+            \node<6->[box] (native) at (7.8,0) {strojový\\kód};
+
+            \draw<4->[arrow] (src) -- (bc);
+            \draw<5->[arrow] (bc) -- (jit);
+            \draw<6->[arrow] (jit) -- (native);
+        \end{tikzpicture}
+
+        \vspace{0.3cm}
+
+        \onslide<7->
+        \begin{timportantframe}
+            \begin{center}
+                JIT spojuje výhody interpretace a kompilace:
+                \textbf{přenositelnost mezikódu} a \textbf{vyšší rychlost běhu}.
+            \end{center}
+        \end{timportantframe}
+
+    \end{frame}
+
+    \begin{frame}{Proč je dnes JIT preferovaná?}
+
+        \begin{itemize}
+            \visible<2->{\item Čistá interpretace je jednoduchá, ale často příliš pomalá.}
+            \visible<3->{\item Klasická kompilace je rychlá při běhu, ale hůře se přizpůsobuje běhu programu (hlavně pro účely \textbf{debugování}).}
+            \visible<4->{\item JIT dokáže přeložit jen ty části programu,
+            které se skutečně často používají.}
+            \visible<5->{\item Díky tomu může optimalizovat podle skutečného chování programu za běhu.}
+        \end{itemize}
+
+    \end{frame}
+
+    \begin{frame}{Příklady jazyků a prostředí s JIT}
+
+        \begin{itemize}
+            \visible<2->{\item \textbf{Java} -- program se překládá do bytecode pro JVM,
+            která používá JIT kompilaci.}
+
+            \visible<3->{\item \textbf{C\#} -- kód se překládá do mezikódu IL,
+            který běhové prostředí .NET překládá za běhu.}
+
+            \visible<4->{\item \textbf{JavaScript} -- moderní prohlížeče
+            (např. V8 nebo SpiderMonkey) používají JIT.}
+
+            \visible<5->{\item \textbf{Python} -- klasická implementace CPython je spíše interpret,
+            ale například \textbf{PyPy} používá JIT.}
+
+            \visible<6->{\item \textbf{LuaJIT} -- speciální velmi rychlá implementace jazyka Lua.}
+        \end{itemize}
+
+        \vspace{0.1cm}
+
+        \onslide<7->
+        \begin{tinfoframe}
+            Dnes se proto v praxi často nesetkáváme s "čistě interpretovanými"
+            jazyky, ale spíše s běhovými prostředími, která využívají JIT kompilaci.
+        \end{tinfoframe}
+
+    \end{frame}
+
+    \section{Zdroje}
+
+    \begin{frame}{Zdroje}
+        \begin{itemize}
+            \item ČEŠKA, Milan, Tomáš HRUŠKA a Miroslav BENEŠ. \textit{Překladače.} Brno: Vysoké učení technické v Brně, Fakulta elektrotechnická, b. r. Učební texty vysokých škol. Dostupné \href{https://www.fi.muni.cz/usr/kretinsky/prekladace_skripta_VUT.pdf}{online}. Cit. 2026-07-02.
+            \item BRYANT, Randal E. a David R. O'HALLARON. Computer Systems: A Programmer's Perspective. 3rd ed. Boston: Pearson, 2016. ISBN 978-0-13-409266-9.
+        \end{itemize}
     \end{frame}
 
 \end{document}
