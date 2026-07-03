@@ -292,7 +292,7 @@
                 minimum height=0.95cm
             ] (memA) at (-3.0, -1.05) {Společná paměť\\ instrukce i data};
 
-            \draw[arr] (cpuA.south) -- node[right, font=\scriptsize] {jedna cesta} (memA.north);
+            \draw[arr] (cpuA.south) -- (memA.north);
 
             % Right title
             \node[title] at (3.0, 1.35) {Harvardská architektura};
@@ -310,19 +310,1009 @@
                 fill=green!10,
                 minimum width=1.95cm,
                 minimum height=0.95cm
-            ] (imem) at (1.75, -1.05) {Paměť\\ instrukcí};
+            ] (imem) at (1.40, -1.05) {Paměť\\ instrukcí};
 
             \node[
                 unit,
                 fill=green!10,
                 minimum width=1.95cm,
                 minimum height=0.95cm
-            ] (dmem) at (4.25, -1.05) {Paměť\\ dat};
+            ] (dmem) at (4.55, -1.05) {Paměť\\ dat};
 
-            \draw[arr] (cpuB.south west) -- node[left, font=\scriptsize] {instr.} (imem.north);
-            \draw[arr] (cpuB.south east) -- node[right, font=\scriptsize] {data} (dmem.north);
+            \draw[arr] (cpuB.west) -| node[left, font=\scriptsize] {instr.} (imem.north);
+            \draw[arr] (cpuB.east) -| node[right, font=\scriptsize] {data} (dmem.north);
 
         \end{tikzpicture}
     \end{frame}
+
+    \begin{frame}{Co CPU obsahuje?}
+
+        \small
+
+        \begin{itemize}
+            \visible<2->{\item \textbf{Aritmeticko-logická jednotka (ALU)} provádí aritmetické a logické operace.}
+
+            \visible<3->{\item \textbf{Řadič} řídí činnost procesoru a posílá řídicí signály.}
+
+            \visible<4->{\item \textbf{Registry} uchovávají aktuálně používaná data přímo uvnitř procesoru.}
+
+            \visible<5->{\item Procesor komunikuje s pamětí a zařízeními pomocí \textbf{sběrnic}.}
+        \end{itemize}
+
+        \vspace{3mm}
+
+        \visible<6->{
+            \centering
+            \begin{tikzpicture}[
+                x=1cm, y=1cm,
+                >=stealth,
+                every node/.style={font=\small},
+                title/.style={font=\bfseries},
+                unit/.style={
+                    draw,
+                    thick,
+                    rounded corners,
+                    align=center,
+                    minimum width=2.25cm,
+                    minimum height=0.72cm
+                },
+                arr/.style={<->, thick}
+            ]
+                % CPU
+                \draw[fill=green!50, thick] (-5.3, 4.0) rectangle (-0.5, 1.2);
+                \node[font=\bfseries] at (-4, 3.2) {CPU};
+                \node[unit, fill=blue!25, minimum width=2.00cm, minimum height=1.00cm] (reg) at (-1.8, 2) {Registry};
+                \node[unit, fill=blue!25, minimum width=2.00cm, minimum height=1.00cm] (cont) at (-1.8, 3.2) {Řadič};
+                \node[unit, fill=blue!25, minimum width=2.00cm, minimum height=1.00cm] (alu) at (-4, 2) {ALU};
+
+                % Bus
+                \node[unit, fill=blue!8, minimum width=11.00cm, minimum height=0.40cm] (bus) at (0, 0) {Sběrnice};
+
+                % Memory
+                \node[unit, fill=yellow!20, minimum width=2.75cm, minimum height=1.50cm, font=\bfseries] (mem) at (2.5,2.0) {Paměť};
+
+                % Buses
+                \draw[<->,orange!80!black, thick] (-4.0, 1.2) -- (-4.0, 0.25);
+                \draw[->,red, thick] (-3.0, 1.2) -- (-3.0, 0.25);
+                \draw[<->,blue, thick] (-2.0, 1.2) -- (-2.0, 0.25);
+
+                \draw[<->,orange!80!black, thick] (3.5, 1.25) -- (3.5, 0.25);
+                \draw[->,red, thick] (2.5, 1.25) -- (2.5, 0.25);
+                \draw[<->,blue, thick] (1.5, 1.25) -- (1.5, 0.25);
+
+                % Legend
+                \node[anchor=north west] at (2.0, 4.5) {
+                    \begin{tabular}{l}
+                        \textcolor{orange!80!black}{\rule{1em}{0.5em}} Datová sběrnice \\
+                        \textcolor{red}{\rule{1em}{0.5em}} Adresová sběrnice \\
+                        \textcolor{blue}{\rule{1em}{0.5em}} Řídící sběrnice \\
+                    \end{tabular}
+                };
+
+            \end{tikzpicture}
+        }
+
+    \end{frame}
+
+    \begin{frame}{Instrukční cyklus}
+
+        \small
+
+        \begin{itemize}
+            \visible<2->{\item Procesor zpracovává program jako posloupnost \textbf{strojových instrukcí}.}
+            \visible<3->{\item Každá instrukce projde několika základními kroky.}
+            \visible<4->{\item Po dokončení jedné instrukce procesor pokračuje další instrukcí.}
+        \end{itemize}
+
+        \vspace{2mm}
+
+        \visible<5->{
+            \begin{tinfoframe}
+                \footnotesize
+                Instrukční cyklus je základní „pracovní rytmus“ procesoru:
+                \textbf{načti instrukci}, \textbf{zjisti její význam},
+                \textbf{zpracuj data} a \textbf{ulož výsledek}.
+            \end{tinfoframe}
+        }
+
+        \vspace{3mm}
+
+        \visible<6->{
+        \centering
+
+        \begin{tikzpicture}[
+            x=1cm, y=1cm,
+            >=stealth,
+            every node/.style={font=\small},
+            stepbox/.style={
+                draw,
+                thick,
+                rounded corners,
+                align=center,
+                text width=2.0cm,
+                minimum height=1.0cm,
+                minimum width=2.2cm,
+                fill=blue!12
+            },
+            arr/.style={->, thick}
+        ]
+            % Main cycle boxes
+            \node[stepbox, font=\scriptsize] (fetch) at (-4.8,0.70)
+                {\textbf{Čtení}\\ instrukce};
+
+            \node[stepbox, font=\scriptsize] (decode) at (-2.4,0.70)
+                {\textbf{Dekódování}\\ instrukce};
+
+            \node[stepbox, font=\scriptsize] (operands) at (0,0.70)
+                {\textbf{Čtení}\\ operandů};
+
+            \node[stepbox, font=\scriptsize] (execute) at (2.4,0.70)
+                {\textbf{Provedení}\\ instrukce};
+
+            \node[stepbox, font=\scriptsize] (writeback) at (4.8,0.70)
+                {\textbf{Uložení}\\ výsledku};
+
+            % Arrows between boxes
+            \draw[arr] (fetch.east) -- (decode.west);
+            \draw[arr] (decode.east) -- (operands.west);
+            \draw[arr] (operands.east) -- (execute.west);
+            \draw[arr] (execute.east) -- (writeback.west);
+
+            % Labels under boxes
+            \node[font=\scriptsize, text=gray!60!black] at (-4.8,-0.18) {fetch};
+            \node[font=\scriptsize, text=gray!60!black] at (-2.4,-0.18) {decode};
+            \node[font=\scriptsize, text=gray!60!black] at (0,-0.18) {operand fetch};
+            \node[font=\scriptsize, text=gray!60!black] at (2.4,-0.18) {execute};
+            \node[font=\scriptsize, text=gray!60!black] at (4.8,-0.18) {write back};
+
+            % Return line
+            \draw[arr]
+                (writeback.south) -- (4.8,-0.7) --
+                (-4.8,-0.7) -- (fetch.south);
+
+            % Interrupt check box
+            \node[
+                draw,
+                thick,
+                rounded corners,
+                fill=orange!15,
+                align=center,
+                text width=2.3cm,
+                minimum height=0.95cm,
+                font=\scriptsize
+            ] (interrupt) at (4.8,-1.9)
+                {kontrola\\ přerušení};
+
+            \draw[thick] (writeback.south) -- (interrupt.north);
+
+        \end{tikzpicture}
+        }
+
+    \end{frame}
+
+\begin{frame}{Registry}
+
+    \small
+
+    \begin{itemize}
+        \visible<2->{\item \textbf{Registry} jsou malé, velmi rychlé paměti přímo uvnitř CPU.}
+        \visible<3->{\item Uchovávají dočasná data, adresy i informace o stavu výpočtu.}
+        \visible<4->{\item Procesor s registry pracuje mnohem rychleji než s hlavní pamětí.}
+    \end{itemize}
+
+    \vspace{1mm}
+
+    \visible<5->{
+    \centering
+
+    \begin{tikzpicture}[
+        x=1cm, y=1cm,
+        >=stealth,
+        every node/.style={font=\scriptsize},
+        cpu/.style={
+            draw,
+            thick,
+            rounded corners,
+            fill=blue!8,
+            align=center
+        },
+        unit/.style={
+            draw,
+            thick,
+            rounded corners,
+            align=center,
+            fill=white,
+            minimum height=0.55cm
+        },
+        reg/.style={
+            draw,
+            thick,
+            rounded corners,
+            align=center,
+            fill=green!12,
+            minimum width=0.9cm,
+            minimum height=0.48cm
+        },
+        special/.style={
+            draw,
+            thick,
+            rounded corners,
+            align=center,
+            fill=orange!18,
+            minimum width=1.45cm,
+            minimum height=0.48cm
+        },
+        arr/.style={->, thick}
+    ]
+
+        % CPU outer box
+        \node[
+            cpu,
+            minimum width=10.0cm,
+            minimum height=3.4cm
+        ] (cpu) at (0.25,0) {};
+
+        \node[font=\large\bfseries] at (-3.3,1.35) {Procesor};
+
+        % ALU and control
+        \node[
+            unit,
+            fill=blue!20,
+            minimum width=2.2cm,
+            minimum height=0.75cm
+        ] (alu) at (-3.15,0.35) {\textbf{ALU}};
+
+        \node[
+            unit,
+            fill=orange!25,
+            minimum width=2.2cm,
+            minimum height=0.75cm
+        ] (ctrl) at (-3.15,-0.70) {\textbf{řadič}};
+
+        % General registers block title
+        \node[
+            unit,
+            fill=green!8,
+            minimum width=3.7cm,
+            minimum height=2.35cm
+        ] (regfile) at (0.75,0.05) {};
+
+        \node[font=\bfseries] at (0.75,0.95) {pracovní registry};
+
+        % Registers grid
+        \node[reg] (r0) at (-0.50,0.35) {$R_0$};
+        \node[reg] (r1) at (0.75,0.35) {$R_1$};
+        \node[reg] (r2) at (2.00,0.35) {$R_2$};
+
+        \node[reg] (r3) at (-0.50,-0.35) {$R_3$};
+        \node[reg] (r4) at (0.75,-0.35) {$R_4$};
+        \node[reg] (r5) at (2.00,-0.35) {$R_5$};
+
+        % Special registers
+        \node[special] (pc) at (4.05,0.95) {\textbf{PC}};
+        \node[special] (ir) at (4.05,0.25) {\textbf{IR}};
+        \node[special] (sp) at (4.05,-0.45) {\textbf{SP}};
+        \node[special] (flags) at (4.05,-1.15) {\textbf{FLAGS}};
+
+        % Arrows
+        \draw[arr] (alu.east) -- (-1.15,0.35);
+
+        \draw[arr] (ctrl.east) -- (-1.15,-0.70);
+        \draw[arr] (ir.west) -- (2.65,0.25);
+
+    \end{tikzpicture}
+    }
+
+    \begin{itemize}
+        \item \textbf{PC} (program counter) ukazuje na adresu další instrukce v paměti.
+        \item \textbf{IR} (instruction register) uchovává právě prováděnou instrukci.
+        \item \textbf{SP} (stack pointer) ukazuje na vrchol zásobníku v paměti.
+        \item \textbf{FLAGS} uchovává příznaky, které informují o výsledku poslední operace (např. přetečení, záporný výsledek, nulový výsledek).
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Cache}
+
+    \begin{itemize}
+        \visible<2->{\item \textbf{Cache} je malá a velmi rychlá paměť mezi \textbf{CPU} a \textbf{RAM}.}
+        \visible<3->{\item Uchovává kopie \textbf{často používaných dat a instrukcí}.}
+        \visible<4->{\item Jejím cílem je zkrátit dobu, po kterou procesor čeká na data z hlavní paměti.}
+    \end{itemize}
+
+    \vspace{1mm}
+
+    \visible<5->{
+    \centering
+
+    \begin{tikzpicture}[
+        x=1cm, y=1cm,
+        >=stealth,
+        every node/.style={font=\small},
+        mainbox/.style={
+            draw,
+            thick,
+            rounded corners,
+            align=center,
+            minimum height=0.85cm
+        },
+        smallbox/.style={
+            draw,
+            thick,
+            rounded corners,
+            align=center,
+            minimum height=0.65cm
+        },
+        arr/.style={->, thick}
+    ]
+
+        % Main path
+        \node[
+            mainbox,
+            fill=blue!12,
+            minimum width=1.9cm
+        ] (cpu) at (-5.0,0.8) {\textbf{CPU}};
+
+        \node[
+            mainbox,
+            fill=orange!18,
+            minimum width=2.2cm
+        ] (cache) at (0,0.8) {\textbf{Cache}};
+
+        \node[
+            mainbox,
+            fill=green!15,
+            minimum width=2.0cm
+        ] (ram) at (5.0,0.8) {\textbf{RAM}};
+
+        \draw[arr] (cpu.east) -- node[above, font=\scriptsize] {požadavek na data} (cache.west);
+        \draw[arr] (cache.east) -- node[above, font=\scriptsize] {není-li nalezeno} (ram.west);
+
+        \draw[arr,bend left=30,red] (ram.south) to node[midway,below] {\textbf{cache miss}} (cache.south);
+        \draw[arr,bend left=30,red] (cache.south) to (cpu.south);
+
+        \draw[arr,bend right=30,green!80!black] (cache.north) to node[midway,above] {\textbf{cache hit}} (cpu.north);
+
+    \end{tikzpicture}
+    }
+    \visible<6->{\scriptsize
+    \begin{multicols}{2}
+        \begin{enumerate}
+            \visible<7->{\item CPU požádá o~data}
+            \visible<8->{\item Cache ověří, zda je obsahuje}
+            \visible<9->{\item Při cache miss se data načtou z~RAM}
+            \visible<10->{\item Data se uloží do cache a~předají CPU}
+        \end{enumerate}
+    \end{multicols}}
+
+\end{frame}
+
+\begin{frame}{Random Access Memory (RAM)}
+
+    \small
+
+    \begin{itemize}
+        \visible<2->{\item \textbf{RAM} (\textit{Random Access Memory}) je \textbf{hlavní pracovní paměť} počítače.}
+
+        \visible<3->{\item Ukládají se do ní \textbf{běžící programy}, jejich \textbf{data} a \textbf{mezivýsledky výpočtů}.}
+
+        \visible<4->{\item Je \textbf{rychlejší} než externí úložiště, ale \textbf{pomalejší} než registry nebo cache.}
+
+        \visible<5->{\item Je \textbf{volatilní} — po vypnutí napájení se její obsah ztratí.}
+    \end{itemize}
+
+    \vspace{1mm}
+
+    \visible<6->{
+        \begin{tinfoframe}
+            \footnotesize
+            Z pohledu programu se RAM chová jako \textbf{lineárně adresovaná paměť}:
+            každé paměťové místo má svou \textbf{adresu} a procesor může
+            z dané adresy \textbf{číst} nebo na ni \textbf{zapisovat}.
+        \end{tinfoframe}
+    }
+
+    \centering
+
+    \begin{tikzpicture}[
+        x=1cm, y=1cm,
+        >=stealth,
+        every node/.style={font=\small},
+        box/.style={
+            draw,
+            thick,
+            rounded corners,
+            align=center
+        },
+        cell/.style={
+            draw,
+            thick,
+            minimum width=1.1cm,
+            minimum height=0.8cm,
+            align=center,
+            fill=green!8
+        },
+        arr/.style={->, thick}
+    ]
+
+        % CPU
+        \node[
+            box,
+            fill=blue!12,
+            minimum width=2.2cm,
+            minimum height=1.0cm
+        ] (cpu) at (-5.5,0.8) {\textbf{CPU}};
+
+        % RAM title
+        \node[
+            box,
+            fill=yellow!20,
+            minimum width=7.3cm,
+            minimum height=1.2cm
+        ] (rambox) at (1.0,0.8) {};
+
+        \node[font=\bfseries\large] at (1.0,1.05) {RAM};
+        \node[font=\scriptsize] at (1.0,0.55) {hlavní paměť};
+
+        % Arrow CPU -> RAM
+        \draw[arr] (cpu.east) -- node[above, font=\scriptsize] {čtení / zápis} (-2.65,0.8);
+
+        % Linear memory cells
+        \node[cell] (c0) at (-2.0,-0.7) {};
+        \node[cell] (c1) at (-0.8,-0.7) {};
+        \node[cell] (c2) at (0.4,-0.7) {};
+        \node[cell] (c3) at (1.6,-0.7) {};
+        \node[cell] (c4) at (2.8,-0.7) {};
+        \node[cell] (c5) at (4.0,-0.7) {};
+
+        % Cell values
+        \node[font=\scriptsize] at (-2.0,-0.7) {A7};
+        \node[font=\scriptsize] at (-0.8,-0.7) {3C};
+        \node[font=\scriptsize] at (0.4,-0.7) {F1};
+        \node[font=\scriptsize] at (1.6,-0.7) {00};
+        \node[font=\scriptsize] at (2.8,-0.7) {2B};
+        \node[font=\scriptsize] at (4.0,-0.7) {9D};
+
+        % Addresses
+        \node[font=\scriptsize] at (-2.0,-1.35) {0};
+        \node[font=\scriptsize] at (-0.8,-1.35) {1};
+        \node[font=\scriptsize] at (0.4,-1.35) {2};
+        \node[font=\scriptsize] at (1.6,-1.35) {3};
+        \node[font=\scriptsize] at (2.8,-1.35) {4};
+        \node[font=\scriptsize] at (4.0,-1.35) {5};
+
+        % Labels
+        \node[anchor=west, font=\scriptsize] at (-2.75,-2.0) {adresy paměťových míst};
+        \node[anchor=west, font=\scriptsize] at (-2.75,-2.35) {uložené hodnoty};
+
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{RAM jako fyzická 2D matice}
+
+    \small
+
+    \begin{itemize}
+        \visible<2->{\item Z pohledu programu je RAM \textbf{lineárně adresovaná}.}
+        \visible<3->{\item Uvnitř paměťového čipu jsou ale buňky uspořádány do \textbf{řádků a~sloupců}.}
+        \visible<4->{\item Adresa určuje, \textbf{která buňka} se má číst nebo zapisovat.}
+    \end{itemize}
+
+    \vspace{1mm}
+
+    \visible<5->{
+    \centering
+
+    \begin{tikzpicture}[
+        x=1cm, y=1cm,
+        >=stealth,
+        every node/.style={font=\small},
+        box/.style={
+            draw,
+            thick,
+            rounded corners,
+            align=center
+        },
+        arr/.style={->, thick},
+        line/.style={thick},
+        cell/.style={draw, minimum width=0.42cm, minimum height=0.42cm},
+        hilite/.style={draw, fill=yellow!45, minimum width=0.42cm, minimum height=0.42cm}
+    ]
+
+        % Address input
+        \node[
+            box,
+            fill=orange!18,
+            minimum width=2.3cm,
+            minimum height=0.8cm
+        ] (addr) at (-4.8,1.4) {\textbf{Adresa}};
+
+        % Row decoder
+        \node[
+            box,
+            fill=blue!12,
+            minimum width=1.9cm,
+            minimum height=1.0cm
+        ] (rowdec) at (-4.8,-1.0) {\textbf{Řádkový}\\ dekodér};
+
+        % Column decoder
+        \node[
+            box,
+            fill=blue!12,
+            minimum width=2.0cm,
+            minimum height=1.0cm
+        ] (coldec) at (0.35,2.8) {\textbf{Sloupcový}\\ dekodér};
+
+        % Data box
+        \node[
+            box,
+            fill=green!12,
+            minimum width=1.9cm,
+            minimum height=0.85cm
+        ] (data) at (4.9,1.4) {\textbf{Data}};
+
+        % Memory matrix outline
+        \draw[thick] (2.9,1.95) rectangle (-2.9,-1.45);
+
+        % Matrix cells 6 x 8
+        \foreach \row/\y in {
+            1/1.5,
+            2/1.0,
+            3/0.5,
+            4/0.0,
+            5/-0.5,
+            6/-1.0
+        }{
+            \foreach \col/\x in {
+                1/-2.45,
+                2/-1.75,
+                3/-1.05,
+                4/-0.35,
+                5/0.35,
+                6/1.05,
+                7/1.75,
+                8/2.45
+            }{
+                \ifnum\row=6
+                    \ifnum\col=5
+                        \node[hilite] at (\x,\y) {};
+                    \else
+                        \node[cell] at (\x,\y) {};
+                    \fi
+                \else
+                    \node[cell] at (\x,\y) {};
+                \fi
+            }
+        }
+
+        % Address arrows
+        \draw[arr] (addr.south) -- (-4.8,0.35) -- (rowdec.north);
+        \draw[arr] (addr.east) -- (-3.5,1.4) -- (-3.5,2.8) -- (coldec.west);
+
+        % Row decoder to matrix
+        \draw[arr] (rowdec.east) -- (-3.05,-1.0);
+        \draw[line, red!70] (-3.05,-1.00) -- (2.75,-1.00);
+
+        % Column decoder to matrix
+        \draw[arr] (coldec.south) -- (0.35,2.0);
+        \draw[line, red!70] (0.35,1.9) -- (0.35,-1.3);
+
+        % Data connection
+        \draw[arr] (2.9,-1.05) -| (data.south);
+
+    \end{tikzpicture}
+    }
+
+\end{frame}
+
+\begin{frame}{Externí paměti: SSD a HDD}
+
+    \small
+
+    \begin{itemize}
+        \visible<2->{\item \textbf{HDD} ukládá data magneticky na rotující plotny.}
+        \visible<3->{\item \textbf{SSD} ukládá data elektronicky do flash paměti.}
+        \visible<4->{\item SSD nemá pohyblivé části, proto má rychlejší náhodný přístup.}
+        \visible<5->{\item HDD bývá výhodný pro velké kapacity za nižší cenu.}
+    \end{itemize}
+
+    \vspace{2mm}
+
+    \visible<6->{
+    \centering
+
+    \begin{tikzpicture}[
+        x=1cm, y=1cm,
+        >=stealth,
+        every node/.style={font=\small},
+        box/.style={
+            draw,
+            thick,
+            rounded corners,
+            align=center
+        },
+        label/.style={font=\scriptsize, align=center}
+    ]
+
+        % HDD box
+        \node[
+            box,
+            fill=blue!8,
+            minimum width=4.7cm,
+            minimum height=2.4cm
+        ] (hddbox) at (-3.0,0) {};
+
+        \node[font=\large\bfseries] at (-3.0,0.85) {HDD};
+
+        % HDD platter
+        \draw[thick, fill=gray!20] (-3.45,0.0) circle (0.55);
+        \draw[thick, fill=white] (-3.45,0.0) circle (0.12);
+        \draw[thick] (-3.45,0.0) circle (0.34);
+
+        % HDD arm
+        \draw[thick] (-2.45,0.45) -- (-3.25,0.12);
+        \draw[thick, fill=black] (-3.25,0.12) circle (0.04);
+        \draw[thick, fill=gray!40] (-2.35,0.50) circle (0.10);
+
+        \node[label] at (-3.0,-0.85)
+            {magnetické plotny\\ mechanický pohyb};
+
+        % SSD box
+        \node[
+            box,
+            fill=green!10,
+            minimum width=4.7cm,
+            minimum height=2.4cm
+        ] (ssdbox) at (3.0,0) {};
+
+        \node[font=\large\bfseries] at (3.0,0.85) {SSD};
+
+        % SSD board
+        \draw[thick, rounded corners, fill=green!35]
+            (1.85,-0.35) rectangle (4.15,0.45);
+
+        % NAND chips
+        \foreach \x in {2.25,2.95,3.65}{
+            \draw[thick, rounded corners=2pt, fill=black!70]
+                (\x-0.25,-0.12) rectangle (\x+0.25,0.25);
+        }
+
+        % Connector
+        \draw[thick, fill=yellow!60]
+            (4.15,-0.18) rectangle (4.45,0.28);
+
+        \node[label] at (3.0,-0.85)
+            {flash paměť\\ bez pohyblivých částí};
+
+        % Comparison note
+        \node[
+            box,
+            fill=yellow!18,
+            minimum width=8.7cm,
+            minimum height=0.7cm,
+            font=\footnotesize
+        ] at (0,-2.05)
+            {Obě slouží k dlouhodobému uložení dat i po vypnutí počítače.};
+
+    \end{tikzpicture}
+    }
+
+    \vspace{1mm}
+
+    \visible<7->{
+        \begin{tinfoframe}
+            \footnotesize
+            SSD je obvykle rychlejší při spouštění systému a aplikací,
+            zatímco HDD se často používá tam, kde rozhoduje hlavně
+            \textbf{velká kapacita} a \textbf{nízká cena za GB}.
+        \end{tinfoframe}
+    }
+
+\end{frame}
+
+\begin{frame}{Struktura HDD}
+    \begin{tikzpicture}[
+    scale=0.6,
+    transform shape,
+    x=1cm, y=1cm,
+    >=stealth,
+    every node/.style={font=\small},
+    diskcase/.style={
+        draw,
+        thick,
+        rounded corners=8pt,
+        fill=gray!8
+    },
+    platter/.style={
+        draw,
+        thick,
+        fill=gray!20
+    },
+    platterline/.style={
+        draw,
+        thick,
+        fill=gray!15,
+        rounded corners=3pt
+    },
+    hub/.style={
+        draw,
+        thick,
+        fill=white
+    },
+    arm/.style={
+        draw,
+        very thick,
+        line cap=round
+    },
+    head/.style={
+        draw,
+        thick,
+        fill=black
+    },
+    pivot/.style={
+        draw,
+        thick,
+        fill=gray!55
+    },
+    actuator/.style={
+        draw,
+        thick,
+        fill=gray!35
+    },
+    callout/.style={->, thick},
+    labelbox/.style={
+        font=\scriptsize,
+        fill=white,
+        inner sep=1.5pt
+    }
+]
+
+% =====================================================
+% Pohled shora
+% =====================================================
+
+\node[font=\bfseries\large] at (-3.4,3.55) {Pohled shora};
+
+% Disk body
+\draw[diskcase] (-6.8,-2.8) rectangle (0.0,2.9);
+
+% Inner frame
+\draw[thick, rounded corners=5pt] (-6.35,-2.4) rectangle (-0.45,2.45);
+
+% Platter
+\draw[platter] (-4.25,0) circle (1.75);
+\draw[thick] (-4.25,0) circle (1.15);
+
+% Hub
+\draw[hub] (-4.25,0) circle (0.35);
+\draw[hub] (-4.25,0) circle (0.10);
+
+% Screw marks around hub
+\foreach \ang in {0,60,120,180,240,300}{
+    \fill ({-4.25+0.22*cos(\ang)},{0+0.22*sin(\ang)}) circle (0.025);
+}
+
+% Pivot and actuator
+\node[pivot, minimum size=0.36cm, circle] (pivotTop) at (-1.9,-1.05) {};
+
+\draw[actuator, rounded corners=4pt]
+    (-2.45,-2.10) --
+    (-1.05,-2.10) --
+    (-0.80,-1.45) --
+    (-1.45,-0.55) --
+    (-2.05,-0.55) --
+    cycle;
+
+% Arm and head
+\draw[arm] (pivotTop.center) -- (-3.15,-0.25);
+\draw[head, rounded corners=1pt] (-3.32,-0.35) rectangle (-3.02,-0.15);
+
+% Secondary arm
+\draw[arm, line width=1pt] (-1.95,-0.75) -- (-2.65,-0.35);
+
+% Small electronics block
+\draw[thick, fill=gray!18, rounded corners=3pt]
+    (-6.15,-2.05) rectangle (-5.15,-1.45);
+
+% Decorative screws
+\foreach \p in {(-6.25,2.25),(-0.65,2.25),(-6.25,-2.20),(-0.65,-2.20)}{
+    \draw[thick] \p circle (0.06);
+}
+
+% Top view labels
+\node[labelbox, anchor=east] (labTopPlatter) at (-6.95,1.25) {plotna};
+\draw[callout] (labTopPlatter.east) -- (-5.45,0.95);
+
+\node[labelbox, anchor=east] (labTopHead) at (-6.95,-0.95) {čtecí/zapisovací hlava};
+\draw[callout] (labTopHead.east) -- (-3.17,-0.25);
+
+\node[labelbox, anchor=west] (labTopArm) at (0.15,3.25) {raménko};
+\draw[callout] (labTopArm.west) -- (-2.45,-0.45);
+
+\node[labelbox, anchor=west] (labTopAct) at (0.15,-3.00) {aktuátor};
+\draw[callout] (labTopAct.west) -- (-1.35,-1.45);
+
+
+% =====================================================
+% Pohled ze strany
+% =====================================================
+
+\node[font=\bfseries\large] at (4.35,3.55) {Pohled ze strany};
+
+% Side case
+\draw[diskcase] (1.0,-2.8) rectangle (7.7,2.9);
+
+% Side inner frame
+\draw[thick, rounded corners=5pt] (1.45,-2.4) rectangle (7.25,2.45);
+
+% Platter stack - side view
+\draw[platterline] (2.2,1.20) rectangle (5.55,1.42);
+\draw[platterline] (2.2,0.40) rectangle (5.55,0.62);
+\draw[platterline] (2.2,-0.40) rectangle (5.55,-0.18);
+\draw[platterline] (2.2,-1.20) rectangle (5.55,-0.98);
+
+% Elliptic ends for platters
+\foreach \y in {1.31,0.51,-0.29,-1.09}{
+    \draw[thick, fill=gray!20] (2.2,\y) ellipse (0.16 and 0.11);
+    \draw[thick, fill=gray!20] (5.55,\y) ellipse (0.16 and 0.11);
+}
+
+% Spindle / central axis
+\draw[thick, fill=gray!45] (3.72,-1.55) rectangle (4.05,1.75);
+\draw[thick, fill=gray!60] (3.885,1.75) ellipse (0.165 and 0.07);
+\draw[thick, fill=gray!60] (3.885,-1.55) ellipse (0.165 and 0.07);
+
+% Spindle cap
+\draw[hub] (3.55,1.85) rectangle (4.22,2.05);
+\draw[hub] (3.55,-1.85) rectangle (4.22,-1.65);
+
+% Actuator and pivot from side
+\node[pivot, minimum size=0.34cm, circle] (pivotSide) at (6.45,-1.35) {};
+
+\draw[actuator, rounded corners=4pt]
+    (5.85,-2.20) --
+    (7.05,-2.20) --
+    (7.20,-1.55) --
+    (6.85,-0.85) --
+    (6.15,-0.85) --
+    cycle;
+
+% Side arms between platters
+\draw[arm] (pivotSide.center) -- (5.45,0.50);
+\draw[arm] (pivotSide.center) -- (5.45,-0.30);
+
+% Heads
+\draw[head, rounded corners=1pt] (5.25,0.38) rectangle (5.55,0.58);
+\draw[head, rounded corners=1pt] (5.25,-0.42) rectangle (5.55,-0.22);
+
+% Small gap labels
+\node[labelbox, anchor=west] (labSidePlatters) at (7.85,1.25) {více ploten nad sebou};
+\draw[callout] (labSidePlatters.west) -- (5.55,1.31);
+
+\node[labelbox, anchor=west] (labSideSpindle) at (7.85,0.10) {vřeteno};
+\draw[callout] (labSideSpindle.west) -- (4.05,0.10);
+
+\node[labelbox, anchor=west] (labSideHead) at (7.85,-0.75) {hlavy mezi plotnami};
+\draw[callout] (labSideHead.west) -- (5.48,-0.30);
+
+\node[labelbox, anchor=west] (labSideAct) at (7.85,-2.85) {aktuátor};
+\draw[callout] (labSideAct.west) -- (6.55,-1.55);
+
+% Bottom explanatory note
+\node[
+    draw,
+    thick,
+    rounded corners,
+    fill=yellow!15,
+    align=center,
+    font=\small,
+    text width=12.8cm
+] at (0.45,-4.55) {
+    HDD ukládá data na rotující magnetické plotny.
+    Čtecí/zapisovací hlava se pohybuje nad povrchem plotny a vybírá požadovanou stopu.
+};
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Struktura plotny HDD}
+    \centering
+    \begin{tikzpicture}[
+    scale=0.92,
+    transform shape,
+    x=1cm, y=1cm,
+    >=stealth,
+    every node/.style={font=\small},
+    platter/.style={draw, thick, fill=gray!12},
+    track/.style={draw, thick, gray!65},
+    sectorline/.style={draw, thin, gray!60},
+    highlight/.style={draw, thick, fill=yellow!55},
+    hub/.style={draw, thick, fill=white},
+    callout/.style={->, thick},
+    labelbox/.style={font=\scriptsize, fill=white, inner sep=1.5pt},
+    detailbox/.style={
+        draw,
+        thick,
+        rounded corners,
+        fill=yellow!12,
+        align=center
+    },
+    bitcell/.style={
+        draw,
+        minimum width=0.42cm,
+        minimum height=0.32cm,
+        fill=white,
+        font=\scriptsize
+    }
+]
+
+% =====================================================
+% Plotna
+% =====================================================
+
+% Outer platter
+\draw[platter] (0,0) circle (2.7);
+
+% Highlighted sector on one track
+\path[highlight]
+    (20:1.35)
+    arc (20:55:1.35)
+    -- (55:1.85)
+    arc (55:20:1.85)
+    -- cycle;
+
+% Tracks
+\foreach \r in {0.8,1.1,1.35,1.6,1.85,2.1,2.35}{
+    \draw[track] (0,0) circle (\r);
+}
+
+% Sector lines
+\foreach \a in {0,30,60,90,120,150,180,210,240,270,300,330}{
+    \draw[sectorline] (\a:0.65) -- (\a:2.7);
+}
+
+% Hub / spindle
+\draw[hub] (0,0) circle (0.55);
+\draw[hub] (0,0) circle (0.18);
+\node[font=\scriptsize] at (0,-0.02) {};
+
+% Labels around platter
+\node[labelbox, anchor=east] (labplatter) at (-3.35,1.95) {\textbf{plotna}};
+\draw[callout] (labplatter.east) -- (-2.25,1.25);
+
+\node[labelbox, anchor=east] (labtrack) at (-3.35,0.85) {\textbf{stopa}};
+\draw[callout] (labtrack.east) -- (-1.55,0.35);
+
+\node[labelbox, anchor=east] (labhub) at (-3.35,-0.35) {\textbf{vřeteno}};
+\draw[callout] (labhub.east) -- (-0.42,-0.12);
+
+\node[labelbox, anchor=east] (labsector) at (-3.35,-1.55) {\textbf{sektor}};
+\draw[callout] (labsector.east) -- (1.40,1.08);
+
+% Rotation arrow
+\draw[->, thick, blue!70!black]
+    (2.15,1.95)
+    arc (42:-20:2.9);
+
+% Arrow from highlighted sector to detail
+\draw[callout] (1.55,1.15) -- (3.20,0.65);
+
+% Bottom note
+\node[
+    draw,
+    thick,
+    rounded corners,
+    fill=blue!8,
+    align=center,
+    font=\scriptsize,
+    text width=8.7cm
+] at (0,-3.50) {
+    Plotna je rozdělena na soustředné \textbf{stopy}.
+    Každá stopa se dále dělí na \textbf{sektory},
+    které tvoří základní oblasti pro ukládání dat.
+};
+
+\end{tikzpicture}
+\end{frame}
 
 \end{document}
