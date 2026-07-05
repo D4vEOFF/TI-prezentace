@@ -1011,208 +1011,8 @@
 \end{frame}
 
 \begin{frame}{Struktura HDD}
-    \begin{tikzpicture}[
-    scale=0.6,
-    transform shape,
-    x=1cm, y=1cm,
-    >=stealth,
-    every node/.style={font=\small},
-    diskcase/.style={
-        draw,
-        thick,
-        rounded corners=8pt,
-        fill=gray!8
-    },
-    platter/.style={
-        draw,
-        thick,
-        fill=gray!20
-    },
-    platterline/.style={
-        draw,
-        thick,
-        fill=gray!15,
-        rounded corners=3pt
-    },
-    hub/.style={
-        draw,
-        thick,
-        fill=white
-    },
-    arm/.style={
-        draw,
-        very thick,
-        line cap=round
-    },
-    head/.style={
-        draw,
-        thick,
-        fill=black
-    },
-    pivot/.style={
-        draw,
-        thick,
-        fill=gray!55
-    },
-    actuator/.style={
-        draw,
-        thick,
-        fill=gray!35
-    },
-    callout/.style={->, thick},
-    labelbox/.style={
-        font=\scriptsize,
-        fill=white,
-        inner sep=1.5pt
-    }
-]
-
-% =====================================================
-% Pohled shora
-% =====================================================
-
-\node[font=\bfseries\large] at (-3.4,3.55) {Pohled shora};
-
-% Disk body
-\draw[diskcase] (-6.8,-2.8) rectangle (0.0,2.9);
-
-% Inner frame
-\draw[thick, rounded corners=5pt] (-6.35,-2.4) rectangle (-0.45,2.45);
-
-% Platter
-\draw[platter] (-4.25,0) circle (1.75);
-\draw[thick] (-4.25,0) circle (1.15);
-
-% Hub
-\draw[hub] (-4.25,0) circle (0.35);
-\draw[hub] (-4.25,0) circle (0.10);
-
-% Screw marks around hub
-\foreach \ang in {0,60,120,180,240,300}{
-    \fill ({-4.25+0.22*cos(\ang)},{0+0.22*sin(\ang)}) circle (0.025);
-}
-
-% Pivot and actuator
-\node[pivot, minimum size=0.36cm, circle] (pivotTop) at (-1.9,-1.05) {};
-
-\draw[actuator, rounded corners=4pt]
-    (-2.45,-2.10) --
-    (-1.05,-2.10) --
-    (-0.80,-1.45) --
-    (-1.45,-0.55) --
-    (-2.05,-0.55) --
-    cycle;
-
-% Arm and head
-\draw[arm] (pivotTop.center) -- (-3.15,-0.25);
-\draw[head, rounded corners=1pt] (-3.32,-0.35) rectangle (-3.02,-0.15);
-
-% Secondary arm
-\draw[arm, line width=1pt] (-1.95,-0.75) -- (-2.65,-0.35);
-
-% Small electronics block
-\draw[thick, fill=gray!18, rounded corners=3pt]
-    (-6.15,-2.05) rectangle (-5.15,-1.45);
-
-% Decorative screws
-\foreach \p in {(-6.25,2.25),(-0.65,2.25),(-6.25,-2.20),(-0.65,-2.20)}{
-    \draw[thick] \p circle (0.06);
-}
-
-% Top view labels
-\node[labelbox, anchor=east] (labTopPlatter) at (-6.95,1.25) {plotna};
-\draw[callout] (labTopPlatter.east) -- (-5.45,0.95);
-
-\node[labelbox, anchor=east] (labTopHead) at (-6.95,-0.95) {čtecí/zapisovací hlava};
-\draw[callout] (labTopHead.east) -- (-3.17,-0.25);
-
-\node[labelbox, anchor=west] (labTopArm) at (0.15,3.25) {raménko};
-\draw[callout] (labTopArm.west) -- (-2.45,-0.45);
-
-\node[labelbox, anchor=west] (labTopAct) at (0.15,-3.00) {aktuátor};
-\draw[callout] (labTopAct.west) -- (-1.35,-1.45);
-
-
-% =====================================================
-% Pohled ze strany
-% =====================================================
-
-\node[font=\bfseries\large] at (4.35,3.55) {Pohled ze strany};
-
-% Side case
-\draw[diskcase] (1.0,-2.8) rectangle (7.7,2.9);
-
-% Side inner frame
-\draw[thick, rounded corners=5pt] (1.45,-2.4) rectangle (7.25,2.45);
-
-% Platter stack - side view
-\draw[platterline] (2.2,1.20) rectangle (5.55,1.42);
-\draw[platterline] (2.2,0.40) rectangle (5.55,0.62);
-\draw[platterline] (2.2,-0.40) rectangle (5.55,-0.18);
-\draw[platterline] (2.2,-1.20) rectangle (5.55,-0.98);
-
-% Elliptic ends for platters
-\foreach \y in {1.31,0.51,-0.29,-1.09}{
-    \draw[thick, fill=gray!20] (2.2,\y) ellipse (0.16 and 0.11);
-    \draw[thick, fill=gray!20] (5.55,\y) ellipse (0.16 and 0.11);
-}
-
-% Spindle / central axis
-\draw[thick, fill=gray!45] (3.72,-1.55) rectangle (4.05,1.75);
-\draw[thick, fill=gray!60] (3.885,1.75) ellipse (0.165 and 0.07);
-\draw[thick, fill=gray!60] (3.885,-1.55) ellipse (0.165 and 0.07);
-
-% Spindle cap
-\draw[hub] (3.55,1.85) rectangle (4.22,2.05);
-\draw[hub] (3.55,-1.85) rectangle (4.22,-1.65);
-
-% Actuator and pivot from side
-\node[pivot, minimum size=0.34cm, circle] (pivotSide) at (6.45,-1.35) {};
-
-\draw[actuator, rounded corners=4pt]
-    (5.85,-2.20) --
-    (7.05,-2.20) --
-    (7.20,-1.55) --
-    (6.85,-0.85) --
-    (6.15,-0.85) --
-    cycle;
-
-% Side arms between platters
-\draw[arm] (pivotSide.center) -- (5.45,0.50);
-\draw[arm] (pivotSide.center) -- (5.45,-0.30);
-
-% Heads
-\draw[head, rounded corners=1pt] (5.25,0.38) rectangle (5.55,0.58);
-\draw[head, rounded corners=1pt] (5.25,-0.42) rectangle (5.55,-0.22);
-
-% Small gap labels
-\node[labelbox, anchor=west] (labSidePlatters) at (7.85,1.25) {více ploten nad sebou};
-\draw[callout] (labSidePlatters.west) -- (5.55,1.31);
-
-\node[labelbox, anchor=west] (labSideSpindle) at (7.85,0.10) {vřeteno};
-\draw[callout] (labSideSpindle.west) -- (4.05,0.10);
-
-\node[labelbox, anchor=west] (labSideHead) at (7.85,-0.75) {hlavy mezi plotnami};
-\draw[callout] (labSideHead.west) -- (5.48,-0.30);
-
-\node[labelbox, anchor=west] (labSideAct) at (7.85,-2.85) {aktuátor};
-\draw[callout] (labSideAct.west) -- (6.55,-1.55);
-
-% Bottom explanatory note
-\node[
-    draw,
-    thick,
-    rounded corners,
-    fill=yellow!15,
-    align=center,
-    font=\small,
-    text width=12.8cm
-] at (0.45,-4.55) {
-    HDD ukládá data na rotující magnetické plotny.
-    Čtecí/zapisovací hlava se pohybuje nad povrchem plotny a vybírá požadovanou stopu.
-};
-
-\end{tikzpicture}
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/hdd.jpg}
 \end{frame}
 
 \begin{frame}{Struktura plotny HDD}
@@ -1255,10 +1055,10 @@
 
 % Highlighted sector on one track
 \path[highlight]
-    (20:1.35)
-    arc (20:55:1.35)
-    -- (55:1.85)
-    arc (55:20:1.85)
+    (30:1.35)
+    arc (30:60:1.35)
+    -- (60:1.85)
+    arc (60:30:1.85)
     -- cycle;
 
 % Tracks
@@ -1286,16 +1086,13 @@
 \node[labelbox, anchor=east] (labhub) at (-3.35,-0.35) {\textbf{vřeteno}};
 \draw[callout] (labhub.east) -- (-0.42,-0.12);
 
-\node[labelbox, anchor=east] (labsector) at (-3.35,-1.55) {\textbf{sektor}};
+\node[labelbox, anchor=east] (labsector) at (3.35,1.55) {\textbf{sektor}};
 \draw[callout] (labsector.east) -- (1.40,1.08);
 
 % Rotation arrow
 \draw[->, thick, blue!70!black]
     (2.15,1.95)
     arc (42:-20:2.9);
-
-% Arrow from highlighted sector to detail
-\draw[callout] (1.55,1.15) -- (3.20,0.65);
 
 % Bottom note
 \node[
@@ -1304,15 +1101,120 @@
     rounded corners,
     fill=blue!8,
     align=center,
-    font=\scriptsize,
-    text width=8.7cm
+    font=\small,
+    text width=10.0cm
 ] at (0,-3.50) {
-    Plotna je rozdělena na soustředné \textbf{stopy}.
-    Každá stopa se dále dělí na \textbf{sektory},
-    které tvoří základní oblasti pro ukládání dat.
+    Plotna je rozdělena na soustředné \textbf{stopy}. Každá stopa se dále dělí na \textbf{sektory}, které tvoří základní oblasti pro ukládání dat.
 };
 
 \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Paměťová hierarchie}
+
+    \small
+
+    \begin{itemize}
+        \visible<2->{\item Počítač nepoužívá jen jeden druh paměti, ale \textbf{celou hierarchii pamětí}.}
+
+        \visible<3->{\item Jednotlivé úrovně se liší hlavně \textbf{rychlostí}, \textbf{kapacitou} a \textbf{cenou}.}
+
+        \visible<4->{\item Čím je paměť blíže procesoru, tím bývá \textbf{rychlejší}, ale také \textbf{menší} a \textbf{dražší}.}
+    \end{itemize}
+
+    \vspace{1mm}
+
+    \visible<5->{
+    \centering
+
+    \begin{tikzpicture}[
+        scale=0.92,
+        transform shape,
+        x=1cm, y=1cm,
+        >=stealth,
+        every node/.style={font=\small},
+        level/.style={
+            draw,
+            thick,
+            rounded corners,
+            align=center,
+            minimum height=0.58cm
+        },
+        arrowlabel/.style={
+            font=\scriptsize,
+            align=center
+        }
+    ]
+
+        % Levels of hierarchy
+        \node[
+            level,
+            fill=red!15,
+            minimum width=2.3cm
+        ] (reg) at (0,1.80) {\textbf{registry}};
+
+        \node[
+            level,
+            fill=orange!20,
+            minimum width=3.3cm
+        ] (cache) at (0,1.05) {\textbf{cache}};
+
+        \node[
+            level,
+            fill=yellow!25,
+            minimum width=4.4cm
+        ] (ram) at (0,0.30) {\textbf{RAM}};
+
+        \node[
+            level,
+            fill=green!18,
+            minimum width=5.5cm
+        ] (ssd) at (0,-0.45) {\textbf{SSD / HDD}};
+
+        \node[
+            level,
+            fill=blue!12,
+            minimum width=6.5cm
+        ] (archive) at (0,-1.20) {\textbf{záloha / cloud / páska}};
+
+        % Vertical arrows between levels
+        \draw[->, thick] (reg.south) -- (cache.north);
+        \draw[->, thick] (cache.south) -- (ram.north);
+        \draw[->, thick] (ram.south) -- (ssd.north);
+        \draw[->, thick] (ssd.south) -- (archive.north);
+
+        % Left side arrow - speed and price per bit increase upwards
+        \draw[->, very thick] (-4.25,-1.45) -- (-4.25,2.10);
+        \node[arrowlabel, anchor=east] at (-4.45,0.35)
+            {rychlost};
+
+        % Right side arrow - capacity increases downwards
+        \draw[->, very thick] (4.25,2.10) -- (4.25,-1.45);
+        \node[arrowlabel, anchor=west] at (4.45,0.35)
+            {kapacita};
+
+        % CPU label above
+        \node[font=\scriptsize\bfseries] at (0,2.35) {nejblíže CPU};
+
+    \end{tikzpicture}
+    }
+
+    \vspace{1mm}
+
+    \visible<6->{
+        \begin{tinfoframe}
+            \footnotesize
+            Paměťová hierarchie umožňuje spojit \textbf{vysokou rychlost}
+            blízko procesoru s~\textbf{velkou kapacitou} na~nižších úrovních.
+        \end{tinfoframe}
+    }
+
+\end{frame}
+
+\begin{frame}{Zdroje}
+    \begin{itemize}
+        \item BRYANT, Randal E. a David R. O'HALLARON. Computer Systems: A Programmer's Perspective. 3rd ed. Boston: Pearson, 2016. ISBN 978-0-13-409266-9.
+    \end{itemize}
 \end{frame}
 
 \end{document}
