@@ -10,6 +10,76 @@
 
 \begin{document}
 
-    \input{../titlepage.tex}
+\input{../titlepage.tex}
+
+\section{Kryptologie}
+
+\titleframe{Kryptologie}
+
+\begin{frame}{Kryptologie}
+    \pause
+    $\kappa\rho\upsilon\pi\tau o\sigma$ (skrytý) a $\lambda o \gamma o \sigma$ (věda), tedy věda o šifrování a dešifrování zpráv.
+    \begin{itemize}
+        \pause
+        \item \textbf{Kryptografie} se zabývá teoretickými aspekty návrhu šifrovacích metod.
+        \pause
+        \item \textbf{Kryptanalýza} se zabývá metodami prolomení šifrovacích metod.
+    \end{itemize}    
+\end{frame}
+
+\begin{frame}{Formulace problému}
+    \centering
+
+    \begin{tnoticeframe}[0.9\textwidth]
+        \begin{center}
+            Alice chce Bobovi poslat tajnou zprávu $m \in \set{0,1}^{n}$.
+        \end{center}
+    \end{tnoticeframe}
+
+    \begin{tikzpicture}[
+        x=1cm, y=1cm,
+        >=latex,
+        msgarrow/.style={
+            ->,
+            >=latex,
+            line width=1.1pt,
+            draw=black
+        },
+        attackarrow/.style={
+            ->,
+            >=latex,
+            line width=1.1pt,
+            draw=red
+        }
+    ]
+        % Alice
+        \node[inner sep=0pt] (alice) at (-4.55,0.45)
+            {\includegraphics[height=1.65cm]{images/woman-icon.pdf}};
+        \node at (-4.55,-0.85) {Alice};
+
+        % Bob
+        \node[inner sep=0pt] (bob) at (4.25,0.45)
+            {\includegraphics[height=1.65cm]{images/man-icon.pdf}};
+        \node at (4.25,-0.85) {Bob};
+
+        % Hlavní komunikační šipka
+        \draw[msgarrow] (-3.55,0.55) -- (3.35,0.55);
+
+        % Popisek zprávy
+        \node[text=blue!35!black] at (-0.2,0.95) {$m$};
+
+        % Záškodník
+        \node[inner sep=0pt] (attacker) at (0,-2.25)
+            {\includegraphics[height=1.55cm]{images/hacker-icon.pdf}};
+        \node at (0,-3.35) {Záškodník};
+
+        % Červená šipka odposlechu
+        \draw[attackarrow]
+            (-0.75,-1.55)
+            .. controls (-1.45,-1.50) and (-1.35,-0.10) ..
+            (-0.15,0.55);
+
+    \end{tikzpicture}
+\end{frame}
 
 \end{document}
