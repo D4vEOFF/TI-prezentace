@@ -16,6 +16,8 @@
 
 \titleframe{Kryptologie}
 
+\subsection{Základní pojmy}
+
 \begin{frame}{Kryptologie}
     \pause
     $\kappa\rho\upsilon\pi\tau o\sigma$ (skrytý) a $\lambda o \gamma o \sigma$ (věda), tedy věda o šifrování a dešifrování zpráv.
@@ -26,6 +28,8 @@
         \item \textbf{Kryptanalýza} se zabývá metodami prolomení šifrovacích metod.
     \end{itemize}    
 \end{frame}
+
+\subsection{Formulace problému}
 
 \begin{frame}{Formulace problému}
     \centering
@@ -80,6 +84,434 @@
             (-0.15,0.55);
 
     \end{tikzpicture}
+\end{frame}
+
+\section{Historické metody}
+
+\titleframe{Historické metody}
+
+\subsection{Substituční metoda}
+
+\begin{frame}{Substituční metoda}
+    \pause
+    \begin{itemize}
+        \item Mějme abecedu $\Sigma = \set{a_0,a_1,\ldots,a_{q-1}}$.\pause
+        \item Zvolíme tajný posun \(0<k<q\).\pause
+        \item Znak \(a_i\) zašifrujeme jako $a_i \mapsto a_{(i+k)\bmod q}$.\pause
+        \item Tedy pro slovo $w=a_1\dots a_n\in\Sigma^{*}$ je jeho šifra
+        \[
+            s(w)=s(a_1\dots a_n)=a_{(1+k)\bmod q}\dots a_{(n+k)\bmod q}.
+        \]
+    \end{itemize}
+    \pause
+    \centering
+    \begin{tikzpicture}[
+        x=0.8cm,
+        y=0.8cm,
+        >=latex,
+        cell/.style={
+            draw=black!55,
+            rounded corners=0.7mm,
+            minimum width=0.6cm,
+            minimum height=0.6cm,
+            font=\scriptsize
+        },
+        arrow/.style={
+            ->,
+            line width=0.9pt,
+            draw=black!75
+        }
+    ]
+
+        % Horní abeceda
+        \foreach \x/\letter in {
+            0/A,1/B,2/C,3/D,4/E,5/F,6/G,7/H
+        }{
+            \node[cell, fill=black!5] (u\x) at (\x,0) {\letter};
+        }
+
+        % Dolní posunutá abeceda pro k = 3
+        \foreach \x/\letter in {
+            0/D,1/E,2/F,3/G,4/H,5/A,6/B,7/C
+        }{
+            \node[cell, fill=green!18] (d\x) at (\x,-1.25) {\letter};
+        }
+
+        % Šipky
+        \foreach \x in {0,1,2,3,4,5,6,7}{
+            \draw[arrow] (u\x) -- (d\x);
+        }
+
+        \node[font=\scriptsize] at (-1.1,0) {původní};
+        \node[font=\scriptsize] at (-1.1,-1.25) {šifra};
+
+        \node[font=\small\bfseries] at (3.5,0.85) {Příklad: \(k=3\)};
+
+    \end{tikzpicture}
+
+    \vspace{0.35cm}
+    \pause
+    \begin{tnoticeframe}
+        Například pro $k=3$ v případě standardní abecedy:
+        \begin{center}
+            $\texttt{TAJNE}\longmapsto \texttt{WDMQH}$.
+        \end{center}
+    \end{tnoticeframe}
+
+\end{frame}
+
+\begin{frame}{Nevýhoda substituční šifry}
+    \pause
+    \begin{talertframe}
+        \textbf{Jednoduše prolomitelná!} Stačí zkusit všechna možná posunutí $k=1,\dots,q-1$.
+    \end{talertframe}
+    \pause
+    \centering
+    \small
+    \begin{tabular}{c|c@{\qquad}c|c}
+        \(k\) & dešifrování & \(k\) & dešifrování \\
+        \hline
+        0  & \markdarkred{\texttt{XPTQF}} & 13 & \texttt{KCGDS} \\
+        1  & \texttt{WOSPE} & 14 & \texttt{JBFCR} \\
+        2  & \texttt{VNROD} & 15 & \texttt{IAEBQ} \\
+        3  & \texttt{UMQNC} & 16 & \texttt{HZDAP} \\
+        4  & \texttt{TLPMB} & 17 & \texttt{GYCZO} \\
+        5  & \markdarkgreen{\textbf{\texttt{SKOLA}}} & 18 & \texttt{FXBYN} \\
+        6  & \texttt{RJNKZ} & 19 & \texttt{EWAXM} \\
+        7  & \texttt{QIMJY} & 20 & \texttt{DVZWL} \\
+        8  & \texttt{PHLIX} & 21 & \texttt{CUYVK} \\
+        9  & \texttt{OGKHW} & 22 & \texttt{BTXUJ} \\
+        10 & \texttt{NFJGV} & 23 & \texttt{ASWTI} \\
+        11 & \texttt{MEIFU} & 24 & \texttt{ZRVSH} \\
+        12 & \texttt{LDHET} & 25 & \texttt{YQURG}
+    \end{tabular}
+\end{frame}
+
+\begin{frame}{Obecná substituční šifra}
+    \pause
+    Místo pevného posunu zvolíme libovolné přeuspořádání abecedy
+    \[
+        \mapping{\pi}{\Sigma}{\Sigma}.
+    \]
+    \pause
+    Každý znak \(a\in\Sigma\) zašifrujeme jako $a \mapsto \pi(a)$.
+    \pause
+    \begin{timportantframe}[0.8\textwidth]
+        \begin{center}
+            Klíčem je tedy celá permutace abecedy $\pi$.
+        \end{center}
+    \end{timportantframe}
+    \pause
+    \centering
+    \begin{tikzpicture}[
+        x=0.8cm, y=0.8cm,
+        >=latex,
+        cell/.style={
+            draw=black!55,
+            rounded corners=0.7mm,
+            minimum width=0.6cm,
+            minimum height=0.6cm,
+            font=\scriptsize
+        },
+        arrow/.style={
+            ->,
+            line width=0.8pt,
+            draw=black!70
+        }
+    ]
+
+        \foreach \x/\letter in {
+            0/A,1/B,2/C,3/D,4/E,5/F,6/G,7/H
+        }{
+            \node[cell, fill=black!5] (u\x) at (\x,0) {\letter};
+        }
+
+        \foreach \x/\letter in {
+            0/Q,1/M,2/A,3/Z,4/B,5/T,6/L,7/E
+        }{
+            \node[cell, fill=green!18] (d\x) at (\x,-1.35) {\letter};
+        }
+
+        \foreach \x in {0,1,2,3,4,5,6,7}{
+            \draw[arrow] (u\x) -- (d\x);
+        }
+
+        \node[font=\scriptsize] at (-1.2,0) {původní};
+        \node[font=\scriptsize] at (-1.2,-1.35) {šifra};
+
+        \node[font=\small\bfseries] at (3.5,0.75)
+            {Příklad permutace};
+
+    \end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}{Příklad}{Obecná substituční šifra}
+    \pause
+    Klíčem je například následující substituce:
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}[x=0.43cm,y=0.55cm,>=latex,
+            cell/.style={draw=black!55, minimum width=0.38cm,
+            minimum height=0.42cm, font=\tiny}
+        ]
+            \foreach \x/\a in {0/A,1/B,2/C,3/D,4/E,5/F,6/G,7/H,8/I,9/J,10/K,11/L,12/M,
+            13/N,14/O,15/P,16/Q,17/R,18/S,19/T,20/U,21/V,22/W,23/X,24/Y,25/Z}
+                \node[cell,fill=black!5] at (\x,0) {\a};
+
+            \foreach \x/\a in {0/Q,1/W,2/E,3/R,4/T,5/Y,6/U,7/I,8/O,9/P,10/A,11/S,12/D,
+            13/F,14/G,15/H,16/J,17/K,18/L,19/Z,20/X,21/C,22/V,23/B,24/N,25/M}
+                \node[cell,fill=green!18] at (\x,-1) {\a};
+        \end{tikzpicture}
+    \end{figure}
+
+    \vspace{0.35cm}
+    \pause
+    Zašifrujeme slovo
+    \[
+        \texttt{TAJEMSTVI}.
+    \]
+    \pause
+    Podle tabulky
+    \begin{align*}
+        &T\mapsto Z,\quad A\mapsto Q,\quad J\mapsto P,\quad E\mapsto T,\\
+        &M\mapsto D,\quad S\mapsto L,\quad V\mapsto C,\quad I\mapsto O.
+    \end{align*}
+    dostáváme $\texttt{TAJEMSTVI}\quad\longmapsto\quad\texttt{ZQPTDLZCO}$.
+
+\end{frame}
+
+\begin{frame}{Nevýhody obecné substituční šifry}
+    \pause
+    \begin{tnoticeframe}
+        Obecná substituční šifra je teoreticky bezpečná, neboť pro abecedu o~$q$ znacích existuje $q!$ různých permutací.
+    \end{tnoticeframe}
+    \begin{talertbox}{Hlavní problém}
+        \begin{center}
+            Šifra stále zachovává strukturu původního jazyka.
+        \end{center}
+    \end{talertbox}
+
+    \vspace{0.25cm}
+    \pause
+    \begin{itemize}
+        \item Často používaná písmena zůstávají rozpoznatelná.\pause
+        \item Zachovávají se opakování znaků a vzory ve slovech.\pause
+        \item Delší zprávy lze prolomit frekvenční analýzou.\pause
+        \item Četnosti různých znaků \href{https://en.wikipedia.org/wiki/Letter_frequency}{\underline{zde}}.
+    \end{itemize}
+
+\end{frame}
+
+\section{Symetrická kryptografie}
+
+\titleframe{Symetrická kryptografie}
+
+\subsection{Perfektní schéma symetrického šifrování}
+
+\begin{frame}{Symetrická kryptografie}
+
+    Alice i Bob používají stejný tajný klíč \(k\).
+    \[
+        c = \mathbf{E}(m, k),
+        \qquad
+        m = \mathbf{D}(c, k).
+    \]
+    Tzn. klíč $k$ lze použít k~\markdarkred{šifrování i~dešifrování}.
+
+\end{frame}
+
+\begin{frame}{Perfektní schéma}
+    \centering
+    \begin{tikzpicture}[
+        x=1cm,
+        y=1cm,
+        >=latex
+    ]
+
+        % Horní popisek
+        \node[
+            rounded corners=2mm,
+            draw=orange!70!black,
+            fill=orange!25,
+            line width=0.6pt,
+            inner xsep=4mm,
+            inner ysep=2.2mm,
+            font=\normalsize
+        ] at (0,3.00)
+        {Alice se setká s Bobem na utajeném místě};
+
+        % Bublina od Boba
+        \node[
+            draw=blue!70!black,
+            fill=blue!20,
+            rounded corners=2mm,
+            line width=0.8pt,
+            text width=7.2cm,
+            align=left,
+            inner xsep=4mm,
+            inner ysep=3mm,
+            font=\normalsize,
+            rectangle callout,
+            callout absolute pointer={(0.15,-0.25)}
+        ] at (-1.8,1.0)
+        {Ahoj Alice, použij prosím tento klíč k~zašifrování zprávy pro mne\\[1mm]
+        $k = 01001101$};
+
+        % Alice
+        \node[inner sep=0pt] (alice) at (-2.25,-1.2)
+            {\includegraphics[height=1.65cm]{images/woman-icon.pdf}};
+        \node[font=\normalsize] at (-2.25,-2.45) {Alice};
+
+        % Bob
+        \node[inner sep=0pt] (bob) at (0.55,-1.2)
+            {\includegraphics[height=1.65cm]{images/man-icon.pdf}};
+        \node[font=\normalsize] at (0.55,-2.45) {Bob};
+
+        % Pravý vysvětlující rámeček
+        \node[
+            rounded corners=2mm,
+            draw=orange!70!black,
+            fill=orange!25,
+            line width=0.6pt,
+            text width=3.8cm,
+            align=left,
+            inner xsep=4mm,
+            inner ysep=3mm,
+            font=\normalsize
+        ] at (4.0,-0.95)
+        {Bob předá Alici náhodný klíč $k \in \set{0,1}^{n}$};
+
+    \end{tikzpicture}
+\end{frame}
+
+\subsection{Jednorázová šifra}
+
+\begin{frame}{Jednorázová šifra}
+
+    \begin{itemize}
+        \item Anglicky \emph{one-time pad}.
+        \item Alice i~Bob sdílí náhodný tajný klíč $k \in \set{0,1}^n$. Zprávu $m \in \set{0,1}^n$ Alice zašifruje pomocí operace XOR:
+        \[
+            c = m \oplus k.
+        \]
+        \item Bob zprávu \markdarkred{dešifruje stejným klíčem}:
+        \[
+            c \oplus k=(m \oplus k)\oplus k=m.
+        \]
+        \item Použita během 2. světové války, studené války, \dots
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Perfektní schéma jednorázové šifry}
+
+    \centering
+    \begin{tikzpicture}[
+        x=1cm, y=1cm,
+        >=latex,
+        msgarrow/.style={
+            ->,
+            >=latex,
+            line width=1.1pt,
+            draw=black
+        },
+        attackarrow/.style={
+            ->,
+            >=latex,
+            line width=1.1pt,
+            draw=red
+        }
+    ]
+
+        % Horní popisek
+        \node[
+            rounded corners=2mm,
+            draw=orange!70!black,
+            fill=orange!25,
+            line width=0.6pt,
+            inner xsep=4mm,
+            inner ysep=2mm,
+            font=\normalsize
+        ] at (0,3.00)
+        {Alice pošle \markdarkred{zašifrovaný text} $m \oplus k$};
+
+        % Alice
+        \node[inner sep=0pt] (alice) at (-4.55,0.45)
+            {\includegraphics[height=1.65cm]{images/woman-icon.pdf}};
+        \node[font=\normalsize] at (-4.55,-0.85) {Alice};
+
+        % Bob
+        \node[inner sep=0pt] (bob) at (4.25,0.45)
+            {\includegraphics[height=1.65cm]{images/man-icon.pdf}};
+        \node[font=\normalsize] at (4.25,-0.85) {Bob};
+
+        % Hlavní komunikační šipka
+        \draw[msgarrow] (-3.55,0.55) -- (3.35,0.55);
+
+        % Popisek zprávy
+        \node[font=\normalsize, text=blue!35!black] at (-0.2,0.95) {$m \oplus k$};
+
+        % Záškodník
+        \node[inner sep=0pt] (attacker) at (0,-2.05)
+            {\includegraphics[height=1.55cm]{images/hacker-icon.pdf}};
+        \node[font=\normalsize] at (0,-3.15) {Záškodník};
+
+        % Červená šipka odposlechu
+        \draw[attackarrow]
+            (-0.65,-1.35)
+            .. controls (-1.35,-1.25) and (-1.25,-0.10) ..
+            (-0.15,0.55);
+
+        % Spodní popisek
+        \node[
+            rounded corners=2mm,
+            draw=orange!70!black,
+            fill=orange!50,
+            line width=0.6pt,
+            inner xsep=4mm,
+            inner ysep=2mm,
+            font=\normalsize
+        ] at (0,-4.25)
+        {Záškodník nemůže rozlišit $m \oplus k$ od náhodného řetězce};
+
+    \end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}{Bezpečnost jednorázové šifry}
+
+    Jednorázová šifra splňuje:
+    \[
+        \Pr(M=m \mid C=c)=\Pr(M=m).
+    \]
+    Zachycený šifrový text tedy útočníkovi neposkytuje žádnou informaci
+    o původní zprávě.
+
+    \vspace{0.25cm}
+
+    \begin{tnoticeframe}
+        Pro každou zprávu \(m\) a každý šifrový text \(c\) existuje právě jeden klíč:
+        \[
+            k = m \oplus c.
+        \]
+
+        Protože \(k\) je vybrán rovnoměrně náhodně z \(2^n\) možností,
+        \[
+            \Pr(C=c \mid M=m)
+            =
+            \Pr(K=m\oplus c)
+            =
+            \frac{1}{2^n}.
+        \]
+    \end{tnoticeframe}
+
+    \vspace{0.15cm}
+
+    \begin{talertbox}{Důležité podmínky}
+        Klíč musí být náhodný, stejně dlouhý jako zpráva a~použitý pouze jednou.
+    \end{talertbox}
+
 \end{frame}
 
 \end{document}
