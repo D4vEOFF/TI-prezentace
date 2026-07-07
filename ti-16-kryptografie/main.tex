@@ -921,11 +921,13 @@
 \subsection{Bezpečnost RSA}
 
 \begin{frame}{Bezpečnost RSA}
+    \pause
     U RSA je veřejný klíč $ k_V=(v,n)$, kde
     \[
         n=pq
     \]
     je součin dvou \markdarkred{velkých prvočísel}.
+    \pause
     \vspace{0.2cm}
 
     \begin{talertframe}
@@ -959,14 +961,15 @@
 \end{frame}
 
 \begin{frame}{Problém $\FACTOR$ patří do $\classNP$}
-
+    \pause
     \begin{propblock}
         Platí $\FACTOR\in\classNP$.
     \end{propblock}
+    \pause
     \begin{itemize}
-        \item Na vstupu mějme dvojici $(n,b)$ a číslo $d\in\N$.
-        \item Celková délka vstupu je $L_n=|\binary{n}|+|\binary{b}|$.
-        \item Mějme algoritmus níže.
+        \item Na vstupu mějme dvojici $(n,b)$ a číslo $d\in\N$.\pause
+        \item Celková délka vstupu je $L_n=|\binary{n}|+|\binary{b}|$.\pause
+        \item Mějme algoritmus níže.\pause
         \begin{center}
             \begin{minipage}{0.7\textwidth}
                 \begin{algorithm}[H]
@@ -978,24 +981,597 @@
                 \end{algorithm}
             \end{minipage}
         \end{center}
-        \item Porovnání binárně zapsaných čísel i~výpočet zbytku po dělení lze provést v~čase polynomiálním vzhledem k~počtu bitů vstupu $L_n$.
+        \pause
+        \item Porovnání binárně zapsaných čísel i~výpočet zbytku po dělení lze provést v~čase polynomiálním vzhledem k~počtu bitů vstupu $L_n$.\pause
         \item Ověřovač tedy běží v~polynomiálním čase.
     \end{itemize}
 
 \end{frame}
 
 \begin{frame}{Co víme o faktorizaci?}
+    \pause
     \begin{tnoticeframe}[.5\textwidth]
         \begin{center}
             Víme, že $\FACTOR\in\classNP$.
         \end{center}
     \end{tnoticeframe}
+    \pause
     \begin{talertbox}[.8\textwidth]{Otevřený problém}
         \begin{center}
             Není známo, zdali $\FACTOR$ je $\classNP$-úplný problém.
         \end{center}
     \end{talertbox}
+    \pause
     Kdyby $\FACTOR\in\classP$, pak ze znalosti čísla $n$ bychom mohli nalézt prvočísla $p,q$ a~odtud odvodit $s$.
 \end{frame}
+
+\section{Pseudonáhodné generátory a jednosměrné funkce}
+
+\titleframe{\huge Pseudonáhodné generátory\\ a~jednosměrné funkce}
+
+\subsection{Pseudonáhodné generátory}
+
+\begin{frame}{Pseudonáhodný generátor}
+    \pause
+    Funkce
+    \[
+        G:\{0,1\}^n \to \{0,1\}^{\ell(n)}
+    \]
+    je \markdarkred{pseudonáhodný generátor (PRG)}, pokud:\pause
+    \begin{itemize}
+        \item \(G\) je vyčíslitelná deterministickým polynomiálním algoritmem,\pause
+        \item \(\ell(n)>n\) pro každé \(n\in\mathbb{N}\) (\markdarkred{stretch}),\pause
+        \item žádný \markdarkred{pravděpodobnostní polynomiální algoritmus $\mathcal{A}$} neumí "rozlišit"
+        \(G(y_n)\) od \(y_{\ell(n)}\), kromě zanedbatelné chyby.\pause
+    \end{itemize}
+    Vstup \(s\in\{0,1\}^n\), tzv. \markdarkred{seed}, se "natáhne" na delší řetězec \(G(s)\).
+
+\end{frame}
+
+\subsection{Nerozlišitelnost výstupu PRG}
+
+\begin{frame}{Nerozlišitelnost výstupu PRG}
+    \pause
+    \begin{tinfobox}{Třetí podmínka}
+        Pro každý pravděpodobnostní polynomiální algoritmus \(\mathcal{A}\) platí:
+        \[
+        \left|
+        \Pr_{y\in\{0,1\}^{\ell(n)}}[\mathcal{A}(y)=1]
+        -
+        \Pr_{y\in\{0,1\}^{n}}[\mathcal{A}(G(y))=1]
+        \right|
+        \leqslant \varepsilon(n),
+        \]
+        kde \(\varepsilon(n)\) je zanedbatelná funkce. Funkce \(\varepsilon(n)\) je \textbf{zanedbatelná}, pokud pro každé
+        \(k\in\mathbb{N}\) existuje \(n_k\) takové, že pro každé \(n>n_k\) platí
+        \[
+            \varepsilon(n) < \frac{1}{n^k}.
+        \]
+    \end{tinfobox}
+    \pause
+    \begin{tnoticeframe}
+        Algoritmus \(\mathcal{A}\) dostane řetězec délky \(\ell(n)\) a snaží se
+        rozhodnout, zda je skutečně náhodný, nebo vznikl jako výstup \(G\).
+    \end{tnoticeframe}
+
+\end{frame}
+
+\subsection{Existence PRG, když P=NP}
+
+\begin{frame}{Žádné PRG, pokud $\classP=\classNP$}
+    \pause
+    \begin{timportantframe}
+        Pokud by platilo $\classP=\classNP$, pak by žádné pseudonáhodné generátory neexistovaly.
+    \end{timportantframe}
+
+    \vspace{0.2cm}
+    \pause
+    \textbf{Důvod:} Pro daný výstup \(y\in\set{0,1}^{n}\) bychom uměli efektivně rozhodnout, zda existuje seed \(s\) takový, že
+    \[
+        G(s)=y.
+    \]
+    \pause
+    \begin{itemize}
+        \item Uvažujme jazyk
+        \[
+            L_G =\set{y : \exists s\in\{0,1\}^n: G(s)=y}.
+        \]
+        Tento jazyk patří do \(\classNP\), protože certifikátem (nápovědou) je seed~\(s\).\pause
+        \item Rozlišovač \(\mapping{\mathcal{D}}{\set{0,1}^{\ell(n)}}{\set{0,1}}\) se vstupem \(y\) udělá:
+        \[
+            \mathcal{D}(y)=1
+            \quad\Longleftrightarrow\quad
+            y\in L_G.
+        \]
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Žádné PRG, pokud $\classP=\classNP$}
+    \pause
+    \begin{itemize}
+        \item Pokud \(y=G(s)\), pak vždy platí $\mathcal{D}(y)=1$ a tedy
+        \[\Pr[\mathcal{D}(y)=1]=1.\]\pause
+        \item Pokud je \(y\) skutečně náhodný řetězec délky \(\ell(n)\), pak pravděpodobnost, že leží v~\(L_G\), je nejvýše
+        \[
+            \frac{2^n}{2^{\ell(n)}}=2^{n-\ell(n)}.
+        \]\pause
+        \item Pak dostáváme
+        \begin{align*}
+             &\left|\Pr_{y\in\{0,1\}^{\ell(n)}}[\mathcal{D}(y)=1]-\Pr_{y\in\{0,1\}^{n}}[\mathcal{D}(G(y))=1]\right|\\
+             &=\left|2^{n-\ell(n)}-1\right|=1-2^{n-\ell(n)}\geqslant 1-\frac{1}{2}=\frac{1}{2},
+        \end{align*}
+        což není zanedbatelná funkce.
+    \end{itemize}
+\end{frame}
+
+\subsection{Jednosměrné funkce}
+
+\begin{frame}{Jednosměrná funkce}
+    \pause
+    \[
+        \mapping{f}{\set{0,1}^{*}}{\set{0,1}^{*}}
+    \]
+    je \markdarkred{jednosměrná funkce (OWF)}, pokud\pause
+    \begin{itemize}
+        \item $f(x)$ lze spočítat v polynomiálním čase pro každé $x\in\set{0,1}^{*}$ a\pause
+        \item je \markdarkred{"těžko" invertovatelná}.
+    \end{itemize}
+    \pause
+    Druhá podmínka formálně říká, že pro každý pravděpodobnostní polynomiální algoritmus $\mathcal{A}$ existuje zanedbatelná funkce $\varepsilon(n)$ taková, že pro každé $n\in\N$ 
+    \[\Pr_{y\in\set{0,1}^{n}}\left[f(\mathcal{A}(y))=y\right]\leqslant\varepsilon(n).\]
+    \pause
+    \begin{timportantframe}
+        Když náhodně vybereme $y$ a dáme jej útočníkovi, pak útočník má \textbf{zanedbatelně malou šanci}, že se mu podaří najít vstup~$x$ takový, že $y=f(x)$.
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Idea jednosměrné funkce}
+
+    \centering
+    \begin{tikzpicture}[
+        x=1cm, y=1cm,
+        >=latex,
+        mainarrow/.style={
+            ->,
+            >=latex,
+            line width=1.1pt,
+            draw=black
+        },
+        hardarrow/.style={
+            ->,
+            >=latex,
+            dashed,
+            line width=1pt,
+            draw=red!75!black
+        },
+        box/.style={
+            rounded corners=1.5mm,
+            draw=black!55,
+            fill=black!5,
+            inner xsep=4mm,
+            inner ysep=2.2mm,
+            font=\large,
+            align=center
+        },
+        smallbox/.style={
+            rounded corners=1.5mm,
+            draw=black!45,
+            fill=black!3,
+            inner xsep=3mm,
+            inner ysep=1.6mm,
+            font=\normalsize,
+            align=center
+        }
+    ]
+
+        % vstup
+        \node[smallbox] (x) at (-4.2,0.8) {$x$};
+
+        % funkce
+        \node[box] (f) at (0,0.8) {$f$};
+
+        % vystup
+        \node[smallbox] (y) at (4.2,0.8) {$y=f(x)$};
+
+        % dopredny smer
+        \draw[mainarrow] (x.east) -- (f.west);
+        \draw[mainarrow] (f.east) -- (y.west);
+
+        \node[font=\small,text=green!70!black] at (0,1.55) {snadno vyčíslitelné};
+
+        % utocnik
+        \node[inner sep=0pt] (attacker) at (4.2,-2.1)
+            {\includegraphics[height=1.45cm]{images/hacker-icon.pdf}};
+        \node[font=\normalsize] at (4.2,-3.15) {Záškodník};
+
+        % kandidat na vzor
+        \node[smallbox] (xp) at (-2.8,-2.15) {$x^\prime$ ?};
+
+        % pokus o inverzi
+        \draw[hardarrow] (attacker.north west)
+            .. controls (2.7,-1.2) and (0.6,-1.0) ..
+            node[
+            font=\small,
+            text=red!75!black,
+            align=center,
+            midway,
+            above
+        ] {z $y$ je těžké najít\\ nějaké $x^\prime$ takové, že $f(x^\prime)=y$} (xp.east);
+
+    \end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}{Možní kandidáti na jednosměrné funkce}
+    \pause
+    \begin{talertframe}[.8\textwidth]
+        Dodnes není známé, zdali nějaké jednosměrné funkce existují.
+    \end{talertframe}
+    \pause
+    Existují kandidáti na jednosměrné funkce:
+    \pause
+    \begin{itemize}
+        \item Násobení prvočísel: $f(p,q)=pq$.\pause
+        \item Součet podmnožiny:
+        \[f(x_1,\dots,x_n,J)=\left(x_1,\dots,x_n,\left(\sum_{j\in J}x_j\right)\bmod 2^{n}\right),\]
+        kde $x_1,\dots,x_n\in\set{0,1}^{n}$ a $J\subseteq\set{1,\dots,n}$.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Souvislost OWF a PRG}
+    \pause
+    \begin{itemize}
+        \item Existence jednosměrných funkcí je~úzce spojena s~existencí pseudonáhodných generátorů.\pause
+        \item Ve skutečnosti platí:
+        \[
+            \text{existují OWF}
+            \quad\Longleftrightarrow\quad
+            \text{existují PRG}.
+        \]\pause
+        \item Jednosměrná funkce poskytuje výpočetní těžkost. Z této těžkosti lze konstruovat bity, které vypadají náhodně.
+    \end{itemize}
+
+\end{frame}
+
+\subsection{Souvislost PRG s kryptografií}
+
+\begin{frame}{Souvislost s kryptografií}
+    \pause
+    \begin{itemize}
+        \item V praxi nechceme používat opravdu náhodný klíč délky celé zprávy.\pause
+        \item Místo toho použijeme krátký tajný seed \(s\) a z něj vytvoříme dlouhý proud bitů $G(s)$.\pause
+        \item Potom šifrujeme podobně jako u jednorázové šifry:
+        \[
+            c=m\oplus G(s).
+        \]
+    \end{itemize}
+    \pause
+    \vspace{0.2cm}
+
+    \begin{talertframe}
+        Bezpečnost pak nestojí na dokonalé náhodnosti, ale na tom, že
+        \(G(s)\) je \textbf{nerozlišitelný od náhodného řetězce}.
+    \end{talertframe}
+
+\end{frame}
+
+\begin{frame}{Využití PRG pro šifrování}
+    \centering
+    \begin{tikzpicture}[
+        x=1cm, y=1cm,
+        >=latex,
+        msgarrow/.style={->, >=latex, line width=1.05pt, draw=black},
+        keyarrow/.style={->, >=latex, line width=0.95pt, draw=blue!65!black},
+        auxarrow/.style={->, >=latex, line width=0.9pt, draw=black!65},
+        box/.style={
+            rounded corners=1.5mm,
+            draw=black!55,
+            fill=black!5,
+            inner xsep=3mm,
+            inner ysep=1.5mm,
+            font=\small,
+            align=center
+        },
+        keybox/.style={
+            rounded corners=1.5mm,
+            draw=blue!65!black,
+            fill=blue!12,
+            inner xsep=3mm,
+            inner ysep=1.5mm,
+            font=\small,
+            align=center
+        }
+    ]
+
+        % Alice
+        \node[inner sep=0pt] (alice) at (-4.3,0.2)
+            {\includegraphics[height=1.4cm]{images/woman-icon.pdf}};
+        \node[font=\normalsize, below=0.08cm of alice] {Alice};
+
+        % Bob
+        \node[inner sep=0pt] (bob) at (4.3,0.2)
+            {\includegraphics[height=1.4cm]{images/man-icon.pdf}};
+        \node[font=\normalsize, below=0.08cm of bob] {Bob};
+
+        % sdileny seed
+        \node[keybox] (seedA) at (-4.3,1.55) {tajný seed \(s\)};
+        \node[keybox] (seedB) at (4.3,1.55) {tajný seed \(s\)};
+
+        % PRG boxy
+        \node[box] (prgA) at (-2.2,1.55) {\(G(s)\)};
+        \node[box] (prgB) at (2.2,1.55) {\(G(s)\)};
+
+        \draw[auxarrow] (seedA.east) -- (prgA.west);
+        \draw[auxarrow] (seedB.west) -- (prgB.east);
+
+        % Bezpecne predani seedu
+        \draw[keyarrow] (seedA.north east) to[bend left=25]
+            node[midway, above, font=\scriptsize, text=blue!65!black]
+            {sdílený seed \(s\)}
+            (seedB.north west);
+
+        % sifrovani u Alice
+        \node[box] (enc) at (-1.55,0.25) {\(c = m \oplus G(s)\)};
+        \node[font=\scriptsize, below=0.05cm of enc, align=center]
+            {Alice šifruje};
+
+        \draw[msgarrow] (alice.east) -- (enc.west);
+        \node[font=\small, above=0.02cm of $(alice.east)!0.5!(enc.west)$] {\(m\)};
+
+        \draw[auxarrow] (prgA.south) -- (enc.north);
+
+        % desifrovani u Boba
+        \node[box] (dec) at (1.55,0.25) {\(m = c \oplus G(s)\)};
+        \node[font=\scriptsize, below=0.05cm of dec, align=center]
+            {Bob dešifruje};
+
+        \draw[auxarrow] (prgB.south) -- (dec.north);
+
+        % prenos sifrovaneho textu
+        \draw[msgarrow] (enc.east) -- (dec.west);
+        \node[font=\small, above=0.02cm of $(enc.east)!0.5!(dec.west)$] {\(c\)};
+
+        \draw[msgarrow] (dec.east) -- (bob.west);
+
+    \end{tikzpicture}
+\end{frame}
+
+\section{Hešovací funkce}
+
+\titleframe{Hešovací funkce}
+
+\subsection{Definice a vlastnosti hešovací funkce}
+
+\begin{frame}{Hešovací funkce}
+    \pause
+    \begin{defblock}
+        \markdarkred{Hešovací funkce} je jakákoliv funkce z~$\set{0,1}^{*}$ do~$\set{0,1}^{n}$. Je-li $H$ hešovací funkce a $x\in\set{0,1}^{*}$, pak $H(x)$ se nazývá \markdarkred{hash} nebo též \markdarkred{otisk}.
+    \end{defblock}
+    \pause
+    Požadavky na hešovací funkci:
+    \pause
+    \begin{enumerate}
+        \item otisk je \textbf{rychle vyčíslitelný} a\pause
+        \item malá změna vstupu má \textbf{výrazně} změnit výstup.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Kolize jsou nevyhnutelné}
+    Funkce
+    \[\mapping{H}{\set{0,1}^{*}}{\set{0,1}^{n}}\]
+    uvažuje vstupy z nekonečné množiny do množiny s~$2^{n}$ prvky.
+    \begin{talertframe}
+        \begin{center}
+            Musí existovat dvojice $x,y\in\set{0,1}^{*}$ taková, že $H(x)=H(y)$.
+        \end{center}
+    \end{talertframe}
+
+    \vspace{0.15cm}
+
+    
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}[
+            x=1cm,y=1cm,
+            >=latex,
+            arrow/.style={->, >=latex, line width=0.9pt, draw=black!70},
+            msg/.style={
+                rounded corners=1mm,
+                draw=black!55,
+                fill=black!5,
+                minimum width=2.1cm,
+                minimum height=0.45cm,
+                font=\scriptsize
+            },
+            hash/.style={
+                rounded corners=1mm,
+                draw=blue!60!black,
+                fill=blue!12,
+                minimum width=1.45cm,
+                minimum height=0.45cm,
+                font=\scriptsize
+            }
+        ]
+    
+            \node[msg] (x1) at (-3.8,1.0) {\(x=\texttt{1010\ldots}\)};
+            \node[msg] (x2) at (-3.8,0.25) {\(y=\texttt{0111\ldots}\)};
+            \node[msg] (x3) at (-3.8,-0.5) {\(\texttt{1100\ldots}\)};
+            \node[msg] (x4) at (-3.8,-1.25) {\(\texttt{0001\ldots}\)};
+    
+            \node[font=\scriptsize] at (-3.8,1.55) {vstupy};
+    
+            \node[hash] (h1) at (3.2,0.65) {\(00\ldots 1\)};
+            \node[hash] (h2) at (3.2,-0.15) {\(10\ldots 0\)};
+            \node[hash] (h3) at (3.2,-0.95) {\(11\ldots 1\)};
+    
+            \node[font=\scriptsize] at (3.2,1.55) {\(2^n\) výstupů};
+    
+            \node[
+                rounded corners=1.5mm,
+                draw=orange!70!black,
+                fill=orange!20,
+                font=\small,
+                inner xsep=3mm,
+                inner ysep=1.5mm
+            ] (H) at (0,0) {\(H\)};
+    
+            \draw[arrow] (x1.east) -- (H.west);
+            \draw[arrow] (x2.east) -- (H.west);
+            \draw[arrow] (x3.east) -- (H.west);
+            \draw[arrow] (x4.east) -- (H.west);
+    
+            \draw[arrow] (H.east) -- (h1.west);
+            \draw[arrow] (H.east) -- (h2.west);
+            \draw[arrow] (H.east) -- (h3.west);
+    
+            % zvýrazněná kolize
+            \draw[->, >=latex, line width=1.1pt, draw=red!75!black]
+                (x1.east) .. controls (-1.7,1.35) and (1.5,1.25) .. (h1.west);
+            \draw[->, >=latex, line width=1.1pt, draw=red!75!black]
+                (x2.east) .. controls (-1.7,0.55) and (1.5,0.85) .. (h1.west);
+    
+            \node[font=\scriptsize, text=red!75!black] at (0,1.45)
+                {kolize: \(x\neq y\), ale \(H(x)=H(y)\)};
+    
+        \end{tikzpicture}
+    \end{figure}
+
+    \vspace{0.15cm}
+
+    \textbf{Nový požadavek:} Chceme, aby bylo "výpočetně složité" nějakou kolizi najít. 
+\end{frame}
+
+\subsection{Narozeninový paradox a hledání kolizí}
+
+% TODO: Slide o narozeninovém paradoxu
+% TODO: Slide o souvislosti s kolizemi
+
+\subsection{Bezpečnostní vlastnosti hešovacích funkcí}
+
+\begin{frame}{Bezpečnostní vlastnosti hešovacích funkcí}
+
+    Uvažujme hešovací funkci
+    \[
+        \mapping{H_n}{\set{0,1}^{*}}{\set{0,1}^{n}}
+    \]
+    Dále nechť $\varepsilon$ značí nějakou zanedbatelnou funkci a $\mathcal{A}$ pravděpodobnostní polynomiální algoritmus.
+    \begin{center}
+        \begin{tabular}{@{}p{0.25\textwidth}@{\hspace{0.5em}}p{0.7\textwidth}@{}}
+
+            \markdarkred{Odolnost vůči nalezení vzoru} &
+            Z hashe \(y\) je těžké najít nějaké \(x\), pro které
+            \(H_n(x)=y\), tzn. 
+            \[
+                \Pr_{y\in\set{0,1}^{n}}\left[
+                H_n(\mathcal A(y))=y
+                \right]\leqslant \varepsilon(n).
+            \]
+            pro každé $n\in\N$.\\
+
+            \markdarkred{Odolnost vůči kolizím} &
+            Je těžké najít libovolnou dvojici \(x\neq y\), pro kterou $H_n(x)=H_n(y)$, tj.
+            \[
+                \Pr_{x,y\in\set{0,1}^{n}}\left[
+                x\neq y \land H_n(x)=H_n(y)
+                \right]\leqslant \varepsilon(n).
+            \]
+            pro každé $n\in\N$.
+
+        \end{tabular}
+    \end{center}
+
+\end{frame}
+
+\subsection{Hešovací funkce vs. jednosměrná funkce}
+
+\begin{frame}{Hešovací funkce vs. jednosměrná funkce}
+
+\centering
+
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    >=latex,
+    arrow/.style={->, >=latex, line width=1pt, draw=black!75},
+    hard/.style={->, >=latex, dashed, line width=1pt, draw=red!80!black},
+    box/.style={
+        rounded corners=1.5mm,
+        draw=black!45,
+        fill=black!5,
+        inner xsep=3mm,
+        inner ysep=2mm,
+        align=center
+    },
+    req/.style={
+        rounded corners=1.5mm,
+        draw=red!70!black,
+        fill=red!6,
+        inner xsep=3mm,
+        inner ysep=2mm,
+        align=center
+    }
+]
+
+    %------------------------------------------------
+    % 1. Těžká invertovatelnost
+    %------------------------------------------------
+    \node[font=\bfseries] at (-3.1,2.2) {1. Těžká invertovatelnost};
+
+    \node[box] (in1) at (-5.2,0.8) {vstup\\ $x$};
+    \node[box] (H1)  at (-3.3,0.8) {$H$};
+    \node[box] (out1) at (-1.0,0.8) {hash\\ $h=H(x)$};
+
+    \draw[arrow] (in1.east) -- (H1.west);
+    \draw[arrow] (H1.east) -- (out1.west);
+
+    \draw[hard] (out1.south) .. controls (-1.8,-0.35) and (-4.2,-0.35) .. (in1.south);
+    \node[req, text width=4.7cm] at (-3.1,-2.0)
+    {Z daného hashe $h$ je těžké najít nějaký vstup $x'$, pro který platí $H(x')=h$.};
+
+    %------------------------------------------------
+    % 2. Těžké hledání kolizí
+    %------------------------------------------------
+    \node[font=\bfseries] at (2.95,2.2) {2. Těžké hledání kolizí};
+
+    \node[box] (x2) at (0.9,1.15) {vstup\\ $x$};
+    \node[box] (y2) at (0.9,-0.3)  {vstup\\ $y$};
+
+    \node[box] (Hx) at (2.8,1.15) {$H$};
+    \node[box] (Hy) at (2.8,-0.3)  {$H$};
+
+    \node[box] (hx) at (5.0,1.15) {hash\\ $H(x)$};
+    \node[box] (hy) at (5.0,-0.3)  {hash\\ $H(y)$};
+
+    \draw[arrow] (x2.east) -- (Hx.west);
+    \draw[arrow] (y2.east) -- (Hy.west);
+    \draw[arrow] (Hx.east) -- (hx.west);
+    \draw[arrow] (Hy.east) -- (hy.west);
+
+    \node[req, text width=5.1cm] at (3.0,-2.0)
+    {Je těžké najít dvě různá data $x\neq y$, pro která platí $H(x)=H(y)$.};
+
+    % zvýraznění kolize
+    \draw[hard] (Hy.north east) to[bend left=20] node[font=\scriptsize, text=red!80!black,midway,above] {$H(x)=H(y)$} (hy.north west);
+    % \node[font=\scriptsize, text=red!80!black] at (5.0,-0.55) {$x\neq y,\quad H(x)=H(y)$};
+
+\end{tikzpicture}
+
+\begin{tnoticeframe}[.9\textwidth]
+    \begin{center}
+        Bezpečná hešovací funkce je tedy speciálním typem jednosměrné funkce.
+    \end{center}
+\end{tnoticeframe}
+
+\end{frame}
+
+\subsection{Praktické použití hešovacích funkcí}
+
+\subsection{Rodina SHA}
+
+\subsection{SHA-3}
+
+\section{}
 
 \end{document}
