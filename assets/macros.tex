@@ -29,6 +29,11 @@
   {Věta}
   {Věta (#1)}}
 }{\end{block}}
+\newenvironment{corblock}[1][]{
+  \begin{block}{\ifthenelse{\equal{#1}{}}
+  {Důsledek}
+  {Důsledek (#1)}}
+}{\end{block}}
 \newenvironment{propblock}[1][]{
   \begin{block}{\ifthenelse{\equal{#1}{}}
   {Tvrzení}
@@ -134,6 +139,7 @@
 \DeclareMathOperator{\ROZVRH}{Rozvrh}
 \DeclareMathOperator{\SUDOKU}{Sudoku}
 \newcommand{\HALT}{\ensuremath{\textsc{Halt}}}
+\newcommand{\FACTOR}{\ensuremath{\textsc{Factor}}}
 
 \DeclareMathOperator{\regex}{RegE}
 

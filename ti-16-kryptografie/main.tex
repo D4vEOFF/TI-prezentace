@@ -286,6 +286,7 @@
     \begin{tnoticeframe}
         Obecná substituční šifra je teoreticky bezpečná, neboť pro abecedu o~$q$ znacích existuje $q!$ různých permutací.
     \end{tnoticeframe}
+    \pause
     \begin{talertbox}{Hlavní problém}
         \begin{center}
             Šifra stále zachovává strukturu původního jazyka.
@@ -310,13 +311,14 @@
 \subsection{Perfektní schéma symetrického šifrování}
 
 \begin{frame}{Symetrická kryptografie}
-
-    Alice i Bob používají stejný tajný klíč \(k\).
+    \pause
+    Alice i~Bob používají stejný tajný klíč $k\in\set{0,1}^{n}$.
     \[
         c = \mathbf{E}(m, k),
         \qquad
         m = \mathbf{D}(c, k).
     \]
+    \pause
     Tzn. klíč $k$ lze použít k~\markdarkred{šifrování i~dešifrování}.
 
 \end{frame}
@@ -388,23 +390,25 @@
 \subsection{Jednorázová šifra}
 
 \begin{frame}{Jednorázová šifra}
-
+    \pause
     \begin{itemize}
-        \item Anglicky \emph{one-time pad}.
+        \item Anglicky \emph{one-time pad}.\pause
         \item Alice i~Bob sdílí náhodný tajný klíč $k \in \set{0,1}^n$. Zprávu $m \in \set{0,1}^n$ Alice zašifruje pomocí operace XOR:
         \[
             c = m \oplus k.
         \]
+        \pause
         \item Bob zprávu \markdarkred{dešifruje stejným klíčem}:
         \[
             c \oplus k=(m \oplus k)\oplus k=m.
         \]
+        \pause
         \item Použita během 2. světové války, studené války, \dots
     \end{itemize}
 
 \end{frame}
 
-\begin{frame}{Perfektní schéma jednorázové šifry}
+\begin{frame}{Schéma jednorázové šifry}
 
     \centering
     \begin{tikzpicture}[
@@ -480,38 +484,518 @@
 \end{frame}
 
 \begin{frame}{Bezpečnost jednorázové šifry}
+    \pause
+    \begin{itemize}
+        \item Jednorázová šifra splňuje:
+        \[
+            \Pr(M=m \mid C=c)=\Pr(M=m).
+        \]
+        Zachycený šifrový text tedy útočníkovi neposkytuje žádnou informaci
+        o~původní zprávě.
+        \pause
+        \item Pro každou zprávu \(m\) a každý šifrový text \(c\) existuje právě jeden klíč $k = m \oplus c$.\pause
+        \item Protože \(k\) je vybrán rovnoměrně náhodně z \(2^n\) možností,
+        \[
+            \Pr(C=c \mid M=m)=\Pr(K=m\oplus c)=\frac{1}{2^n}.
+        \]
+        Výsledná pravděpodobnost je \markdarkred{nezávislá na původní zprávě $m$}.
+    \end{itemize}
+    \pause
+    \begin{talertbox}{Důležité podmínky}
+        Klíč $k$ musí být \textbf{náhodný}, \textbf{stejně dlouhý} jako zpráva $m$ a~\textbf{použitý pouze jednou}.
+    \end{talertbox}
 
-    Jednorázová šifra splňuje:
+\end{frame}
+
+\begin{frame}{Proč se klíč nesmí použít vícekrát?}
+    \pause
+    \begin{itemize}
+        \item Nechť Alice zašifruje dvě zprávy stejným klíčem \(k\):
+        \[
+            c_1 = m_1 \oplus k,
+            \qquad
+            c_2 = m_2 \oplus k.
+        \]
+        \pause
+        \item Útočník může spočítat:
+        \[
+            c_1 \oplus c_2
+            =
+            (m_1 \oplus k)\oplus(m_2 \oplus k)
+            =
+            m_1 \oplus m_2.
+        \]
+        Klíč se tedy vyruší.
+    \end{itemize}
+    \pause
+    \begin{timportantbox}{Důsledek}
+        Útočník nezíská přímo \(m_1\) a \(m_2\), ale získá informaci
+        o~ jejich vzájemném vztahu. Pokud jednu zprávu zná nebo odhadne,
+        může snadno získat i druhou.
+    \end{timportantbox}
+
+\end{frame}
+
+\begin{frame}{Nevýhoda jednorázové šifry}
+    \pause
+    \begin{talertframe}
+        Klíč $k$ musí být stejně dlouhý jako zpráva $m$. Bezpečně předat klíč délky \(n\) může být stejně obtížné
+        jako bezpečně předat samotnou zprávu délky \(n\).
+    \end{talertframe}
+    \pause
+    To představuje problém, pokud klíč $k$ nemůžeme druhé straně předat bezpečně.
+\end{frame}
+
+\section{Asymetrická kryptografie}
+
+\titleframe{Asymetrická kryptografie}
+
+\subsection{Princip asymetrické kryptografie}
+
+\begin{frame}{Asymetrická kryptografie}
+    \pause
+    Každý uživatel má dvojici klíčů:
     \[
-        \Pr(M=m \mid C=c)=\Pr(M=m).
+        \text{veřejný klíč}\;k_V
+        \qquad
+        \text{a}
+        \qquad
+        \text{soukromý klíč}\;k_S.
     \]
-    Zachycený šifrový text tedy útočníkovi neposkytuje žádnou informaci
-    o původní zprávě.
+    \pause
+    Veřejný klíč \markdarkred{může znát kdokoliv}. Soukromý klíč si uživatel \markdarkred{musí
+    nechat pouze pro sebe}.
+
+    \vspace{0.15cm}
+    \pause
+    \begin{tinfobox}{Princip}
+        Chce-li Alice poslat zprávu Bobovi, použije Bobův veřejný klíč:
+        \[
+            c = \mathbf{E}(m, k_V).
+        \]
+        Bob zprávu dešifruje svým soukromým klíčem $m = \mathbf{D}(c, k_P)$.
+    \end{tinfobox}
+
+\end{frame}
+
+\begin{frame}{Schéma asymetrického šifrování}
+
+\centering
+
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    >=latex,
+    msgarrow/.style={->, >=latex, line width=1.05pt, draw=black},
+    keyarrow/.style={->, >=latex, line width=0.95pt, draw=blue!65!black}
+]
+
+% Alice
+\node[inner sep=0pt] (alice) at (-4.2,0.15)
+    {\includegraphics[height=1.45cm]{images/woman-icon.pdf}};
+\node[font=\normalsize, below=0.1cm of alice] {Alice};
+
+% Bob
+\node[inner sep=0pt] (bob) at (4.0,0.15)
+    {\includegraphics[height=1.45cm]{images/man-icon.pdf}};
+\node[font=\normalsize, below=0.1cm of bob] {Bob};
+
+% Bobovy klíče
+\node[
+    rounded corners=1.5mm,
+    draw=blue!65!black,
+    fill=blue!12,
+    inner xsep=3mm,
+    inner ysep=1.5mm,
+    font=\small,
+    above=1.5cm of bob
+] (pk)
+{veřejný klíč \(k_V\)};
+
+\node[
+    rounded corners=1.5mm,
+    draw=red!70!black,
+    fill=red!10,
+    inner xsep=3mm,
+    inner ysep=1.5mm,
+    font=\small,
+    above=0.5cm of bob
+] (sk)
+{soukromý klíč \(k_P\)};
+
+% Veřejný klíč k Alici
+\draw[keyarrow] (pk.west) to[bend right=10] node[midway,above left,font=\scriptsize,text=blue!65!black] {Bob zveřejní \(k_V\)} (-3.65,0.95);
+
+% Šifrování u Alice
+\node[
+    rounded corners=1.5mm,
+    draw=black!55,
+    fill=black!5,
+    inner xsep=3mm,
+    inner ysep=1.5mm,
+    font=\small
+] (enc) at (-1.5,0.55)
+{\(\mathbf{E}(m,k_V)\)};
+
+\node[font=\scriptsize, below=0.1cm of enc, align=center] {Alice šifruje\\ pomocí \(k_V\)};
+
+% Zpráva k šifrování
+\draw[msgarrow] (alice.east) -- (enc.west);
+
+% Dešifrování u Boba
+\node[
+    rounded corners=1.5mm,
+    draw=black!55,
+    fill=black!5,
+    inner xsep=3mm,
+    inner ysep=1.5mm,
+    font=\small
+] (dec) at (1.5,0.55)
+{\(\mathbf{D}(c,k_P)\)};
+
+\draw[msgarrow] (dec.east) -- (bob.west);
+
+\node[font=\scriptsize, below=0.1cm of dec, align=center] {Bob dešifruje\\ pomocí \(k_P\)};
+
+\draw[->, >=latex, dashed, line width=0.95pt, draw=red!70!black]
+    (sk.west) -- (dec.north);
+
+% Šifrový text
+\draw[msgarrow] (enc.east) -- (dec.west);
+
+% Spodní shrnutí
+\node[
+    rounded corners=2mm,
+    draw=orange!70!black,
+    fill=orange!22,
+    line width=0.6pt,
+    inner xsep=4mm,
+    inner ysep=2mm,
+    text width=10.4cm,
+    align=center,
+    font=\small
+] at (0,-2.5)
+{Kdo zná \(k_V\), může Bobovi šifrovat zprávy. Dešifrovat je umí pouze Bob se svým \(k_P\).};
+
+\end{tikzpicture}
+
+\end{frame}
+
+\section{Algoritmus RSA}
+
+\titleframe{Algoritmus RSA}
+
+\subsection{Základní princip}
+
+\begin{frame}{Algoritmus RSA}
+    \pause
+    Zkratka \textbf{RSA} pochází ze jmen autorů Ron \textbf{R}ivest, Adi \textbf{S}hamir a~Leonard \textbf{A}dleman.
+    \pause
+    \begin{enumerate}
+        \item Vygeneruj \markdarkred{tři velká prvočísla}: největší označíme $s$ a~zbylá $p,q$.\pause
+        \item Spočtáme $n=p\cdot q$.\pause
+        \item Spočítáme číslo $v$ tak, aby
+        \[v\cdot s\bmod (p-1)(q-1)=1.\]\pause
+        \item Položíme veřejný a soukromý klíč uspořádaným dvojicím
+        \[k_V=(v,n)\quad\text{a}\quad k_P=(s,n).\]\pause
+        \item Šifrování a dešifrování pro $x<n$:
+        \[\markdarkred{y=}\;\mathbf{E}(x, k_V)=x^{v}\bmod n\quad\text{a}\quad\mathbf{D}(y, k_P)=y^{s}\bmod n.\]
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Schéma RSA}
+    \centering
+    \begin{tikzpicture}[
+        x=1cm, y=1cm,
+        >=latex,
+        msgarrow/.style={->, >=latex, line width=1.05pt, draw=black},
+        keyarrow/.style={->, >=latex, line width=0.95pt, draw=blue!65!black}
+    ]
+
+    % Alice
+    \node[inner sep=0pt] (alice) at (-4.2,0.15)
+        {\includegraphics[height=1.45cm]{images/woman-icon.pdf}};
+    \node[font=\normalsize, below=0.1cm of alice] {Alice};
+
+    % Bob
+    \node[inner sep=0pt] (bob) at (4.0,0.15)
+        {\includegraphics[height=1.45cm]{images/man-icon.pdf}};
+    \node[font=\normalsize, below=0.1cm of bob] {Bob};
+
+    % Bobovy klíče
+    \node[
+        rounded corners=1.5mm,
+        draw=blue!65!black,
+        fill=blue!12,
+        inner xsep=3mm,
+        inner ysep=1.5mm,
+        font=\small,
+        above=2.0cm of bob,
+        align=center
+    ] (pk)
+    {veřejný klíč\\ \(k_V=(v,n)\)};
+
+    \node[
+        rounded corners=1.5mm,
+        draw=red!70!black,
+        fill=red!10,
+        inner xsep=3mm,
+        inner ysep=1.5mm,
+        font=\small,
+        above=0.5cm of bob,
+        align=center
+    ] (sk)
+    {soukromý klíč\\ \(k_P=(s,n)\)};
+
+    % Veřejný klíč k Alici
+    \draw[keyarrow] (pk.west) to[bend right=10]
+        node[midway,above left,font=\scriptsize,text=blue!65!black]
+        {Bob zveřejní \(k_V=(v,n)\)}
+        (-3.65,0.95);
+
+    % Šifrování u Alice
+    \node[
+        rounded corners=1.5mm,
+        draw=black!55,
+        fill=black!5,
+        inner xsep=3mm,
+        inner ysep=1.5mm,
+        font=\small,
+        align=center
+    ] (enc) at (-1.45,0.55)
+    {\(c = m^v \bmod n\)};
+
+    \node[font=\scriptsize, below=0.1cm of enc, align=center]
+    {Alice šifruje\\ pomocí \(k_V=(v,n)\)};
+
+    % Zpráva k šifrování
+    \draw[msgarrow] (alice.east) -- (enc.west);
+    \node[font=\small, above=0.05cm of $(alice.east)!0.5!(enc.west)$] {\(m\)};
+
+    % Dešifrování u Boba
+    \node[
+        rounded corners=1.5mm,
+        draw=black!55,
+        fill=black!5,
+        inner xsep=3mm,
+        inner ysep=1.5mm,
+        font=\small,
+        align=center
+    ] (dec) at (1.65,0.55)
+    {\(m = c^s \bmod n\)};
+
+    \draw[msgarrow] (dec.east) -- (bob.west);
+
+    \node[font=\scriptsize, below=0.1cm of dec, align=center]
+    {Bob dešifruje\\ pomocí \(k_P=(s,n)\)};
+
+    \draw[->, >=latex, dashed, line width=0.95pt, draw=red!70!black]
+        (sk.west) -- (dec.north);
+
+    % Šifrový text
+    \draw[msgarrow] (enc.east) -- (dec.west);
+    \node[font=\small, above=0.05cm of $(enc.east)!0.5!(dec.west)$] {\(c\)};
+
+    \end{tikzpicture}
+\end{frame}
+
+\subsection{Malá Fermatova věta}
+
+\begin{frame}{Malá Fermatova věta}
+    \pause
+    \begin{thmblock}[Malá Fermatova věta]
+        Nechť \(p\) je prvočíslo a nechť \(a\in\mathbb{Z}\) není dělitelné číslem \(p\). Potom platí
+        \[
+            a^{p-1} \bmod p = 1.
+        \]
+    \end{thmblock}
 
     \vspace{0.25cm}
-
+    \pause
     \begin{tnoticeframe}
-        Pro každou zprávu \(m\) a každý šifrový text \(c\) existuje právě jeden klíč:
+        Ekvivalentně lze psát, že pro každé \(a\in\mathbb{Z}\) platí
         \[
-            k = m \oplus c.
-        \]
-
-        Protože \(k\) je vybrán rovnoměrně náhodně z \(2^n\) možností,
-        \[
-            \Pr(C=c \mid M=m)
-            =
-            \Pr(K=m\oplus c)
-            =
-            \frac{1}{2^n}.
+            a^{p} \bmod p = a.
         \]
     \end{tnoticeframe}
 
-    \vspace{0.15cm}
+\end{frame}
 
-    \begin{talertbox}{Důležité podmínky}
-        Klíč musí být náhodný, stejně dlouhý jako zpráva a~použitý pouze jednou.
+\subsection{Čínská věta o zbytcích}
+
+\begin{frame}{Čínská věta o zbytcích}
+    \pause
+    \begin{thmblock}[Čínská věta o zbytcích]
+        Nechť \(m_1,m_2,\ldots,m_k\in\N\) jsou po dvou nesoudělná.
+
+        Potom pro libovolná celá čísla \(a_1,a_2,\ldots,a_k\) má soustava kongruencí
+        \begin{align*}
+            x\bmod m_1 &= a_1,\\
+            x\bmod m_2 &= a_2,\\
+            &\vdots\\
+            x\bmod m_k &= a_k
+        \end{align*}
+        právě jedno řešení.
+    \end{thmblock}
+    \pause
+    \begin{tnoticeframe}
+        Toto řešení je určeno jednoznačně modulo $M=m_1m_2\cdots m_k$.
+    \end{tnoticeframe}
+
+\end{frame}
+
+\begin{frame}{Důsledek čínské věty o zbytcích}
+    \pause
+    \begin{corblock}
+        Nechť $m_1,m_2\in\N$ jsou nesoudělná. Pak pro každé $x,a\in\N$ platí
+        \[\left.\begin{aligned}
+            x\bmod m_1&=a\\
+            x\bmod m_2&=a
+        \end{aligned}\right\}\iff x\bmod m_1m_2=a.\]
+    \end{corblock}
+\end{frame}
+
+\subsection{Korektnost RSA}
+
+\begin{frame}{Korektnost RSA}
+    \pause
+    Chceme ukázat, že $\mathbf{D}(\mathbf{E}(x, k_V), k_S)=x$, neboli že
+    \[\left(x^{v}\bmod n\right)^{s}\bmod n=x^{vs}\bmod n=x.\]
+    \pause
+    Důkaz rozdělíme na dva případy:
+    \begin{enumerate}
+        \pause
+        \item \textbf{$p$ dělí číslo $x$.} Pak platí
+        \[x^{vs}\bmod p = 0 = x\bmod p.\]\pause
+        \item \textbf{$p$ nedělí číslo $x$.} Protože platí $vs\bmod(p-1)(q-1)=1$, existuje $t\in\N$ takové, že
+        \[vs=1+t(p-1)(q-1).\]\pause
+        Pak dostáváme
+        \begin{align*}
+            x^{vs}\bmod p&=x^{1+t(p-1)(q-1)}\bmod p\stackrel{\text{MFV}}{=}x(x^{p-1})^{t(q-1)}\bmod p\\
+            &=x\cdot 1^{t(q-1)}\bmod p=x\bmod p.
+        \end{align*}
+        \pause
+        Podobně pro $q$ dostaneme, že též platí $x^{vs}\bmod q=x\bmod q$.
+    \end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Korektnost RSA}
+    \pause
+    Tedy víme, že platí
+    \begin{align*}
+        x\bmod p&=x^{vs}\bmod p\\
+        x\bmod q&=x^{vs}\bmod q.
+    \end{align*}
+    \pause
+    Podle \markdarkred{důsledku čínské věty o~zbytcích} platí
+    \[x^{vs}\bmod pq=x\bmod pq=x\bmod n\stackrel{x<n}{=}x.\]
+\end{frame}
+
+\begin{frame}{Příklad}{Algoritmus RSA pro malá prvočísla}
+
+    \begin{itemize}
+        \pause
+        \item Volme prvočísla
+        \[
+        s=27,\quad p=5,\quad q=11.
+        \]
+        \pause
+        \item Pak $n=pq=55$. Spočítáme hodnotu $v$ tak, aby platilo
+        \[vs\bmod (p-1)(q-1)=27v\bmod 40=1.\]
+        Tuto rovnost splňuje např. $v=3$.
+        \pause
+        \item Máme tedy veřejný klíč $k_V=(3, 55)$ a soukromý klíč $k_S=(27,55)$.
+        \pause
+        \item Alice zašifruje zprávu \(x=7\):
+        \[
+        c=x^v \bmod n = 7^3 \bmod 55 = 343 \bmod 55 = 13.
+        \]
+        Bob dešifruje:
+        \[
+        x=c^s \bmod n = 13^{27}\bmod 55 = 7.
+        \]
+    \end{itemize}
+
+\end{frame}
+
+\subsection{Bezpečnost RSA}
+
+\begin{frame}{Bezpečnost RSA}
+    U RSA je veřejný klíč $ k_V=(v,n)$, kde
+    \[
+        n=pq
+    \]
+    je součin dvou \markdarkred{velkých prvočísel}.
+    \vspace{0.2cm}
+
+    \begin{talertframe}
+        Pokud útočník zná rozklad
+        \[
+            n=pq,
+        \]
+        může z rovnosti
+        \[vs\bmod(p-1)(q-1)=1\]
+        snadno dopočítat $s$.
+    \end{talertframe}
+\end{frame}
+
+\begin{frame}{Faktorizace}
+    \pause
+    \begin{talertbox}{Základní předpoklad bezpečnosti}
+        Je snadné spočítat součin \(n=pq\), ale je těžké z čísla \(n\)
+        zpětně zjistit prvočísla \(p\) a \(q\).
     \end{talertbox}
+    \pause
+    \decproblem{Faktorizace ($\FACTOR$)}{
+        Přirozená čísla $n,b\in\N,b\leqslant n$.
+    }{
+        Existuje $d\in\N$ takové, že $1<d<b$ a $d$ dělí $n$?
+    }
+    \pause
+    Protože pracujeme s binárními hodnotami $n$, platí
+    \[|\binary{n}|=\lceil\log_2{n}\rceil.\]
+    \pause
+    Naivní algoritmus by musel mít složitost $2^{|\binary{n}|}$.
+\end{frame}
 
+\begin{frame}{Problém $\FACTOR$ patří do $\classNP$}
+
+    \begin{propblock}
+        Platí $\FACTOR\in\classNP$.
+    \end{propblock}
+    \begin{itemize}
+        \item Na vstupu mějme dvojici $(n,b)$ a číslo $d\in\N$.
+        \item Celková délka vstupu je $L_n=|\binary{n}|+|\binary{b}|$.
+        \item Mějme algoritmus níže.
+        \begin{center}
+            \begin{minipage}{0.7\textwidth}
+                \begin{algorithm}[H]
+                    \caption{Verifikátor}
+                    \If{\textup{$(d=1\lor d\geqslant b)\land n\bmod d\neq 0$}}{
+                        \Return{\textup{\textbf{false}}}
+                    }
+                    \Return{\textup{\textbf{true}}}
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+        \item Porovnání binárně zapsaných čísel i~výpočet zbytku po dělení lze provést v~čase polynomiálním vzhledem k~počtu bitů vstupu $L_n$.
+        \item Ověřovač tedy běží v~polynomiálním čase.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Co víme o faktorizaci?}
+    \begin{tnoticeframe}[.5\textwidth]
+        \begin{center}
+            Víme, že $\FACTOR\in\classNP$.
+        \end{center}
+    \end{tnoticeframe}
+    \begin{talertbox}[.8\textwidth]{Otevřený problém}
+        \begin{center}
+            Není známo, zdali $\FACTOR$ je $\classNP$-úplný problém.
+        \end{center}
+    \end{talertbox}
+    Kdyby $\FACTOR\in\classP$, pak ze znalosti čísla $n$ bychom mohli nalézt prvočísla $p,q$ a~odtud odvodit $s$.
 \end{frame}
 
 \end{document}
