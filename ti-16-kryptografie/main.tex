@@ -1,3 +1,4 @@
+\pdfminorversion=7
 \documentclass[11pt,professionalfont,aspectratio=43]{beamer}
 
 % Assets
@@ -7,6 +8,56 @@
 \input{../assets/listing.tex}
 
 \def\presentationtitle{Kryptografie}
+
+%------------------------------------------------
+% Makra pro elektronický podpis
+%------------------------------------------------
+
+\newcommand{\papericon}[3]{%
+    % #1 = jméno uzlu, #2 = souřadnice, #3 = popisek pod ikonou
+    \begin{scope}[shift={#2}]
+        \coordinate (#1) at (0,0);
+        \draw[fill=black!5, draw=black!55, line width=0.5pt]
+            (-0.42,-0.55) -- (-0.42,0.55) -- (0.18,0.55) --
+            (0.42,0.31) -- (0.42,-0.55) -- cycle;
+        \draw[draw=black!55, line width=0.5pt]
+            (0.18,0.55) -- (0.18,0.31) -- (0.42,0.31);
+        \foreach \yy in {0.28,0.10,-0.08,-0.26} {
+            \draw[draw=black!30, line width=0.4pt] (-0.28,\yy) -- (0.02,\yy);
+        }
+        \node[font=\small, align=center] at (0,-0.92) {#3};
+    \end{scope}
+}
+
+\newcommand{\signedpapericon}[3]{%
+    % #1 = jméno uzlu, #2 = souřadnice, #3 = popisek pod ikonou
+    \begin{scope}[shift={#2}]
+        \coordinate (#1) at (0,0);
+        \draw[fill=black!5, draw=black!55, line width=0.5pt]
+            (-0.42,-0.55) -- (-0.42,0.55) -- (0.18,0.55) --
+            (0.42,0.31) -- (0.42,-0.55) -- cycle;
+        \draw[draw=black!55, line width=0.5pt]
+            (0.18,0.55) -- (0.18,0.31) -- (0.42,0.31);
+        \foreach \yy in {0.28,0.10,-0.08,-0.26} {
+            \draw[draw=black!30, line width=0.4pt] (-0.28,\yy) -- (0.02,\yy);
+        }
+        \node at (0.02,-0.08)
+            {\includegraphics[width=0.42cm]{images/certificate.pdf}};
+        \node[font=\small, align=center] at (0,-0.92) {#3};
+    \end{scope}
+}
+
+\newcommand{\hashbox}[3]{%
+    % #1 = jméno uzlu, #2 = souřadnice, #3 = text uvnitř
+    \node[
+        draw=black!55,
+        fill=black!3,
+        rounded corners=0.5mm,
+        inner xsep=2.5mm,
+        inner ysep=1.6mm,
+        font=\small
+    ] (#1) at #2 {#3};
+}
 
 \begin{document}
 
@@ -1360,15 +1411,17 @@
 \end{frame}
 
 \begin{frame}{Kolize jsou nevyhnutelné}
+    \pause
     Funkce
     \[\mapping{H}{\set{0,1}^{*}}{\set{0,1}^{n}}\]
     uvažuje vstupy z nekonečné množiny do množiny s~$2^{n}$ prvky.
+    \pause
     \begin{talertframe}
         \begin{center}
             Musí existovat dvojice $x,y\in\set{0,1}^{*}$ taková, že $H(x)=H(y)$.
         \end{center}
     \end{talertframe}
-
+    \pause
     \vspace{0.15cm}
 
     
@@ -1440,27 +1493,140 @@
     \end{figure}
 
     \vspace{0.15cm}
-
+    \pause
     \textbf{Nový požadavek:} Chceme, aby bylo "výpočetně složité" nějakou kolizi najít. 
 \end{frame}
 
 \subsection{Narozeninový paradox a hledání kolizí}
 
-% TODO: Slide o narozeninovém paradoxu
-% TODO: Slide o souvislosti s kolizemi
+\begin{frame}{Narozeninový paradox}
+    \pause
+    \begin{tinfobox}{Otázka}
+        Jaká je pravděpodobnost, že mezi \(n\) lidmi existují alespoň dva,
+        kteří mají narozeniny ve stejný den?
+    \end{tinfobox}
+    \pause
+    Nechť \(C\) značí počet dvojic lidí, které \markdarkred{mají narozeniny ve stejný den}.
+    \pause
+    \begin{align*}
+        \Pr[C>0]&=1-\Pr(C=0)\\
+        \Pr[C=0]&=\frac{365}{365}\cdot\frac{364}{365}\cdot\frac{363}{365}\cdots\frac{365-n+1}{365}\\
+        \Pr[C>0]&=1-\prod_{i=0}^{n-1}\frac{365-i}{365}
+    \end{align*}
+    \pause
+    \begin{tnoticeframe}
+        Už pro \(n=23\) vychází pravděpodobnost přibližně \(50{,}7\ \%\).
+    \end{tnoticeframe}
+
+\end{frame}
+
+\begin{frame}{Kolik vzniká dvojic?}
+
+    \centering
+
+    \begin{tikzpicture}[
+        x=1cm,y=1cm,
+        avatar/.style={
+            inner sep=0pt
+        },
+        edge/.style={
+            draw=black!22,
+            line width=0.3pt
+        }
+    ]
+
+        % 23 lidí rozmístěných po kružnici
+        \foreach \i in {1,...,23}{
+            \node[avatar] (p\i) at ({90-360/23*(\i-1)}:2.35)
+                {\includegraphics[width=4mm,height=4mm]{images/avatar.pdf}};
+        }
+
+        % všechny dvojice
+        \foreach \i in {1,...,23}{
+            \foreach \j in {\i,...,23}{
+                \ifnum\j>\i
+                    \draw[edge] (p\i) -- (p\j);
+                \fi
+            }
+        }
+
+        % popisek
+        \node[
+            rounded corners=2mm,
+            draw=orange!70!black,
+            fill=orange!20,
+            text width=9.2cm,
+            align=center,
+            font=\small
+        ] at (0,-3.35)
+        {Pro \(n=23\) lidí vzniká $\binom{23}{2}=253$ různých dvojic.};
+
+    \end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}{Narozeninový paradox a kolize hashů}
+    \pause
+    \begin{itemize}
+        \item Uvažujme hešovací funkci $H_r:\set{0,1}^* \to \set{0,1}^r$. Možných hashů je~$2^r$.\pause
+        \item Mějme celkově $k$ různých zpráv
+        \[x_1,\dots,x_k\;\text{a jejich hashe} H_r(x_1),\dots,H_r(x_k).\]
+        \pause
+        \item Označme si počet vzniklých kolizí opět jako $C$. Zajímá nás $\Pr[C>0]$.\pause
+        \item Postupujeme podobně:
+        \begin{align*}
+            \Pr[C>0]&=1-\Pr[C=0]=1-\prod_{j=1}^{k-1}\left(1-\frac{j}{2^{r}}\right)\stackrel{1-x\approx e^{-x}}{=}1-\prod_{j=1}^{k-1}e^{-j/2^{r}}\\
+            &=1-e^{-1/2^{r}}\cdot e^{-2/2^{r}}\cdots e^{-(k-1)/2^{r}}=1-e^{-\frac{1}{2^{r}}\sum_{j=1}^{k-1}j}=1-e^{-\frac{k(k-1)}{2^{r+1}}}
+        \end{align*}
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Narozeninový paradox a kolize hashů}
+    \pause
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}
+            \node[
+                rounded corners=2mm,
+                draw=green!70!black,
+                fill=green!20,
+                text width=5.2cm,
+                align=center,
+                font=\small
+            ] at (0,0)
+            {$\displaystyle \Pr[C>0]=1-\exp\left(-\frac{k(k-1)}{2^{r+1}}\right)$};
+        \end{tikzpicture}
+    \end{figure}
+    \pause
+    \begin{itemize}
+        \item Pokud budeme předpokládat, že $k$ je "velké", potom řádově porovnáme
+        \[\binom{k}{2}=\frac{k(k-1)}{2}=\frac{k^{2}-k}{2}\approx \frac{k^{2}}{2}.\]\pause
+        \item Kolize začne být pravděpodobná, pokud $\frac{k^{2}}{2}\approx 2^{r}$, neboli $k\approx 2^{r/2}$.\pause
+        \item Pak totiž
+        \[\Pr[C>0]=1-\exp\left(\frac{2^{r/2}(2^{r/2}-1)}{2^{r+1}}\right)\approx 1-e^{\frac{2^{r}}{2^{r+1}}}=1-e^{1/2}\approx 0{,}3935.\]
+    \end{itemize}
+    \pause
+    \begin{talertframe}
+        \begin{center}
+            Kolize v $r$-bitovém hashi lze hrubou silou hledat přibližně v~čase $2^{r/2}$.
+        \end{center}
+    \end{talertframe}
+\end{frame}
 
 \subsection{Bezpečnostní vlastnosti hešovacích funkcí}
 
 \begin{frame}{Bezpečnostní vlastnosti hešovacích funkcí}
-
+    \pause
     Uvažujme hešovací funkci
     \[
         \mapping{H_n}{\set{0,1}^{*}}{\set{0,1}^{n}}
     \]
-    Dále nechť $\varepsilon$ značí nějakou zanedbatelnou funkci a $\mathcal{A}$ pravděpodobnostní polynomiální algoritmus.
+    \pause
+    Dále nechť $\varepsilon$ značí nějakou zanedbatelnou funkci a $\mathcal{A}$ pravděpodobnostní polynomiální algoritmus (útočníkav).
+    \pause
     \begin{center}
         \begin{tabular}{@{}p{0.25\textwidth}@{\hspace{0.5em}}p{0.7\textwidth}@{}}
-
             \markdarkred{Odolnost vůči nalezení vzoru} &
             Z hashe \(y\) je těžké najít nějaké \(x\), pro které
             \(H_n(x)=y\), tzn. 
@@ -1470,7 +1636,7 @@
                 \right]\leqslant \varepsilon(n).
             \]
             pro každé $n\in\N$.\\
-
+            \pause
             \markdarkred{Odolnost vůči kolizím} &
             Je těžké najít libovolnou dvojici \(x\neq y\), pro kterou $H_n(x)=H_n(y)$, tj.
             \[
@@ -1553,25 +1719,613 @@
     {Je těžké najít dvě různá data $x\neq y$, pro která platí $H(x)=H(y)$.};
 
     % zvýraznění kolize
-    \draw[hard] (Hy.north east) to[bend left=20] node[font=\scriptsize, text=red!80!black,midway,above] {$H(x)=H(y)$} (hy.north west);
-    % \node[font=\scriptsize, text=red!80!black] at (5.0,-0.55) {$x\neq y,\quad H(x)=H(y)$};
+    \draw[hard] (Hy.north east) to[bend left=20] node[font=\scriptsize, text=red!80!black,midway,above left] {$H(x)=H(y)$} (hy.north west);
 
 \end{tikzpicture}
 
 \begin{tnoticeframe}[.9\textwidth]
     \begin{center}
-        Bezpečná hešovací funkce je tedy speciálním typem jednosměrné funkce.
+        \textbf{Bezpečná} hešovací funkce je tedy speciálním typem jednosměrné funkce.
     \end{center}
 \end{tnoticeframe}
 
 \end{frame}
 
-\subsection{Praktické použití hešovacích funkcí}
+\section{Secure Hash Algorithm (SHA)}
 
-\subsection{Rodina SHA}
+\titleframe{Secure Hash Algorithm}
+
+\subsection{Historie SHA}
+
+\begin{frame}{Historie SHA}
+    \pause
+    \begin{itemize}
+        \item SHA = \textit{Secure Hash Algorithm}\pause
+        \item Rodina standardizovaných kryptografických hešovacích funkcí.
+    \end{itemize}
+    \pause
+    \begin{table}
+        \centering
+        \renewcommand{\arraystretch}{1.5}
+        \begin{tabular}{ccl}
+            \markdarkred{1993} & SHA-0 & původní Secure Hash Standard \\ \pause
+            \markdarkred{1995} & SHA-1 & nahrazení SHA-0; dnes se již nedoporučuje \\ \pause
+            \markdarkred{2002} & SHA-2 & rodina SHA-224, SHA-256, SHA-384, SHA-512 \\ \pause
+            \markdarkred{2015} & SHA-3 & založena na algoritmu Keccak \\
+        \end{tabular}
+    \end{table}
+    \pause
+    \begin{tnoticeframe}
+        V současnosti se pro nové kryptografické použití volí zejména
+        \begin{center}
+            \textbf{SHA-2} nebo \textbf{SHA-3}.
+        \end{center}
+        SHA-1 byla nahrazena.
+    \end{tnoticeframe}
+
+\end{frame}
+
+\subsection{Sponge function}
+
+% 1
+\begin{frame}{Sponge function}
+    \pause
+    Sponge function (SF) pracuje s vnitřním stavem délky
+    \[
+        b=\underbrace{r}_{\text{rate}}+\overbrace{c}^{\text{capacity}}.
+    \]
+
+    \vspace{0.15cm}
+    \pause
+    Zpráva $m$ se nejprve doplní paddingem a rozdělí na bloky délky \(r\):
+    \[
+        M \longrightarrow p_1p_2\ldots p_t.
+    \]
+    \pause
+    Každý blok \(p_i\) má délku \(r\) bitů.
+
+\end{frame}
+
+\begin{frame}{Fáze SF}
+    \pause
+    % Fáze 1
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}
+            \node[
+                rounded corners=2mm,
+                draw=orange!70!black,
+                fill=orange!20,
+                text width=5.2cm,
+                align=center,
+                font=\small
+            ] at (0,0)
+            {Fáze 1: \textbf{absorbing}};
+        \end{tikzpicture}
+    \end{figure}
+    \pause
+    \begin{itemize}
+        \item Začneme s nulovým stavem $S_0=0^b$.\pause
+        \item Pro každý blok \(P_i\) položíme
+        \[
+            S_i=f\left(S_{i-1}\oplus(p_i 0^c)\right),
+        \]
+        kde $\mapping{f}{\set{0,1}^{r}}{\set{0,1}^{r}}$ je \markdarkred{pseudonáhodná permutace}.
+    \end{itemize}
+    \pause
+    % Fáze 2
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}
+            \node[
+                rounded corners=2mm,
+                draw=orange!70!black,
+                fill=orange!20,
+                text width=5.2cm,
+                align=center,
+                font=\small
+            ] at (0,0)
+            {Fáze 2: \textbf{squeezing}};
+        \end{tikzpicture}
+    \end{figure}
+    \pause
+    \begin{itemize}
+        \item Z výsledného stavu \(S_t\) čteme prvních \(r\) bitů.\pause
+        \item Pokud potřebujeme delší výstup, opakujeme:
+        \[
+            S_{k+1}=f(S_k)\;,\; k>t.
+        \]
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Obrázek sponge function}
+
+\centering
+
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    >=latex,
+    block/.style={
+        rounded corners=1mm,
+        draw=black!55,
+        fill=black!5,
+        minimum width=1.05cm,
+        minimum height=0.45cm,
+        font=\scriptsize,
+        align=center
+    },
+    state/.style={
+        rounded corners=1mm,
+        draw=blue!60!black,
+        fill=blue!10,
+        minimum width=1.05cm,
+        minimum height=0.45cm,
+        font=\scriptsize,
+        align=center
+    },
+    func/.style={
+        rounded corners=1mm,
+        draw=orange!70!black,
+        fill=orange!20,
+        minimum width=0.75cm,
+        minimum height=0.55cm,
+        font=\small\bfseries,
+        align=center
+    },
+    arr/.style={->, >=latex, line width=0.8pt, draw=black!75},
+    xor/.style={
+        circle,
+        draw=black!65,
+        fill=white,
+        minimum size=4.5mm,
+        inner sep=0pt,
+        font=\scriptsize
+    }
+]
+
+    % input
+    \node[block] (M) at (-5.1,2.1) {zpráva\\ \(m\)};
+    \node[block] (pad) at (-3.55,2.1) {padding};
+    \node[block] (split) at (-1.85,2.1) {bloky\\ \(p_1,\ldots,p_t\)};
+
+    \draw[arr] (M) -- (pad);
+    \draw[arr] (pad) -- (split);
+
+    % state chain
+    \node[state] (S0) at (-5.0,-0.45) {\(S_0=0^b\)};
+    \node[xor] (xor1) at (-3.8,-0.45) {\(\oplus\)};
+    \node[func] (f1) at (-2.6,-0.45) {\(f\)};
+    \node[state] (S1) at (-1.4,-0.45) {\(S_1\)};
+
+    \node[xor] (xor2) at (-0.2,-0.45) {\(\oplus\)};
+    \node[func] (f2) at (1.0,-0.45) {\(f\)};
+    \node[state] (S2) at (2.2,-0.45) {\(S_2\)};
+
+    \node[font=\large] (dots) at (3.6,-0.45) {\(\cdots\)};
+
+    \node[state] (St) at (5.0,-0.45) {\(S_t\)};
+
+    \draw[arr] (S0) -- (xor1);
+    \draw[arr] (xor1) -- (f1);
+    \draw[arr] (f1) -- (S1);
+    \draw[arr] (S1) -- (xor2);
+    \draw[arr] (xor2) -- (f2);
+    \draw[arr] (f2) -- (S2);
+    \draw[arr] (S2) -- (dots);
+    \draw[arr] (dots) -- (St);
+
+    % input blocks to xor
+    \node[block] (P1) at (-3.8,0.45) {\(p_1 0^c\)};
+    \node[block] (P2) at (-0.2,0.45) {\(p_2 0^c\)};
+    \draw[arr] (P1) -- (xor1);
+    \draw[arr] (P2) -- (xor2);
+    \draw[arr] (split.south west) -- (P1.north);
+    \draw[arr] (split.south east) -- (P2.north);
+
+    % squeezing
+    \node[block] (out) at (5.0,-1.60) {vezmi prvních\\ \(d\) bitů};
+    \node[state] (hash) at (5.0,-3.00) {hash\\ \(H(m)\)};
+
+    \draw[arr] (St) -- (out);
+    \draw[arr] (out) -- (hash);
+
+    % labels
+    \node[font=\scriptsize, text=blue!60!black] at (-1.4,-1.3) {absorbing};
+    \draw[draw=blue!60!black] (-5.8,1.0) rectangle (3.0,-1.0);
+    \node[font=\scriptsize, text=blue!60!black] at (5.0,-3.9) {squeezing};
+    \draw[draw=blue!60!black] (3.8,0) rectangle (6.2,-3.6);
+
+\end{tikzpicture}
+
+\end{frame}
 
 \subsection{SHA-3}
 
-\section{}
+\begin{frame}{SHA-3 jako konkrétní sponge function}
+    \pause
+    \begin{itemize}
+        \item Vnitřní stav má délku $b=1600$ bitů.\pause
+        \item Pro SHA3-\(d\) platí:
+        \[
+            c=2d,
+            \qquad
+            r=1600-c.
+        \]
+        Například pro SHA3-256: $d=256, c=512, r=1088$.\pause
+        \item Typicky se používají SHA3-224, SHA3-256, SHA3-384 a~SHA3-512.
+    \end{itemize}
+    \pause
+    \begin{talertframe}
+        Dodnes není známo, zdali je SHA3-$d$ jednosměrná funkce. Jedná se o~potenciálního kandidáta.
+    \end{talertframe}
+
+\end{frame}
+
+\section{Elektronický podpis}
+
+\titleframe{Elektronický podpis}
+
+\subsection{Zpráva s doručenkou}
+
+\begin{frame}{Zpráva s doručenkou}
+
+    \begin{tinfobox}{Motivace}
+        Alice chce mít jistotu, že její zpráva pro Boba byla skutečně doručena
+        adresátovi a že ji Bob obdržel v původním stavu.
+    \end{tinfobox}
+
+    \vspace{0.15cm}
+
+    \centering
+    \begin{tikzpicture}[
+        x=1cm, y=1cm,
+        scale=0.92,
+        >=latex,
+        arr/.style={->, >=latex, line width=1pt, draw=black},
+        biarr/.style={<->, >=latex, line width=1pt, draw=black},
+        msgbox/.style={
+            rounded corners=1mm,
+            draw=black!60,
+            fill=black!3,
+            inner xsep=3mm,
+            inner ysep=2mm,
+            font=\small,
+            align=center
+        }
+    ]
+
+        % Alice
+        \pause
+        \node[inner sep=0pt] (alice) at (-4.0,0.9)
+            {\includegraphics[height=1.45cm]{images/woman-icon.pdf}};
+        \node[font=\Large, below=0.1cm of alice] {Alice};
+
+        % Bob
+        \node[inner sep=0pt] (bob) at (4.0,0.9)
+            {\includegraphics[height=1.45cm]{images/man-icon.pdf}};
+        \node[font=\Large, below=0.1cm of bob] {Bob};
+
+        % Communication arrow
+        \draw[biarr] (alice) -- (bob);
+
+        % Upper message: Alice -> Bob
+        \pause
+        \node[align=left, text width=4cm] (lefttext) at (-4.2,-1.7)
+        {zprávu \(x\) zašifruje veřejným klíčem Boba \(k_V^{B}\) a~připojí svůj podpis};
+
+        \node[msgbox] (msg1) at (0,-1.7)
+        {\(\,\mathbf{E}\left(x, k_V^{B}\right)\,;\,A\,\)};
+
+        \node[align=left, text width=4cm] (righttext) at (4.2,-1.7)
+        {dešifruje soukromým klíčem \(k_S^{B}\) a~přečte \(x\) i podpis Alice};
+        
+        \draw[arr] (lefttext) -- (msg1.west);
+        \draw[arr] (msg1.east) -- (righttext);
+
+        % Lower message: Bob -> Alice
+        \pause
+        \node[align=left, text width=4cm] (lefttext2) at (-4.2,-3.5)
+        {dešifruje soukromým klíčem \(k_S^{A}\) a~zkontroluje obsah};
+
+        \node[msgbox] (msg2) at (0,-3.5)
+        {\(\,\mathbf{E}\left(x, k_V^{A}\right)\,;\,B\,\)};
+
+        \node[align=left, text width=4cm] (righttext2) at (4.2,-3.5)
+        {odpověď zašifruje veřejným klíčem Alice \(k_V^{A}\) a~připojí svůj podpis};
+
+        \draw[arr] (righttext2) -- (msg2.east);
+        \draw[arr] (msg2.west) -- (lefttext2);
+
+    \end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}{Je protokol bezpečný?}
+    
+\centering
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    >=latex,
+    scale=0.85,
+    arr/.style={->, >=latex, line width=1pt, draw=black},
+    biarr/.style={<->, >=latex, line width=1pt, draw=black},
+    msgbox/.style={
+        rounded corners=0.8mm,
+        draw=black!60,
+        fill=black!3,
+        inner xsep=3mm,
+        inner ysep=2mm,
+        font=\small,
+        align=center
+    }
+]
+
+    %------------------------------------------------
+    % Postavy
+    %------------------------------------------------
+    \node[inner sep=0pt] (alice) at (-4.8,1.9)
+        {\includegraphics[height=1.5cm]{images/woman-icon.pdf}};
+    \node[font=\Large, below=0.1cm of alice] {Alice};
+
+    \node[inner sep=0pt] (bob) at (4.8,1.9)
+        {\includegraphics[height=1.5cm]{images/man-icon.pdf}};
+    \node[font=\Large, below=0.1cm of bob] {Bob};
+
+    \node[inner sep=0pt] (mallory) at (0.0,2.0)
+        {\includegraphics[height=2.2cm]{images/hacker-icon.pdf}};
+    \node[font=\Large, below=0.1cm of mallory] {Záškodník \(P\)};
+
+    % horní komunikační šipka
+    \draw[biarr] (alice) -- (bob);
+
+    %------------------------------------------------
+    % Horní průchod: Alice -> Bob
+    %------------------------------------------------
+    \node[msgbox] (m1) at (-4.8,-1.3)
+        {\(\mathbf{E}(x,k_V^B)\,;\,A\)};
+    \node[msgbox] (m2) at (0.0,-1.3)
+        {\(\mathbf{E}(x,k_V^B)\,;\,P\)};
+
+    \node[align=left, text width=3.7cm] (righttext1) at (4.8,-1.3)
+    {Dešifruje pomocí \(k_S^B\), přečte \(x\) a podpis \(P\). Zprávu \(x\) zašifruje veřejným klíčem \(k_V^P\), podepíše a~odešle \(P\)};
+
+    %------------------------------------------------
+    % Bobova odpověď útočníkovi
+    %------------------------------------------------
+    \node[msgbox] (m3) at (4.8,-4.0)
+        {\(\mathbf{E}(x,k_V^P)\,;\,B\)};
+    
+    %------------------------------------------------
+    % Útočník přepošle Alice
+    %------------------------------------------------
+    \node[msgbox] (m4) at (0.0,-4.0)
+        {\(\mathbf{E}(x,k_V^A)\,;\,B\)};
+
+    \node[align=left, text width=3.7cm] (lefttext2) at (-4.8,-4.0)
+    {Dešifruje pomocí \(k_S^A\) a~zkontroluje obsah};
+
+    \draw[arr] (righttext1.south) -- (m3.north);
+    \draw[arr] (m1.east) -- (m2.west);
+    \draw[arr] (m2.east) -- (righttext1);
+
+    \draw[arr] (m3.west) -- (m4.east);
+    \draw[arr] (m4.west) -- (lefttext2);
+
+\end{tikzpicture}%
+
+\end{frame}
+
+\begin{frame}{Proč tento protokol nestačí?}
+    \pause
+    \begin{talertbox}{Hlavní problém}
+        Bob sice obdrží zprávu, kterou dokáže dešifrovat svým soukromým klíčem,
+        ale nemá jistotu, že zpráva skutečně pochází od Alice.
+    \end{talertbox}
+
+    \vspace{0.2cm}
+    \pause
+    \begin{itemize}
+        \item Záškodník může zprávu zachytit, změnit připojený podpis a vydávat se za jiného odesílatele.\pause
+        \item Bob potom přečte správnou zprávu \(x\), ale mylně se domnívá, že ji poslal někdo jiný.
+    \end{itemize}
+    \vspace{0.15cm}
+    \pause
+    \begin{timportantbox}{Co zde chybí?}
+        Musí být kryptograficky "svázán" se zprávou.
+        \begin{center}
+            \markdarkred{Podpis závisí na obsahu zprávy i~na~soukromém klíči odesílatele.}
+        \end{center}
+    \end{timportantbox}
+
+\end{frame}
+
+\begin{frame}{Komutativita klíčů}
+    \pause
+    \begin{itemize}
+        \item Chceme používat \textbf{stejnou dvojici klíčů} jak pro šifrování, tak pro podpis.\pause
+        \item Proto potřebujeme, aby platilo nejen
+        \[
+            \mathbf{D}\left(\mathbf{E}(x,k_V),k_S\right)=x,\quad\text{ale také}\quad\mathbf{E}\left(\mathbf{D}(x,k_S),k_V\right)=x.
+        \]
+    \end{itemize}
+
+    \vspace{0.15cm}
+    \pause
+    \centering
+    \begin{tikzpicture}[
+        x=1cm, y=1cm,
+        scale=0.90,
+        >=latex,
+        arr/.style={->, >=latex, line width=1pt, draw=black},
+        biarr/.style={<->, >=latex, line width=1pt, draw=black},
+        opbox/.style={
+            rounded corners=1mm,
+            draw=black!60,
+            fill=black!4,
+            inner xsep=3mm,
+            inner ysep=2mm,
+            font=\small,
+            align=center
+        }
+    ]
+
+        % Alice, Bob
+        \node[inner sep=0pt] (alice) at (-4.5,2.8)
+            {\includegraphics[height=1.5cm]{images/woman-icon.pdf}};
+        \node[font=\Large, below=0.1cm of alice] {Alice};
+
+        \node[inner sep=0pt] (bob) at (4.5,2.8)
+            {\includegraphics[height=1.5cm]{images/man-icon.pdf}};
+        \node[font=\Large, below=0.1cm of bob] {Bob};
+
+        \draw[biarr] (alice) -- (bob);
+
+        %------------------------------------------------
+        % Horní řádek: obyčejné šifrování
+        %------------------------------------------------
+        \node[align=left, text width=4.0cm] (lefttext1) at (-4.5,0.5)
+        {Alice spočítá $\mathbf{E}(x,k_V^B)$};
+
+        \node[opbox] (enc) at (0,0.5)
+        {\(\mathbf{E}(x,k_V^B)\)};
+
+        \node[align=left, text width=4.0cm] (righttext1) at (4.5,0.5)
+        {Bob spočítá $\mathbf{D}\left(\mathbf{E}(x,k_V^B),k_S^B\right)=x$};
+
+        \draw[arr] (lefttext1) -- (enc.west);
+        \draw[arr] (enc.east) -- (righttext1);
+
+        %------------------------------------------------
+        % Dolní řádek: podpis
+        %------------------------------------------------
+        \node[align=left, text width=4.0cm] (lefttext2) at (-4.5,-1)
+        {Alice "podepíše" hodnotu \(x\): $\mathbf{D}(x,k_S^A)$};
+
+        \node[opbox] (sig) at (0,-1)
+        {\(\mathbf{D}(x,k_S^A)\)};
+
+        \node[align=left, text width=4.0cm] (righttext2) at (4.5,-1)
+        {Bob ověří podpis pomocí $\mathbf{E}\left(\mathbf{D}(x,k_S^A),k_V^A\right)=x$};
+
+        \draw[arr] (lefttext2) -- (sig.west);
+        \draw[arr] (sig.east) -- (righttext2);
+
+    \end{tikzpicture}%
+
+\end{frame}
+
+\begin{frame}{Podpis hashe}
+    \pause
+    Podepisovat přímo celou zprávu
+    \[
+        \sigma=\mathbf{D}(m,k_S^A)
+    \]
+    není praktické.
+    \pause
+    \begin{talertframe}[.9\textwidth]
+        Zpráva může být dlouhá a~asymetrické operace jsou pomalé.
+    \end{talertframe}
+
+    \vspace{0.2cm}
+    \pause
+    Mějme libovolnou \markdarkred{hešovací funkci $\mapping{H_n}{\set{0,1}^{*}}{\set{0,1}^{n}}$}
+    \pause
+    \begin{itemize}
+        \item Alice nejprve spočítá krátký otisk zprávy $h=H_n(m)$.\pause
+        \item Podepíše až tento hash:
+        \[
+            \sigma=\mathbf{D}\left(H_n(m),k_S^A\right).
+        \]\pause
+        \item Bob spočítá hash přijaté zprávy a porovná:
+        \[
+            \mathbf{E}\left(\sigma,k_V^A\right)\stackrel{?}{=}H_n(m).
+        \]\pause
+        \item Pokud se zpráva změní, změní se i~její hash a~podpis přestane sedět.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Elektronický podpis v praxi}
+
+\centering
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    >=latex,
+    scale=0.9,
+    arr/.style={->, >=latex, line width=0.95pt, draw=black},
+    brace/.style={decorate, decoration={brace, amplitude=4pt}},
+    lbl/.style={font=\small, align=center}
+]
+
+    \node[font=\Large] at (-4.3,4.3) {Podepsání};
+    \node[font=\Large] at (4.3,4.3) {Ověření};
+    \draw[draw=black!35, line width=0.5pt] (0,4.75) -- (0,-4.7);
+
+    %================================================
+    % LEVÁ ČÁST -- Podepsání
+    %================================================
+
+    \papericon{docL}{(-6.4,2.7)}{Data (dopis)}
+
+    \draw[arr] (-5.7,2.7) -- (-4.45,2.7)
+        node[midway, above, font=\scriptsize] {\(H_n\)};
+
+    \hashbox{hashL}{(-3.15,2.7)}{\texttt{101100110101}}
+    \node[font=\small] at (-3.15,2.02) {Hash (otisk)};
+
+    \draw[arr] (-3.15,1.7) -- (-3.15,0.6)
+        node[midway, right, font=\scriptsize, align=center]
+        {\(\mathbf{D}(\,\cdot\,,k_S^A)\)};
+
+    \hashbox{sigL}{(-3.15,-0.05)}{\texttt{111101101110}}
+    \node at (-4.0,-0.05)
+        {\includegraphics[width=0.28cm]{images/lock.pdf}};
+    \node[font=\small] at (-3.15,-0.72) {Podpis};
+
+    \node at (-4.95,-0.05)
+        {\includegraphics[width=0.85cm]{images/certificate.pdf}};
+    \node[font=\small] at (-4.95,-0.72) {Certifikát};
+
+    \draw[brace] (-5.55,-1.05) -- (-2.3,-1.05);
+    \draw[dashed] (-4.95,-0.88) -- (-4.5,-1.18);
+
+    \signedpapericon{signedL}{(-3.9,-3.0)}{Digitálně podepsaná data (dopis)}
+
+    %================================================
+    % PRAVÁ ČÁST -- Ověření
+    %================================================
+
+    \signedpapericon{signedR}{(4.05,2.55)}{Digitálně podepsaná data (dopis)}
+
+    \draw[brace] (2.55,1.25) -- (5.55,1.25);
+
+    \papericon{docR}{(2.8,-0.1)}{Data (dopis)}
+
+    \hashbox{sigR}{(5.2,-0.1)}{\texttt{111101101110}}
+    \node at (4.33,-0.1)
+        {\includegraphics[width=0.28cm]{images/lock.pdf}};
+    \node[font=\small] at (5.2,-0.77) {Podpis};
+
+    \draw[arr] (2.8,-1.05) -- (2.8,-2.0)
+        node[midway, right, font=\scriptsize] {\(H_n\)};
+    \hashbox{hashR1}{(2.8,-2.65)}{\texttt{101100110101}}
+    \node[font=\small] at (2.8,-3.32) {Hash (otisk)};
+
+    \draw[arr] (5.2,-1.05) -- (5.2,-2.0)
+        node[midway, right, font=\scriptsize, align=center]
+        {\(\mathbf{E}(\,\cdot\,,k_V^A)\)};
+    \hashbox{hashR2}{(5.2,-2.65)}{\texttt{101100110101}}
+    \node[font=\small] at (5.2,-3.32) {Hash (otisk)};
+
+    \node[font=\Huge] at (4.0,-2.65) {\(=\)};
+
+    \node[lbl, text width=4.6cm] at (4.0,-4.1)
+    {Rovnají-li se otisky, podpis dat\\
+    (dopisu) je ověřen.};
+
+\end{tikzpicture}%
+
+\end{frame}
 
 \end{document}
