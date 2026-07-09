@@ -626,7 +626,7 @@
         \[
             c = \mathbf{E}(m, k_V).
         \]
-        Bob zprávu dešifruje svým soukromým klíčem $m = \mathbf{D}(c, k_P)$.
+        Bob zprávu dešifruje svým soukromým klíčem $m = \mathbf{D}(c, k_S)$.
     \end{tinfobox}
 
 \end{frame}
@@ -673,7 +673,7 @@
     font=\small,
     above=0.5cm of bob
 ] (sk)
-{soukromý klíč \(k_P\)};
+{soukromý klíč \(k_S\)};
 
 % Veřejný klíč k Alici
 \draw[keyarrow] (pk.west) to[bend right=10] node[midway,above left,font=\scriptsize,text=blue!65!black] {Bob zveřejní \(k_V\)} (-3.65,0.95);
@@ -703,11 +703,11 @@
     inner ysep=1.5mm,
     font=\small
 ] (dec) at (1.5,0.55)
-{\(\mathbf{D}(c,k_P)\)};
+{\(\mathbf{D}(c,k_S)\)};
 
 \draw[msgarrow] (dec.east) -- (bob.west);
 
-\node[font=\scriptsize, below=0.1cm of dec, align=center] {Bob dešifruje\\ pomocí \(k_P\)};
+\node[font=\scriptsize, below=0.1cm of dec, align=center] {Bob dešifruje\\ pomocí \(k_S\)};
 
 \draw[->, >=latex, dashed, line width=0.95pt, draw=red!70!black]
     (sk.west) -- (dec.north);
@@ -727,7 +727,7 @@
     align=center,
     font=\small
 ] at (0,-2.5)
-{Kdo zná \(k_V\), může Bobovi šifrovat zprávy. Dešifrovat je umí pouze Bob se svým \(k_P\).};
+{Kdo zná \(k_V\), může Bobovi šifrovat zprávy. Dešifrovat je umí pouze Bob se svým \(k_S\).};
 
 \end{tikzpicture}
 
@@ -749,9 +749,9 @@
         \item Spočítáme číslo $v$ tak, aby
         \[v\cdot s\bmod (p-1)(q-1)=1.\]\pause
         \item Položíme veřejný a soukromý klíč uspořádaným dvojicím
-        \[k_V=(v,n)\quad\text{a}\quad k_P=(s,n).\]\pause
+        \[k_V=(v,n)\quad\text{a}\quad k_S=(s,n).\]\pause
         \item Šifrování a dešifrování pro $x<n$:
-        \[\markdarkred{y=}\;\mathbf{E}(x, k_V)=x^{v}\bmod n\quad\text{a}\quad\mathbf{D}(y, k_P)=y^{s}\bmod n.\]
+        \[\markdarkred{y=}\;\mathbf{E}(x, k_V)=x^{v}\bmod n\quad\text{a}\quad\mathbf{D}(y, k_S)=y^{s}\bmod n.\]
     \end{enumerate}
 \end{frame}
 
@@ -797,7 +797,7 @@
         above=0.5cm of bob,
         align=center
     ] (sk)
-    {soukromý klíč\\ \(k_P=(s,n)\)};
+    {soukromý klíč\\ \(k_S=(s,n)\)};
 
     % Veřejný klíč k Alici
     \draw[keyarrow] (pk.west) to[bend right=10]
@@ -839,7 +839,7 @@
     \draw[msgarrow] (dec.east) -- (bob.west);
 
     \node[font=\scriptsize, below=0.1cm of dec, align=center]
-    {Bob dešifruje\\ pomocí \(k_P=(s,n)\)};
+    {Bob dešifruje\\ pomocí \(k_S=(s,n)\)};
 
     \draw[->, >=latex, dashed, line width=0.95pt, draw=red!70!black]
         (sk.west) -- (dec.north);
@@ -1049,9 +1049,9 @@
         \end{center}
     \end{tnoticeframe}
     \pause
-    \begin{talertbox}[.8\textwidth]{Otevřený problém}
+    \begin{talertbox}[.9\textwidth]{Otevřený problém}
         \begin{center}
-            Není známo, zdali $\FACTOR$ je $\classNP$-úplný problém.
+            Není známo, zdali $\FACTOR$ je $\classNP$-úplný problém nebo $\FACTOR\in\classP$.
         \end{center}
     \end{talertbox}
     \pause
@@ -1068,7 +1068,7 @@
     \pause
     Funkce
     \[
-        G:\{0,1\}^n \to \{0,1\}^{\ell(n)}
+        G:\set{0,1}^n \to \set{0,1}^{\ell(n)}
     \]
     je \markdarkred{pseudonáhodný generátor (PRG)}, pokud:\pause
     \begin{itemize}
@@ -1572,7 +1572,7 @@
     \begin{itemize}
         \item Uvažujme hešovací funkci $H_r:\set{0,1}^* \to \set{0,1}^r$. Možných hashů je~$2^r$.\pause
         \item Mějme celkově $k$ různých zpráv
-        \[x_1,\dots,x_k\;\text{a jejich hashe} H_r(x_1),\dots,H_r(x_k).\]
+        \[x_1,\dots,x_k\;\text{a jejich hashe}\;H_r(x_1),\dots,H_r(x_k).\]
         \pause
         \item Označme si počet vzniklých kolizí opět jako $C$. Zajímá nás $\Pr[C>0]$.\pause
         \item Postupujeme podobně:
