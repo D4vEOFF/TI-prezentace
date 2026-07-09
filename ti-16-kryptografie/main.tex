@@ -41,7 +41,7 @@
         \foreach \yy in {0.28,0.10,-0.08,-0.26} {
             \draw[draw=black!30, line width=0.4pt] (-0.28,\yy) -- (0.02,\yy);
         }
-        \node at (0.02,-0.08)
+        \node at (0.25,-0.25)
             {\includegraphics[width=0.42cm]{images/certificate.pdf}};
         \node[font=\small, align=center] at (0,-0.92) {#3};
     \end{scope}
@@ -2140,6 +2140,8 @@
 
 \end{frame}
 
+\subsection{Komutativita klíčů}
+
 \begin{frame}{Komutativita klíčů}
     \pause
     \begin{itemize}
@@ -2252,7 +2254,7 @@
 \begin{tikzpicture}[
     x=1cm, y=1cm,
     >=latex,
-    scale=0.9,
+    scale=0.8,
     arr/.style={->, >=latex, line width=0.95pt, draw=black},
     brace/.style={decorate, decoration={brace, amplitude=4pt}},
     lbl/.style={font=\small, align=center}
@@ -2266,66 +2268,97 @@
     % LEVÁ ČÁST -- Podepsání
     %================================================
 
-    \papericon{docL}{(-6.4,2.7)}{Data (dopis)}
+    \papericon{docL}{(-6.4,2.7)}{Data}
+    \hashbox{hashL}{(-3.00,2.7)}{\texttt{101100110101}}
+    \draw[arr, shorten <= 10pt] (docL.east) -- (hashL)
+        node[midway, above right, font=\scriptsize] {\(H_n\)};
 
-    \draw[arr] (-5.7,2.7) -- (-4.45,2.7)
-        node[midway, above, font=\scriptsize] {\(H_n\)};
+    \node[font=\small, above=0.05cm of hashL] {Hash};
+    \hashbox{sigL}{(-3.00,0.00)}{\texttt{111101101110}}
+    \node[right=-0.3cm of sigL] {\includegraphics[width=0.28cm]{images/lock.pdf}};
+    \node[font=\small, below=0.05cm of sigL] {Podpis};
 
-    \hashbox{hashL}{(-3.15,2.7)}{\texttt{101100110101}}
-    \node[font=\small] at (-3.15,2.02) {Hash (otisk)};
-
-    \draw[arr] (-3.15,1.7) -- (-3.15,0.6)
+    \draw[arr] (hashL.south) -- (sigL.north)
         node[midway, right, font=\scriptsize, align=center]
-        {\(\mathbf{D}(\,\cdot\,,k_S^A)\)};
+        {\(\mathbf{D}(\;\cdot\,,k_S^A)\)};
 
-    \hashbox{sigL}{(-3.15,-0.05)}{\texttt{111101101110}}
-    \node at (-4.0,-0.05)
-        {\includegraphics[width=0.28cm]{images/lock.pdf}};
-    \node[font=\small] at (-3.15,-0.72) {Podpis};
-
-    \node at (-4.95,-0.05)
+    \node (certificate) at (-6.2,0.0)
         {\includegraphics[width=0.85cm]{images/certificate.pdf}};
-    \node[font=\small] at (-4.95,-0.72) {Certifikát};
+    \node[font=\small, below=0.02cm of certificate] {Certifikát};
 
-    \draw[brace] (-5.55,-1.05) -- (-2.3,-1.05);
-    \draw[dashed] (-4.95,-0.88) -- (-4.5,-1.18);
+    \signedpapericon{signedL}{(-3.9,-3.0)}{Digitálně podepsaná data}
 
-    \signedpapericon{signedL}{(-3.9,-3.0)}{Digitálně podepsaná data (dopis)}
+    \draw[arr,shorten >= 15pt, shorten <= 15pt] (sigL) -- (signedL);
+    \draw[arr,shorten >= 15pt, shorten <= 18pt] (certificate) -- (signedL);
 
     %================================================
     % PRAVÁ ČÁST -- Ověření
     %================================================
 
-    \signedpapericon{signedR}{(4.05,2.55)}{Digitálně podepsaná data (dopis)}
+    \signedpapericon{signedR}{(4.0,2.7)}{Digitálně podepsaná data}
 
-    \draw[brace] (2.55,1.25) -- (5.55,1.25);
+    \papericon{docR}{(2.0,0.0)}{Data}
+    \hashbox{sigR}{(6.0,0.0)}{\texttt{111101101110}}
 
-    \papericon{docR}{(2.8,-0.1)}{Data (dopis)}
+    \draw[arr, shorten <= 30pt, shorten >= 13pt] (signedR) -- (docR);
+    \draw[arr, shorten <= 30pt] (signedR) -- (sigR.north);
+    
+    \node[right=-0.3cm of sigR] {\includegraphics[width=0.28cm]{images/lock.pdf}};
+    \node[font=\small, below=0.05cm of sigR] {Podpis};
 
-    \hashbox{sigR}{(5.2,-0.1)}{\texttt{111101101110}}
-    \node at (4.33,-0.1)
-        {\includegraphics[width=0.28cm]{images/lock.pdf}};
-    \node[font=\small] at (5.2,-0.77) {Podpis};
+    \hashbox{hashR1}{(2.0,-2.65)}{\texttt{101100110101}}
+    \node[font=\small, below=0.05cm of hashR1] {Hash};
 
-    \draw[arr] (2.8,-1.05) -- (2.8,-2.0)
-        node[midway, right, font=\scriptsize] {\(H_n\)};
-    \hashbox{hashR1}{(2.8,-2.65)}{\texttt{101100110101}}
-    \node[font=\small] at (2.8,-3.32) {Hash (otisk)};
+    \hashbox{hashR2}{(6.0,-2.65)}{\texttt{101100110101}}
+    \node[font=\small, below=0.05cm of hashR2] {Hash};
 
-    \draw[arr] (5.2,-1.05) -- (5.2,-2.0)
+    \draw[arr, shorten <= 27pt] (docR) -- (hashR1)
+        node[midway, below right, font=\scriptsize] {\(H_n\)};
+    \draw[arr, shorten <= 16pt] (sigR) -- (hashR2)
         node[midway, right, font=\scriptsize, align=center]
-        {\(\mathbf{E}(\,\cdot\,,k_V^A)\)};
-    \hashbox{hashR2}{(5.2,-2.65)}{\texttt{101100110101}}
-    \node[font=\small] at (5.2,-3.32) {Hash (otisk)};
+        {\(\mathbf{E}(\;\cdot\;,k_V^A)\)};
 
-    \node[font=\Huge] at (4.0,-2.65) {\(=\)};
+    \node[font=\Large] at (4.0,-2.5) {\(\stackrel{?}{=}\)};
 
-    \node[lbl, text width=4.6cm] at (4.0,-4.1)
-    {Rovnají-li se otisky, podpis dat\\
-    (dopisu) je ověřen.};
+    \node[lbl, text width=6.6cm] at (4.0,-4.3)
+    {Rovnají-li se otisky,\\ podpis dat je ověřen.};
 
 \end{tikzpicture}%
 
+\end{frame}
+
+\begin{frame}{Elektronický podpis v právním rámci}
+    \pause
+    \begin{itemize}
+        \item První českou úpravou byl zákon č. 227/2000 Sb., \href{https://www.zakonyprolidi.cz/cs/2000-227}{\emph{\underline{o elektronickém podpisu}}}.\pause
+        \item Účinný byl od 1.10.2000 a~byl zrušen k 19.9.2016.\pause
+        \item Dnes oblast upravuje zejména: nařízení eIDAS a~český zákon č. 297/2016 Sb., \href{https://www.zakonyprolidi.cz/cs/2016-297}{\emph{\underline{o službách vytvářejících důvěru pro elektronické transakce}}}.
+    \end{itemize}
+
+    \vspace{0.15cm}
+    \pause
+    \begin{tnoticebox}{297/2016 Sb., § 13 odst. 3}
+        \textit{Agentura zveřejňuje způsobem umožňujícím dálkový přístup důvěryhodné seznamy obsahující informace týkající se~kvalifikovaných poskytovatelů služeb vytvářejících důvěru spolu s~informacemi o~jimi poskytovaných kvalifikovaných službách vytvářejících důvěru.}
+    \end{tnoticebox}
+
+\end{frame}
+
+\begin{frame}{Elektronický podpis v právním rámci}
+    \pause
+    Příklady kvalifikovaných poskytovatelů v~ČR (celý seznam \href{https://www.dia.gov.cz/cs/legislativa/eidas-sluzby-vytvarejici-duveru-a-elektronicka-identifikace/povinne-zverejnovane-informace/seznam-kvalifikovanych-poskytovatelu-sluzeb-vytvarejicich-duveru-a-poskytovanych-kvalifikovanych-sluzeb-vytvarejicich-duveru}{\underline{zde}}):
+    \pause
+    \begin{itemize}
+        \item První certifikační autorita, a. s.
+        \item Česká pošta, s. p. / PostSignum
+        \item eIdentity a. s.
+        \item Komerční banka, a. s.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Zdroje}
+    \begin{itemize}
+        \item KATZ, Jonathan a LINDELL, Yehuda. \textit{Introduction to modern cryptography.} Chapman & Hall/CRC cryptography and network security. Boca Raton: Chapman & Hall/CRC, c2008. ISBN 978-1-58488-551-1.
+    \end{itemize}
 \end{frame}
 
 \end{document}
