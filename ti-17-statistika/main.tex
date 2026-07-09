@@ -10,6 +10,232 @@
 
 \begin{document}
 
-    \input{../titlepage.tex}
+\input{../titlepage.tex}
+
+\section{Úvod do statistiky}
+
+\titleframe{Úvod do statistiky}
+
+\subsection{Proč nás zajímá statistika?}
+
+\begin{frame}{Proč nás zajímá statistika?}
+\pause
+\begin{tinfoframe}
+Umělá inteligence se učí z~\textbf{dat}. 
+Statistika nám pomáhá pochopit, co data skutečně říkají,
+a odlišit užitečný vzor od náhody, šumu nebo chybné interpretace.
+\end{tinfoframe}
+\pause
+\vspace{0.25cm}
+
+\begin{center}
+\begin{tikzpicture}[
+    node/.style={
+        draw, rounded corners, thick,
+        minimum width=2.25cm,
+        minimum height=0.75cm,
+        align=center,
+        fill=blue!8
+    },
+    arr/.style={->, thick}
+]
+    \node[node] (data) {Data};
+    \node[node, right=0.45cm of data] (stats) {Statistický\\popis};
+    \node[node, right=0.45cm of stats] (model) {Model};
+    \node[node, right=0.45cm of model] (decision) {Závěr};
+
+    \draw[arr] (data) -- (stats);
+    \draw[arr] (stats) -- (model);
+    \draw[arr] (model) -- (decision);
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.1cm}
+\pause
+\begin{itemize}
+    \item Popisuje data pomocí číselných charakteristik,\pause
+    \item pomáhá odhalit vztahy, odlehlé hodnoty a chyby v datech,\pause
+    \item je základem pro učení modelů a vyhodnocení jejich výsledků.
+\end{itemize}
+\pause
+\vspace{0.1cm}
+
+\begin{timportantframe}
+Bez statistiky snadno zaměníme \textbf{náhodu za vzor},
+\textbf{korelaci za příčinu} a \textbf{výpočet za správný závěr}.
+\end{timportantframe}
+
+\end{frame}
+
+\subsection{Data, informace a kontext}
+
+\begin{frame}{Data, informace a kontext}
+\begin{itemize}
+    \item \textbf{Data} jsou \markdarkred{surové hodnoty}.
+    \item \textbf{Informace} vzniká až tehdy, když data \markdarkred{zasadíme do kontextu} a~\markdarkred{vztáhneme je ke konkrétní otázce}.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\begin{tnoticeframe}[.85\textwidth]
+\begin{center}
+    Například hodnota \textbf{85} sama o~sobě nic neříká.
+\end{center}
+\end{tnoticeframe}
+
+\vspace{0.1cm}
+
+\begin{itemize}
+    \item \textbf{85 bodů ze 100} v testu už má konkrétní význam.
+    \item \textbf{85~\% studentů uspělo} popisuje výsledek celé skupiny.
+    \item \textbf{85~ms odezvy modelu} může být výborné, nebo špatné podle použití.
+\end{itemize}
+
+\vspace{0.1cm}
+
+\begin{timportantframe}
+Stejná data mohou vést k různým závěrům podle toho,
+\textbf{co měříme}, \textbf{proč to měříme} a \textbf{jak otázku položíme}.
+\end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Příklad}{průměrná mzda $\neq$ běžná mzda}
+\pause
+Podle zprávy ČSÚ za 1. čtvrtletí roku 2026 vzrostla průměrná hrubá měsíční mzda o~$8,1\,\%$ na~$52\,202$ Kč.
+\pause
+\begin{talertbox}{Závěr}
+"Běžný zaměstnanec v ČR vydělává $52\,202$ Kč."
+\end{talertbox}
+\pause
+\begin{center}
+\begin{tabular}{c|c}
+\textbf{Průměrná mzda} & \textbf{Medián mzdy} \\
+\hline
+$52\,202$ Kč & $44\,337$ Kč
+\end{tabular}
+\end{center}
+\pause
+\begin{itemize}
+    \item \textbf{Průměr} říká, kolik připadá na jednoho zaměstnance po~rozpočtení.\pause
+    \item \textbf{Medián} říká, kolik bere prostřední zaměstnanec po~seřazení mezd vzestupně.\pause
+    \item Průměrnou mzdu nepobíraly podle dat ČSÚ téměř \textbf{dvě třetiny zaměstnanců}.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Příklad}{průměrná mzda $\neq$ běžná mzda}
+    \pause
+    \begin{timportantframe}
+    Bez kontextu může průměr vyvolat dojem, že jde o "typickou" mzdu.
+    V~techto případech bývá často názornější \textbf{medián}.
+    \end{timportantframe}
+    \pause
+    {\scriptsize Zdroj: \url{https://csu.gov.cz/produkty/mzdy-na-zacatku-roku-vyrazne-vzrostly}}
+\end{frame}
+
+\begin{frame}{Příklad}{nižší inflace $\neq$ nižší ceny}
+\pause
+\begin{center}
+    \textbf{\small Míra inflace vyjádřená přírůstkem průměrného ročního indexu spotřebitelských cen (ČSÚ)}
+\end{center}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{images/csu-inflace-2026.png}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Příklad}{nižší inflace $\neq$ nižší ceny}
+    \pause
+    \begin{talertbox}{Závěr}
+    "Inflace v roce 2024 oproti roku 2023 klesla, takže ceny musely také klesnout."
+    \end{talertbox}
+    \pause
+    \begin{center}
+    \begin{tikzpicture}[
+        box/.style={draw, rounded corners, thick, align=center,
+            minimum width=3.2cm, minimum height=0.9cm, fill=blue!8},
+        arr/.style={->, thick},
+        >=stealth
+    ]
+        \node[box] (a) {Inflace $10{,}7\,\%$\\rok 2023};
+        \node[box, right=3.8cm of a] (b) {Inflace $2{,}4\,\%$\\rok 2024};
+
+        \draw[arr] (a) -- node[above]{pokles tempa růstu} (b);
+    \end{tikzpicture}
+    \end{center}
+    \pause
+    \begin{itemize}
+        \item Inflace měří změnu cenové hladiny.\pause
+        \item Pokud je inflace kladná, ceny v průměru stále rostou.\pause
+        \item Nižší inflace tedy znamená, že ceny rostou pomaleji než dříve.
+    \end{itemize}
+    \pause
+    {\scriptsize Zdroj: \url{https://csu.gov.cz/pak/prumerna-rocni-mira-inflace-v-cr-v-roce-2024-byla-24}.}
+\end{frame}
+
+\begin{frame}{Příklad}{Údaj za~celek neplatí pro každou část}
+\pause
+V roce 2025 byla podle dat ČSÚ u~voleb do Poslanecké sněmovny Parlamentu České republiky celková účast $68{,}95\,\%$.
+\pause
+\begin{talertbox}{Závěr}
+    V~Ústeckém kraji z~celkových $632\,844$ oprávněných voličů jich hlasovalo $436\,346$.
+\end{talertbox}
+\pause
+Výpočet vychází z~předpokladu, že údaj pro celek se nutně vztahuje i~na jeho část:
+\[632\,844\cdot 0{,}6895=436\,346.\]
+\pause
+\begin{center}
+\begin{tabular}{c|c}
+\textbf{Území} & \textbf{Volební účast} \\
+\hline
+Česká republika & $68{,}95\,\%$ \\
+Ústecký kraj & $61{,}96\,\%$
+\end{tabular}
+\end{center}
+
+\end{frame}
+
+\begin{frame}{Příklad}{Údaj za~celek neplatí pro každou část}
+    \pause
+    \begin{timportantframe}
+    Z~údaje za celek nelze bez dalšího odvozovat závěr o~každé jeho části.
+    Podmnožiny mohou mít jiné složení, chování i~hodnoty sledovaného znaku.
+    \end{timportantframe}
+    \pause
+    {\scriptsize Zdroje:
+    \begin{itemize}
+        \item \url{https://csu.gov.cz/volby-do-poslanecke-snemovny}
+        \item \url{https://www.volby.cz/app/ps2025/cs/results}
+    \end{itemize}}
+
+\end{frame}
+
+\subsection{Statistický soubor a statistický znak}
+
+\begin{frame}{Statistický soubor a statistický znak}
+    \pause
+    \begin{defblock}
+        Statistický soubor s $n$ objekty a $p$ sledovanými znaky
+        můžeme chápeme jako matici
+        \[
+        \mathbf{X} =
+        \begin{pmatrix}
+        x_{11} & x_{12} & \cdots & x_{1p} \\
+        x_{21} & x_{22} & \cdots & x_{2p} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        x_{n1} & x_{n2} & \cdots & x_{np}
+        \end{pmatrix}.
+        \]
+    \end{defblock}
+    \pause
+    \begin{itemize}
+        \item řádky odpovídají jednotlivým \textbf{objektům},\pause
+        \item sloupce odpovídají sledovaným \textbf{statistickým znakům},\pause
+        \item hodnota $x_{ij}$ je hodnota $j$-tého znaku u $i$-tého objektu.
+    \end{itemize}
+
+\end{frame}
 
 \end{document}
