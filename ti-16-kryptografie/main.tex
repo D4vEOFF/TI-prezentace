@@ -238,6 +238,8 @@
     \end{tabular}
 \end{frame}
 
+\subsection{Obecná substituční šifra}
+
 \begin{frame}{Obecná substituční šifra}
     \pause
     Místo pevného posunu zvolíme libovolné přeuspořádání abecedy
@@ -1575,7 +1577,7 @@
         \item Označme si počet vzniklých kolizí opět jako $C$. Zajímá nás $\Pr[C>0]$.\pause
         \item Postupujeme podobně:
         \begin{align*}
-            \Pr[C>0]&=1-\Pr[C=0]=1-\prod_{j=1}^{k-1}\left(1-\frac{j}{2^{r}}\right)\stackrel{1-x\approx e^{-x}}{=}1-\prod_{j=1}^{k-1}e^{-j/2^{r}}\\
+            \Pr[C>0]&=1-\Pr[C=0]=1-\prod_{j=1}^{k-1}\left(1-\frac{j}{2^{r}}\right)\stackrel{1-x\approx e^{-x}}{=\approx}1-\prod_{j=1}^{k-1}e^{-j/2^{r}}\\
             &=1-e^{-1/2^{r}}\cdot e^{-2/2^{r}}\cdots e^{-(k-1)/2^{r}}=1-e^{-\frac{1}{2^{r}}\sum_{j=1}^{k-1}j}=1-e^{-\frac{k(k-1)}{2^{r+1}}}
         \end{align*}
     \end{itemize}
@@ -1595,13 +1597,14 @@
                 align=center,
                 font=\small
             ] at (0,0)
-            {$\displaystyle \Pr[C>0]=1-\exp\left(-\frac{k(k-1)}{2^{r+1}}\right)$};
+            {$\displaystyle \Pr[C>0]\approx 1-\exp\left(-\frac{k(k-1)}{2^{r+1}}\right)$};
         \end{tikzpicture}
     \end{figure}
     \pause
     \begin{itemize}
         \item Pokud budeme předpokládat, že $k$ je "velké", potom řádově porovnáme
-        \[\binom{k}{2}=\frac{k(k-1)}{2}=\frac{k^{2}-k}{2}\approx \frac{k^{2}}{2}.\]\pause
+        \[\binom{k}{2}=\frac{k(k-1)}{2}=\frac{k^{2}-k}{2}\approx \frac{k^{2}}{2}\]
+        dvojic.\pause
         \item Kolize začne být pravděpodobná, pokud $\frac{k^{2}}{2}\approx 2^{r}$, neboli $k\approx 2^{r/2}$.\pause
         \item Pak totiž
         \[\Pr[C>0]=1-\exp\left(\frac{2^{r/2}(2^{r/2}-1)}{2^{r+1}}\right)\approx 1-e^{\frac{2^{r}}{2^{r+1}}}=1-e^{1/2}\approx 0{,}3935.\]
@@ -1623,7 +1626,7 @@
         \mapping{H_n}{\set{0,1}^{*}}{\set{0,1}^{n}}
     \]
     \pause
-    Dále nechť $\varepsilon$ značí nějakou zanedbatelnou funkci a $\mathcal{A}$ pravděpodobnostní polynomiální algoritmus (útočníkav).
+    Dále nechť $\varepsilon$ značí nějakou zanedbatelnou funkci a $\mathcal{A}$ pravděpodobnostní polynomiální algoritmus (útočníka).
     \pause
     \begin{center}
         \begin{tabular}{@{}p{0.25\textwidth}@{\hspace{0.5em}}p{0.7\textwidth}@{}}
@@ -1969,14 +1972,14 @@
 \subsection{Zpráva s doručenkou}
 
 \begin{frame}{Zpráva s doručenkou}
-
+    \pause
     \begin{tinfobox}{Motivace}
         Alice chce mít jistotu, že její zpráva pro Boba byla skutečně doručena
         adresátovi a že ji Bob obdržel v původním stavu.
     \end{tinfobox}
 
     \vspace{0.15cm}
-
+    \pause
     \centering
     \begin{tikzpicture}[
         x=1cm, y=1cm,
@@ -1996,7 +1999,6 @@
     ]
 
         % Alice
-        \pause
         \node[inner sep=0pt] (alice) at (-4.0,0.9)
             {\includegraphics[height=1.45cm]{images/woman-icon.pdf}};
         \node[font=\Large, below=0.1cm of alice] {Alice};
@@ -2010,7 +2012,6 @@
         \draw[biarr] (alice) -- (bob);
 
         % Upper message: Alice -> Bob
-        \pause
         \node[align=left, text width=4cm] (lefttext) at (-4.2,-1.7)
         {zprávu \(x\) zašifruje veřejným klíčem Boba \(k_V^{B}\) a~připojí svůj podpis};
 
@@ -2024,7 +2025,6 @@
         \draw[arr] (msg1.east) -- (righttext);
 
         % Lower message: Bob -> Alice
-        \pause
         \node[align=left, text width=4cm] (lefttext2) at (-4.2,-3.5)
         {dešifruje soukromým klíčem \(k_S^{A}\) a~zkontroluje obsah};
 
@@ -2248,6 +2248,8 @@
 
 \end{frame}
 
+\subsection{Elektronický podpis v praxi}
+
 \begin{frame}{Elektronický podpis v praxi}
 
 \centering
@@ -2327,6 +2329,8 @@
 
 \end{frame}
 
+\subsection{Elektronický podpis v právním rámci}
+
 \begin{frame}{Elektronický podpis v právním rámci}
     \pause
     \begin{itemize}
@@ -2355,9 +2359,14 @@
     \end{itemize}
 \end{frame}
 
+\section{Zdroje}
+
 \begin{frame}{Zdroje}
     \begin{itemize}
-        \item KATZ, Jonathan a LINDELL, Yehuda. \textit{Introduction to modern cryptography.} Chapman & Hall/CRC cryptography and network security. Boca Raton: Chapman & Hall/CRC, c2008. ISBN 978-1-58488-551-1.
+        \item KATZ, Jonathan a LINDELL, Yehuda. \textit{Introduction to modern cryptography.} Chapman \& Hall/CRC cryptography and network security. Boca Raton: Chapman \& Hall/CRC, c2008. ISBN 978-1-58488-551-1.
+        \item MENEZES, Alfred J.; OORSCHOT, Paul C.van a VANSTONE, Scott A. \textit{Handbook of applied cryptography.} Boca Raton: CRC Press, 1997. ISBN 0-8493-8523-7.
+        \item NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY. \textit{SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions}. FIPS PUB 202. Gaithersburg: National Institute of Standards and Technology, 2015. DOI: 10.6028/NIST.FIPS.202.
+        \item ČESKO. Zákon č. 297/2016 Sb., o službách vytvářejících důvěru pro elektronické transakce. In: \textit{Sbírka zákonů České republiky}. 2016, částka 115, s. 4466--4472.
     \end{itemize}
 \end{frame}
 
