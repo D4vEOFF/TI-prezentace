@@ -257,6 +257,12 @@ Výpočet vychází z~předpokladu, že údaj pro celek se nutně vztahuje i~na 
     \end{itemize}
 \end{frame}
 
+\section{Charakteristiky polohy}
+
+\titleframe{Charakteristiky polohy}
+
+\subsection{Aritmetický průměr}
+
 \begin{frame}{Aritmetický průměr}
 
     \begin{defblock}[Aritmetický průměr]
@@ -274,6 +280,8 @@ Výpočet vychází z~předpokladu, že údaj pro celek se nutně vztahuje i~na 
     \end{itemize}
 
 \end{frame}
+
+\subsection{Vlastnosti aritmetického průměru}
 
 \begin{frame}{Vlastnosti aritmetického průměru}
 
@@ -382,19 +390,19 @@ Minimum nastává právě pro $a=\average{\mathbf{X}}$.
 
 \end{frame}
 
+\subsection{Medián}
+
 \begin{frame}{Medián}
-
-\small
-
+\pause
 Pro pevně zvolený statistický znak pišme jeho hodnoty jako
 \[
 x_1,x_2,\ldots,x_n.
-\]
+\]\pause
 Po uspořádání vzestupně je označme
 \[
 x_{(1)}\leqslant x_{(2)}\leqslant \cdots \leqslant x_{(n)}.
 \]
-
+\pause
 \begin{defblock}[Medián]
 \markdarkred{Medián} souboru $\mathbf{X}$ definujeme jako
 \[
@@ -407,28 +415,437 @@ x_{\left((n+1)/2\right)}, & \text{je-li } n \text{ liché},\\[0.2cm]
 \end{cases}
 \]
 \end{defblock}
-
+\pause
 \begin{tinfoframe}
-    Medián je "prostřední" hodnota uspořádaného souboru.
+    \begin{center}
+        Medián je "prostřední" hodnota uspořádaného souboru.
+    \end{center}
 \end{tinfoframe}
 
 \end{frame}
 
 \begin{frame}{Příklad}{Výpočet mediánu}
+    \pause
     \begin{itemize}
         \item Pro hodnoty statistického znaku
         \[
         3,\ 2,\ 100,\ 5,\ 4\quad\stackrel{\text{seřazení}}{\longrightarrow}\quad 2,\ 3,\ 4,\ 5,\ 100
         \]
-        platí $\median(\mathbf{X})=4.$
+        platí $\median(\mathbf{X})=4$.\pause
         \item Ovšem všimněme si, že
-        \[\average{\mathbf{X}}=22{,}8.\]
+        \[4=\median(\mathbf{X})<\average{\mathbf{X}}=22{,}8.\]
     \end{itemize}
-    \begin{talertframe}[.6\textwidth]
-        \begin{center}
-            Většina hodnot je pod průměrem!
-        \end{center}
+    \pause
+    \begin{talertframe}
+        Většina hodnot je \textbf{pod průměrem!} Tento efekt způsobuje hodnota $100$ v souboru. Takovým hodnotám se se říká \markdarkred{odlehlé hodnoty} nebo \markdarkred{odlehlé pozorování}.
     \end{talertframe}
+\end{frame}
+
+\section{Charakteristiky variability}
+
+\titleframe{\huge Charakteristiky variability}
+
+\subsection{Rozptyl}
+
+\begin{frame}{Rozptyl}
+\pause
+\begin{defblock}[Rozptyl]
+Mějme statistický soubor $\mathbf{X}=(x_1,\ldots,x_n)$. \markdarkred{Rozptyl} souboru $\mathbf{X}$ definujeme jako
+\[
+\Var(\mathbf{X})=\sigma_{\mathbf{X}}^2=\frac{1}{n}\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})^2.
+\]
+\end{defblock}
+\pause
+\begin{itemize}
+    \item Anglicky \emph{variance}.
+    \item Rozptyl měří, jak moc jsou hodnoty vzdálené od průměru.\pause
+    \item Čím větší je rozptyl, tím více jsou data rozptýlená.\pause
+    \item Pracujeme se \textbf{čtverci odchylek}, proto je rozptyl vždy nezáporný.
+\end{itemize}
+\pause
+\begin{tinfoframe}[.9\textwidth]
+Rozptyl je roven nule právě tehdy, když jsou všechny hodnoty stejné.
+\end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Malý a velký rozptyl}
+
+\small
+\pause
+\begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+        \begin{center}
+            \textbf{Malý rozptyl}
+            
+            \vspace{0.1cm}
+            
+            \begin{tikzpicture}[x=0.75cm,y=0.55cm,>=stealth]
+                % osy
+                \draw[->, thick] (0.5,0.5) -- (6.3,0.5);
+                \draw[->, thick] (0.8,0.2) -- (0.8,7.8);
+                
+                % značky na osách
+                \foreach \x in {1,...,5} {
+                    \draw (\x,0.62) -- (\x,0.38);
+                    \node[below] at (\x,0.38) {\scriptsize \x};
+                }
+                
+                \foreach \y in {1,...,7} {
+                    \draw (0.68,\y) -- (0.92,\y);
+                    \node[left] at (0.68,\y) {\scriptsize \y};
+                }
+                
+                % průměr
+                \draw[red, very thick] (0.9,4) -- (6.1,4);
+                \node[right, red] at (6.1,4) {\scriptsize $\average{\mathbf{X}}$};
+                
+                % body
+                \fill[blue] (1,3.7) circle (2.2pt);
+                \fill[blue] (2,4.2) circle (2.2pt);
+                \fill[blue] (3,3.9) circle (2.2pt);
+                \fill[blue] (4,4.1) circle (2.2pt);
+                \fill[blue] (5,4.1) circle (2.2pt);
+            \end{tikzpicture}
+        \end{center}
+    \end{column}
+    \pause
+    \begin{column}{0.48\textwidth}
+        \begin{center}
+            \textbf{Velký rozptyl}
+            
+            \vspace{0.1cm}
+            
+            \begin{tikzpicture}[x=0.75cm,y=0.55cm,>=stealth]
+                % osy
+                \draw[->, thick] (0.5,0.5) -- (6.3,0.5);
+                \draw[->, thick] (0.8,0.2) -- (0.8,7.8);
+                
+                % značky na osách
+                \foreach \x in {1,...,5} {
+                    \draw (\x,0.62) -- (\x,0.38);
+                    \node[below] at (\x,0.38) {\scriptsize \x};
+                }
+                
+                \foreach \y in {1,...,7} {
+                    \draw (0.68,\y) -- (0.92,\y);
+                    \node[left] at (0.68,\y) {\scriptsize \y};
+                }
+                
+                % průměr
+                \draw[red, very thick] (0.9,4) -- (6.1,4);
+                \node[right, red] at (6.1,4) {\scriptsize $\average{\mathbf{Y}}$};
+                
+                % body
+                \fill[blue] (1,1) circle (2.2pt);
+                \fill[blue] (2,2) circle (2.2pt);
+                \fill[blue] (3,4) circle (2.2pt);
+                \fill[blue] (4,6) circle (2.2pt);
+                \fill[blue] (5,7) circle (2.2pt);
+            \end{tikzpicture}
+        \end{center}
+    \end{column}
+\end{columns}
+
+\vspace{0.15cm}
+\pause
+\begin{timportantframe}
+V obou případech je průměr stejný, ale ve druhém souboru jsou hodnoty
+od průměru vzdálenější, a proto $\Var(\mathbf{X})<\Var(\mathbf{Y})$.
+\end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Příklad}{Výpočet rozptylu}
+\pause
+Během pěti dnů jsme naměřili polední teploty ve stupních Celsia:
+\[
+\mathbf{T}=(18,20,20,21,26).
+\]
+\pause
+Pak spočítáme:
+\begin{align*}
+    \average{\mathbf{T}}&=\frac{18+20+20+21+26}{5}=21,\\
+    \Var(\mathbf{T})&=\frac{1}{5}\left((18-21)^2+(20-21)^2+(20-21)^2+(21-21)^2+(26-21)^2\right)\\
+    &=\boxed{7{,}2}.
+\end{align*}
+\pause
+\begin{tinfoframe}
+Rozptyl teplot je $7{,}2\,^\circ\mathrm{C}^2$.
+Vyšší hodnota je způsobena hlavně dnem s teplotou $26\,^\circ\mathrm{C}$.
+\end{tinfoframe}
+
+\end{frame}
+
+\subsection{Směrodatná odchylka}
+
+\begin{frame}{Směrodatná odchylka}
+
+\begin{defblock}[Směrodatná odchylka]
+Mějme statistický soubor $\mathbf{X}=(x_1,\ldots,x_n)$. \markdarkred{Směrodatnou odchylku} statistického souboru $\mathbf{X}$ definujeme jako
+\[
+\sigma_{\mathbf{X}}=\sqrt{\Var(\mathbf{X})}=\sqrt{\frac{1}{n}\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})^2}.
+\]
+\end{defblock}
+
+\begin{exblock}
+    Z minulého příkladu můžeme určit, že
+    \[\sigma_\mathbf{T}=\sqrt{\Var(\mathbf{T})}=\sqrt{7{,}2}\approx 2{,}683\,^\circ\mathrm{C}\]
+\end{exblock}
+
+\end{frame}
+
+\subsection{Vztah průměru, mediánu a směrodatné odchylky}
+
+\begin{frame}{Vztah průměru, mediánu a směrodatné odchylky}
+
+\begin{propblock}[Bez důkazu]
+Pro libovolný statistický soubor $\mathbf{X}=(x_1,\dots,x_n)$ platí
+\[
+\left|\average{\mathbf{X}}-\median(\mathbf{X})\right|\leqslant\sigma_{\mathbf{X}}.
+\]
+\end{propblock}
+
+\begin{itemize}
+    \item Obecně nelze říci, zda je větší průměr nebo medián.
+    \item Jejich vzdálenost je ale omezena směrodatnou odchylkou.
+    \item Pokud jsou průměr a medián daleko od sebe, data mají velký rozptyl.
+\end{itemize}
+
+\begin{tinfoframe}
+Směrodatná odchylka tedy říká i to, jak daleko od sebe mohou být různé způsoby popisu "středu" dat.
+\end{tinfoframe}
+
+\end{frame}
+
+\section{Standardizace dat}
+
+\titleframe{Standardizace dat}
+
+\subsection{Standardizovaná hodnota a soubor}
+
+\begin{frame}{Standardizovaná hodnota a soubor}
+
+\pause
+\begin{defblock}[Standardizovaná hodnota]
+Mějme statistický soubor $\mathbf{X}=(x_1,\ldots,x_n)$, kde $\sigma_{\mathbf{X}}>0$.
+\markdarkred{Standardizovanou hodnotu} $x_i$ definujeme jako
+\[
+z_i=\frac{x_i-\average{\mathbf{X}}}{\sigma_{\mathbf{X}}}.
+\]
+Standardizovaný soubor hodnot značíme $\mathbf{Z}=(z_1,\ldots,z_n)$.
+\end{defblock}
+
+\pause
+\begin{tinfoframe}
+    Hodnota $z_i$ v podstatě říká, o~kolik směrodatných odchylek $\sigma_\mathbf{X}$ je~$x_i$ vzdálena od průměru $\average{\mathbf{X}}$.
+\end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Standardizace dat schématicky}
+
+\pause
+\begin{center}
+\begin{tikzpicture}[
+    x=1.15cm,
+    y=1cm,
+    >=stealth,
+    every node/.style={font=\small}
+]
+
+% horní osa
+\draw[->, thick] (1.3,2.2) -- (6.7,2.2);
+\node[left] at (1.3,2.2) {$\mathbf{X}$};
+
+\foreach \x in {2,3,4,5,6}{
+    \fill[blue] (\x,2.2) circle (2pt);
+}
+
+\draw[red, very thick] (4,1.9) -- (4,2.55);
+\node[above, red] at (4,2.55) {$\average{\mathbf{X}}$};
+
+\draw[<->, thick] (4,1.65) -- (5.41,1.65);
+\node[below] at (4.7,1.65) {$\sigma_{\mathbf{X}}$};
+
+\node[above] at (2,2.35) {$x_1$};
+\node[above] at (6,2.35) {$x_n$};
+
+% šipka
+\draw[->, thick] (4,1.25) -- node[midway,left] {$z_i=\dfrac{x_i-\average{\mathbf{X}}}{\sigma_{\mathbf{X}}}$} (4,0.55);
+
+% dolní osa
+\draw[->, thick] (1.3,0) -- (6.7,0);
+\node[left] at (1.3,0) {$\mathbf{Z}$};
+
+% značky z-osy
+\foreach \x/\lab in {2.59/$-1{,}41$,3.29/$-0{,}71$,4/$0$,4.71/$0{,}71$,5.41/$1{,}41$}{
+    \fill[blue] (\x,0) circle (2pt);
+}
+
+\draw[red, very thick] (4,-0.3) -- (4,0.35);
+\node[below, red] at (4,-0.3) {$0$};
+
+\draw (3,0.1) -- (3,-0.1);
+\node[below] at (3,-0.1) {$-1$};
+
+\draw (5,0.1) -- (5,-0.1);
+\node[below] at (5,-0.1) {$1$};
+
+\end{tikzpicture}
+\end{center}
+
+\pause
+\begin{timportantframe}
+Standardizace posune průměr do nuly a~změní měřítko tak, aby jedna jednotka odpovídala jedné směrodatné odchylce.
+\end{timportantframe}
+
+\end{frame}
+
+\subsection{Vlastnosti standardizovaných dat}
+
+\begin{frame}{Vlastnosti standardizovaných dat}
+
+\small
+\pause
+\begin{propblock}
+Mějme statistický soubor $\mathbf{X}=(x_1,\ldots,x_n)$, kde $\sigma_{\mathbf{X}}>0$.
+Pro standardizovaný soubor $\mathbf{Z}$ platí $\average{\mathbf{Z}}=0$ a~$\sigma_{\mathbf{Z}}=1$.
+\end{propblock}
+
+\pause
+\textbf{Důkaz.}
+
+\[
+\average{\mathbf{Z}}
+=
+\frac{1}{n}\sum_{i=1}^{n}z_i
+=
+\frac{1}{n}\sum_{i=1}^{n}
+\frac{x_i-\average{\mathbf{X}}}{\sigma_{\mathbf{X}}}
+=
+\frac{1}{\sigma_{\mathbf{X}}}
+\cdot
+\frac{1}{n}
+\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})
+=
+0.
+\]
+
+\pause
+Protože $\average{\mathbf{Z}}=0$, dostáváme
+\[
+\Var(\mathbf{Z})
+=
+\frac{1}{n}\sum_{i=1}^{n}z_i^2
+=
+\frac{1}{n}\sum_{i=1}^{n}
+\left(
+\frac{x_i-\average{\mathbf{X}}}{\sigma_{\mathbf{X}}}
+\right)^2
+=
+\frac{1}{\sigma_{\mathbf{X}}^2}
+\cdot
+\Var(\mathbf{X})
+=
+\frac{1}{\Var(\mathbf{X})}
+\cdot
+\Var(\mathbf{X})
+=
+1.
+\]
+
+\pause
+Tedy $\sigma_{\mathbf{Z}}=\sqrt{\Var(\mathbf{Z})}=1$.
+
+\end{frame}
+
+\begin{frame}{Proč standardizujeme data?}
+
+\pause
+Různé statistické znaky mohou mít \markdarkred{různé jednotky} a \markdarkred{různé měřítko}.
+
+\pause
+\begin{exblock}
+Například u jednoho člověka můžeme sledovat:
+\[
+\text{věk}=18\text{ let},
+\qquad
+\text{příjem}=35\,000\text{ Kč}.
+\]
+\end{exblock}
+
+\pause
+\begin{itemize}
+    \item Bez úpravy může znak s~většími čísly působit "důležitěji".\pause
+    \item Standardizace převede hodnoty na společné měřítko.\pause
+    \item Hodnoty pak říkají, o kolik směrodatných odchylek se liší od průměru.
+\end{itemize}
+
+\pause
+\begin{timportantframe}
+Standardizace pomáhá porovnávat různé statistické znaky
+a připravit data pro některé metody umělé inteligence.
+\end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Příklad}{věk a příjem}
+
+\begin{center}
+\begin{tabular}{c|c|c}
+\textbf{Osoba} & \textbf{Věk} & \textbf{Příjem} \\
+\hline
+1 & 18 & $22\,000$ Kč \\
+2 & 22 & $28\,000$ Kč \\
+3 & 25 & $31\,000$ Kč \\
+4 & 31 & $38\,000$ Kč \\
+5 & 35 & $45\,000$ Kč \\
+6 & 40 & $52\,000$ Kč \\
+7 & 46 & $61\,000$ Kč \\
+8 & 52 & $69\,000$ Kč \\
+9 & 58 & $78\,000$ Kč \\
+10 & 65 & $90\,000$ Kč
+\end{tabular}
+\end{center}
+
+\end{frame}
+
+\begin{frame}{Příklad}{standardizovaný soubor}
+
+\small
+
+\begin{center}
+\begin{tabular}{c|c|c}
+\textbf{Osoba} & \textbf{Věk} & \textbf{Příjem} \\
+\hline
+1 & $-1{,}41$ & $-1{,}36$ \\
+2 & $-1{,}14$ & $-1{,}09$ \\
+3 & $-0{,}94$ & $-0{,}95$ \\
+4 & $-0{,}55$ & $-0{,}62$ \\
+5 & $-0{,}28$ & $-0{,}30$ \\
+6 & $0{,}05$ & $0{,}03$ \\
+7 & $0{,}45$ & $0{,}45$ \\
+8 & $0{,}85$ & $0{,}82$ \\
+9 & $1{,}25$ & $1{,}23$ \\
+10 & $1{,}72$ & $1{,}79$
+\end{tabular}
+\end{center}
+
+\begin{tinfoframe}
+Po standardizaci už hodnoty ve sloupcích \textbf{věk} a \textbf{příjem}
+nejsou v tak rozdílném měřítku.
+\end{tinfoframe}
+
+\end{frame}
+
+\section{Zdroje}
+
+\begin{frame}{Zdroje}
+    \begin{itemize}
+        \item STUART J. RUSSELL a~NORVIG, Peter. \textit{Artificial intelligence: A~modern approach.} 3rd ed. Englewood Cliffs, N.J: Pearson, 2016. ISBN 8120323823.
+        \item JAMES, Gareth; WITTEN, Daniela; HASTIE, Trevor; TIBSHIRANI, Robert a TAYLOR, Jonathan E. \textit{An introduction to statistical learning: with applications in Python.} Springer texts in statistics. Cham: Springer, 2023. ISBN 978-3-031-39189-7.
+    \end{itemize}    
 \end{frame}
 
 \end{document}
