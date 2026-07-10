@@ -1172,7 +1172,7 @@
     \end{itemize}
     \pause
     Druhá podmínka formálně říká, že pro každý pravděpodobnostní polynomiální algoritmus $\mathcal{A}$ existuje zanedbatelná funkce $\varepsilon(n)$ taková, že pro každé $n\in\N$ 
-    \[\Pr_{y\in\set{0,1}^{n}}\left[f(\mathcal{A}(y))=y\right]\leqslant\varepsilon(n).\]
+    \[\Pr_{x\in\set{0,1}^{n}}\left[f(\mathcal{A}(f(x)))=f(x)\right]\leqslant\varepsilon(n).\]
     \pause
     \begin{timportantframe}
         Když náhodně vybereme $y$ a dáme jej útočníkovi, pak útočník má \textbf{zanedbatelně malou šanci}, že se mu podaří najít vstup~$x$ takový, že $y=f(x)$.
@@ -1294,7 +1294,7 @@
 \begin{frame}{Souvislost s kryptografií}
     \pause
     \begin{itemize}
-        \item V praxi nechceme používat opravdu náhodný klíč délky celé zprávy.\pause
+        \item V~praxi nechceme používat opravdu náhodný klíč délky celé zprávy.\pause
         \item Místo toho použijeme krátký tajný seed \(s\) a z něj vytvoříme dlouhý proud bitů $G(s)$.\pause
         \item Potom šifrujeme podobně jako u jednorázové šifry:
         \[
@@ -1635,7 +1635,7 @@
             \(H_n(x)=y\), tzn. 
             \[
                 \Pr_{y\in\set{0,1}^{n}}\left[
-                H_n(\mathcal A(y))=y
+                H_n(\mathcal{A}(f(x)))=f(x)
                 \right]\leqslant \varepsilon(n).
             \]
             pro každé $n\in\N$.\\
