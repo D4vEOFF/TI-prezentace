@@ -839,6 +839,430 @@ nejsou v tak rozdílném měřítku.
 
 \end{frame}
 
+\section{Korelace}
+
+\titleframe{Korelace}
+
+\subsection{Dva statistické znaky}
+
+\begin{frame}{Dva statistické znaky}
+
+\pause
+Dosud jsme pracovali hlavně s jedním statistickým znakem.
+
+\pause
+\begin{tinfoframe}
+Někdy nás ale zajímá, zda spolu dva statistické znaky nějak souvisí.
+\end{tinfoframe}
+
+\pause
+Například:
+\begin{itemize}
+    \item výška a~hmotnost,
+    \item vzdělání a~příjem,
+    \item teplota a~prodej zmrzliny.
+\end{itemize}
+
+\pause
+\begin{timportantframe}
+Cílem není pouze popsat jednotlivé znaky zvlášť, ale zjistit, zda mezi nimi existuje nějaký vztah.
+\end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Dvojice hodnot a bodový graf}
+
+\pause
+Mějme dva statistické soubory
+\[
+\mathbf{X}=(x_1,\ldots,x_n),
+\qquad
+\mathbf{Y}=(y_1,\ldots,y_n).
+\]
+
+\pause
+Hodnoty uspořádáme do dvojic
+\[
+(x_1,y_1),\ (x_2,y_2),\ \ldots,\ (x_n,y_n).
+\]
+
+\pause
+\begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+        \begin{center}
+        \begin{tikzpicture}[
+            x=0.75cm,
+            y=0.55cm,
+            >=stealth,
+            every node/.style={font=\small}
+        ]
+            \draw[->, thick] (0,0) -- (7.2,0) node[right] {$x$};
+            \draw[->, thick] (0,0) -- (0,5.5) node[above] {$y$};
+
+            \foreach \x/\y in {
+                0.8/0.9, 1.4/1.2, 2.0/1.8, 2.6/2.1,
+                3.2/2.7, 3.8/3.0, 4.4/3.4, 5.0/4.1,
+                5.6/4.4, 6.2/4.8
+            }{
+                \fill[blue] (\x,\y) circle (2pt);
+            }
+        \end{tikzpicture}
+        \end{center}
+    \end{column}
+    \pause
+    \begin{column}{0.48\textwidth}
+        \vspace{1cm}
+        \begin{tinfoframe}
+        Bodový graf často rychle ukáže, zda mezi dvěma znaky může být vztah.
+        \end{tinfoframe}
+    \end{column}
+\end{columns}
+
+\end{frame}
+
+\subsection{Kovariance}
+
+\begin{frame}{Kovariance}
+
+\pause
+\begin{defblock}[Kovariance]
+Mějme statistické soubory $\mathbf{X}=(x_1,\ldots,x_n),\mathbf{Y}=(y_1,\ldots,y_n)$. \markdarkred{Kovarianci} souborů $\mathbf{X}$ a $\mathbf{Y}$ definujeme jako
+\[
+\Cov(\mathbf{X},\mathbf{Y})
+=
+\frac{1}{n}\sum_{i=1}^{n}
+(x_i-\average{\mathbf{X}})(y_i-\average{\mathbf{Y}}).
+\]
+\end{defblock}
+
+\pause
+\begin{itemize}
+    \item Lze ihned vidět, že $\Cov(\mathbf{X},\mathbf{X})=\Var(\mathbf{X})$.\pause
+    \item Kladná kovariance: větší hodnoty $\mathbf{X}$ často odpovídají větším hodnotám $\mathbf{Y}$.\pause
+    \item Záporná kovariance: větší hodnoty $\mathbf{X}$ často odpovídají menším hodnotám $\mathbf{Y}$.
+\end{itemize}
+\pause
+\begin{talertbox}[0.8\textwidth]{Problém}
+    \begin{center}
+        Kovariance závisí na jednotkách a "měřítku" dat.
+    \end{center}
+\end{talertbox}
+
+\end{frame}
+
+\subsection{Korelační koeficient}
+
+\begin{frame}{Korelační koeficient}
+
+\pause
+\begin{defblock}[Korelační koeficient]
+Mějme statistické soubory $\mathbf{X}$ a $\mathbf{Y}$, kde
+$\sigma_{\mathbf{X}}>0$ a $\sigma_{\mathbf{Y}}>0$.
+\markdarkred{Korelační koeficient} definujeme jako
+\[
+\rho_{\mathbf{X}\mathbf{Y}} 
+=
+\frac{\operatorname{cov}(\mathbf{X},\mathbf{Y})}
+{\sigma_{\mathbf{X}}\sigma_{\mathbf{Y}}}.
+\]
+\end{defblock}
+
+\pause
+Ekvivalentně:
+\[
+\rho_{\mathbf{X}\mathbf{Y}}
+=
+\frac{
+\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})(y_i-\average{\mathbf{Y}})
+}{
+\sqrt{\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})^2}
+\sqrt{\sum_{i=1}^{n}(y_i-\average{\mathbf{Y}})^2}
+}=\frac{1}{n\sigma_\mathbf{X}\sigma_\mathbf{Y}}\left(\sum_{i=1}^{n}x_iy_i-n\average{\mathbf{X}}\average{\mathbf{Y}}\right).
+\]
+
+\pause
+\begin{tinfoframe}
+Korelační koeficient je standardizovaná kovariance. Nemá jednotky a měří míru \markdarkred{lineární závislosti}.
+\end{tinfoframe}
+
+\end{frame}
+
+\subsection{Význam hodnot korelace}
+
+\begin{frame}{Význam hodnot korelace}
+
+\pause
+\begin{columns}[T]
+\begin{column}{0.32\textwidth}
+\centering
+\textbf{Kladná korelace}
+\vspace{0.1cm}
+\begin{center}
+    \begin{tikzpicture}[x=0.42cm,y=0.35cm,>=stealth]
+        \draw[->, thick] (0,0) -- (6.5,0);
+        \draw[->, thick] (0,0) -- (0,5.5);
+        \foreach \x/\y in {0.7/0.8,1.2/1.4,1.9/1.7,2.6/2.5,3.3/3.1,4.0/3.6,4.7/4.0,5.4/4.8}{
+            \fill[blue] (\x,\y) circle (1.7pt);
+        }
+        \node[red] at (3,-0.9) {$\rho_{\mathbf{X}\mathbf{Y}}>0$};
+    \end{tikzpicture}
+\end{center}
+\end{column}
+
+\pause
+\begin{column}{0.32\textwidth}
+\centering
+\textbf{Záporná korelace}
+\vspace{0.1cm}
+\begin{center}
+    \begin{tikzpicture}[x=0.42cm,y=0.35cm,>=stealth]
+        \draw[->, thick] (0,0) -- (6.5,0);
+        \draw[->, thick] (0,0) -- (0,5.5);
+        \foreach \x/\y in {0.7/4.8,1.2/4.5,1.9/3.8,2.6/3.2,3.3/2.7,4.0/2.0,4.7/1.5,5.4/0.9}{
+            \fill[blue] (\x,\y) circle (1.7pt);
+        }
+        \node[red] at (3,-0.9) {$\rho_{\mathbf{X}\mathbf{Y}}<0$};
+    \end{tikzpicture}
+\end{center}
+\end{column}
+
+\pause
+\begin{column}{0.32\textwidth}
+\centering
+\textbf{Bez lin. korelace}
+\vspace{0.1cm}
+\begin{center}
+    \begin{tikzpicture}[x=0.42cm,y=0.35cm,>=stealth]
+        \draw[->, thick] (0,0) -- (6.5,0);
+        \draw[->, thick] (0,0) -- (0,5.5);
+        \foreach \x/\y in {0.8/3.8,1.3/1.2,1.9/4.4,2.5/2.0,3.1/3.1,3.8/0.8,4.3/4.7,5.0/2.6,5.6/3.5}{
+            \fill[blue] (\x,\y) circle (1.7pt);
+        }
+        \node[red] at (3,-0.9) {$\rho_{\mathbf{X}\mathbf{Y}}\approx 0$};
+    \end{tikzpicture}
+\end{center}
+\end{column}
+\end{columns}
+
+\pause
+\vspace{0.3cm}
+
+\begin{timportantframe}
+Korelace měří směr a sílu \textbf{lineárního} vztahu mezi dvěma znaky.
+\end{timportantframe}
+
+\end{frame}
+
+\subsection{Vlastnosti korelačního koeficientu}
+
+\begin{frame}{Vlastnosti korelačního koeficientu}
+
+\pause
+\begin{propblock}[Bez důkazu]
+    Pro korelační koeficient soubory $\mathbf{X},\mathbf{Y}$ platí
+    \begin{enumerate}
+        \item $-1\leqslant \rho_{\mathbf{X}\mathbf{Y}}\leqslant 1$,
+        \item $\rho_{\mathbf{X}\mathbf{Y}}=\pm 1$ právě tehdy, když $\mathbf{Y}=\alpha\mathbf{X}+\beta$ pro vhodné $\alpha,\beta\in\R$.
+    \end{enumerate}
+\end{propblock}
+
+\pause
+\begin{itemize}
+    \item $\rho_{\mathbf{X}\mathbf{Y}}=1$ znamená dokonalou \markdarkred{kladnou lineární závislost}.
+    \item $\rho_{\mathbf{X}\mathbf{Y}}=-1$ znamená dokonalou \markdarkred{zápornou lineární závislost}.
+    \item $\rho_{\mathbf{X}\mathbf{Y}}=0$ znamená, že mezi daty \markdarkred{není lineární korelace}.
+\end{itemize}
+
+\pause
+\begin{talertbox}{Pozor!}
+Hodnota $\rho_{\mathbf{X}\mathbf{Y}}=0$ neznamená nutně,
+že mezi znaky není žádný vztah.
+Znamená pouze, že mezi nimi není lineární korelace.
+\end{talertbox}
+
+\end{frame}
+
+\begin{frame}{Příklad}{Výška a~hmotnost}
+
+    \small
+    \pause
+    Mějme data osmi studentů:
+
+    \begin{center}
+    \begin{tabular}{c|cccccccc}
+    \textbf{Výška [cm]} & 166 & 188 & 175 & 176 & 169 & 181 & 172 & 160 \\
+    \hline
+    \textbf{Hmotnost [kg]} & 55 & 90 & 53 & 52 & 63 & 76 & 68 & 50
+    \end{tabular}
+    \end{center}
+
+    \pause
+    Označme
+    \begin{align*}
+        \mathbf{V}&=(166,188,175,176,169,181,172,160),\\
+        \mathbf{H}&=(55,90,53,52,63,76,68,50).
+    \end{align*}
+    \pause
+    Po výpočtu dostaneme přibližně:
+    \[
+    \average{\mathbf{V}}\approx 173{,}38\;;
+    \quad
+    \average{\mathbf{H}}\approx 63{,}38\;;
+    \quad
+    \sigma_{\mathbf{V}}\approx 8{,}18\;;
+    \quad
+    \sigma_{\mathbf{H}}\approx 13{,}11.
+    \]
+
+    \pause
+    Celkově vychází $\rho_{\mathbf{V}\mathbf{H}}\approx 0{,}79$.
+
+    \pause
+    \begin{tinfoframe}
+    Mezi výškou a hmotností je v tomto malém souboru \textbf{silná kladná lineární korelace}.
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Korelace měří lineární vztah}
+
+    \pause
+    \begin{center}
+    \begin{tikzpicture}[
+        x=0.75cm,
+        y=0.45cm,
+        >=stealth,
+        every node/.style={font=\small}
+    ]
+        \draw[->, thick] (-3.4,0) -- (3.6,0) node[right] {$x$};
+        \draw[->, thick] (0,-0.3) -- (0,5.6) node[above] {$y$};
+
+        \foreach \x/\y in {
+            -3/4.7,-2.5/3.3,-2/2.1,-1.5/1.2,-1/0.6,-0.5/0.2,
+            0/0.1,0.5/0.2,1/0.7,1.5/1.3,2/2.2,2.5/3.4,3/4.8
+        }{
+            \fill[blue] (\x,\y) circle (2pt);
+        }
+    \end{tikzpicture}
+    \end{center}
+
+    \pause
+    \begin{talertbox}{Pozor}
+    Data mohou být zjevně závislá, ale korelační koeficient může být blízký nule.
+    \end{talertbox}
+
+    \pause
+    \begin{timportantframe}
+    Korelační koeficient zachycuje pouze \textbf{lineární} závislost.
+    Nelineární vztahy může snadno "přehlédnout".
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Příklad}{Nelineární vztah s~nulovou korelací}
+
+    \pause
+    \begin{itemize}
+        \item Mějme statistické soubory
+        \[
+        \mathbf{X}=(x_1,\ldots,x_n),\quad\mathbf{Y}=(y_1,\ldots,y_n),
+        \]
+        kde $y_i=x_i^2$ pro každé $i$, neboli $\mathbf{Y}=\mathbf{X}^{2}$.\pause
+        \item Předpokládejme navíc, že hodnoty $x_i$ jsou symetrické kolem nuly, tedy pro každé $x_i$ je v souboru $\mathbf{X}$ i~hodnota $-x_i$.
+        \item Z toho ihned plyne, že $\average{\mathbf{X}}=0$ a~$\sum_{i=1}^{n}x_i^{3}=0$.
+    \end{itemize}
+    \pause
+    Kovariance tedy vychází nulová:
+    \begin{align*}
+        \Cov(\mathbf{X},\mathbf{Y})&=\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})(y_i-\average{\mathbf{Y}})=\sum_{i=1}^{n}x_i^{3}-\average{\mathbf{Y}}\sum_{i=1}^{n}x_i\\
+        &=0-\average{\mathbf{Y}}\cdot 0=0.
+    \end{align*}
+
+    \pause
+    Pokud navíc $\sigma_{\mathbf{X}}>0$ a $\sigma_{\mathbf{Y}}>0$, pak $\rho_{\mathbf{X}\mathbf{Y}}=0$.
+
+\end{frame}
+
+\subsection{Jak měřit jiné typy závislosti?}
+
+\begin{frame}{Jak měřit jiné typy závislosti?}
+
+\pause
+
+Korelační koeficient není jediný způsob, jak zkoumat vztah mezi daty.
+
+\pause
+\begin{itemize}
+    \item \textbf{Transformace dat:}
+    pokud čekáme kvadratický vztah, můžeme zkoumat korelaci mezi
+    \[
+    \mathbf{X}^2
+    \quad\text{a}\quad
+    \mathbf{Y}.
+    \]
+    Například pro $\mathbf{Y}=\mathbf{X}^2$ dostaneme
+    \[
+    \rho_{\mathbf{X}^2\mathbf{Y}}=1.
+    \]
+
+    \pause
+    \item \textbf{Regresní modely:}
+    místo přímky lze hledat například parabolu, kubickou funkci nebo exponenciálu:
+    \[
+    y=ax^2+bx+c,
+    \qquad
+    y=ae^{bx}.
+    \]
+
+    \pause
+    \item \textbf{Jiné koeficienty závislosti:}
+    pro pořadové nebo monotónní vztahy se používají např. Spearmanův
+    nebo Kendallův korelační koeficient.
+\end{itemize}
+
+\pause
+\begin{timportantframe}
+Nejdůležitější je nejprve se na data podívat.
+Bodový graf často napoví, jaký typ vztahu má smysl hledat.
+\end{timportantframe}
+
+\end{frame}
+
+\subsection{Korelace není kauzalita}
+
+\begin{frame}{Korelace není kauzalita}
+
+\pause
+\begin{tinfoframe}
+Korelace znamená, že dvě veličiny se v datech "mění společně".
+Kauzalita znamená, že \markdarkred{jedna veličina je příčinou změny druhé}.
+\end{tinfoframe}
+
+\pause
+\[
+\text{korelace}
+\quad\not\Rightarrow\quad
+\text{kauzalita}
+\]
+
+\pause
+\begin{exblock}
+V létě roste prodej zmrzliny a zároveň počet případů úpalu.
+\end{exblock}
+
+\pause
+\begin{talertbox}{Chybný závěr}
+Zmrzlina způsobuje úpal.
+\end{talertbox}
+
+\pause
+\begin{timportantframe}
+Obě veličiny mohou růst kvůli třetí proměnné:
+například kvůli vyšší teplotě.
+\end{timportantframe}
+
+\end{frame}
+
 \section{Zdroje}
 
 \begin{frame}{Zdroje}
