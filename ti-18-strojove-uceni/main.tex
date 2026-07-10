@@ -10,6 +10,139 @@
 
 \begin{document}
 
-    \input{../titlepage.tex}
+\input{../titlepage.tex}
+
+\section{Úvod}
+
+\titleframe{Úvod do strojového učení}
+
+\begin{frame}{Proč nás zajímá AI a strojové učení?}
+
+    \begin{columns}[T,onlytextwidth]
+        \begin{column}{0.54\textwidth}
+            \begin{itemize}
+                \visible<2->{\item Umělá inteligence často pracuje s \textbf{daty}.}
+                \visible<3->{\item Data sama o sobě ale ještě nejsou poznání.}
+                \visible<4->{\item Z dat chceme získat}
+                \visible<5->{
+                    \begin{itemize}
+                        \item užitečné vzory,
+                        \item vztahy mezi veličinami,
+                        \item predikce pro nové případy,
+                        \item podporu pro rozhodování.
+                    \end{itemize}
+                }
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.42\textwidth}
+            \centering
+            \begin{tikzpicture}[
+                >=stealth,
+                node distance=0.55cm,
+                box/.style={
+                    draw=black!55,
+                    rounded corners=2pt,
+                    fill=blue!6,
+                    minimum width=3.2cm,
+                    minimum height=0.62cm,
+                    align=center,
+                    font=\small
+                },
+                arr/.style={->, thick, draw=black!65}
+            ]
+                \node[box] (data) {Data};
+                \node[box, below=of data] (stat) {Statistický popis};
+                \node[box, below=of stat] (model) {Model};
+                \node[box, below=of model] (zaver) {Závěr};
+
+                \draw[arr] (data) -- (stat);
+                \draw[arr] (stat) -- (model);
+                \draw[arr] (model) -- (zaver);
+            \end{tikzpicture}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.25cm}
+
+    \visible<6->{
+        \begin{timportantframe}
+            Bez statistického pohledu můžeme snadno zaměnit
+            \textbf{náhodu za vzor}, \textbf{korelaci za příčinu}
+            nebo \textbf{výpočet za správný závěr}.
+        \end{timportantframe}
+    }
+
+\end{frame}
+
+\begin{frame}{Data, model, rozhodnutí}
+
+    \begin{center}
+        \begin{tikzpicture}[
+            >=stealth,
+            node distance=0.6cm,
+            box/.style={
+                draw=black!60,
+                rounded corners=2pt,
+                minimum width=2.5cm,
+                minimum height=0.75cm,
+                align=center,
+                font=\small
+            },
+            bluebox/.style={box, fill=blue!7},
+            orangebox/.style={box, fill=orange!12},
+            greenbox/.style={box, fill=green!8},
+            arr/.style={->, thick, draw=black!70}
+        ]
+            \node[bluebox] (data) {Trénovací\\data};
+            \node[orangebox, right=of data] (learning) {Učení};
+            \node[greenbox, right=of learning] (model) {Model};
+            \node[bluebox, right=of model] (pred) {Predikce\\rozhodnutí};
+
+            \draw[arr] (data) -- (learning);
+            \draw[arr] (learning) -- (model);
+            \draw[arr] (model) -- (pred);
+        \end{tikzpicture}
+    \end{center}
+
+    \vspace{0.25cm}
+
+    \begin{itemize}
+        \visible<2->{\item Ve strojovém učení typicky zvolíme \textbf{typ modelu}.}
+        \visible<3->{\item Konkrétní parametry modelu se nastaví podle \textbf{trénovacích dat}.}
+        \visible<4->{\item Naučený model se potom použije na \textbf{nové případy}.}
+    \end{itemize}
+
+    \vspace{0.2cm}
+
+    \visible<5->{
+        \begin{talertframe}[0.6\textwidth]
+            \begin{center}
+                \large\textbf{Model není nutně realita.}
+            \end{center}
+        \end{talertframe}
+
+        \begin{tnoticeframe}[0.9\textwidth]
+            \begin{center}
+                Model je pouze zjednodušený popis vztahů v datech.
+            \end{center}
+        \end{tnoticeframe}
+    }
+
+    \visible<6->{
+        \vspace{0.15cm}
+        \begin{center}
+            \small
+            \[
+                \text{špatná data}
+                \quad\Longrightarrow\quad
+                \text{špatný model}
+                \quad\Longrightarrow\quad
+                \text{špatný závěr}
+            \]
+        \end{center}
+    }
+
+\end{frame}
 
 \end{document}
