@@ -233,7 +233,7 @@ Výpočet vychází z~předpokladu, že údaj pro celek se nutně vztahuje i~na 
     \end{defblock}
     \pause
     \begin{tnoticeframe}
-        Pokud je sledovaný znak pouze jeden, můžeme soubor $\mathbf{X}$ považovat za množinu, tj. $\mathbf{X}=\set{x_1,\dots,x_n}$.
+        Pokud je sledovaný znak pouze jeden, můžeme soubor $\mathbf{X}$ považovat za $n$-rozměrný vektor, tj. $\mathbf{X}=(x_1,\dots,x_n)$.
     \end{tnoticeframe}    
 
 \end{frame}
@@ -250,17 +250,17 @@ Výpočet vychází z~předpokladu, že údaj pro celek se nutně vztahuje i~na 
         My ale budeme typicky pracovat se soubory \textbf{sledující jeden statistický znak}. Resp. jeden sloupec většího souboru budeme považovat za samostatný (pod)soubor.
     \end{timportantframe}
     \pause
-    Dále budeme pro statistické soubory $\mathbf{X}=\set{x_1,\dots,x_n},\mathbf{Y}=\set{y_1,\dots,y_n}$ a $a\in\R$ značit
+    Dále budeme pro statistické soubory $\mathbf{X}=(x_1,\dots,x_n),\mathbf{Y}=(y_1,\dots,y_n)$ a $a\in\R$ značit
     \begin{itemize}
-        \item $\mathbf{X}+\mathbf{Y}=\set{x_1+y_1,\dots,x_n+y_n}$ a\pause
-        \item $a\mathbf{X}=\set{ax_1,\dots,ax_n}$.
+        \item $\mathbf{X}+\mathbf{Y}=(x_1+y_1,\dots,x_n+y_n)$ a\pause
+        \item $a\mathbf{X}=(ax_1,\dots,ax_n)$.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Aritmetický průměr}
 
     \begin{defblock}[Aritmetický průměr]
-    Mějme statistický soubor $\mathbf{X}=\set{x_1,\dots,x_n}$. \markdarkred{Aritmetický průměr} $j$-tého statistického znaku definujeme jako
+    Mějme statistický soubor $\mathbf{X}=(x_1,\dots,x_n)$. \markdarkred{Aritmetický průměr} $j$-tého statistického znaku definujeme jako
     \[
     \average{\mathbf{X}}_j=\frac{1}{n}\sum_{i=1}^{n}x_{ij}.
     \]
@@ -279,7 +279,7 @@ Výpočet vychází z~předpokladu, že údaj pro celek se nutně vztahuje i~na 
 
 Pro pevně zvolený statistický znak pišme jednoduše
 \[
-\mathbf{X}=\set{x_1,x_2,\ldots,x_n}
+\mathbf{X}=(x_1,x_2,\ldots,x_n)
 \qquad\text{a}\qquad
 \average{\mathbf{X}}=\frac{1}{n}\sum_{i=1}^{n}x_i.
 \]
