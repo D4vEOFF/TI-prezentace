@@ -217,25 +217,218 @@ Výpočet vychází z~předpokladu, že údaj pro celek se nutně vztahuje i~na 
 \begin{frame}{Statistický soubor a statistický znak}
     \pause
     \begin{defblock}
-        Statistický soubor s $n$ objekty a $p$ sledovanými znaky
-        můžeme chápeme jako matici
-        \[
-        \mathbf{X} =
-        \begin{pmatrix}
-        x_{11} & x_{12} & \cdots & x_{1p} \\
-        x_{21} & x_{22} & \cdots & x_{2p} \\
-        \vdots & \vdots & \ddots & \vdots \\
-        x_{n1} & x_{n2} & \cdots & x_{np}
-        \end{pmatrix}.
-        \]
+        \begin{itemize}
+            \item \markdarkred{Statistický znak} je sledovaná vlastnost objektů ve statistickém souboru.
+            \item \markdarkred{Statistický soubor} s~$n$ objekty a $p$ sledovanými znaky můžeme chápeme jako matici
+            \[
+            \mathbf{X} =
+            \begin{pmatrix}
+            x_{11} & x_{12} & \cdots & x_{1p} \\
+            x_{21} & x_{22} & \cdots & x_{2p} \\
+            \vdots & \vdots & \ddots & \vdots \\
+            x_{n1} & x_{n2} & \cdots & x_{np}
+            \end{pmatrix}.
+            \]
+        \end{itemize}
     \end{defblock}
     \pause
+    \begin{tnoticeframe}
+        Pokud je sledovaný znak pouze jeden, můžeme soubor $\mathbf{X}$ považovat za množinu, tj. $\mathbf{X}=\set{x_1,\dots,x_n}$.
+    \end{tnoticeframe}    
+
+\end{frame}
+
+\begin{frame}{Statistický soubor a statistický znak}
+    \pause
     \begin{itemize}
-        \item řádky odpovídají jednotlivým \textbf{objektům},\pause
-        \item sloupce odpovídají sledovaným \textbf{statistickým znakům},\pause
+        \item řádky odpovídají jednotlivým \markdarkred{objektům},\pause
+        \item sloupce odpovídají sledovaným \markdarkred{statistickým znakům},\pause
         \item hodnota $x_{ij}$ je hodnota $j$-tého znaku u $i$-tého objektu.
     \end{itemize}
+    \pause
+    \begin{timportantframe}
+        My ale budeme typicky pracovat se soubory \textbf{sledující jeden statistický znak}. Resp. jeden sloupec většího souboru budeme považovat za samostatný (pod)soubor.
+    \end{timportantframe}
+    \pause
+    Dále budeme pro statistické soubory $\mathbf{X}=\set{x_1,\dots,x_n},\mathbf{Y}=\set{y_1,\dots,y_n}$ a $a\in\R$ značit
+    \begin{itemize}
+        \item $\mathbf{X}+\mathbf{Y}=\set{x_1+y_1,\dots,x_n+y_n}$ a\pause
+        \item $a\mathbf{X}=\set{ax_1,\dots,ax_n}$.
+    \end{itemize}
+\end{frame}
 
+\begin{frame}{Aritmetický průměr}
+
+    \begin{defblock}[Aritmetický průměr]
+    Mějme statistický soubor $\mathbf{X}=\set{x_1,\dots,x_n}$. \markdarkred{Aritmetický průměr} $j$-tého statistického znaku definujeme jako
+    \[
+    \average{\mathbf{X}}_j=\frac{1}{n}\sum_{i=1}^{n}x_{ij}.
+    \]
+    Je-li statistický znak pouze jeden, můžeme psát jen $\average{\mathbf{X}}$.
+    \end{defblock}
+
+    \begin{itemize}
+        \item průměrujeme hodnoty v jednom sloupci,
+        \item každá hodnota má stejnou váhu,
+        \item průměr nemusí být jednou z naměřených hodnot.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Vlastnosti aritmetického průměru}
+
+Pro pevně zvolený statistický znak pišme jednoduše
+\[
+\mathbf{X}=\set{x_1,x_2,\ldots,x_n}
+\qquad\text{a}\qquad
+\average{\mathbf{X}}=\frac{1}{n}\sum_{i=1}^{n}x_i.
+\]
+
+\begin{propblock}
+    Pro statistický soubor $\mathbf{X}$ platí:
+    \begin{enumerate}
+        \item $\displaystyle \sum_{i=1}^{n}(x_i-\average{\mathbf{X}})=0.$
+        \item Pro soubory $\mathbf{X},\mathbf{Y}$ je $\average{a\mathbf{X}+b\mathbf{Y}}=a\average{\mathbf{X}}+b\average{\mathbf{Y}}$.
+        \item Aritmetický průměr minimalizuje hodnotu výrazu $\sum_{i=1}^{n}(x_i-a)^2$,
+        nebo-li
+        \[\average{\mathbf{X}}=\argmin\limits_{a\in\mathbb{R}}\sum_{i=1}^{n}(x_i-a)^2.\]
+    \end{enumerate}
+\end{propblock}
+
+\end{frame}
+
+\begin{frame}{Důkaz bodu 1}{$\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})=0$}
+    \pause
+    \begin{align*}
+        \sum_{i=1}^{n}(x_i-\average{\mathbf{X}})&=\sum_{i=1}^{n}x_i-\sum_{i=1}^{n}\average{\mathbf{X}}=\sum_{i=1}^{n}x_i-n\average{\mathbf{X}}=\sum_{i=1}^{n}x_i-n\average{\mathbf{X}}\\
+        &=\sum_{i=1}^{n}x_i-n\cdot\frac{1}{n}\sum_{i=1}^{n}x_i=\sum_{i=1}^{n}x_i-\sum_{i=1}^{n}x_i=0.
+    \end{align*}
+    \pause
+    \begin{center}
+    \begin{tikzpicture}[
+        x=1.35cm,
+        y=0.6cm,
+        >=stealth,
+        every node/.style={font=\small}
+    ]
+
+        % osy
+        \draw[->, thick] (0.3,0) -- (5.1,0);
+        \draw[->, thick] (0.5,-0.3) -- (0.5,5.2);
+
+        % x-ová osa: značky 1,2,3,4
+        \foreach \x in {1,2,3,4}{
+            \draw (\x,0.12) -- (\x,-0.12);
+            \node[below] at (\x,-0.12) {$\x$};
+        }
+
+        % y-ová osa: značky x_1, x_4, x_3, x_2
+        \draw (0.38,1) -- (0.62,1);
+        \node[left] at (0.38,1) {$x_1$};
+
+        \draw (0.38,2) -- (0.62,2);
+        \node[left] at (0.38,2) {$x_4$};
+
+        \draw (0.38,3) -- (0.62,3);
+        \node[left] at (0.38,3) {$x_3$};
+
+        \draw (0.38,4) -- (0.62,4);
+        \node[left] at (0.38,4) {$x_2$};
+
+        % body
+        \fill (1,1) circle (2pt);
+        \fill (2,4) circle (2pt);
+        \fill (3,3) circle (2pt);
+        \fill (4,2) circle (2pt);
+
+        % průměr
+        \draw[red, very thick] (0.55,2.5) -- (4.95,2.5);
+        \node[right, red] at (4.95,2.5) {$\average{\mathbf{X}}$};
+
+    \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Důkaz bodu 2}{$\average{a\mathbf{X}+b\mathbf{Y}}=a\average{\mathbf{X}}+b\average{\mathbf{Y}}$}
+    \pause
+    Soubor $a\mathbf{X}+b\mathbf{Y}$ obsahuje hodnoty
+    \[
+    ax_1+by_1,\ ax_2+by_2,\ \ldots,\ ax_n+by_n.
+    \]
+    \pause
+    Proto
+    \begin{align*}
+        \average{a\mathbf{X}+b\mathbf{Y}}&=\frac{1}{n}\sum_{i=1}^{n}(ax_i+by_i)=\frac{1}{n}\sum_{i=1}^{n}(ax_i+by_i)\\
+        &=a\cdot\frac{1}{n}\sum_{i=1}^{n}x_i+b\cdot\frac{1}{n}\sum_{i=1}^{n}y_i=a\average{\mathbf{X}}+b\average{\mathbf{Y}}.
+    \end{align*}
+
+\end{frame}
+
+\begin{frame}{Důkaz bodu 3}{minimalizace $\sum_{i=1}^{n}(x_i-a)^2$}
+\pause
+Mějme libovolné $a\in\mathbb{R}$. Pak upravíme:
+\[
+x_i-a=(x_i-\average{\mathbf{X}})+(\average{\mathbf{X}}-a).
+\]
+\pause
+Tedy po dosazení, roznásobení a aplikaci prvního bodu máme:
+\begin{align*}
+    \sum_{i=1}^{n}(x_i-a)^2&=\sum_{i=1}^{n}\left((x_i-\average{\mathbf{X}})+(\average{\mathbf{X}}-a)\right)^{2}\\
+    &=\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})^2+2(\average{\mathbf{X}}-a)\overbrace{\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})}^{0}+n(\average{\mathbf{X}}-a)^2\\
+    &=\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})^2+n(\average{\mathbf{X}}-a)^2.
+\end{align*}
+\pause
+Minimum nastává právě pro $a=\average{\mathbf{X}}$.
+
+\end{frame}
+
+\begin{frame}{Medián}
+
+\small
+
+Pro pevně zvolený statistický znak pišme jeho hodnoty jako
+\[
+x_1,x_2,\ldots,x_n.
+\]
+Po uspořádání vzestupně je označme
+\[
+x_{(1)}\leqslant x_{(2)}\leqslant \cdots \leqslant x_{(n)}.
+\]
+
+\begin{defblock}[Medián]
+\markdarkred{Medián} souboru $\mathbf{X}$ definujeme jako
+\[
+\median(\mathbf{X})
+=
+\begin{cases}
+x_{\left((n+1)/2\right)}, & \text{je-li } n \text{ liché},\\[0.2cm]
+\frac{x_{\left(n/2\right)}+x_{\left(n/2+1\right)}}{2},
+& \text{je-li } n \text{ sudé}.
+\end{cases}
+\]
+\end{defblock}
+
+\begin{tinfoframe}
+    Medián je "prostřední" hodnota uspořádaného souboru.
+\end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Příklad}{Výpočet mediánu}
+    \begin{itemize}
+        \item Pro hodnoty statistického znaku
+        \[
+        3,\ 2,\ 100,\ 5,\ 4\quad\stackrel{\text{seřazení}}{\longrightarrow}\quad 2,\ 3,\ 4,\ 5,\ 100
+        \]
+        platí $\median(\mathbf{X})=4.$
+        \item Ovšem všimněme si, že
+        \[\average{\mathbf{X}}=22{,}8.\]
+    \end{itemize}
+    \begin{talertframe}[.6\textwidth]
+        \begin{center}
+            Většina hodnot je pod průměrem!
+        \end{center}
+    \end{talertframe}
 \end{frame}
 
 \end{document}
