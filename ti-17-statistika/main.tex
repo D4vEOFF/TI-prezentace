@@ -390,6 +390,154 @@ Minimum nastává právě pro $a=\average{\mathbf{X}}$.
 
 \end{frame}
 
+\subsection{Vážený aritmetický průměr}
+
+\begin{frame}{Vážený aritmetický průměr}
+
+\pause
+\begin{defblock}[Vážený aritmetický průměr]
+Mějme statistický soubor $\mathbf{X}=(x_1,\ldots,x_n)$ a~vektor \textbf{kladných vah $\mathbf{w}=(w_1,\ldots,w_n)$}. \markdarkred{Vážený aritmetický průměr} definujeme jako
+\[
+\average{\mathbf{X}}_{\mathbf{w}}
+=
+\frac{\sum_{i=1}^{n}w_ix_i}{\sum_{i=1}^{n}w_i}.
+\]
+\end{defblock}
+
+\pause
+\begin{itemize}
+    \item Hodnota s~větší vahou má na výsledek větší vliv.
+    \item Pokud jsou všechny váhy stejné, tj. $w_1=w_2=\cdots=w_n$, dostaneme obyčejný aritmetický průměr $\average{\mathbf{X}}_\mathbf{w}=\average{\mathbf{X}}$.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Příklad}{Výpočet váženého průměru}
+
+\pause
+Výsledná známka z~předmětu může být určena z~několika částí:
+
+\begin{center}
+\begin{tabular}{c|c|c}
+\textbf{Část} & \textbf{Výsledek} & \textbf{Váha} \\
+\hline
+test & $80$ & $2$ \\
+projekt & $95$ & $3$ \\
+aktivita & $70$ & $1$
+\end{tabular}
+\end{center}
+
+\pause
+Tedy
+\[
+\mathbf{X}=(80,95,70),
+\qquad
+\mathbf{w}=(2,3,1).
+\]
+
+\pause
+\[
+\average{\mathbf{X}}_{\mathbf{w}}
+=
+\frac{2\cdot80+3\cdot95+1\cdot70}{2+3+1}
+=
+\frac{515}{6}
+\approx 85{,}83.
+\]
+
+\pause
+\begin{tinfoframe}
+Projekt má na výsledek větší vliv než aktivita, protože má větší váhu.
+\end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Normalizované váhy}
+
+\pause
+
+\begin{propblock}
+Mějme váhy
+\[
+\mathbf{w}=(w_1,\ldots,w_n),
+\qquad
+w_i>0.
+\]
+Položme
+\[
+\omega_i=\frac{w_i}{w_1+\cdots+w_n}.
+\]
+Potom platí $0<\omega_i\leqslant 1$ pro každé $i\in\set{1,\ldots,n}$,
+\[
+\omega_1+\cdots+\omega_n=1\quad\text{a}\quad \average{\mathbf{X}}_{\mathbf{w}}
+=
+\omega_1x_1+\cdots+\omega_nx_n.
+\]
+\end{propblock}
+
+\end{frame}
+
+\begin{frame}{Důkaz tvrzení}
+    \pause
+    \begin{itemize}
+        \item Skutečnost, že $0<\omega_i\leqslant 1$ je zjevná.\pause
+        \item Počítáním dostaneme:
+        \[\sum_{i=1}^{n}\omega_i=\sum_{i=1}^{n}\frac{w_i}{\sum_{i=1}^{n}w_i}=\frac{1}{\sum_{i=1}^{n}w_i}\sum_{i=1}^{n}w_i=1\]\pause
+        a
+        \[\average{\mathbf{X}}_\mathbf{w}=\frac{\sum_{i=1}^{n}w_ix_i}{\sum_{i=1}^{n}w_i}=\sum_{i=1}^{n}\frac{w_i}{\sum_{i=1}^{n}w_i}x_i=\sum_{i=1}^{n}\omega_ix_i.\]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Vážený průměr leží mezi hodnotami}
+
+\pause
+
+\begin{propblock}
+Pro statistický soubor $\mathbf{X}=(x_1,\ldots,x_n)$ a kladné váhy
+$\mathbf{w}=(w_1,\ldots,w_n)$ platí
+\[
+\min_{0\leqslant i\leqslant n} x_i
+\leqslant
+\average{\mathbf{X}}_{\mathbf{w}}
+\leqslant
+\max_{0\leqslant i\leqslant n} x_i.
+\]
+\end{propblock}
+
+\end{frame}
+
+\begin{frame}{Důkaz tvrzení}
+    \pause
+    Označme
+    \[
+    m=\min_{0\leqslant i\leqslant n} x_i,
+    \qquad
+    M=\max_{0\leqslant i\leqslant n} x_i.
+    \]
+    Pak pro každé $i$ platí
+    \[
+    m\leqslant x_i\leqslant M.
+    \]
+
+    \pause
+    Protože $\omega_i>0$ a $\omega_1+\cdots+\omega_n=1$, dostáváme
+    \begin{align*}
+        \omega_1m+\cdots+\omega_nm&\leqslant\omega_1x_1+\cdots+\omega_nx_n\leqslant\omega_1M+\cdots+\omega_nM,\\
+        m(\omega_1+\cdots+\omega_n)&\leqslant\omega_1x_1+\cdots+\omega_nx_n\leqslant M(\omega_1+\cdots+\omega_n).\\
+        m &\leqslant\omega_1x_1+\cdots+\omega_nx_n\leqslant M
+    \end{align*}
+
+    \pause
+    Tedy
+    \[
+    m
+    \leqslant
+    \average{\mathbf{X}}_{\mathbf{w}}
+    \leqslant
+    M.
+    \]
+\end{frame}
+
 \subsection{Medián}
 
 \begin{frame}{Medián}
@@ -580,14 +728,14 @@ Vyšší hodnota je způsobena hlavně dnem s teplotou $26\,^\circ\mathrm{C}$.
 \subsection{Směrodatná odchylka}
 
 \begin{frame}{Směrodatná odchylka}
-
+\pause
 \begin{defblock}[Směrodatná odchylka]
 Mějme statistický soubor $\mathbf{X}=(x_1,\ldots,x_n)$. \markdarkred{Směrodatnou odchylku} statistického souboru $\mathbf{X}$ definujeme jako
 \[
 \sigma_{\mathbf{X}}=\sqrt{\Var(\mathbf{X})}=\sqrt{\frac{1}{n}\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})^2}.
 \]
 \end{defblock}
-
+\pause
 \begin{exblock}
     Z minulého příkladu můžeme určit, že
     \[\sigma_\mathbf{T}=\sqrt{\Var(\mathbf{T})}=\sqrt{7{,}2}\approx 2{,}683\,^\circ\mathrm{C}\]
@@ -598,22 +746,22 @@ Mějme statistický soubor $\mathbf{X}=(x_1,\ldots,x_n)$. \markdarkred{Směrodat
 \subsection{Vztah průměru, mediánu a směrodatné odchylky}
 
 \begin{frame}{Vztah průměru, mediánu a směrodatné odchylky}
-
+\pause
 \begin{propblock}[Bez důkazu]
 Pro libovolný statistický soubor $\mathbf{X}=(x_1,\dots,x_n)$ platí
 \[
 \left|\average{\mathbf{X}}-\median(\mathbf{X})\right|\leqslant\sigma_{\mathbf{X}}.
 \]
 \end{propblock}
-
+\pause
 \begin{itemize}
-    \item Obecně nelze říci, zda je větší průměr nebo medián.
-    \item Jejich vzdálenost je ale omezena směrodatnou odchylkou.
-    \item Pokud jsou průměr a medián daleko od sebe, data mají velký rozptyl.
+    \item Obecně nelze říci, zda je větší průměr nebo medián.\pause
+    \item Jejich vzdálenost je ale omezena směrodatnou odchylkou.\pause
+    \item Pokud jsou průměr a~medián daleko od sebe, data mají \textbf{velký rozptyl}.
 \end{itemize}
-
+\pause
 \begin{tinfoframe}
-Směrodatná odchylka tedy říká i to, jak daleko od sebe mohou být různé způsoby popisu "středu" dat.
+Směrodatná odchylka tedy říká i~to, jak daleko od sebe mohou být různé způsoby popisu "středu" dat.
 \end{tinfoframe}
 
 \end{frame}
@@ -1219,12 +1367,6 @@ Korelační koeficient není jediný způsob, jak zkoumat vztah mezi daty.
     pro pořadové nebo monotónní vztahy se používají např. Spearmanův
     nebo Kendallův korelační koeficient.
 \end{itemize}
-
-\pause
-\begin{timportantframe}
-Nejdůležitější je nejprve se na data podívat.
-Bodový graf často napoví, jaký typ vztahu má smysl hledat.
-\end{timportantframe}
 
 \end{frame}
 
