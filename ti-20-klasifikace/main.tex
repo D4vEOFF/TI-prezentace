@@ -10,6 +10,2479 @@
 
 \begin{document}
 
-    \input{../titlepage.tex}
+\input{../titlepage.tex}
+
+\section{Úvod do klasifikace}
+
+\titleframe{Úvod do klasifikace}
+
+\subsection{Motivační příklady}
+
+\begin{frame}{Co je klasifikace?}
+    \pause
+    \begin{tnoticebox}{Základní myšlenka}
+        \textbf{Klasifikace} je úloha, ve které chceme
+        novému objektu přiřadit jednu z~předem daných tříd.
+    \end{tnoticebox}
+
+    \vspace{2mm}
+    \pause
+    \begin{center}
+        \begin{tikzpicture}[
+            >=stealth,
+            box/.style={
+                draw,
+                rounded corners=2mm,
+                minimum width=27mm,
+                minimum height=10mm,
+                align=center,
+                fill=blue!7
+            },
+            arr/.style={->, thick}
+        ]
+            \node[box] (obj) at (0,0) {nový objekt};
+            \node[box, fill=orange!12] (model) at (4,0) {klasifikátor};
+            \node[box, fill=green!12] (cls) at (8,0) {třída};
+
+            \draw[arr] (obj) -- (model);
+            \draw[arr] (model) -- (cls);
+
+            \node[align=center, font=\small] at (0,-1.05)
+                {např. e-mail, pacient,\\ obrázek, žádost};
+            \node[align=center, font=\small] at (8,-1.05)
+                {např. spam / ne-spam,\\ nemocný / zdravý};
+        \end{tikzpicture}
+    \end{center}
+
+    \vspace{1mm}
+    \pause
+    \begin{tinfoframe}[\textwidth]
+        Klasifikace patří mezi úlohy \textbf{učení s~učitelem}
+        (anglicky \markdarkred{supervised learning}), protože při trénování známe správné třídy
+        trénovacích dat.
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Příklady klasifikačních úloh}
+
+    \small
+    \pause
+    \begin{center}
+        \renewcommand{\arraystretch}{1.3}
+        \begin{tabularx}{0.96\textwidth}{|>{\bfseries}l|X|X|}
+            \hline
+            Úloha & Vstupní objekt & Možné třídy \\
+            \hline
+            Detekce spamu
+                & e-mail
+                & spam / běžná zpráva \\
+            \hline
+            Lékařská diagnostika
+                & pacient popsaný výsledky vyšetření
+                & nemocný / zdravý \\
+            \hline
+            Schvalování žádosti
+                & žádost popsaná několika údaji
+                & schválit / zamítnout \\
+            \hline
+            Rozpoznávání číslic
+                & obrázek ručně psané číslice
+                & $0,1,\ldots,9$ \\
+            \hline
+            Určení druhu rostliny
+                & rostlina popsaná rozměry a tvarem
+                & druh rostliny \\
+            \hline
+        \end{tabularx}
+    \end{center}
+
+    \vspace{2mm}
+    \pause
+    \begin{timportantframe}
+        Ve všech případech máme objekt popsaný určitými vlastnostmi
+        a chceme rozhodnout, do které z~předem daných tříd patří.
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Regrese versus klasifikace}
+    \begin{columns}[T,onlytextwidth]
+        \pause
+        \begin{column}{0.48\textwidth}
+            \begin{tinfobox}{Regrese}
+                \textbf{Regrese} předpovídá
+                číselnou hodnotu.
+
+                \vspace{1mm}
+
+                \begin{center}
+                    \begin{tikzpicture}[scale=0.8]
+                        \draw[->, thick] (0,0) -- (4.2,0);
+                        \foreach \x/\lab in {0/0,1/10,2/20,3/30,4/40}
+                            \draw (\x,0.08) -- (\x,-0.08) node[below] {\scriptsize \lab};
+                        \node[above] at (2,0.35) {\small číselná osa};
+                    \end{tikzpicture}
+                \end{center}
+
+                \vspace{1mm}
+
+                \small
+                Např. cena domu, výše příjmu, teplota.
+            \end{tinfobox}
+        \end{column}
+        \pause
+        \begin{column}{0.48\textwidth}
+            \begin{tnoticebox}{Klasifikace}
+                \textbf{Klasifikace} předpovídá
+                kategorii neboli třídu.
+
+                \begin{center}
+                    \begin{tikzpicture}[
+                        cls/.style={
+                            draw,
+                            rounded corners=1mm,
+                            minimum width=14mm,
+                            minimum height=7mm,
+                            fill=green!12
+                        }
+                    ]
+                        \node[cls] at (0,0) {A};
+                        \node[cls] at (1.7,0) {B};
+                        \node[cls] at (3.4,0) {C};
+                        \node[above] at (1.7,0.55) {\small množina tříd};
+                    \end{tikzpicture}
+                \end{center}
+
+                \vspace{1mm}
+
+                \small
+                Např. typ domu, kategorie příjmu, druh rostliny.
+            \end{tnoticebox}
+        \end{column}
+
+    \end{columns}
+
+    \vspace{1mm}
+    \pause
+    \begin{timportantframe}
+        Rozdíl není v~tom, jak jsou data uložená, ale v~tom,
+        jaký typ hodnoty chceme předpovídat.
+    \end{timportantframe}
+
+\end{frame}
+
+\subsection{Formální vymezení klasifikační úlohy}
+
+\subsection{Formální vymezení klasifikační úlohy}
+
+\begin{frame}{Dva pohledy na vstupní data}
+
+    \begin{columns}[T,onlytextwidth]
+        \pause
+        \begin{column}{0.48\textwidth}
+            \begin{tinfobox}{Pohled podle znaků}
+                Každý statistický soubor
+                \[
+                    \mathbf{X}_j
+                    =
+                    (x_{1j},\ldots,x_{nj})
+                \]
+                obsahuje hodnoty jednoho znaku
+                u~všech $n$ objektů.
+            \end{tinfobox}
+        \end{column}
+        \pause
+        \begin{column}{0.48\textwidth}
+            \begin{tnoticebox}{Pohled podle objektů}
+                Každý vektor
+                \[
+                    \mathbf{x}_i
+                    =
+                    (x_{i1},\ldots,x_{ip})
+                \]
+                obsahuje hodnoty všech $p$ znaků
+                u~jednoho objektu.
+            \end{tnoticebox}
+        \end{column}
+
+    \end{columns}
+
+    \vspace{3mm}
+    \pause
+    \begin{center}
+        \renewcommand{\arraystretch}{1.25}
+        \begin{tabular}{c|cccc}
+             & $\mathbf{X}_1$ & $\mathbf{X}_2$ & $\cdots$ & $\mathbf{X}_p$ \\
+            \hline
+            $\mathbf{x}_1$ & $x_{11}$ & $x_{12}$ & $\cdots$ & $x_{1p}$ \\
+            $\mathbf{x}_2$ & $x_{21}$ & $x_{22}$ & $\cdots$ & $x_{2p}$ \\
+            $\vdots$       & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ \\
+            $\mathbf{x}_n$ & $x_{n1}$ & $x_{n2}$ & $\cdots$ & $x_{np}$
+        \end{tabular}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}{Výstupní statistický soubor}
+    \pause
+    \begin{itemize}
+        \item Množinu všech možných tříd označíme
+        \[
+            \mathcal{Y}=\{c_1,c_2,\ldots,c_K\}.
+        \]\pause
+        \item Nechť
+        \[
+            \mathbf{Y}=(y_1,y_2,\ldots,y_n)
+        \]
+        je statistický soubor tříd jednotlivých objektů $\mathbf{x}_1,\dots,\mathbf{x}_n$.\pause
+        \item Trénovací množinu představuje
+        \[D=\set{(\mathbf{x}_1,y_1),
+                (\mathbf{x}_2,y_2),
+                \ldots,
+                (\mathbf{x}_n,y_n)}\]
+    \end{itemize}
+
+    \vspace{1mm}
+    \pause
+    \begin{tinfoframe}[9.5cm]
+        \begin{center}
+            U~binární klasifikace často používáme $ \mathcal{Y}=\set{0,1}$.
+        \end{center}
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Klasifikátor}
+    \pause
+    \begin{defblock}[Klasifikátor]
+        Nechť \(\mathcal{Y}\) je množina tříd.
+        \markdarkred{Klasifikátor} je funkce
+        \[
+            \mapping{h}{\R^p}{\mathcal{Y}},
+        \]
+        která každému vektoru znaků $\mathbf{x}\in\R^{p}$ přiřadí jednu třídu $c\in\mathcal{Y}$.
+    \end{defblock}
+
+    \vspace{2mm}
+    \pause
+    \begin{center}
+        \begin{tikzpicture}[
+            >=stealth,
+            box/.style={
+                draw,
+                rounded corners=2mm,
+                minimum width=28mm,
+                minimum height=9mm,
+                align=center,
+                fill=blue!7
+            },
+            arr/.style={->, thick}
+        ]
+            \node[box] (x) at (0,0) {$\mathbf{x}$};
+            \node[box, fill=orange!12] (h) at (4,0) {$h$};
+            \node[box, fill=green!12] (y) at (8,0)
+                {$h(\mathbf{x})\in\mathcal{Y}$};
+
+            \draw[arr] (x) -- (h);
+            \draw[arr] (h) -- (y);
+
+            \node[font=\small, align=center] at (0,-1)
+                {nový objekt\\popsaný stat. znaky};
+            \node[font=\small, align=center] at (8,-1)
+                {předpovězená\\třída};
+        \end{tikzpicture}
+    \end{center}
+
+    \vspace{1mm}
+    \pause
+    \begin{tinfoframe}[\textwidth]
+        V~praxi klasifikátor neznáme předem. Vytváříme ho na základě
+        trénovací množiny \(D\).
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Cíl klasifikační úlohy}
+    \pause
+    \begin{tnoticebox}{Hlavní cíl}
+        Cílem klasifikace není pouze správně zařadit objekty
+        z~trénovací množiny, ale především správně klasifikovat nové,
+        dosud neznámé objekty.
+    \end{tnoticebox}
+
+    \vspace{3mm}
+    \pause
+    \begin{center}
+        \begin{tikzpicture}[
+            >=stealth,
+            box/.style={
+                draw,
+                rounded corners=2mm,
+                minimum width=28mm,
+                minimum height=9mm,
+                align=center
+            },
+            arr/.style={->, thick}
+        ]
+            \node[box, fill=blue!7] (data) at (0,0)
+                {trénovací\\množina \(D\)};
+            \node[box, fill=orange!12] (learn) at (3.7,0)
+                {učení\\modelu};
+            \node[box, fill=green!12] (model) at (7.4,0)
+                {klasifikátor\\\(h\)};
+
+            \node[box, fill=blue!7] (new) at (1.85,-1.75)
+                {nový objekt\\\(\mathbf{x}\)};
+            \node[box, fill=green!12] (out) at (5.55,-1.75)
+                {předpověď\\\(h(\mathbf{x})\)};
+
+            \draw[arr] (data) -- (learn);
+            \draw[arr] (learn) -- (model);
+            \draw[arr] (new) -- (out);
+            \draw[arr] (model) -- (out);
+        \end{tikzpicture}
+    \end{center}
+
+    \vspace{1mm}
+    \pause
+    \begin{timportantframe}
+        Dobře naučený klasifikátor by měl zachytit obecný vztah mezi
+        příznaky a~třídou, nikoli si pouze "zapamatovat" trénovací data.
+    \end{timportantframe}
+
+\end{frame}
+
+\subsection{Druhy klasifikačních úloh}
+
+\begin{frame}{Binární a~vícetřídní klasifikace}
+    \pause
+    \begin{itemize}
+        \item Řekneme, že klasifikační úloha je \textbf{binární}, jestliže množina tříd má tvar
+        \[
+            \mathcal{Y}=\set{0,1}.
+        \]
+        \pause
+        \item Řekneme, že klasifikační úloha je \textbf{vícetřídní} (anglicky \markdarkred{multi class classification}), jestliže množina tříd má tvar
+        \[
+            \mathcal{Y}=\{c_1,c_2,\ldots,c_K\},
+            \qquad K\geqslant 3.
+        \]
+    \end{itemize}
+
+    \vspace{1mm}
+    \pause
+    \begin{tinfoframe}
+        V~obou případech každému objektu přiřazujeme právě jednu třídu $y_i\in\mathcal{Y}$.
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Víceznačková klasifikace}
+    \pause
+    Řekneme, že klasifikační úloha je \textbf{víceznačková} (anglicky \markdarkred{multi-label classification}), jestliže jeden objekt může současně patřit do více tříd.
+    \pause
+    \vspace{2mm}
+
+    Místo jedné třídy \(y_i\in\mathcal{Y}\) pak můžeme výsledek pro
+    \(i\)-tý objekt zapsat například jako vektor
+    \[
+        \mathbf{y}_i=(y_{i1},y_{i2},\ldots,y_{iK})\in\{0,1\}^K,
+    \]
+    kde
+    \[
+        y_{ij}=1
+        \quad\Longleftrightarrow\quad
+        i\text{-tý objekt má }j\text{-tou značku}.
+    \]
+    \pause
+    \vspace{1mm}
+
+    Například fotografie může mít současně značky \emph{člověk}, \emph{auto} a~\emph{budova}.
+    \pause
+    \begin{timportantframe}
+        V~této prezentaci se budeme dále věnovat především binární
+        a~vícetřídní klasifikaci.
+    \end{timportantframe}
+
+\end{frame}
+
+\subsection{Skóre a rozhodování klasifikátoru}
+
+\begin{frame}{Skóre modelu}
+    \pause
+    \begin{defblock}{Skóre modelu}
+        Nechť jsou dány vstupní statistické soubory
+        \[
+            \mathbf{X}_1,\mathbf{X}_2,\ldots,\mathbf{X}_p
+        \]
+        a~výstupní statistický soubor $\mathbf{Y}=(y_1,y_2,\ldots,y_n)$. \markdarkred{Skórovací funkce} je funkce
+        \[
+            \mapping{s}{\R^p}{\R}
+        \]
+        Hodnotu $s(\mathbf{x})$ nazýváme \markdarkred{skóre} prvku $\mathbf{x}\in\R^{p}$.
+    \end{defblock}
+    \pause
+    Pro $i$-tý objekt položíme
+    \[
+        s_i=s(\mathbf{x}_i),
+        \qquad
+        \mathbf{x}_i=(x_{i1},x_{i2},\ldots,x_{ip}).
+    \]
+    \pause
+    Skóre všech objektů tvoří statistický soubor
+    \[
+        \mathbf{S}=(s_1,s_2,\ldots,s_n).
+    \]
+
+\end{frame}
+
+\begin{frame}{Od skóre k~předpovězené třídě}{Binární klasifikace}
+    \pause
+    Pro množinu tříd $\mathcal{Y}=\set{0,1}$ může model každému objektu \(\mathbf{x}_i\) přiřadit jediné skóre
+    \[
+        s_i=s(\mathbf{x}_i).
+    \]
+    \pause
+    Pomocí rozhodovacího prahu \(t\) pak položíme
+    \[
+        \hat y_i=
+        \begin{cases}
+            1, & s_i\geqslant t,\\
+            0, & s_i<t.
+        \end{cases}
+    \]
+
+\end{frame}
+
+\begin{frame}{Od skóre k~předpovězené třídě}{Vícetřídní klasifikace}
+    \pause
+    Pro množinu tříd $\mathcal{Y}=\set{c_1,c_2,\ldots,c_K}$ model vypočítá pro každý objekt skóre všech tříd:
+    \[
+        s_1(\mathbf{x}_i),\,
+        s_2(\mathbf{x}_i),\ldots,
+        s_K(\mathbf{x}_i).
+    \]
+    \pause
+    Objekt přiřadíme třídě s~nejvyšším skóre:
+    \[
+        \begin{aligned}
+            \hat k_i
+            &=
+            \argmax_{1\leqslant k\leqslant K}
+            s_k(\mathbf{x}_i),\\
+            \hat y_i&=c_{\hat k_i}.
+        \end{aligned}
+    \]
+    \pause
+    Predikované hodnoty všech objektů tvoří statistický soubor
+    \[
+        \hat{\mathbf{Y}}
+        =
+        (\hat y_1,\hat y_2,\ldots,\hat y_n).
+    \]
+    \pause
+    \begin{tinfoframe}[12cm]
+        \begin{center}
+            Tedy pro soubory $\mathbf{X}_1,\dots,\mathbf{X}_p,\mathbf{Y}$ jsme získali soubor odhadů $\hat{\mathbf{Y}}$.
+        \end{center}
+    \end{tinfoframe}
+\end{frame}
+
+\begin{frame}{Rozhodovací hranice}
+    \pause
+    \begin{defblock}[Rozhodovací hranice]
+        Nechť \(s\colon\R^p\to\R\) je skórovací funkce
+        a~\(t\in\R\) rozhodovací práh.
+
+        \markdarkred{Rozhodovací hranicí} (anglicky \markdarkred{decision boundary}) rozumíme množinu
+        \[
+            B_t
+            =
+            \set{\mathbf{x}\in\R^p : s(\mathbf{x})=t}.
+        \]
+    \end{defblock}
+    \pause
+    \begin{tinfoframe}[\textwidth]
+        Rozhodovací hranice odděluje oblasti, v~nichž model přiřazuje
+        objektům různé třídy.
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Rozhodovací hranice pro $\mathbf{X}_1,\mathbf{X}_2,\mathbf{Y}$}
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=\textwidth,
+                height=8.1cm,
+                xmin=0, xmax=6,
+                ymin=0, ymax=4,
+                axis lines=left,
+                xlabel={$x_1$},
+                ylabel={$x_2$},
+                xtick=\empty,
+                ytick=\empty,
+                enlargelimits=false,
+                clip=false,
+                axis background/.style={fill=blue!10},
+                every axis x label/.style={
+                    at={(current axis.right of origin)},
+                    anchor=west
+                },
+                every axis y label/.style={
+                    at={(current axis.above origin)},
+                    anchor=south
+                }
+            ]
+
+                % oblast třídy 1
+                \addplot[
+                    draw=none,
+                    fill=orange!12
+                ] coordinates {
+                    (0,2.6)
+                    (6,0.8)
+                    (6,4)
+                    (0,4)
+                } \closedcycle;
+
+                % rozhodovací hranice
+                \addplot[
+                    very thick,
+                    red!75!black,
+                    domain=0:6,
+                    samples=2
+                ] {2.6 - 0.3*x}
+                node[pos=0.62, above, sloped, black] {\small \(B_t\)};
+
+                % body třídy 0
+                \addplot[
+                    only marks,
+                    mark=*,
+                    mark size=2.2pt,
+                    blue!70
+                ] coordinates {
+                    (0.8,0.8)
+                    (1.3,1.5)
+                    (2.1,0.7)
+                    (3.1,1.2)
+                    (4.7,0.6)
+                    (5.2,1.4)
+                };
+
+                % body třídy 1
+                \addplot[
+                    only marks,
+                    mark=*,
+                    mark size=2.2pt,
+                    orange!85!black
+                ] coordinates {
+                    (0.9,3.2)
+                    (1.8,2.8)
+                    (2.9,2.6)
+                    (3.9,2.2)
+                    (4.8,2.7)
+                    (5.4,3.3)
+                };
+
+                % popisky oblastí
+                \node[blue!70!black, font=\small] at (axis cs:1.2,0.35)
+                    {třída~\(0\)};
+                \node[orange!85!black, font=\small] at (axis cs:4.8,3.55)
+                    {třída~\(1\)};
+
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\section{Logistická regrese}
+
+\titleframe{Logistická regrese}
+
+\subsection{Proč nestačí lineární regrese?}
+
+\begin{frame}{Připomenutí: lineární regrese}
+    \pause
+    \begin{itemize}
+        \item Nechť jsou dány statistické soubory
+        \[
+            \mathbf{X}=(x_1,x_2,\ldots,x_n),
+            \quad
+            \mathbf{Y}=(y_1,y_2,\ldots,y_n).
+        \]\pause
+        Lineární model má tvar
+        \[
+            f(x)=ax+b.
+        \]\pause
+        \item Pro $i$-tý objekt dostaneme odhad
+        \[
+            \hat y_i=f(x_i)=ax_i+b.
+        \]
+    \end{itemize}
+    \pause
+    \begin{tinfoframe}
+        \textbf{Problém:} lineární model může vracet libovolné reálné číslo, zatímco u~klasifikace chceme rozhodnout mezi třídami.
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Lineární regrese pro třídy \(0\) a~\(1\)}
+
+    \begin{columns}[T,onlytextwidth]
+
+        \begin{column}{0.48\textwidth}
+            \small
+            \pause
+            \begin{itemize}
+                \item U~binární klasifikace máme
+                \[
+                    \mathbf{Y}=(y_1,\ldots,y_n),
+                    \qquad
+                    y_i\in\set{0,1}.
+                \]
+                \pause
+                \item Lineární model můžeme formálně použít: $\hat y_i=f(x_i)$.
+                \pause
+                \item Abychom získali třídu, mohli bychom zvolit práh:
+                \[
+                    \hat c_i=
+                    \begin{cases}
+                        1, & \hat y_i\geqslant 0{,}5,\\
+                        0, & \hat y_i<0{,}5.
+                    \end{cases}
+                \]
+            \end{itemize}
+        \end{column}
+        \pause
+        \begin{column}{0.50\textwidth}
+            \begin{center}
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=\textwidth,
+                        height=4.9cm,
+                        xmin=0, xmax=10,
+                        ymin=-0.3, ymax=1.35,
+                        axis lines=left,
+                        xlabel={$x$},
+                        ylabel={$y$},
+                        xtick=\empty,
+                        ytick={0,0.5,1},
+                        yticklabels={$0$,$0{,}5$,$1$},
+                        clip=false
+                    ]
+                        \addplot[
+                            only marks,
+                            mark=*,
+                            mark size=2pt,
+                            blue!70
+                        ] coordinates {
+                            (1,0) (2,0) (3,0) (4,0)
+                            (6,1) (7,1) (8,1) (9,1)
+                        };
+
+                        \addplot[
+                            very thick,
+                            red!75!black,
+                            domain=0:10,
+                            samples=2
+                        ] {-0.2+0.15*x};
+
+                        \addplot[
+                            dashed,
+                            gray,
+                            domain=0:10,
+                            samples=2
+                        ] {0.5};
+
+                        \node[font=\scriptsize] at (axis cs:8.3,1.18)
+                            {$f(x)$};
+                    \end{axis}
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+
+    \end{columns}
+    \pause
+    \begin{timportantframe}
+        Takový postup sice dá klasifikátor, ale výstupy lineárního modelu
+        nejsou omezeny na interval \(\langle0,1\rangle\).
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Jaký výstup potřebujeme?}
+    \pause
+    \begin{tnoticebox}{Požadavek na model}
+        Chceme zachovat lineární skóre $s(x)=ax+b$, ale převést jej na číslo z~intervalu \((0,1)\).
+    \end{tnoticebox}
+
+    \vspace{3mm}
+
+    \begin{columns}[T,onlytextwidth]
+
+        \begin{column}{0.48\textwidth}
+            \pause
+            Hledáme funkci $\mapping{g}{\R}{(0,1)}$, která splňuje:
+            \begin{itemize}
+                \item záporná skóre převádí blízko k~\(0\),
+                \item kladná skóre převádí blízko k~\(1\),
+                \item hodnota \(z=0\) odpovídá středu:
+                \[
+                    g(0)=0{,}5.
+                \]
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.50\textwidth}
+            \pause
+            \begin{center}
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=\textwidth,
+                        height=4.8cm,
+                        xmin=-6, xmax=6,
+                        ymin=0, ymax=1,
+                        axis lines=middle,
+                        xlabel={$z$},
+                        ylabel={$g(z)$},
+                        xtick={0},
+                        ytick={0,0.5,1},
+                        yticklabels={$0$,$0{,}5$,$1$},
+                        clip=false
+                    ]
+                        \addplot[
+                            very thick,
+                            blue!70,
+                            domain=-6:6,
+                            samples=100
+                        ] {1/(1+exp(-x))};
+
+                        \addplot[
+                            dashed,
+                            gray,
+                            domain=-6:6,
+                            samples=2
+                        ] {0.5};
+                    \end{axis}
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+
+    \end{columns}
+
+\end{frame}
+
+\subsection{Logistický model}
+
+\begin{frame}{Logistická funkce}
+    \pause
+    \begin{defblock}[Logistická funkce]
+        \markdarkred{Logistická funkce} (též \markdarkred{sigmoida}) je funkce
+        \[
+            \sigma(z)=\frac{1}{1+e^{-z}},
+            \qquad z\in\mathbb{R}.
+        \]
+    \end{defblock}
+
+    \begin{columns}[T,onlytextwidth]
+        \pause
+        \begin{column}{0.44\textwidth}
+            \small
+            Platí:
+            \[
+                \sigma(z)\in(0,1)\quad\text{a}\quad \sigma(0)=0{,}5.
+            \]
+
+            \begin{tinfoframe}
+                Velmi záporné hodnoty převádí blízko k~\(0\),
+                velmi kladné hodnoty blízko k~\(1\).
+            \end{tinfoframe}
+        \end{column}
+        \pause
+        \begin{column}{0.54\textwidth}
+            \begin{center}
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=\textwidth,
+                        height=4.3cm,
+                        xmin=-6, xmax=6,
+                        ymin=0, ymax=1,
+                        axis lines=middle,
+                        xlabel={$z$},
+                        ylabel={$\sigma(z)$},
+                        xtick={0},
+                        ytick={0,0.5,1},
+                        yticklabels={$0$,$0{,}5$,$1$},
+                        clip=false
+                    ]
+                        \addplot[
+                            very thick,
+                            blue!70,
+                            domain=-6:6,
+                            samples=100
+                        ] {1/(1+exp(-x))};
+
+                        \addplot[
+                            dashed,
+                            gray,
+                            domain=-6:6,
+                            samples=2
+                        ] {0.5};
+                    \end{axis}
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\subsection{Od lineární k logistické regresi}
+
+\begin{frame}{Od lineární k logistické regresi}
+    \pause
+    Nechť jsou dány statistické soubory
+    \[
+        \mathbf{X}=(x_1,x_2,\ldots,x_n),
+        \qquad
+        \mathbf{Y}=(y_1,y_2,\ldots,y_n),
+        \qquad
+        y_i\in\{0,1\}.
+    \]
+    \pause
+    \begin{tnoticebox}{Myšlenka logistické regrese}
+        Nejprve vypočítáme lineární skóre $z_i=ax_i+b$. Poté jej převedeme logistickou funkcí na $\hat p_i=\sigma(z_i)$.
+    \end{tnoticebox}
+
+    \vspace{1mm}
+    \pause
+    Tím dostaneme statistický soubor výstupů
+    \[
+        \hat{\mathbf{P}}
+        =
+        (\hat p_1,\hat p_2,\ldots,\hat p_n),
+        \qquad
+        \hat p_i\in(0,1).
+    \]
+    \pause
+    \begin{tinfoframe}
+        Hodnotu \(\hat p_i\) budeme chápat jako míru podpory modelu
+        pro zařazení objektu do třídy~\(1\).
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Model logistické regrese}
+    \pause
+    \begin{itemize}
+        \item Logistická regrese přiřadí hodnotě \(x\) číslo
+        \[
+            \hat p(x)
+            =
+            \sigma(ax+b)
+            =
+            \frac{1}{1+e^{-(ax+b)}}.
+        \]\pause
+        \item Pro $i$-tý prvek souboru $\mathbf{X}$ tedy platí
+        \[
+            \hat p_i
+            =
+            \hat p(x_i)
+            =
+            \frac{1}{1+e^{-(ax_i+b)}}.
+        \]
+    \end{itemize}
+    \pause
+    \begin{timportantframe}[\textwidth]
+        Parametry \(a\) a~\(b\) určují tvar modelu. Při trénování hledáme
+        takové hodnoty, aby model dobře odpovídal trénovacím datům (viz lineární regrese).
+    \end{timportantframe}
+
+\end{frame}
+
+\subsection{Rozhodovací pravidlo}
+
+\begin{frame}{Od výstupu modelu k~předpovězené třídě}
+
+    Nechť logistický model přiřadí hodnotě \(x_i\) výstup
+    \[
+        \hat p_i
+        =
+        \hat p(x_i)
+        =
+        \frac{1}{1+e^{-(ax_i+b)}}.
+    \]
+
+    \begin{tnoticebox}{Rozhodovací pravidlo}
+        Zvolme rozhodovací práh $t\in(0,1)$. Předpovězenou třídu \(i\)-tého objektu určíme vztahem
+        \[
+            h^{(t)}(x)
+            =
+            \hat y_i^{(t)}
+            =
+            \begin{cases}
+                1, & \hat p(x)\geqslant t,\\[1mm]
+                0, & \hat p(x)<t.
+            \end{cases}
+        \]
+    \end{tnoticebox}
+
+    \vspace{1mm}
+
+    Předpovězené třídy všech obektů z~$\mathbf{X}$ tvoří statistický soubor
+    \[
+        \hat{\mathbf{Y}}^{(t)}
+        =
+        (\hat y_1^{(t)},\hat y_2^{(t)},\ldots,\hat y_n^{(t)}).
+    \]
+
+\end{frame}
+
+\begin{frame}{Kdy model předpoví třídu \(1\)?}
+    \pause
+    \begin{propblock}
+        Nechť $\hat p(x)=\sigma(ax+b)$ pro $a,b\in\R$ a~\(t\in(0,1)\). Potom platí
+        \[
+            \hat p(x)\geqslant t
+            \quad\Longleftrightarrow\quad
+            ax+b\geqslant\ln\left(\frac{t}{1-t}\right).
+        \]
+    \end{propblock}
+
+    \pause
+
+    \textbf{Důkaz:} Logistická funkce je rostoucí, a~proto
+    \[
+        \hat p(x)\geqslant t
+        \quad\Longleftrightarrow\quad
+        ax+b\geqslant\sigma^{-1}(t)=\ln\left(\frac{t}{1-t}\right).
+    \]
+    Z~toho dostáváme požadovanou ekvivalenci.
+    \pause
+    \begin{timportantframe}
+        Speciálně pro \(t=0{,}5\) je $\ln\left(\frac{0{,}5}{1-0{,}5}\right)=\ln{1}=0$, takže o~třídě rozhoduje pouze znaménko výrazu \(ax+b\).
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Rozhodovací hranice logistické regrese}
+    \pause
+    Ze vztahu
+    \[
+        ax_t+b
+        =
+        \ln\left(\frac{t}{1-t}\right)
+    \]
+    dostáváme
+    \[
+        x_t
+        =
+        \frac{
+            \ln\left(\frac{t}{1-t}\right)-b
+        }{a}.
+    \]
+    \pause
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=0.78\textwidth,
+                height=4.8cm,
+                xmin=-6, xmax=6,
+                ymin=0, ymax=1,
+                axis lines=left,
+                xlabel={$x$},
+                ylabel={$\hat p(x)$},
+                xtick={1.386},
+                xticklabels={$x_t$},
+                ytick={0,0.8,1},
+                yticklabels={$0$,$t=0{,}8$,$1$},
+                clip=false
+            ]
+
+                % Ukázka pro a=1, b=0 a t=0,8,
+                % kdy x_t = ln(0,8/0,2) = ln 4.
+                \addplot[
+                    very thick,
+                    blue!70,
+                    domain=-6:6,
+                    samples=120
+                ] {1/(1+exp(-x))};
+
+                \addplot[
+                    dashed,
+                    gray,
+                    domain=-6:6,
+                    samples=2
+                ] {0.8};
+
+                \addplot[
+                    dashed,
+                    red!75!black
+                ] coordinates {
+                    (1.386,0)
+                    (1.386,0.8)
+                };
+
+                \addplot[
+                    only marks,
+                    mark=*,
+                    mark size=2pt,
+                    red!75!black
+                ] coordinates {
+                    (1.386,0.8)
+                };
+
+                \node[
+                    font=\small,
+                    blue!70!black
+                ] at (axis cs:-2.5,0.25) {třída~\(0\)};
+
+                \node[
+                    font=\small,
+                    blue!70!black
+                ] at (axis cs:3.6,0.87) {třída~\(1\)};
+
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\subsection{Křížová entropie}
+
+\begin{frame}{Proč potřebujeme ztrátovou funkci?}
+    \pause
+    Nechť logistický model pro statistické soubory
+    \[
+        \mathbf{X}=(x_1,\ldots,x_n),
+        \qquad
+        \mathbf{Y}=(y_1,\ldots,y_n),
+        \qquad y_i\in\{0,1\},
+    \]
+    vrací hodnoty
+    \[
+        \hat{\mathbf{P}}
+        =
+        (\hat p_1,\ldots,\hat p_n).
+    \]
+    \pause
+    \begin{tnoticebox}{Myšlenka}
+        Při trénování nechceme hodnotit pouze výslednou třídu
+        \(h^{(t)}(x_i)\), ale také to, \textbf{jak jistý} si model byl.
+    \end{tnoticebox}
+
+    \vspace{1mm}
+    \pause
+    \begin{center}
+        \renewcommand{\arraystretch}{1.25}
+        \begin{tabular}{c|c|c}
+            skutečnost & výstup modelu pro $t=0{,}5$ & komentář \\
+            \hline
+            \(y_i=1\) & \(\hat p_i=0{,}51\) & \markdarkgreen{správně}, ale \markdarkred{nejistě} \\
+            \(y_i=1\) & \(\hat p_i=0{,}99\) & \markdarkgreen{správně} a~\markdarkgreen{jistě} \\
+            \(y_i=1\) & \(\hat p_i=0{,}01\) & \markdarkred{chybně} a~\markdarkgreen{velmi jistě}
+        \end{tabular}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}{Křížová entropie pro jeden objekt}
+    \pause
+    \begin{defblock}[Ztráta jednoho objektu]
+        Pro skutečnou třídu \(y_i\in\{0,1\}\) a~výstup modelu
+        \(\hat p_i\in(0,1)\) definujeme ztrátu
+        \[
+            \ell(y_i,\hat p_i)
+            =
+            -
+            \left(
+                y_i\ln \hat p_i
+                +
+                (1-y_i)\ln(1-\hat p_i)
+            \right).
+        \]
+        Tato ztrátová funkce se nazývá \markdarkred{binární křížová entropie} (anglicky \markdarkred{binary cross-entropy}).
+    \end{defblock}
+    
+    \vspace{1mm}
+    \pause
+    Po dosazení dostaneme jednodušší tvar:
+    \[
+        \ell(1,\hat p_i)=-\ln \hat p_i,
+        \qquad
+        \ell(0,\hat p_i)=-\ln(1-\hat p_i).
+    \]
+    \pause
+    \begin{tinfoframe}
+        Správná a~jistá odpověď má malou ztrátu.
+        Sebejistá chybná odpověď má naopak ztrátu velmi vysokou.
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Křížová entropie pro celý soubor}
+    \pause
+    \begin{defblock}[Průměrná křížová entropie]
+        Nechť
+        \[
+            \mathbf{Y}=(y_1,\ldots,y_n),
+            \qquad
+            \hat{\mathbf{P}}=(\hat p_1,\ldots,\hat p_n).
+        \]
+        \markdarkred{Průměrnou křížovou entropii} definujeme vztahem
+        \[
+            L(\mathbf{Y},\hat{\mathbf{P}})=\frac1n\sum_{i=1}^{n}\ell(y_i,\hat p_i)
+            =
+            -\frac1n
+            \sum_{i=1}^{n}
+            \left(
+                y_i\ln \hat p_i
+                +
+                (1-y_i)\ln(1-\hat p_i)
+            \right).
+        \]
+    \end{defblock}
+
+    \vspace{1mm}
+    \pause
+    \begin{tnoticebox}{Trénování logistické regrese}
+        Při trénování hledáme parametry \(a\) a~\(b\), pro které je
+        hodnota $L(\mathbf{Y},\hat{\mathbf{P}})$ co nejmenší.
+    \end{tnoticebox}
+
+\end{frame}
+
+\begin{frame}{Chování křížové entropie}
+
+    \begin{columns}[T,onlytextwidth]
+        \pause
+        \begin{column}{0.48\textwidth}
+            \small
+            Pro objekt se skutečnou třídou \(y=1\) je ztráta
+            \[
+                \ell(1,\hat p)=-\ln \hat p.
+            \]
+
+            \vspace{1mm}
+
+            \begin{center}
+                \renewcommand{\arraystretch}{1.25}
+                \begin{tabular}{c|c}
+                    \(\hat p\) & \(\ell(1,\hat p)\) \\
+                    \hline
+                    \(0{,}9\) & \(0{,}11\) \\
+                    \(0{,}5\) & \(0{,}69\) \\
+                    \(0{,}1\) & \(2{,}30\) \\
+                    \(0{,}01\) & \(4{,}61\)
+                \end{tabular}
+            \end{center}
+        \end{column}
+        \pause
+        \begin{column}{0.50\textwidth}
+            \begin{center}
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=\textwidth,
+                        height=4.8cm,
+                        xmin=0.01, xmax=1,
+                        ymin=0, ymax=5,
+                        axis lines=left,
+                        xlabel={$\hat p$},
+                        ylabel={$\ell(1,\hat p)$},
+                        xtick={0.1,0.5,0.9},
+                        xticklabels={$0{,}1$,$0{,}5$,$0{,}9$},
+                        ytick={0,1,2,3,4,5},
+                        clip=false
+                    ]
+                        \addplot[
+                            very thick,
+                            blue!70,
+                            domain=0.01:1,
+                            samples=120
+                        ] {-ln(x)};
+
+                        \addplot[
+                            only marks,
+                            mark=*,
+                            mark size=2pt,
+                            red!75!black
+                        ] coordinates {
+                            (0.9,0.105)
+                            (0.5,0.693)
+                            (0.1,2.303)
+                            (0.01,4.605)
+                        };
+                    \end{axis}
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+
+    \end{columns}
+    \pause
+    \begin{timportantframe}[\textwidth]
+        Čím menší hodnotu \(\hat p\) model přiřadí objektu,
+        který skutečně patří do třídy~\(1\), tím větší ztrátu dostane.
+    \end{timportantframe}
+
+\end{frame}
+
+\subsection{Trénování logistické regrese}
+
+\begin{frame}{Trénování logistického modelu}
+    \pause
+    \begin{itemize}
+        \item Nechť jsou dány statistické soubory
+        \[
+            \mathbf{X}=(x_1,x_2,\ldots,x_n),
+            \qquad
+            \mathbf{Y}=(y_1,y_2,\ldots,y_n),
+            \qquad
+            y_i\in\{0,1\}.
+        \]\pause
+        \item Pro zvolené parametry \(a,b\in\mathbb{R}\) model vrací hodnoty
+        \[
+            \hat p_i(a,b)
+            =
+            \frac{1}{1+e^{-(ax_i+b)}}.
+        \]\pause
+        \item Parametry modelu volíme tak, aby byla průměrná křížová entropie
+        co nejmenší:
+        \[
+            (a^\ast,b^\ast)
+            =
+            \argmin_{(a,b)\in\mathbb{R}^2}
+            L(a,b),
+        \]
+        kde
+        \[
+            L(a,b)
+            =
+            -\frac1n\sum_{i=1}^{n}
+            \left(
+                y_i\ln\hat p_i(a,b)
+                +(1-y_i)\ln\left(1-\hat p_i(a,b)\right)
+            \right).
+        \]
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Jak hledáme vhodné parametry?}
+    \pause
+    Hodnoty \(a^\ast\) a~\(b^\ast\) obvykle nelze získat jednoduchým
+    dosazením do vzorce. Hledáme je proto pomocí numerické optimalizace.
+
+    \vspace{2mm}
+    \pause
+    \begin{center}
+        \begin{tikzpicture}[
+            >=stealth,
+            box/.style={
+                draw,
+                rounded corners=2mm,
+                minimum width=25mm,
+                minimum height=11mm,
+                align=center
+            },
+            arr/.style={
+                ->,
+                thick,
+                rounded corners=2mm
+            }
+        ]
+            \node[box, fill=blue!8] (parameters) at (0,0)
+                {zvolíme\\\(a,b\)};
+
+            \node[box, fill=orange!10] (outputs) at (3.3,0)
+                {vypočítáme\\
+                \(\hat p_1,\ldots,\hat p_n\)};
+
+            \node[box, fill=red!8] (loss) at (6.8,0)
+                {vypočítáme\\\(L(a,b)\)};
+
+            \node[box, fill=green!10] (change) at (5.05,-1.8)
+                {upravíme\\\(a,b\)};
+
+            % Pomocné body pro pravoúhlé šipky
+            \coordinate (rightturn) at (6.8,-1.8);
+            \coordinate (leftturn) at (3.3,-1.8);
+
+            \draw[arr]
+                (parameters.east) -- (outputs.west);
+
+            \draw[arr]
+                (outputs.east) -- (loss.west);
+
+            \draw[arr]
+                (loss.south) --
+                (rightturn) --
+                (change.east);
+
+            \draw[arr]
+                (change.west) --
+                (leftturn) --
+                (outputs.south);
+        \end{tikzpicture}
+    \end{center}
+
+    \vspace{2mm}
+    \pause
+    \begin{tnoticebox}{Postup učení}
+        Tento postup opakujeme, dokud se hodnota ztrátové funkce
+        dostatečně nezmenší nebo se parametry nepřestanou výrazně měnit. K~tomu se používá např. tzn. \textbf{gradientní sestup}.
+    \end{tnoticebox}
+
+\end{frame}
+
+\begin{frame}{Myšlenka gradientního sestupu}
+
+    \begin{columns}[T,onlytextwidth]
+        \pause
+        \begin{column}{0.47\textwidth}
+            \small
+            Při trénování chceme minimalizovat ztrátovou funkci
+            \(L(a,b)\).
+
+            \begin{tnoticebox}{Základní princip}
+                Začneme s~nějakými hodnotami parametrů a~postupně je
+                upravujeme směrem, ve~kterém se ztráta nejrychleji zmenšuje.
+            \end{tnoticebox}
+        \end{column}
+        \pause
+        \begin{column}{0.51\textwidth}
+            \begin{center}
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=\textwidth,
+                        height=4cm,
+                        xmin=0, xmax=5,
+                        ymin=0, ymax=10,
+                        axis lines=left,
+                        xlabel={parametr \(\theta\)},
+                        ylabel={ztráta \(L(\theta)\)},
+                        xtick={1.5},
+                        xticklabels={\(\theta^\ast\)},
+                        ytick=\empty,
+                        clip=false
+                    ]
+                        \addplot[
+                            very thick,
+                            blue!70,
+                            domain=0:5,
+                            samples=120
+                        ] {(x-1.5)^2+0.2};
+
+                        \addplot[
+                            only marks,
+                            mark=*,
+                            mark size=2.1pt,
+                            red!75!black
+                        ] coordinates {
+                            (4.5,9.2)
+                            (3.3,3.44)
+                            (2.58,1.37)
+                            (2.15,0.62)
+                        };
+
+                        \draw[->, thick, red!75!black]
+                            (axis cs:4.5,9.2) -- (axis cs:3.3,3.44);
+                        \draw[->, thick, red!75!black]
+                            (axis cs:3.3,3.44) -- (axis cs:2.58,1.37);
+                        \draw[->, thick, red!75!black]
+                            (axis cs:2.58,1.37) -- (axis cs:2.15,0.62);
+
+                        \node[font=\scriptsize] at (axis cs:4.35,9.65) {\(\theta_0\)};
+                        \node[font=\scriptsize] at (axis cs:3.15,3.95) {\(\theta_1\)};
+                        \node[font=\scriptsize] at (axis cs:2.45,1.85) {\(\theta_2\)};
+
+                        \addplot[
+                            dashed,
+                            gray
+                        ] coordinates {
+                            (1.5,0)
+                            (1.5,0.2)
+                        };
+                    \end{axis}
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+
+    \end{columns}
+    \pause
+    V~jednorozměrném případě:
+    \[
+        \theta_{k+1}
+        =
+        \theta_k-\eta L'(\theta_k),
+    \]
+    kde \(\eta>0\) je velikost kroku.\\[1mm]
+    \pause
+    Pro logistickou regresi: $\displaystyle (a,b)\gets (a,b) - \eta\left(\frac{\partial L}{\partial a},\frac{\partial L}{\partial b}\right)$.
+
+\end{frame}
+
+\subsection{Konkrétní příklad}
+
+\begin{frame}{Příklad}{Zadání klasifikační úlohy}
+    \pause
+    Sledujeme, kolik hodin se student připravoval na test:
+    \[
+        \mathbf{X}=(1,2,3,4,5,6,7,8),\quad \mathbf{Y}=(0,0,0,1,0,1,1,1),
+    \]
+    kde \(y_i=1\) znamená, že student test úspěšně zvládl.
+    \pause
+    \begin{tnoticebox}[8cm]{Naučený model}
+        Trénováním jsme získali logistický model
+        \[
+            \hat p(x)
+            =
+            \frac{1}{1+e^{-(1{,}28x-5{,}77)}}.
+        \]
+    \end{tnoticebox}
+    \pause
+    \begin{tinfoframe}
+        Nyní chceme klasifikovat nového studenta, který se připravoval
+        \(x=5\) hodin.
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Příklad}{Výpočet lineárního skóre}
+    \pause
+    Pro nového studenta s~hodnotou \(x=5\) nejprve vypočítáme
+    lineární skóre:
+    \[
+        z(x)=1{,}28x-5{,}77.
+    \]
+
+    \vspace{2mm}
+    \pause
+    Po dosazení:
+    \[
+        z(5)
+        =
+        1{,}28\cdot 5-5{,}77
+        =
+        6{,}40-5{,}77
+        =
+        0{,}63.
+    \]
+    \pause
+    \begin{timportantframe}
+        Kladné skóre znamená, že model se přiklání ke třídě~\(1\),
+        ale samo o~sobě ještě není výslednou třídou.
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Výpočet výstupu logistické funkce}
+    \pause
+    Lineární skóre převedeme logistickou funkcí:
+    \[
+        \hat p(5)
+        =
+        \frac{1}{1+e^{-0{,}63}}
+        \approx
+        0{,}65.
+    \]
+    \pause
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=0.75\textwidth,
+                height=5cm,
+                xmin=-6, xmax=6,
+                ymin=0, ymax=1,
+                axis lines=middle,
+                xlabel={$z$},
+                ylabel={$\sigma(z)$},
+                xtick={0,0.63},
+                xticklabels={$0$,$0{,}63$},
+                ytick={0,0.5,0.65,1},
+                yticklabels={$0$,$0{,}5$,$0{,}65$,$1$},
+                clip=false
+            ]
+                \addplot[
+                    very thick,
+                    blue!70,
+                    domain=-6:6,
+                    samples=120
+                ] {1/(1+exp(-x))};
+
+                \addplot[dashed, gray] coordinates {
+                    (0.63,0) (0.63,0.652)
+                };
+
+                \addplot[dashed, gray] coordinates {
+                    (-6,0.652) (0.63,0.652)
+                };
+
+                \addplot[
+                    only marks,
+                    mark=*,
+                    mark size=2.2pt,
+                    red!75!black
+                ] coordinates {
+                    (0.63,0.652)
+                };
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}{Příklad}{Přiřazení výsledné třídy}
+    \pause
+    Pro zvolený rozhodovací práh \(t\in(0,1)\) použijeme klasifikátor
+    \[
+        h^{(t)}(x)
+        =
+        \begin{cases}
+            1, & \hat p(x)\geq t,\\[1mm]
+            0, & \hat p(x)<t.
+        \end{cases}
+    \]
+
+    \vspace{2mm}
+    \pause
+    Protože
+    \[
+        \hat p(5)\doteq 0{,}65,
+    \]
+    dostáváme například:
+    \[
+        h^{(0{,}5)}(5)=1,
+        \qquad
+        h^{(0{,}7)}(5)=0.
+    \]
+    \pause
+    \begin{timportantframe}
+        Stejný logistický model může při různých rozhodovacích prazích
+        vést k~různým klasifikacím.
+    \end{timportantframe}
+
+\end{frame}
+
+
+\section{Vyhodnocení klasifikace}
+
+\titleframe{Vyhodnocení klasifikace}
+
+\subsection{Správné a chybné klasifikace}
+
+\begin{frame}{Skutečná a~předpovězená třída}
+    \pause
+    Nechť jsou dány soubory
+    \[
+        \mathbf{X}=(x_1,\dots,x_n),
+        \quad
+        \mathbf{Y}=(y_1,\ldots,y_n),
+        \quad
+        \hat{\mathbf{Y}}^{(t)}
+        =
+        (\hat y_1^{(t)},\ldots,\hat y_n^{(t)}).
+    \]
+    \pause
+    \begin{tnoticebox}{Co porovnáváme?}
+        U~každého objektu porovnáváme skutečnou třídu \(y_i\)
+        s~předpovězenou třídou $\hat y_i^{(t)}=h^{(t)}(x_i)$.
+    \end{tnoticebox}
+
+    \vspace{1mm}
+    \pause
+    \begin{center}
+        \renewcommand{\arraystretch}{1.25}
+        \begin{tabular}{c|c|c|c}
+            objekt & \(x_i\) & skutečnost \(y_i\) & předpověď \(\hat y_i^{(t)}\) \\
+            \hline
+            \(1\) & \(x_1\) & \(1\) & \(1\) \\
+            \(2\) & \(x_2\) & \(0\) & \(1\) \\
+            \(3\) & \(x_3\) & \(0\) & \(0\) \\
+            \(4\) & \(x_4\) & \(1\) & \(0\)
+        \end{tabular}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}{Čtyři možné výsledky}
+    \pause
+    U~binární klasifikace rozlišujeme čtyři případy podle toho,
+    zda je skutečná a~předpovězená třída rovna \(0\) nebo \(1\).
+
+    \vspace{2mm}
+    \pause
+    \begin{center}
+        \renewcommand{\arraystretch}{1.35}
+        \begin{tabular}{c|c|c}
+            skutečnost & předpověď & označení \\
+            \hline
+            \(y_i=1\) & \(\hat y_i^{(t)}=1\)
+                & {\small správně pozitivní výsledek (\markdarkred{true positive}, TP)} \\
+            \(y_i=0\) & \(\hat y_i^{(t)}=0\)
+                & {\small správně negativní výsledek (\markdarkred{true negative}, TN)} \\
+            \(y_i=0\) & \(\hat y_i^{(t)}=1\)
+                & {\small falešně pozitivní výsledek (\markdarkred{false positive}, FP)} \\
+            \(y_i=1\) & \(\hat y_i^{(t)}=0\)
+                & {\small falešně negativní výsledek (\markdarkred{false negative}, FN)}
+        \end{tabular}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}{Počty jednotlivých výsledků}
+    \pause
+    \begin{defblock}
+        Pro statistické soubory \(\mathbf{X}=(x_1,\dots,x_n)\), \(\mathbf{Y}=(y_1,\dots,y_n)\) a~klasifikátor \(h^{(t)}\) definujeme:
+        \[
+            \begin{aligned}
+                \TP_{\mathbf{X},\mathbf{Y}}^{(t)}
+                &=
+                \left|
+                    \set{i:y_i=1,\ h^{(t)}(x_i)=1}
+                \right|,\\
+                \TN_{\mathbf{X},\mathbf{Y}}^{(t)}
+                &=
+                \left|
+                    \set{i:y_i=0,\ h^{(t)}(x_i)=0}
+                \right|,\\
+                \FP_{\mathbf{X},\mathbf{Y}}^{(t)}
+                &=
+                \left|
+                    \set{i:y_i=0,\ h^{(t)}(x_i)=1}
+                \right|,\\
+                \FN_{\mathbf{X},\mathbf{Y}}^{(t)}
+                &=
+                \left|
+                    \set{i:y_i=1,\ h^{(t)}(x_i)=0}
+                \right|.
+            \end{aligned}
+        \]
+    \end{defblock}
+    \pause
+    \begin{timportantframe}[\textwidth]
+        Tyto čtyři hodnoty závisí na statistických souborech
+        \(\mathbf{X},\mathbf{Y}\) i~na zvoleném rozhodovacím prahu \(t\).
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Čtyři možné výsledky binární klasifikace}
+
+    \begin{center}
+        \begin{tikzpicture}[
+            cell/.style={
+                draw,
+                minimum width=3.8cm,
+                minimum height=1.8cm,
+                align=center
+            },
+            lab/.style={font=\small},
+            biglab/.style={font=\bfseries}
+        ]
+
+            % hlavní 2x2 tabulka
+            \node[cell,biglab,fill=green!15] (tp) at (0,0)
+                {$\TP_{\mathbf{X},\mathbf{Y}}^{(t)}$\\[1mm]
+                 \small správně pozitivní\\
+                 \small \(y_i=1,\ h^{(t)}(x_i)=1\)};
+
+            \node[cell,biglab, fill=red!10] (fn) at (3.8,0)
+                {$\FN_{\mathbf{X},\mathbf{Y}}^{(t)}$\\[1mm]
+                 \small falešně negativní\\
+                 \small \(y_i=1,\ h^{(t)}(x_i)=0\)};
+
+            \node[cell,biglab, fill=red!10] (fp) at (0,-1.8)
+                {$\FP_{\mathbf{X},\mathbf{Y}}^{(t)}$\\[1mm]
+                 \small falešně pozitivní\\
+                 \small \(y_i=0,\ h^{(t)}(x_i)=1\)};
+
+            \node[cell,biglab, fill=green!15] (tn) at (3.8,-1.8)
+                {$\TN_{\mathbf{X},\mathbf{Y}}^{(t)}$\\[1mm]
+                 \small správně negativní\\
+                 \small \(y_i=0,\ h^{(t)}(x_i)=0\)};
+
+            % obrys celé tabulky
+            \draw[thick] (-1.9,0.9) rectangle (5.7,-2.7);
+
+            % popisky řádků
+            \node[lab, rotate=90] at (-3.3,-0.9) {skutečná třída};
+            \node[lab] at (-2.6,0) {\(y_i=1\)};
+            \node[lab] at (-2.6,-1.8) {\(y_i=0\)};
+
+            % popisky sloupců
+            \node[lab] at (1.9,1.7) {předpovězená třída};
+            \node[lab] at (0,1.3) {\(h^{(t)}(x_i)=1\)};
+            \node[lab] at (3.8,1.3) {\(h^{(t)}(x_i)=0\)};
+
+        \end{tikzpicture}
+    \end{center}
+
+    \vspace{2mm}
+
+    \begin{tinfoframe}
+        Dobré výsledky odpovídají zeleným polím
+        \(\TP_{\mathbf{X},\mathbf{Y}}^{(t)}\) a~\(\TN_{\mathbf{X},\mathbf{Y}}^{(t)}\),
+        chybné výsledky červeným polím
+        \(\FP_{\mathbf{X},\mathbf{Y}}^{(t)}\) a~\(\FN_{\mathbf{X},\mathbf{Y}}^{(t)}\).
+    \end{tinfoframe}
+
+\end{frame}
+
+\subsection{Správnost klasifikace}
+
+\begin{frame}{Správnost klasifikace}
+    \pause
+    \begin{defblock}[Správnost]
+        \markdarkred{Správností} klasifikátoru \(h^{(t)}\) (anglicky \markdarkred{accuracy}) na statistických souborech
+        \(\mathbf{X},\mathbf{Y}\) rozumíme číslo
+        \[
+            \Accuracy_{\mathbf{X},\mathbf{Y}}^{(t)}
+            =
+            \frac{
+                \TP_{\mathbf{X},\mathbf{Y}}^{(t)}
+                +
+                \TN_{\mathbf{X},\mathbf{Y}}^{(t)}
+            }{
+                \TP_{\mathbf{X},\mathbf{Y}}^{(t)}
+                +
+                \TN_{\mathbf{X},\mathbf{Y}}^{(t)}
+                +
+                \FP_{\mathbf{X},\mathbf{Y}}^{(t)}
+                +
+                \FN_{\mathbf{X},\mathbf{Y}}^{(t)}
+            }.
+        \]
+    \end{defblock}
+    \pause
+    Protože jmenovatel je celkový počet objektů \(n\), můžeme psát také $\Accuracy_{\mathbf{X},\mathbf{Y}}^{(t)}=\frac{\left|\set{i:h^{(t)}(x_i)=y_i}\right|}{n}$.
+    \pause
+    \begin{tinfoframe}
+        Správnost vyjadřuje podíl objektů, které klasifikátor zařadil správně.
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Příklad}{Výpočet správnosti}
+    \pause
+    Předpokládejme, že pro daný práh \(t\) vyšlo
+    \[
+        \begin{aligned}
+            \TP_{\mathbf{X},\mathbf{Y}}^{(t)}&=36,
+            \qquad
+            \TN_{\mathbf{X},\mathbf{Y}}^{(t)}=44,\\
+            \FP_{\mathbf{X},\mathbf{Y}}^{(t)}&=8,
+            \qquad
+            \FN_{\mathbf{X},\mathbf{Y}}^{(t)}=12.
+        \end{aligned}
+    \]
+    \pause
+    \vspace{1mm}
+
+    Celkový počet objektů je
+    \[
+        n=36+44+8+12=100.
+    \]
+    \pause
+    Proto
+    \[
+        \Accuracy_{\mathbf{X},\mathbf{Y}}^{(t)}
+        =
+        \frac{36+44}{100}
+        =
+        0{,}8.
+    \]
+    \pause
+    \begin{timportantframe}[9cm]
+        \begin{center}
+            Klasifikátor tedy správně zařadil \(80\,\%\) objektů.
+        \end{center}
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Kdy může být správnost zavádějící?}
+    \pause
+    \begin{exblock}[Nevyvážené třídy]
+        Představme si test na vzácnou nemoc:
+        \[
+            990 \text{ osob je zdravých},
+            \qquad
+            10 \text{ osob je nemocných}.
+        \]
+        Klasifikátor vždy odpoví "zdravý".
+    \end{exblock}
+
+    \vspace{1mm}
+    \pause
+    Dostaneme
+    \[
+        \TN_{\mathbf{X},\mathbf{Y}}^{(t)}=990,
+        \quad
+        \FN_{\mathbf{X},\mathbf{Y}}^{(t)}=10,
+        \quad
+        \TP_{\mathbf{X},\mathbf{Y}}^{(t)}=0,
+        \quad
+        \FP_{\mathbf{X},\mathbf{Y}}^{(t)}=0.
+    \]
+    \pause
+    \[
+        \Accuracy_{\mathbf{X},\mathbf{Y}}^{(t)}
+        =
+        \frac{990}{1000}
+        =
+        0{,}99.
+    \]
+    \pause
+    \begin{timportantframe}
+        Správnost je \(99\,\%\), ale klasifikátor \textbf{nenašel ani jednoho nemocného člověka}.
+    \end{timportantframe}
+
+\end{frame}
+
+\subsection{Přesnost}
+
+\begin{frame}{Přesnost}
+    \pause
+    \begin{defblock}[Přesnost]
+        \markdarkred{Přesností} klasifikátoru \(h^{(t)}\) (anglicky \markdarkred{precision}) na statistických souborech
+        \(\mathbf{X}\), \(\mathbf{Y}\) rozumíme číslo
+        \[
+            \Precision_{\mathbf{X},\mathbf{Y}}^{(t)}
+            =
+            \frac{
+                \TP_{\mathbf{X},\mathbf{Y}}^{(t)}
+            }{
+                \TP_{\mathbf{X},\mathbf{Y}}^{(t)}
+                +
+                \FP_{\mathbf{X},\mathbf{Y}}^{(t)}
+            },
+        \]
+        pokud je jmenovatel nenulový.
+    \end{defblock}
+    \pause
+    \begin{tinfoframe}
+        Přesnost odpovídá na otázku:
+
+        \[
+            \text{Kolik objektů označených jako třída~\(1\)
+            skutečně patří do třídy~\(1\)?}
+        \]
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Příklad}{Výpočet přesnosti}
+    \pause
+    Předpokládejme, že pro daný práh \(t\) vyšlo
+    \[
+        \TP_{\mathbf{X},\mathbf{Y}}^{(t)}=36,
+        \qquad
+        \FP_{\mathbf{X},\mathbf{Y}}^{(t)}=8.
+    \]
+
+    \vspace{2mm}
+    \pause
+    Klasifikátor označil jako pozitivní celkem $36+8=44$ objektů.
+    \pause
+    \[
+        \Precision_{\mathbf{X},\mathbf{Y}}^{(t)}
+        =
+        \frac{36}{36+8}
+        =
+        \frac{36}{44}
+        \doteq
+        0{,}82.
+    \]
+    \pause
+    \begin{timportantframe}
+        Přibližně \(82\,\%\) objektů označených jako třída~\(1\)
+        bylo skutečně ze třídy~\(1\).
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Kdy je přesnost důležitá?}
+    \pause
+    \begin{exblock}[Automatické blokování zpráv]
+        Představme si klasifikátor, který označuje e-maily jako spam.
+        Pokud označí běžný e-mail jako spam, může uživateli skrýt
+        důležitou zprávu.
+    \end{exblock}
+
+    \vspace{1mm}
+    \pause
+    V~takové situaci chceme, aby mezi zprávami označenými jako spam
+    bylo co nejméně běžných zpráv, tedy aby bylo malé $\FP_{\mathbf{X},\mathbf{Y}}^{(t)}$.
+    \pause
+    \begin{timportantframe}[\textwidth]
+        Vysoká přesnost znamená, že pozitivním předpovědím modelu
+        můžeme poměrně dobře věřit.
+    \end{timportantframe}
+    \pause
+    \begin{tinfoframe}[\textwidth]
+        Samotná přesnost ale nestačí. Model může být velmi přesný,
+        a~přitom najít jen malou část všech skutečně pozitivních objektů.
+    \end{tinfoframe}
+
+\end{frame}
+
+\subsection{Pokrytí}
+
+\begin{frame}{Pokrytí}
+    \pause
+    \begin{defblock}[Pokrytí]
+        \markdarkred{Pokrytím} klasifikátoru \(h^{(t)}\) (anglicky \markdarkred{recall}) na statistických souborech
+        \(\mathbf{X}\), \(\mathbf{Y}\) rozumíme číslo
+        \[
+            \Recall_{\mathbf{X},\mathbf{Y}}^{(t)}
+            =
+            \frac{
+                \TP_{\mathbf{X},\mathbf{Y}}^{(t)}
+            }{
+                \TP_{\mathbf{X},\mathbf{Y}}^{(t)}
+                +
+                \FN_{\mathbf{X},\mathbf{Y}}^{(t)}
+            },
+        \]
+        pokud je jmenovatel nenulový.
+    \end{defblock}
+    \pause
+    \begin{tinfoframe}
+        Pokrytí odpovídá na otázku:
+
+        \[
+            \text{Kolik skutečně pozitivních objektů klasifikátor našel?}
+        \]
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Výpočet pokrytí na příkladu}
+    \pause
+    Předpokládejme, že pro daný práh \(t\) vyšlo
+    \[
+        \TP_{\mathbf{X},\mathbf{Y}}^{(t)}=36,
+        \qquad
+        \FN_{\mathbf{X},\mathbf{Y}}^{(t)}=12.
+    \]
+
+    \vspace{2mm}
+    \pause
+    Skutečně pozitivních objektů bylo celkem $36+12=48$.
+    \pause
+    \[
+        \Recall_{\mathbf{X},\mathbf{Y}}^{(t)}
+        =
+        \frac{36}{36+12}
+        =
+        \frac{36}{48}
+        =
+        0{,}75.
+    \]
+    \pause
+    \begin{timportantframe}[11.5cm]
+        \begin{center}
+            Klasifikátor našel \(75\,\%\) všech skutečně pozitivních objektů.
+        \end{center}
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Přesnost versus pokrytí}
+    \pause
+    Přesnost a~pokrytí sledují různé druhy chyb.
+
+    \vspace{1mm}
+    \pause
+    \begin{center}
+        \renewcommand{\arraystretch}{1.35}
+        \begin{tabular}{c|c|c}
+            metrika & co trestá & otázka \\
+            \hline
+            přesnost &
+            \(\FP_{\mathbf{X},\mathbf{Y}}^{(t)}\) &
+            Kolik pozitivních předpovědí bylo správně? \\
+            pokrytí &
+            \(\FN_{\mathbf{X},\mathbf{Y}}^{(t)}\) &
+            Kolik skutečně pozitivních objektů jsme našli?
+        \end{tabular}
+    \end{center}
+
+    \vspace{1mm}
+    \pause
+    \begin{timportantframe}[\textwidth]
+        Zvýšení rozhodovacího prahu \(t\) obvykle zvyšuje opatrnost modelu:
+        pozitivních předpovědí ubývá, což \textbf{může zvýšit přesnost},
+        ale \textbf{snížit pokrytí}.
+    \end{timportantframe}
+
+\end{frame}
+
+\subsection{F-míra}
+
+\begin{frame}{F-míra}
+    \pause
+    \begin{defblock}[F-míra]
+        Nechť je dán klasifikátor $h^{(t)}$ a statistické soubory $\mathbf{X},\mathbf{Y}$ takové, že jsou definovány hodnoty
+        \[
+            \Precision_{\mathbf{X},\mathbf{Y}}^{(t)}
+            \qquad\text{a}\qquad
+            \Recall_{\mathbf{X},\mathbf{Y}}^{(t)}.
+        \]
+        Pak hodnotu
+        \[
+            \Fscore_{1,\mathbf{X},\mathbf{Y}}^{(t)}
+            =
+            2\cdot
+            \frac{
+                \Precision_{\mathbf{X},\mathbf{Y}}^{(t)}
+                \cdot
+                \Recall_{\mathbf{X},\mathbf{Y}}^{(t)}
+            }{
+                \Precision_{\mathbf{X},\mathbf{Y}}^{(t)}
+                +
+                \Recall_{\mathbf{X},\mathbf{Y}}^{(t)}
+            }
+        \]
+        nazýváme \markdarkred{\(F_1\)-míra} (anglicky \markdarkred{$F_1$-score}).
+    \end{defblock}
+    \pause
+    \begin{tinfoframe}[\textwidth]
+        \(F_1\)-míra kombinuje přesnost a~pokrytí do jednoho čísla.
+        Vysoká hodnota vyžaduje, aby byly vysoké obě metriky.
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{F-míra pomocí \(\TP\), \(\FP\) a~\(\FN\)}
+    \pause
+    \begin{propblock}
+        Pokud jsou jmenovatele nenulové, pak platí
+        \[
+            \Fscore_{1,\mathbf{X},\mathbf{Y}}^{(t)}
+            =
+            \frac{
+                2\TP_{\mathbf{X},\mathbf{Y}}^{(t)}
+            }{
+                2\TP_{\mathbf{X},\mathbf{Y}}^{(t)}
+                +
+                \FP_{\mathbf{X},\mathbf{Y}}^{(t)}
+                +
+                \FN_{\mathbf{X},\mathbf{Y}}^{(t)}
+            }.
+        \]
+    \end{propblock}
+
+    \pause
+    \textbf{Důkaz}: Plyne z definice hodnot $\Precision_{\mathbf{X},\mathbf{Y}}^{(t)}$ a $\Recall_{\mathbf{X},\mathbf{Y}}^{(t)}$.
+
+    \vspace{2mm}
+    \pause
+    \begin{timportantframe}[\textwidth]
+        \(F_1\)-míra nezávisí přímo na počtu správně negativních výsledků
+        \(\TN_{\mathbf{X},\mathbf{Y}}^{(t)}\).
+        Proto bývá užitečnější než správnost u~nevyvážených tříd.
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Příklad}{Výpočet $F_1$-míry}
+    \pause
+    Předpokládejme, že
+    \[
+        \TP_{\mathbf{X},\mathbf{Y}}^{(t)}=36,
+        \qquad
+        \FP_{\mathbf{X},\mathbf{Y}}^{(t)}=8,
+        \qquad
+        \FN_{\mathbf{X},\mathbf{Y}}^{(t)}=12.
+    \]
+    \pause
+    Potom
+    \[
+        \Precision_{\mathbf{X},\mathbf{Y}}^{(t)}
+        =
+        \frac{36}{36+8}
+        \doteq 0{,}82,
+        \qquad
+        \Recall_{\mathbf{X},\mathbf{Y}}^{(t)}
+        =
+        \frac{36}{36+12}
+        =
+        0{,}75.
+    \]
+    \pause
+    \[
+        \Fscore_{1,\mathbf{X},\mathbf{Y}}^{(t)}
+        =
+        2\cdot
+        \frac{0{,}82\cdot 0{,}75}{0{,}82+0{,}75}
+        \doteq
+        0{,}78.
+    \]
+
+    \begin{timportantframe}[\textwidth]
+        Výsledná \(F_1\)-míra je přibližně \(0{,}78\), tedy kompromis
+        mezi přesností a~pokrytím.
+    \end{timportantframe}
+
+\end{frame}
+
+\subsection{Porovnání metrik}
+
+\begin{frame}{Shrnutí metrik}
+
+    \begin{center}
+        \renewcommand{\arraystretch}{1.45}
+        \begin{tabular}{c|c|c}
+            metrika & vzorec & hlavní otázka \\
+            \hline
+            správnost &
+            \(
+            \frac{\TP+\TN}{\TP+\TN+\FP+\FN}
+            \) &
+            Kolik odpovědí bylo správně? \\
+            přesnost &
+            \(
+            \frac{\TP}{\TP+\FP}
+            \) &
+            Kolika pozitivním předpovědím věřit? \\
+            pokrytí &
+            \(
+            \frac{\TP}{\TP+\FN}
+            \) &
+            Kolik pozitivních případů jsme našli? \\
+            \(F_1\)-míra &
+            \(
+            \frac{2\TP}{2\TP+\FP+\FN}
+            \) &
+            Jaký je kompromis přesnosti a~pokrytí?
+        \end{tabular}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}{Příklad}{Společný výpočet metrik}
+    \pause
+    Předpokládejme, že pro daný práh \(t\) platí
+    \[
+        \TP_{\mathbf{X},\mathbf{Y}}^{(t)}=36,\quad
+        \TN_{\mathbf{X},\mathbf{Y}}^{(t)}=44,\quad
+        \FP_{\mathbf{X},\mathbf{Y}}^{(t)}=8,\quad
+        \FN_{\mathbf{X},\mathbf{Y}}^{(t)}=12.
+    \]
+
+    \vspace{1mm}
+    \pause
+    \begin{align*}
+        \Accuracy_{\mathbf{X},\mathbf{Y}}^{(t)}
+        &=
+        \frac{36+44}{36+44+8+12}
+        =
+        0{,}80;\\[1mm]
+        \Precision_{\mathbf{X},\mathbf{Y}}^{(t)}
+        &=
+        \frac{36}{36+8}
+        \doteq
+        0{,}82;\\[1mm]
+        \Recall_{\mathbf{X},\mathbf{Y}}^{(t)}
+        &=
+        \frac{36}{36+12}
+        =
+        0{,}75;\\[1mm]
+        \Fscore_{1,\mathbf{X},\mathbf{Y}}^{(t)}
+        &\doteq
+        0{,}78.
+    \end{align*}
+
+\end{frame}
+
+\begin{frame}{Kterou metriku sledovat?}
+    \pause
+    \begin{center}
+        \renewcommand{\arraystretch}{1.35}
+        \begin{tabular}{p{0.33\textwidth}|p{0.28\textwidth}|p{0.25\textwidth}}
+            situace & nebezpečná chyba & vhodná metrika \\
+            \hline
+            detekce závažné nemoci\pause &
+            nemocný označen jako zdravý\pause &
+            vysoké pokrytí\pause \\
+            \hline
+            automatické blokování e-mailů\pause &
+            běžný e-mail označen jako spam\pause &
+            vysoká přesnost\pause \\
+            \hline
+            obecné vyhodnocení vyvážených tříd\pause &
+            oba typy chyb jsou podobně důležité\pause &
+            správnost nebo \(F_1\)-míra
+        \end{tabular}
+    \end{center}
+    \pause
+    \begin{timportantframe}[\textwidth]
+        Neexistuje jedna nejlepší metrika pro všechny úlohy.
+        Volba metriky závisí na tom, jak "drahé" jsou jednotlivé typy chyb.
+    \end{timportantframe}
+
+\end{frame}
+
+\subsection{Vliv rozhodovacího prahu}
+
+\begin{frame}{Změna rozhodovacího prahu}
+    \pause
+    Logistický model vrací hodnotu \(\hat p(x)\in(0,1)\).
+    Výslednou třídu určuje klasifikátor
+    \[
+        h^{(t)}(x)
+        =
+        \begin{cases}
+            1, & \hat p(x)\geqslant t,\\[1mm]
+            0, & \hat p(x)<t.
+        \end{cases}
+    \]
+    \pause
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=0.78\textwidth,
+                height=4.8cm,
+                xmin=0, xmax=8,
+                ymin=0, ymax=1,
+                axis lines=middle,
+                xlabel={$x$},
+                ylabel={\(\hat p(x)\)},
+                xtick=\empty,
+                ytick={0,0.5,0.75,1},
+                yticklabels={$0$,$0{,}5$,$0{,}75$,$1$},
+                clip=false
+            ]
+                \addplot[
+                    very thick,
+                    blue!70,
+                    domain=0:8,
+                    samples=120
+                ] {1/(1+exp(-(1.2*x-4.6)))};
+
+                \addplot[dashed, gray] coordinates {(0,0.5) (8,0.5)};
+                \addplot[dashed, red!70!black] coordinates {(0,0.75) (8,0.75)};
+
+                \node[font=\scriptsize, gray] at (axis cs:7.3,0.55) {\(t=0{,}5\)};
+                \node[font=\scriptsize, red!70!black] at (axis cs:7.3,0.80) {\(t=0{,}75\)};
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}{Nižší a~vyšší práh}
+
+    \begin{columns}[T,onlytextwidth]
+        \pause
+        \begin{column}{0.48\textwidth}
+            \begin{tinfobox}{Nižší práh}
+                \begin{center}
+                    $t<0{,}5$
+                \end{center}
+                \begin{itemize}
+                    \item více pozitivních předpovědí,
+                    \item obvykle vyšší pokrytí,
+                    \item více falešně pozitivních výsledků.
+                \end{itemize}
+            \end{tinfobox}
+        \end{column}
+        \pause
+        \begin{column}{0.48\textwidth}
+            \begin{tnoticebox}{Vyšší práh}
+                \begin{center}
+                    $t>0{,}5$
+                \end{center}
+                \begin{itemize}
+                    \item méně pozitivních předpovědí,
+                    \item obvykle vyšší přesnost,
+                    \item více falešně negativních výsledků.
+                \end{itemize}
+            \end{tnoticebox}
+        \end{column}
+
+    \end{columns}
+
+    \vspace{2mm}
+    \pause
+    \begin{timportantframe}[\textwidth]
+        Změnou prahu neměníme samotný logistický model \(\hat p(x)\),
+        ale pouze pravidlo, kterým jeho výstup převádíme na třídu.
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Jak zvolit rozhodovací práh?}
+    \pause
+    Rozhodovací práh volíme podle konkrétní úlohy.
+
+    \vspace{1mm}
+    \pause
+    \begin{center}
+        \renewcommand{\arraystretch}{1.35}
+        \begin{tabular}{p{0.35\textwidth}|p{0.48\textwidth}}
+            cíl & vhodná volba prahu \\
+            \hline
+            nechceme přehlédnout pozitivní případy &
+            nižší práh, vyšší pokrytí \\
+            \hline
+            nechceme označovat negativní případy jako pozitivní &
+            vyšší práh, vyšší přesnost \\
+            \hline
+            oba typy chyb jsou podobně důležité &
+            práh volíme podle validačních dat
+        \end{tabular}
+    \end{center}
+    \pause
+    \begin{timportantframe}
+        Práh \(t=0{,}5\) je přirozená výchozí volba, ale nemusí být
+        nejlepší pro každou úlohu.
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Přesnost a~pokrytí při změně prahu}
+    \pause
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=0.78\textwidth,
+                height=5cm,
+                xmin=0.1, xmax=0.9,
+                ymin=0, ymax=1,
+                axis lines=left,
+                xlabel={rozhodovací práh \(t\)},
+                ylabel={hodnota metriky},
+                xtick={0.2,0.5,0.8},
+                ytick={0,0.5,1},
+                yticklabels={$0$,$0{,}5$,$1$},
+                legend pos=south east,
+                clip=false
+            ]
+                \addplot[
+                    very thick,
+                    blue!70,
+                    domain=0.1:0.9,
+                    samples=80
+                ] {0.45+0.5*x};
+
+                \addlegendentry{přesnost}
+
+                \addplot[
+                    very thick,
+                    orange!85!black,
+                    domain=0.1:0.9,
+                    samples=80
+                ] {1.05-0.75*x};
+
+                \addlegendentry{pokrytí}
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \pause
+    \begin{tinfoframe}[\textwidth]
+        Graf je pouze ilustrační. Typicky však platí, že zvýšení prahu
+        zvyšuje opatrnost modelu a~mění poměr mezi přesností a~pokrytím.
+    \end{tinfoframe}
+
+\end{frame}
+
+\subsection{Vyhodnocování na neznámých datech}
+
+\subsection{Vyhodnocení na neznámých datech}
+
+\begin{frame}{Proč nestačí trénovací data?}
+    \pause
+    \begin{talertbox}[\textwidth]{Problém}
+        Pokud model hodnotíme na stejných datech, na kterých jsme ho učili,
+        můžeme získat příliš optimistický výsledek.
+    \end{talertbox}
+
+    \vspace{2mm}
+    \pause
+    Model se totiž může naučit nejen obecný vztah mezi \(\mathbf{X}\)
+    a~\(\mathbf{Y}\), ale také náhodné zvláštnosti trénovacích dat.
+
+    \vspace{2mm}
+    \pause
+    \begin{timportantframe}[\textwidth]
+        Důležité není pouze to, jak model funguje na známých datech,
+        ale především to, jak bude fungovat na nových objektech.
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Rozdělení dat}
+    \pause
+    \begin{center}
+        \begin{tikzpicture}[
+            part/.style={
+                draw,
+                minimum height=1.1cm,
+                align=center
+            }
+        ]
+            \node[part, fill=blue!10, minimum width=4.2cm] at (0,0)
+                {trénovací část\\\small učení modelu};
+
+            \node[part, fill=orange!12, minimum width=2.8cm] at (3.5,0)
+                {validační část\\\small volba nastavení};
+
+            \node[part, fill=green!12, minimum width=2.8cm] at (6.3,0)
+                {testovací část\\\small závěrečné hodnocení};
+
+            \draw[thick] (-2.1,0.55) rectangle (7.7,-0.55);
+        \end{tikzpicture}
+    \end{center}
+
+    \vspace{2mm}
+    \pause
+    Data často rozdělíme na tři části:
+    \begin{itemize}
+        \item \markdarkred{trénovací data} slouží k~učení parametrů modelu,\pause
+        \item \markdarkred{validační data} slouží k~volbě nastavení modelu,\pause
+        \item \markdarkred{testovací data} slouží k~nezávislému závěrečnému hodnocení.
+    \end{itemize}
+
+\end{frame}
+
+
+\section{Algoritmus $k$-NN}
+
+\titleframe{Algoritmus $k$-NN}
+
+\subsection{Základní myšlenka}
+
+\subsection{Algoritmus $k$-NN}
+
+\subsection{Volba parametru $k$}
+
+\subsection{Vzdálenost mezi objekty}
+
+\subsection{Vlastnosti $k$-NN}
+
+
+\section{Rozhodovací stromy}
+
+\titleframe{Rozhodovací stromy}
+
+\subsection{Stavba rozhodovacího stromu}
+
+\subsection{Klasifikace pomocí stromu}
+
+\subsection{Rozdělení prostoru příznaků}
+
+\subsection{Čistota uzlu}
+
+\subsection{Entropie}
+
+\subsection{Informační zisk}
+
+\subsection{Konstrukce stromu}
+
+\subsection{Přeučení rozhodovacího stromu}
+
+\subsection{Vlastnosti rozhodovacích stromů}
 
 \end{document}
