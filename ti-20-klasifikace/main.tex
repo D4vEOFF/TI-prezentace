@@ -2609,21 +2609,15 @@
 
 \begin{frame}{Množina \(k\) nejbližších sousedů}
     \pause
-    \begin{defblock}[Vzdálenost objektů]
-        Nechť jsou dány vstupní statistické soubory
-        \[
-            \mathbf{X}_1,\mathbf{X}_2,\ldots,\mathbf{X}_p
-        \]
-        a~nechť $\mathbf{x}_i=(x_{i1},x_{i2},\ldots,x_{ip})$ je vektor hodnot $i$-tého objektu.
-
-        Vzdálenost dvou objektů budeme značit $d(\mathbf{x}_i,\mathbf{x}_j)$.
+    \begin{defblock}[Vzdálenost objektů (vektorů)]
+        Nechť jsou dány vektory $\mathbf{x},\mathbf{y}\in\R^{p}$. Pak jejich vzdálenost budeme značit $d(\mathbf{x},\mathbf{y})$.
     \end{defblock}
 
     \vspace{1mm}
     \pause
     \begin{defblock}[\(k\) nejbližších sousedů]
-        Pro libovolný vektor \(\mathbf{x}\in\mathbb{R}^p\) seřaďme indexy
-        trénovacích objektů $\mathbf{x}_i$ tak, aby
+        Nechť jsou dány vstupní statistické soubory $\mathbf{X}_1,\dots,\mathbf{X}_p$. Pro libovolný vektor \(\mathbf{x}\in\mathbb{R}^p\) seřaďme indexy
+        objektů $\mathbf{x}_i=(x_{i1},\dots,x_{ip})$ tak, aby
         \[
             d(\mathbf{x},\mathbf{x}_{\pi(1)})
             \leqslant
