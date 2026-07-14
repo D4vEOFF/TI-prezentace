@@ -403,8 +403,8 @@
         E(a)
         =
         \sum_{i=1}^n
-        (y_i-\average{\mathbf{Y}})^2 -2a\sum_{i=1}^n
-        (x_i-\average{\mathbf{X}})(y_i-\average{\mathbf{Y}})+a^2\sum_{i=1}^n (x_i-\average{\mathbf{X}})^2.
+        (y_i-\average{\mathbf{Y}})^2 -\boxed{a}\cdot 2\sum_{i=1}^n
+        (x_i-\average{\mathbf{X}})(y_i-\average{\mathbf{Y}})+\boxed{a^2}\sum_{i=1}^n (x_i-\average{\mathbf{X}})^2.
     \]
 \end{frame}
 
@@ -432,7 +432,7 @@
             (x_i-\average{\mathbf{X}})^2
             }
             =
-            \frac{\Cov(\mathbf{X},\mathbf{Y})}{\Var(\mathbf{X})}.
+            \boxed{\frac{\Cov(\mathbf{X},\mathbf{Y})}{\Var(\mathbf{X})}}.
         \]\pause
         \item Jakmile známe $a$, dopočítáme
         \[
@@ -550,7 +550,7 @@
 
 \begin{frame}{Korelace jako směrnice po standardizaci}
     \pause
-    Definujme standardizované hodnoty souborů $\mathbf{X}$ a~$\mathbf{X}$
+    Definujme standardizované hodnoty souborů $\mathbf{X}$ a~$\mathbf{Y}$
     \[
         u_i=
         \frac{x_i-\average{\mathbf{X}}}{\sigma_\mathbf{X}},
@@ -574,8 +574,7 @@
     \pause
     \begin{itemize}
         \item Korelační koeficient nemá jednotky.\pause
-        \item Změna jednotek nezmění korelační koeficient.\pause
-        \item Změna jednotek může změnit směrnici původní přímky.
+        \item Změna jednotek nezmění korelační koeficient.
     \end{itemize}
 \end{frame}
 
@@ -603,7 +602,7 @@
         \pause
         \item Pokud $\rho_{\mathbf{X}\mathbf{Y}}=0$, potom
         \[
-            \MSE_{\mathbf{X},\mathbf{Y}}(f)=\sigma_\mathbf{Y}^2.
+            \MSE_{\mathbf{X},\mathbf{Y}}(f)=\sigma_\mathbf{Y}^2=\Var(\mathbf{Y}).
         \]
         Nejlepší lineární model se nezlepší oproti konstantnímu modelu.
     \end{itemize}
@@ -625,7 +624,7 @@
     \begin{defblock}[Koeficient determinace]
         Nechť jsou dány soubory $\mathbf X=(x_1,\ldots,x_n)$ a $\mathbf Y=(y_1,\ldots,y_n)$, kde $\sigma_\mathbf{Y}>0$ a~dále $f$ je jejich regresní přímka. \markdarkred{Koeficient determinace} modelu $f$ definujeme jako
         \[
-            R^2=1-\frac{\MSE_{\mathbf X,\mathbf Y}(f)}{\MSE_{\mathbf X,\mathbf Y}(x\mapsto\average{\mathbf{Y}})}=1-\frac{\MSE_{\mathbf X,\mathbf Y}(f)}{\sigma_{\mathbf{Y}}^{2}}.
+            R^2=1-\frac{\MSE_{\mathbf X,\mathbf Y}(f)}{\MSE_{\mathbf X,\mathbf Y}(x\mapsto\average{\mathbf{Y}})}=1-\frac{\MSE_{\mathbf X,\mathbf Y}(f)}{\Var{\mathbf{Y}}}.
         \]
     \end{defblock}
     \pause
@@ -998,7 +997,7 @@ coordinates {
         \frac{
             \Cov(\mathbf X,\mathbf Y)
         }{
-            \sigma_X\sigma_Y
+            \sigma_\mathbf{X}\sigma_\mathbf{Y}
         }=
         \frac{1{,}8}{\sqrt2\sqrt2}
         =
@@ -1145,6 +1144,72 @@ coordinates {
     \begin{tinfoframe}
         Regrese odpovídá na otázku "jak spolu hodnoty souvisí v~datech", nikoli automaticky na~otázku "co je příčinou čeho".
     \end{tinfoframe}
+\end{frame}
+
+\section{Shrnutí}
+
+\begin{frame}{Shrnutí}
+    \pause
+    \begin{itemize}
+        \item \textbf{Lineární regrese} hledá přímku
+        \[
+            f(x)=ax+b,
+        \]
+        která co nejlépe odhaduje hodnoty souboru $\mathbf Y$
+        z hodnot souboru $\mathbf X$.\pause
+
+        \item Koeficienty určujeme \textbf{metodou nejmenších čtverců},
+        tedy minimalizujeme
+        \[
+            \MSE_{\mathbf X,\mathbf Y}(f)
+            =
+            \frac1n\sum_{i=1}^n
+            (y_i-f(x_i))^2.
+        \]
+        \pause
+        \item Nejlepší regresní přímka prochází bodem $(\average{\mathbf{X}},\average{\mathbf{Y}})$ a~její koeficienty jsou
+        \[
+            a=
+            \frac{\Cov(\mathbf X,\mathbf Y)}
+                 {\Var(\mathbf X)}
+            =
+            \rho_{\mathbf{X}\mathbf{Y}}\frac{\sigma_Y}{\sigma_X},
+            \qquad
+            b=\average{\mathbf{Y}}-a\average{\mathbf{X}}.
+        \]
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Shrnutí}
+    \pause
+    \begin{itemize}
+        \item \textbf{Koeficient determinace} porovnává regresní přímku $f$ s~nejlepším konstantním modelem $c(x)=\average{\mathbf{Y}}$:
+        \[
+            R^2
+            =
+            1-
+            \frac{
+                \MSE_{\mathbf X,\mathbf Y}(f)
+            }{
+                \MSE_{\mathbf X,\mathbf Y}
+                (x\mapsto\average{\mathbf{Y}})
+            }.
+        \]
+    \end{itemize}
+    \pause
+    \begin{timportantframe}
+        Pro jednoduchou lineární regresi platí
+        \[
+            \boxed{R^2=\rho_{\mathbf{X}\mathbf{Y}}^2}.
+        \]
+        Čím je $R^2$ blíže jedné, tím větší část chyby konstantního modelu odstraníme použitím regresní přímky.
+    \end{timportantframe}
+    \pause
+    \begin{talertframe}
+        Lineární regrese zachycuje pouze lineární vztah, je citlivá na~odlehlé hodnoty a~sama o~sobě nedokazuje příčinnou souvislost.
+    \end{talertframe}
+    
 \end{frame}
 
 \section{Zdroje}
