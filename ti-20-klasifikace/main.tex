@@ -2025,23 +2025,20 @@
     \begin{defblock}[F-míra]
         Nechť je dán klasifikátor $h^{(t)}$ a statistické soubory $\mathbf{X},\mathbf{Y}$ takové, že jsou definovány hodnoty
         \[
-            \Precision_{\mathbf{X},\mathbf{Y}}^{(t)}
+            \Precision_{\mathbf{X},\mathbf{Y}}^{(t)}\neq 0
             \qquad\text{a}\qquad
-            \Recall_{\mathbf{X},\mathbf{Y}}^{(t)}.
+            \Recall_{\mathbf{X},\mathbf{Y}}^{(t)}\neq 0.
         \]
         Pak hodnotu
         \[
             \Fscore_{1,\mathbf{X},\mathbf{Y}}^{(t)}
             =
-            2\cdot
             \frac{
-                \Precision_{\mathbf{X},\mathbf{Y}}^{(t)}
-                \cdot
-                \Recall_{\mathbf{X},\mathbf{Y}}^{(t)}
+                2
             }{
-                \Precision_{\mathbf{X},\mathbf{Y}}^{(t)}
+                (\Precision_{\mathbf{X},\mathbf{Y}}^{(t)})^{-1}
                 +
-                \Recall_{\mathbf{X},\mathbf{Y}}^{(t)}
+                (\Recall_{\mathbf{X},\mathbf{Y}}^{(t)})^{-1}
             }
         \]
         nazýváme \markdarkred{\(F_1\)-míra} (anglicky \markdarkred{$F_1$-score}).
@@ -2390,8 +2387,6 @@
 
 \subsection{Vyhodnocování na neznámých datech}
 
-\subsection{Vyhodnocení na neznámých datech}
-
 \begin{frame}{Proč nestačí trénovací data?}
     \pause
     \begin{talertbox}[\textwidth]{Problém}
@@ -2417,22 +2412,32 @@
     \pause
     \begin{center}
         \begin{tikzpicture}[
-            part/.style={
+            >=stealth,
+            box/.style={
                 draw,
-                minimum height=1.1cm,
+                rounded corners=2mm,
+                minimum width=25mm,
+                minimum height=11mm,
                 align=center
+            },
+            arr/.style={
+                ->,
+                thick,
+                rounded corners=2mm
             }
         ]
-            \node[part, fill=blue!10, minimum width=4.2cm] at (0,0)
-                {trénovací část\\\small učení modelu};
+            \node[box, fill=blue!10] (train) at (-3.5,0)
+                {trénovací část\\\scriptsize učení modelu};
 
-            \node[part, fill=orange!12, minimum width=2.8cm] at (3.5,0)
-                {validační část\\\small volba nastavení};
+            \node[box, fill=orange!12] (validate) at (0,0)
+                {validační část\\\scriptsize volba nastavení};
 
-            \node[part, fill=green!12, minimum width=2.8cm] at (6.3,0)
-                {testovací část\\\small závěrečné hodnocení};
+            \node[box, fill=green!12] (test) at (3.5,0)
+                {testovací část\\\scriptsize závěrečné hodnocení};
+            
+            \draw[arr] (train) -- (validate);
+            \draw[arr] (validate) -- (test);
 
-            \draw[thick] (-2.1,0.55) rectangle (7.7,-0.55);
         \end{tikzpicture}
     \end{center}
 
@@ -2447,6 +2452,59 @@
 
 \end{frame}
 
+\begin{frame}{Validační data}
+    \pause
+    \begin{tnoticebox}{K~čemu slouží validace?}
+        Validační data používáme k~volbě parametrů, jejichž hodnota není výsledkem trénování modelu.
+    \end{tnoticebox}
+
+    \vspace{1mm}
+    \pause
+    Například můžeme pomocí validačních dat volit:
+    \begin{itemize}
+        \item rozhodovací práh \(t\),\pause
+        \item hodnotu \(k\) u~metody \(k\)-NN (viz později),\pause
+        \item maximální hloubku rozhodovacího stromu (viz později),\pause
+        \item vhodnou hodnoticí metriku pro danou úlohu.
+    \end{itemize}
+    \pause
+    \begin{timportantframe}
+        Na validačních datech model ladíme. Proto je nepoužíváme jako
+        poslední nezávislý odhad kvality modelu.
+    \end{timportantframe}
+\end{frame}
+
+\begin{frame}{Testovací data}
+    \pause
+    \begin{tnoticebox}{Závěrečné hodnocení}
+        Testovací data použijeme až ve chvíli, kdy je model i~jeho nastavení
+        \textbf{pevně zvoleno}.
+    \end{tnoticebox}
+
+    \vspace{1mm}
+    \pause
+    Na testovacích datech spočítáme například
+    \[
+        \begin{aligned}
+            &\Accuracy_{\mathbf{X}_{\mathrm{test}},
+            \mathbf{Y}_{\mathrm{test}}}^{(t)},
+            \qquad
+            \Precision_{\mathbf{X}_{\mathrm{test}},
+            \mathbf{Y}_{\mathrm{test}}}^{(t)},\\
+            &\Recall_{\mathbf{X}_{\mathrm{test}},
+            \mathbf{Y}_{\mathrm{test}}}^{(t)},
+            \qquad
+            \Fscore_{1,\mathbf{X}_{\mathrm{test}},
+            \mathbf{Y}_{\mathrm{test}}}^{(t)}.
+        \end{aligned}
+    \]
+    \pause
+    \begin{timportantframe}[\textwidth]
+        Výsledek na testovacích datech je nejlepší odhad toho,
+        jak bude model fungovat na nových datech.
+    \end{timportantframe}
+
+\end{frame}
 
 \section{Algoritmus $k$-NN}
 
@@ -2454,7 +2512,262 @@
 
 \subsection{Základní myšlenka}
 
+\begin{frame}{Myšlenka metody \(k\)-NN}
+    \pause
+    \begin{tnoticebox}[8.5cm]{Základní intuice}
+        \begin{center}
+            "Podobné" objekty mají často stejnou třídu.
+        \end{center}
+    \end{tnoticebox}
+    \pause
+    Metoda \textbf{\(k\) nejbližších sousedů} (\markdarkred{\(k\)-nearest neighbors}, \(k\)-NN) klasifikuje nový objekt
+    podle tříd nejbližších objektů z~trénovacích dat.
+    \pause
+    \[
+        \mathbf{X}=(x_1,\ldots,x_n),
+        \qquad
+        \mathbf{Y}=(y_1,\ldots,y_n).
+    \]
+    \pause
+    \begin{tinfoframe}[\textwidth]
+        Na rozdíl od logistické regrese zde nehledáme vzorec
+        \(\hat p(x)\). Při klasifikaci přímo porovnáváme nový objekt
+        s~trénovacími objekty.
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Nejbližší soused}
+    \pause
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=0.78\textwidth,
+                height=5.4cm,
+                xmin=0, xmax=10,
+                ymin=0, ymax=6,
+                axis lines=left,
+                xlabel={$x_1$},
+                ylabel={$x_2$},
+                xtick=\empty,
+                ytick=\empty,
+                clip=false
+            ]
+
+                \addplot[
+                    only marks,
+                    mark=*,
+                    mark size=2.2pt,
+                    blue!70
+                ] coordinates {
+                    (1,1) (2,1.4) (2.8,0.9) (3.1,2.1)
+                };
+
+                \addplot[
+                    only marks,
+                    mark=*,
+                    mark size=2.2pt,
+                    orange!85!black
+                ] coordinates {
+                    (6.2,3.8) (7.1,4.5) (8,3.7) (7.5,5.2)
+                };
+
+                \addplot[
+                    only marks,
+                    mark=*,
+                    mark size=3pt,
+                    red!75!black
+                ] coordinates {
+                    (5.7,3.3)
+                };
+
+                \draw[dashed, thick, red!75!black]
+                    (axis cs:5.7,3.3) -- (axis cs:6.2,3.8);
+
+                \node[font=\small, red!75!black] at (axis cs:5.2,2.90)
+                    {nový objekt};
+
+                \node[font=\small, blue!70!black] at (axis cs:2.3,0.35)
+                    {třída~\(0\)};
+
+                \node[font=\small, orange!85!black] at (axis cs:7.5,5.75)
+                    {třída~\(1\)};
+
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \pause
+    \begin{timportantframe}[11.0cm]
+        \begin{center}
+            Při \(k=1\) rozhoduje pouze jeden nejbližší trénovací objekt.
+        \end{center}
+    \end{timportantframe}
+
+\end{frame}
+
 \subsection{Algoritmus $k$-NN}
+
+\begin{frame}{Množina \(k\) nejbližších sousedů}
+    \pause
+    \begin{defblock}[Vzdálenost objektů]
+        Nechť jsou dány vstupní statistické soubory
+        \[
+            \mathbf{X}_1,\mathbf{X}_2,\ldots,\mathbf{X}_p
+        \]
+        a~nechť $\mathbf{x}_i=(x_{i1},x_{i2},\ldots,x_{ip})$ je vektor hodnot $i$-tého objektu.
+
+        Vzdálenost dvou objektů budeme značit $d(\mathbf{x}_i,\mathbf{x}_j)$.
+    \end{defblock}
+
+    \vspace{1mm}
+    \pause
+    \begin{defblock}[\(k\) nejbližších sousedů]
+        Pro libovolný vektor \(\mathbf{x}\in\mathbb{R}^p\) seřaďme indexy
+        trénovacích objektů $\mathbf{x}_i$ tak, aby
+        \[
+            d(\mathbf{x},\mathbf{x}_{\pi(1)})
+            \leqslant
+            d(\mathbf{x},\mathbf{x}_{\pi(2)})
+            \leqslant
+            \cdots
+            \leqslant
+            d(\mathbf{x},\mathbf{x}_{\pi(n)}).
+        \]
+        Potom definujeme $N_k(\mathbf{x})=\set{\pi(1),\pi(2),\ldots,\pi(k)}$.
+    \end{defblock}
+
+\end{frame}
+
+\begin{frame}{Klasifikátor \(k\)-NN}
+    \pause
+    \begin{itemize}
+        \item Nechť jsou dány vstupní statistické soubory $\mathbf{X}_1,\mathbf{X}_2,\ldots,\mathbf{X}_p$ a~výstupní statistický soubor
+        \[
+            \mathbf{Y}=(y_1,y_2,\ldots,y_n),
+            \qquad
+            y_i\in\mathcal{Y}.
+        \]\pause
+        \item Klasifikátor \(k\)-NN přiřadí novému objektu
+        \(\mathbf{x}\in\mathbb{R}^p\) třídu, která se mezi jeho
+        \(k\) nejbližšími sousedy vyskytuje nejčastěji:
+        \[
+            h_k(\mathbf{x})
+            =
+            \operatorname*{arg\,max}_{c\in\mathcal{Y}}
+            \left|
+                \set{i\in N_k(\mathbf{x}):y_i=c}
+            \right|.
+        \]\pause
+        \item Pokud nastane shoda hlasů, je nutné použít předem zvolené pravidlo. U~binární klasifikace se proto často volí liché \(k\).
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Algoritmus \(k\)-NN pro $\mathbf{X}_1,\mathbf{X}_2,\mathbf{Y}$}
+
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=9cm,
+                height=7.8cm,
+                xmin=0.5, xmax=8,
+                ymin=0.5, ymax=5.2,
+                axis lines=left,
+                axis equal image,
+                xlabel={$x_1$},
+                ylabel={$x_2$},
+                xtick=\empty,
+                ytick=\empty,
+                clip=false,
+                legend style={
+                    at={(1.3,0.02)},
+                    anchor=south east,
+                    font=\small
+                }
+            ]
+
+                % třída 0
+                \addplot[
+                    only marks,
+                    mark=*,
+                    mark size=2.2pt,
+                    blue!70
+                ] coordinates {
+                    (1.2,1.1)
+                    (1.9,2.0)
+                    (2.8,1.4)
+                    (3.6,2.5)
+                    (4.2,1.8)
+                    (2.4,3.0)
+                };
+                \addlegendentry{třída~\(0\)}
+
+                % třída 1
+                \addplot[
+                    only marks,
+                    mark=square*,
+                    mark size=2.4pt,
+                    orange!85!black
+                ] coordinates {
+                    (5.0,3.3)
+                    (5.7,2.7)
+                    (5.9,4.1)
+                    (6.7,3.4)
+                    (7.4,4.5)
+                    (6.2,1.9)
+                };
+                \addlegendentry{třída~\(1\)}
+
+                % nový objekt
+                \addplot[
+                    only marks,
+                    mark=diamond*,
+                    mark size=3.4pt,
+                    red!75!black
+                ] coordinates {
+                    (4.8,2.4)
+                };
+                \addlegendentry{nový objekt \(\mathbf{x}\)}
+
+                % zvýraznění 5 nejbližších sousedů
+                \addplot[
+                    only marks,
+                    mark=o,
+                    mark size=5.2pt,
+                    black,
+                    line width=0.9pt
+                ] coordinates {
+                    (4.2,1.8)
+                    (3.6,2.5)
+                    (5.0,3.3)
+                    (5.7,2.7)
+                    (6.2,1.9)
+                };
+
+                % spojnice k 5 nejbližším sousedům
+                \draw[dashed, thick, gray]
+                    (axis cs:4.8,2.4) -- (axis cs:4.2,1.8);
+                \draw[dashed, thick, gray]
+                    (axis cs:4.8,2.4) -- (axis cs:3.6,2.5);
+                \draw[dashed, thick, gray]
+                    (axis cs:4.8,2.4) -- (axis cs:5.0,3.3);
+                \draw[dashed, thick, gray]
+                    (axis cs:4.8,2.4) -- (axis cs:5.7,2.7);
+                \draw[dashed, thick, gray]
+                    (axis cs:4.8,2.4) -- (axis cs:6.2,1.9);
+
+                % popisek nového objektu
+                \node[
+                    font=\small,
+                    red!75!black,
+                    anchor=west
+                ] at (axis cs:4.95,2.15) {\(\mathbf{x}\)};
+
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+
+\end{frame}
 
 \subsection{Volba parametru $k$}
 
