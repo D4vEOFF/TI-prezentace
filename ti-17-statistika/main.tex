@@ -987,6 +987,76 @@ nejsou v tak rozdílném měřítku.
 
 \end{frame}
 
+\section{Min-max normalizace dat}
+
+\titleframe{Min-max normalizace dat}
+
+\begin{frame}{Min-max normalizace}
+
+\pause
+\begin{defblock}[Min-max normalizace]
+Mějme statistický soubor $\mathbf{X}=(x_1,\ldots,x_n)$ a označme
+\[
+m=\min_i x_i,\qquad M=\max_i x_i.
+\]
+Je-li $M>m$, definujeme min-max normalizované hodnoty jako
+\[
+u_i=\frac{x_i-m}{M-m}.
+\]
+\end{defblock}
+
+\pause
+\begin{itemize}
+    \item Nejmenší hodnota se zobrazí na~$0$.
+    \item Největší hodnota se zobrazí na~$1$.
+    \item Všechny ostatní hodnoty leží mezi nimi.
+\end{itemize}
+
+\pause
+\begin{timportantframe}
+Min-max normalizace převádí data do intervalu $\langle 0,1\rangle$.
+\end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Příklad}{Min-max normalizace}
+
+\pause
+Použijme opět soubor poledních teplot:
+\[
+\mathbf{T}=(18,20,20,21,26).
+\]
+
+\pause
+Platí
+\[
+m=18,\qquad M=26,\qquad M-m=8.
+\]
+
+\pause
+\[
+\begin{aligned}
+    \mathbf{U}
+    &=
+    \left(
+    \frac{18-18}{8},
+    \frac{20-18}{8},
+    \frac{20-18}{8},
+    \frac{21-18}{8},
+    \frac{26-18}{8}
+    \right)\\
+    &=(0;\ 0{,}25;\ 0{,}25;\ 0{,}375;\ 1).
+\end{aligned}
+\]
+
+\pause
+\begin{tinfoframe}
+Původní teploty ve~stupních Celsia jsme převedli na~bezrozměrné hodnoty
+v~intervalu $\langle 0,1\rangle$.
+\end{tinfoframe}
+
+\end{frame}
+
 \section{Korelace}
 
 \titleframe{Korelace}
