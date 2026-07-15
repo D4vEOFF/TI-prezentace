@@ -10,6 +10,617 @@
 
 \begin{document}
 
-    \input{../titlepage.tex}
+\input{../titlepage.tex}
+
+\section{Úvod}
+
+\titleframe{Úvod do neuronových sítí}
+
+\subsection{Motivace}
+
+\begin{frame}{Proč neuronové sítě?}
+    \pause
+    \begin{columns}[T]
+        \begin{column}{0.56\textwidth}
+            \begin{itemize}
+                \item V~předchozích prezentacích jsme viděli, že modely se mohou učit z~dat.
+                \pause
+                \item Některé vztahy v~datech jsou ale příliš složité pro jednoduchý lineární model.
+                \pause
+                \item Neuronové sítě umožňují skládat více jednoduchých výpočtů za sebou.
+                \pause
+                \item Díky tomu mohou modelovat i~složitější nelineární vztahy.
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.40\textwidth}
+            \centering
+            \begin{tikzpicture}[
+                >=stealth,
+                box/.style={
+                    draw,
+                    rounded corners=2mm,
+                    minimum width=25mm,
+                    minimum height=11mm,
+                    align=center
+                },
+                arr/.style={
+                    ->,
+                    thick,
+                    rounded corners=2mm
+                },
+                node distance=8mm,
+                every node/.style={font=\small}
+            ]
+                \node[box] (data) {data};
+                \node[box, below=of data] (model) {model};
+                \node[box, below=of model] (zaver) {závěr};
+
+                \draw[arr] (data) -- (model);
+                \draw[arr] (model) -- (zaver);
+            \end{tikzpicture}
+        \end{column}
+    \end{columns}
+
+    \pause
+
+    \begin{timportantbox}[0.94\textwidth]{Základní myšlenka}
+        Neuronová síť je model složený z~mnoha jednoduchých výpočetních jednotek,
+        jejichž propojení a~váhy se nastavují během učení.
+    \end{timportantbox}
+
+\end{frame}
+
+
+\begin{frame}{Co již víme\dots}
+    \pause
+    \begin{tinfobox}[\textwidth]{Připomenutí}
+        V~úlohách učení s~učitelem (anglicky
+        \markdarkred{supervised learning}) pracujeme se statistickými soubory $\mathbf{X}_1,\mathbf{X}_2,\ldots,\mathbf{X}_p$
+        a~se statistickým souborem očekávaných výstupů $\mathbf{Y}$.
+    \end{tinfobox}
+
+    \pause
+
+    Pro \(i\)-tý datový záznam získáme vektor dat
+    \[
+        \mathbf{x}_i
+        =
+        (x_{i1},x_{i2},\ldots,x_{ip}),
+    \]
+    kterému odpovídá očekávaný výstup \(y_i\).
+
+    \pause
+    \vspace{2mm}
+    \centering
+    \begin{tikzpicture}[
+        >=stealth,
+        box/.style={
+            draw,
+            rounded corners=2mm,
+            minimum width=25mm,
+            minimum height=11mm,
+            align=center
+        },
+        arr/.style={
+            ->,
+            thick,
+            rounded corners=2mm
+        },
+        node distance=10mm,
+        every node/.style={font=\small}
+    ]
+        \node[box] (input) {
+            vektor dat\\
+            \(\mathbf{x}_i\)
+        };
+
+        \node[box, right=of input] (model) {
+            model
+        };
+
+        \node[box, right=of model] (output) {
+            vypočtený výstup\\
+            \(\hat{y}_i\)
+        };
+
+        \node[box, below=8mm of output] (expected) {
+            očekávaný výstup\\
+            \(y_i\)
+        };
+
+        \draw[arr] (input) -- (model);
+        \draw[arr] (model) -- (output);
+        \draw[arr] (expected) -- (output);
+    \end{tikzpicture}
+
+\end{frame}
+
+\subsection{Biologický neuron}
+
+\begin{frame}{Neuron jako biologická inspirace}
+    \pause
+    \begin{itemize}
+        \item Neuron je buňka nervové soustavy, která zpracovává a~předává signály.
+        \pause
+        \item Signály přijímá pomocí dendritů.
+        \pause
+        \item Zpracovaný signál je veden dále axonem.
+        \pause
+        \item Ke komunikaci mezi neurony dochází pomocí synaptických spojů.
+    \end{itemize}
+
+    \pause
+
+    \begin{timportantbox}[\textwidth]{Myšlenka pro informatiku}
+        Biologický neuron slouží jako inspirace pro jednoduchý výpočetní model.
+    \end{timportantbox}
+
+\end{frame}
+
+\begin{frame}{Schéma biologického neuronu}
+    \centering
+    \begin{tikzpicture}[
+        >=stealth,
+        arr/.style={
+            ->,
+            thick,
+            rounded corners=2mm,
+            red
+        },
+    ]
+        
+        \node at (0,0) {\includegraphics[width=12cm]{images/neuron.png}};
+
+        % Dendrity
+        \node (dentrites) at (-3,-3) {Dendrity};
+        \draw[arr] (dentrites) -- (-3.5,-2);
+        \draw[arr] (dentrites) -- (-2.7,-2);
+
+        % Cell body
+        \node (cellbody) at (-1.2,0.8) {Tělo buňky};
+        \draw[arr] (cellbody) -- (-3,-0.3);
+
+        % Axon trunk
+        \node (cellbody) at (1,-2.5) {Axonové vlákno};
+        \draw[arr] (cellbody) -- (0.7,-1.2);
+
+        % Synapses
+        \node (synapses) at (4.5,3) {Synapse};
+        \draw[arr] (synapses) -- (3.2,2.1);
+        \draw[arr] (synapses) -- (4,1);
+
+    \end{tikzpicture}
+
+    \begin{figure}
+        \centering
+        
+    \end{figure}
+
+\end{frame}
+
+\subsection{Od biologie k modelu}
+
+\begin{frame}{Od biologického neuronu k formálnímu neuronu}
+
+    \begin{center}
+    \begin{tikzpicture}[
+        >=stealth,
+        box/.style={
+            draw,
+            rounded corners=2mm,
+            minimum width=25mm,
+            minimum height=11mm,
+            align=center
+        },
+        arr/.style={
+            ->,
+            thick,
+            rounded corners=2mm
+        },
+        node distance=3mm,
+        every node/.style={font=\small}
+    ]
+
+        \node[box] (inputs) {vstupní\\signály};
+        \node[box, below=of inputs] (synstrength) {síla synaptických\\spojů};
+        \node[box, below=of synstrength] (activation) {aktivace\\neuronu};
+        
+        \node[box, right=3cm of inputs] (inputsformal) {$x_1,\ldots,x_n$};
+        \node[box, below=of inputsformal] (synstrengthformal) {$w_1,\ldots,w_n$};
+        \node[box, below=of synstrengthformal] (activationformal) {$f$};
+
+        \draw[arr] (inputs) -- (inputsformal);
+        \draw[arr] (synstrength) -- (synstrengthformal);
+        \draw[arr] (activation) -- (activationformal);
+
+    \end{tikzpicture}
+    \end{center}
+
+    \pause
+
+    \begin{timportantbox}[\textwidth]{Zjednodušení}
+        Formální neuron nepopisuje biologické děje uvnitř buňky.
+        Formální neuron popisuje jednoduchý výpočet: sečtení vážených vstupů
+        a~rozhodnoutí o~výstupu.
+    \end{timportantbox}
+
+\end{frame}
+
+\begin{frame}{Synaptický spoj jako váha}
+
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{itemize}
+                \pause
+                \item Každý vstup může mít jiný význam.
+                \pause
+                \item Váha \(w_j\) určuje, jak silně vstup \(x_j\) ovlivňuje výstup neuronu.
+                \pause
+                \item Kladná váha výstup podporuje.
+                \pause
+                \item Záporná váha výstup potlačuje.
+            \end{itemize}
+        \end{column}
+        \pause
+        \begin{column}{0.48\textwidth}
+            \centering
+            \begin{tikzpicture}[
+                >=stealth,
+                box/.style={
+                    draw,
+                    rounded corners=2mm,
+                    minimum width=8mm,
+                    minimum height=8mm,
+                    align=center
+                },
+                arr/.style={
+                    ->,
+                    thick,
+                    rounded corners=2mm
+                },
+                node distance=9mm,
+                every node/.style={font=\small}
+            ]
+
+                \node[box] (x1) at (0,1.2) {\(x_1\)};
+                \node[box] (x2) at (0,0) {\(x_2\)};
+                \node[box] (x3) at (0,-1.2) {\(x_3\)};
+
+                \node[box, right=16mm of x2] (n) {neuron};
+                \node[box, right=11mm of n] (y) {\(y\)};
+
+                \draw[arr] (x1) -- node[above] {\(w_1\)} (n);
+                \draw[arr] (x2) -- node[above] {\(w_2\)} (n);
+                \draw[arr] (x3) -- node[below] {\(w_3\)} (n);
+                \draw[arr] (n) -- (y);
+
+            \end{tikzpicture}
+        \end{column}
+    \end{columns}
+
+    \pause
+
+    \begin{tnoticebox}[\textwidth]{Poznámka}
+        V~neuronové síti nejsou váhy předem pevně dané.
+        Síť se je snaží nastavit během učení.
+    \end{tnoticebox}
+
+\end{frame}
+
+\subsection{Neuronová síť jako graf}
+
+\begin{frame}{Neuronová síť jako graf}
+
+    Neuronovou síť můžeme chápat jako orientovaný ohodnocený graf.
+    Vrcholy představují neurony a~hrany představují spoje mezi nimi.
+    \pause
+
+    \vspace{3mm}
+
+    \centering
+    \begin{tikzpicture}[
+        >=stealth,
+        arr/.style={
+            ->,
+            thick,
+            rounded corners=2mm
+        },
+        node distance=13mm,
+        every node/.style={font=\small}
+    ]
+
+        \node[vertex] (x1) at (0,1.2) {\(x_1\)};
+        \node[vertex] (x2) at (0,0) {\(x_2\)};
+        \node[vertex] (x3) at (0,-1.2) {\(x_3\)};
+
+        \node[vertex] (h1) at (2.4,0.7) {};
+        \node[vertex] (h2) at (2.4,-0.7) {};
+
+        \node[vertex] (y) at (4.8,0) {\(y\)};
+
+        \foreach \x in {x1,x2,x3} {
+            \foreach \h in {h1,h2} {
+                \draw[arr] (\x) -- (\h);
+            }
+        }
+
+        \draw[arr] (h1) -- (y);
+        \draw[arr] (h2) -- (y);
+
+        \node[below=3mm of x3] {vstupy};
+        \node[below=8mm of h2] {neurony};
+        \node[below=8mm of y] {výstup};
+
+    \end{tikzpicture}
+
+    \pause
+
+    \begin{timportantframe}[\textwidth]
+        Na rozdíl od jednoho neuronu může celá síť skládat více výpočtů
+        dohromady. Právě tím získává větší vyjadřovací schopnost.
+    \end{timportantframe}
+
+\end{frame}
+
+\section{Formální neuronová síť}
+
+\titleframe{Formální neuronová síť}
+
+\subsection{Formální neuron}
+
+\begin{frame}{Formální neuron}
+    \pause
+
+    \centering
+    \begin{tikzpicture}[
+        node distance=10mm,
+        every node/.style={font=\small}
+    ]
+
+        % Vstupy
+        \node[vertex] (x1) at (0,1.5) {\(x_{i1}\)};
+        \node[vertex] (x2) at (0,0.5) {\(x_{i2}\)};
+        \node[vertexplain] (dots) at (0,-0.35) {\(\vdots\)};
+        \node[vertex] (xp) at (0,-1.3) {\(x_{ip}\)};
+
+        % Zpracování
+        \node[task, minimum width=19mm, minimum height=12mm]
+            (sum) at (3.0,0.1)
+            {vážený\\součet};
+
+        \node[task, minimum width=14mm, minimum height=12mm]
+            (activation) at (5.2,0.1)
+            {%
+                \(\displaystyle f\)
+            };
+
+        \node[vertex]
+            (output) at (7.0,0.1)
+            {\(\hat{y}_i\)};
+
+        % Bias
+        \node[vertex]
+            (bias) at (3.0,-1.7)
+            {\(b\)};
+
+        % Hrany od vstupů
+        \draw[diredge]
+            (x1) --
+            node[pos=0.48, above, sloped] {\(w_1\)}
+            (sum);
+
+        \draw[diredge]
+            (x2) --
+            node[pos=0.48, above, sloped] {\(w_2\)}
+            (sum);
+
+        \draw[diredge]
+            (xp) --
+            node[pos=0.48, below, sloped] {\(w_p\)}
+            (sum);
+
+        % Bias
+        \draw[diredge]
+            (bias) -- (sum);
+
+        % Výstupní část
+        \draw[diredge]
+            (sum) --
+            node[above] {\(z_i\)}
+            (activation);
+
+        \draw[diredge]
+            (activation) -- (output);
+
+        % Popisky
+        \node[vertexplain, below=5mm of xp]
+            {vstupy};
+
+        \node[vertexplain, below=5mm of activation]
+            {přenosová funkce};
+
+    \end{tikzpicture}
+
+    \pause
+
+    \begin{timportantframe}[\textwidth]
+        Formální neuron nejprve spočítá vážený součet vstupů
+        a~poté na něj aplikuje přenosovou funkci.
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Výpočet formálního neuronu}
+    \pause
+    \begin{itemize}
+        \item Pro \(i\)-tý datový záznam máme vektor
+        \[
+            \mathbf{x}_i
+            =
+            (x_{i1},x_{i2},\ldots,x_{ip}).
+        \]\pause
+        a~vstupní váhy neuronu $w_1,w_2,\ldots,w_p$.
+        \item Z~toho spočítáme výstupní hodnotu
+        \[
+            \hat{y}_i=f\left(\sum_{j=1}^{p} w_j x_{ij}-\theta\right),
+        \]
+        kde
+        \pause
+        \begin{itemize}
+            \item \(\theta\) je tzv. \markdarkred{bias}, který umožňuje posunout rozhodování neuronu a\pause
+            \item $f$ je tzv. \markdarkred{aktivační funkce} (anglicky \markdarkred{activation function}, viz později).
+        \end{itemize}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Váhy a~prahová hodnota}
+    \pause
+    \begin{itemize}
+        \item Váha \(w_j\) určuje význam vstupu \(x_{ij}\).
+        \pause
+        \item Pokud je \(w_j>0\), vyšší hodnota vstupu \(x_{ij}\) výstup spíše zvyšuje.
+        \pause
+        \item Pokud je \(w_j<0\), vyšší hodnota vstupu \(x_{ij}\) výstup spíše snižuje.
+        \pause
+        \item Prahová hodnota \(\theta\) určuje, jak velký musí být vážený součet,
+              aby došlo k~aktivaci neuronu.
+    \end{itemize}
+
+\end{frame}
+
+\subsection{Neuronová síť}
+
+\begin{frame}{Formální definice neuronové sítě}
+    \pause
+    \begin{defblock}[Formální neuronová síť]
+        Neuronovou síť budeme chápat jako uspořádanou sedmici
+        \[
+            \mathcal{N}=(V,E,I,O,w,\theta,f),
+        \]
+        kde
+        \begin{itemize}
+            \item $V$ je konečná množina \markdarkred{neuronů},
+            \item $E$ je množina orientovaných hran (spojů),
+            \item $I$ je množina \markdarkred{vstupních neuronů},
+            \item $O$ je množina \markdarkred{výstupních neuronů},
+            \item $\mapping{w}{E}{\R}$ je tzv. \markdarkred{váhová funkce},
+            \item $\mapping{\theta}{V\setminus I}{\R}$ je tzv. \markdarkred{prahová funkce} a
+            \item $f$ je aktivační funkce.
+        \end{itemize}
+    \end{defblock}
+
+\end{frame}
+
+\begin{frame}{Dopředná neuronová síť}
+    \pause
+    \markdarkred{Dopředná neuronová síť} (anglicky \markdarkred{feed-forward neural network}) je taková neuronová síť, v~níž se informace
+    šíří \textbf{pouze jedním směrem}: od vstupních neuronů k~výstupním neuronům.
+
+    \pause
+    \vspace{3mm}
+    \centering
+    \begin{tikzpicture}[
+        x=1cm,
+        y=1cm,
+        every node/.style={font=\small}
+    ]
+
+        % Vstupní vrstva
+        \node[vertex] (x1) at (0, 1.8) {\(x_{i1}\)};
+        \node[vertex] (x2) at (0, 0.6) {\(x_{i2}\)};
+        \node[vertexplain] at (0,-0.35) {\(\vdots\)};
+        \node[vertex] (xp) at (0,-1.4) {\(x_{ip}\)};
+
+        % První skrytá vrstva
+        \node[vertex] (h11) at (2.5, 1.8) {\(a^{(1)}_1\)};
+        \node[vertex] (h12) at (2.5, 0.6) {\(a^{(1)}_2\)};
+        \node[vertexplain] at (2.5,-0.35) {\(\vdots\)};
+        \node[vertex] (h1n) at (2.5,-1.4) {\(a^{(1)}_{n_1}\)};
+
+        % Vynechané skryté vrstvy
+        \node[vertexplain] at (4.7, 1.8) {\(\cdots\)};
+        \node[vertexplain] at (4.7, 0.6) {\(\cdots\)};
+        \node[vertexplain] at (4.7,-1.4) {\(\cdots\)};
+
+        % Poslední skrytá vrstva
+        \node[vertex] (hl1) at (6.9, 1.8)
+            {\(a^{(L-1)}_1\)};
+        \node[vertex] (hl2) at (6.9, 0.6)
+            {\(a^{(L-1)}_2\)};
+        \node[vertexplain] at (6.9,-0.35) {\(\vdots\)};
+        \node[vertex] (hln) at (6.9,-1.4)
+            {\(a^{(L-1)}_{n_{L-1}}\)};
+
+        % Výstupní vrstva
+        \node[vertex] (y1) at (9.7, 1.8)
+            {\(\hat{y}_{i1}\)};
+        \node[vertex] (y2) at (9.7, 0.6)
+            {\(\hat{y}_{i2}\)};
+        \node[vertexplain] at (9.7,-0.35) {\(\vdots\)};
+        \node[vertex] (ym) at (9.7,-1.4)
+            {\(\hat{y}_{im}\)};
+
+        % Vstupní vrstva -> první skrytá vrstva
+        \foreach \x in {x1,x2,xp} {
+            \foreach \h in {h11,h12,h1n} {
+                \draw[diredge] (\x) -- (\h);
+            }
+        }
+
+        % Poslední skrytá vrstva -> výstupní vrstva
+        \foreach \h in {hl1,hl2,hln} {
+            \foreach \y in {y1,y2,ym} {
+                \draw[diredge] (\h) -- (\y);
+            }
+        }
+
+        % Naznačení pokračování mezi skrytými vrstvami
+        \draw[diredge] (h11) -- ++(1.05,0);
+        \draw[diredge] (h12) -- ++(1.05,0);
+        \draw[diredge] (h1n) -- ++(1.05,0);
+
+        \draw[diredge] ($(hl1)+(-1.05,0)$) -- (hl1);
+        \draw[diredge] ($(hl2)+(-1.05,0)$) -- (hl2);
+        \draw[diredge] ($(hln)+(-1.05,0)$) -- (hln);
+
+        % Označení vrstev
+        \node[vertexplain, text width=25mm]
+            at (0,-2.35)
+            {vstupní vrstva\\
+            \(\mathbf{a}^{(0)}=\mathbf{x}_i\)};
+
+        \node[vertexplain, text width=27mm]
+            at (2.5,-2.55)
+            {první skrytá vrstva\\
+            \(\mathbf{a}^{(1)}\)};
+
+        \node[vertexplain, text width=33mm]
+            at (4.7,-2.55)
+            {další skryté\\vrstvy};
+
+        \node[vertexplain, text width=31mm]
+            at (6.9,-2.55)
+            {poslední skrytá vrstva\\
+            \(\mathbf{a}^{(L-1)}\)};
+
+        \node[vertexplain, text width=28mm]
+            at (9.7,-2.35)
+            {výstupní vrstva\\
+            \(\hat{\mathbf{y}}_i=\mathbf{a}^{(L)}\)};
+
+    \end{tikzpicture}
+
+\end{frame}
+
+\section{Učení neuronové sítě}
+
+\titleframe{Učení neuronové sítě}
+
+\section{Hopfieldův model}
+
+\titleframe{Hopfieldův model}
 
 \end{document}
