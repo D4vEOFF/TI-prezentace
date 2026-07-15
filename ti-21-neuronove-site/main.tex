@@ -64,7 +64,7 @@
 
     \pause
 
-    \begin{timportantbox}[0.94\textwidth]{Základní myšlenka}
+    \begin{timportantbox}[\textwidth]{Základní myšlenka}
         Neuronová síť je model složený z~mnoha jednoduchých výpočetních jednotek,
         jejichž propojení a~váhy se nastavují během učení.
     \end{timportantbox}
@@ -469,7 +469,7 @@
         \pause
         \begin{itemize}
             \item \(\theta\) je tzv. \markdarkred{bias}, který umožňuje posunout rozhodování neuronu a\pause
-            \item $f$ je tzv. \markdarkred{aktivační funkce} (anglicky \markdarkred{activation function}, viz později).
+            \item $f$ je tzv. \markdarkred{přenosová funkce} (anglicky \markdarkred{activation function}, viz později).
         \end{itemize}
     \end{itemize}
 
@@ -508,11 +508,13 @@
             \item $O$ je množina \markdarkred{výstupních neuronů},
             \item $\mapping{w}{E}{\R}$ je tzv. \markdarkred{váhová funkce},
             \item $\mapping{\theta}{V\setminus I}{\R}$ je tzv. \markdarkred{prahová funkce} a
-            \item $f$ je aktivační funkce.
+            \item $f$ je přenosová funkce.
         \end{itemize}
     \end{defblock}
 
 \end{frame}
+
+\subsection{Dopředná neuronová síť}
 
 \begin{frame}{Dopředná neuronová síť}
     \pause
@@ -614,6 +616,392 @@
     \end{tikzpicture}
 
 \end{frame}
+
+\begin{frame}{Dopředný výpočet ve vrstvách}
+    \pause
+    \begin{itemize}
+        \item Označme $\mathbf{a}^{(0)}=\mathbf{x}_i$.\pause
+        \item Pro každou další vrstvu $\mathbf{a}^{(\ell+1)}$ postupně počítáme
+        \[
+            a_i^{(\ell+1)}=f\left(\sum_{j=1}^{n_{\ell}}w_{ji}^{(\ell+1)}a_j^{(\ell)}+\theta_i^{(\ell+1)}\right)
+        \]\pause
+        \item Výstup poslední vrstvy je výstupem celé neuronové sítě:
+        \[
+            \hat{\mathbf{y}}_i=\mathbf{a}^{(L)}.
+        \]\pause
+        \item Pokud má síť pouze jeden výstupní neuron, píšeme jednoduše $\hat{y}_i$.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Dopředný výpočet ve vrstvách}
+    \centering
+    \begin{tikzpicture}[
+        x=1cm,
+        y=1cm,
+        every node/.style={font=\small}
+    ]
+
+        % Levá vrstva
+        \node[vertex] (a1) at (0,1.6) {\(a_1^{(\ell)}\)};
+        \node[vertex] (aj) at (0,0) {\(a_j^{(\ell)}\)};
+        \node[vertex] (an) at (0,-1.6) {\(a_{n_\ell}^{(\ell)}\)};
+
+        \node[vertexplain] at (0,0.8) {\(\vdots\)};
+        \node[vertexplain] at (0,-0.8) {\(\vdots\)};
+
+        % Pravá vrstva
+        \node[vertex] (ai) at (5.2,0) {\(a_i^{(\ell+1)}\)};
+
+        % Hrany
+        \draw[diredge] (a1) -- (ai);
+        \draw[diredge] (aj) -- node[above] {\(w_{ji}^{(\ell+1)}\)} (ai);
+        \draw[diredge] (an) -- (ai);
+
+        % Popisky vrstev
+        \node[vertexplain] at (0,-2.55) {vrstva \(\ell\)};
+        \node[vertexplain] at (5.2,-2.55) {vrstva \(\ell+1\)};
+
+        % Vysvětlující popisky
+        \node[vertexplain, text width=33mm, align=center] at (0,2.45)
+            {výstupy neuronů\\v~předchozí vrstvě};
+
+        \node[vertexplain, text width=34mm, align=center] at (5.2,2.45)
+            {výstup \(i\)-tého neuronu\\v následující vrstvě};
+
+    \end{tikzpicture}
+\end{frame}
+
+\subsection{Perceptron}
+
+\begin{frame}{Perceptron}
+    \pause
+    \begin{tinfoframe}[\textwidth]
+        Perceptron je nejjednodušší neuronová síť tvořená vstupní vrstvou
+        a~jedním výstupním neuronem.
+    \end{tinfoframe}
+
+    \pause
+
+    \begin{itemize}
+        \item Na vstupu je vektor
+        \[
+            \mathbf{x}_i=(x_{i1},x_{i2},\ldots,x_{ip}),
+        \]
+        kde jednotlivé znaky jsou ze souborů $\mathbf{X}_1,\dots,\mathbf{X}_p$.
+        \pause
+        \item Každý vstup \(x_{ij}\) má svou váhu \(w_j\).
+        \pause
+        \item Výstupem je jedna hodnota \(\hat{y}_i\).
+        \pause
+        \item Perceptron se používá především pro jednoduchou binární klasifikaci.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Výpočet perceptronu}
+    \pause
+    \centering
+    \begin{tikzpicture}[
+        x=1cm,
+        y=1cm,
+        every node/.style={font=\small}
+    ]
+
+        \node[vertex] (x1) at (0,1.4) {\(x_{i1}\)};
+        \node[vertex] (x2) at (0,0.4) {\(x_{i2}\)};
+        \node[vertexplain] at (0,-0.35) {\(\vdots\)};
+        \node[vertex] (xp) at (0,-1.2) {\(x_{ip}\)};
+
+        \node[vertex] (y) at (4.2,0.1) {\(\hat{y}_i\)};
+        \node[vertexplain,right=of y] (output) {$\displaystyle \hat{y}_i=f\left(\sum_{j=1}^{p} w_jx_{ij}+\theta\right)$};
+
+        \draw[diredge] (x1) -- node[above, sloped] {\(w_1\)} (y);
+        \draw[diredge] (x2) -- node[above, sloped] {\(w_2\)} (y);
+        \draw[diredge] (xp) -- node[below, sloped] {\(w_p\)} (y);
+        \draw[diredge] (y) -- ++(1,0);
+
+    \end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}{Perceptron jako klasifikátor}
+    \pause
+    U~binární klasifikace může perceptron rozhodovat například pomocí \markdarkred{skokové přenosové funkce}
+    \[
+        f(z)=
+        \begin{cases}
+            1, & \text{pokud } z\geqslant 0,\\
+            0, & \text{pokud } z<0.
+        \end{cases}
+    \]
+
+    \pause
+
+    \begin{itemize}
+        \item Spočítáme hodnotu
+        \[
+            z_i=\sum_{j=1}^{p}w_jx_{ij}+\theta.
+        \]
+        \pause
+        \item Pokud \(z_i\geqslant 0\), zařadíme záznam do jedné třídy.
+        \pause
+        \item Pokud \(z_i<0\), zařadíme záznam do druhé třídy.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Geometrická interpretace perceptronu}
+    \pause
+    Pro dva vstupní znaky \(x_{i1}\) a~\(x_{i2}\) má rozhodovací hranice tvar
+    \[
+        w_1x_{i1}+w_2x_{i2}+\theta=0.
+    \]
+
+    \pause
+
+    \begin{center}
+        \begin{tikzpicture}[
+            x=0.85cm,
+            y=0.85cm,
+            every node/.style={font=\small}
+        ]
+
+            \draw[->, thick] (-0.3,0) -- (6.1,0) node[right] {\(x_1\)};
+            \draw[->, thick] (0,-0.3) -- (0,4.4) node[above] {\(x_2\)};
+
+            \draw[thick, blue!70!black] (0.8,3.8) -- node[midway,above,sloped] {\(w_1x_1+w_2x_2+\theta=0\)} (5.5,0.6);
+
+            \draw[fill=green!20] (1.0,0.8) circle (2pt);
+            \draw[fill=green!20] (1.6,1.2) circle (2pt);
+            \draw[fill=green!20] (2.3,0.7) circle (2pt);
+
+            \draw[fill=red!20] (4.4,3.2) circle (2pt);
+            \draw[fill=red!20] (5.0,2.6) circle (2pt);
+            \draw[fill=red!20] (3.8,2.7) circle (2pt);
+
+        \end{tikzpicture}
+    \end{center}
+
+    \pause
+
+    \begin{timportantframe}[\textwidth]
+        Perceptron vytváří lineární rozhodovací hranici.
+        V~rovině je to přímka, ve vyšších dimenzích nadrovina.
+    \end{timportantframe}
+
+\end{frame}
+
+\subsection{Přenosová funkec}
+
+\begin{frame}{Proč potřebujeme přenosovou funkci?}
+
+    Přenosová funkce \(f\) určuje, jak se vnitřní potenciál neuronu převede na jeho výstup.
+
+    \pause
+
+    \[
+        a_i^{(\ell+1)}
+        =
+        f\left(
+            \sum_{j=1}^{n_{\ell}}
+            w_{ji}^{(\ell+1)}a_j^{(\ell)}
+            +
+            \theta_i^{(\ell+1)}
+        \right)
+    \]
+
+    \pause
+
+    \begin{timportantframe}[\textwidth]
+        Pokud by všechny přenosové funkce byly lineární, pak by i~celá
+        vícevrstvá síť představovala pouze lineární model.
+        Nelineární přenosové funkce umožňují modelovat složitější vztahy.
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Skoková funkce a~sigmoida}
+    
+    \begin{columns}[T]
+        \pause
+        \begin{column}{0.48\textwidth}
+            \[
+                f(x)=
+                \begin{cases}
+                    1, & x\geqslant 0,\\
+                    0, & x<0.
+                \end{cases}
+            \]
+
+            \begin{center}
+                \begin{tikzpicture}[x=0.7cm,y=0.7cm]
+                    \draw[->, thick] (-2.4,0) -- (2.6,0) node[right] {\(x\)};
+                    \draw[->, thick] (0,-0.4) -- (0,1.8) node[above] {\(y\)};
+
+                    \draw[thick, blue!70!black] (-2.2,0) -- (0,0);
+                    \draw[thick, blue!70!black] (0,1) -- (2.3,1);
+                    \draw[fill=white, thick, blue!70!black] (0,0) circle (2pt);
+                    \draw[fill=blue!70!black, thick] (0,1) circle (2pt);
+
+                    \node[below] at (0,0) {\(0\)};
+                    \node[left] at (0,1) {\(1\)};
+                \end{tikzpicture}
+            \end{center}
+            \pause
+            \begin{tnoticebox}[0.95\textwidth]{Skoková funkce}
+                Vhodná pro jednoduché binární rozhodování.
+            \end{tnoticebox}
+        \end{column}
+        \pause
+        \begin{column}{0.48\textwidth}
+            \[
+                f(x)=\frac{1}{1+e^{-x}}
+            \]
+
+            \begin{center}
+                \begin{tikzpicture}[x=0.7cm,y=0.7cm]
+                    \draw[->, thick] (-3.0,0) -- (3.2,0) node[right] {\(x\)};
+                    \draw[->, thick] (0,-0.2) -- (0,1.8) node[above] {\(y\)};
+
+                    \draw[dashed] (-3,1) -- (3,1);
+                    \node[left] at (0,1) {\(1\)};
+                    \node[left] at (0,0.5) {\(\frac{1}{2}\)};
+
+                    \draw[thick, red!70!black, domain=-3:3, samples=80]
+                        plot (\x,{1/(1+exp(-\x))});
+
+                    \node[below] at (0,0) {\(0\)};
+                \end{tikzpicture}
+            \end{center}
+
+            \begin{tnoticebox}[0.95\textwidth]{Sigmoida}
+                Hladká funkce s~výstupem v~intervalu \((0,1)\).
+            \end{tnoticebox}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Další přenosové funkce}
+    \pause
+    \begin{itemize}
+        \item \markdarkred{ReLU} (zkratka pro \markdarkred{Rectified Linear Unit}) se často používá ve skrytých vrstvách sítí s~větším počtem vrstev.
+        \[\operatorname{ReLU}(x)=\max\set{0,x},\quad x\in\R.\]\pause
+        \item Funkce \markdarkred{softmax} se často používá pro vícetřídní klasifikaci na výstupní vrstvě. Výstupy lze chápat jako skóre jednotlivých tříd. Máme-li celkově $k$ tříd, pak
+        \[\sigma_i(\mathbf{z})=\frac{e^{z_i}}{\sum_{j=1}^{p}e^{z_j}},\quad \mathbf{z}\in(z_1,\dots,z_p)\in\R^{p}, \quad 1\leqslant i\leqslant k.\]\pause
+        \item U regresních úloh se často používá \markdarkred{identita}: $\operatorname{id}(x)=x$ pro $x\in\R$.
+    \end{itemize}
+
+    \pause
+
+    \begin{timportantframe}[\textwidth]
+        Skryté vrstvy obvykle potřebují nelineární přenosovou funkci. Na různých vrstvách se tak mohou používat různé přenosové funkce.
+    \end{timportantframe}
+
+\end{frame}
+
+\subsection{Vícevrstvý perceptron}
+
+\begin{frame}{Vícevrstvý perceptron}
+
+    \markdarkred{Vícevrstvý perceptron} (anglicky \markdarkred{multi-layer perceptron}, zkráceně MLP) je dopředná neuronová síť tvořená vstupní vrstvou, jednou nebo více skrytými vrstvami a~výstupní vrstvou.
+
+    \pause
+
+    \begin{center}
+        \begin{tikzpicture}[
+            x=1cm,
+            y=1cm,
+            every node/.style={font=\scriptsize}
+        ]
+    
+            % Vstupní vrstva
+            \node[vertex] (x1) at (0,1.45) {\(x_{i1}\)};
+            \node[vertex] (x2) at (0,0.45) {\(x_{i2}\)};
+            \node[vertexplain] at (0,-0.25) {\(\vdots\)};
+            \node[vertex] (xp) at (0,-1.05) {\(x_{ip}\)};
+    
+            % První skrytá vrstva
+            \node[vertex] (a11) at (2.4,1.45) {\(a_1^{(1)}\)};
+            \node[vertex] (a12) at (2.4,0.45) {\(a_2^{(1)}\)};
+            \node[vertexplain] at (2.4,-0.25) {\(\vdots\)};
+            \node[vertex] (a1n) at (2.4,-1.05) {\(a_{n_1}^{(1)}\)};
+    
+            % Vynechané vrstvy
+            \node[vertexplain] at (4.5,1.45) {\(\cdots\)};
+            \node[vertexplain] at (4.5,0.45) {\(\cdots\)};
+            \node[vertexplain] at (4.5,-1.05) {\(\cdots\)};
+    
+            % Poslední skrytá vrstva
+            \node[vertex] (al1) at (6.6,1.45) {\(a_1^{(L-1)}\)};
+            \node[vertex] (al2) at (6.6,0.45) {\(a_2^{(L-1)}\)};
+            \node[vertexplain] at (6.6,-0.25) {\(\vdots\)};
+            \node[vertex] (aln) at (6.6,-1.05) {\(a_{n_{L-1}}^{(L-1)}\)};
+    
+            % Výstupní vrstva
+            \node[vertex] (y1) at (9.2,1.45) {\(\hat{y}_{i1}\)};
+            \node[vertex] (y2) at (9.2,0.45) {\(\hat{y}_{i2}\)};
+            \node[vertexplain] at (9.2,-0.25) {\(\vdots\)};
+            \node[vertex] (yn) at (9.2,-1.05) {\(\hat{y}_{in_L}\)};
+    
+            % Vstupy -> první skrytá vrstva
+            \foreach \x in {x1,x2,xp} {
+                \foreach \a in {a11,a12,a1n} {
+                    \draw[diredge] (\x) -- (\a);
+                }
+            }
+    
+            % Naznačení dalších vrstev
+            \draw[diredge] (a11) -- ++(1.0,0);
+            \draw[diredge] (a12) -- ++(1.0,0);
+            \draw[diredge] (a1n) -- ++(1.0,0);
+    
+            \draw[diredge] ($(al1)+(-1.0,0)$) -- (al1);
+            \draw[diredge] ($(al2)+(-1.0,0)$) -- (al2);
+            \draw[diredge] ($(aln)+(-1.0,0)$) -- (aln);
+    
+            % Poslední skrytá vrstva -> výstupní vrstva
+            \foreach \a in {al1,al2,aln} {
+                \foreach \y in {y1,y2,yn} {
+                    \draw[diredge] (\a) -- (\y);
+                }
+            }
+    
+            % Popisky
+            \node[vertexplain, text width=21mm]
+                at (0,-1.85)
+                {vstupní vrstva\\\(\ell=0\)};
+    
+            \node[vertexplain, text width=25mm]
+                at (2.4,-1.85)
+                {první skrytá\\vrstva};
+    
+            \node[vertexplain, text width=26mm]
+                at (4.5,-1.85)
+                {další skryté\\vrstvy};
+    
+            \node[vertexplain, text width=27mm]
+                at (6.6,-1.85)
+                {poslední skrytá\\vrstva};
+    
+            \node[vertexplain, text width=23mm]
+                at (9.2,-1.85)
+                {výstupní vrstva\\\(\ell=L\)};
+    
+        \end{tikzpicture}
+    \end{center}
+
+    \pause
+
+    Obecně pracujeme s~výstupními statistickými soubory $\mathbf{Y}_1,\mathbf{Y}_2,\ldots,\mathbf{Y}_k$. Pro \(i\)-tý záznam tedy očekáváme výstup $\mathbf{y}_i=(y_{i1},y_{i2},\ldots,y_{ik})$ a~síť počítá odhad
+    \[
+        \hat{\mathbf{y}}_i=(\hat{y}_{i1},\hat{y}_{i2},\ldots,\hat{y}_{ik}).
+    \]
+
+\end{frame}
+
 
 \section{Učení neuronové sítě}
 
