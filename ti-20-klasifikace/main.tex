@@ -2645,9 +2645,9 @@
         \(\mathbf{x}\in\mathbb{R}^p\) třídu, která se mezi jeho
         \(k\) nejbližšími sousedy vyskytuje nejčastěji:
         \[
-            h_k(\mathbf{x})
+            h^{(k)}(\mathbf{x})
             =
-            \operatorname*{arg\,max}_{c\in\mathcal{Y}}
+            \argmax_{c\in\mathcal{Y}}
             \left|
                 \set{i\in N_k(\mathbf{x}):y_i=c}
             \right|.
@@ -2765,10 +2765,344 @@
 
 \subsection{Volba parametru $k$}
 
+\begin{frame}{Vliv hodnoty \(k\)}
+    \pause    
+    \small
+    Stejný nový objekt \(\mathbf{x}\) může být při různých hodnotách
+    \(k\) zařazen do různých tříd.
+
+    \vspace{1mm}
+    \pause
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=6cm,
+                height=4.5cm,
+                xmin=0.5, xmax=7,
+                ymin=0.5, ymax=4.6,
+                axis lines=left,
+                axis equal image,
+                xlabel={$x_1$},
+                ylabel={$x_2$},
+                xlabel near ticks,
+                ylabel near ticks,
+                xtick=\empty,
+                ytick=\empty,
+                title={\(k=1\)},
+                clip=false
+            ]
+                \addplot[only marks, mark=*, mark size=2pt, blue!70]
+                coordinates {
+                    (1.3,1.2) (2.0,1.8) (2.7,1.1) (3.1,2.5) (4.3,3.0)
+                };
+
+                \addplot[only marks, mark=square*, mark size=2.2pt, orange!85!black]
+                coordinates {
+                    (4.8,2.7) (5.2,3.5) (5.6,2.4)
+                    (6.1,3.2) (6.6,2.5) (5.8,4.0)
+                };
+
+                \addplot[only marks, mark=diamond*, mark size=3pt, red!75!black]
+                coordinates {(4.5,3.1)};
+
+                \addplot[only marks, mark=o, mark size=5pt, black, line width=0.9pt]
+                coordinates {(4.3,3.0)};
+
+                \draw[dashed, thick, gray]
+                    (axis cs:4.5,3.1) -- (axis cs:4.3,3.0);
+
+                \node[font=\scriptsize, red!75!black, anchor=west]
+                    at (axis cs:4.65,3.15) {\(\mathbf{x}\)};
+            \end{axis}
+            \qquad
+            \begin{axis}[
+                xshift=5.5cm,
+                width=6cm,
+                height=4.5cm,
+                xmin=0.5, xmax=7,
+                ymin=0.5, ymax=4.6,
+                axis lines=left,
+                axis equal image,
+                xlabel={$x_1$},
+                ylabel={$x_2$},
+                xlabel near ticks,
+                ylabel near ticks,
+                xtick=\empty,
+                ytick=\empty,
+                title={\(k=5\)},
+                clip=false
+            ]
+                \addplot[only marks, mark=*, mark size=2pt, blue!70]
+                coordinates {
+                    (1.3,1.2) (2.0,1.8) (2.7,1.1) (3.1,2.5) (4.3,3.0)
+                };
+
+                \addplot[only marks, mark=square*, mark size=2.2pt, orange!85!black]
+                coordinates {
+                    (4.8,2.7) (5.2,3.5) (5.6,2.4)
+                    (6.1,3.2) (6.6,2.5) (5.8,4.0)
+                };
+
+                \addplot[only marks, mark=diamond*, mark size=3pt, red!75!black]
+                coordinates {(4.5,3.1)};
+
+                \addplot[only marks, mark=o, mark size=5pt, black, line width=0.9pt]
+                coordinates {
+                    (4.3,3.0) (4.8,2.7) (5.2,3.5) (5.6,2.4) (6.1,3.2)
+                };
+
+                \draw[dashed, thick, gray]
+                    (axis cs:4.5,3.1) -- (axis cs:4.3,3.0);
+
+                \draw[dashed, thick, gray]
+                    (axis cs:4.5,3.1) -- (axis cs:4.8,2.7);
+
+                \draw[dashed, thick, gray]
+                    (axis cs:4.5,3.1) -- (axis cs:5.2,3.5);
+
+                \draw[dashed, thick, gray]
+                    (axis cs:4.5,3.1) -- (axis cs:5.6,2.4);
+
+                \draw[dashed, thick, gray]
+                    (axis cs:4.5,3.1) -- (axis cs:6.1,3.2);
+
+                \node[font=\scriptsize, red!75!black, anchor=west]
+                    at (axis cs:4.65,3.15) {\(\mathbf{x}\)};
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \pause
+    \begin{tinfoframe}
+        Pro \(k=1\) rozhoduje jediný nejbližší soused, zatímco pro \(k=5\)
+        rozhoduje většinové hlasování pěti nejbližších sousedů.
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Jak zvolit hodnotu \(k\)?}
+    \pause
+    \begin{tnoticebox}[\textwidth]{Volba pomocí validačních dat}
+        Hodnotu \(k\) obvykle nevolíme podle trénovacích dat, ale pomocí
+        validační množiny.
+    \end{tnoticebox}
+
+    \vspace{1mm}
+    \pause
+    \begin{itemize}
+        \item Zvolíme množinu kandidátů $\mathcal{K}\subseteq \set{1,2,\ldots,n}$.\pause
+        \item Pro každé \(k\in\mathcal{K}\) vytvoříme klasifikátor \(h^{(k)}\) a~spočítáme zvolenou metriku (správnost, přesnost, pokrytí, F-míra) na validačních datech.\pause
+        \item Pokud tuto metriku označíme \(M_{\mathrm{val}}(h^{(k)})\), pak můžeme psát
+        \[
+            k^\ast
+            \in
+            \argmax_{k\in\mathcal{K}}\;
+            M_{\mathrm{val}}(h^{(k)}).
+        \]
+    \end{itemize}
+    
+    \vspace{1mm}
+    \pause
+    \begin{tinfoframe}[\textwidth]
+        U~binární klasifikace se často volí liché hodnoty \(k\), protože
+        tím snižujeme riziko nerozhodného hlasování.
+    \end{tinfoframe}
+
+\end{frame}
+
 \subsection{Vzdálenost mezi objekty}
+
+\begin{frame}{Eukleidovská vzdálenost}
+    \pause
+    \begin{defblock}[Eukleidovská vzdálenost]
+        Nechť \(\mathbf{u},\mathbf{v}\in\mathbb{R}^p\), kde
+        \[
+            \mathbf{u}=(u_1,\ldots,u_p),
+            \qquad
+            \mathbf{v}=(v_1,\ldots,v_p).
+        \]
+        \textbf{Eukleidovskou vzdáleností} \(\mathbf{u}\) a~\(\mathbf{v}\) rozumíme číslo
+        \[
+            d_E(\mathbf{u},\mathbf{v})
+            =
+            \sqrt{
+                \sum_{i=1}^{p}(u_i-v_i)^2
+            }.
+        \]
+    \end{defblock}
+    
+    \begin{tinfoframe}[\textwidth]
+        V~rovině jde o~běžnou geometrickou vzdálenost dvou bodů.
+        Metoda \(k\)-NN pak hledá objekty, které jsou novému objektu
+        podle této vzdálenosti nejblíže.
+    \end{tinfoframe}
+
+\end{frame}
+
+\begin{frame}{Další možnosti volby vzdálenosti}
+    \pause
+    Nechť $\mathbf{u}=(u_1,\ldots,u_p),\mathbf{v}=(v_1,\ldots,v_p)$ jsou dva objekty z~\(\mathbb{R}^p\).
+    \pause
+    \begin{itemize}
+        \item \textbf{Minkowského vzdálenost:} Pro \(q\geq 1\) definujeme
+        \[
+            d_q(\mathbf{u},\mathbf{v})
+            =
+            \left(
+                \sum_{j=1}^{p}|u_j-v_j|^q
+            \right)^{1/q}.
+        \]
+        \pause
+        \item Pro \(q=1\) získáváme \textbf{manhattanskou vzdálenost}
+        \[
+            d_1(\mathbf{u},\mathbf{v})
+            =
+            \sum_{j=1}^{p}|u_j-v_j|.
+        \]
+        \pause
+        \item Pro \(q=2\) získáváme eukleidovskou vzdálenost \(d_E\).
+        \pause
+        \item Další možností je \textbf{maximová vzdálenost}
+        \[
+            d_{\infty}(\mathbf{u},\mathbf{v})
+            =
+            \max_{1\leq j\leq p}|u_j-v_j|.
+        \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Problém různých měřítek}
+    \pause
+    Uvažujme dva znaky:
+    \[
+        \mathbf{X}_1=\text{věk v~letech},
+        \qquad
+        \mathbf{X}_2=\text{roční příjem v~Kč}.
+    \]
+    \pause
+    Pro nový objekt
+    \[
+        \mathbf{x}=(30,500\,000)
+    \]
+    a~dva trénovací objekty
+    \[
+        \mathbf{x}_A=(45,500\,000),
+        \qquad
+        \mathbf{x}_B=(30,510\,000)
+    \]
+    dostaneme
+    \[
+        d_E(\mathbf{x},\mathbf{x}_A)=15,
+        \qquad
+        d_E(\mathbf{x},\mathbf{x}_B)=10\,000.
+    \]
+    \pause
+    \begin{timportantframe}[\textwidth]
+        Číselně větší měřítko příjmu způsobí, že rozdíl \(10\,000\)~Kč
+        zcela převáží rozdíl \(15\)~let věku. To lze vyřešit např. \markdarkred{min-max normalizací}.
+    \end{timportantframe}
+
+\end{frame}
+
+\begin{frame}{Připomenutí: min-max normalizace dat}
+    \pause
+    Nechť
+    \[
+        \mathbf{X}_j=(x_{1j},\ldots,x_{nj})
+    \]
+    je \(j\)-tý vstupní statistický soubor. Označme
+    \[
+        m_j=\min_i x_{ij},
+        \qquad
+        M_j=\max_i x_{ij}.
+    \]
+    Pokud \(M_j>m_j\), definujeme normalizovanou hodnotu
+    \[
+        \tilde{x}_{ij}
+        =
+        \frac{x_{ij}-m_j}{M_j-m_j}.
+    \]
+    \pause
+    \begin{tinfoframe}
+        Po normalizaci leží hodnoty daného znaku v~intervalu \(\langle0,1\rangle\).
+        Jednotlivé znaky pak mají srovnatelný vliv na vzdálenost.
+    \end{tinfoframe}
+
+\end{frame}
 
 \subsection{Vlastnosti $k$-NN}
 
+\begin{frame}{Výhody metody \(k\)-NN}
+    \pause
+    {   
+        \setbeamertemplate{itemize item}{%
+            \raisebox{-0.15\height}{%
+                \includegraphics[
+                    width=0.6cm
+                ]{images/face-smile-emoji-icon.pdf}%
+            }%
+        }
+
+        \begin{itemize}
+            \item jednoduchá a~názorná myšlenka,\pause
+            \item téměř žádná fáze trénování,\pause
+            \item použitelná pro binární i~vícetřídní klasifikaci,\pause
+            \item může vytvářet nelineární rozhodovací hranice,\pause
+            \item nepředpokládá konkrétní tvar vztahu mezi znaky a~třídou.
+        \end{itemize}
+    }
+    \pause
+    \begin{tnoticeframe}[\textwidth]
+        Metoda je velmi intuitivní: nový objekt klasifikujeme podle toho,
+        jaké třídy mají jemu podobné objekty.
+    \end{tnoticeframe}
+
+\end{frame}
+
+\begin{frame}{Nevýhody metody \(k\)-NN}
+    \pause
+     {
+        \setbeamertemplate{itemize item}{%
+            \raisebox{-0.15\height}{%
+                \includegraphics[
+                    width=0.6cm
+                ]{images/face-frown-emoji-icon.pdf}%
+            }%
+        }
+
+        \begin{itemize}
+            \item klasifikace nového objektu může být pomalá,\pause
+            \item je nutné uchovávat trénovací data,\pause
+            \item výsledek závisí na~volbě \(k\)
+                  a~na~zvolené vzdálenosti,\pause
+            \item metoda je citlivá na~různá měřítka znaků,\pause
+            \item při velkém počtu znaků se vzdálenosti
+                  hůře interpretují.
+        \end{itemize}
+    }
+    \pause
+    \begin{talertframe}[\textwidth]
+        Metoda \(k\)-NN přesouvá většinu práce do okamžiku,
+        kdy chceme klasifikovat nový objekt.
+    \end{talertframe}
+
+\end{frame}
+
+\begin{frame}{Kdy je metoda \(k\)-NN vhodná?}
+    \pause
+    Metoda \(k\)-NN je vhodná zejména tehdy, když:
+    \begin{itemize}
+        \item podobnost objektů dobře odpovídá jejich třídám,\pause
+        \item počet trénovacích objektů není příliš velký,\pause
+        \item znaky lze rozumně normalizovat,\pause
+        \item chceme jednoduchý a~snadno vysvětlitelný klasifikátor.
+    \end{itemize}
+    \pause
+    \begin{timportantframe}
+        Klíčová otázka zní: \textit{Má zvolená vzdálenost skutečně vystihovat
+        podobnost objektů z~hlediska dané klasifikační úlohy?}
+    \end{timportantframe}
+
+\end{frame}
 
 \section{Rozhodovací stromy}
 
