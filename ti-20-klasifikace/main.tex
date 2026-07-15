@@ -3072,11 +3072,9 @@
         \begin{itemize}
             \item klasifikace nového objektu může být pomalá,\pause
             \item je nutné uchovávat trénovací data,\pause
-            \item výsledek závisí na~volbě \(k\)
-                  a~na~zvolené vzdálenosti,\pause
+            \item výsledek závisí na~volbě \(k\) a~na~zvolené vzdálenosti,\pause
             \item metoda je citlivá na~různá měřítka znaků,\pause
-            \item při velkém počtu znaků se vzdálenosti
-                  hůře interpretují.
+            \item při velkém počtu znaků se vzdálenosti hůře interpretují.
         \end{itemize}
     }
     \pause
@@ -3104,26 +3102,531 @@
 
 \end{frame}
 
-\section{Rozhodovací stromy}
+% \section{Rozhodovací stromy}
 
-\titleframe{Rozhodovací stromy}
+% \titleframe{Rozhodovací stromy}
 
-\subsection{Stavba rozhodovacího stromu}
+% \subsection{Stavba rozhodovacího stromu}
 
-\subsection{Klasifikace pomocí stromu}
+% \begin{frame}{Kořen rozhodovacího stromu}
+%     \pause
+%     \markdarkred{Kořen} je počáteční uzel rozhodovacího stromu. Klasifikace každého nového objektu začíná právě v~něm.
+%     \pause
+%     \begin{center}
+%         \begin{tikzpicture}[scale=0.85, transform shape]
+%             \node[decision, very thick, fill=green!55] (root) at (0,2.4)
+%                 {\(x_1\leqslant a\)?};
 
-\subsection{Rozdělení prostoru příznaků}
+%             \node[process] (l0) at (-3,0.5) {\(\hat y=0\)};
+%             \node[decision] (d2) at (3,0.5) {\(x_2\leqslant b\)?};
 
-\subsection{Čistota uzlu}
+%             \node[process] (l1) at (1.6,-1.4) {\(\hat y=1\)};
+%             \node[process] (l2) at (4.4,-1.4) {\(\hat y=0\)};
 
-\subsection{Entropie}
+%             \draw[diredge] (root) -- node[midway, above left] {\small ano} (l0);
+%             \draw[diredge] (root) -- node[midway, above right] {\small ne} (d2);
+%             \draw[diredge] (d2) -- node[midway, above left] {\small ano} (l1);
+%             \draw[diredge] (d2) -- node[midway, above right] {\small ne} (l2);
+%         \end{tikzpicture}
+%     \end{center}
+%     \pause
+%     \begin{tinfoframe}
+%         Při stavbě stromu kořen odpovídá celé trénovací množině.
+%         První podmínka data rozdělí na dvě části.
+%     \end{tinfoframe}
 
-\subsection{Informační zisk}
+% \end{frame}
 
-\subsection{Konstrukce stromu}
+% \begin{frame}{Vnitřní rozhodovací uzly}
+%     \pause
+%     \markdarkred{Vnitřní uzel} obsahuje rozhodovací podmínku.
+%     Podle jejího výsledku pokračujeme jednou z~navazujících větví.
+%     \pause
+%     \begin{center}
+%         \begin{tikzpicture}[scale=0.85, transform shape]
+%             \node[decision] (root) at (0,2.4) {\(x_1\leqslant a\)?};
 
-\subsection{Přeučení rozhodovacího stromu}
+%             \node[process] (l0) at (-3,0.5) {\(\hat y=0\)};
+%             \node[decision, very thick, fill=green!55] (d2) at (3,0.5)
+%                 {\(x_2\leqslant b\)?};
 
-\subsection{Vlastnosti rozhodovacích stromů}
+%             \node[process] (l1) at (1.6,-1.4) {\(\hat y=1\)};
+%             \node[process] (l2) at (4.4,-1.4) {\(\hat y=0\)};
+
+%             \draw[diredge] (root) -- node[midway, above left] {\small ano} (l0);
+%             \draw[diredge] (root) -- node[midway, above right] {\small ne} (d2);
+%             \draw[diredge] (d2) -- node[midway, above left] {\small ano} (l1);
+%             \draw[diredge] (d2) -- node[midway, above right] {\small ne} (l2);
+%         \end{tikzpicture}
+%     \end{center}
+%     \pause
+%     \begin{timportantframe}
+%         Vnitřní uzel tedy ještě neurčuje výslednou třídu.
+%         Pouze rozhoduje, kam bude objekt pokračovat.
+%     \end{timportantframe}
+
+% \end{frame}
+
+% \begin{frame}{Větve rozhodovacího stromu}
+%     \pause
+%     \markdarkred{Větve} spojují rozhodovací uzly s~jejich potomky.
+%     Každá větev odpovídá jednomu možnému výsledku podmínky.
+%     \pause
+%     \begin{center}
+%         \begin{tikzpicture}[scale=0.85, transform shape]
+%             \node[decision] (root) at (0,2.4) {\(x_1\leqslant a\)?};
+
+%             \node[process] (l0) at (-3,0.5) {\(\hat y=0\)};
+%             \node[decision] (d2) at (3,0.5) {\(x_2\leqslant b\)?};
+
+%             \node[process] (l1) at (1.6,-1.4) {\(\hat y=1\)};
+%             \node[process] (l2) at (4.4,-1.4) {\(\hat y=0\)};
+
+%             \draw[diredge, red!75!black, very thick]
+%                 (root) -- node[midway, above left, black] {\small ano} (l0);
+%             \draw[diredge, red!75!black, very thick]
+%                 (root) -- node[midway, above right, black] {\small ne} (d2);
+%             \draw[diredge, red!75!black, very thick]
+%                 (d2) -- node[midway, above left, black] {\small ano} (l1);
+%             \draw[diredge, red!75!black, very thick]
+%                 (d2) -- node[midway, above right, black] {\small ne} (l2);
+%         \end{tikzpicture}
+%     \end{center}
+%     \pause
+%     \begin{tinfoframe}
+%         Cesta od kořene k~listu odpovídá posloupnosti rozhodnutí,
+%         která byla pro daný objekt provedena.
+%     \end{tinfoframe}
+
+% \end{frame}
+
+% % Slide 87
+% \begin{frame}{Listy a~výsledné třídy}
+%     \pause
+%     \markdarkred{List} je koncový uzel stromu.
+%     Neobsahuje další rozhodovací podmínku, ale výslednou třídu.
+    
+%     \begin{columns}[T,onlytextwidth]
+%         \pause
+%         \begin{column}{0.52\textwidth}
+%             \begin{center}
+%                 \begin{tikzpicture}[scale=0.76, transform shape]
+%                     \node[decision] (root) at (0,2.4) {\(x_1\leqslant a\)?};
+
+%                     \node[process, very thick, fill=orange!55] (l0) at (-3,0.5)
+%                         {\(\hat y=0\)};
+%                     \node[decision] (d2) at (3,0.5) {\(x_2\leqslant b\)?};
+
+%                     \node[process, very thick, fill=orange!55] (l1) at (1.6,-1.4)
+%                         {\(\hat y=1\)};
+%                     \node[process, very thick, fill=orange!55] (l2) at (4.4,-1.4)
+%                         {\(\hat y=0\)};
+
+%                     \draw[diredge] (root) -- node[midway, above left] {\scriptsize ano} (l0);
+%                     \draw[diredge] (root) -- node[midway, above right] {\scriptsize ne} (d2);
+%                     \draw[diredge] (d2) -- node[midway, above left] {\scriptsize ano} (l1);
+%                     \draw[diredge] (d2) -- node[midway, above right] {\scriptsize ne} (l2);
+%                 \end{tikzpicture}
+%             \end{center}
+%         \end{column}
+%         \pause
+%         \begin{column}{0.46\textwidth}
+%             Tento strom odpovídá klasifikátoru
+%             \[
+%                 h(\mathbf{x})
+%                 =
+%                 \begin{cases}
+%                     0, & x_1\leqslant a,\\
+%                     1, & x_1>a,\ x_2\leqslant b,\\
+%                     0, & x_1>a,\ x_2>b.
+%                 \end{cases}
+%             \]
+%         \end{column}
+
+%     \end{columns}
+
+% \end{frame}
+
+% \subsection{Klasifikace pomocí stromu}
+
+% \begin{frame}{Klasifikace nového objektu}
+%     \pause
+%     Nechť
+%     \[
+%         \mathbf{x}=(x_1,\ldots,x_p)\in\mathbb{R}^p
+%     \]
+%     je nový objekt, jehož třídu chceme určit.
+%     \pause
+%     \begin{enumerate}
+%         \item Začneme v~kořeni stromu.\pause
+%         \item Vyhodnotíme podmínku uvedenou v~aktuálním uzlu.\pause
+%         \item Podle výsledku podmínky pokračujeme příslušnou větví.\pause
+%         \item Postup opakujeme, dokud nedojdeme do~listu.\pause
+%         \item Třída uvedená v~listu je výsledkem klasifikace.
+%     \end{enumerate}
+%     \pause
+%     \begin{center}
+%         \begin{tikzpicture}[scale=0.8, transform shape]
+
+%             \node[decision] (root) at (0,1.7)
+%                 {\(x_j\leqslant a\)?};
+
+%             \node[process] (leaf0) at (-3,-0.2)
+%                 {list: \(\hat y=c_1\)};
+
+%             \node[decision] (next) at (3,-0.2)
+%                 {\(x_r\leqslant b\)?};
+
+%             \node[process] (leaf1) at (1.5,-2)
+%                 {list: \(\hat y=c_2\)};
+
+%             \node[process] (leaf2) at (4.5,-2)
+%                 {list: \(\hat y=c_3\)};
+
+%             \draw[diredge]
+%                 (root) -- node[midway, above left] {\small ano} (leaf0);
+
+%             \draw[diredge]
+%                 (root) -- node[midway, above right] {\small ne} (next);
+
+%             \draw[diredge]
+%                 (next) -- node[midway, above left] {\small ano} (leaf1);
+
+%             \draw[diredge]
+%                 (next) -- node[midway, above right] {\small ne} (leaf2);
+
+%         \end{tikzpicture}
+%     \end{center}
+
+% \end{frame}
+
+% \begin{frame}{Příklad}{Klasifikace nového objektu}
+    
+%     \begin{columns}[T,onlytextwidth]
+%         \pause
+%         \begin{column}{0.57\textwidth}
+%             \begin{center}
+%                 \begin{tikzpicture}[scale=0.78, transform shape]
+
+%                     \node[decision] (root) at (0,2.3)
+%                         {\(x_1\leqslant 4\)?};
+
+%                     \node[process] (leaf0) at (-2.8,0.3)
+%                         {\(\hat y=0\)};
+
+%                     \node[decision] (second) at (2.8,0.3)
+%                         {\(x_2\leqslant 3\)?};
+
+%                     \node[process] (leaf1) at (1.4,-1.7)
+%                         {\(\hat y=1\)};
+
+%                     \node[process] (leaf2) at (4.2,-1.7)
+%                         {\(\hat y=0\)};
+
+%                     \draw[diredge, gray]
+%                         (root) -- node[midway, above left, black]
+%                         {\scriptsize ano} (leaf0);
+
+%                     \draw[diredge, red!75!black, very thick]
+%                         (root) -- node[midway, above right, black]
+%                         {\scriptsize ne} (second);
+
+%                     \draw[diredge, red!75!black, very thick]
+%                         (second) -- node[midway, above left, black]
+%                         {\scriptsize ano} (leaf1);
+
+%                     \draw[diredge, gray]
+%                         (second) -- node[midway, above right, black]
+%                         {\scriptsize ne} (leaf2);
+
+%                 \end{tikzpicture}
+%             \end{center}
+%         \end{column}
+%         \pause
+%         \begin{column}{0.41\textwidth}
+%             \begin{itemize}
+%                 \item Klasifikujme objekt $\mathbf{x}=(6,2)$.\pause
+%                 \item V~kořeni neplatí podmínka $6\leqslant 4$,
+%                 proto pokračujeme doprava.\pause
+%                 \item V~dalším uzlu platí $2\leqslant 3$,
+%                 proto pokračujeme doleva.
+%             \end{itemize}
+%         \end{column}
+
+%     \end{columns}
+%     \pause
+%     \begin{timportantframe}[9.5cm]
+%         \begin{center}
+%             Objekt skončí v~listu se třídou~\(1\), tedy $h(6,2)=1$.
+%         \end{center}
+%     \end{timportantframe}
+
+% \end{frame}
+
+% \begin{frame}{Formální popis klasifikátoru}
+%     \pause
+%     Nechť \(\mathcal{L}(T)\) označuje množinu všech listů rozhodovacího stromu $T$ a~$\mathcal{Y}$ množinu tříd.
+%     Každému listu \(\ell\in\mathcal{L}(T)\) je přiřazena třída $c_\ell\in\mathcal{Y}$.
+%     \pause
+%     \begin{defblock}[Rozhodovací oblast]
+%         \markdarkred{Rozhodovací oblastí}
+%         (anglicky \markdarkred{decision region}) listu \(\ell\)
+%         rozumíme množinu
+%         \[
+%             R_T(\ell)
+%             =
+%             \set{
+%                 \mathbf{x}\in\mathbb{R}^p:
+%                 \mathbf{x}\text{ při průchodu stromem skončí
+%                 v~listu }\ell
+%             }.
+%         \]
+%     \end{defblock}
+%     \pause
+%     \begin{defblock}[Klasifikátor určený rozhodovacím stromem]
+%         Rozhodovací strom $T$ určuje klasifikátor $\mapping{h}{\mathbb{R}^p}{\mathcal{Y}}$ předpisem
+%         \[
+%             h^{(T)}(\mathbf{x})=c_\ell
+%             \qquad\text{pro }\mathbf{x}\in R_T(\ell).
+%         \]
+%     \end{defblock}
+
+% \end{frame}
+
+% \subsection{Rozdělení prostoru příznaků}
+
+% \begin{frame}{Rozhodovací oblasti stromu}
+
+%     \begin{columns}[T,onlytextwidth]
+%         \pause
+%         \begin{column}{0.40\textwidth}
+%             \begin{center}
+%                 \begin{tikzpicture}[scale=0.68, transform shape]
+
+%                     \node[decision] (root) at (0,2.3)
+%                         {\(x_1\leqslant 4\)?};
+
+%                     \node[process] (leaf0) at (-2.8,0.3)
+%                         {\(\hat y=0\)};
+
+%                     \node[decision] (second) at (2.8,0.3)
+%                         {\(x_2\leqslant 3\)?};
+
+%                     \node[process] (leaf1) at (1.4,-1.7)
+%                         {\(\hat y=1\)};
+
+%                     \node[process] (leaf2) at (4.2,-1.7)
+%                         {\(\hat y=0\)};
+
+%                     \draw[diredge]
+%                         (root) -- node[midway, above left]
+%                         {\scriptsize ano} (leaf0);
+
+%                     \draw[diredge]
+%                         (root) -- node[midway, above right]
+%                         {\scriptsize ne} (second);
+
+%                     \draw[diredge]
+%                         (second) -- node[midway, above left]
+%                         {\scriptsize ano} (leaf1);
+
+%                     \draw[diredge]
+%                         (second) -- node[midway, above right]
+%                         {\scriptsize ne} (leaf2);
+
+%                 \end{tikzpicture}
+%             \end{center}
+%         \end{column}
+%         \pause
+%         \begin{column}{0.58\textwidth}
+%             \begin{center}
+%                 \begin{tikzpicture}
+%                     \begin{axis}[
+%                         width=\textwidth,
+%                         height=5.4cm,
+%                         xmin=0, xmax=8,
+%                         ymin=0, ymax=6,
+%                         axis lines=left,
+%                         xlabel={$x_1$},
+%                         ylabel={$x_2$},
+%                         xlabel near ticks,
+%                         ylabel near ticks,
+%                         xtick={4},
+%                         ytick={3},
+%                         clip=true
+%                     ]
+
+%                         % Oblasti třídy 0
+%                         \path[fill=blue!12]
+%                             (axis cs:0,0) rectangle (axis cs:4,6);
+
+%                         \path[fill=blue!12]
+%                             (axis cs:4,3) rectangle (axis cs:8,6);
+
+%                         % Oblast třídy 1
+%                         \path[fill=orange!20]
+%                             (axis cs:4,0) rectangle (axis cs:8,3);
+
+%                         % Rozhodovací hranice
+%                         \draw[very thick]
+%                             (axis cs:4,0) -- (axis cs:4,6);
+
+%                         \draw[very thick]
+%                             (axis cs:4,3) -- (axis cs:8,3);
+
+%                         % Popisky oblastí
+%                         \node at (axis cs:2,3)
+%                             {\(\hat y=0\)};
+
+%                         \node at (axis cs:6,1.5)
+%                             {\(\hat y=1\)};
+
+%                         \node at (axis cs:6,4.5)
+%                             {\(\hat y=0\)};
+
+%                     \end{axis}
+%                 \end{tikzpicture}
+%             \end{center}
+%         \end{column}
+
+%     \end{columns}
+%     \pause
+%     \begin{tinfoframe}[\textwidth]
+%         Každá podmínka \(x_j\leqslant a\) rozděluje příslušnou část
+%         prostoru nadrovinou \(x_j=a\). Listy stromu tak určují jednotlivé
+%         rozhodovací oblasti.
+%     \end{tinfoframe}
+
+% \end{frame}
+
+% \subsection{Učení rozhodovacího stromu}
+
+% \begin{frame}{Data v~uzlu stromu}
+%     \pause
+%     Nechť jsou dány vstupní statistické soubory
+%     \[
+%         \mathbf{X}_1,\ldots,\mathbf{X}_p
+%     \]
+%     a~výstupní statistický soubor
+%     \[
+%         \mathbf{Y}=(y_1,\ldots,y_n),
+%         \qquad
+%         y_i\in\mathcal{Y}.
+%     \]
+%     \pause
+%     Každý objekt je popsán vektorem
+%     \[
+%         \mathbf{x}_i=(x_{i1},\ldots,x_{ip}).
+%     \]
+%     \pause
+%     \begin{defblock}
+%         Pro uzel \(v\) označme symbolem
+%         \[
+%             I_T(v)\subseteq\set{1,\ldots,n}
+%         \]
+%         množinu indexů trénovacích objektů $\mathbf{x}_i=(x_{i1},\dots,x_{ip})$, které při průchodu stromem
+%         dorazily do~uzlu \(v\).
+%     \end{defblock}
+%     \pause
+%     \begin{itemize}
+%         \item Pokud mají všechny objekty v~uzlu stejnou třídu,\pause
+%               nazýváme uzel \textbf{čistý} (anglicky \markdarkred{pure}).
+%         \item Jinak jsou v~uzlu zastoupeny objekty z~více tříd.
+%     \end{itemize}
+
+% \end{frame}
+
+% \begin{frame}{Giniho nečistota}
+
+%     Pro neprázdnou množinu indexů
+%     \(I\subseteq\set{1,\ldots,n}\) a~třídu \(c\in\mathcal{Y}\)
+%     označme
+
+%     \[
+%         p_I(c)
+%         =
+%         \frac{
+%             \left|\set{i\in I:y_i=c}\right|
+%         }{
+%             |I|
+%         }
+%     \]
+
+%     podíl objektů ze~třídy \(c\).
+
+%     \begin{defblock}[Giniho nečistota]
+%         \markdarkred{Giniho nečistotou} (anglicky \markdarkred{Gini impurity}) množiny objektů s~indexy \(I\) rozumíme číslo
+%         \[
+%             \operatorname{Gini}(I)
+%             =
+%             1-\sum_{c\in\mathcal{Y}}p_I(c)^2.
+%         \]
+%     \end{defblock}
+
+%     Pro binární klasifikaci platí
+%     \[
+%         \operatorname{Gini}(I)
+%         =
+%         2p_I(0)p_I(1).
+%     \]
+
+%     \begin{tinfoframe}
+%         Čistá množina má Giniho nečistotu \(0\).
+%         U~binární klasifikace je nečistota největší, když jsou obě
+%         třídy zastoupeny stejně.
+%     \end{tinfoframe}
+
+% \end{frame}
+
+% \begin{frame}{Pravděpodobnostní interpretace Giniho nečistoty}
+
+%     \begin{itemize}
+%         \item Uvažujme náhodný výběr dvou objektů z~množiny \(I\),
+%         přičemž vybíráme nezávisle a~s~vracením.
+%         \item Označme jejich třídy \(C_1\) a~\(C_2\).
+%         Pro každé \(c\in\mathcal{Y}\) potom platí $\Pr[C_1=c]=\Pr[C_2=c]=p_I(c)$.
+%         \item Pravděpodobnost, že oba objekty patří do~stejné třídy, je
+%         \[
+%             \Pr[C_1=C_2]
+%             =
+%             \sum_{c\in\mathcal{Y}}
+%             \Pr[C_1=c]\Pr[C_2=c]
+%             =
+%             \sum_{c\in\mathcal{Y}}p_I(c)^2.
+%         \]
+%         \item Proto
+%         \[
+%             \operatorname{Gini}(I)
+%             =
+%             1-\sum_{c\in\mathcal{Y}}p_I(c)^2
+%             =
+%             \Pr[C_1\neq C_2].
+%         \]
+%     \end{itemize}
+
+%     \begin{timportantframe}
+%         Giniho nečistota udává pravděpodobnost, že dva nezávisle
+%         vybrané objekty z~daného uzlu budou patřit do~různých tříd.
+%     \end{timportantframe}
+
+% \end{frame}
+
+% \subsection{Entropie}
+
+% \subsection{Informační zisk}
+
+% \subsection{Konstrukce stromu}
+
+% \subsection{Přeučení rozhodovacího stromu}
+
+% \subsection{Vlastnosti rozhodovacích stromů}
+
+\section{Zdroje}
+
+\begin{frame}{Zdroje}
+    \begin{itemize}
+        \item STUART J. RUSSELL a~NORVIG, Peter. \textit{Artificial intelligence: A~modern approach.} 3rd ed. Englewood Cliffs, N.J: Pearson, 2016. ISBN 8120323823.
+    \end{itemize}
+\end{frame}
 
 \end{document}
