@@ -1,0 +1,103 @@
+% Jednotlivé vzory jsou zapsány jako seznamy černých pixelů x/y.
+% Mřížka má 10 sloupců a 12 řádků, tedy 120 neuronů.
+
+\def\patternThree{
+    2/11,3/11,4/11,5/11,6/11,7/11,
+    1/10,2/10,7/10,8/10,
+    7/9,8/9,
+    6/8,7/8,8/8,
+    4/7,5/7,6/7,7/7,
+    4/6,5/6,6/6,7/6,8/6,
+    7/5,8/5,
+    7/4,8/4,
+    7/3,8/3,
+    1/2,2/2,7/2,8/2,
+    2/1,3/1,4/1,5/1,6/1,7/1
+}
+
+\def\patternNoisy{
+    0/11,2/11,3/11,4/11,5/11,7/11,
+    7/10,8/10,
+    5/9,8/9,
+    0/8,2/8,5/8,6/8,7/8,8/8,
+    0/7,4/7,5/7,6/7,7/7,9/7,
+    0/6,6/6,7/6,
+    0/5,8/5,9/5,
+    1/4,7/4,9/4,
+    5/3,
+    1/2,7/2,8/2,9/2,
+    4/1,5/1,7/1,
+    3/0
+}
+
+\def\patternIntermediateA{
+    2/11,3/11,4/11,5/11,6/11,7/11,
+    1/10,2/10,7/10,8/10,
+    7/9,8/9,
+    6/8,7/8,8/8,
+    1/7,4/7,5/7,7/7,
+    4/6,5/6,6/6,8/6,
+    7/5,9/5,
+    1/4,7/4,8/4,
+    7/3,8/3,
+    1/2,2/2,7/2,8/2,
+    2/1,3/1,5/1,6/1,7/1,9/1
+}
+
+\def\patternIntermediateB{
+    2/11,3/11,4/11,5/11,6/11,7/11,
+    1/10,2/10,7/10,8/10,
+    7/9,8/9,
+    7/8,8/8,
+    4/7,5/7,6/7,7/7,
+    4/6,5/6,6/6,7/6,8/6,
+    7/5,8/5,
+    7/4,8/4,
+    7/3,8/3,9/3,
+    1/2,2/2,7/2,8/2,
+    2/1,3/1,4/1,5/1,6/1,7/1
+}
+
+% #1, #2 ... posunutí obrázku
+% #3     ... seznam černých pixelů
+% #4     ... nadpis
+% #5     ... barva nadpisu
+\newcommand{\hopfieldpattern}[5]{%
+    \begin{scope}[shift={(#1,#2)}]
+
+        \node[
+            task,
+            fill=#5!15,
+            minimum width=23mm,
+            minimum height=7mm,
+            font=\scriptsize
+        ] at (0.75,2.5) {#4};
+
+        \fill[white]
+            (0,0) rectangle (1.5,1.8);
+
+        \draw[
+            step=0.15cm,
+            very thin,
+            black!25
+        ] (0,0) grid (1.5,1.8);
+
+        % Nejprve se rozbalí makro se seznamem pixelů
+        \edef\drawpatternloop{%
+            \noexpand\foreach
+            \noexpand\x/\noexpand\y
+            in {#3}%
+        }%
+
+        % Teprve poté se provede cyklus
+        \drawpatternloop {%
+            \fill[black]
+                ({0.15*\x},{0.15*\y})
+                rectangle ++(0.15,0.15);
+        }%
+
+        \draw[thick]
+            (0,0) rectangle (1.5,1.8);
+
+    \end{scope}
+}

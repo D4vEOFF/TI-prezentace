@@ -8,6 +8,8 @@
 
 \def\presentationtitle{Neuronové sítě}
 
+\input{hopfield.tex}
+
 \begin{document}
 
 \input{../titlepage.tex}
@@ -1002,13 +1004,1078 @@
 
 \end{frame}
 
+\begin{frame}{Výpočet ve vrstvách}
+
+    Vstupní vrstva obsahuje hodnoty znaků \(i\)-tého vektoru dat:
+    \[
+        a_j^{(0)}=x_{ij},
+        \qquad
+        j\in\set{1,\ldots,p}.
+    \]
+
+    \pause
+
+    Hodnota \(i\)-tého neuronu v~následující vrstvě se vypočítá jako
+    \[
+        a_i^{(\ell+1)}
+        =
+        f^{(\ell+1)}
+        \left(
+            \sum_{j=1}^{n_\ell}
+            w_{ji}^{(\ell+1)}a_j^{(\ell)}
+            +
+            \theta_i^{(\ell+1)}
+        \right).
+    \]
+
+    \pause
+
+    \begin{enumerate}
+        \item Nejprve známe hodnoty ve vstupní vrstvě.\pause
+        \item Z~nich vypočítáme hodnoty neuronů v~první skryté vrstvě.\pause
+        \item Stejným způsobem pokračujeme vrstvu po vrstvě.\pause
+        \item Hodnoty poslední vrstvy tvoří výstup celé sítě.
+    \end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Proč více vrstev pomáhá?}
+
+    \begin{columns}[T]
+        \pause
+        \begin{column}{0.46\textwidth}
+
+            \begin{center}
+                \textbf{Úloha XOR}
+                \begin{tikzpicture}[
+                    x=2.2cm,
+                    y=2.2cm,
+                    every node/.style={font=\small}
+                ]
+
+                    \draw[->, thick] (-0.15,0) -- (1.35,0)
+                        node[right] {\(x_1\)};
+                    \draw[->, thick] (0,-0.15) -- (0,1.35)
+                        node[above] {\(x_2\)};
+
+                    \draw[fill=blue!20] (0,0) circle (3pt);
+                    \draw[fill=red!20] (0,1) circle (3pt);
+                    \draw[fill=red!20] (1,0) circle (3pt);
+                    \draw[fill=blue!20] (1,1) circle (3pt);
+
+                    % \node[vertex, fill=red!20] at (0,0) {};
+                    % \node[vertex, fill=red!20] at (1,1) {};
+
+                    % \node[vertex, fill=blue!20] at (1,0) {};
+                    % \node[vertex, fill=blue!20] at (0,1) {};
+
+                    \node[below left] at (0,0) {\(0\)};
+                    \node[below] at (1,0) {\(1\)};
+                    \node[left] at (0,1) {\(1\)};
+
+                    \draw[dashed, thick] (-0.1,0.6) -- (0.6,-0.1);
+                    \draw[dashed, thick] (0.4,1.1) -- (1.1,0.4);
+
+                \end{tikzpicture}
+            \end{center}
+
+        \end{column}
+        \pause
+        \begin{column}{0.50\textwidth}
+
+            \begin{center}
+                \textbf{Síť se skrytou vrstvou}
+                \begin{tikzpicture}[
+                    x=1cm,
+                    y=1cm,
+                    every node/.style={font=\small}
+                ]
+
+                    \node[vertex] (x1) at (0,0.8) {\(x_1\)};
+                    \node[vertex] (x2) at (0,-0.8) {\(x_2\)};
+
+                    \node[vertex] (a1) at (2.3,0.8) {\(a_1^{(1)}\)};
+                    \node[vertex] (a2) at (2.3,-0.8) {\(a_2^{(1)}\)};
+
+                    \node[vertex] (y) at (4.6,0) {\(\hat{y}\)};
+
+                    \draw[diredge] (x1) -- (a1);
+                    \draw[diredge] (x1) -- (a2);
+                    \draw[diredge] (x2) -- (a1);
+                    \draw[diredge] (x2) -- (a2);
+
+                    \draw[diredge] (a1) -- (y);
+                    \draw[diredge] (a2) -- (y);
+
+                    \node[vertexplain, text width=20mm]
+                        at (0,-1.55)
+                        {vstupní\\vrstva};
+
+                    \node[vertexplain, text width=22mm]
+                        at (2.3,-1.55)
+                        {skrytá\\vrstva};
+
+                    \node[vertexplain, text width=20mm]
+                        at (4.6,-1.55)
+                        {výstupní\\vrstva};
+
+                \end{tikzpicture}
+            \end{center}
+
+        \end{column}
+    \end{columns}
+
+    \pause
+
+    \begin{timportantframe}[\textwidth]
+        Vícevrstvá síť s~nelineárními přenosovými funkcemi může vytvářet
+        nelineární rozhodovací hranice a~řešit úlohy, které jediný
+        perceptron vyřešit nedokáže.
+    \end{timportantframe}
+
+\end{frame}
+
 
 \section{Učení neuronové sítě}
 
 \titleframe{Učení neuronové sítě}
 
+\subsection{Trénovací data}
+
+\begin{frame}{Trénovací množina}
+    \pause
+    \begin{itemize}
+        \item Uvažujme vstupní statistické soubory $\mathbf{X}_1,\mathbf{X}_2,\ldots,\mathbf{X}_p$
+        a~výstupní statistické soubory $\mathbf{Y}_1,\mathbf{Y}_2,\ldots,\mathbf{Y}_k$.\pause
+        \item Jednotlivé statistické soubory mají tvar
+        \[
+            \begin{aligned}
+                \mathbf{X}_j
+                &=
+                (x_{1j},x_{2j},\ldots,x_{nj}),
+                \qquad
+                j\in\{1,\ldots,p\},\\
+                \mathbf{Y}_r
+                &=
+                (y_{1r},y_{2r},\ldots,y_{nr}),
+                \qquad
+                r\in\{1,\ldots,k\}.
+            \end{aligned}
+        \]\pause
+        \item Pro \(i\)-tý datový záznam sestavíme vstupní a~výstupní vektor
+        \[
+            \mathbf{x}_i
+            =
+            (x_{i1},x_{i2},\ldots,x_{ip}),
+            \qquad
+            \mathbf{y}_i
+            =
+            (y_{i1},y_{i2},\ldots,y_{ik}).
+        \]
+    \end{itemize}
+
+    \pause
+
+    \begin{timportantframe}[\textwidth]
+        Trénovací množinu tvoří dvojice vstupních dat a~jejich očekávaných
+        výstupů:
+        \[
+            D
+            =
+            \set{
+                (\mathbf{x}_i,\mathbf{y}_i)
+                \mid
+                i\in\{1,\ldots,n\}
+            }.
+        \]
+    \end{timportantframe}
+
+\end{frame}
+
+\subsection{Měření chyby}
+
+\begin{frame}{Měření chyby neuronové sítě}
+    \pause
+    Pro vstup \(\mathbf{x}_i\) neuronová síť $\mathcal{N}$ vypočítá odhad
+    \[
+        \hat{\mathbf{y}}_i
+        =
+        (\hat{y}_{i1},\hat{y}_{i2},\ldots,\hat{y}_{ik}).
+    \]
+
+    \pause
+
+    Chybu \(r\)-tého výstupu pro \(i\)-tý vektor dat můžeme vyjádřit jako
+    \[
+        e_{ir}=y_{ir}-\hat{y}_{ir}.
+    \]
+
+    \pause
+
+    \begin{itemize}
+        \item Součet čtverců chyb (anglicky \markdarkred{sum of squared errors}) definujeme jako
+        \[
+            \SSE_{\mathbf{X}_1,\ldots,\mathbf{X}_p}^{\mathbf{Y}_1,\ldots,\mathbf{Y}_k}(\mathcal{N})
+            =
+            \sum_{i=1}^{n}
+            \sum_{r=1}^{k}
+            \left(y_{ir}-\hat{y}_{ir}\right)^2.
+        \]\pause
+        \item Střední kvadratická chyba (anglicky \markdarkred{mean squared error}) je
+        \[
+            \MSE_{\mathbf{X}_1,\ldots,\mathbf{X}_p}^{\mathbf{Y}_1,\ldots,\mathbf{Y}_k}(\mathcal{N})
+            =
+            \frac{1}{nk}
+            \sum_{i=1}^{n}
+            \sum_{r=1}^{k}
+            \left(y_{ir}-\hat{y}_{ir}\right)^2
+            =
+            \frac{1}{nk}\SSE_{\mathbf{X}_1,\ldots,\mathbf{X}_p}^{\mathbf{Y}_1,\ldots,\mathbf{Y}_k}(\mathcal{N}).
+        \]
+    \end{itemize}
+
+\end{frame}
+
+\subsection{Zpětná propagace}
+
+\begin{frame}{Zpětná propagace chyby}
+
+    \begin{tinfoframe}[\textwidth]
+        Z~hodnoty chyby víme, jak přesný byl výstup celé sítě.
+        Potřebujeme však určit, jak jednotlivé váhy a~prahové hodnoty
+        k~této chybě přispěly.
+    \end{tinfoframe}
+
+    \pause
+
+    \centering
+    \begin{tikzpicture}[
+        x=1cm,
+        y=1cm,
+        every node/.style={font=\small}
+    ]
+
+        \node[task] (input) at (0,0)
+            {vstup\\\(\mathbf{x}_i\)};
+
+        \node[task] (hidden1) at (2.5,0)
+            {první skrytá\\vrstva};
+
+        \node[task] (hidden2) at (5.0,0)
+            {další skryté\\vrstvy};
+
+        \node[task] (output) at (7.5,0)
+            {výstup\\\(\hat{\mathbf{y}}_i\)};
+
+        \node[task] (error) at (10.0,0)
+            {chyba\\\(E_i\)};
+
+        % Dopředný výpočet
+        \draw[diredge] (input) -- (hidden1);
+        \draw[diredge] (hidden1) -- (hidden2);
+        \draw[diredge] (hidden2) -- (output);
+        \draw[diredge] (output) -- (error);
+
+        % Zpětná propagace
+        \draw[diredge, dashed, bend right=35]
+            (error.north) to (output.north);
+
+        \draw[diredge, dashed, bend right=35]
+            (output.north) to (hidden2.north);
+
+        \draw[diredge, dashed, bend right=35]
+            (hidden2.north) to (hidden1.north);
+
+        \node[vertexplain] at (5.0,-0.75)
+            {dopředný výpočet};
+
+        \node[vertexplain] at (6.3,1.25)
+            {zpětná propagace};
+
+    \end{tikzpicture}
+
+    \pause
+
+    \begin{timportantbox}[\textwidth]{Základní myšlenka}
+        Zpětná propagace chyby (anglicky
+        \markdarkred{backpropagation}) postupuje od výstupní vrstvy
+        směrem ke vstupní vrstvě a~určuje, jak změna každé váhy
+        a~prahové hodnoty ovlivní výslednou chybu.
+    \end{timportantbox}
+
+\end{frame}
+
+\subsection{Minimalizace chyby}
+
+\begin{frame}{Minimalizace chyby gradientním sestupem}
+
+    \begin{tinfobox}[\textwidth]{Připomenutí}
+        Gradientní sestup upravuje parametry modelu ve směru, ve kterém
+        se hodnota chybové funkce zmenšuje.
+    \end{tinfobox}
+
+    \pause
+
+    Váhu spoje z~\(j\)-tého neuronu v~\((\ell-1)\)-ní vrstvě do
+    \(i\)-tého neuronu v~\((\ell)\)-ní vrstvě upravíme podle vztahu
+    \[
+        w_{ji}^{(\ell)}
+        \gets
+        w_{ji}^{(\ell)}
+        -
+        \eta
+        \frac{\partial E}
+             {\partial w_{ji}^{(\ell)}}.
+    \]
+
+    \pause
+
+    Obdobně upravíme prahovou hodnotu neuronu:
+    \[
+        \theta_i^{(\ell)}
+        \gets
+        \theta_i^{(\ell)}
+        -
+        \eta
+        \frac{\partial E}
+             {\partial \theta_i^{(\ell)}}.
+    \]
+
+\end{frame}
+
+\begin{frame}{Minimalizace chyby gradientním sestupem}
+    \pause
+    \begin{center}
+        \begin{tikzpicture}[
+            >=stealth,
+            box/.style={
+                draw,
+                rounded corners=2mm,
+                minimum width=25mm,
+                minimum height=11mm,
+                align=center
+            },
+        ]
+            \node[box,fill=red!20] at (-3,0) {$\displaystyle w_{ji}^{(\ell)}\gets w_{ji}^{(\ell)}-\eta\frac{\partial E}{\partial w_{ji}^{(\ell)}}$};
+            \node[box,fill=green!20] at (3,0) {$\displaystyle \theta_i^{(\ell)}\gets\theta_i^{(\ell)}-\eta\frac{\partial E}{\partial \theta_i^{(\ell)}}$};
+        \end{tikzpicture}
+    \end{center}
+    
+    \pause
+
+    \begin{timportantframe}[\textwidth]
+        Parametr \(\eta>0\) se nazývá rychlost učení (anglicky \markdarkred{learning rate}).
+        Určuje velikost změny parametrů během jednoho kroku učení.
+    \end{timportantframe}
+
+    \pause
+
+    \begin{tnoticebox}[\textwidth]{Úloha zpětné propagace}
+        Zpětná propagace efektivně vypočítá derivace chybové funkce
+        podle všech vah a~prahových hodnot neuronové sítě.
+        Gradientní sestup následně tyto parametry upraví.
+    \end{tnoticebox}
+\end{frame}
+
+\subsection{Hluboké učení}
+
+\begin{frame}{Hluboké učení}
+    \pause
+    \markdarkred{Hluboké učení} (anglicky \markdarkred{deep learning}) je oblast
+    strojového učení, která využívá neuronové sítě s~větším počtem
+    skrytých vrstev.
+
+    \pause
+
+    \begin{itemize}
+        \item Mělká síť má obvykle malý počet skrytých vrstev.
+        \pause
+        \item Hluboká síť obsahuje mnoho skrytých vrstev.
+        \pause
+        \item Každá vrstva postupně vytváří nový popis vstupních dat.
+        \pause
+        \item Díky tomu může síť zachycovat složitější vztahy v~datech.
+    \end{itemize}
+
+    \pause
+
+    \begin{timportantbox}[\textwidth]{Hlavní rozdíl}
+        \textbf{Nejde o~jiný princip výpočtu neuronu}, ale o~rozsáhlejší síť,
+        která skládá velké množství jednoduchých výpočtů.
+    \end{timportantbox}
+
+\end{frame}
+
+\subsection{Batch a epoch}
+
+\begin{frame}{Batch}
+    \pause
+    \begin{itemize}
+        \item Mějme trénovací množinu $D=\set{(\mathbf{x}_i,\mathbf{y}_i)\mid i\in\{1,\ldots,n\}}$.
+        \item \markdarkred{Batch} neboli dávka je menší část trénovací množiny, na které v~daném kroku spočítáme chybu a~upravíme parametry sítě.
+    \end{itemize}
+
+    \pause
+
+    Pokud má batch velikost \(m\), může mít například tvar
+    \[
+        B
+        =
+        \set{
+            (\mathbf{x}_{i_1},\mathbf{y}_{i_1}),
+            \ldots,
+            (\mathbf{x}_{i_m},\mathbf{y}_{i_m})
+        }
+        \subseteq
+        D,
+    \]
+    kde $i_1,\dots,i_m\in\set{1,\dots,n}$ jsou vybrané indexy.
+
+    \pause
+
+    \begin{tnoticebox}[\textwidth]{Proč nepoužívat vždy celý soubor?}
+        U~velkých trénovacích množin by výpočet chyby nad celým souborem
+        mohl být pomalý. Proto se často používají menší dávky dat.
+    \end{tnoticebox}
+
+\end{frame}
+
+\begin{frame}{Epoch}
+    \pause
+    \begin{itemize}
+        \item Jedna epocha (anglicky \markdarkred{epoch}) znamená jedno úplné
+        zpracování celé trénovací množiny.\pause
+        \item Trénovací množinu si můžeme rozdělit na batche
+        \[
+            D
+            =
+            \mathcal{B}_1
+            \cup
+            \mathcal{B}_2
+            \cup
+            \cdots
+            \cup
+            \mathcal{B}_s.
+        \]\pause
+        \item Během jedné epochy síť postupně zpracuje
+        \[
+            \mathcal{B}_1,\mathcal{B}_2,\ldots,\mathcal{B}_s.
+        \]
+    \end{itemize}
+
+    \pause
+
+    \begin{timportantbox}[\textwidth]{Vztah batch a~epoch}
+        Jeden batch odpovídá jednomu kroku učení.
+        Jedna epocha odpovídá zpracování všech batchů.
+    \end{timportantbox}
+
+\end{frame}
+
+\begin{frame}{Batch a~epoch při trénování modelu}
+    \pause
+    \centering
+    \begin{tikzpicture}[
+        x=1cm,
+        y=1cm,
+        every node/.style={font=\small}
+    ]
+
+        \node[task] (data) at (0,0) {trénovací\\množina \(D\)};
+        \node[task] (split) at (2.3,0) {rozdělení\\na batche};
+        \node[task] (batch1) at (4.7,1.0) {\(\mathcal{B}_1\)};
+        \node[task] (batch2) at (4.7,0) {\(\mathcal{B}_2\)};
+        \node[task] (batchs) at (4.7,-1.7) {\(\mathcal{B}_s\)};
+        \node[task] (train) at (7.3,0) {průchod sítí};
+        \node[task] (update) at (10.0,0) {úprava\\parametrů};
+
+        \draw[diredge] (data) -- (split);
+        \draw[diredge] (train) -- (update);
+        \draw[diredge] (split.north east) -- (batch1);
+        \draw[diredge] (split.east) -- (batch2);
+        \draw[diredge] (split.south east) -- (batchs);
+
+        \draw[diredge] (batch1) -- (train.north west);
+        \draw[diredge] (batch2) -- (train.west);
+        \draw[diredge] (batchs) -- (train.south west);
+
+        \node[vertexplain] at (4.7,-0.75) {\(\vdots\)};
+
+        \draw[diredge, rounded corners=4mm]
+            (update.north) -- ++(0,1.1) -- ++(-9.2,0) node[midway,above,vertexplain,align=center] {další epocha} -| (data.north);
+
+    \end{tikzpicture}
+
+    \pause
+
+    \begin{enumerate}
+        \item Trénovací množinu \(D\) rozdělíme na \textbf{batche}.
+        \item Pro každý batch spočítáme výstupy sítě a~chybu.
+        \item Pomocí zpětné propagace upravíme váhy a~prahové hodnoty.
+        \item Po zpracování všech batchů skončí jedna \textbf{epocha}.
+        \item Celý postup opakujeme po zvolený počet epoch.
+    \end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Jak volit počet epoch a~velikost batche?}
+    
+    \begin{columns}[T]
+        \pause
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[
+                    >=stealth,
+                    box/.style={
+                        draw,
+                        rounded corners=2mm,
+                        minimum width=25mm,
+                        minimum height=11mm,
+                        align=center
+                    },
+                ]
+                    \node[box,fill=orange!20,font=\bfseries] {Počet epoch};
+                \end{tikzpicture}
+            \end{center}
+            \pause
+            \begin{itemize}
+                \item Příliš málo epoch:
+                síť se nestačí naučit vztahy v~datech.
+                \pause
+                \item Příliš mnoho epoch:
+                roste riziko tzv \markdarkred{přeučení}.
+                \pause
+                \item Sledujeme proto chybu na validační množině.
+                \pause
+                \item Trénování ukončíme, pokud se validační chyba
+                delší dobu nezlepšuje.
+            \end{itemize}
+        \end{column}
+        \pause
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[
+                    >=stealth,
+                    box/.style={
+                        draw,
+                        rounded corners=2mm,
+                        minimum width=25mm,
+                        minimum height=11mm,
+                        align=center
+                    },
+                ]
+                    \node[box,fill=red!20,font=\bfseries] {Velikost batche};
+                \end{tikzpicture}
+            \end{center}
+            \pause
+            \begin{itemize}
+                \item Menší batch znamená více a~méně přesných
+                aktualizací parametrů.
+                \pause
+                \item Větší batch znamená méně aktualizací
+                a~větší nároky na paměť.
+                \pause
+                \item Vhodnou velikost volíme podle validačních
+                výsledků a~výpočetních možností.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}{Jak volit počet epoch a~velikost batche?}
+    \begin{timportantbox}[\textwidth]{Praktické pravidlo}
+        Neexistuje univerzálně nejlepší počet epoch ani velikost batche.
+        Hodnoty volíme experimentálně podle výsledků na validační množině;
+        počet epoch lze řídit pomocí předčasného ukončení
+        (anglicky \markdarkred{early stopping}).
+    \end{timportantbox}
+\end{frame}
+
+\subsection{Přeučení}
+
+\begin{frame}{Přeučení modelu}
+
+    \markdarkred{Přeučení} (anglicky \markdarkred{overfitting}) nastává tehdy,
+    když se model \textbf{příliš přizpůsobí trénovacím datům} a~ztratí schopnost
+    dobře pracovat s~novými daty.
+
+    \pause
+
+    \begin{itemize}
+        \item Model se nenaučí pouze obecné vztahy, ale také šum a~náhodné zvláštnosti trénovací množiny.
+        \pause
+        \item Na trénovacích datech může mít velmi malou chybu.
+        \pause
+        \item Na validačních nebo testovacích datech se však chyba začne zvyšovat.
+    \end{itemize}
+
+    \pause
+
+    \begin{timportantbox}[\textwidth]{Kdy k~přeučení často dochází?}
+        Například při příliš dlouhém trénování, příliš složitém modelu,
+        malém množství trénovacích dat nebo při slabé regularizaci.
+    \end{timportantbox}
+
+\end{frame}
+
+\begin{frame}{Přeučení v~průběhu trénování}
+    \pause
+    \centering
+
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=0.82\textwidth,
+            height=0.45\textwidth,
+            xmin=0, xmax=100,
+            ymin=0, ymax=1.05,
+            axis lines=left,
+            xlabel={počet epoch},
+            ylabel={chyba},
+            xlabel near ticks,
+            ylabel near ticks,
+            legend pos=north east,
+            grid=both,
+            domain=0:100,
+            samples=120
+        ]
+
+            \addplot[thick, blue]
+                {0.82*exp(-0.045*x)+0.08};
+            \addlegendentry{trénovací chyba}
+
+            \addplot[thick, red]
+                {0.58*exp(-0.060*x)+0.18+0.00013*(x-45)^2};
+            \addlegendentry{validační chyba}
+
+            \draw[dashed, thick]
+                (axis cs:45,0) -- (axis cs:45,1.05);
+
+            \node[align=center]
+                at (axis cs:30,0.80)
+                {vhodný okamžik\\ukončení};
+
+            \node[align=center, text width=28mm]
+                at (axis cs:78,0.55)
+                {oblast\\přeučení};
+
+        \end{axis}
+    \end{tikzpicture}
+
+    \pause
+
+    \begin{tnoticebox}[\textwidth]{Interpretace}
+        Trénovací chyba obvykle s~počtem epoch klesá.
+        Pokud však validační chyba začne růst, model se pravděpodobně
+        začíná přizpůsobovat trénovacím datům až příliš.
+    \end{tnoticebox}
+
+\end{frame}
+
 \section{Hopfieldův model}
 
 \titleframe{Hopfieldův model}
+
+\subsection{Dopředné a rekurentní neuronové sítě}
+
+\begin{frame}{Dopředné a~rekurentní neuronové sítě}
+
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[
+                    >=stealth,
+                    box/.style={
+                        draw,
+                        rounded corners=2mm,
+                        minimum width=25mm,
+                        minimum height=11mm,
+                        align=center
+                    },
+                ]
+                    \node[box,fill=orange!20,font=\bfseries] {Dopředná síť};
+                \end{tikzpicture}
+            \end{center}
+            Data se šíří pouze jedním směrem: od vstupů k~výstupům.
+            \begin{center}
+                \begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small}]
+                    \node[vertex] (x1) at (0,1) {};
+                    \node[vertex] (x2) at (0,0) {};
+                    \node[vertex] (h1) at (1.7,1) {};
+                    \node[vertex] (h2) at (1.7,0) {};
+                    \node[vertex] (y) at (3.4,0.5) {};
+
+                    \foreach \x in {x1,x2}{
+                        \foreach \h in {h1,h2}{
+                            \draw[diredge] (\x) -- (\h);
+                        }
+                    }
+                    \draw[diredge] (h1) -- (y);
+                    \draw[diredge] (h2) -- (y);
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[
+                    >=stealth,
+                    box/.style={
+                        draw,
+                        rounded corners=2mm,
+                        minimum width=25mm,
+                        minimum height=11mm,
+                        align=center
+                    },
+                ]
+                    \node[box,fill=red!20,font=\bfseries] {Rekurentní síť};
+                \end{tikzpicture}
+            \end{center}
+            Spoje mohou vytvářet cykly.
+            Stav sítě se proto může postupně měnit v~čase.
+            \begin{center}
+                \begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small}]
+                    \node[vertex] (a) at (6.0,0.9) {};
+                    \node[vertex] (b) at (7.2,0.9) {};
+                    \node[vertex] (c) at (7.2,-0.3) {};
+                    \node[vertex] (d) at (6.0,-0.3) {};
+
+                    \draw[diredge] (a) -- (b);
+                    \draw[diredge] (b) -- (c);
+                    \draw[diredge] (c) -- (d);
+                    \draw[diredge] (d) -- (a);
+                    \draw[diredge] (a) -- (c);
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+
+    \pause
+
+    \begin{timportantframe}[\textwidth]
+        Hopfieldova síť je jednoduchý příklad rekurentní neuronové sítě.
+        Lze ji chápat jako model asociativní paměti.
+    \end{timportantframe}
+
+\end{frame}
+
+\subsection{Hopfieldova síť}
+
+\begin{frame}{Hopfieldova síť}
+
+    \markdarkred{Hopfieldova síť} je tvořena \(n\) neurony, které jsou navzájem
+    propojeny (tvoří úplný neorientovaný graf $K_n$). Síť tedy není rozdělená na vrstvy.
+
+    \pause
+
+    \centering
+    \begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small}]
+        \node[vertex] (s1) at (0,1.4) {\(s_1\)};
+        \node[vertex] (s2) at (1.6,2.2) {\(s_2\)};
+        \node[vertex] (s3) at (3.2,1.4) {\(s_3\)};
+        \node[vertex] (s4) at (3.2,-0.4) {\(s_4\)};
+        \node[vertex] (s5) at (1.6,-1.2) {\(s_5\)};
+        \node[vertex] (s6) at (0,-0.4) {\(s_6\)};
+
+        \foreach \u/\v in {s1/s2,s1/s3,s1/s4,s1/s5,s1/s6,
+                           s2/s3,s2/s4,s2/s5,s2/s6,
+                           s3/s4,s3/s5,s3/s6,
+                           s4/s5,s4/s6,
+                           s5/s6}{
+            \draw[edge] (\u) -- (\v);
+        }
+    \end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}{Popis a stav síťě}
+    \pause
+    \begin{itemize}
+        \item Všechny neurony jsou vstupní i~výstupní.\pause
+        \item Na Hopfieldovu síť lze popsat jako uspořádanou dvojici $\mathcal{H}_n=(N,w)$, kde $\mapping{w}{V\times V}{\R}$ je váhová funkce a $|N|=n$.\pause
+        \item Pro jednotlivé váhy hran platí
+        \[w_{ij}=w_{ji}\quad\text{a}\quad w_{ii}=0.\]\pause
+        \item Pracujeme se skokovou přenosovou funkcí.\pause
+        \item Pracujeme se vstupními (trénovacími) soubory $\mathbf{X}_1,\dots,\mathbf{X}_n$, kde
+        \[\mathbf{x}_i=(x_{i1},\dots,x_{in}),\quad x_{ij}\in\set{-1,1}.\]\pause
+        \item Stav sítě $\mathcal{H}_n$ můžeme reprezentovat vektorem $\mathbf{s}=(s_1,\dots,s_n)$.
+    \end{itemize}
+    \pause
+    \begin{timportantframe}[\textwidth]
+        Hopfieldův model představuje \textbf{učení bez učitele}, neboť zde nemáme výstupní hodnoty. Fungováním představuje model asociativní paměti.
+    \end{timportantframe}
+\end{frame}
+
+\begin{frame}{Aktualizace stavu Hopfieldovy sítě}
+    \pause
+    \begin{itemize}
+        \item Označme číslem $t\in\N$ krok výpočtu sítě a~$\mathbf{s}_i^{(t)}$ stav $i$-tého neuronu v kroku výpočtu $t$.\pause
+        \item Pro \(i\)-tý neuron v~kroku $t+1$ spočítáme hodnotu
+        \[
+            s_i^{(t+1)}=f\left(\sum_{j=1}^{n}w_{ji}s_j^{(t)}+\theta_i\right),
+        \]
+        kde $f$ je skoková funkce.
+        \item Výpočet skončít ve chvíli, kdy pro všechna $i$ je $s_i^{(t+1)}=s_i^{(t)}$.
+    \end{itemize}
+
+    \pause
+
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{tnoticebox}[\textwidth]{Synchronní aktualizace}
+                Všechny neurony se přepočítají současně.
+                Tato varianta je jednoduchá, ale může vést k~oscilacím.
+            \end{tnoticebox}
+        \end{column}
+
+        \begin{column}{0.48\textwidth}
+            \begin{timportantbox}[\textwidth]{Asynchronní aktualizace}
+                Neurony se přepočítávají postupně.
+                Tato varianta lépe souvisí s~konvergencí sítě.
+            \end{timportantbox}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\subsection{Hopfieldova síť jako asociativní paměť}
+
+\begin{frame}{Hopfieldova síť jako asociativní paměť}
+    \pause
+    Cílem není určit třídu ani vypočítat číselný výstup.
+    Síť má z~neúplného nebo poškozeného vstupu \textbf{obnovit některý
+    z~uložených vzorů}.
+
+    \pause
+    \vspace{3mm}
+    \centering
+    \begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small}]
+        \node[task,fill=blue!10] (stored) at (2,0) {uložené\\vzory};
+        \node[task,fill=red!10] (input) at (6,-2) {poškozený\\vstup\\\(\mathbf{s}^{(0)}\)};
+        \node[task,fill=orange!10] (net) at (6,0) {Hopfieldova\\síť};
+        \node[task,fill=green!10] (output) at (9,0) {obnovený\\vzor\\\(\mathbf{x}_r=(x_{r1},\dots,x_{rn})\)};
+
+        \draw[diredge] (stored) -- node[above] {učení} (net);
+        \draw[diredge] (input) -- (net);
+        \draw[diredge] (net) -- (output);
+    \end{tikzpicture}
+
+    \pause
+
+    \begin{timportantframe}[\textwidth]
+        Během vybavování se nemění váhy sítě. Mění se pouze stav
+        \[
+            \mathbf{s}^{(0)},\mathbf{s}^{(1)},\mathbf{s}^{(2)},\ldots
+        \]
+        dokud se síť neustálí v~některém stabilním stavu.
+    \end{timportantframe}
+
+\end{frame}
+
+\subsection{Učení Hopfieldovy sítě}
+
+\begin{frame}{Učení Hopfieldovy sítě}
+    \pause
+    Pracujeme se vstupními soubory $\mathbf{X}_1,\dots,\mathbf{X}_n$ a~$r$-tým vstupním vzorem $\mathbf{x}_r=(x_{r1},\dots,x_{rn})$.
+
+    \pause
+
+    \begin{tinfobox}[\textwidth]{Hebbovo pravidlo}
+        Váhu mezi \(i\)-tým a~\(j\)-tým neuronem určíme vztahem
+        \[
+            w_{ij}
+            =
+            \frac{1}{n}
+            \sum_{r=1}^{n}
+            x_{ri}x_{rj},
+            \qquad i\neq j,
+        \]
+        a~současně položíme $w_{ii}=0$.
+    \end{tinfobox}
+
+    \pause
+
+    \begin{itemize}
+        \item Pokud mají dva neurony ve vzorech často stejnou hodnotu,
+              jejich váha bude spíše kladná.
+        \pause
+        \item Pokud mají často opačnou hodnotu, jejich váha bude spíše záporná.
+        \pause
+        \item Váhy tedy zachycují vztahy mezi jednotlivými složkami uložených vzorů.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Energetická funkce}
+    \pause
+    Pro stav $\mathbf{s}=(s_1,\dots,s_n)$ definujeme energetickou funkci
+    \[
+        E(\mathbf{s})
+        =
+        -\frac{1}{2}
+        \sum_{i=1}^{n}
+        \sum_{j=1}^{n}
+        w_{ij}s_is_j
+        -
+        \sum_{i=1}^{n}
+        \theta_i s_i.
+    \]
+
+    \pause
+
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{itemize}
+                \item Stav sítě si můžeme představit jako bod v~krajině.
+                \pause
+                \item Energetická funkce říká, jak „vysoko“ se daný stav nachází.
+                \pause
+                \item Stabilní stavy odpovídají lokálním minimům energie.
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.48\textwidth}
+            \centering
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=6.5cm,
+                    height=5cm,
+                    xmin=0, xmax=6,
+                    ymin=0, ymax=2.2,
+                    axis lines=left,
+                    xlabel={stav sítě},
+                    ylabel={energie},
+                    xlabel near ticks,
+                    ylabel near ticks,
+                    xtick=\empty,
+                    ytick=\empty,
+                    samples=100,
+                    domain=0:6
+                ]
+                    \addplot[thick, blue!70!black]
+                        {0.08*(x-1)^2*(x-4.7)^2+0.25};
+
+                    \addplot[only marks, mark=*]
+                        coordinates {(4.7,0.25)};
+
+                    \node[align=center]
+                        at (axis cs:4.6,0.75)
+                        {stabilní\\stav};
+                \end{axis}
+            \end{tikzpicture}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}{Vybavení naučeného vzoru}
+    \centering
+    \begin{tikzpicture}[
+        x=1cm,
+        y=1cm,
+        every node/.style={font=\small}
+    ]
+
+        % Uložený vzor
+        \hopfieldpattern
+            {0}{0}
+            {\patternThree}
+            {uložený vzor\\\(\mathbf{x}_3\)}
+            {green}
+
+        % Poškozený vstup
+        \hopfieldpattern
+            {2.4}{0}
+            {\patternNoisy}
+            {vstup\\\(\mathbf{s}^{(0)}\)}
+            {orange}
+
+        % První mezistav
+        \hopfieldpattern
+            {4.8}{0}
+            {\patternIntermediateA}
+            {stav\\\(\mathbf{s}^{(1)}\)}
+            {blue}
+
+        % Druhý mezistav
+        \hopfieldpattern
+            {7.2}{0}
+            {\patternIntermediateB}
+            {stav\\\(\mathbf{s}^{(2)}\)}
+            {blue}
+
+        % Výsledný stabilní stav
+        \hopfieldpattern
+            {9.6}{0}
+            {\patternThree}
+            {stabilní stav\\\(\mathbf{s}^{(3)}=\mathbf{x}_3\)}
+            {green}
+
+        % Oddělení uloženého vzoru od procesu vybavování
+        \draw[dashed,thick,black!45]
+            (1.95,-0.15) -- (1.95,2.55);
+
+        % Aktualizace stavů
+        \draw[diredge]
+            (3.98,0.9) -- (4.72,0.9);
+
+        \draw[diredge]
+            (6.38,0.9) -- (7.12,0.9);
+
+        \draw[diredge]
+            (8.78,0.9) -- (9.52,0.9);
+
+        % Popisky
+        \node[vertexplain,font=\scriptsize]
+            at (0.75,-0.22)
+            {uložený atraktor};
+
+        \node[vertexplain,font=\scriptsize]
+            at (3.15,-0.22)
+            {\(30\) chybných bitů};
+
+        \node[vertexplain,font=\scriptsize]
+            at (5.55,-0.22)
+            {\(8\) chybných bitů};
+
+        \node[vertexplain,font=\scriptsize]
+            at (7.95,-0.22)
+            {\(2\) chybné bity};
+
+        \node[vertexplain,font=\scriptsize]
+            at (10.35,-0.22)
+            {žádný chybný bit};
+
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Omezení Hopfieldovy sítě}
+    \pause
+    {
+        \setbeamertemplate{itemize item}{%
+            \raisebox{-0.15\height}{%
+                \includegraphics[
+                    width=0.6cm
+                ]{images/face-frown-emoji-icon.pdf}%
+            }%
+        }
+
+        \begin{itemize}
+            \item \textbf{Omezená kapacita:} Síť dokáže spolehlivě uložit pouze omezený počet vzorů. Podobné uložené vzory se mohou pak navzájem rušit.\pause
+            \item \textbf{Nesprávná konvergence:} Síť nemusí skončit v~požadovaném uloženém vzoru. Může konvergovat k~jinému uloženému vzoru.\pause
+            \item \textbf{Nepravý atraktor:} Stabilní stav Hopfieldovy sítě nemusí dokonce odpovídat žádnému ze vstupních vzorů
+            \[
+                \mathbf{x}_1,\dots,\mathbf{x}_k.
+            \]
+            Může například vzniknout kombinací několika uložených vzorů.
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}{Zdroje}
+    \begin{itemize}
+        \item STUART J. RUSSELL a~NORVIG, Peter. \textit{Artificial intelligence: A~modern approach.} 3rd ed. Englewood Cliffs, N.J: Pearson, 2016. ISBN 8120323823.
+    \end{itemize}
+\end{frame}
 
 \end{document}
