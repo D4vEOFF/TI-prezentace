@@ -1,25 +1,37 @@
-import os
 import argparse
-import subprocess
 import glob
+import os
 import platform
 import re
-import shutil  # Pro kopírování výsledných PDF
+import shutil
+import subprocess
+
 
 def fix_path_for_windows(path):
     if platform.system() == "Windows":
         return path.replace("\\", "/")
     return path
 
+
 def delete_if_exists(file_path):
     if os.path.exists(file_path):
         print(f"File {file_path} exists, deleting it...")
         os.remove(file_path)
 
+
 def cleanup_files(folder):
     folder = fix_path_for_windows(folder)
-    extensions = ["*.aux", "*.out", "*.log", "*.synctex.gz", "*.toc"]
-    
+    extensions = [
+        "*.aux",
+        "*.out",
+        "*.log",
+        "*.synctex.gz",
+        "*.toc",
+        "*.nav",
+        "*.snm",
+        "*.vrb",
+    ]
+
     print("Cleaning up auxiliary files...")
     for ext in extensions:
         for file in glob.glob(os.path.join(folder, ext)):
@@ -27,184 +39,263 @@ def cleanup_files(folder):
             os.remove(file)
     print("Cleanup completed.")
 
-def add_handout_option(line):
-    """
-    Pokud se v řádku nachází \documentclass s obsahem "beamer",
-    vloží volbu "handout" mezi volitelné parametry.
-    """
-    if "beamer" in line:
-        pattern = r"^(?P<pre>\s*\\documentclass)(?P<opts>\s*\[[^\]]*\])?\s*(?P<brace>\{)(?P<class>[^}]+)(?P<close>\})"
-        match = re.match(pattern, line)
-        if match:
-            pre = match.group("pre")
-            opts = match.group("opts")
-            brace = match.group("brace")
-            class_name = match.group("class")
-            close = match.group("close")
-            if opts:
-                opts_content = opts.strip()[1:-1].strip()
-                opts_list = [opt.strip() for opt in opts_content.split(",") if opt.strip()]
-                if "handout" not in opts_list:
-                    opts_list.append("handout")
-                new_opts = "[" + ",".join(opts_list) + "]"
-            else:
-                new_opts = "[handout]"
-            return f"{pre}{new_opts} {brace}{class_name}{close}\n"
-    return line
 
-def create_handout_tex(main_file, handout_file):
+def normalize_aspect_ratio(aspect):
+    """
+    Převede zápisy jako 16:10, 16_10 nebo 1610 na hodnotu 1610,
+    kterou používá volba Beameru aspectratio i název výsledného souboru.
+    """
+    normalized = re.sub(r"\D", "", aspect)
+    if not normalized:
+        raise ValueError(f"Invalid aspect ratio: {aspect!r}")
+    return normalized
+
+
+def update_documentclass_options(line, aspect=None, handout=False):
+    r"""
+    Upraví volby třídy beamer v řádku \\documentclass:
+      - nastaví zadaný poměr stran,
+      - přidá nebo odebere volbu handout.
+
+    Ostatní volby i případný text za příkazem \documentclass zůstanou zachovány.
+    """
+    pattern = (
+        r"^(?P<pre>\s*\\documentclass)"
+        r"(?P<opts>\s*\[[^\]]*\])?"
+        r"\s*(?P<brace>\{)"
+        r"(?P<class>[^}]+)"
+        r"(?P<close>\})"
+        r"(?P<post>.*)$"
+    )
+
+    newline = "\n" if line.endswith("\n") else ""
+    line_without_newline = line.rstrip("\r\n")
+    match = re.match(pattern, line_without_newline)
+
+    if not match or match.group("class").strip() != "beamer":
+        return line
+
+    opts = match.group("opts")
+    if opts:
+        opts_content = opts.strip()[1:-1].strip()
+        opts_list = [opt.strip() for opt in opts_content.split(",") if opt.strip()]
+    else:
+        opts_list = []
+
+    # Poměr stran nahrazujeme pouze tehdy, pokud byl pro danou variantu zadán.
+    if aspect is not None:
+        normalized_aspect = normalize_aspect_ratio(aspect)
+        opts_list = [opt for opt in opts_list if not opt.startswith("aspectratio=")]
+        opts_list.append(f"aspectratio={normalized_aspect}")
+
+    # U generovaných variant nastavujeme handout explicitně, aby se nepřenášel
+    # omylem z původního souboru do standardní verze.
+    opts_list = [opt for opt in opts_list if opt != "handout"]
+    if handout:
+        opts_list.append("handout")
+
+    new_opts = f"[{','.join(opts_list)}]" if opts_list else ""
+
+    return (
+        f"{match.group('pre')}{new_opts} "
+        f"{match.group('brace')}{match.group('class')}{match.group('close')}"
+        f"{match.group('post')}{newline}"
+    )
+
+
+def create_variant_tex(main_file, variant_file, aspect=None, handout=False):
     with open(main_file, "r", encoding="utf8") as fin:
         lines = fin.readlines()
-    
-    new_lines = []
-    for line in lines:
-        new_line = add_handout_option(line)
-        new_lines.append(new_line)
-    
-    with open(handout_file, "w", encoding="utf8") as fout:
+
+    new_lines = [
+        update_documentclass_options(line, aspect=aspect, handout=handout)
+        for line in lines
+    ]
+
+    with open(variant_file, "w", encoding="utf8") as fout:
         fout.writelines(new_lines)
-    print(f"Created handout TeX file: {handout_file}")
 
-# --- Funkce pro úpravu poměru stran ---
+    variant_description = []
+    if aspect is not None:
+        variant_description.append(f"aspect ratio {normalize_aspect_ratio(aspect)}")
+    if handout:
+        variant_description.append("handout")
 
-def add_aspectratio_option(line, aspect):
-    """
-    Pokud se v řádku nachází \documentclass s obsahem "beamer",
-    vloží (nebo nahradí) volbu aspectratio podle zadané hodnoty.
-    Např. "16:9" se převede na "aspectratio=169".
-    """
-    if "beamer" in line:
-        pattern = r"^(?P<pre>\s*\\documentclass)(?P<opts>\s*\[[^\]]*\])?\s*(?P<brace>\{)(?P<class>[^}]+)(?P<close>\})"
-        match = re.match(pattern, line)
-        if match:
-            pre = match.group("pre")
-            opts = match.group("opts")
-            brace = match.group("brace")
-            class_name = match.group("class")
-            close = match.group("close")
-            aspect_option = f"aspectratio={aspect.replace(':', '')}"
-            if opts:
-                opts_content = opts.strip()[1:-1].strip()
-                opts_list = [opt.strip() for opt in opts_content.split(",") if opt.strip()]
-                # Odstraníme případné již existující nastavení aspectratio
-                opts_list = [opt for opt in opts_list if not opt.startswith("aspectratio=")]
-                opts_list.append(aspect_option)
-                new_opts = "[" + ",".join(opts_list) + "]"
-            else:
-                new_opts = f"[{aspect_option}]"
-            return f"{pre}{new_opts} {brace}{class_name}{close}\n"
-    return line
+    description = ", ".join(variant_description) or "standard"
+    print(f"Created TeX file for {description}: {variant_file}")
 
-def create_aspect_tex(main_file, aspect_tex, aspect):
-    with open(main_file, "r", encoding="utf8") as fin:
-        lines = fin.readlines()
-    
-    new_lines = []
-    for line in lines:
-        new_line = add_aspectratio_option(line, aspect)
-        new_lines.append(new_line)
-    
-    with open(aspect_tex, "w", encoding="utf8") as fout:
-        fout.writelines(new_lines)
-    print(f"Created {aspect} TeX file: {aspect_tex}")
 
-def compile_aspect(folder, title, aspect):
-    """
-    Zkompiluje projekt s upraveným poměrem stran.
-    Výstupní soubor bude pojmenován např. pro 16:9 jako {title}_16_9.pdf.
-    """
-    aspect_suffix = aspect.replace(":", "_")
-    main_file = fix_path_for_windows(os.path.join(folder, "main.tex"))
-    aspect_tex = fix_path_for_windows(os.path.join(folder, f"main_{aspect_suffix}.tex"))
-    output_pdf_aspect = fix_path_for_windows(os.path.join(folder, f"{title}_{aspect_suffix}.pdf"))
-    
-    create_aspect_tex(main_file, aspect_tex, aspect)
-    delete_if_exists(output_pdf_aspect)
-    
-    # Kompilace verze s daným poměrem stran (dvakrát)
+def run_pdflatex(folder, tex_file, description):
     for i in range(2):
-        print(f"Compiling {aspect_tex} for {aspect} version... (Run {i+1})")
-        subprocess.run(["pdflatex", "-output-directory", folder, aspect_tex])
-    
-    source_pdf = fix_path_for_windows(os.path.join(folder, f"main_{aspect_suffix}.pdf"))
-    os.rename(source_pdf, output_pdf_aspect)
-    print(f"{aspect} compilation completed. Output file: {output_pdf_aspect}")
-    
-    delete_if_exists(aspect_tex)
-    cleanup_files(folder)
+        print(f"Compiling {tex_file} ({description})... (Run {i + 1})")
+        result = subprocess.run(
+            ["pdflatex", "-output-directory", folder, tex_file],
+            check=False,
+        )
+        if result.returncode != 0:
+            raise RuntimeError(
+                f"pdflatex failed while compiling {tex_file} "
+                f"(run {i + 1}, exit code {result.returncode})."
+            )
 
-# --- Ostatní funkce ---
 
-def compile_handout(folder, title):
-    main_file = fix_path_for_windows(os.path.join(folder, "main.tex"))
-    handout_tex = fix_path_for_windows(os.path.join(folder, "main_handout.tex"))
-    output_pdf_handout = fix_path_for_windows(os.path.join(folder, f"{title}_handout.pdf"))
+def compile_variant(folder, title, aspect=None, handout=False):
+    """
+    Zkompiluje jednu variantu prezentace.
 
-    create_handout_tex(main_file, handout_tex)
-    delete_if_exists(output_pdf_handout)
-
-    # Kompilace handout verze (dvakrát)
-    for i in range(2):
-        print(f"Compiling {handout_tex} for handout... (Run {i+1})")
-        subprocess.run(["pdflatex", "-output-directory", folder, handout_tex])
-    
-    source_pdf = fix_path_for_windows(os.path.join(folder, "main_handout.pdf"))
-    os.rename(source_pdf, output_pdf_handout)
-    print(f"Handout compilation completed. Output file: {output_pdf_handout}")
-
-    delete_if_exists(handout_tex)
-    cleanup_files(folder)
-
-def compile_latex(folder, title, handout=False, aspect_ratios=None):
+    Příklady výstupů:
+      - bez poměru stran: prezentace.pdf
+      - bez poměru stran, handout: prezentace_handout.pdf
+      - poměr 43: prezentace_43.pdf
+      - poměr 43, handout: prezentace_43_handout.pdf
+    """
     folder = fix_path_for_windows(folder)
-
-    # Kompilace standardní verze, která se považuje za 4:3
     main_file = fix_path_for_windows(os.path.join(folder, "main.tex"))
-    output_pdf = fix_path_for_windows(os.path.join(folder, f"{title}.pdf"))
+
+    aspect_suffix = normalize_aspect_ratio(aspect) if aspect is not None else None
+
+    stem_parts = ["main"]
+    output_parts = [title]
+
+    if aspect_suffix is not None:
+        stem_parts.append(aspect_suffix)
+        output_parts.append(aspect_suffix)
+
+    if handout:
+        stem_parts.append("handout")
+        output_parts.append("handout")
+
+    source_stem = "_".join(stem_parts)
+    output_stem = "_".join(output_parts)
+
+    # Původní main.tex lze použít přímo pouze pro základní standardní variantu.
+    is_original_main = aspect is None and not handout
+    if is_original_main:
+        tex_file = main_file
+    else:
+        tex_file = fix_path_for_windows(os.path.join(folder, f"{source_stem}.tex"))
+        create_variant_tex(main_file, tex_file, aspect=aspect, handout=handout)
+
+    output_pdf = fix_path_for_windows(os.path.join(folder, f"{output_stem}.pdf"))
+    source_pdf = fix_path_for_windows(os.path.join(folder, f"{source_stem}.pdf"))
 
     delete_if_exists(output_pdf)
 
-    # Kompilace standardní verze (dvakrát)
-    for i in range(2):
-        print(f"Compiling {main_file}... (Run {i+1})")
-        subprocess.run(["pdflatex", "-output-directory", folder, main_file])
+    description_parts = []
+    if aspect_suffix is not None:
+        description_parts.append(f"aspect ratio {aspect_suffix}")
+    description_parts.append("handout" if handout else "standard")
+    description = ", ".join(description_parts)
 
-    source_pdf = fix_path_for_windows(os.path.join(folder, "main.pdf"))
-    os.rename(source_pdf, output_pdf)
-    print(f"Compilation completed. Output file: {output_pdf}")
-    
-    cleanup_files(folder)
+    try:
+        run_pdflatex(folder, tex_file, description)
 
-    # Pokud byly zadány dodatečné poměry stran, vytvoříme pro každý z nich dodatečnou verzi
+        if not os.path.exists(source_pdf):
+            raise FileNotFoundError(
+                f"Expected output file {source_pdf} was not created."
+            )
+
+        os.replace(source_pdf, output_pdf)
+        print(f"Compilation completed. Output file: {output_pdf}")
+    finally:
+        if not is_original_main:
+            delete_if_exists(tex_file)
+        cleanup_files(folder)
+
+    return output_pdf
+
+
+def compile_latex(folder, title, handout=False, aspect_ratios=None):
+    """
+    Zkompiluje požadované varianty a vrátí seznam vytvořených PDF.
+
+    Pokud jsou zadány poměry stran, vytvoří se standardní varianta pro každý
+    z nich a při --handout také odpovídající handout varianta pro každý poměr.
+    Pokud poměry stran zadány nejsou, zachovává se původní chování:
+    title.pdf a případně title_handout.pdf.
+    """
+    compiled_files = []
+    aspect_ratios = aspect_ratios or []
+
     if aspect_ratios:
-        for aspect in aspect_ratios:
-            compile_aspect(folder, title, aspect)
-    
-    if handout:
-        compile_handout(folder, title)
+        # Odstranění duplicit při zachování pořadí.
+        normalized_aspects = list(
+            dict.fromkeys(normalize_aspect_ratio(aspect) for aspect in aspect_ratios)
+        )
+
+        for aspect in normalized_aspects:
+            compiled_files.append(
+                compile_variant(folder, title, aspect=aspect, handout=False)
+            )
+            if handout:
+                compiled_files.append(
+                    compile_variant(folder, title, aspect=aspect, handout=True)
+                )
+    else:
+        compiled_files.append(
+            compile_variant(folder, title, aspect=None, handout=False)
+        )
+        if handout:
+            compiled_files.append(
+                compile_variant(folder, title, aspect=None, handout=True)
+            )
+
+    return compiled_files
+
 
 def main():
     parser = argparse.ArgumentParser(
-        description="LaTeX Document Compiler. Compiles a LaTeX file twice and renames the output PDF. "
-                    "For beamer documents, the optional --handout flag creates an additional handout version. "
-                    "With -ars (--aspect-ratios) you can specify one or more additional aspect ratios (e.g. 16:9 16:10). "
-                    "If --all is specified, all subdirectories containing main.tex are processed; the output PDF "
-                    "is named after the folder name. Option --move moves all resulting PDFs to the current directory."
+        description=(
+            "LaTeX Document Compiler. Compiles a LaTeX file twice and renames "
+            "the output PDF. For beamer documents, --handout creates a handout "
+            "version for every requested aspect ratio. With -ar "
+            "(--aspect-ratios) you can specify one or more aspect ratios, for "
+            "example 43 1610 or 4:3 16:10. If --all is specified, all "
+            "subdirectories containing main.tex are processed; the output PDF "
+            "is named after the folder name. Option --move moves all resulting "
+            "PDFs to the current directory."
+        )
     )
-    parser.add_argument("-f", "--folder",
-                        help="Path to the folder containing the LaTeX projects (or a single project). "
-                             "Not required if --all is specified (default: current directory).")
-    parser.add_argument("-t", "--title",
-                        help="Title for the output PDF file (without .pdf). Not needed if --all is specified.")
-    parser.add_argument("--all", action="store_true",
-                        help="Compile main.tex in all subdirectories (each output PDF is named after its folder)")
-    parser.add_argument("--handout", action="store_true",
-                        help="Generate handout version for beamer presentations")
-    parser.add_argument("--move", action="store_true",
-                        help="Move all resulting PDFs to the current (root) directory")
-    parser.add_argument("-ars", "--aspect-ratios", nargs="+", default=[],
-                        help="List of aspect ratios to compile additional versions (e.g. 16:9 16:10). "
-                             "If omitted, only the 4:3 variant is generated.")
+    parser.add_argument(
+        "-f",
+        "--folder",
+        help=(
+            "Path to the folder containing the LaTeX projects (or a single "
+            "project). Not required if --all is specified (default: current "
+            "directory)."
+        ),
+    )
+    parser.add_argument(
+        "-t",
+        "--title",
+        help="Title for the output PDF file (without .pdf). Not needed if --all is specified.",
+    )
+    parser.add_argument(
+        "--all",
+        action="store_true",
+        help="Compile main.tex in all subdirectories (each output PDF is named after its folder)",
+    )
+    parser.add_argument(
+        "--handout",
+        action="store_true",
+        help="Generate a handout version for every compiled aspect ratio",
+    )
+    parser.add_argument(
+        "--move",
+        action="store_true",
+        help="Move all resulting PDFs to the current (root) directory",
+    )
+    parser.add_argument(
+        "-ar",
+        "-ars",
+        "--aspect-ratios",
+        nargs="+",
+        default=[],
+        help=(
+            "List of aspect ratios to compile, e.g. 43 1610 or 4:3 16:10. "
+            "When supplied, output filenames contain the normalized ratio."
+        ),
+    )
 
     args = parser.parse_args()
 
@@ -213,9 +304,8 @@ def main():
             parser.error("The --folder argument is required when not using --all.")
         if not args.title:
             parser.error("The --title argument is required when not using --all.")
-    else:
-        if not args.folder:
-            args.folder = os.getcwd()
+    elif not args.folder:
+        args.folder = os.getcwd()
 
     compiled_files = []
 
@@ -223,43 +313,45 @@ def main():
         for root, dirs, files in os.walk(args.folder):
             if "main.tex" in files:
                 title = os.path.basename(os.path.abspath(root))
-                print(f"Found main.tex in {root}, compiling as '{title}.pdf'")
-                compile_latex(root, title, handout=args.handout, aspect_ratios=args.aspect_ratios)
-                compiled_pdf = fix_path_for_windows(os.path.join(root, f"{title}.pdf"))
-                compiled_files.append(compiled_pdf)
-                if args.aspect_ratios:
-                    for aspect in args.aspect_ratios:
-                        aspect_suffix = aspect.replace(":", "_")
-                        compiled_pdf_aspect = fix_path_for_windows(os.path.join(root, f"{title}_{aspect_suffix}.pdf"))
-                        compiled_files.append(compiled_pdf_aspect)
-                if args.handout:
-                    handout_pdf = fix_path_for_windows(os.path.join(root, f"{title}_handout.pdf"))
-                    compiled_files.append(handout_pdf)
+                print(f"Found main.tex in {root}, compiling as '{title}'")
+                compiled_files.extend(
+                    compile_latex(
+                        root,
+                        title,
+                        handout=args.handout,
+                        aspect_ratios=args.aspect_ratios,
+                    )
+                )
+
         if not compiled_files:
             print("No main.tex files were found in any subdirectories.")
     else:
-        compile_latex(args.folder, args.title, handout=args.handout, aspect_ratios=args.aspect_ratios)
-        compiled_pdf = fix_path_for_windows(os.path.join(args.folder, f"{args.title}.pdf"))
-        compiled_files.append(compiled_pdf)
-        if args.aspect_ratios:
-            for aspect in args.aspect_ratios:
-                aspect_suffix = aspect.replace(":", "_")
-                compiled_pdf_aspect = fix_path_for_windows(os.path.join(args.folder, f"{args.title}_{aspect_suffix}.pdf"))
-                compiled_files.append(compiled_pdf_aspect)
-        if args.handout:
-            handout_pdf = fix_path_for_windows(os.path.join(args.folder, f"{args.title}_handout.pdf"))
-            compiled_files.append(handout_pdf)
+        compiled_files.extend(
+            compile_latex(
+                args.folder,
+                args.title,
+                handout=args.handout,
+                aspect_ratios=args.aspect_ratios,
+            )
+        )
 
     if args.move:
         dest = os.getcwd()
-        print(f"Copying compiled PDFs to {dest}")
+        print(f"Moving compiled PDFs to {dest}")
+
         for pdf in compiled_files:
-            if os.path.exists(pdf):
-                dest_file = os.path.join(dest, os.path.basename(pdf))
-                print(f"Moving {pdf} to {dest_file}")
-                shutil.move(pdf, dest_file)
-            else:
+            if not os.path.exists(pdf):
                 print(f"File {pdf} does not exist and cannot be moved.")
+                continue
+
+            dest_file = os.path.join(dest, os.path.basename(pdf))
+            if os.path.abspath(pdf) == os.path.abspath(dest_file):
+                print(f"File {pdf} is already in the destination directory.")
+                continue
+
+            print(f"Moving {pdf} to {dest_file}")
+            shutil.move(pdf, dest_file)
+
 
 if __name__ == "__main__":
     main()
