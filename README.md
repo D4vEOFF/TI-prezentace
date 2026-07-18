@@ -2,7 +2,7 @@
 
 # Materiály pro předmět Teoretická informatika (TI)
 
-Repozitář obsahuje zdrojové soubory výukových prezentací k předmětu **Teoretická informatika** na SPŠE Ječná. Materiály jsou vytvořeny v systému LaTeX pomocí třídy Beamer a jsou psány v českém jazyce.
+Repozitář obsahuje zdrojové soubory výukových prezentací k předmětu **Teoretická informatika** na SPŠE Ječná. Materiály jsou vytvořeny v systému LaTeX pomocí třídy Beamer.
 
 Hlavní série zahrnuje 22 prezentací označených čísly `00` až `21`. Pokrývá grafové algoritmy, výpočetní složitost, formální jazyky a automaty, kompilátory, hardware, kryptografii, statistiku, strojové učení a neuronové sítě.
 
@@ -21,11 +21,6 @@ Repozitář obsahuje zdrojové soubory prezentací. Výsledná PDF lze vytvořit
     - [Kompilace všech prezentací](#kompilace-všech-prezentací)
     - [Parametry skriptu](#parametry-skriptu)
     - [Názvy výstupních souborů](#názvy-výstupních-souborů)
-    - [Časté problémy](#časté-problémy)
-      - [Program `pdflatex` nebyl nalezen](#program-pdflatex-nebyl-nalezen)
-      - [Balíček `babel` nezná jazyk `czech`](#balíček-babel-nezná-jazyk-czech)
-      - [LaTeX hlásí chybějící balíček](#latex-hlásí-chybějící-balíček)
-      - [Kompilace všech prezentací zahrnuje rozpracované materiály](#kompilace-všech-prezentací-zahrnuje-rozpracované-materiály)
   - [Obsah jednotlivých prezentací](#obsah-jednotlivých-prezentací)
     - [Informace k předmětu](#informace-k-předmětu)
       - [00 – Informace k předmětu](#00--informace-k-předmětu)
@@ -259,24 +254,6 @@ Pro název zadaný parametrem `--title prezentace` používá skript následují
 | Handout 16:9 | `prezentace_169_handout.pdf` |
 | Poměr stran 16:10 | `prezentace_1610.pdf` |
 | Handout 16:10 | `prezentace_1610_handout.pdf` |
-
-### Časté problémy
-
-#### Program `pdflatex` nebyl nalezen
-
-Zkontrolujte, zda je nainstalována distribuce LaTeXu a zda se adresář obsahující `pdflatex` nachází v systémové proměnné `PATH`.
-
-#### Balíček `babel` nezná jazyk `czech`
-
-Je třeba doinstalovat českou jazykovou podporu distribuce LaTeXu. U úplné instalace TeX Live nebo MiKTeXu bývá obsažena automaticky.
-
-#### LaTeX hlásí chybějící balíček
-
-Doinstalujte příslušný balíček pomocí správce své distribuce LaTeXu. Seznam balíčků používaných projektem je uveden v souboru [`assets/packages.tex`](assets/packages.tex).
-
-#### Kompilace všech prezentací zahrnuje rozpracované materiály
-
-Skript při použití `--all` nerozlišuje mezi hlavními a rozpracovanými prezentacemi. Rozpracované adresáře `ti-99-*` je proto třeba kompilovat samostatně, případně upravit způsob jejich označení.
 
 ## Obsah jednotlivých prezentací
 
