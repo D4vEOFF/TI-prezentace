@@ -1,3 +1,5 @@
+<img src="https://www.spsejecna.cz/ci/SPSE-Jecna_Logotyp.svg">
+
 # Materiály pro předmět Teoretická informatika (TI)
 
 Repozitář obsahuje zdrojové soubory výukových prezentací k předmětu **Teoretická informatika** na SPŠE Ječná. Materiály jsou vytvořeny v systému LaTeX pomocí třídy Beamer a jsou psány v českém jazyce.
@@ -462,7 +464,7 @@ Změny v souborech `assets/theme.tex`, `assets/macros.tex`, `assets/packages.tex
 ## Autor a licence
 
 **Autor:** David Weber  
-**Instituce:** SPŠE Ječná  
+**Instituce:** SPŠE Ječná
 **Kontakt:** [weber3@spsejecna.cz](mailto:weber3@spsejecna.cz)
 
 Repozitář zatím neobsahuje samostatný soubor `LICENSE`. Před dalším zveřejňováním nebo umožněním úprav a šíření materiálů je vhodné doplnit zvolenou licenci a samostatně vymezit podmínky použití převzatých obrázků a dalších materiálů třetích stran.
