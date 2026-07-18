@@ -440,11 +440,9 @@ Změny v souborech `assets/theme.tex`, `assets/macros.tex`, `assets/packages.tex
 
 ## Autor a licence
 
-**Autor:** David Weber  
-**Instituce:** SPŠE Ječná
-**Kontakt:** [weber3@spsejecna.cz](mailto:weber3@spsejecna.cz)
-
-Repozitář zatím neobsahuje samostatný soubor `LICENSE`. Před dalším zveřejňováním nebo umožněním úprav a šíření materiálů je vhodné doplnit zvolenou licenci a samostatně vymezit podmínky použití převzatých obrázků a dalších materiálů třetích stran.
+- **Autor:** David Weber  
+- **Instituce:** SPŠE Ječná
+- **Kontakt:** [weber3@spsejecna.cz](mailto:weber3@spsejecna.cz)
 
 ## Použitá a doporučená literatura
 
