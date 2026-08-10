@@ -1,0 +1,60 @@
+\begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    >=latex
+]
+
+    % Horní popisek
+    \node[
+        rounded corners=2mm,
+        draw=orange!70!black,
+        fill=orange!25,
+        line width=0.6pt,
+        inner xsep=4mm,
+        inner ysep=2.2mm,
+        font=\normalsize
+    ] at (0,3.00)
+    {Alice se setká s Bobem na utajeném místě};
+
+    % Bublina od Boba
+    \node[
+        draw=blue!70!black,
+        fill=blue!20,
+        rounded corners=2mm,
+        line width=0.8pt,
+        text width=7.2cm,
+        align=left,
+        inner xsep=4mm,
+        inner ysep=3mm,
+        font=\normalsize,
+        rectangle callout,
+        callout absolute pointer={(0.15,-0.25)}
+    ] at (-1.8,1.0)
+    {Ahoj Alice, použij prosím tento klíč k~zašifrování zprávy pro mne\\[1mm]
+    $k = 01001101$};
+
+    % Alice
+    \node[inner sep=0pt] (alice) at (-2.25,-1.2)
+        {\includegraphics[height=1.65cm]{images/woman-icon.pdf}};
+    \node[font=\normalsize] at (-2.25,-2.45) {Alice};
+
+    % Bob
+    \node[inner sep=0pt] (bob) at (0.55,-1.2)
+        {\includegraphics[height=1.65cm]{images/man-icon.pdf}};
+    \node[font=\normalsize] at (0.55,-2.45) {Bob};
+
+    % Pravý vysvětlující rámeček
+    \node[
+        rounded corners=2mm,
+        draw=orange!70!black,
+        fill=orange!25,
+        line width=0.6pt,
+        text width=3.8cm,
+        align=left,
+        inner xsep=4mm,
+        inner ysep=3mm,
+        font=\normalsize
+    ] at (4.0,-0.95)
+    {Bob předá Alici náhodný klíč $k \in \set{0,1}^{n}$};
+
+\end{tikzpicture}

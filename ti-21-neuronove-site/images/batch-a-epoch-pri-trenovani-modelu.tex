@@ -1,0 +1,30 @@
+\begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    every node/.style={font=\small}
+]
+
+    \node[task] (data) at (0,0) {trénovací\\množina \(D\)};
+    \node[task] (split) at (2.3,0) {rozdělení\\na batche};
+    \node[task] (batch1) at (4.7,1.0) {\(\mathcal{B}_1\)};
+    \node[task] (batch2) at (4.7,0) {\(\mathcal{B}_2\)};
+    \node[task] (batchs) at (4.7,-1.7) {\(\mathcal{B}_s\)};
+    \node[task] (train) at (7.3,0) {průchod sítí};
+    \node[task] (update) at (10.0,0) {úprava\\parametrů};
+
+    \draw[diredge] (data) -- (split);
+    \draw[diredge] (train) -- (update);
+    \draw[diredge] (split.north east) -- (batch1);
+    \draw[diredge] (split.east) -- (batch2);
+    \draw[diredge] (split.south east) -- (batchs);
+
+    \draw[diredge] (batch1) -- (train.north west);
+    \draw[diredge] (batch2) -- (train.west);
+    \draw[diredge] (batchs) -- (train.south west);
+
+    \node[vertexplain] at (4.7,-0.75) {\(\vdots\)};
+
+    \draw[diredge, rounded corners=4mm]
+        (update.north) -- ++(0,1.1) -- ++(-9.2,0) node[midway,above,vertexplain,align=center] {další epocha} -| (data.north);
+
+\end{tikzpicture}

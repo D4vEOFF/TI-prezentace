@@ -1,0 +1,19 @@
+\begin{tikzpicture}[
+    box/.style={
+        draw,
+        rounded corners,
+        thick,
+        align=center,
+        minimum width=2.2cm,
+        minimum height=0.8cm,
+        font=\scriptsize
+    },
+    arrow/.style={->, thick}
+]
+    \node<3->[box] (lex) at (0,0) {tokeny};
+    \node<2->[box] (parser) at (3.2,0) {syntaktický\\analyzátor};
+    \node<5->[box] (out) at (6.4,0) {správný vstup\\/ chyba / strom};
+
+    \draw<3->[arrow] (lex) -- (parser);
+    \draw<5->[arrow] (parser) -- (out);
+\end{tikzpicture}

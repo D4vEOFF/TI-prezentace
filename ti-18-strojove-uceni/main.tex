@@ -39,29 +39,7 @@
 
         \begin{column}{0.42\textwidth}
             \centering
-            \begin{tikzpicture}[
-                >=stealth,
-                node distance=0.55cm,
-                box/.style={
-                    draw=black!55,
-                    rounded corners=2pt,
-                    fill=blue!6,
-                    minimum width=3.2cm,
-                    minimum height=0.62cm,
-                    align=center,
-                    font=\small
-                },
-                arr/.style={->, thick, draw=black!65}
-            ]
-                \node[box] (data) {Data};
-                \node[box, below=of data] (stat) {Statistický popis};
-                \node[box, below=of stat] (model) {Model};
-                \node[box, below=of model] (zaver) {Závěr};
-
-                \draw[arr] (data) -- (stat);
-                \draw[arr] (stat) -- (model);
-                \draw[arr] (model) -- (zaver);
-            \end{tikzpicture}
+            \input{images/proc-nas-zajima-ai-a-strojove-uceni.tex}
         \end{column}
     \end{columns}
 
@@ -80,31 +58,7 @@
 \begin{frame}{Data, model, rozhodnutí}
 
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            node distance=0.6cm,
-            box/.style={
-                draw=black!60,
-                rounded corners=2pt,
-                minimum width=2.5cm,
-                minimum height=0.75cm,
-                align=center,
-                font=\small
-            },
-            bluebox/.style={box, fill=blue!7},
-            orangebox/.style={box, fill=orange!12},
-            greenbox/.style={box, fill=green!8},
-            arr/.style={->, thick, draw=black!70}
-        ]
-            \node[bluebox] (data) {Trénovací\\data};
-            \node[orangebox, right=of data] (learning) {Učení};
-            \node[greenbox, right=of learning] (model) {Model};
-            \node[bluebox, right=of model] (pred) {Predikce\\rozhodnutí};
-
-            \draw[arr] (data) -- (learning);
-            \draw[arr] (learning) -- (model);
-            \draw[arr] (model) -- (pred);
-        \end{tikzpicture}
+        \input{images/data-model-rozhodnuti.tex}
     \end{center}
 
     \vspace{0.25cm}
@@ -169,27 +123,7 @@
 
         \begin{column}{0.43\textwidth}
             \centering
-            \begin{tikzpicture}[
-                >=stealth,
-                box/.style={
-                    draw=black!60,
-                    rounded corners=2pt,
-                    align=center,
-                    font=\small,
-                    minimum width=3.25cm,
-                    minimum height=0.72cm
-                },
-                main/.style={box, fill=blue!7},
-                branch/.style={box, fill=orange!10},
-                arr/.style={->, thick, draw=black!70}
-            ]
-                \node[main] (data) {Data};
-                \node[branch] (pred) at (1.5,-2.0) {Predikce\\známého výstupu};
-                \node[branch] (struct) at (1.5,2.0) {Hledání\\skryté struktury};
-
-                \draw[arr] (data) -- (pred);
-                \draw[arr] (data) -- (struct);
-            \end{tikzpicture}
+            \input{images/statisticke-uceni.tex}
         \end{column}
     \end{columns}
 
@@ -219,45 +153,7 @@
     \vspace{0.25cm}
 
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            concept/.style={
-                draw=black!65,
-                rounded corners=2pt,
-                fill=blue!7,
-                minimum width=2.3cm,
-                minimum height=0.62cm,
-                align=center,
-                font=\small
-            },
-            ai/.style={
-                draw=black!75,
-                rounded corners=2pt,
-                fill=orange!14,
-                minimum width=2.1cm,
-                minimum height=0.82cm,
-                align=center,
-                font=\small\bfseries
-            },
-            arr/.style={->, thick, draw=black!65}
-        ]
-            \node[concept] (perception) at (-3.4,1.2) {vnímání};
-            \node[concept] (reasoning) at (0,1.2) {uvažování};
-            \node[concept] (learning) at (3.4,1.2) {učení};
-
-            \node[ai] (ai) at (0,0) {AI};
-
-            \node[concept] (planning) at (-3.4,-1.2) {plánování};
-            \node[concept] (decision) at (0,-1.2) {rozhodování};
-            \node[concept] (acting) at (3.4,-1.2) {jednání};
-
-            \draw[arr] (perception) -- (ai);
-            \draw[arr] (reasoning) -- (ai);
-            \draw[arr] (learning) -- (ai);
-            \draw[arr] (planning) -- (ai);
-            \draw[arr] (decision) -- (ai);
-            \draw[arr] (acting) -- (ai);
-        \end{tikzpicture}
+        \input{images/co-je-umela-inteligence.tex}
     \end{center}
 
     \vspace{0.1cm}
@@ -285,17 +181,7 @@
 
         \begin{column}{0.48\textwidth}
             \centering
-            \begin{tikzpicture}
-                \draw[fill=blue!7, draw=black!65, thick] (0,0) ellipse (2.2 and 1.7);
-                \draw[fill=orange!17, draw=black!65, thick] (0.38,-0.1) ellipse (1.05 and 0.68);
-
-                \node[font=\small\bfseries] at (-0.7,0.85) {AI};
-                \node[font=\scriptsize, align=center] at (0.38,-0.1) {strojové\\učení};
-
-                \node[font=\scriptsize, align=center] at (-1.3,0.05) {hledání};
-                \node[font=\scriptsize, align=center] at (-0.35,-1.0) {logika};
-                \node[font=\scriptsize, align=center] at (0.8,0.9) {plánování};
-            \end{tikzpicture}
+            \input{images/ai-neni-jen-strojove-uceni.tex}
         \end{column}
     \end{columns}
 
@@ -390,120 +276,7 @@
 
         \begin{column}{0.46\textwidth}
             \centering
-            \begin{tikzpicture}[
-                >=stealth,
-                every node/.style={inner sep=0pt, outer sep=0pt},
-                labelstyle/.style={font=\Large},
-                calloutbox/.style={
-                    rectangle callout,
-                    rounded corners=2pt,
-                    draw=black!60,
-                    fill=white,
-                    line width=0.5pt
-                },
-                bubble/.style={
-                    draw=black!60,
-                    fill=white,
-                    rounded corners=2pt,
-                    line width=0.5pt
-                }
-            ]
-
-                %================================================
-                % Globální rozvržení tří skupin
-                %================================================
-                \coordinate (Apos) at (-1.5,1.55);
-                \coordinate (Bpos) at ( 1.5,1.55);
-                \coordinate (Cpos) at ( 0.0,-1.6);
-
-                % oddělovací čára
-                \draw[line width=1.1pt] (-2.5,0) -- (2.5,0);
-
-                %================================================
-                % Skupina A
-                %================================================
-                \begin{scope}[shift={(Apos)}]
-
-                    % hlavní objekt skupiny A = počítač
-                    \node (A-screen) at (0,0) {};
-                    \fill[green!55!black] (-0.50,-0.38) rectangle (0.50,0.52);
-                    \draw[rounded corners=2pt, line width=0.7pt] (-0.50,-0.38) rectangle (0.50,0.52);
-
-                    \fill[gray!35] (-0.10,-0.48) rectangle (0.10,-0.38);
-                    \fill[gray!50] (-0.70,-0.78) rectangle (0.70,-0.48);
-                    \draw[line width=0.5pt] (-0.70,-0.78) rectangle (0.70,-0.48);
-
-                    % bublina relativně k počítači
-                    \node[
-                        calloutbox,
-                        callout absolute pointer={(0,0.46)}
-                    ] (A-bubble) at (1.00,1.05)
-                    {\includegraphics[width=0.7cm]{images/avatar.pdf}};
-
-                    % popisek relativně k počítači
-                    \node[labelstyle] at (0,-1.18) {A};
-
-                \end{scope}
-
-                %================================================
-                % Skupina B
-                %================================================
-                \begin{scope}[shift={(Bpos)}]
-
-                    % hlavní objekt skupiny B = avatar
-                    \node (B-avatar) at (0,0)
-                        {\includegraphics[width=1.05cm]{images/avatar.pdf}};
-
-                    % bublina relativně k avataru
-                    \node[
-                        calloutbox,
-                        callout absolute pointer={(0,0.55)}
-                    ] (B-bubble) at (1.00,1.10)
-                    {\includegraphics[width=0.7cm]{images/avatar.pdf}};
-
-                    % popisek
-                    \node[labelstyle] at (0,-1.18) {B};
-
-                \end{scope}
-
-                %================================================
-                % Skupina C
-                %================================================
-                \begin{scope}[shift={(Cpos)}]
-
-                    % hlavní objekt skupiny C = avatar
-                    \node (C-avatar) at (0,0)
-                        {\includegraphics[width=1.05cm]{images/avatar.pdf}};
-
-                    % popisek
-                    \node[labelstyle] at (0,-1.10) {C};
-
-                    % myšlenková bublina relativně k avataru
-                    \node[bubble] (C-think) at (1.95,1.1) {
-                        \begin{tikzpicture}[x=1cm,y=1cm]
-                            % avatar vlevo
-                            \node at (-0.85,0)
-                                {\includegraphics[width=0.55cm]{images/avatar.pdf}};
-
-                            % počítač uprostřed
-                            \fill[green!55!black] (-0.05,-0.18) rectangle (0.55,0.36);
-                            \draw[rounded corners=1pt, line width=0.4pt] (-0.05,-0.18) rectangle (0.55,0.36);
-                            \fill[gray!35] (0.18,-0.24) rectangle (0.32,-0.18);
-                            \fill[gray!50] (-0.18,-0.38) rectangle (0.68,-0.24);
-                            \draw[line width=0.35pt] (-0.18,-0.38) rectangle (0.68,-0.24);
-
-                            % otazník vpravo
-                            \node[font=\Large] at (1.10,0) {?};
-                        \end{tikzpicture}
-                    };
-
-                    % malé "myšlenkové" kroužky relativně k avataru
-                    \draw[line width=0.5pt, fill=white] (0.70,0.35) circle (0.10);
-                    \draw[line width=0.5pt, fill=white] (1.05,0.50) circle (0.16);
-
-                \end{scope}
-
-            \end{tikzpicture}
+            \input{images/turinguv-test.tex}
         \end{column}
     \end{columns}
 
@@ -526,29 +299,7 @@
 \begin{frame}{AI jako inteligentní agent}
 
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw=black!65,
-                rounded corners=2pt,
-                minimum width=2.55cm,
-                minimum height=0.78cm,
-                align=center,
-                font=\small
-            },
-            env/.style={box, fill=green!8},
-            agent/.style={box, fill=orange!15, minimum height=1.05cm},
-            arr/.style={->, thick, draw=black!70}
-        ]
-            \node[env] (env1) at (-3.5,0) {prostředí};
-            \node[agent] (agent) at (0,0) {agent};
-            \node[env] (env2) at (3.5,0) {prostředí};
-
-            \draw[arr] (env1) -- node[above, font=\scriptsize] {vjemy} (agent);
-            \draw[arr] (agent) -- node[above, font=\scriptsize] {akce} (env2);
-
-            \draw[arr, bend left=35] (env2.south) to node[below, font=\scriptsize] {změna prostředí} (env1.south);
-        \end{tikzpicture}
+        \input{images/ai-jako-inteligentni-agent.tex}
     \end{center}
 
     \vspace{0.25cm}
@@ -620,30 +371,7 @@
     \pause
 
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw=black!60,
-                rounded corners=2pt,
-                minimum width=2.45cm,
-                minimum height=0.65cm,
-                align=center,
-                font=\scriptsize
-            },
-            arr/.style={->, thick, draw=black!70}
-        ]
-            \node[box, fill=blue!7] (data) at (0,0)
-                {data\\$\mathbf{X}_1,\mathbf{X}_2,\dots,\mathbf{X}_k$};
-
-            \node[box, fill=orange!12] (learn) at (3.0,0)
-                {algoritmus\\učení};
-
-            \node[box, fill=green!8] (model) at (6.0,0)
-                {model};
-
-            \draw[arr] (data) -- (learn);
-            \draw[arr] (learn) -- (model);
-        \end{tikzpicture}
+        \input{images/co-se-rozumi-strojovym-ucenim.tex}
     \end{center}
 
     \pause
@@ -688,30 +416,7 @@
     \pause
 
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw=black!60,
-                rounded corners=2pt,
-                minimum width=2.7cm,
-                minimum height=0.72cm,
-                align=center,
-                font=\scriptsize
-            },
-            arr/.style={->, thick, draw=black!70}
-        ]
-            \node[box, fill=orange!12] (data) at (0,1.35)
-                {dostupná data\\$\mathbf{x}_1,\dots,\mathbf{x}_n$};
-
-            \node[box, fill=blue!7] (train) at (-2.2,0)
-                {trénovací data};
-
-            \node[box, fill=green!8] (test) at (2.2,0)
-                {testovací data};
-
-            \draw[arr] (data) -- (train);
-            \draw[arr] (data) -- (test);
-        \end{tikzpicture}
+        \input{images/trenovaci-a-testovaci-data.tex}
     \end{center}
 
     \pause
@@ -754,57 +459,7 @@
     \vspace{0.2cm}
 
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw=black!60,
-                rounded corners=2pt,
-                minimum width=2.3cm,
-                minimum height=0.78cm,
-                align=center,
-                font=\scriptsize
-            },
-            smallbox/.style={
-                draw=black!55,
-                rounded corners=2pt,
-                minimum width=1.95cm,
-                minimum height=0.58cm,
-                align=center,
-                font=\scriptsize
-            },
-            arr/.style={->, thick, draw=black!70},
-            braceup/.style={decorate,decoration={brace,amplitude=4pt}, thick}
-        ]
-
-            % Hlavní řetězec
-            \node[box, fill=blue!7] (data) at (0,0)
-                {trénovací data\\$\mathbf{X}_1,\dots,\mathbf{X}_k$};
-
-            \node[box, fill=orange!12] (alg) at (3.2,0)
-                {trénovací\\algoritmus};
-
-            \node[box, fill=green!8] (model) at (9.6,0)
-                {model\\$f_{\boldsymbol{\theta}}$};
-
-            \node[box, fill=red!8] (pred) at (9.6,-1.7)
-                {výstup modelu\\$\hat{\mathbf{Y}}_1,\dots,\hat{\mathbf{Y}}_k$};
-
-            \node[box, fill=gray!12] (err) at (6.4,-1.7)
-                {vyhodnocení\\chyby};
-
-            % Šipky
-            \draw[arr] (data) -- (alg);
-            \draw[arr] (alg) -- node[above, font=\scriptsize]
-                {nastavení parametrů $\boldsymbol{\theta}$} (model);
-            \draw[arr] (model) -- (pred);
-            \draw[arr] (pred) -- (err);
-
-            \draw[arr]
-                (err.west)
-                to[out=180,in=-60,looseness=1.15]
-                (alg.south);
-
-        \end{tikzpicture}
+        \input{images/uceni-a-trenovani-modelu.tex}
     \end{center}
 
     \pause
@@ -852,34 +507,7 @@
     \pause
 
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw=black!60,
-                rounded corners=2pt,
-                minimum width=2.65cm,
-                minimum height=0.65cm,
-                align=center,
-                font=\scriptsize
-            },
-            arr/.style={->, thick, draw=black!70}
-        ]
-            \node[box, fill=orange!14] (ml) at (0,1.8)
-                {strojové učení};
-
-            \node[box, fill=blue!7] (sup) at (-3.2,0.45)
-                {učení\\s učitelem};
-
-            \node[box, fill=green!8] (unsup) at (0,0.45)
-                {učení\\bez učitele};
-
-            \node[box, fill=red!8] (rl) at (3.2,0.45)
-                {zpětnovazební\\učení};
-
-            \draw[arr] (ml) -- (sup);
-            \draw[arr] (ml) -- (unsup);
-            \draw[arr] (ml) -- (rl);
-        \end{tikzpicture}
+        \input{images/zakladni-cleneni-strojoveho-uceni-1.tex}
     \end{center}
 
     \vspace{0.1cm}
@@ -913,34 +541,7 @@
     \pause
 
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw=black!60,
-                rounded corners=2pt,
-                minimum width=2.65cm,
-                minimum height=0.65cm,
-                align=center,
-                font=\scriptsize
-            },
-            arr/.style={->, thick, draw=black!70}
-        ]
-            \node[box, fill=orange!14] (ml) at (0,1.8)
-                {strojové učení};
-
-            \node[box, fill=blue!7] (sup) at (-3.2,0.45)
-                {učení\\s učitelem};
-
-            \node[box, fill=green!8] (unsup) at (0,0.45)
-                {učení\\bez učitele};
-
-            \node[box, fill=red!8] (rl) at (3.2,0.45)
-                {zpětnovazební\\učení};
-
-            \draw[arr] (ml) -- (sup);
-            \draw[arr] (ml) -- (unsup);
-            \draw[arr] (ml) -- (rl);
-        \end{tikzpicture}
+        \input{images/zakladni-cleneni-strojoveho-uceni-2.tex}
     \end{center}
 
     \vspace{0.1cm}
@@ -1003,37 +604,7 @@
     \pause
 
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw=black!60,
-                rounded corners=2pt,
-                minimum width=2.6cm,
-                minimum height=0.78cm,
-                align=center
-            },
-            arr/.style={->, thick, draw=black!70}
-        ]
-            \node[box, fill=blue!7] (train) at (0,1.05)
-                {trénovací data\\$(x_j,y_j)$};
-
-            \node[box, fill=orange!12] (algorithm) at (3.25,1.05)
-                {trénovací\\algoritmus};
-
-            \node[box, fill=green!8] (model) at (6.5,1.05)
-                {natrénovaný model\\$\hat f$};
-
-            \node[box, fill=blue!7] (new) at (0,-1.05)
-                {nový vstup\\$x$};
-
-            \node[box, fill=green!8] (prediction) at (6.5,-1.05)
-                {odhad výstupu\\$\hat y=\hat f(x)$};
-
-            \draw[arr] (train) -- (algorithm);
-            \draw[arr] (algorithm) -- (model);
-            \draw[arr] (new) -- (prediction);
-            \draw[arr] (model) -- (prediction);
-        \end{tikzpicture}
+        \input{images/jak-probiha-uceni-s-ucitelem.tex}
     \end{center}
 
     \pause
@@ -1054,29 +625,7 @@
     \small
 
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw=black!60,
-                rounded corners=2pt,
-                minimum width=3cm,
-                minimum height=0.75cm,
-                align=center
-            },
-            arr/.style={->, thick, draw=black!70}
-        ]
-            \node[box, fill=orange!14] (supervised) at (0,1.35)
-                {učení s učitelem};
-
-            \node[box, fill=blue!7] (regression) at (-2.5,0)
-                {\markdarkred{regrese}\\$\mathbf{Y}$ je soubor čísel};
-
-            \node[box, fill=green!8] (classification) at (2.5,0)
-                {\markdarkred{klasifikace}\\$\mathbf{Y}$ je soubor kategorií};
-
-            \draw[arr] (supervised) -- (regression);
-            \draw[arr] (supervised) -- (classification);
-        \end{tikzpicture}
+        \input{images/regrese-a-klasifikace.tex}
     \end{center}
 
     \pause
@@ -1151,33 +700,7 @@
         \begin{column}{0.48\textwidth}
             \centering
 
-            \begin{tikzpicture}[x=0.8cm,y=0.55cm,>=stealth]
-                \draw[->] (-0.5,0) -- (5.6,0)
-                    node[right, font=\scriptsize] {$x$};
-
-                \draw[->] (0,-0.5) -- (0,4.6)
-                    node[above, font=\scriptsize] {$y$};
-
-                \draw[thick, blue!70]
-                    (0.4,0.7) -- (5.2,4.0);
-
-                \foreach \x/\y in {
-                    0.6/0.9,
-                    1.1/1.5,
-                    1.8/1.6,
-                    2.4/2.3,
-                    3.0/2.5,
-                    3.6/3.1,
-                    4.3/3.4,
-                    4.9/4.1
-                }{
-                    \fill[orange!90!black] (\x,\y) circle (2pt);
-                }
-
-                \node[font=\scriptsize, blue!70]
-                    at (3.8,4.15)
-                    {$\hat y=\hat\beta_0+\hat\beta_1x$};
-            \end{tikzpicture}
+            \input{images/jednoducha-linearni-regrese.tex}
 
         \end{column}
     \end{columns}
@@ -1222,35 +745,7 @@
     \pause
 
     \begin{center}
-        \begin{tikzpicture}[x=1cm,y=1cm,>=stealth]
-
-            \draw[->] (0,0) -- (8.2,0)
-                node[right, font=\small] {$X$};
-
-            \draw[very thick, blue!70]
-                (4,-0.6) -- (4,0.9);
-
-            \node[font=\scriptsize, blue!70]
-                at (4,1.15) {rozhodovací hranice};
-
-            \foreach \x in {0.7,1.3,1.9,2.5,3.1,3.6}{
-                \fill[green!70!black] (\x,0) circle (2.3pt);
-            }
-
-            \foreach \x in {4.5,5.1,5.8,6.4,7.0,7.6}{
-                \fill[red!80!black] (\x,0) circle (2.3pt);
-            }
-
-            \node[font=\scriptsize, green!50!black]
-                at (2.1,-0.55) {třída A};
-
-            \node[font=\scriptsize, red!70!black]
-                at (6.1,-0.55) {třída B};
-
-            \node[font=\scriptsize]
-                at (4.3,-0.3) {$c$};
-
-        \end{tikzpicture}
+        \input{images/rozhodovaci-hranice-1.tex}
     \end{center}
 
     \pause
@@ -1297,68 +792,7 @@
         \begin{column}{0.60\textwidth}
             \centering
 
-            \begin{tikzpicture}[x=0.72cm,y=0.62cm,>=stealth]
-
-                % Osy
-                \draw[->] (0,0) -- (6.3,0)
-                    node[right, font=\scriptsize] {$x_1$};
-
-                \draw[->] (0,0) -- (0,5.8)
-                    node[above, font=\scriptsize] {$x_2$};
-
-                % Rozhodovací hranice x_1 + x_2 = 5
-                \draw[very thick, blue!70]
-                (0,5)
-                --
-                node[
-                    midway,
-                    sloped,
-                    above,
-                    font=\scriptsize,
-                    text=blue!70
-                ] {rozhodovací hranice}
-                (5,0);
-
-                % Třída A
-                \foreach \x/\y in {
-                    0.8/0.9,
-                    1.2/1.4,
-                    1.8/1.2,
-                    2.1/2.0,
-                    2.7/1.5,
-                    3.1/1.2
-                }{
-                    \fill[green!65!black] (\x,\y) circle (2.4pt);
-                }
-
-                % Třída B
-                \foreach \x/\y in {
-                    1.4/4.4,
-                    2.0/3.8,
-                    2.8/3.2,
-                    3.5/2.6,
-                    4.1/2.4,
-                    4.8/1.8
-                }{
-                    \fill[red!80!black] (\x,\y) circle (2.4pt);
-                }
-
-                % Popisky oblastí
-                \node[font=\scriptsize, green!50!black]
-                    at (1.2,0.45) {třída $A$};
-
-                \node[font=\scriptsize, red!70!black]
-                    at (4.75,4.35) {třída $B$};
-
-                % Rovnice hranice
-                \node[
-                    font=\scriptsize,
-                    fill=white,
-                    inner sep=1pt
-                ] at (4.75,0.75)
-                    {$x_1+x_2=5$};
-
-            \end{tikzpicture}
+            \input{images/rozhodovaci-hranice-2.tex}
         \end{column}
 
         \pause
@@ -1497,26 +931,7 @@
     \pause
 
     \begin{center}
-        \begin{tikzpicture}[x=0.75cm,y=0.55cm,>=stealth,scale=0.8]
-            \draw[->] (0,0) -- (7.2,0) node[right, font=\scriptsize] {$x_1$};
-            \draw[->] (0,0) -- (0,5.3) node[above, font=\scriptsize] {$x_2$};
-
-            \foreach \x/\y in {1.0/1.1,1.3/1.5,1.7/1.2,1.9/1.8,2.2/1.4}{
-                \fill[blue!70] (\x,\y) circle (2.1pt);
-            }
-
-            \foreach \x/\y in {4.8/1.0,5.2/1.5,5.5/1.1,5.8/1.8,6.1/1.4}{
-                \fill[blue!70] (\x,\y) circle (2.1pt);
-            }
-
-            \foreach \x/\y in {3.1/3.8,3.4/4.3,3.8/3.7,4.1/4.2,4.4/3.9}{
-                \fill[blue!70] (\x,\y) circle (2.1pt);
-            }
-
-            \draw[dashed, rounded corners=8pt, draw=black!45] (0.65,0.65) rectangle (2.55,2.05);
-            \draw[dashed, rounded corners=8pt, draw=black!45] (4.45,0.65) rectangle (6.45,2.05);
-            \draw[dashed, rounded corners=8pt, draw=black!45] (2.75,3.35) rectangle (4.75,4.55);
-        \end{tikzpicture}
+        \input{images/priklad-hledani-skupin-v-datech.tex}
     \end{center}
 
     \pause
@@ -1545,22 +960,7 @@
     \vspace{0.15cm}
 
     \begin{center}
-        \begin{tikzpicture}[
-            box/.style={
-                draw=black!60,
-                rounded corners=2pt,
-                minimum width=3cm,
-                minimum height=0.72cm,
-                align=center,
-                font=\scriptsize
-            }
-        ]
-            \node[box, fill=blue!7] at (-2.6,0)
-                {malá vzdálenost\\$\Rightarrow$ podobné objekty};
-
-            \node[box, fill=orange!12] at (2.6,0)
-                {velká vzdálenost\\$\Rightarrow$ odlišné objekty};
-        \end{tikzpicture}
+        \input{images/shlukova-analyza.tex}
     \end{center}
 
     \pause
@@ -1592,23 +992,7 @@
     \pause
 
     \begin{center}
-        \begin{tikzpicture}[x=1cm,y=1cm,>=stealth]
-            \draw[->] (0,0) -- (5.6,0) node[right, font=\scriptsize] {$x_1$};
-            \draw[->] (0,0) -- (0,3.6) node[above, font=\scriptsize] {$x_2$};
-
-            \coordinate (P) at (1.2,1.0);
-            \coordinate (Q) at (4.2,2.7);
-
-            \fill[blue!70] (P) circle (2.4pt);
-            \fill[red!80!black] (Q) circle (2.4pt);
-
-            \node[font=\scriptsize, below left] at (P) {$P$};
-            \node[font=\scriptsize, above right] at (Q) {$Q$};
-
-            \draw[thick, dashed] (P) -- node[above, font=\scriptsize] {$d(P,Q)$} (Q);
-
-            \draw[dotted] (P) -- (4.2,1.0) -- (Q);
-        \end{tikzpicture}
+        \input{images/podobnost-a-vzdalenost.tex}
     \end{center}
 
     \pause
@@ -1635,35 +1019,7 @@
     \pause
 
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw=black!60,
-                rounded corners=2pt,
-                minimum width=3.0cm,
-                minimum height=0.72cm,
-                align=center,
-                font=\scriptsize
-            },
-            arr/.style={->, thick, draw=black!70}
-        ]
-            \node[box, fill=blue!7] (start) at (0,0)
-                {zvolíme $k$\\počátečních středů};
-
-            \node[box, fill=orange!12] (assign) at (3.4,0)
-                {přiřadíme body\\k nejbližšímu středu};
-
-            \node[box, fill=green!8] (update) at (6.8,0)
-                {přepočítáme\\středy shluků};
-
-            \draw[arr] (start) -- (assign);
-            \draw[arr] (assign) -- (update);
-            \draw[arr]
-                (update.south)
-                to[out=-90,in=-90,looseness=1.3]
-                node[below, font=\scriptsize] {opakujeme}
-                (assign.south);
-        \end{tikzpicture}
+        \input{images/algoritmus-k-means-1.tex}
     \end{center}
 
     \pause
@@ -1685,30 +1041,7 @@
         \begin{column}{0.52\textwidth}
             \centering
 
-            \begin{tikzpicture}[x=0.72cm,y=0.55cm,>=stealth]
-                \draw[->] (0,0) -- (6.4,0) node[right, font=\scriptsize] {$X_1$};
-                \draw[->] (0,0) -- (0,5.1) node[above, font=\scriptsize] {$X_2$};
-
-                % body
-                \foreach \x/\y in {1.0/1.1,1.3/1.5,1.7/1.2,1.9/1.8,2.2/1.4}{
-                    \fill[blue!70] (\x,\y) circle (2pt);
-                }
-
-                \foreach \x/\y in {4.7/1.0,5.1/1.5,5.4/1.1,5.7/1.8,6.0/1.4}{
-                    \fill[orange!80!black] (\x,\y) circle (2pt);
-                }
-
-                \foreach \x/\y in {3.0/3.8,3.3/4.3,3.7/3.7,4.0/4.2,4.3/3.9}{
-                    \fill[green!60!black] (\x,\y) circle (2pt);
-                }
-
-                % středy
-                \node[font=\large, blue!70] at (1.65,1.4) {$\times$};
-                \node[font=\large, orange!80!black] at (5.35,1.35) {$\times$};
-                \node[font=\large, green!60!black] at (3.65,4.0) {$\times$};
-
-                \node[font=\scriptsize] at (1.65,0.55) {střed};
-            \end{tikzpicture}
+            \input{images/algoritmus-k-means-2.tex}
 
         \end{column}
 
@@ -1893,31 +1226,7 @@
         \begin{column}{0.40\textwidth}
             \centering
 
-            \begin{tikzpicture}[x=0.8cm,y=0.8cm]
-
-                \draw[step=1cm, black!50] (0,0) grid (4,4);
-
-                % překážka
-                \fill[black!25] (1,2) rectangle (2,3);
-                \node at (1.5,2.5) {\scriptsize zeď};
-
-                % agent
-                \fill[blue!65] (0.5,0.5) circle (0.18);
-                \node[below, font=\scriptsize] at (0.5,0.18) {agent};
-
-                % cíl
-                \fill[green!55!black] (3,3) rectangle (4,4);
-                \node[font=\scriptsize, text=white] at (3.5,3.5) {cíl};
-
-                % past
-                \fill[red!65] (3,0) rectangle (4,1);
-                \node[font=\scriptsize, text=white] at (3.5,0.5) {past};
-
-                % šipky akcí
-                \draw[->, thick] (0.5,0.5) -- (1.25,0.5);
-                \draw[->, thick] (0.5,0.5) -- (0.5,1.25);
-
-            \end{tikzpicture}
+            \input{images/priklad-agent-v-mrizkovem-svete.tex}
 
         \end{column}
 
@@ -1960,56 +1269,7 @@
 \begin{frame}{Agent a~prostředí}
 
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw=black!60,
-                rounded corners=3pt,
-                minimum width=3.1cm,
-                minimum height=1.15cm,
-                align=center
-            },
-            arr/.style={
-                ->,
-                thick,
-                draw=black!70
-            }
-        ]
-
-            \node[
-                box,
-                fill=blue!8
-            ] (agent) at (-2.7,0)
-                {\textbf{agent}\\
-                 volí akci};
-
-            \node[
-                box,
-                fill=orange!12
-            ] (environment) at (2.7,0)
-                {\textbf{prostředí}\\
-                 reaguje na akci};
-
-            \draw[arr]
-                (agent.north east)
-                to[bend left=20]
-                node[
-                    above,
-                    font=\scriptsize
-                ] {akce $a_t$}
-                (environment.north west);
-
-            \draw[arr]
-                (environment.south west)
-                to[bend left=20]
-                node[
-                    below,
-                    align=center,
-                    font=\scriptsize
-                ] {odměna $r_{t+1}$\\a nový stav $s_{t+1}$}
-                (agent.south east);
-
-        \end{tikzpicture}
+        \input{images/agent-a-prostredi.tex}
     \end{center}
 
     \pause
@@ -2089,30 +1349,7 @@
     \pause
 
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw=black!60,
-                rounded corners=2pt,
-                minimum width=2.5cm,
-                minimum height=0.72cm,
-                align=center,
-                font=\scriptsize
-            },
-            arr/.style={->, thick, draw=black!70}
-        ]
-            \node[box, fill=blue!7] (state) at (0,0)
-                {stav\\$s$};
-
-            \node[box, fill=orange!12] (policy) at (3.2,0)
-                {politika\\$\pi$};
-
-            \node[box, fill=green!8] (action) at (6.4,0)
-                {akce\\$a$};
-
-            \draw[arr] (state) -- (policy);
-            \draw[arr] (policy) -- (action);
-        \end{tikzpicture}
+        \input{images/politika-agenta.tex}
     \end{center}
 
     \pause

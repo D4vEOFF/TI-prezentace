@@ -1,0 +1,6 @@
+\begin{tikzpicture}[scale=0.8]
+    \draw[->, thick] (0,0) -- (4.2,0);
+    \foreach \x/\lab in {0/0,1/10,2/20,3/30,4/40}
+        \draw (\x,0.08) -- (\x,-0.08) node[below] {\scriptsize \lab};
+    \node[above] at (2,0.35) {\small číselná osa};
+\end{tikzpicture}

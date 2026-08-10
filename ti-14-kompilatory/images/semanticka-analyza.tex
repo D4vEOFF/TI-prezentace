@@ -1,0 +1,23 @@
+\begin{tikzpicture}[
+    box/.style={
+        draw,
+        rounded corners,
+        thick,
+        align=center,
+        font=\scriptsize,
+        minimum width=2.1cm,
+        minimum height=0.75cm
+    },
+    arrow/.style={->, thick}
+]
+
+    \node[box] (parser) at (0,0) {parser};
+    \node[box] (tree) at (2.7,0) {syntaktický\\strom};
+    \node[box] (sem) at (5.4,0) {sémantická\\analýza};
+    \node[box] (out) at (8.1,0) {anotovaný strom\\nebo chyba};
+
+    \draw[arrow] (parser) -- (tree);
+    \draw[arrow] (tree) -- (sem);
+    \draw[arrow] (sem) -- (out);
+
+\end{tikzpicture}

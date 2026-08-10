@@ -1,0 +1,31 @@
+\begin{tikzpicture}[
+    >=stealth,
+    box/.style={
+        draw,
+        rounded corners=2mm,
+        minimum width=8mm,
+        minimum height=8mm,
+        align=center
+    },
+    arr/.style={
+        ->,
+        thick,
+        rounded corners=2mm
+    },
+    node distance=9mm,
+    every node/.style={font=\small}
+]
+
+    \node[box] (x1) at (0,1.2) {\(x_1\)};
+    \node[box] (x2) at (0,0) {\(x_2\)};
+    \node[box] (x3) at (0,-1.2) {\(x_3\)};
+
+    \node[box, right=16mm of x2] (n) {neuron};
+    \node[box, right=11mm of n] (y) {\(y\)};
+
+    \draw[arr] (x1) -- node[above] {\(w_1\)} (n);
+    \draw[arr] (x2) -- node[above] {\(w_2\)} (n);
+    \draw[arr] (x3) -- node[below] {\(w_3\)} (n);
+    \draw[arr] (n) -- (y);
+
+\end{tikzpicture}

@@ -1,0 +1,17 @@
+\begin{tikzpicture}[x=1cm,y=1cm,>=stealth]
+    \draw[->] (0,0) -- (5.6,0) node[right, font=\scriptsize] {$x_1$};
+    \draw[->] (0,0) -- (0,3.6) node[above, font=\scriptsize] {$x_2$};
+
+    \coordinate (P) at (1.2,1.0);
+    \coordinate (Q) at (4.2,2.7);
+
+    \fill[blue!70] (P) circle (2.4pt);
+    \fill[red!80!black] (Q) circle (2.4pt);
+
+    \node[font=\scriptsize, below left] at (P) {$P$};
+    \node[font=\scriptsize, above right] at (Q) {$Q$};
+
+    \draw[thick, dashed] (P) -- node[above, font=\scriptsize] {$d(P,Q)$} (Q);
+
+    \draw[dotted] (P) -- (4.2,1.0) -- (Q);
+\end{tikzpicture}

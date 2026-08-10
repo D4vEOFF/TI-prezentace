@@ -1,0 +1,11 @@
+\begin{tikzpicture}[x=0.65cm,y=0.45cm,>=stealth]
+    \draw[->] (0,0) -- (7.2,0) node[right] {$x$};
+    \draw[->] (0,0) -- (0,6.2) node[above] {$y$};
+
+    \foreach \x/\y in {1/1.2,2/2.0,3/2.4,4/3.6,5/4.1,6/5.1}
+        \fill[blue!70!black] (\x,\y) circle (2pt);
+
+    \draw[red!75!black,thick] (0.6,0.8) -- (6.6,5.4);
+
+    \node[red!75!black] at (4.5,5.35) {$f(x)=ax+b$};
+\end{tikzpicture}

@@ -6,9 +6,9 @@
 \input{../assets/macros.tex}
 \input{../assets/listing.tex}
 
-\input{anim-det-automat-1.tex}
-\input{anim-det-automat-2.tex}
-\input{anim-nedet-automat-1.tex}
+\input{images/anim-det-automat-1.tex}
+\input{images/anim-det-automat-2.tex}
+\input{images/anim-nedet-automat-1.tex}
 
 \def\presentationtitle{Konečné automaty}
 
@@ -820,10 +820,7 @@
 
     \begin{frame}{Pro jazyk $L_\text{eq}$ neexistuje DFA}
         \centering
-        \visible<2->{\begin{tikzpicture}
-            \node[fill=green,opacity=0.2,text opacity=1] (u) at (-3,0) {\Large $u=0^{i}1^{i}$};
-            \node[fill=red,opacity=0.2,text opacity=1] at (3,0) {\Large $v=0^{j}1^{i}$};
-        \end{tikzpicture}}
+        \visible<2->{\input{images/pro-jazyk-l-eq-neexistuje-dfa.tex}}
         \begin{itemize}
             \visible<3->{\item Automat $A$ skočí po přečtení prvních $i$ znaků slova $u$ ve stavu $q$.}
             \visible<4->{\item Podobně po přečtení prvních $j$ znaků slova $v$ skončí ve stejném stavu $q$.}

@@ -28,30 +28,7 @@
     \vspace{2mm}
     \pause
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw,
-                rounded corners=2mm,
-                minimum width=27mm,
-                minimum height=10mm,
-                align=center,
-                fill=blue!7
-            },
-            arr/.style={->, thick}
-        ]
-            \node[box] (obj) at (0,0) {nový objekt};
-            \node[box, fill=orange!12] (model) at (4,0) {klasifikátor};
-            \node[box, fill=green!12] (cls) at (8,0) {třída};
-
-            \draw[arr] (obj) -- (model);
-            \draw[arr] (model) -- (cls);
-
-            \node[align=center, font=\small] at (0,-1.05)
-                {např. e-mail, pacient,\\ obrázek, žádost};
-            \node[align=center, font=\small] at (8,-1.05)
-                {např. spam / ne-spam,\\ nemocný / zdravý};
-        \end{tikzpicture}
+        \input{images/co-je-klasifikace.tex}
     \end{center}
 
     \vspace{1mm}
@@ -117,12 +94,7 @@
                 \vspace{1mm}
 
                 \begin{center}
-                    \begin{tikzpicture}[scale=0.8]
-                        \draw[->, thick] (0,0) -- (4.2,0);
-                        \foreach \x/\lab in {0/0,1/10,2/20,3/30,4/40}
-                            \draw (\x,0.08) -- (\x,-0.08) node[below] {\scriptsize \lab};
-                        \node[above] at (2,0.35) {\small číselná osa};
-                    \end{tikzpicture}
+                    \input{images/regrese-versus-klasifikace-1.tex}
                 \end{center}
 
                 \vspace{1mm}
@@ -138,20 +110,7 @@
                 kategorii neboli třídu.
 
                 \begin{center}
-                    \begin{tikzpicture}[
-                        cls/.style={
-                            draw,
-                            rounded corners=1mm,
-                            minimum width=14mm,
-                            minimum height=7mm,
-                            fill=green!12
-                        }
-                    ]
-                        \node[cls] at (0,0) {A};
-                        \node[cls] at (1.7,0) {B};
-                        \node[cls] at (3.4,0) {C};
-                        \node[above] at (1.7,0.55) {\small množina tříd};
-                    \end{tikzpicture}
+                    \input{images/regrese-versus-klasifikace-2.tex}
                 \end{center}
 
                 \vspace{1mm}
@@ -267,31 +226,7 @@
     \vspace{2mm}
     \pause
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw,
-                rounded corners=2mm,
-                minimum width=28mm,
-                minimum height=9mm,
-                align=center,
-                fill=blue!7
-            },
-            arr/.style={->, thick}
-        ]
-            \node[box] (x) at (0,0) {$\mathbf{x}$};
-            \node[box, fill=orange!12] (h) at (4,0) {$h$};
-            \node[box, fill=green!12] (y) at (8,0)
-                {$h(\mathbf{x})\in\mathcal{Y}$};
-
-            \draw[arr] (x) -- (h);
-            \draw[arr] (h) -- (y);
-
-            \node[font=\small, align=center] at (0,-1)
-                {nový objekt\\popsaný stat. znaky};
-            \node[font=\small, align=center] at (8,-1)
-                {předpovězená\\třída};
-        \end{tikzpicture}
+        \input{images/klasifikator.tex}
     \end{center}
 
     \vspace{1mm}
@@ -314,34 +249,7 @@
     \vspace{3mm}
     \pause
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw,
-                rounded corners=2mm,
-                minimum width=28mm,
-                minimum height=9mm,
-                align=center
-            },
-            arr/.style={->, thick}
-        ]
-            \node[box, fill=blue!7] (data) at (0,0)
-                {trénovací\\množina \(D\)};
-            \node[box, fill=orange!12] (learn) at (3.7,0)
-                {učení\\modelu};
-            \node[box, fill=green!12] (model) at (7.4,0)
-                {klasifikátor\\\(h\)};
-
-            \node[box, fill=blue!7] (new) at (1.85,-1.75)
-                {nový objekt\\\(\mathbf{x}\)};
-            \node[box, fill=green!12] (out) at (5.55,-1.75)
-                {předpověď\\\(h(\mathbf{x})\)};
-
-            \draw[arr] (data) -- (learn);
-            \draw[arr] (learn) -- (model);
-            \draw[arr] (new) -- (out);
-            \draw[arr] (model) -- (out);
-        \end{tikzpicture}
+        \input{images/cil-klasifikacni-ulohy.tex}
     \end{center}
 
     \vspace{1mm}
@@ -512,88 +420,7 @@
 
 \begin{frame}{Rozhodovací hranice pro $\mathbf{X}_1,\mathbf{X}_2,\mathbf{Y}$}
     \begin{center}
-        \begin{tikzpicture}
-            \begin{axis}[
-                width=\textwidth,
-                height=8.1cm,
-                xmin=0, xmax=6,
-                ymin=0, ymax=4,
-                axis lines=left,
-                xlabel={$x_1$},
-                ylabel={$x_2$},
-                xtick=\empty,
-                ytick=\empty,
-                enlargelimits=false,
-                clip=false,
-                axis background/.style={fill=blue!10},
-                every axis x label/.style={
-                    at={(current axis.right of origin)},
-                    anchor=west
-                },
-                every axis y label/.style={
-                    at={(current axis.above origin)},
-                    anchor=south
-                }
-            ]
-
-                % oblast třídy 1
-                \addplot[
-                    draw=none,
-                    fill=orange!12
-                ] coordinates {
-                    (0,2.6)
-                    (6,0.8)
-                    (6,4)
-                    (0,4)
-                } \closedcycle;
-
-                % rozhodovací hranice
-                \addplot[
-                    very thick,
-                    red!75!black,
-                    domain=0:6,
-                    samples=2
-                ] {2.6 - 0.3*x}
-                node[pos=0.62, above, sloped, black] {\small \(B_t\)};
-
-                % body třídy 0
-                \addplot[
-                    only marks,
-                    mark=*,
-                    mark size=2.2pt,
-                    blue!70
-                ] coordinates {
-                    (0.8,0.8)
-                    (1.3,1.5)
-                    (2.1,0.7)
-                    (3.1,1.2)
-                    (4.7,0.6)
-                    (5.2,1.4)
-                };
-
-                % body třídy 1
-                \addplot[
-                    only marks,
-                    mark=*,
-                    mark size=2.2pt,
-                    orange!85!black
-                ] coordinates {
-                    (0.9,3.2)
-                    (1.8,2.8)
-                    (2.9,2.6)
-                    (3.9,2.2)
-                    (4.8,2.7)
-                    (5.4,3.3)
-                };
-
-                % popisky oblastí
-                \node[blue!70!black, font=\small] at (axis cs:1.2,0.35)
-                    {třída~\(0\)};
-                \node[orange!85!black, font=\small] at (axis cs:4.8,3.55)
-                    {třída~\(1\)};
-
-            \end{axis}
-        \end{tikzpicture}
+        \input{images/rozhodovaci-hranice-pro-x-1-x-2-y.tex}
     \end{center}
 \end{frame}
 
@@ -658,48 +485,7 @@
         \pause
         \begin{column}{0.50\textwidth}
             \begin{center}
-                \begin{tikzpicture}
-                    \begin{axis}[
-                        width=\textwidth,
-                        height=4.9cm,
-                        xmin=0, xmax=10,
-                        ymin=-0.3, ymax=1.35,
-                        axis lines=left,
-                        xlabel={$x$},
-                        ylabel={$y$},
-                        xtick=\empty,
-                        ytick={0,0.5,1},
-                        yticklabels={$0$,$0{,}5$,$1$},
-                        clip=false
-                    ]
-                        \addplot[
-                            only marks,
-                            mark=*,
-                            mark size=2pt,
-                            blue!70
-                        ] coordinates {
-                            (1,0) (2,0) (3,0) (4,0)
-                            (6,1) (7,1) (8,1) (9,1)
-                        };
-
-                        \addplot[
-                            very thick,
-                            red!75!black,
-                            domain=0:10,
-                            samples=2
-                        ] {-0.2+0.15*x};
-
-                        \addplot[
-                            dashed,
-                            gray,
-                            domain=0:10,
-                            samples=2
-                        ] {0.5};
-
-                        \node[font=\scriptsize] at (axis cs:8.3,1.18)
-                            {$f(x)$};
-                    \end{axis}
-                \end{tikzpicture}
+                \input{images/linearni-regrese-pro-tridy-0-a-1.tex}
             \end{center}
         \end{column}
 
@@ -738,35 +524,7 @@
         \begin{column}{0.50\textwidth}
             \pause
             \begin{center}
-                \begin{tikzpicture}
-                    \begin{axis}[
-                        width=\textwidth,
-                        height=4.8cm,
-                        xmin=-6, xmax=6,
-                        ymin=0, ymax=1,
-                        axis lines=middle,
-                        xlabel={$z$},
-                        ylabel={$g(z)$},
-                        xtick={0},
-                        ytick={0,0.5,1},
-                        yticklabels={$0$,$0{,}5$,$1$},
-                        clip=false
-                    ]
-                        \addplot[
-                            very thick,
-                            blue!70,
-                            domain=-6:6,
-                            samples=100
-                        ] {1/(1+exp(-x))};
-
-                        \addplot[
-                            dashed,
-                            gray,
-                            domain=-6:6,
-                            samples=2
-                        ] {0.5};
-                    \end{axis}
-                \end{tikzpicture}
+                \input{images/jaky-vystup-potrebujeme.tex}
             \end{center}
         \end{column}
 
@@ -803,35 +561,7 @@
         \pause
         \begin{column}{0.54\textwidth}
             \begin{center}
-                \begin{tikzpicture}
-                    \begin{axis}[
-                        width=\textwidth,
-                        height=4.3cm,
-                        xmin=-6, xmax=6,
-                        ymin=0, ymax=1,
-                        axis lines=middle,
-                        xlabel={$z$},
-                        ylabel={$\sigma(z)$},
-                        xtick={0},
-                        ytick={0,0.5,1},
-                        yticklabels={$0$,$0{,}5$,$1$},
-                        clip=false
-                    ]
-                        \addplot[
-                            very thick,
-                            blue!70,
-                            domain=-6:6,
-                            samples=100
-                        ] {1/(1+exp(-x))};
-
-                        \addplot[
-                            dashed,
-                            gray,
-                            domain=-6:6,
-                            samples=2
-                        ] {0.5};
-                    \end{axis}
-                \end{tikzpicture}
+                \input{images/logisticka-funkce.tex}
             \end{center}
         \end{column}
     \end{columns}
@@ -984,67 +714,7 @@
     \]
     \pause
     \begin{center}
-        \begin{tikzpicture}
-            \begin{axis}[
-                width=0.78\textwidth,
-                height=4.8cm,
-                xmin=-6, xmax=6,
-                ymin=0, ymax=1,
-                axis lines=left,
-                xlabel={$x$},
-                ylabel={$\hat p(x)$},
-                xtick={1.386},
-                xticklabels={$x_t$},
-                ytick={0,0.8,1},
-                yticklabels={$0$,$t=0{,}8$,$1$},
-                clip=false
-            ]
-
-                % Ukázka pro a=1, b=0 a t=0,8,
-                % kdy x_t = ln(0,8/0,2) = ln 4.
-                \addplot[
-                    very thick,
-                    blue!70,
-                    domain=-6:6,
-                    samples=120
-                ] {1/(1+exp(-x))};
-
-                \addplot[
-                    dashed,
-                    gray,
-                    domain=-6:6,
-                    samples=2
-                ] {0.8};
-
-                \addplot[
-                    dashed,
-                    red!75!black
-                ] coordinates {
-                    (1.386,0)
-                    (1.386,0.8)
-                };
-
-                \addplot[
-                    only marks,
-                    mark=*,
-                    mark size=2pt,
-                    red!75!black
-                ] coordinates {
-                    (1.386,0.8)
-                };
-
-                \node[
-                    font=\small,
-                    blue!70!black
-                ] at (axis cs:-2.5,0.25) {třída~\(0\)};
-
-                \node[
-                    font=\small,
-                    blue!70!black
-                ] at (axis cs:3.6,0.87) {třída~\(1\)};
-
-            \end{axis}
-        \end{tikzpicture}
+        \input{images/rozhodovaci-hranice-logisticke-regrese.tex}
     \end{center}
 \end{frame}
 
@@ -1180,40 +850,7 @@
         \pause
         \begin{column}{0.50\textwidth}
             \begin{center}
-                \begin{tikzpicture}
-                    \begin{axis}[
-                        width=\textwidth,
-                        height=4.8cm,
-                        xmin=0.01, xmax=1,
-                        ymin=0, ymax=5,
-                        axis lines=left,
-                        xlabel={$\hat p$},
-                        ylabel={$\ell(1,\hat p)$},
-                        xtick={0.1,0.5,0.9},
-                        xticklabels={$0{,}1$,$0{,}5$,$0{,}9$},
-                        ytick={0,1,2,3,4,5},
-                        clip=false
-                    ]
-                        \addplot[
-                            very thick,
-                            blue!70,
-                            domain=0.01:1,
-                            samples=120
-                        ] {-ln(x)};
-
-                        \addplot[
-                            only marks,
-                            mark=*,
-                            mark size=2pt,
-                            red!75!black
-                        ] coordinates {
-                            (0.9,0.105)
-                            (0.5,0.693)
-                            (0.1,2.303)
-                            (0.01,4.605)
-                        };
-                    \end{axis}
-                \end{tikzpicture}
+                \input{images/chovani-krizove-entropie.tex}
             \end{center}
         \end{column}
 
@@ -1275,54 +912,7 @@
     \vspace{2mm}
     \pause
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw,
-                rounded corners=2mm,
-                minimum width=25mm,
-                minimum height=11mm,
-                align=center
-            },
-            arr/.style={
-                ->,
-                thick,
-                rounded corners=2mm
-            }
-        ]
-            \node[box, fill=blue!8] (parameters) at (0,0)
-                {zvolíme\\\(a,b\)};
-
-            \node[box, fill=orange!10] (outputs) at (3.3,0)
-                {vypočítáme\\
-                \(\hat p_1,\ldots,\hat p_n\)};
-
-            \node[box, fill=red!8] (loss) at (6.8,0)
-                {vypočítáme\\\(L(a,b)\)};
-
-            \node[box, fill=green!10] (change) at (5.05,-1.8)
-                {upravíme\\\(a,b\)};
-
-            % Pomocné body pro pravoúhlé šipky
-            \coordinate (rightturn) at (6.8,-1.8);
-            \coordinate (leftturn) at (3.3,-1.8);
-
-            \draw[arr]
-                (parameters.east) -- (outputs.west);
-
-            \draw[arr]
-                (outputs.east) -- (loss.west);
-
-            \draw[arr]
-                (loss.south) --
-                (rightturn) --
-                (change.east);
-
-            \draw[arr]
-                (change.west) --
-                (leftturn) --
-                (outputs.south);
-        \end{tikzpicture}
+        \input{images/jak-hledame-vhodne-parametry.tex}
     \end{center}
 
     \vspace{2mm}
@@ -1351,59 +941,7 @@
         \pause
         \begin{column}{0.51\textwidth}
             \begin{center}
-                \begin{tikzpicture}
-                    \begin{axis}[
-                        width=\textwidth,
-                        height=4cm,
-                        xmin=0, xmax=5,
-                        ymin=0, ymax=10,
-                        axis lines=left,
-                        xlabel={parametr \(\theta\)},
-                        ylabel={ztráta \(L(\theta)\)},
-                        xtick={1.5},
-                        xticklabels={\(\theta^\ast\)},
-                        ytick=\empty,
-                        clip=false
-                    ]
-                        \addplot[
-                            very thick,
-                            blue!70,
-                            domain=0:5,
-                            samples=120
-                        ] {(x-1.5)^2+0.2};
-
-                        \addplot[
-                            only marks,
-                            mark=*,
-                            mark size=2.1pt,
-                            red!75!black
-                        ] coordinates {
-                            (4.5,9.2)
-                            (3.3,3.44)
-                            (2.58,1.37)
-                            (2.15,0.62)
-                        };
-
-                        \draw[->, thick, red!75!black]
-                            (axis cs:4.5,9.2) -- (axis cs:3.3,3.44);
-                        \draw[->, thick, red!75!black]
-                            (axis cs:3.3,3.44) -- (axis cs:2.58,1.37);
-                        \draw[->, thick, red!75!black]
-                            (axis cs:2.58,1.37) -- (axis cs:2.15,0.62);
-
-                        \node[font=\scriptsize] at (axis cs:4.35,9.65) {\(\theta_0\)};
-                        \node[font=\scriptsize] at (axis cs:3.15,3.95) {\(\theta_1\)};
-                        \node[font=\scriptsize] at (axis cs:2.45,1.85) {\(\theta_2\)};
-
-                        \addplot[
-                            dashed,
-                            gray
-                        ] coordinates {
-                            (1.5,0)
-                            (1.5,0.2)
-                        };
-                    \end{axis}
-                \end{tikzpicture}
+                \input{images/myslenka-gradientniho-sestupu.tex}
             \end{center}
         \end{column}
 
@@ -1487,46 +1025,7 @@
     \]
     \pause
     \begin{center}
-        \begin{tikzpicture}
-            \begin{axis}[
-                width=0.75\textwidth,
-                height=5cm,
-                xmin=-6, xmax=6,
-                ymin=0, ymax=1,
-                axis lines=middle,
-                xlabel={$z$},
-                ylabel={$\sigma(z)$},
-                xtick={0,0.63},
-                xticklabels={$0$,$0{,}63$},
-                ytick={0,0.5,0.65,1},
-                yticklabels={$0$,$0{,}5$,$0{,}65$,$1$},
-                clip=false
-            ]
-                \addplot[
-                    very thick,
-                    blue!70,
-                    domain=-6:6,
-                    samples=120
-                ] {1/(1+exp(-x))};
-
-                \addplot[dashed, gray] coordinates {
-                    (0.63,0) (0.63,0.652)
-                };
-
-                \addplot[dashed, gray] coordinates {
-                    (-6,0.652) (0.63,0.652)
-                };
-
-                \addplot[
-                    only marks,
-                    mark=*,
-                    mark size=2.2pt,
-                    red!75!black
-                ] coordinates {
-                    (0.63,0.652)
-                };
-            \end{axis}
-        \end{tikzpicture}
+        \input{images/vypocet-vystupu-logisticke-funkce.tex}
     \end{center}
 
 \end{frame}
@@ -1669,52 +1168,7 @@
 \begin{frame}{Čtyři možné výsledky binární klasifikace}
 
     \begin{center}
-        \begin{tikzpicture}[
-            cell/.style={
-                draw,
-                minimum width=3.8cm,
-                minimum height=1.8cm,
-                align=center
-            },
-            lab/.style={font=\small},
-            biglab/.style={font=\bfseries}
-        ]
-
-            % hlavní 2x2 tabulka
-            \node[cell,biglab,fill=green!15] (tp) at (0,0)
-                {$\TP_{\mathbf{X},\mathbf{Y}}^{(t)}$\\[1mm]
-                 \small správně pozitivní\\
-                 \small \(y_i=1,\ h^{(t)}(x_i)=1\)};
-
-            \node[cell,biglab, fill=red!10] (fn) at (3.8,0)
-                {$\FN_{\mathbf{X},\mathbf{Y}}^{(t)}$\\[1mm]
-                 \small falešně negativní\\
-                 \small \(y_i=1,\ h^{(t)}(x_i)=0\)};
-
-            \node[cell,biglab, fill=red!10] (fp) at (0,-1.8)
-                {$\FP_{\mathbf{X},\mathbf{Y}}^{(t)}$\\[1mm]
-                 \small falešně pozitivní\\
-                 \small \(y_i=0,\ h^{(t)}(x_i)=1\)};
-
-            \node[cell,biglab, fill=green!15] (tn) at (3.8,-1.8)
-                {$\TN_{\mathbf{X},\mathbf{Y}}^{(t)}$\\[1mm]
-                 \small správně negativní\\
-                 \small \(y_i=0,\ h^{(t)}(x_i)=0\)};
-
-            % obrys celé tabulky
-            \draw[thick] (-1.9,0.9) rectangle (5.7,-2.7);
-
-            % popisky řádků
-            \node[lab, rotate=90] at (-3.3,-0.9) {skutečná třída};
-            \node[lab] at (-2.6,0) {\(y_i=1\)};
-            \node[lab] at (-2.6,-1.8) {\(y_i=0\)};
-
-            % popisky sloupců
-            \node[lab] at (1.9,1.7) {předpovězená třída};
-            \node[lab] at (0,1.3) {\(h^{(t)}(x_i)=1\)};
-            \node[lab] at (3.8,1.3) {\(h^{(t)}(x_i)=0\)};
-
-        \end{tikzpicture}
+        \input{images/ctyri-mozne-vysledky-binarni-klasifikace.tex}
     \end{center}
 
     \vspace{2mm}
@@ -2237,34 +1691,7 @@
     \]
     \pause
     \begin{center}
-        \begin{tikzpicture}
-            \begin{axis}[
-                width=0.78\textwidth,
-                height=4.8cm,
-                xmin=0, xmax=8,
-                ymin=0, ymax=1,
-                axis lines=middle,
-                xlabel={$x$},
-                ylabel={\(\hat p(x)\)},
-                xtick=\empty,
-                ytick={0,0.5,0.75,1},
-                yticklabels={$0$,$0{,}5$,$0{,}75$,$1$},
-                clip=false
-            ]
-                \addplot[
-                    very thick,
-                    blue!70,
-                    domain=0:8,
-                    samples=120
-                ] {1/(1+exp(-(1.2*x-4.6)))};
-
-                \addplot[dashed, gray] coordinates {(0,0.5) (8,0.5)};
-                \addplot[dashed, red!70!black] coordinates {(0,0.75) (8,0.75)};
-
-                \node[font=\scriptsize, gray] at (axis cs:7.3,0.55) {\(t=0{,}5\)};
-                \node[font=\scriptsize, red!70!black] at (axis cs:7.3,0.80) {\(t=0{,}75\)};
-            \end{axis}
-        \end{tikzpicture}
+        \input{images/zmena-rozhodovaciho-prahu.tex}
     \end{center}
 
 \end{frame}
@@ -2342,40 +1769,7 @@
 \begin{frame}{Přesnost a~pokrytí při změně prahu}
     \pause
     \begin{center}
-        \begin{tikzpicture}
-            \begin{axis}[
-                width=0.78\textwidth,
-                height=5cm,
-                xmin=0.1, xmax=0.9,
-                ymin=0, ymax=1,
-                axis lines=left,
-                xlabel={rozhodovací práh \(t\)},
-                ylabel={hodnota metriky},
-                xtick={0.2,0.5,0.8},
-                ytick={0,0.5,1},
-                yticklabels={$0$,$0{,}5$,$1$},
-                legend pos=south east,
-                clip=false
-            ]
-                \addplot[
-                    very thick,
-                    blue!70,
-                    domain=0.1:0.9,
-                    samples=80
-                ] {0.45+0.5*x};
-
-                \addlegendentry{přesnost}
-
-                \addplot[
-                    very thick,
-                    orange!85!black,
-                    domain=0.1:0.9,
-                    samples=80
-                ] {1.05-0.75*x};
-
-                \addlegendentry{pokrytí}
-            \end{axis}
-        \end{tikzpicture}
+        \input{images/presnost-a-pokryti-pri-zmene-prahu.tex}
     \end{center}
     \pause
     \begin{tinfoframe}[\textwidth]
@@ -2411,34 +1805,7 @@
 \begin{frame}{Rozdělení dat}
     \pause
     \begin{center}
-        \begin{tikzpicture}[
-            >=stealth,
-            box/.style={
-                draw,
-                rounded corners=2mm,
-                minimum width=25mm,
-                minimum height=11mm,
-                align=center
-            },
-            arr/.style={
-                ->,
-                thick,
-                rounded corners=2mm
-            }
-        ]
-            \node[box, fill=blue!10] (train) at (-3.5,0)
-                {trénovací část\\\scriptsize učení modelu};
-
-            \node[box, fill=orange!12] (validate) at (0,0)
-                {validační část\\\scriptsize volba nastavení};
-
-            \node[box, fill=green!12] (test) at (3.5,0)
-                {testovací část\\\scriptsize závěrečné hodnocení};
-            
-            \draw[arr] (train) -- (validate);
-            \draw[arr] (validate) -- (test);
-
-        \end{tikzpicture}
+        \input{images/rozdeleni-dat.tex}
     \end{center}
 
     \vspace{2mm}
@@ -2540,61 +1907,7 @@
 \begin{frame}{Nejbližší soused}
     \pause
     \begin{center}
-        \begin{tikzpicture}
-            \begin{axis}[
-                width=0.78\textwidth,
-                height=5.4cm,
-                xmin=0, xmax=10,
-                ymin=0, ymax=6,
-                axis lines=left,
-                xlabel={$x_1$},
-                ylabel={$x_2$},
-                xtick=\empty,
-                ytick=\empty,
-                clip=false
-            ]
-
-                \addplot[
-                    only marks,
-                    mark=*,
-                    mark size=2.2pt,
-                    blue!70
-                ] coordinates {
-                    (1,1) (2,1.4) (2.8,0.9) (3.1,2.1)
-                };
-
-                \addplot[
-                    only marks,
-                    mark=*,
-                    mark size=2.2pt,
-                    orange!85!black
-                ] coordinates {
-                    (6.2,3.8) (7.1,4.5) (8,3.7) (7.5,5.2)
-                };
-
-                \addplot[
-                    only marks,
-                    mark=*,
-                    mark size=3pt,
-                    red!75!black
-                ] coordinates {
-                    (5.7,3.3)
-                };
-
-                \draw[dashed, thick, red!75!black]
-                    (axis cs:5.7,3.3) -- (axis cs:6.2,3.8);
-
-                \node[font=\small, red!75!black] at (axis cs:5.2,2.90)
-                    {nový objekt};
-
-                \node[font=\small, blue!70!black] at (axis cs:2.3,0.35)
-                    {třída~\(0\)};
-
-                \node[font=\small, orange!85!black] at (axis cs:7.5,5.75)
-                    {třída~\(1\)};
-
-            \end{axis}
-        \end{tikzpicture}
+        \input{images/nejblizsi-soused.tex}
     \end{center}
     \pause
     \begin{timportantframe}[11.0cm]
@@ -2660,105 +1973,7 @@
 \begin{frame}{Algoritmus \(k\)-NN pro $\mathbf{X}_1,\mathbf{X}_2,\mathbf{Y}$}
 
     \begin{center}
-        \begin{tikzpicture}
-            \begin{axis}[
-                width=9cm,
-                height=7.8cm,
-                xmin=0.5, xmax=8,
-                ymin=0.5, ymax=5.2,
-                axis lines=left,
-                axis equal image,
-                xlabel={$x_1$},
-                ylabel={$x_2$},
-                xtick=\empty,
-                ytick=\empty,
-                clip=false,
-                legend style={
-                    at={(1.3,0.02)},
-                    anchor=south east,
-                    font=\small
-                }
-            ]
-
-                % třída 0
-                \addplot[
-                    only marks,
-                    mark=*,
-                    mark size=2.2pt,
-                    blue!70
-                ] coordinates {
-                    (1.2,1.1)
-                    (1.9,2.0)
-                    (2.8,1.4)
-                    (3.6,2.5)
-                    (4.2,1.8)
-                    (2.4,3.0)
-                };
-                \addlegendentry{třída~\(0\)}
-
-                % třída 1
-                \addplot[
-                    only marks,
-                    mark=square*,
-                    mark size=2.4pt,
-                    orange!85!black
-                ] coordinates {
-                    (5.0,3.3)
-                    (5.7,2.7)
-                    (5.9,4.1)
-                    (6.7,3.4)
-                    (7.4,4.5)
-                    (6.2,1.9)
-                };
-                \addlegendentry{třída~\(1\)}
-
-                % nový objekt
-                \addplot[
-                    only marks,
-                    mark=diamond*,
-                    mark size=3.4pt,
-                    red!75!black
-                ] coordinates {
-                    (4.8,2.4)
-                };
-                \addlegendentry{nový objekt \(\mathbf{x}\)}
-
-                % zvýraznění 5 nejbližších sousedů
-                \addplot[
-                    only marks,
-                    mark=o,
-                    mark size=5.2pt,
-                    black,
-                    line width=0.9pt
-                ] coordinates {
-                    (4.2,1.8)
-                    (3.6,2.5)
-                    (5.0,3.3)
-                    (5.7,2.7)
-                    (6.2,1.9)
-                };
-
-                % spojnice k 5 nejbližším sousedům
-                \draw[dashed, thick, gray]
-                    (axis cs:4.8,2.4) -- (axis cs:4.2,1.8);
-                \draw[dashed, thick, gray]
-                    (axis cs:4.8,2.4) -- (axis cs:3.6,2.5);
-                \draw[dashed, thick, gray]
-                    (axis cs:4.8,2.4) -- (axis cs:5.0,3.3);
-                \draw[dashed, thick, gray]
-                    (axis cs:4.8,2.4) -- (axis cs:5.7,2.7);
-                \draw[dashed, thick, gray]
-                    (axis cs:4.8,2.4) -- (axis cs:6.2,1.9);
-
-                % popisek nového objektu
-                \node[
-                    font=\small,
-                    red!75!black,
-                    anchor=west
-                ] at (axis cs:4.95,2.15) {\(\mathbf{x}\)};
-
-            \end{axis}
-        \end{tikzpicture}
+        \input{images/algoritmus-k-nn-pro-x-1-x-2-y.tex}
     \end{center}
 
 \end{frame}
@@ -2774,102 +1989,7 @@
     \vspace{1mm}
     \pause
     \begin{center}
-        \begin{tikzpicture}
-            \begin{axis}[
-                width=6cm,
-                height=4.5cm,
-                xmin=0.5, xmax=7,
-                ymin=0.5, ymax=4.6,
-                axis lines=left,
-                axis equal image,
-                xlabel={$x_1$},
-                ylabel={$x_2$},
-                xlabel near ticks,
-                ylabel near ticks,
-                xtick=\empty,
-                ytick=\empty,
-                title={\(k=1\)},
-                clip=false
-            ]
-                \addplot[only marks, mark=*, mark size=2pt, blue!70]
-                coordinates {
-                    (1.3,1.2) (2.0,1.8) (2.7,1.1) (3.1,2.5) (4.3,3.0)
-                };
-
-                \addplot[only marks, mark=square*, mark size=2.2pt, orange!85!black]
-                coordinates {
-                    (4.8,2.7) (5.2,3.5) (5.6,2.4)
-                    (6.1,3.2) (6.6,2.5) (5.8,4.0)
-                };
-
-                \addplot[only marks, mark=diamond*, mark size=3pt, red!75!black]
-                coordinates {(4.5,3.1)};
-
-                \addplot[only marks, mark=o, mark size=5pt, black, line width=0.9pt]
-                coordinates {(4.3,3.0)};
-
-                \draw[dashed, thick, gray]
-                    (axis cs:4.5,3.1) -- (axis cs:4.3,3.0);
-
-                \node[font=\scriptsize, red!75!black, anchor=west]
-                    at (axis cs:4.65,3.15) {\(\mathbf{x}\)};
-            \end{axis}
-            \qquad
-            \begin{axis}[
-                xshift=5.5cm,
-                width=6cm,
-                height=4.5cm,
-                xmin=0.5, xmax=7,
-                ymin=0.5, ymax=4.6,
-                axis lines=left,
-                axis equal image,
-                xlabel={$x_1$},
-                ylabel={$x_2$},
-                xlabel near ticks,
-                ylabel near ticks,
-                xtick=\empty,
-                ytick=\empty,
-                title={\(k=5\)},
-                clip=false
-            ]
-                \addplot[only marks, mark=*, mark size=2pt, blue!70]
-                coordinates {
-                    (1.3,1.2) (2.0,1.8) (2.7,1.1) (3.1,2.5) (4.3,3.0)
-                };
-
-                \addplot[only marks, mark=square*, mark size=2.2pt, orange!85!black]
-                coordinates {
-                    (4.8,2.7) (5.2,3.5) (5.6,2.4)
-                    (6.1,3.2) (6.6,2.5) (5.8,4.0)
-                };
-
-                \addplot[only marks, mark=diamond*, mark size=3pt, red!75!black]
-                coordinates {(4.5,3.1)};
-
-                \addplot[only marks, mark=o, mark size=5pt, black, line width=0.9pt]
-                coordinates {
-                    (4.3,3.0) (4.8,2.7) (5.2,3.5) (5.6,2.4) (6.1,3.2)
-                };
-
-                \draw[dashed, thick, gray]
-                    (axis cs:4.5,3.1) -- (axis cs:4.3,3.0);
-
-                \draw[dashed, thick, gray]
-                    (axis cs:4.5,3.1) -- (axis cs:4.8,2.7);
-
-                \draw[dashed, thick, gray]
-                    (axis cs:4.5,3.1) -- (axis cs:5.2,3.5);
-
-                \draw[dashed, thick, gray]
-                    (axis cs:4.5,3.1) -- (axis cs:5.6,2.4);
-
-                \draw[dashed, thick, gray]
-                    (axis cs:4.5,3.1) -- (axis cs:6.1,3.2);
-
-                \node[font=\scriptsize, red!75!black, anchor=west]
-                    at (axis cs:4.65,3.15) {\(\mathbf{x}\)};
-            \end{axis}
-        \end{tikzpicture}
+        \input{images/vliv-hodnoty-k.tex}
     \end{center}
     \pause
     \begin{tinfoframe}

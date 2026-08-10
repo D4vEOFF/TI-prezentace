@@ -1,0 +1,40 @@
+\begin{tikzpicture}[
+    >=stealth,
+    box/.style={
+        draw,
+        rounded corners=2mm,
+        minimum width=25mm,
+        minimum height=11mm,
+        align=center
+    },
+    arr/.style={
+        ->,
+        thick,
+        rounded corners=2mm
+    },
+    node distance=10mm,
+    every node/.style={font=\small}
+]
+    \node[box] (input) {
+        vektor dat\\
+        \(\mathbf{x}_i\)
+    };
+
+    \node[box, right=of input] (model) {
+        model
+    };
+
+    \node[box, right=of model] (output) {
+        vypočtený výstup\\
+        \(\hat{y}_i\)
+    };
+
+    \node[box, below=8mm of output] (expected) {
+        očekávaný výstup\\
+        \(y_i\)
+    };
+
+    \draw[arr] (input) -- (model);
+    \draw[arr] (model) -- (output);
+    \draw[arr] (expected) -- (output);
+\end{tikzpicture}

@@ -1,0 +1,21 @@
+\begin{tikzpicture}[
+    box/.style={
+        draw,
+        rounded corners,
+        thick,
+        minimum width=20mm,
+        minimum height=8mm,
+        align=center,
+        font=\scriptsize
+    },
+    arrow/.style={->, thick, >=stealth}
+]
+    \node<3->[box] (src) at (0,0) {zdrojový\\kód};
+    \node<4->[box] (bc) at (2.6,0) {bytecode\\/ mezikód};
+    \node<5->[box] (jit) at (5.2,0) {JIT\\kompilátor};
+    \node<6->[box] (native) at (7.8,0) {strojový\\kód};
+
+    \draw<4->[arrow] (src) -- (bc);
+    \draw<5->[arrow] (bc) -- (jit);
+    \draw<6->[arrow] (jit) -- (native);
+\end{tikzpicture}

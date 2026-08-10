@@ -1,0 +1,25 @@
+\begin{tikzpicture}[
+    >=stealth,
+    node distance=0.6cm,
+    box/.style={
+        draw=black!60,
+        rounded corners=2pt,
+        minimum width=2.5cm,
+        minimum height=0.75cm,
+        align=center,
+        font=\small
+    },
+    bluebox/.style={box, fill=blue!7},
+    orangebox/.style={box, fill=orange!12},
+    greenbox/.style={box, fill=green!8},
+    arr/.style={->, thick, draw=black!70}
+]
+    \node[bluebox] (data) {Trénovací\\data};
+    \node[orangebox, right=of data] (learning) {Učení};
+    \node[greenbox, right=of learning] (model) {Model};
+    \node[bluebox, right=of model] (pred) {Predikce\\rozhodnutí};
+
+    \draw[arr] (data) -- (learning);
+    \draw[arr] (learning) -- (model);
+    \draw[arr] (model) -- (pred);
+\end{tikzpicture}

@@ -1,0 +1,41 @@
+\begin{tikzpicture}[
+    box/.style={
+        draw,
+        rounded corners,
+        thick,
+        align=center,
+        minimum width=2.6cm,
+        minimum height=0.8cm
+    },
+    arrow/.style={->, thick},
+    node distance=0.75cm
+]
+
+    \visible<3->{\node[box] (src) {zdrojový\\kód};}
+    \visible<2->{\node[box, right=of src] (comp) {kompilátor};}
+    \visible<4->{\node[box, right=of comp] (out) {cílový\\kód};}
+
+    \visible<3->{\draw[arrow] (src) -- (comp);}
+    \visible<4->{\draw[arrow] (comp) -- (out);}
+
+    \visible<5->{
+        \node[below=0.25cm of src, align=center] {
+            \scriptsize
+            \shortstack{
+                \texttt{C}\\[-0.5mm]
+                \texttt{Java}\\[-0.5mm]
+                \texttt{C\#}
+            }
+        };
+
+        \node[below=0.25cm of out, align=center] {
+            \scriptsize
+            \shortstack{
+                assembler\\[-0.5mm]
+                mezikód\\[-0.5mm]
+                strojový kód
+            }
+        };
+    }
+
+\end{tikzpicture}

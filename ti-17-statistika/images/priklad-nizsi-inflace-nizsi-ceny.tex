@@ -1,0 +1,11 @@
+\begin{tikzpicture}[
+    box/.style={draw, rounded corners, thick, align=center,
+        minimum width=3.2cm, minimum height=0.9cm, fill=blue!8},
+    arr/.style={->, thick},
+    >=stealth
+]
+    \node[box] (a) {Inflace $10{,}7\,\%$\\rok 2023};
+    \node[box, right=3.8cm of a] (b) {Inflace $2{,}4\,\%$\\rok 2024};
+
+    \draw[arr] (a) -- node[above]{pokles tempa růstu} (b);
+\end{tikzpicture}

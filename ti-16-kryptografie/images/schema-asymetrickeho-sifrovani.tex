@@ -1,0 +1,95 @@
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    >=latex,
+    msgarrow/.style={->, >=latex, line width=1.05pt, draw=black},
+    keyarrow/.style={->, >=latex, line width=0.95pt, draw=blue!65!black}
+]
+
+% Alice
+\node[inner sep=0pt] (alice) at (-4.2,0.15)
+    {\includegraphics[height=1.45cm]{images/woman-icon.pdf}};
+\node[font=\normalsize, below=0.1cm of alice] {Alice};
+
+% Bob
+\node[inner sep=0pt] (bob) at (4.0,0.15)
+    {\includegraphics[height=1.45cm]{images/man-icon.pdf}};
+\node[font=\normalsize, below=0.1cm of bob] {Bob};
+
+% Bobovy klíče
+\node[
+    rounded corners=1.5mm,
+    draw=blue!65!black,
+    fill=blue!12,
+    inner xsep=3mm,
+    inner ysep=1.5mm,
+    font=\small,
+    above=1.5cm of bob
+] (pk)
+{veřejný klíč \(k_V\)};
+
+\node[
+    rounded corners=1.5mm,
+    draw=red!70!black,
+    fill=red!10,
+    inner xsep=3mm,
+    inner ysep=1.5mm,
+    font=\small,
+    above=0.5cm of bob
+] (sk)
+{soukromý klíč \(k_S\)};
+
+% Veřejný klíč k Alici
+\draw[keyarrow] (pk.west) to[bend right=10] node[midway,above left,font=\scriptsize,text=blue!65!black] {Bob zveřejní \(k_V\)} (-3.65,0.95);
+
+% Šifrování u Alice
+\node[
+    rounded corners=1.5mm,
+    draw=black!55,
+    fill=black!5,
+    inner xsep=3mm,
+    inner ysep=1.5mm,
+    font=\small
+] (enc) at (-1.5,0.55)
+{\(\mathbf{E}(m,k_V)\)};
+
+\node[font=\scriptsize, below=0.1cm of enc, align=center] {Alice šifruje\\ pomocí \(k_V\)};
+
+% Zpráva k šifrování
+\draw[msgarrow] (alice.east) -- (enc.west);
+
+% Dešifrování u Boba
+\node[
+    rounded corners=1.5mm,
+    draw=black!55,
+    fill=black!5,
+    inner xsep=3mm,
+    inner ysep=1.5mm,
+    font=\small
+] (dec) at (1.5,0.55)
+{\(\mathbf{D}(c,k_S)\)};
+
+\draw[msgarrow] (dec.east) -- (bob.west);
+
+\node[font=\scriptsize, below=0.1cm of dec, align=center] {Bob dešifruje\\ pomocí \(k_S\)};
+
+\draw[->, >=latex, dashed, line width=0.95pt, draw=red!70!black]
+    (sk.west) -- (dec.north);
+
+% Šifrový text
+\draw[msgarrow] (enc.east) -- (dec.west);
+
+% Spodní shrnutí
+\node[
+    rounded corners=2mm,
+    draw=orange!70!black,
+    fill=orange!22,
+    line width=0.6pt,
+    inner xsep=4mm,
+    inner ysep=2mm,
+    text width=10.4cm,
+    align=center,
+    font=\small
+] at (0,-2.5)
+{Kdo zná \(k_V\), může Bobovi šifrovat zprávy. Dešifrovat je umí pouze Bob se svým \(k_S\).};
+
+\end{tikzpicture}

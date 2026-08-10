@@ -29,25 +29,7 @@ a odlišit užitečný vzor od náhody, šumu nebo chybné interpretace.
 \vspace{0.25cm}
 
 \begin{center}
-\begin{tikzpicture}[
-    node/.style={
-        draw, rounded corners, thick,
-        minimum width=2.25cm,
-        minimum height=0.75cm,
-        align=center,
-        fill=blue!8
-    },
-    arr/.style={->, thick}
-]
-    \node[node] (data) {Data};
-    \node[node, right=0.45cm of data] (stats) {Statistický\\popis};
-    \node[node, right=0.45cm of stats] (model) {Model};
-    \node[node, right=0.45cm of model] (decision) {Závěr};
-
-    \draw[arr] (data) -- (stats);
-    \draw[arr] (stats) -- (model);
-    \draw[arr] (model) -- (decision);
-\end{tikzpicture}
+\input{images/proc-nas-zajima-statistika.tex}
 \end{center}
 
 \vspace{0.1cm}
@@ -153,17 +135,7 @@ $52\,202$ Kč & $44\,337$ Kč
     \end{talertbox}
     \pause
     \begin{center}
-    \begin{tikzpicture}[
-        box/.style={draw, rounded corners, thick, align=center,
-            minimum width=3.2cm, minimum height=0.9cm, fill=blue!8},
-        arr/.style={->, thick},
-        >=stealth
-    ]
-        \node[box] (a) {Inflace $10{,}7\,\%$\\rok 2023};
-        \node[box, right=3.8cm of a] (b) {Inflace $2{,}4\,\%$\\rok 2024};
-
-        \draw[arr] (a) -- node[above]{pokles tempa růstu} (b);
-    \end{tikzpicture}
+    \input{images/priklad-nizsi-inflace-nizsi-ceny.tex}
     \end{center}
     \pause
     \begin{itemize}
@@ -313,47 +285,7 @@ Pro pevně zvolený statistický znak pišme jednoduše
     \end{align*}
     \pause
     \begin{center}
-    \begin{tikzpicture}[
-        x=1.35cm,
-        y=0.6cm,
-        >=stealth,
-        every node/.style={font=\small}
-    ]
-
-        % osy
-        \draw[->, thick] (0.3,0) -- (5.1,0);
-        \draw[->, thick] (0.5,-0.3) -- (0.5,5.2);
-
-        % x-ová osa: značky 1,2,3,4
-        \foreach \x in {1,2,3,4}{
-            \draw (\x,0.12) -- (\x,-0.12);
-            \node[below] at (\x,-0.12) {$\x$};
-        }
-
-        % y-ová osa: značky x_1, x_4, x_3, x_2
-        \draw (0.38,1) -- (0.62,1);
-        \node[left] at (0.38,1) {$x_1$};
-
-        \draw (0.38,2) -- (0.62,2);
-        \node[left] at (0.38,2) {$x_4$};
-
-        \draw (0.38,3) -- (0.62,3);
-        \node[left] at (0.38,3) {$x_3$};
-
-        \draw (0.38,4) -- (0.62,4);
-        \node[left] at (0.38,4) {$x_2$};
-
-        % body
-        \fill (1,1) circle (2pt);
-        \fill (2,4) circle (2pt);
-        \fill (3,3) circle (2pt);
-        \fill (4,2) circle (2pt);
-
-        % průměr
-        \draw[red, very thick] (0.55,2.5) -- (4.95,2.5);
-        \node[right, red] at (4.95,2.5) {$\average{\mathbf{X}}$};
-
-    \end{tikzpicture}
+    \input{images/dukaz-bodu-1-i-1-n-x-i-x-0.tex}
     \end{center}
 \end{frame}
 
@@ -628,33 +560,7 @@ Rozptyl je roven nule právě tehdy, když jsou všechny hodnoty stejné.
             
             \vspace{0.1cm}
             
-            \begin{tikzpicture}[x=0.75cm,y=0.55cm,>=stealth]
-                % osy
-                \draw[->, thick] (0.5,0.5) -- (6.3,0.5);
-                \draw[->, thick] (0.8,0.2) -- (0.8,7.8);
-                
-                % značky na osách
-                \foreach \x in {1,...,5} {
-                    \draw (\x,0.62) -- (\x,0.38);
-                    \node[below] at (\x,0.38) {\scriptsize \x};
-                }
-                
-                \foreach \y in {1,...,7} {
-                    \draw (0.68,\y) -- (0.92,\y);
-                    \node[left] at (0.68,\y) {\scriptsize \y};
-                }
-                
-                % průměr
-                \draw[red, very thick] (0.9,4) -- (6.1,4);
-                \node[right, red] at (6.1,4) {\scriptsize $\average{\mathbf{X}}$};
-                
-                % body
-                \fill[blue] (1,3.7) circle (2.2pt);
-                \fill[blue] (2,4.2) circle (2.2pt);
-                \fill[blue] (3,3.9) circle (2.2pt);
-                \fill[blue] (4,4.1) circle (2.2pt);
-                \fill[blue] (5,4.1) circle (2.2pt);
-            \end{tikzpicture}
+            \input{images/maly-a-velky-rozptyl-1.tex}
         \end{center}
     \end{column}
     \pause
@@ -664,33 +570,7 @@ Rozptyl je roven nule právě tehdy, když jsou všechny hodnoty stejné.
             
             \vspace{0.1cm}
             
-            \begin{tikzpicture}[x=0.75cm,y=0.55cm,>=stealth]
-                % osy
-                \draw[->, thick] (0.5,0.5) -- (6.3,0.5);
-                \draw[->, thick] (0.8,0.2) -- (0.8,7.8);
-                
-                % značky na osách
-                \foreach \x in {1,...,5} {
-                    \draw (\x,0.62) -- (\x,0.38);
-                    \node[below] at (\x,0.38) {\scriptsize \x};
-                }
-                
-                \foreach \y in {1,...,7} {
-                    \draw (0.68,\y) -- (0.92,\y);
-                    \node[left] at (0.68,\y) {\scriptsize \y};
-                }
-                
-                % průměr
-                \draw[red, very thick] (0.9,4) -- (6.1,4);
-                \node[right, red] at (6.1,4) {\scriptsize $\average{\mathbf{Y}}$};
-                
-                % body
-                \fill[blue] (1,1) circle (2.2pt);
-                \fill[blue] (2,2) circle (2.2pt);
-                \fill[blue] (3,4) circle (2.2pt);
-                \fill[blue] (4,6) circle (2.2pt);
-                \fill[blue] (5,7) circle (2.2pt);
-            \end{tikzpicture}
+            \input{images/maly-a-velky-rozptyl-2.tex}
         \end{center}
     \end{column}
 \end{columns}
@@ -795,52 +675,7 @@ Standardizovaný soubor hodnot značíme $\mathbf{Z}=(z_1,\ldots,z_n)$.
 
 \pause
 \begin{center}
-\begin{tikzpicture}[
-    x=1.15cm,
-    y=1cm,
-    >=stealth,
-    every node/.style={font=\small}
-]
-
-% horní osa
-\draw[->, thick] (1.3,2.2) -- (6.7,2.2);
-\node[left] at (1.3,2.2) {$\mathbf{X}$};
-
-\foreach \x in {2,3,4,5,6}{
-    \fill[blue] (\x,2.2) circle (2pt);
-}
-
-\draw[red, very thick] (4,1.9) -- (4,2.55);
-\node[above, red] at (4,2.55) {$\average{\mathbf{X}}$};
-
-\draw[<->, thick] (4,1.65) -- (5.41,1.65);
-\node[below] at (4.7,1.65) {$\sigma_{\mathbf{X}}$};
-
-\node[above] at (2,2.35) {$x_1$};
-\node[above] at (6,2.35) {$x_n$};
-
-% šipka
-\draw[->, thick] (4,1.25) -- node[midway,left] {$z_i=\dfrac{x_i-\average{\mathbf{X}}}{\sigma_{\mathbf{X}}}$} (4,0.55);
-
-% dolní osa
-\draw[->, thick] (1.3,0) -- (6.7,0);
-\node[left] at (1.3,0) {$\mathbf{Z}$};
-
-% značky z-osy
-\foreach \x/\lab in {2.59/$-1{,}41$,3.29/$-0{,}71$,4/$0$,4.71/$0{,}71$,5.41/$1{,}41$}{
-    \fill[blue] (\x,0) circle (2pt);
-}
-
-\draw[red, very thick] (4,-0.3) -- (4,0.35);
-\node[below, red] at (4,-0.3) {$0$};
-
-\draw (3,0.1) -- (3,-0.1);
-\node[below] at (3,-0.1) {$-1$};
-
-\draw (5,0.1) -- (5,-0.1);
-\node[below] at (5,-0.1) {$1$};
-
-\end{tikzpicture}
+\input{images/standardizace-dat-schematicky.tex}
 \end{center}
 
 \pause
@@ -1108,23 +943,7 @@ Hodnoty uspořádáme do dvojic
 \begin{columns}[T]
     \begin{column}{0.48\textwidth}
         \begin{center}
-        \begin{tikzpicture}[
-            x=0.75cm,
-            y=0.55cm,
-            >=stealth,
-            every node/.style={font=\small}
-        ]
-            \draw[->, thick] (0,0) -- (7.2,0) node[right] {$x$};
-            \draw[->, thick] (0,0) -- (0,5.5) node[above] {$y$};
-
-            \foreach \x/\y in {
-                0.8/0.9, 1.4/1.2, 2.0/1.8, 2.6/2.1,
-                3.2/2.7, 3.8/3.0, 4.4/3.4, 5.0/4.1,
-                5.6/4.4, 6.2/4.8
-            }{
-                \fill[blue] (\x,\y) circle (2pt);
-            }
-        \end{tikzpicture}
+        \input{images/dvojice-hodnot-a-bodovy-graf.tex}
         \end{center}
     \end{column}
     \pause
@@ -1216,14 +1035,7 @@ Korelační koeficient je standardizovaná kovariance. Nemá jednotky a měří 
 \textbf{Kladná korelace}
 \vspace{0.1cm}
 \begin{center}
-    \begin{tikzpicture}[x=0.42cm,y=0.35cm,>=stealth]
-        \draw[->, thick] (0,0) -- (6.5,0);
-        \draw[->, thick] (0,0) -- (0,5.5);
-        \foreach \x/\y in {0.7/0.8,1.2/1.4,1.9/1.7,2.6/2.5,3.3/3.1,4.0/3.6,4.7/4.0,5.4/4.8}{
-            \fill[blue] (\x,\y) circle (1.7pt);
-        }
-        \node[red] at (3,-0.9) {$\rho_{\mathbf{X}\mathbf{Y}}>0$};
-    \end{tikzpicture}
+    \input{images/vyznam-hodnot-korelace-1.tex}
 \end{center}
 \end{column}
 
@@ -1233,14 +1045,7 @@ Korelační koeficient je standardizovaná kovariance. Nemá jednotky a měří 
 \textbf{Záporná korelace}
 \vspace{0.1cm}
 \begin{center}
-    \begin{tikzpicture}[x=0.42cm,y=0.35cm,>=stealth]
-        \draw[->, thick] (0,0) -- (6.5,0);
-        \draw[->, thick] (0,0) -- (0,5.5);
-        \foreach \x/\y in {0.7/4.8,1.2/4.5,1.9/3.8,2.6/3.2,3.3/2.7,4.0/2.0,4.7/1.5,5.4/0.9}{
-            \fill[blue] (\x,\y) circle (1.7pt);
-        }
-        \node[red] at (3,-0.9) {$\rho_{\mathbf{X}\mathbf{Y}}<0$};
-    \end{tikzpicture}
+    \input{images/vyznam-hodnot-korelace-2.tex}
 \end{center}
 \end{column}
 
@@ -1250,14 +1055,7 @@ Korelační koeficient je standardizovaná kovariance. Nemá jednotky a měří 
 \textbf{Bez lin. korelace}
 \vspace{0.1cm}
 \begin{center}
-    \begin{tikzpicture}[x=0.42cm,y=0.35cm,>=stealth]
-        \draw[->, thick] (0,0) -- (6.5,0);
-        \draw[->, thick] (0,0) -- (0,5.5);
-        \foreach \x/\y in {0.8/3.8,1.3/1.2,1.9/4.4,2.5/2.0,3.1/3.1,3.8/0.8,4.3/4.7,5.0/2.6,5.6/3.5}{
-            \fill[blue] (\x,\y) circle (1.7pt);
-        }
-        \node[red] at (3,-0.9) {$\rho_{\mathbf{X}\mathbf{Y}}\approx 0$};
-    \end{tikzpicture}
+    \input{images/vyznam-hodnot-korelace-3.tex}
 \end{center}
 \end{column}
 \end{columns}
@@ -1346,22 +1144,7 @@ Znamená pouze, že mezi nimi není lineární korelace.
 
     \pause
     \begin{center}
-    \begin{tikzpicture}[
-        x=0.75cm,
-        y=0.45cm,
-        >=stealth,
-        every node/.style={font=\small}
-    ]
-        \draw[->, thick] (-3.4,0) -- (3.6,0) node[right] {$x$};
-        \draw[->, thick] (0,-0.3) -- (0,5.6) node[above] {$y$};
-
-        \foreach \x/\y in {
-            -3/4.7,-2.5/3.3,-2/2.1,-1.5/1.2,-1/0.6,-0.5/0.2,
-            0/0.1,0.5/0.2,1/0.7,1.5/1.3,2/2.2,2.5/3.4,3/4.8
-        }{
-            \fill[blue] (\x,\y) circle (2pt);
-        }
-    \end{tikzpicture}
+    \input{images/korelace-meri-linearni-vztah.tex}
     \end{center}
 
     \pause

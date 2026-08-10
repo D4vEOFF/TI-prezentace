@@ -1,0 +1,69 @@
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    >=latex,
+    scale=0.85,
+    arr/.style={->, >=latex, line width=1pt, draw=black},
+    biarr/.style={<->, >=latex, line width=1pt, draw=black},
+    msgbox/.style={
+        rounded corners=0.8mm,
+        draw=black!60,
+        fill=black!3,
+        inner xsep=3mm,
+        inner ysep=2mm,
+        font=\small,
+        align=center
+    }
+]
+
+    %------------------------------------------------
+    % Postavy
+    %------------------------------------------------
+    \node[inner sep=0pt] (alice) at (-4.8,1.9)
+        {\includegraphics[height=1.5cm]{images/woman-icon.pdf}};
+    \node[font=\Large, below=0.1cm of alice] {Alice};
+
+    \node[inner sep=0pt] (bob) at (4.8,1.9)
+        {\includegraphics[height=1.5cm]{images/man-icon.pdf}};
+    \node[font=\Large, below=0.1cm of bob] {Bob};
+
+    \node[inner sep=0pt] (mallory) at (0.0,2.0)
+        {\includegraphics[height=2.2cm]{images/hacker-icon.pdf}};
+    \node[font=\Large, below=0.1cm of mallory] {Záškodník \(P\)};
+
+    % horní komunikační šipka
+    \draw[biarr] (alice) -- (bob);
+
+    %------------------------------------------------
+    % Horní průchod: Alice -> Bob
+    %------------------------------------------------
+    \node[msgbox] (m1) at (-4.8,-1.3)
+        {\(\mathbf{E}(x,k_V^B)\,;\,A\)};
+    \node[msgbox] (m2) at (0.0,-1.3)
+        {\(\mathbf{E}(x,k_V^B)\,;\,P\)};
+
+    \node[align=left, text width=3.7cm] (righttext1) at (4.8,-1.3)
+    {Dešifruje pomocí \(k_S^B\), přečte \(x\) a podpis \(P\). Zprávu \(x\) zašifruje veřejným klíčem \(k_V^P\), podepíše a~odešle \(P\)};
+
+    %------------------------------------------------
+    % Bobova odpověď útočníkovi
+    %------------------------------------------------
+    \node[msgbox] (m3) at (4.8,-4.0)
+        {\(\mathbf{E}(x,k_V^P)\,;\,B\)};
+    
+    %------------------------------------------------
+    % Útočník přepošle Alice
+    %------------------------------------------------
+    \node[msgbox] (m4) at (0.0,-4.0)
+        {\(\mathbf{E}(x,k_V^A)\,;\,B\)};
+
+    \node[align=left, text width=3.7cm] (lefttext2) at (-4.8,-4.0)
+    {Dešifruje pomocí \(k_S^A\) a~zkontroluje obsah};
+
+    \draw[arr] (righttext1.south) -- (m3.north);
+    \draw[arr] (m1.east) -- (m2.west);
+    \draw[arr] (m2.east) -- (righttext1);
+
+    \draw[arr] (m3.west) -- (m4.east);
+    \draw[arr] (m4.west) -- (lefttext2);
+
+\end{tikzpicture}

@@ -1,0 +1,53 @@
+\begin{tikzpicture}[scale=0.9, every node/.style={font=\small}]
+
+    % levé popisky
+    \node[anchor=west] at (-4.8,2.3) {\textbf{Konečný automat}};
+    \node[anchor=west] at (-4.8,-2.6) {\textbf{Regulární gramatika}};
+
+    %------------------------------------------------
+    % Automat vpravo nahoře
+    %------------------------------------------------
+    \initialstate{q0}{(1.0,2.3)}{$q_0$}{(0.0,2.3)}{west}
+    \state{q1}{(3.0,2.3)}{$q_1$}
+    \acceptingstate{q2}{(5.0,2.3)}{$q_2$}
+
+    \transitionarrow[loop above]{q0}{above}{$a$}{q0}
+    \transitionarrow[bend left=15]{q0}{above}{$b$}{q1}
+
+    \transitionarrow[loop above]{q1}{above}{$b$}{q1}
+    \transitionarrow[bend left=15]{q1}{above}{$a$}{q2}
+
+    \transitionarrow[loop above]{q2}{above}{$a,b$}{q2}
+
+    %------------------------------------------------
+    % Šipka převodu mezi oběma částmi
+    %------------------------------------------------
+    \draw[transition, line width=1.1pt] (3.0,1.25) -- (3.0,0.25);
+    \node[anchor=west] at (3.15,0.75) {\small převod};
+
+    %------------------------------------------------
+    % Gramatika vpravo dole
+    %------------------------------------------------
+    \node[anchor=north west, align=left, text width=7.7cm] at (-1.1,-0.05) {%
+        \[
+            G=(V,T,P,S)
+        \]
+        \[
+            V=\{q_0,q_1,q_2\},\qquad
+            T=\{a,b\},\qquad
+            S=q_0
+        \]
+        \[
+        \begin{aligned}
+            P=\{&
+            q_0 \to aq_0 \mid bq_1,\\
+            &
+            q_1 \to bq_1 \mid aq_2,\\
+            &
+            q_2 \to aq_2 \mid bq_2 \mid \lambda
+            \}
+        \end{aligned}
+        \]
+    };
+
+\end{tikzpicture}

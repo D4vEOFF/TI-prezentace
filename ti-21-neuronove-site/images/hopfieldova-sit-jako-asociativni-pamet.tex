@@ -1,0 +1,10 @@
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small}]
+    \node[task,fill=blue!10] (stored) at (2,0) {uložené\\vzory};
+    \node[task,fill=red!10] (input) at (6,-2) {poškozený\\vstup\\\(\mathbf{s}^{(0)}\)};
+    \node[task,fill=orange!10] (net) at (6,0) {Hopfieldova\\síť};
+    \node[task,fill=green!10] (output) at (9,0) {obnovený\\vzor\\\(\mathbf{x}_r=(x_{r1},\dots,x_{rn})\)};
+
+    \draw[diredge] (stored) -- node[above] {učení} (net);
+    \draw[diredge] (input) -- (net);
+    \draw[diredge] (net) -- (output);
+\end{tikzpicture}

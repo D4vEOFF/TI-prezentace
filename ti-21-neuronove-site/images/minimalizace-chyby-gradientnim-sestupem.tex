@@ -1,0 +1,13 @@
+\begin{tikzpicture}[
+    >=stealth,
+    box/.style={
+        draw,
+        rounded corners=2mm,
+        minimum width=25mm,
+        minimum height=11mm,
+        align=center
+    },
+]
+    \node[box,fill=red!20] at (-3,0) {$\displaystyle w_{ji}^{(\ell)}\gets w_{ji}^{(\ell)}-\eta\frac{\partial E}{\partial w_{ji}^{(\ell)}}$};
+    \node[box,fill=green!20] at (3,0) {$\displaystyle \theta_i^{(\ell)}\gets\theta_i^{(\ell)}-\eta\frac{\partial E}{\partial \theta_i^{(\ell)}}$};
+\end{tikzpicture}

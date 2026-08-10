@@ -1,0 +1,80 @@
+\begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    every node/.style={font=\scriptsize}
+]
+    
+    % Vstupní vrstva
+    \node[vertex] (x1) at (0,1.45) {\(x_{i1}\)};
+    \node[vertex] (x2) at (0,0.45) {\(x_{i2}\)};
+    \node[vertexplain] at (0,-0.25) {\(\vdots\)};
+    \node[vertex] (xp) at (0,-1.05) {\(x_{ip}\)};
+    
+    % První skrytá vrstva
+    \node[vertex] (a11) at (2.4,1.45) {\(a_1^{(1)}\)};
+    \node[vertex] (a12) at (2.4,0.45) {\(a_2^{(1)}\)};
+    \node[vertexplain] at (2.4,-0.25) {\(\vdots\)};
+    \node[vertex] (a1n) at (2.4,-1.05) {\(a_{n_1}^{(1)}\)};
+    
+    % Vynechané vrstvy
+    \node[vertexplain] at (4.5,1.45) {\(\cdots\)};
+    \node[vertexplain] at (4.5,0.45) {\(\cdots\)};
+    \node[vertexplain] at (4.5,-1.05) {\(\cdots\)};
+    
+    % Poslední skrytá vrstva
+    \node[vertex] (al1) at (6.6,1.45) {\(a_1^{(L-1)}\)};
+    \node[vertex] (al2) at (6.6,0.45) {\(a_2^{(L-1)}\)};
+    \node[vertexplain] at (6.6,-0.25) {\(\vdots\)};
+    \node[vertex] (aln) at (6.6,-1.05) {\(a_{n_{L-1}}^{(L-1)}\)};
+    
+    % Výstupní vrstva
+    \node[vertex] (y1) at (9.2,1.45) {\(\hat{y}_{i1}\)};
+    \node[vertex] (y2) at (9.2,0.45) {\(\hat{y}_{i2}\)};
+    \node[vertexplain] at (9.2,-0.25) {\(\vdots\)};
+    \node[vertex] (yn) at (9.2,-1.05) {\(\hat{y}_{in_L}\)};
+    
+    % Vstupy -> první skrytá vrstva
+    \foreach \x in {x1,x2,xp} {
+        \foreach \a in {a11,a12,a1n} {
+            \draw[diredge] (\x) -- (\a);
+        }
+    }
+    
+    % Naznačení dalších vrstev
+    \draw[diredge] (a11) -- ++(1.0,0);
+    \draw[diredge] (a12) -- ++(1.0,0);
+    \draw[diredge] (a1n) -- ++(1.0,0);
+    
+    \draw[diredge] ($(al1)+(-1.0,0)$) -- (al1);
+    \draw[diredge] ($(al2)+(-1.0,0)$) -- (al2);
+    \draw[diredge] ($(aln)+(-1.0,0)$) -- (aln);
+    
+    % Poslední skrytá vrstva -> výstupní vrstva
+    \foreach \a in {al1,al2,aln} {
+        \foreach \y in {y1,y2,yn} {
+            \draw[diredge] (\a) -- (\y);
+        }
+    }
+    
+    % Popisky
+    \node[vertexplain, text width=21mm]
+        at (0,-1.85)
+        {vstupní vrstva\\\(\ell=0\)};
+    
+    \node[vertexplain, text width=25mm]
+        at (2.4,-1.85)
+        {první skrytá\\vrstva};
+    
+    \node[vertexplain, text width=26mm]
+        at (4.5,-1.85)
+        {další skryté\\vrstvy};
+    
+    \node[vertexplain, text width=27mm]
+        at (6.6,-1.85)
+        {poslední skrytá\\vrstva};
+    
+    \node[vertexplain, text width=23mm]
+        at (9.2,-1.85)
+        {výstupní vrstva\\\(\ell=L\)};
+    
+\end{tikzpicture}

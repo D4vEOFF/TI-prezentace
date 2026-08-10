@@ -1,0 +1,30 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        width=7cm,
+        height=4.1cm,
+        xmin=0.5, xmax=5.5,
+        ymin=1, ymax=6.7,
+        axis lines=left,
+        xlabel={$x$},
+        ylabel={$y$},
+        xtick={1,2,3,4,5},
+        ytick={1,2,3,4,5,6},
+        tick label style={font=\scriptsize},
+        label style={font=\small},
+        clip=false
+    ]
+        \addplot[
+            only marks,
+            mark=*,
+            mark size=2.5pt,
+            blue!75!black
+        ]
+        coordinates {
+            (1,2)
+            (2,3)
+            (3,5)
+            (4,4)
+            (5,6)
+        };
+    \end{axis}
+\end{tikzpicture}

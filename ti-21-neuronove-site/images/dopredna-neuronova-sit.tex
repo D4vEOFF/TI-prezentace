@@ -1,0 +1,90 @@
+\begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    every node/.style={font=\small}
+]
+
+    % Vstupní vrstva
+    \node[vertex] (x1) at (0, 1.8) {\(x_{i1}\)};
+    \node[vertex] (x2) at (0, 0.6) {\(x_{i2}\)};
+    \node[vertexplain] at (0,-0.35) {\(\vdots\)};
+    \node[vertex] (xp) at (0,-1.4) {\(x_{ip}\)};
+
+    % První skrytá vrstva
+    \node[vertex] (h11) at (2.5, 1.8) {\(a^{(1)}_1\)};
+    \node[vertex] (h12) at (2.5, 0.6) {\(a^{(1)}_2\)};
+    \node[vertexplain] at (2.5,-0.35) {\(\vdots\)};
+    \node[vertex] (h1n) at (2.5,-1.4) {\(a^{(1)}_{n_1}\)};
+
+    % Vynechané skryté vrstvy
+    \node[vertexplain] at (4.7, 1.8) {\(\cdots\)};
+    \node[vertexplain] at (4.7, 0.6) {\(\cdots\)};
+    \node[vertexplain] at (4.7,-1.4) {\(\cdots\)};
+
+    % Poslední skrytá vrstva
+    \node[vertex] (hl1) at (6.9, 1.8)
+        {\(a^{(L-1)}_1\)};
+    \node[vertex] (hl2) at (6.9, 0.6)
+        {\(a^{(L-1)}_2\)};
+    \node[vertexplain] at (6.9,-0.35) {\(\vdots\)};
+    \node[vertex] (hln) at (6.9,-1.4)
+        {\(a^{(L-1)}_{n_{L-1}}\)};
+
+    % Výstupní vrstva
+    \node[vertex] (y1) at (9.7, 1.8)
+        {\(\hat{y}_{i1}\)};
+    \node[vertex] (y2) at (9.7, 0.6)
+        {\(\hat{y}_{i2}\)};
+    \node[vertexplain] at (9.7,-0.35) {\(\vdots\)};
+    \node[vertex] (ym) at (9.7,-1.4)
+        {\(\hat{y}_{im}\)};
+
+    % Vstupní vrstva -> první skrytá vrstva
+    \foreach \x in {x1,x2,xp} {
+        \foreach \h in {h11,h12,h1n} {
+            \draw[diredge] (\x) -- (\h);
+        }
+    }
+
+    % Poslední skrytá vrstva -> výstupní vrstva
+    \foreach \h in {hl1,hl2,hln} {
+        \foreach \y in {y1,y2,ym} {
+            \draw[diredge] (\h) -- (\y);
+        }
+    }
+
+    % Naznačení pokračování mezi skrytými vrstvami
+    \draw[diredge] (h11) -- ++(1.05,0);
+    \draw[diredge] (h12) -- ++(1.05,0);
+    \draw[diredge] (h1n) -- ++(1.05,0);
+
+    \draw[diredge] ($(hl1)+(-1.05,0)$) -- (hl1);
+    \draw[diredge] ($(hl2)+(-1.05,0)$) -- (hl2);
+    \draw[diredge] ($(hln)+(-1.05,0)$) -- (hln);
+
+    % Označení vrstev
+    \node[vertexplain, text width=25mm]
+        at (0,-2.35)
+        {vstupní vrstva\\
+        \(\mathbf{a}^{(0)}=\mathbf{x}_i\)};
+
+    \node[vertexplain, text width=27mm]
+        at (2.5,-2.55)
+        {první skrytá vrstva\\
+        \(\mathbf{a}^{(1)}\)};
+
+    \node[vertexplain, text width=33mm]
+        at (4.7,-2.55)
+        {další skryté\\vrstvy};
+
+    \node[vertexplain, text width=31mm]
+        at (6.9,-2.55)
+        {poslední skrytá vrstva\\
+        \(\mathbf{a}^{(L-1)}\)};
+
+    \node[vertexplain, text width=28mm]
+        at (9.7,-2.35)
+        {výstupní vrstva\\
+        \(\hat{\mathbf{y}}_i=\mathbf{a}^{(L)}\)};
+
+\end{tikzpicture}

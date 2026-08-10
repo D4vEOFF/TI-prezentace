@@ -1,0 +1,15 @@
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small}]
+    \node[vertex] (x1) at (0,1) {};
+    \node[vertex] (x2) at (0,0) {};
+    \node[vertex] (h1) at (1.7,1) {};
+    \node[vertex] (h2) at (1.7,0) {};
+    \node[vertex] (y) at (3.4,0.5) {};
+
+    \foreach \x in {x1,x2}{
+        \foreach \h in {h1,h2}{
+            \draw[diredge] (\x) -- (\h);
+        }
+    }
+    \draw[diredge] (h1) -- (y);
+    \draw[diredge] (h2) -- (y);
+\end{tikzpicture}

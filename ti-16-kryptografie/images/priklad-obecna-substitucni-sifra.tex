@@ -1,0 +1,12 @@
+\begin{tikzpicture}[x=0.43cm,y=0.55cm,>=latex,
+    cell/.style={draw=black!55, minimum width=0.38cm,
+    minimum height=0.42cm, font=\tiny}
+]
+    \foreach \x/\a in {0/A,1/B,2/C,3/D,4/E,5/F,6/G,7/H,8/I,9/J,10/K,11/L,12/M,
+    13/N,14/O,15/P,16/Q,17/R,18/S,19/T,20/U,21/V,22/W,23/X,24/Y,25/Z}
+        \node[cell,fill=black!5] at (\x,0) {\a};
+
+    \foreach \x/\a in {0/Q,1/W,2/E,3/R,4/T,5/Y,6/U,7/I,8/O,9/P,10/A,11/S,12/D,
+    13/F,14/G,15/H,16/J,17/K,18/L,19/Z,20/X,21/C,22/V,23/B,24/N,25/M}
+        \node[cell,fill=green!18] at (\x,-1) {\a};
+\end{tikzpicture}

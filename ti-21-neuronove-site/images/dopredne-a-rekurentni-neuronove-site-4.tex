@@ -1,0 +1,12 @@
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small}]
+    \node[vertex] (a) at (6.0,0.9) {};
+    \node[vertex] (b) at (7.2,0.9) {};
+    \node[vertex] (c) at (7.2,-0.3) {};
+    \node[vertex] (d) at (6.0,-0.3) {};
+
+    \draw[diredge] (a) -- (b);
+    \draw[diredge] (b) -- (c);
+    \draw[diredge] (c) -- (d);
+    \draw[diredge] (d) -- (a);
+    \draw[diredge] (a) -- (c);
+\end{tikzpicture}

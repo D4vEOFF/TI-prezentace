@@ -1,0 +1,22 @@
+\begin{tikzpicture}[
+    scale=0.75,
+    transform shape,
+    box/.style={
+        draw,
+        thick,
+        minimum width=18mm,
+        minimum height=10mm,
+        align=center,
+        font=\scriptsize
+    },
+    arrow/.style={->, thick, >=stealth}
+]
+    \node[box] (src) at (0,0) {zdrojový\\program};
+    \node[box] (interp) at (2.1,0) {interpret};
+    \node[box] (data) at (2.1,1.25) {data};
+    \node[box] (out) at (4.2,0) {výsledky};
+
+    \draw[arrow] (src) -- (interp);
+    \draw[arrow] (data) -- (interp);
+    \draw[arrow] (interp) -- (out);
+\end{tikzpicture}

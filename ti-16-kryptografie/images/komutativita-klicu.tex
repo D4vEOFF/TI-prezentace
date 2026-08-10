@@ -1,0 +1,59 @@
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    scale=0.90,
+    >=latex,
+    arr/.style={->, >=latex, line width=1pt, draw=black},
+    biarr/.style={<->, >=latex, line width=1pt, draw=black},
+    opbox/.style={
+        rounded corners=1mm,
+        draw=black!60,
+        fill=black!4,
+        inner xsep=3mm,
+        inner ysep=2mm,
+        font=\small,
+        align=center
+    }
+]
+
+    % Alice, Bob
+    \node[inner sep=0pt] (alice) at (-4.5,2.8)
+        {\includegraphics[height=1.5cm]{images/woman-icon.pdf}};
+    \node[font=\Large, below=0.1cm of alice] {Alice};
+
+    \node[inner sep=0pt] (bob) at (4.5,2.8)
+        {\includegraphics[height=1.5cm]{images/man-icon.pdf}};
+    \node[font=\Large, below=0.1cm of bob] {Bob};
+
+    \draw[biarr] (alice) -- (bob);
+
+    %------------------------------------------------
+    % Horní řádek: obyčejné šifrování
+    %------------------------------------------------
+    \node[align=left, text width=4.0cm] (lefttext1) at (-4.5,0.5)
+    {Alice spočítá $\mathbf{E}(x,k_V^B)$};
+
+    \node[opbox] (enc) at (0,0.5)
+    {\(\mathbf{E}(x,k_V^B)\)};
+
+    \node[align=left, text width=4.0cm] (righttext1) at (4.5,0.5)
+    {Bob spočítá $\mathbf{D}\left(\mathbf{E}(x,k_V^B),k_S^B\right)=x$};
+
+    \draw[arr] (lefttext1) -- (enc.west);
+    \draw[arr] (enc.east) -- (righttext1);
+
+    %------------------------------------------------
+    % Dolní řádek: podpis
+    %------------------------------------------------
+    \node[align=left, text width=4.0cm] (lefttext2) at (-4.5,-1)
+    {Alice "podepíše" hodnotu \(x\): $\mathbf{D}(x,k_S^A)$};
+
+    \node[opbox] (sig) at (0,-1)
+    {\(\mathbf{D}(x,k_S^A)\)};
+
+    \node[align=left, text width=4.0cm] (righttext2) at (4.5,-1)
+    {Bob ověří podpis pomocí $\mathbf{E}\left(\mathbf{D}(x,k_S^A),k_V^A\right)=x$};
+
+    \draw[arr] (lefttext2) -- (sig.west);
+    \draw[arr] (sig.east) -- (righttext2);
+
+\end{tikzpicture}

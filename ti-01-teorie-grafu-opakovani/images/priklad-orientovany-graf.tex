@@ -1,0 +1,31 @@
+\begin{tikzpicture}[scale=1]
+
+\node[vertex,fill=orange] (VI1)   at (-1,-1) {};
+\node[vertex,fill=orange] (VI2)   at (1,-1) {};
+\node[vertex,fill=orange] (VI3)   at (1,1) {};
+\node[vertex,fill=orange] (VI4)   at (-1,1) {};
+
+\node[vertex,fill=orange] (VO1)   at (-2,-2) {};
+\node[vertex,fill=orange] (VO2)   at (2,-2) {};
+\node[vertex,fill=orange] (VO3)   at (2,2) {};
+\node[vertex,fill=orange] (VO4)   at (-2,2) {};
+
+\draw[diredge] (VI1) -- (VI2);
+\draw[diredge] (VI2) -- (VI3);
+\draw[diredge] (VI3) -- (VI4);
+\draw[diredge] (VI4) -- (VI1);
+\draw[diredge] (VI4) -- (VI2);
+\draw[diredge] (VI3) -- (VI1);
+
+\draw[diredge] (VO4) -- (VI4);
+\draw[diredge] (VO3) -- (VI3);
+\draw[diredge] (VO2) -- (VI2);
+\draw[diredge] (VO1) -- (VI1);
+
+
+\draw[diredge] (VO1) -- (VO2);
+\draw[diredge] (VO2) -- (VO3);
+\draw[diredge] (VO3) -- (VO4);
+\draw[diredge] (VO4) -- (VO1);
+
+\end{tikzpicture}

@@ -1,0 +1,43 @@
+\begin{tikzpicture}[
+    x=0.8cm,
+    y=0.8cm,
+    >=latex,
+    cell/.style={
+        draw=black!55,
+        rounded corners=0.7mm,
+        minimum width=0.6cm,
+        minimum height=0.6cm,
+        font=\scriptsize
+    },
+    arrow/.style={
+        ->,
+        line width=0.9pt,
+        draw=black!75
+    }
+]
+
+    % Horní abeceda
+    \foreach \x/\letter in {
+        0/A,1/B,2/C,3/D,4/E,5/F,6/G,7/H
+    }{
+        \node[cell, fill=black!5] (u\x) at (\x,0) {\letter};
+    }
+
+    % Dolní posunutá abeceda pro k = 3
+    \foreach \x/\letter in {
+        0/D,1/E,2/F,3/G,4/H,5/A,6/B,7/C
+    }{
+        \node[cell, fill=green!18] (d\x) at (\x,-1.25) {\letter};
+    }
+
+    % Šipky
+    \foreach \x in {0,1,2,3,4,5,6,7}{
+        \draw[arrow] (u\x) -- (d\x);
+    }
+
+    \node[font=\scriptsize] at (-1.1,0) {původní};
+    \node[font=\scriptsize] at (-1.1,-1.25) {šifra};
+
+    \node[font=\small\bfseries] at (3.5,0.85) {Příklad: \(k=3\)};
+
+\end{tikzpicture}

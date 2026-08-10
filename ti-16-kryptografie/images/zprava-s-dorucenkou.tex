@@ -1,0 +1,57 @@
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    scale=0.92,
+    >=latex,
+    arr/.style={->, >=latex, line width=1pt, draw=black},
+    biarr/.style={<->, >=latex, line width=1pt, draw=black},
+    msgbox/.style={
+        rounded corners=1mm,
+        draw=black!60,
+        fill=black!3,
+        inner xsep=3mm,
+        inner ysep=2mm,
+        font=\small,
+        align=center
+    }
+]
+
+    % Alice
+    \node[inner sep=0pt] (alice) at (-4.0,0.9)
+        {\includegraphics[height=1.45cm]{images/woman-icon.pdf}};
+    \node[font=\Large, below=0.1cm of alice] {Alice};
+
+    % Bob
+    \node[inner sep=0pt] (bob) at (4.0,0.9)
+        {\includegraphics[height=1.45cm]{images/man-icon.pdf}};
+    \node[font=\Large, below=0.1cm of bob] {Bob};
+
+    % Communication arrow
+    \draw[biarr] (alice) -- (bob);
+
+    % Upper message: Alice -> Bob
+    \node[align=left, text width=4cm] (lefttext) at (-4.2,-1.7)
+    {zprávu \(x\) zašifruje veřejným klíčem Boba \(k_V^{B}\) a~připojí svůj podpis};
+
+    \node[msgbox] (msg1) at (0,-1.7)
+    {\(\,\mathbf{E}\left(x, k_V^{B}\right)\,;\,A\,\)};
+
+    \node[align=left, text width=4cm] (righttext) at (4.2,-1.7)
+    {dešifruje soukromým klíčem \(k_S^{B}\) a~přečte \(x\) i podpis Alice};
+    
+    \draw[arr] (lefttext) -- (msg1.west);
+    \draw[arr] (msg1.east) -- (righttext);
+
+    % Lower message: Bob -> Alice
+    \node[align=left, text width=4cm] (lefttext2) at (-4.2,-3.5)
+    {dešifruje soukromým klíčem \(k_S^{A}\) a~zkontroluje obsah};
+
+    \node[msgbox] (msg2) at (0,-3.5)
+    {\(\,\mathbf{E}\left(x, k_V^{A}\right)\,;\,B\,\)};
+
+    \node[align=left, text width=4cm] (righttext2) at (4.2,-3.5)
+    {odpověď zašifruje veřejným klíčem Alice \(k_V^{A}\) a~připojí svůj podpis};
+
+    \draw[arr] (righttext2) -- (msg2.east);
+    \draw[arr] (msg2.west) -- (lefttext2);
+
+\end{tikzpicture}
