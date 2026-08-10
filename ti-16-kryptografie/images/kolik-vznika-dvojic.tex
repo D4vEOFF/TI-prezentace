@@ -1,0 +1,38 @@
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    avatar/.style={
+        inner sep=0pt
+    },
+    edge/.style={
+        draw=black!22,
+        line width=0.3pt
+    }
+]
+
+    % 23 lidí rozmístěných po kružnici
+    \foreach \i in {1,...,23}{
+        \node[avatar] (p\i) at ({90-360/23*(\i-1)}:2.35)
+            {\includegraphics[width=4mm,height=4mm]{images/avatar.pdf}};
+    }
+
+    % všechny dvojice
+    \foreach \i in {1,...,23}{
+        \foreach \j in {\i,...,23}{
+            \ifnum\j>\i
+                \draw[edge] (p\i) -- (p\j);
+            \fi
+        }
+    }
+
+    % popisek
+    \node[
+        rounded corners=2mm,
+        draw=orange!70!black,
+        fill=orange!20,
+        text width=9.2cm,
+        align=center,
+        font=\small
+    ] at (0,-3.35)
+    {Pro \(n=23\) lidí vzniká $\binom{23}{2}=253$ různých dvojic.};
+
+\end{tikzpicture}

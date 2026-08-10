@@ -1,0 +1,92 @@
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    >=latex,
+    msgarrow/.style={->, >=latex, line width=1.05pt, draw=black},
+    keyarrow/.style={->, >=latex, line width=0.95pt, draw=blue!65!black}
+]
+
+% Alice
+\node[inner sep=0pt] (alice) at (-4.2,0.15)
+    {\includegraphics[height=1.45cm]{images/woman-icon.pdf}};
+\node[font=\normalsize, below=0.1cm of alice] {Alice};
+
+% Bob
+\node[inner sep=0pt] (bob) at (4.0,0.15)
+    {\includegraphics[height=1.45cm]{images/man-icon.pdf}};
+\node[font=\normalsize, below=0.1cm of bob] {Bob};
+
+% Bobovy klíče
+\node[
+    rounded corners=1.5mm,
+    draw=blue!65!black,
+    fill=blue!12,
+    inner xsep=3mm,
+    inner ysep=1.5mm,
+    font=\small,
+    above=2.0cm of bob,
+    align=center
+] (pk)
+{veřejný klíč\\ \(k_V=(v,n)\)};
+
+\node[
+    rounded corners=1.5mm,
+    draw=red!70!black,
+    fill=red!10,
+    inner xsep=3mm,
+    inner ysep=1.5mm,
+    font=\small,
+    above=0.5cm of bob,
+    align=center
+] (sk)
+{soukromý klíč\\ \(k_S=(s,n)\)};
+
+% Veřejný klíč k Alici
+\draw[keyarrow] (pk.west) to[bend right=10]
+    node[midway,above left,font=\scriptsize,text=blue!65!black]
+    {Bob zveřejní \(k_V=(v,n)\)}
+    (-3.65,0.95);
+
+% Šifrování u Alice
+\node[
+    rounded corners=1.5mm,
+    draw=black!55,
+    fill=black!5,
+    inner xsep=3mm,
+    inner ysep=1.5mm,
+    font=\small,
+    align=center
+] (enc) at (-1.45,0.55)
+{\(c = m^v \bmod n\)};
+
+\node[font=\scriptsize, below=0.1cm of enc, align=center]
+{Alice šifruje\\ pomocí \(k_V=(v,n)\)};
+
+% Zpráva k šifrování
+\draw[msgarrow] (alice.east) -- (enc.west);
+\node[font=\small, above=0.05cm of $(alice.east)!0.5!(enc.west)$] {\(m\)};
+
+% Dešifrování u Boba
+\node[
+    rounded corners=1.5mm,
+    draw=black!55,
+    fill=black!5,
+    inner xsep=3mm,
+    inner ysep=1.5mm,
+    font=\small,
+    align=center
+] (dec) at (1.65,0.55)
+{\(m = c^s \bmod n\)};
+
+\draw[msgarrow] (dec.east) -- (bob.west);
+
+\node[font=\scriptsize, below=0.1cm of dec, align=center]
+{Bob dešifruje\\ pomocí \(k_S=(s,n)\)};
+
+\draw[->, >=latex, dashed, line width=0.95pt, draw=red!70!black]
+    (sk.west) -- (dec.north);
+
+% Šifrový text
+\draw[msgarrow] (enc.east) -- (dec.west);
+\node[font=\small, above=0.05cm of $(enc.east)!0.5!(dec.west)$] {\(c\)};
+
+\end{tikzpicture}

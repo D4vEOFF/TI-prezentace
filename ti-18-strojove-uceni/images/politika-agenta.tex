@@ -1,0 +1,24 @@
+\begin{tikzpicture}[
+    >=stealth,
+    box/.style={
+        draw=black!60,
+        rounded corners=2pt,
+        minimum width=2.5cm,
+        minimum height=0.72cm,
+        align=center,
+        font=\scriptsize
+    },
+    arr/.style={->, thick, draw=black!70}
+]
+    \node[box, fill=blue!7] (state) at (0,0)
+        {stav\\$s$};
+
+    \node[box, fill=orange!12] (policy) at (3.2,0)
+        {politika\\$\pi$};
+
+    \node[box, fill=green!8] (action) at (6.4,0)
+        {akce\\$a$};
+
+    \draw[arr] (state) -- (policy);
+    \draw[arr] (policy) -- (action);
+\end{tikzpicture}

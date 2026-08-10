@@ -1,0 +1,35 @@
+\begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    every node/.style={font=\small}
+]
+
+    \node[vertex] (x1) at (0,0.8) {\(x_1\)};
+    \node[vertex] (x2) at (0,-0.8) {\(x_2\)};
+
+    \node[vertex] (a1) at (2.3,0.8) {\(a_1^{(1)}\)};
+    \node[vertex] (a2) at (2.3,-0.8) {\(a_2^{(1)}\)};
+
+    \node[vertex] (y) at (4.6,0) {\(\hat{y}\)};
+
+    \draw[diredge] (x1) -- (a1);
+    \draw[diredge] (x1) -- (a2);
+    \draw[diredge] (x2) -- (a1);
+    \draw[diredge] (x2) -- (a2);
+
+    \draw[diredge] (a1) -- (y);
+    \draw[diredge] (a2) -- (y);
+
+    \node[vertexplain, text width=20mm]
+        at (0,-1.55)
+        {vstupní\\vrstva};
+
+    \node[vertexplain, text width=22mm]
+        at (2.3,-1.55)
+        {skrytá\\vrstva};
+
+    \node[vertexplain, text width=20mm]
+        at (4.6,-1.55)
+        {výstupní\\vrstva};
+
+\end{tikzpicture}

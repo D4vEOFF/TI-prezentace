@@ -1,0 +1,8 @@
+\begin{tikzpicture}[x=0.42cm,y=0.35cm,>=stealth]
+    \draw[->, thick] (0,0) -- (6.5,0);
+    \draw[->, thick] (0,0) -- (0,5.5);
+    \foreach \x/\y in {0.7/0.8,1.2/1.4,1.9/1.7,2.6/2.5,3.3/3.1,4.0/3.6,4.7/4.0,5.4/4.8}{
+        \fill[blue] (\x,\y) circle (1.7pt);
+    }
+    \node[red] at (3,-0.9) {$\rho_{\mathbf{X}\mathbf{Y}}>0$};
+\end{tikzpicture}

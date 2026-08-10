@@ -1,0 +1,20 @@
+\begin{tikzpicture}[scale=1]
+
+\node[vertexplain] (R)   at (0,-0.5)   {\includegraphics[width=.1\textwidth]{images/router.png}};
+\node[vertexplain] (S1)  at (-2,1) {\includegraphics[width=.1\textwidth]{images/workgroup-switch.png}};
+\node[vertexplain] (S2)  at (2,1)  {\includegraphics[width=.1\textwidth]{images/workgroup-switch.png}};
+\node[vertexplain] (PC1) at (-3.5,3) {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
+\node[vertexplain] (PC2) at (-1,3)   {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
+\node[vertexplain] (PC3) at (1,3)    {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
+\node[vertexplain] (PC4) at (3.5,3)  {\includegraphics[width=.1\textwidth]{images/vecteezy_3d-monitor-illustration_28537446.png}};
+\node[vertexplain] (T)   at (0,-3)   {\includegraphics[width=.2\textwidth]{images/cloud.png}};
+
+\draw[edge] (R) -- (S1);
+\draw[edge] (R) -- (S2);
+\draw[edge] (R) -- (T);
+\draw[edge] (S1) -- (PC1);
+\draw[edge] (S1) -- (PC2);
+\draw[edge] (S2) -- (PC3);
+\draw[edge] (S2) -- (PC4);
+
+\end{tikzpicture}

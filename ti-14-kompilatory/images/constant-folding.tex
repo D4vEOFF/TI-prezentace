@@ -1,0 +1,15 @@
+\begin{tikzpicture}[
+    box/.style={
+        draw,
+        rounded corners,
+        thick,
+    align=center,
+    font=\scriptsize,
+    minimum width=2.0cm,
+    minimum height=0.6cm
+}
+        ]
+\node[box] (src) at (0,0) {\texttt{x := 2 * 60}\\ \texttt{y := x + 5}};
+\node[box] (res) at (6,0) {\texttt{y := 125}};
+\draw[->, thick] (src) -- (res);
+        \end{tikzpicture}

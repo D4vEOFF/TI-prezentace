@@ -1,0 +1,69 @@
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    >=latex,
+    msgarrow/.style={
+        ->,
+        >=latex,
+        line width=1.1pt,
+        draw=black
+    },
+    attackarrow/.style={
+        ->,
+        >=latex,
+        line width=1.1pt,
+        draw=red
+    }
+]
+
+    % Horní popisek
+    \node[
+        rounded corners=2mm,
+        draw=orange!70!black,
+        fill=orange!25,
+        line width=0.6pt,
+        inner xsep=4mm,
+        inner ysep=2mm,
+        font=\normalsize
+    ] at (0,3.00)
+    {Alice pošle \markdarkred{zašifrovaný text} $m \oplus k$};
+
+    % Alice
+    \node[inner sep=0pt] (alice) at (-4.55,0.45)
+        {\includegraphics[height=1.65cm]{images/woman-icon.pdf}};
+    \node[font=\normalsize] at (-4.55,-0.85) {Alice};
+
+    % Bob
+    \node[inner sep=0pt] (bob) at (4.25,0.45)
+        {\includegraphics[height=1.65cm]{images/man-icon.pdf}};
+    \node[font=\normalsize] at (4.25,-0.85) {Bob};
+
+    % Hlavní komunikační šipka
+    \draw[msgarrow] (-3.55,0.55) -- (3.35,0.55);
+
+    % Popisek zprávy
+    \node[font=\normalsize, text=blue!35!black] at (-0.2,0.95) {$m \oplus k$};
+
+    % Záškodník
+    \node[inner sep=0pt] (attacker) at (0,-2.05)
+        {\includegraphics[height=1.55cm]{images/hacker-icon.pdf}};
+    \node[font=\normalsize] at (0,-3.15) {Záškodník};
+
+    % Červená šipka odposlechu
+    \draw[attackarrow]
+        (-0.65,-1.35)
+        .. controls (-1.35,-1.25) and (-1.25,-0.10) ..
+        (-0.15,0.55);
+
+    % Spodní popisek
+    \node[
+        rounded corners=2mm,
+        draw=orange!70!black,
+        fill=orange!50,
+        line width=0.6pt,
+        inner xsep=4mm,
+        inner ysep=2mm,
+        font=\normalsize
+    ] at (0,-4.25)
+    {Záškodník nemůže rozlišit $m \oplus k$ od náhodného řetězce};
+
+\end{tikzpicture}

@@ -1,0 +1,20 @@
+\begin{tikzpicture}[x=0.75cm,y=0.55cm,>=stealth,scale=0.8]
+    \draw[->] (0,0) -- (7.2,0) node[right, font=\scriptsize] {$x_1$};
+    \draw[->] (0,0) -- (0,5.3) node[above, font=\scriptsize] {$x_2$};
+
+    \foreach \x/\y in {1.0/1.1,1.3/1.5,1.7/1.2,1.9/1.8,2.2/1.4}{
+        \fill[blue!70] (\x,\y) circle (2.1pt);
+    }
+
+    \foreach \x/\y in {4.8/1.0,5.2/1.5,5.5/1.1,5.8/1.8,6.1/1.4}{
+        \fill[blue!70] (\x,\y) circle (2.1pt);
+    }
+
+    \foreach \x/\y in {3.1/3.8,3.4/4.3,3.8/3.7,4.1/4.2,4.4/3.9}{
+        \fill[blue!70] (\x,\y) circle (2.1pt);
+    }
+
+    \draw[dashed, rounded corners=8pt, draw=black!45] (0.65,0.65) rectangle (2.55,2.05);
+    \draw[dashed, rounded corners=8pt, draw=black!45] (4.45,0.65) rectangle (6.45,2.05);
+    \draw[dashed, rounded corners=8pt, draw=black!45] (2.75,3.35) rectangle (4.75,4.55);
+\end{tikzpicture}

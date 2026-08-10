@@ -1,0 +1,12 @@
+\begin{tikzpicture}[x=0.48cm,y=0.35cm,>=stealth]
+    \draw[->] (0,0) -- (7,0);
+    \draw[->] (0,0) -- (0,6);
+
+    \foreach \x/\y in {1/1.0,2/1.5,3/1.9,4/2.5,5/3.0}
+        \fill[blue!70!black] (\x,\y) circle (2pt);
+
+    \fill[red!75!black] (6,5.5) circle (2.5pt);
+
+    \draw[gray,thick] (0.7,0.8) -- (5.5,3.2);
+    \draw[red!75!black,thick] (0.7,0.5) -- (6.5,5.5);
+\end{tikzpicture}

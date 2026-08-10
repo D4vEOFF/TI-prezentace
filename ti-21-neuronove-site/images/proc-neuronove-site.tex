@@ -1,0 +1,24 @@
+\begin{tikzpicture}[
+    >=stealth,
+    box/.style={
+        draw,
+        rounded corners=2mm,
+        minimum width=25mm,
+        minimum height=11mm,
+        align=center
+    },
+    arr/.style={
+        ->,
+        thick,
+        rounded corners=2mm
+    },
+    node distance=8mm,
+    every node/.style={font=\small}
+]
+    \node[box] (data) {data};
+    \node[box, below=of data] (model) {model};
+    \node[box, below=of model] (zaver) {závěr};
+
+    \draw[arr] (data) -- (model);
+    \draw[arr] (model) -- (zaver);
+\end{tikzpicture}

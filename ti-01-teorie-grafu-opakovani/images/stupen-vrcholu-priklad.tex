@@ -1,0 +1,22 @@
+\begin{tikzpicture}[scale=1.2]
+
+\node[vertex] (v1) at (0,2) {$v_1$};
+\node[vertex] (v2) at (2,3) {$v_2$};
+\node[vertex] (v3) at (2,1) {$v_3$};
+\node[vertex] (v4) at (4,3) {$v_4$};
+\node[vertex] (v5) at (4,1) {$v_5$};
+
+\draw[edge] (v1) -- (v2);
+\draw[edge] (v1) -- (v3);
+\draw[edge] (v2) -- (v3);
+\draw[edge] (v2) -- (v4);
+\draw[edge] (v3) -- (v5);
+\draw[edge] (v4) -- (v5);
+
+\visible<3>{\node[above left=2mm and -1mm of v1] {\small $\deg{v_1}=2$};
+\node[above=2mm of v2]               {\small $\deg{v_2}=3$};
+\node[below=2mm of v3]               {\small $\deg{v_3}=3$};
+\node[above=2mm of v4]               {\small $\deg{v_4}=2$};
+\node[below=2mm of v5]               {\small $\deg{v_5}=2$};}
+
+\end{tikzpicture}

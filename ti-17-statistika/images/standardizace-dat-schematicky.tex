@@ -1,0 +1,46 @@
+\begin{tikzpicture}[
+    x=1.15cm,
+    y=1cm,
+    >=stealth,
+    every node/.style={font=\small}
+]
+
+% horní osa
+\draw[->, thick] (1.3,2.2) -- (6.7,2.2);
+\node[left] at (1.3,2.2) {$\mathbf{X}$};
+
+\foreach \x in {2,3,4,5,6}{
+    \fill[blue] (\x,2.2) circle (2pt);
+}
+
+\draw[red, very thick] (4,1.9) -- (4,2.55);
+\node[above, red] at (4,2.55) {$\average{\mathbf{X}}$};
+
+\draw[<->, thick] (4,1.65) -- (5.41,1.65);
+\node[below] at (4.7,1.65) {$\sigma_{\mathbf{X}}$};
+
+\node[above] at (2,2.35) {$x_1$};
+\node[above] at (6,2.35) {$x_n$};
+
+% šipka
+\draw[->, thick] (4,1.25) -- node[midway,left] {$z_i=\dfrac{x_i-\average{\mathbf{X}}}{\sigma_{\mathbf{X}}}$} (4,0.55);
+
+% dolní osa
+\draw[->, thick] (1.3,0) -- (6.7,0);
+\node[left] at (1.3,0) {$\mathbf{Z}$};
+
+% značky z-osy
+\foreach \x/\lab in {2.59/$-1{,}41$,3.29/$-0{,}71$,4/$0$,4.71/$0{,}71$,5.41/$1{,}41$}{
+    \fill[blue] (\x,0) circle (2pt);
+}
+
+\draw[red, very thick] (4,-0.3) -- (4,0.35);
+\node[below, red] at (4,-0.3) {$0$};
+
+\draw (3,0.1) -- (3,-0.1);
+\node[below] at (3,-0.1) {$-1$};
+
+\draw (5,0.1) -- (5,-0.1);
+\node[below] at (5,-0.1) {$1$};
+
+\end{tikzpicture}

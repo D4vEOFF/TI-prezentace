@@ -1,0 +1,31 @@
+\begin{tikzpicture}[
+    >=stealth,
+    box/.style={
+        draw,
+        rounded corners=2mm,
+        minimum width=25mm,
+        minimum height=11mm,
+        align=center
+    },
+    arr/.style={
+        ->,
+        thick,
+        rounded corners=2mm
+    },
+    node distance=3mm,
+    every node/.style={font=\small}
+]
+
+    \node[box] (inputs) {vstupní\\signály};
+    \node[box, below=of inputs] (synstrength) {síla synaptických\\spojů};
+    \node[box, below=of synstrength] (activation) {aktivace\\neuronu};
+    
+    \node[box, right=3cm of inputs] (inputsformal) {$x_1,\ldots,x_n$};
+    \node[box, below=of inputsformal] (synstrengthformal) {$w_1,\ldots,w_n$};
+    \node[box, below=of synstrengthformal] (activationformal) {$f$};
+
+    \draw[arr] (inputs) -- (inputsformal);
+    \draw[arr] (synstrength) -- (synstrengthformal);
+    \draw[arr] (activation) -- (activationformal);
+
+\end{tikzpicture}

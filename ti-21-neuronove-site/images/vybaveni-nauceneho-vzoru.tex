@@ -1,0 +1,77 @@
+\begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    every node/.style={font=\small}
+]
+
+    % Uložený vzor
+    \hopfieldpattern
+        {0}{0}
+        {\patternThree}
+        {uložený vzor\\\(\mathbf{x}_3\)}
+        {green}
+
+    % Poškozený vstup
+    \hopfieldpattern
+        {2.4}{0}
+        {\patternNoisy}
+        {vstup\\\(\mathbf{s}^{(0)}\)}
+        {orange}
+
+    % První mezistav
+    \hopfieldpattern
+        {4.8}{0}
+        {\patternIntermediateA}
+        {stav\\\(\mathbf{s}^{(1)}\)}
+        {blue}
+
+    % Druhý mezistav
+    \hopfieldpattern
+        {7.2}{0}
+        {\patternIntermediateB}
+        {stav\\\(\mathbf{s}^{(2)}\)}
+        {blue}
+
+    % Výsledný stabilní stav
+    \hopfieldpattern
+        {9.6}{0}
+        {\patternThree}
+        {stabilní stav\\\(\mathbf{s}^{(3)}=\mathbf{x}_3\)}
+        {green}
+
+    % Oddělení uloženého vzoru od procesu vybavování
+    \draw[dashed,thick,black!45]
+        (1.95,-0.15) -- (1.95,2.55);
+
+    % Aktualizace stavů
+    \draw[diredge]
+        (3.98,0.9) -- (4.72,0.9);
+
+    \draw[diredge]
+        (6.38,0.9) -- (7.12,0.9);
+
+    \draw[diredge]
+        (8.78,0.9) -- (9.52,0.9);
+
+    % Popisky
+    \node[vertexplain,font=\scriptsize]
+        at (0.75,-0.22)
+        {uložený atraktor};
+
+    \node[vertexplain,font=\scriptsize]
+        at (3.15,-0.22)
+        {\(30\) chybných bitů};
+
+    \node[vertexplain,font=\scriptsize]
+        at (5.55,-0.22)
+        {\(8\) chybných bitů};
+
+    \node[vertexplain,font=\scriptsize]
+        at (7.95,-0.22)
+        {\(2\) chybné bity};
+
+    \node[vertexplain,font=\scriptsize]
+        at (10.35,-0.22)
+        {žádný chybný bit};
+
+\end{tikzpicture}

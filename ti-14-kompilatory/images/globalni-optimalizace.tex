@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+
+    \node<4->[task] (b1) at (0,0) {$B_1$};
+    \node<4->[task] (b2) at (-1.8,-1.2) {$B_2$};
+    \node<4->[task] (b3) at (1.8,-1.2) {$B_3$};
+    \node<4->[task] (b4) at (0,-2.4) {$B_4$};
+
+    \draw<4->[diredge] (b1) -- (b2);
+    \draw<4->[diredge] (b1) -- (b3);
+    \draw<4->[diredge] (b2) -- (b4);
+    \draw<4->[diredge] (b3) -- (b4);
+
+\end{tikzpicture}

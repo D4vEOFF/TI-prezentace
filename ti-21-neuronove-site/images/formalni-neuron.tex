@@ -1,0 +1,68 @@
+\begin{tikzpicture}[
+    node distance=10mm,
+    every node/.style={font=\small}
+]
+
+    % Vstupy
+    \node[vertex] (x1) at (0,1.5) {\(x_{i1}\)};
+    \node[vertex] (x2) at (0,0.5) {\(x_{i2}\)};
+    \node[vertexplain] (dots) at (0,-0.35) {\(\vdots\)};
+    \node[vertex] (xp) at (0,-1.3) {\(x_{ip}\)};
+
+    % Zpracování
+    \node[task, minimum width=19mm, minimum height=12mm]
+        (sum) at (3.0,0.1)
+        {vážený\\součet};
+
+    \node[task, minimum width=14mm, minimum height=12mm]
+        (activation) at (5.2,0.1)
+        {%
+            \(\displaystyle f\)
+        };
+
+    \node[vertex]
+        (output) at (7.0,0.1)
+        {\(\hat{y}_i\)};
+
+    % Bias
+    \node[vertex]
+        (bias) at (3.0,-1.7)
+        {\(b\)};
+
+    % Hrany od vstupů
+    \draw[diredge]
+        (x1) --
+        node[pos=0.48, above, sloped] {\(w_1\)}
+        (sum);
+
+    \draw[diredge]
+        (x2) --
+        node[pos=0.48, above, sloped] {\(w_2\)}
+        (sum);
+
+    \draw[diredge]
+        (xp) --
+        node[pos=0.48, below, sloped] {\(w_p\)}
+        (sum);
+
+    % Bias
+    \draw[diredge]
+        (bias) -- (sum);
+
+    % Výstupní část
+    \draw[diredge]
+        (sum) --
+        node[above] {\(z_i\)}
+        (activation);
+
+    \draw[diredge]
+        (activation) -- (output);
+
+    % Popisky
+    \node[vertexplain, below=5mm of xp]
+        {vstupy};
+
+    \node[vertexplain, below=5mm of activation]
+        {přenosová funkce};
+
+\end{tikzpicture}

@@ -1,0 +1,71 @@
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    >=latex,
+    mainarrow/.style={
+        ->,
+        >=latex,
+        line width=1.1pt,
+        draw=black
+    },
+    hardarrow/.style={
+        ->,
+        >=latex,
+        dashed,
+        line width=1pt,
+        draw=red!75!black
+    },
+    box/.style={
+        rounded corners=1.5mm,
+        draw=black!55,
+        fill=black!5,
+        inner xsep=4mm,
+        inner ysep=2.2mm,
+        font=\large,
+        align=center
+    },
+    smallbox/.style={
+        rounded corners=1.5mm,
+        draw=black!45,
+        fill=black!3,
+        inner xsep=3mm,
+        inner ysep=1.6mm,
+        font=\normalsize,
+        align=center
+    }
+]
+
+    % vstup
+    \node[smallbox] (x) at (-4.2,0.8) {$x$};
+
+    % funkce
+    \node[box] (f) at (0,0.8) {$f$};
+
+    % vystup
+    \node[smallbox] (y) at (4.2,0.8) {$y=f(x)$};
+
+    % dopredny smer
+    \draw[mainarrow] (x.east) -- (f.west);
+    \draw[mainarrow] (f.east) -- (y.west);
+
+    \node[font=\small,text=green!70!black] at (0,1.55) {snadno vyčíslitelné};
+
+    % utocnik
+    \node[inner sep=0pt] (attacker) at (4.2,-2.1)
+        {\includegraphics[height=1.45cm]{images/hacker-icon.pdf}};
+    \node[font=\normalsize] at (4.2,-3.15) {Záškodník};
+
+    % kandidat na vzor
+    \node[smallbox] (xp) at (-2.8,-2.15) {$x^\prime$ ?};
+
+    % pokus o inverzi
+    \draw[hardarrow] (attacker.north west)
+        .. controls (2.7,-1.2) and (0.6,-1.0) ..
+        node[
+        font=\small,
+        text=red!75!black,
+        align=center,
+        midway,
+        above
+    ] {z $y$ je těžké najít\\ nějaké $x^\prime$ takové, že $f(x^\prime)=y$} (xp.east);
+
+\end{tikzpicture}

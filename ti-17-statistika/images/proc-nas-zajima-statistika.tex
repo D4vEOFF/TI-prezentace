@@ -1,0 +1,19 @@
+\begin{tikzpicture}[
+    node/.style={
+        draw, rounded corners, thick,
+        minimum width=2.25cm,
+        minimum height=0.75cm,
+        align=center,
+        fill=blue!8
+    },
+    arr/.style={->, thick}
+]
+    \node[node] (data) {Data};
+    \node[node, right=0.45cm of data] (stats) {Statistický\\popis};
+    \node[node, right=0.45cm of stats] (model) {Model};
+    \node[node, right=0.45cm of model] (decision) {Závěr};
+
+    \draw[arr] (data) -- (stats);
+    \draw[arr] (stats) -- (model);
+    \draw[arr] (model) -- (decision);
+\end{tikzpicture}

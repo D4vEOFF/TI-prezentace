@@ -1,0 +1,31 @@
+\begin{tikzpicture}[scale=1.2]
+
+\node[vertex] (U) at (0,0.5) {$u$};
+\node[vertex] (V) at (2,1) {$v$};
+
+\node[vertexplain] (VP1) at (3,1) {};
+\node[vertexplain] (VP2) at (3,2) {};
+\node[vertexplain] (VP3) at (2,2) {};
+
+\node[vertexplain] (VP4) at (-1,0.5) {};
+\node[vertexplain] (VP5) at (-1,-0.5) {};
+\node[vertexplain] (VP6) at (0,-0.5) {};
+
+\node[vertexplain] (VP7) at (0.667,0.667) {};
+\node[vertexplain] (VP8) at (1.333,0.822) {};
+
+\draw[edge] (U) -- (V);
+
+\draw[edge] (U) -- (VP4);
+\draw[edge] (U) -- (VP5);
+\draw[edge] (U) -- (VP6);
+
+\draw[diredge,color=red] (U) -- (VP7);
+
+\draw[edge] (V) -- (VP1);
+\draw[edge] (V) -- (VP2);
+\draw[edge] (V) -- (VP3);
+
+\draw[diredge,color=red] (V) -- (VP8);
+
+\end{tikzpicture}

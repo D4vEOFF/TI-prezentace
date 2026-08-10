@@ -1,0 +1,77 @@
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    >=latex,
+    msgarrow/.style={->, >=latex, line width=1.05pt, draw=black},
+    keyarrow/.style={->, >=latex, line width=0.95pt, draw=blue!65!black},
+    auxarrow/.style={->, >=latex, line width=0.9pt, draw=black!65},
+    box/.style={
+        rounded corners=1.5mm,
+        draw=black!55,
+        fill=black!5,
+        inner xsep=3mm,
+        inner ysep=1.5mm,
+        font=\small,
+        align=center
+    },
+    keybox/.style={
+        rounded corners=1.5mm,
+        draw=blue!65!black,
+        fill=blue!12,
+        inner xsep=3mm,
+        inner ysep=1.5mm,
+        font=\small,
+        align=center
+    }
+]
+
+    % Alice
+    \node[inner sep=0pt] (alice) at (-4.3,0.2)
+        {\includegraphics[height=1.4cm]{images/woman-icon.pdf}};
+    \node[font=\normalsize, below=0.08cm of alice] {Alice};
+
+    % Bob
+    \node[inner sep=0pt] (bob) at (4.3,0.2)
+        {\includegraphics[height=1.4cm]{images/man-icon.pdf}};
+    \node[font=\normalsize, below=0.08cm of bob] {Bob};
+
+    % sdileny seed
+    \node[keybox] (seedA) at (-4.3,1.55) {tajný seed \(s\)};
+    \node[keybox] (seedB) at (4.3,1.55) {tajný seed \(s\)};
+
+    % PRG boxy
+    \node[box] (prgA) at (-2.2,1.55) {\(G(s)\)};
+    \node[box] (prgB) at (2.2,1.55) {\(G(s)\)};
+
+    \draw[auxarrow] (seedA.east) -- (prgA.west);
+    \draw[auxarrow] (seedB.west) -- (prgB.east);
+
+    % Bezpecne predani seedu
+    \draw[keyarrow] (seedA.north east) to[bend left=25]
+        node[midway, above, font=\scriptsize, text=blue!65!black]
+        {sdílený seed \(s\)}
+        (seedB.north west);
+
+    % sifrovani u Alice
+    \node[box] (enc) at (-1.55,0.25) {\(c = m \oplus G(s)\)};
+    \node[font=\scriptsize, below=0.05cm of enc, align=center]
+        {Alice šifruje};
+
+    \draw[msgarrow] (alice.east) -- (enc.west);
+    \node[font=\small, above=0.02cm of $(alice.east)!0.5!(enc.west)$] {\(m\)};
+
+    \draw[auxarrow] (prgA.south) -- (enc.north);
+
+    % desifrovani u Boba
+    \node[box] (dec) at (1.55,0.25) {\(m = c \oplus G(s)\)};
+    \node[font=\scriptsize, below=0.05cm of dec, align=center]
+        {Bob dešifruje};
+
+    \draw[auxarrow] (prgB.south) -- (dec.north);
+
+    % prenos sifrovaneho textu
+    \draw[msgarrow] (enc.east) -- (dec.west);
+    \node[font=\small, above=0.02cm of $(enc.east)!0.5!(dec.west)$] {\(c\)};
+
+    \draw[msgarrow] (dec.east) -- (bob.west);
+
+\end{tikzpicture}

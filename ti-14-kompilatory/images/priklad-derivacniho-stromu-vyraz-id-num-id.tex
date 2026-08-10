@@ -1,0 +1,58 @@
+\begin{tikzpicture}[
+    scale=0.78,
+    every node/.style={font=\scriptsize},
+    nt/.style={draw, circle, thick, minimum size=7mm},
+    t/.style={draw, rounded corners, thick, minimum width=7mm, minimum height=5mm}
+]
+
+    \node<2->[nt] (E0) at (0,0) {$E$};
+
+    \node<3->[nt] (T0) at (0,-1.0) {$T$};
+    \draw<3->[thick] (E0) -- (T0);
+
+    \node<4->[nt] (T1) at (-1.3,-2.0) {$T$};
+    \node<4->[t]  (times) at (0,-2.0) {$*$};
+    \node<4->[nt] (F3) at (1.3,-2.0) {$F$};
+
+    \draw<4->[thick] (T0) -- (T1);
+    \draw<4->[thick] (T0) -- (times);
+    \draw<4->[thick] (T0) -- (F3);
+
+    \node<5->[nt] (F1) at (-1.3,-3.0) {$F$};
+    \node<5->[t]  (id3) at (1.3,-3.0) {$\mathtt{id}$};
+
+    \draw<5->[thick] (T1) -- (F1);
+    \draw<5->[thick] (F3) -- (id3);
+
+    \node<6->[t]  (lpar) at (-2.7,-4.0) {$($};
+    \node<6->[nt] (E1) at (-1.3,-4.0) {$E$};
+    \node<6->[t]  (rpar) at (0.1,-4.0) {$)$};
+
+    \draw<6->[thick] (F1) -- (lpar);
+    \draw<6->[thick] (F1) -- (E1);
+    \draw<6->[thick] (F1) -- (rpar);
+
+    \node<7->[nt] (E2) at (-2.3,-5.0) {$E$};
+    \node<7->[t]  (plus) at (-1.3,-5.0) {$+$};
+    \node<7->[nt] (T2) at (-0.3,-5.0) {$T$};
+
+    \draw<7->[thick] (E1) -- (E2);
+    \draw<7->[thick] (E1) -- (plus);
+    \draw<7->[thick] (E1) -- (T2);
+
+    \node<8->[nt] (T3) at (-2.3,-6.0) {$T$};
+    \node<8->[nt] (F2) at (-0.3,-6.0) {$F$};
+
+    \draw<8->[thick] (E2) -- (T3);
+    \draw<8->[thick] (T2) -- (F2);
+
+    \node<9->[nt] (F4) at (-2.3,-7.0) {$F$};
+    \node<9->[t] (num1) at (-0.3,-7.0) {$\mathtt{num}$};
+
+    \draw<9->[thick] (T3) -- (F4);
+    \draw<9->[thick] (F2) -- (num1);
+
+    \node<10->[t] (id1) at (-2.3,-7.9) {$\mathtt{id}$};
+    \draw<10->[thick] (F4) -- (id1);
+
+\end{tikzpicture}

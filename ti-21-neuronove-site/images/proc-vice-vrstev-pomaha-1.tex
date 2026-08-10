@@ -1,0 +1,30 @@
+\begin{tikzpicture}[
+    x=2.2cm,
+    y=2.2cm,
+    every node/.style={font=\small}
+]
+
+    \draw[->, thick] (-0.15,0) -- (1.35,0)
+        node[right] {\(x_1\)};
+    \draw[->, thick] (0,-0.15) -- (0,1.35)
+        node[above] {\(x_2\)};
+
+    \draw[fill=blue!20] (0,0) circle (3pt);
+    \draw[fill=red!20] (0,1) circle (3pt);
+    \draw[fill=red!20] (1,0) circle (3pt);
+    \draw[fill=blue!20] (1,1) circle (3pt);
+
+    % \node[vertex, fill=red!20] at (0,0) {};
+    % \node[vertex, fill=red!20] at (1,1) {};
+
+    % \node[vertex, fill=blue!20] at (1,0) {};
+    % \node[vertex, fill=blue!20] at (0,1) {};
+
+    \node[below left] at (0,0) {\(0\)};
+    \node[below] at (1,0) {\(1\)};
+    \node[left] at (0,1) {\(1\)};
+
+    \draw[dashed, thick] (-0.1,0.6) -- (0.6,-0.1);
+    \draw[dashed, thick] (0.4,1.1) -- (1.1,0.4);
+
+\end{tikzpicture}

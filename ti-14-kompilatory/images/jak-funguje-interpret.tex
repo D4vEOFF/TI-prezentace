@@ -1,0 +1,22 @@
+\begin{tikzpicture}[
+    box/.style={
+        draw,
+        rounded corners,
+        thick,
+        minimum width=22mm,
+        minimum height=8mm,
+        align=center,
+        font=\scriptsize
+    },
+    arrow/.style={->, thick, >=stealth}
+]
+    \node<2->[box] (src) at (0,0) {zdrojový\\program};
+    \node<3->[box] (read) at (2.5,0) {načtení\\příkazu};
+    \node<4->[box] (exec) at (5.0,0) {vykonání};
+    \node<5->[box] (next) at (7.5,0) {další\\příkaz};
+
+    \draw<3->[arrow] (src) -- (read);
+    \draw<4->[arrow] (read) -- (exec);
+    \draw<5->[arrow] (exec) -- (next);
+    \draw<5->[arrow] (next.south) to[out=-90,in=-90] (read.south);
+\end{tikzpicture}

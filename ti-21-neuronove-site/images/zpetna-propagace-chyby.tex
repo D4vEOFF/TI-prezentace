@@ -1,0 +1,44 @@
+\begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    every node/.style={font=\small}
+]
+
+    \node[task] (input) at (0,0)
+        {vstup\\\(\mathbf{x}_i\)};
+
+    \node[task] (hidden1) at (2.5,0)
+        {první skrytá\\vrstva};
+
+    \node[task] (hidden2) at (5.0,0)
+        {další skryté\\vrstvy};
+
+    \node[task] (output) at (7.5,0)
+        {výstup\\\(\hat{\mathbf{y}}_i\)};
+
+    \node[task] (error) at (10.0,0)
+        {chyba\\\(E_i\)};
+
+    % Dopředný výpočet
+    \draw[diredge] (input) -- (hidden1);
+    \draw[diredge] (hidden1) -- (hidden2);
+    \draw[diredge] (hidden2) -- (output);
+    \draw[diredge] (output) -- (error);
+
+    % Zpětná propagace
+    \draw[diredge, dashed, bend right=35]
+        (error.north) to (output.north);
+
+    \draw[diredge, dashed, bend right=35]
+        (output.north) to (hidden2.north);
+
+    \draw[diredge, dashed, bend right=35]
+        (hidden2.north) to (hidden1.north);
+
+    \node[vertexplain] at (5.0,-0.75)
+        {dopředný výpočet};
+
+    \node[vertexplain] at (6.3,1.25)
+        {zpětná propagace};
+
+\end{tikzpicture}

@@ -1,0 +1,34 @@
+\begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    every node/.style={font=\small}
+]
+
+    % Levá vrstva
+    \node[vertex] (a1) at (0,1.6) {\(a_1^{(\ell)}\)};
+    \node[vertex] (aj) at (0,0) {\(a_j^{(\ell)}\)};
+    \node[vertex] (an) at (0,-1.6) {\(a_{n_\ell}^{(\ell)}\)};
+
+    \node[vertexplain] at (0,0.8) {\(\vdots\)};
+    \node[vertexplain] at (0,-0.8) {\(\vdots\)};
+
+    % Pravá vrstva
+    \node[vertex] (ai) at (5.2,0) {\(a_i^{(\ell+1)}\)};
+
+    % Hrany
+    \draw[diredge] (a1) -- (ai);
+    \draw[diredge] (aj) -- node[above] {\(w_{ji}^{(\ell+1)}\)} (ai);
+    \draw[diredge] (an) -- (ai);
+
+    % Popisky vrstev
+    \node[vertexplain] at (0,-2.55) {vrstva \(\ell\)};
+    \node[vertexplain] at (5.2,-2.55) {vrstva \(\ell+1\)};
+
+    % Vysvětlující popisky
+    \node[vertexplain, text width=33mm, align=center] at (0,2.45)
+        {výstupy neuronů\\v~předchozí vrstvě};
+
+    \node[vertexplain, text width=34mm, align=center] at (5.2,2.45)
+        {výstup \(i\)-tého neuronu\\v následující vrstvě};
+
+\end{tikzpicture}

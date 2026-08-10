@@ -254,89 +254,7 @@
 
     \begin{frame}{Příklad gramatiky pro anglickou větu}
     \centering
-    \begin{tikzpicture}[
-        x=0.72cm, y=0.92cm,
-        >=stealth,
-        arr/.style={->, thick, draw=black!75},
-        ntbox/.style={draw=none, fill=orange!85, minimum width=2.15cm,
-            minimum height=0.8cm, align=center, font=\scriptsize},
-        topbox/.style={draw=none, fill=yellow!80, rounded corners=3pt,
-            minimum width=2.4cm, minimum height=0.85cm, align=center, font=\scriptsize},
-        termbox/.style={draw=none, fill=green!70, minimum width=1.65cm,
-            minimum height=0.75cm, align=center, font=\scriptsize},
-        rulelabel/.style={font=\tiny, fill=white, inner sep=1pt,
-            text=black!75, align=center}
-    ]
-
-    \node[topbox] (sentence) at (10.5,7.25) {sentence};
-
-    \node[ntbox] (np1) at (7.2,5.55) {noun phrase};
-    \node[ntbox] (vp)  at (13.8,5.55) {verb phrase};
-
-    \node[ntbox] (art1)  at (4.6,3.75) {article};
-    \node[ntbox] (noun1) at (7.9,3.75) {noun};
-    \node[ntbox] (verb)  at (12.3,3.75) {verb};
-    \node[ntbox] (np2)   at (15.8,3.75) {noun phrase};
-
-    \node[ntbox] (art2)  at (14.2,2.0) {article};
-    \node[ntbox] (noun2) at (17.6,2.0) {noun};
-
-    \node[termbox] (the1) at (4.6,0.25) {the};
-    \node[termbox] (dog)  at (7.9,0.25) {dog};
-    \node[termbox] (ate)  at (12.3,0.25) {ate};
-    \node[termbox] (the2) at (14.2,0.25) {the};
-    \node[termbox] (bone) at (17.6,0.25) {bone};
-
-    \draw[arr] (sentence) -- (np1);
-    \draw[arr] (sentence) -- (vp);
-
-    \draw[arr] (np1) -- (art1);
-    \draw[arr] (np1) -- (noun1);
-
-    \draw[arr] (vp) -- (verb);
-    \draw[arr] (vp) -- (np2);
-
-    \draw[arr] (np2) -- (art2);
-    \draw[arr] (np2) -- (noun2);
-
-    \draw[arr] (art1) -- (the1);
-    \draw[arr] (noun1) -- (dog);
-    \draw[arr] (verb) -- (ate);
-    \draw[arr] (art2) -- (the2);
-    \draw[arr] (noun2) -- (bone);
-
-    %------------------------------------------------
-    % Popisky pravidel
-    %------------------------------------------------
-    \node[rulelabel] at (10.5,6.45)
-        {sentence \(\to\) noun phrase verb phrase};
-
-    \node[rulelabel] at (6.25,4.75)
-        {noun phrase \(\to\) article noun};
-
-    \node[rulelabel] at (14.0,4.75)
-        {verb phrase \(\to\) verb noun phrase};
-
-    \node[rulelabel] at (15.9,3.0)
-        {noun phrase \(\to\) article noun};
-
-    % spodní popisky – zarovnané se svislými hranami
-    \node[rulelabel] at (4.6,1.35)
-        {article \(\to\) the};
-
-    \node[rulelabel] at (7.9,1.35)
-        {noun \(\to\) dog};
-
-    \node[rulelabel] at (12.3,1.35)
-        {verb \(\to\) ate};
-
-    \node[rulelabel] at (14.2,1.12)
-        {article \(\to\) the};
-
-    \node[rulelabel] at (17.6,1.12)
-    {noun \(\to\) bone};
-
-    \end{tikzpicture}
+    \input{images/priklad-gramatiky-pro-anglickou-vetu.tex}
     \end{frame}
 
     \section{Regulární gramatiky}
@@ -432,59 +350,7 @@
 
     \begin{frame}{Znázornění převodu automatu na regulární gramatiku}
     \centering
-    \begin{tikzpicture}[scale=0.9, every node/.style={font=\small}]
-
-        % levé popisky
-        \node[anchor=west] at (-4.8,2.3) {\textbf{Konečný automat}};
-        \node[anchor=west] at (-4.8,-2.6) {\textbf{Regulární gramatika}};
-
-        %------------------------------------------------
-        % Automat vpravo nahoře
-        %------------------------------------------------
-        \initialstate{q0}{(1.0,2.3)}{$q_0$}{(0.0,2.3)}{west}
-        \state{q1}{(3.0,2.3)}{$q_1$}
-        \acceptingstate{q2}{(5.0,2.3)}{$q_2$}
-
-        \transitionarrow[loop above]{q0}{above}{$a$}{q0}
-        \transitionarrow[bend left=15]{q0}{above}{$b$}{q1}
-
-        \transitionarrow[loop above]{q1}{above}{$b$}{q1}
-        \transitionarrow[bend left=15]{q1}{above}{$a$}{q2}
-
-        \transitionarrow[loop above]{q2}{above}{$a,b$}{q2}
-
-        %------------------------------------------------
-        % Šipka převodu mezi oběma částmi
-        %------------------------------------------------
-        \draw[transition, line width=1.1pt] (3.0,1.25) -- (3.0,0.25);
-        \node[anchor=west] at (3.15,0.75) {\small převod};
-
-        %------------------------------------------------
-        % Gramatika vpravo dole
-        %------------------------------------------------
-        \node[anchor=north west, align=left, text width=7.7cm] at (-1.1,-0.05) {%
-            \[
-                G=(V,T,P,S)
-            \]
-            \[
-                V=\{q_0,q_1,q_2\},\qquad
-                T=\{a,b\},\qquad
-                S=q_0
-            \]
-            \[
-            \begin{aligned}
-                P=\{&
-                q_0 \to aq_0 \mid bq_1,\\
-                &
-                q_1 \to bq_1 \mid aq_2,\\
-                &
-                q_2 \to aq_2 \mid bq_2 \mid \lambda
-                \}
-            \end{aligned}
-            \]
-        };
-
-    \end{tikzpicture}
+    \input{images/znazorneni-prevodu-automatu-na-regularni-gramatiku.tex}
     \end{frame}
 
     \begin{frame}{Jeden jazyk třemi způsoby}
@@ -533,20 +399,7 @@
                 \textbf{Konečný automat:}
 
                 \begin{center}
-                \begin{tikzpicture}[scale=0.95, every node/.style={font=\small}]
-                    \initialstate{q0}{(0,0)}{$q_0$}{(-1.0,0)}{west}
-                    \state{q1}{(2.0,0)}{$q_1$}
-                    \acceptingstate{q2}{(4.0,0)}{$q_2$}
-
-                    \transitionarrow[loop above]{q0}{above}{$b$}{q0}
-                    \transitionarrow[bend left=15]{q0}{above}{$a$}{q1}
-
-                    \transitionarrow[loop above]{q1}{above}{$a$}{q1}
-                    \transitionarrow[bend left=15]{q1}{above}{$b$}{q2}
-
-                    \transitionarrow[bend left=20]{q2}{below}{$a$}{q1}
-                    \transitionarrow[bend left=50]{q2}{above}{$b$}{q0}
-                \end{tikzpicture}
+                \input{images/jeden-jazyk-tremi-zpusoby.tex}
                 \end{center}
 
                 \begin{itemize}

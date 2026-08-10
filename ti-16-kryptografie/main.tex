@@ -91,50 +91,7 @@
         \end{center}
     \end{tnoticeframe}
 
-    \begin{tikzpicture}[
-        x=1cm, y=1cm,
-        >=latex,
-        msgarrow/.style={
-            ->,
-            >=latex,
-            line width=1.1pt,
-            draw=black
-        },
-        attackarrow/.style={
-            ->,
-            >=latex,
-            line width=1.1pt,
-            draw=red
-        }
-    ]
-        % Alice
-        \node[inner sep=0pt] (alice) at (-4.55,0.45)
-            {\includegraphics[height=1.65cm]{images/woman-icon.pdf}};
-        \node at (-4.55,-0.85) {Alice};
-
-        % Bob
-        \node[inner sep=0pt] (bob) at (4.25,0.45)
-            {\includegraphics[height=1.65cm]{images/man-icon.pdf}};
-        \node at (4.25,-0.85) {Bob};
-
-        % Hlavní komunikační šipka
-        \draw[msgarrow] (-3.55,0.55) -- (3.35,0.55);
-
-        % Popisek zprávy
-        \node[text=blue!35!black] at (-0.2,0.95) {$m$};
-
-        % Záškodník
-        \node[inner sep=0pt] (attacker) at (0,-2.25)
-            {\includegraphics[height=1.55cm]{images/hacker-icon.pdf}};
-        \node at (0,-3.35) {Záškodník};
-
-        % Červená šipka odposlechu
-        \draw[attackarrow]
-            (-0.75,-1.55)
-            .. controls (-1.45,-1.50) and (-1.35,-0.10) ..
-            (-0.15,0.55);
-
-    \end{tikzpicture}
+    \input{images/formulace-problemu.tex}
 \end{frame}
 
 \section{Historické metody}
@@ -156,49 +113,7 @@
     \end{itemize}
     \pause
     \centering
-    \begin{tikzpicture}[
-        x=0.8cm,
-        y=0.8cm,
-        >=latex,
-        cell/.style={
-            draw=black!55,
-            rounded corners=0.7mm,
-            minimum width=0.6cm,
-            minimum height=0.6cm,
-            font=\scriptsize
-        },
-        arrow/.style={
-            ->,
-            line width=0.9pt,
-            draw=black!75
-        }
-    ]
-
-        % Horní abeceda
-        \foreach \x/\letter in {
-            0/A,1/B,2/C,3/D,4/E,5/F,6/G,7/H
-        }{
-            \node[cell, fill=black!5] (u\x) at (\x,0) {\letter};
-        }
-
-        % Dolní posunutá abeceda pro k = 3
-        \foreach \x/\letter in {
-            0/D,1/E,2/F,3/G,4/H,5/A,6/B,7/C
-        }{
-            \node[cell, fill=green!18] (d\x) at (\x,-1.25) {\letter};
-        }
-
-        % Šipky
-        \foreach \x in {0,1,2,3,4,5,6,7}{
-            \draw[arrow] (u\x) -- (d\x);
-        }
-
-        \node[font=\scriptsize] at (-1.1,0) {původní};
-        \node[font=\scriptsize] at (-1.1,-1.25) {šifra};
-
-        \node[font=\small\bfseries] at (3.5,0.85) {Příklad: \(k=3\)};
-
-    \end{tikzpicture}
+    \input{images/substitucni-metoda.tex}
 
     \vspace{0.35cm}
     \pause
@@ -256,46 +171,7 @@
     \end{timportantframe}
     \pause
     \centering
-    \begin{tikzpicture}[
-        x=0.8cm, y=0.8cm,
-        >=latex,
-        cell/.style={
-            draw=black!55,
-            rounded corners=0.7mm,
-            minimum width=0.6cm,
-            minimum height=0.6cm,
-            font=\scriptsize
-        },
-        arrow/.style={
-            ->,
-            line width=0.8pt,
-            draw=black!70
-        }
-    ]
-
-        \foreach \x/\letter in {
-            0/A,1/B,2/C,3/D,4/E,5/F,6/G,7/H
-        }{
-            \node[cell, fill=black!5] (u\x) at (\x,0) {\letter};
-        }
-
-        \foreach \x/\letter in {
-            0/Q,1/M,2/A,3/Z,4/B,5/T,6/L,7/E
-        }{
-            \node[cell, fill=green!18] (d\x) at (\x,-1.35) {\letter};
-        }
-
-        \foreach \x in {0,1,2,3,4,5,6,7}{
-            \draw[arrow] (u\x) -- (d\x);
-        }
-
-        \node[font=\scriptsize] at (-1.2,0) {původní};
-        \node[font=\scriptsize] at (-1.2,-1.35) {šifra};
-
-        \node[font=\small\bfseries] at (3.5,0.75)
-            {Příklad permutace};
-
-    \end{tikzpicture}
+    \input{images/obecna-substitucni-sifra.tex}
 
 \end{frame}
 
@@ -304,18 +180,7 @@
     Klíčem je například následující substituce:
     \begin{figure}
         \centering
-        \begin{tikzpicture}[x=0.43cm,y=0.55cm,>=latex,
-            cell/.style={draw=black!55, minimum width=0.38cm,
-            minimum height=0.42cm, font=\tiny}
-        ]
-            \foreach \x/\a in {0/A,1/B,2/C,3/D,4/E,5/F,6/G,7/H,8/I,9/J,10/K,11/L,12/M,
-            13/N,14/O,15/P,16/Q,17/R,18/S,19/T,20/U,21/V,22/W,23/X,24/Y,25/Z}
-                \node[cell,fill=black!5] at (\x,0) {\a};
-
-            \foreach \x/\a in {0/Q,1/W,2/E,3/R,4/T,5/Y,6/U,7/I,8/O,9/P,10/A,11/S,12/D,
-            13/F,14/G,15/H,16/J,17/K,18/L,19/Z,20/X,21/C,22/V,23/B,24/N,25/M}
-                \node[cell,fill=green!18] at (\x,-1) {\a};
-        \end{tikzpicture}
+        \input{images/priklad-obecna-substitucni-sifra.tex}
     \end{figure}
 
     \vspace{0.35cm}
@@ -378,66 +243,7 @@
 
 \begin{frame}{Perfektní schéma}
     \centering
-    \begin{tikzpicture}[
-        x=1cm,
-        y=1cm,
-        >=latex
-    ]
-
-        % Horní popisek
-        \node[
-            rounded corners=2mm,
-            draw=orange!70!black,
-            fill=orange!25,
-            line width=0.6pt,
-            inner xsep=4mm,
-            inner ysep=2.2mm,
-            font=\normalsize
-        ] at (0,3.00)
-        {Alice se setká s Bobem na utajeném místě};
-
-        % Bublina od Boba
-        \node[
-            draw=blue!70!black,
-            fill=blue!20,
-            rounded corners=2mm,
-            line width=0.8pt,
-            text width=7.2cm,
-            align=left,
-            inner xsep=4mm,
-            inner ysep=3mm,
-            font=\normalsize,
-            rectangle callout,
-            callout absolute pointer={(0.15,-0.25)}
-        ] at (-1.8,1.0)
-        {Ahoj Alice, použij prosím tento klíč k~zašifrování zprávy pro mne\\[1mm]
-        $k = 01001101$};
-
-        % Alice
-        \node[inner sep=0pt] (alice) at (-2.25,-1.2)
-            {\includegraphics[height=1.65cm]{images/woman-icon.pdf}};
-        \node[font=\normalsize] at (-2.25,-2.45) {Alice};
-
-        % Bob
-        \node[inner sep=0pt] (bob) at (0.55,-1.2)
-            {\includegraphics[height=1.65cm]{images/man-icon.pdf}};
-        \node[font=\normalsize] at (0.55,-2.45) {Bob};
-
-        % Pravý vysvětlující rámeček
-        \node[
-            rounded corners=2mm,
-            draw=orange!70!black,
-            fill=orange!25,
-            line width=0.6pt,
-            text width=3.8cm,
-            align=left,
-            inner xsep=4mm,
-            inner ysep=3mm,
-            font=\normalsize
-        ] at (4.0,-0.95)
-        {Bob předá Alici náhodný klíč $k \in \set{0,1}^{n}$};
-
-    \end{tikzpicture}
+    \input{images/perfektni-schema.tex}
 \end{frame}
 
 \subsection{Jednorázová šifra}
@@ -464,75 +270,7 @@
 \begin{frame}{Schéma jednorázové šifry}
 
     \centering
-    \begin{tikzpicture}[
-        x=1cm, y=1cm,
-        >=latex,
-        msgarrow/.style={
-            ->,
-            >=latex,
-            line width=1.1pt,
-            draw=black
-        },
-        attackarrow/.style={
-            ->,
-            >=latex,
-            line width=1.1pt,
-            draw=red
-        }
-    ]
-
-        % Horní popisek
-        \node[
-            rounded corners=2mm,
-            draw=orange!70!black,
-            fill=orange!25,
-            line width=0.6pt,
-            inner xsep=4mm,
-            inner ysep=2mm,
-            font=\normalsize
-        ] at (0,3.00)
-        {Alice pošle \markdarkred{zašifrovaný text} $m \oplus k$};
-
-        % Alice
-        \node[inner sep=0pt] (alice) at (-4.55,0.45)
-            {\includegraphics[height=1.65cm]{images/woman-icon.pdf}};
-        \node[font=\normalsize] at (-4.55,-0.85) {Alice};
-
-        % Bob
-        \node[inner sep=0pt] (bob) at (4.25,0.45)
-            {\includegraphics[height=1.65cm]{images/man-icon.pdf}};
-        \node[font=\normalsize] at (4.25,-0.85) {Bob};
-
-        % Hlavní komunikační šipka
-        \draw[msgarrow] (-3.55,0.55) -- (3.35,0.55);
-
-        % Popisek zprávy
-        \node[font=\normalsize, text=blue!35!black] at (-0.2,0.95) {$m \oplus k$};
-
-        % Záškodník
-        \node[inner sep=0pt] (attacker) at (0,-2.05)
-            {\includegraphics[height=1.55cm]{images/hacker-icon.pdf}};
-        \node[font=\normalsize] at (0,-3.15) {Záškodník};
-
-        % Červená šipka odposlechu
-        \draw[attackarrow]
-            (-0.65,-1.35)
-            .. controls (-1.35,-1.25) and (-1.25,-0.10) ..
-            (-0.15,0.55);
-
-        % Spodní popisek
-        \node[
-            rounded corners=2mm,
-            draw=orange!70!black,
-            fill=orange!50,
-            line width=0.6pt,
-            inner xsep=4mm,
-            inner ysep=2mm,
-            font=\normalsize
-        ] at (0,-4.25)
-        {Záškodník nemůže rozlišit $m \oplus k$ od náhodného řetězce};
-
-    \end{tikzpicture}
+    \input{images/schema-jednorazove-sifry.tex}
 
 \end{frame}
 
@@ -635,101 +373,7 @@
 
 \centering
 
-\begin{tikzpicture}[
-    x=1cm, y=1cm,
-    >=latex,
-    msgarrow/.style={->, >=latex, line width=1.05pt, draw=black},
-    keyarrow/.style={->, >=latex, line width=0.95pt, draw=blue!65!black}
-]
-
-% Alice
-\node[inner sep=0pt] (alice) at (-4.2,0.15)
-    {\includegraphics[height=1.45cm]{images/woman-icon.pdf}};
-\node[font=\normalsize, below=0.1cm of alice] {Alice};
-
-% Bob
-\node[inner sep=0pt] (bob) at (4.0,0.15)
-    {\includegraphics[height=1.45cm]{images/man-icon.pdf}};
-\node[font=\normalsize, below=0.1cm of bob] {Bob};
-
-% Bobovy klíče
-\node[
-    rounded corners=1.5mm,
-    draw=blue!65!black,
-    fill=blue!12,
-    inner xsep=3mm,
-    inner ysep=1.5mm,
-    font=\small,
-    above=1.5cm of bob
-] (pk)
-{veřejný klíč \(k_V\)};
-
-\node[
-    rounded corners=1.5mm,
-    draw=red!70!black,
-    fill=red!10,
-    inner xsep=3mm,
-    inner ysep=1.5mm,
-    font=\small,
-    above=0.5cm of bob
-] (sk)
-{soukromý klíč \(k_S\)};
-
-% Veřejný klíč k Alici
-\draw[keyarrow] (pk.west) to[bend right=10] node[midway,above left,font=\scriptsize,text=blue!65!black] {Bob zveřejní \(k_V\)} (-3.65,0.95);
-
-% Šifrování u Alice
-\node[
-    rounded corners=1.5mm,
-    draw=black!55,
-    fill=black!5,
-    inner xsep=3mm,
-    inner ysep=1.5mm,
-    font=\small
-] (enc) at (-1.5,0.55)
-{\(\mathbf{E}(m,k_V)\)};
-
-\node[font=\scriptsize, below=0.1cm of enc, align=center] {Alice šifruje\\ pomocí \(k_V\)};
-
-% Zpráva k šifrování
-\draw[msgarrow] (alice.east) -- (enc.west);
-
-% Dešifrování u Boba
-\node[
-    rounded corners=1.5mm,
-    draw=black!55,
-    fill=black!5,
-    inner xsep=3mm,
-    inner ysep=1.5mm,
-    font=\small
-] (dec) at (1.5,0.55)
-{\(\mathbf{D}(c,k_S)\)};
-
-\draw[msgarrow] (dec.east) -- (bob.west);
-
-\node[font=\scriptsize, below=0.1cm of dec, align=center] {Bob dešifruje\\ pomocí \(k_S\)};
-
-\draw[->, >=latex, dashed, line width=0.95pt, draw=red!70!black]
-    (sk.west) -- (dec.north);
-
-% Šifrový text
-\draw[msgarrow] (enc.east) -- (dec.west);
-
-% Spodní shrnutí
-\node[
-    rounded corners=2mm,
-    draw=orange!70!black,
-    fill=orange!22,
-    line width=0.6pt,
-    inner xsep=4mm,
-    inner ysep=2mm,
-    text width=10.4cm,
-    align=center,
-    font=\small
-] at (0,-2.5)
-{Kdo zná \(k_V\), může Bobovi šifrovat zprávy. Dešifrovat je umí pouze Bob se svým \(k_S\).};
-
-\end{tikzpicture}
+\input{images/schema-asymetrickeho-sifrovani.tex}
 
 \end{frame}
 
@@ -757,98 +401,7 @@
 
 \begin{frame}{Schéma RSA}
     \centering
-    \begin{tikzpicture}[
-        x=1cm, y=1cm,
-        >=latex,
-        msgarrow/.style={->, >=latex, line width=1.05pt, draw=black},
-        keyarrow/.style={->, >=latex, line width=0.95pt, draw=blue!65!black}
-    ]
-
-    % Alice
-    \node[inner sep=0pt] (alice) at (-4.2,0.15)
-        {\includegraphics[height=1.45cm]{images/woman-icon.pdf}};
-    \node[font=\normalsize, below=0.1cm of alice] {Alice};
-
-    % Bob
-    \node[inner sep=0pt] (bob) at (4.0,0.15)
-        {\includegraphics[height=1.45cm]{images/man-icon.pdf}};
-    \node[font=\normalsize, below=0.1cm of bob] {Bob};
-
-    % Bobovy klíče
-    \node[
-        rounded corners=1.5mm,
-        draw=blue!65!black,
-        fill=blue!12,
-        inner xsep=3mm,
-        inner ysep=1.5mm,
-        font=\small,
-        above=2.0cm of bob,
-        align=center
-    ] (pk)
-    {veřejný klíč\\ \(k_V=(v,n)\)};
-
-    \node[
-        rounded corners=1.5mm,
-        draw=red!70!black,
-        fill=red!10,
-        inner xsep=3mm,
-        inner ysep=1.5mm,
-        font=\small,
-        above=0.5cm of bob,
-        align=center
-    ] (sk)
-    {soukromý klíč\\ \(k_S=(s,n)\)};
-
-    % Veřejný klíč k Alici
-    \draw[keyarrow] (pk.west) to[bend right=10]
-        node[midway,above left,font=\scriptsize,text=blue!65!black]
-        {Bob zveřejní \(k_V=(v,n)\)}
-        (-3.65,0.95);
-
-    % Šifrování u Alice
-    \node[
-        rounded corners=1.5mm,
-        draw=black!55,
-        fill=black!5,
-        inner xsep=3mm,
-        inner ysep=1.5mm,
-        font=\small,
-        align=center
-    ] (enc) at (-1.45,0.55)
-    {\(c = m^v \bmod n\)};
-
-    \node[font=\scriptsize, below=0.1cm of enc, align=center]
-    {Alice šifruje\\ pomocí \(k_V=(v,n)\)};
-
-    % Zpráva k šifrování
-    \draw[msgarrow] (alice.east) -- (enc.west);
-    \node[font=\small, above=0.05cm of $(alice.east)!0.5!(enc.west)$] {\(m\)};
-
-    % Dešifrování u Boba
-    \node[
-        rounded corners=1.5mm,
-        draw=black!55,
-        fill=black!5,
-        inner xsep=3mm,
-        inner ysep=1.5mm,
-        font=\small,
-        align=center
-    ] (dec) at (1.65,0.55)
-    {\(m = c^s \bmod n\)};
-
-    \draw[msgarrow] (dec.east) -- (bob.west);
-
-    \node[font=\scriptsize, below=0.1cm of dec, align=center]
-    {Bob dešifruje\\ pomocí \(k_S=(s,n)\)};
-
-    \draw[->, >=latex, dashed, line width=0.95pt, draw=red!70!black]
-        (sk.west) -- (dec.north);
-
-    % Šifrový text
-    \draw[msgarrow] (enc.east) -- (dec.west);
-    \node[font=\small, above=0.05cm of $(enc.east)!0.5!(dec.west)$] {\(c\)};
-
-    \end{tikzpicture}
+    \input{images/schema-rsa.tex}
 \end{frame}
 
 \subsection{Malá Fermatova věta}
@@ -1183,77 +736,7 @@
 \begin{frame}{Idea jednosměrné funkce}
 
     \centering
-    \begin{tikzpicture}[
-        x=1cm, y=1cm,
-        >=latex,
-        mainarrow/.style={
-            ->,
-            >=latex,
-            line width=1.1pt,
-            draw=black
-        },
-        hardarrow/.style={
-            ->,
-            >=latex,
-            dashed,
-            line width=1pt,
-            draw=red!75!black
-        },
-        box/.style={
-            rounded corners=1.5mm,
-            draw=black!55,
-            fill=black!5,
-            inner xsep=4mm,
-            inner ysep=2.2mm,
-            font=\large,
-            align=center
-        },
-        smallbox/.style={
-            rounded corners=1.5mm,
-            draw=black!45,
-            fill=black!3,
-            inner xsep=3mm,
-            inner ysep=1.6mm,
-            font=\normalsize,
-            align=center
-        }
-    ]
-
-        % vstup
-        \node[smallbox] (x) at (-4.2,0.8) {$x$};
-
-        % funkce
-        \node[box] (f) at (0,0.8) {$f$};
-
-        % vystup
-        \node[smallbox] (y) at (4.2,0.8) {$y=f(x)$};
-
-        % dopredny smer
-        \draw[mainarrow] (x.east) -- (f.west);
-        \draw[mainarrow] (f.east) -- (y.west);
-
-        \node[font=\small,text=green!70!black] at (0,1.55) {snadno vyčíslitelné};
-
-        % utocnik
-        \node[inner sep=0pt] (attacker) at (4.2,-2.1)
-            {\includegraphics[height=1.45cm]{images/hacker-icon.pdf}};
-        \node[font=\normalsize] at (4.2,-3.15) {Záškodník};
-
-        % kandidat na vzor
-        \node[smallbox] (xp) at (-2.8,-2.15) {$x^\prime$ ?};
-
-        % pokus o inverzi
-        \draw[hardarrow] (attacker.north west)
-            .. controls (2.7,-1.2) and (0.6,-1.0) ..
-            node[
-            font=\small,
-            text=red!75!black,
-            align=center,
-            midway,
-            above
-        ] {z $y$ je těžké najít\\ nějaké $x^\prime$ takové, že $f(x^\prime)=y$} (xp.east);
-
-    \end{tikzpicture}
+    \input{images/idea-jednosmerne-funkce.tex}
 
 \end{frame}
 
@@ -1313,83 +796,7 @@
 
 \begin{frame}{Využití PRG pro šifrování}
     \centering
-    \begin{tikzpicture}[
-        x=1cm, y=1cm,
-        >=latex,
-        msgarrow/.style={->, >=latex, line width=1.05pt, draw=black},
-        keyarrow/.style={->, >=latex, line width=0.95pt, draw=blue!65!black},
-        auxarrow/.style={->, >=latex, line width=0.9pt, draw=black!65},
-        box/.style={
-            rounded corners=1.5mm,
-            draw=black!55,
-            fill=black!5,
-            inner xsep=3mm,
-            inner ysep=1.5mm,
-            font=\small,
-            align=center
-        },
-        keybox/.style={
-            rounded corners=1.5mm,
-            draw=blue!65!black,
-            fill=blue!12,
-            inner xsep=3mm,
-            inner ysep=1.5mm,
-            font=\small,
-            align=center
-        }
-    ]
-
-        % Alice
-        \node[inner sep=0pt] (alice) at (-4.3,0.2)
-            {\includegraphics[height=1.4cm]{images/woman-icon.pdf}};
-        \node[font=\normalsize, below=0.08cm of alice] {Alice};
-
-        % Bob
-        \node[inner sep=0pt] (bob) at (4.3,0.2)
-            {\includegraphics[height=1.4cm]{images/man-icon.pdf}};
-        \node[font=\normalsize, below=0.08cm of bob] {Bob};
-
-        % sdileny seed
-        \node[keybox] (seedA) at (-4.3,1.55) {tajný seed \(s\)};
-        \node[keybox] (seedB) at (4.3,1.55) {tajný seed \(s\)};
-
-        % PRG boxy
-        \node[box] (prgA) at (-2.2,1.55) {\(G(s)\)};
-        \node[box] (prgB) at (2.2,1.55) {\(G(s)\)};
-
-        \draw[auxarrow] (seedA.east) -- (prgA.west);
-        \draw[auxarrow] (seedB.west) -- (prgB.east);
-
-        % Bezpecne predani seedu
-        \draw[keyarrow] (seedA.north east) to[bend left=25]
-            node[midway, above, font=\scriptsize, text=blue!65!black]
-            {sdílený seed \(s\)}
-            (seedB.north west);
-
-        % sifrovani u Alice
-        \node[box] (enc) at (-1.55,0.25) {\(c = m \oplus G(s)\)};
-        \node[font=\scriptsize, below=0.05cm of enc, align=center]
-            {Alice šifruje};
-
-        \draw[msgarrow] (alice.east) -- (enc.west);
-        \node[font=\small, above=0.02cm of $(alice.east)!0.5!(enc.west)$] {\(m\)};
-
-        \draw[auxarrow] (prgA.south) -- (enc.north);
-
-        % desifrovani u Boba
-        \node[box] (dec) at (1.55,0.25) {\(m = c \oplus G(s)\)};
-        \node[font=\scriptsize, below=0.05cm of dec, align=center]
-            {Bob dešifruje};
-
-        \draw[auxarrow] (prgB.south) -- (dec.north);
-
-        % prenos sifrovaneho textu
-        \draw[msgarrow] (enc.east) -- (dec.west);
-        \node[font=\small, above=0.02cm of $(enc.east)!0.5!(dec.west)$] {\(c\)};
-
-        \draw[msgarrow] (dec.east) -- (bob.west);
-
-    \end{tikzpicture}
+    \input{images/vyuziti-prg-pro-sifrovani.tex}
 \end{frame}
 
 \section{Hešovací funkce}
@@ -1429,69 +836,7 @@
     
     \begin{figure}
         \centering
-        \begin{tikzpicture}[
-            x=1cm,y=1cm,
-            >=latex,
-            arrow/.style={->, >=latex, line width=0.9pt, draw=black!70},
-            msg/.style={
-                rounded corners=1mm,
-                draw=black!55,
-                fill=black!5,
-                minimum width=2.1cm,
-                minimum height=0.45cm,
-                font=\scriptsize
-            },
-            hash/.style={
-                rounded corners=1mm,
-                draw=blue!60!black,
-                fill=blue!12,
-                minimum width=1.45cm,
-                minimum height=0.45cm,
-                font=\scriptsize
-            }
-        ]
-    
-            \node[msg] (x1) at (-3.8,1.0) {\(x=\texttt{1010\ldots}\)};
-            \node[msg] (x2) at (-3.8,0.25) {\(y=\texttt{0111\ldots}\)};
-            \node[msg] (x3) at (-3.8,-0.5) {\(\texttt{1100\ldots}\)};
-            \node[msg] (x4) at (-3.8,-1.25) {\(\texttt{0001\ldots}\)};
-    
-            \node[font=\scriptsize] at (-3.8,1.55) {vstupy};
-    
-            \node[hash] (h1) at (3.2,0.65) {\(00\ldots 1\)};
-            \node[hash] (h2) at (3.2,-0.15) {\(10\ldots 0\)};
-            \node[hash] (h3) at (3.2,-0.95) {\(11\ldots 1\)};
-    
-            \node[font=\scriptsize] at (3.2,1.55) {\(2^n\) výstupů};
-    
-            \node[
-                rounded corners=1.5mm,
-                draw=orange!70!black,
-                fill=orange!20,
-                font=\small,
-                inner xsep=3mm,
-                inner ysep=1.5mm
-            ] (H) at (0,0) {\(H\)};
-    
-            \draw[arrow] (x1.east) -- (H.west);
-            \draw[arrow] (x2.east) -- (H.west);
-            \draw[arrow] (x3.east) -- (H.west);
-            \draw[arrow] (x4.east) -- (H.west);
-    
-            \draw[arrow] (H.east) -- (h1.west);
-            \draw[arrow] (H.east) -- (h2.west);
-            \draw[arrow] (H.east) -- (h3.west);
-    
-            % zvýrazněná kolize
-            \draw[->, >=latex, line width=1.1pt, draw=red!75!black]
-                (x1.east) .. controls (-1.7,1.35) and (1.5,1.25) .. (h1.west);
-            \draw[->, >=latex, line width=1.1pt, draw=red!75!black]
-                (x2.east) .. controls (-1.7,0.55) and (1.5,0.85) .. (h1.west);
-    
-            \node[font=\scriptsize, text=red!75!black] at (0,1.45)
-                {kolize: \(x\neq y\), ale \(H(x)=H(y)\)};
-    
-        \end{tikzpicture}
+        \input{images/kolize-jsou-nevyhnutelne.tex}
     \end{figure}
 
     \vspace{0.15cm}
@@ -1526,44 +871,7 @@
 
     \centering
 
-    \begin{tikzpicture}[
-        x=1cm,y=1cm,
-        avatar/.style={
-            inner sep=0pt
-        },
-        edge/.style={
-            draw=black!22,
-            line width=0.3pt
-        }
-    ]
-
-        % 23 lidí rozmístěných po kružnici
-        \foreach \i in {1,...,23}{
-            \node[avatar] (p\i) at ({90-360/23*(\i-1)}:2.35)
-                {\includegraphics[width=4mm,height=4mm]{images/avatar.pdf}};
-        }
-
-        % všechny dvojice
-        \foreach \i in {1,...,23}{
-            \foreach \j in {\i,...,23}{
-                \ifnum\j>\i
-                    \draw[edge] (p\i) -- (p\j);
-                \fi
-            }
-        }
-
-        % popisek
-        \node[
-            rounded corners=2mm,
-            draw=orange!70!black,
-            fill=orange!20,
-            text width=9.2cm,
-            align=center,
-            font=\small
-        ] at (0,-3.35)
-        {Pro \(n=23\) lidí vzniká $\binom{23}{2}=253$ různých dvojic.};
-
-    \end{tikzpicture}
+    \input{images/kolik-vznika-dvojic.tex}
 
 \end{frame}
 
@@ -1588,17 +896,7 @@
     \pause
     \begin{figure}
         \centering
-        \begin{tikzpicture}
-            \node[
-                rounded corners=2mm,
-                draw=green!70!black,
-                fill=green!20,
-                text width=5.2cm,
-                align=center,
-                font=\small
-            ] at (0,0)
-            {$\displaystyle \Pr[C>0]\approx 1-\exp\left(-\frac{k(k-1)}{2^{r+1}}\right)$};
-        \end{tikzpicture}
+        \input{images/narozeninovy-paradox-a-kolize-hashu.tex}
     \end{figure}
     \pause
     \begin{itemize}
@@ -1660,71 +958,7 @@
 
 \centering
 
-\begin{tikzpicture}[
-    x=1cm, y=1cm,
-    >=latex,
-    arrow/.style={->, >=latex, line width=1pt, draw=black!75},
-    hard/.style={->, >=latex, dashed, line width=1pt, draw=red!80!black},
-    box/.style={
-        rounded corners=1.5mm,
-        draw=black!45,
-        fill=black!5,
-        inner xsep=3mm,
-        inner ysep=2mm,
-        align=center
-    },
-    req/.style={
-        rounded corners=1.5mm,
-        draw=red!70!black,
-        fill=red!6,
-        inner xsep=3mm,
-        inner ysep=2mm,
-        align=center
-    }
-]
-
-    %------------------------------------------------
-    % 1. Těžká invertovatelnost
-    %------------------------------------------------
-    \node[font=\bfseries] at (-3.1,2.2) {1. Těžká invertovatelnost};
-
-    \node[box] (in1) at (-5.2,0.8) {vstup\\ $x$};
-    \node[box] (H1)  at (-3.3,0.8) {$H$};
-    \node[box] (out1) at (-1.0,0.8) {hash\\ $h=H(x)$};
-
-    \draw[arrow] (in1.east) -- (H1.west);
-    \draw[arrow] (H1.east) -- (out1.west);
-
-    \draw[hard] (out1.south) .. controls (-1.8,-0.35) and (-4.2,-0.35) .. (in1.south);
-    \node[req, text width=4.7cm] at (-3.1,-2.0)
-    {Z daného hashe $h$ je těžké najít nějaký vstup $x'$, pro který platí $H(x')=h$.};
-
-    %------------------------------------------------
-    % 2. Těžké hledání kolizí
-    %------------------------------------------------
-    \node[font=\bfseries] at (2.95,2.2) {2. Těžké hledání kolizí};
-
-    \node[box] (x2) at (0.9,1.15) {vstup\\ $x$};
-    \node[box] (y2) at (0.9,-0.3)  {vstup\\ $y$};
-
-    \node[box] (Hx) at (2.8,1.15) {$H$};
-    \node[box] (Hy) at (2.8,-0.3)  {$H$};
-
-    \node[box] (hx) at (5.0,1.15) {hash\\ $H(x)$};
-    \node[box] (hy) at (5.0,-0.3)  {hash\\ $H(y)$};
-
-    \draw[arrow] (x2.east) -- (Hx.west);
-    \draw[arrow] (y2.east) -- (Hy.west);
-    \draw[arrow] (Hx.east) -- (hx.west);
-    \draw[arrow] (Hy.east) -- (hy.west);
-
-    \node[req, text width=5.1cm] at (3.0,-2.0)
-    {Je těžké najít dvě různá data $x\neq y$, pro která platí $H(x)=H(y)$.};
-
-    % zvýraznění kolize
-    \draw[hard] (Hy.north east) to[bend left=20] node[font=\scriptsize, text=red!80!black,midway,above left] {$H(x)=H(y)$} (hy.north west);
-
-\end{tikzpicture}
+\input{images/hesovaci-funkce-vs-jednosmerna-funkce.tex}
 
 \begin{tnoticeframe}[.9\textwidth]
     \begin{center}
@@ -1794,17 +1028,7 @@
     % Fáze 1
     \begin{figure}
         \centering
-        \begin{tikzpicture}
-            \node[
-                rounded corners=2mm,
-                draw=orange!70!black,
-                fill=orange!20,
-                text width=5.2cm,
-                align=center,
-                font=\small
-            ] at (0,0)
-            {Fáze 1: \textbf{absorbing}};
-        \end{tikzpicture}
+        \input{images/faze-sf-1.tex}
     \end{figure}
     \pause
     \begin{itemize}
@@ -1819,17 +1043,7 @@
     % Fáze 2
     \begin{figure}
         \centering
-        \begin{tikzpicture}
-            \node[
-                rounded corners=2mm,
-                draw=orange!70!black,
-                fill=orange!20,
-                text width=5.2cm,
-                align=center,
-                font=\small
-            ] at (0,0)
-            {Fáze 2: \textbf{squeezing}};
-        \end{tikzpicture}
+        \input{images/faze-sf-2.tex}
     \end{figure}
     \pause
     \begin{itemize}
@@ -1846,100 +1060,7 @@
 
 \centering
 
-\begin{tikzpicture}[
-    x=1cm,y=1cm,
-    >=latex,
-    block/.style={
-        rounded corners=1mm,
-        draw=black!55,
-        fill=black!5,
-        minimum width=1.05cm,
-        minimum height=0.45cm,
-        font=\scriptsize,
-        align=center
-    },
-    state/.style={
-        rounded corners=1mm,
-        draw=blue!60!black,
-        fill=blue!10,
-        minimum width=1.05cm,
-        minimum height=0.45cm,
-        font=\scriptsize,
-        align=center
-    },
-    func/.style={
-        rounded corners=1mm,
-        draw=orange!70!black,
-        fill=orange!20,
-        minimum width=0.75cm,
-        minimum height=0.55cm,
-        font=\small\bfseries,
-        align=center
-    },
-    arr/.style={->, >=latex, line width=0.8pt, draw=black!75},
-    xor/.style={
-        circle,
-        draw=black!65,
-        fill=white,
-        minimum size=4.5mm,
-        inner sep=0pt,
-        font=\scriptsize
-    }
-]
-
-    % input
-    \node[block] (M) at (-5.1,2.1) {zpráva\\ \(m\)};
-    \node[block] (pad) at (-3.55,2.1) {padding};
-    \node[block] (split) at (-1.85,2.1) {bloky\\ \(p_1,\ldots,p_t\)};
-
-    \draw[arr] (M) -- (pad);
-    \draw[arr] (pad) -- (split);
-
-    % state chain
-    \node[state] (S0) at (-5.0,-0.45) {\(S_0=0^b\)};
-    \node[xor] (xor1) at (-3.8,-0.45) {\(\oplus\)};
-    \node[func] (f1) at (-2.6,-0.45) {\(f\)};
-    \node[state] (S1) at (-1.4,-0.45) {\(S_1\)};
-
-    \node[xor] (xor2) at (-0.2,-0.45) {\(\oplus\)};
-    \node[func] (f2) at (1.0,-0.45) {\(f\)};
-    \node[state] (S2) at (2.2,-0.45) {\(S_2\)};
-
-    \node[font=\large] (dots) at (3.6,-0.45) {\(\cdots\)};
-
-    \node[state] (St) at (5.0,-0.45) {\(S_t\)};
-
-    \draw[arr] (S0) -- (xor1);
-    \draw[arr] (xor1) -- (f1);
-    \draw[arr] (f1) -- (S1);
-    \draw[arr] (S1) -- (xor2);
-    \draw[arr] (xor2) -- (f2);
-    \draw[arr] (f2) -- (S2);
-    \draw[arr] (S2) -- (dots);
-    \draw[arr] (dots) -- (St);
-
-    % input blocks to xor
-    \node[block] (P1) at (-3.8,0.45) {\(p_1 0^c\)};
-    \node[block] (P2) at (-0.2,0.45) {\(p_2 0^c\)};
-    \draw[arr] (P1) -- (xor1);
-    \draw[arr] (P2) -- (xor2);
-    \draw[arr] (split.south west) -- (P1.north);
-    \draw[arr] (split.south east) -- (P2.north);
-
-    % squeezing
-    \node[block] (out) at (5.0,-1.60) {vezmi prvních\\ \(d\) bitů};
-    \node[state] (hash) at (5.0,-3.00) {hash\\ \(H(m)\)};
-
-    \draw[arr] (St) -- (out);
-    \draw[arr] (out) -- (hash);
-
-    % labels
-    \node[font=\scriptsize, text=blue!60!black] at (-1.4,-1.3) {absorbing};
-    \draw[draw=blue!60!black] (-5.8,1.0) rectangle (3.0,-1.0);
-    \node[font=\scriptsize, text=blue!60!black] at (5.0,-3.9) {squeezing};
-    \draw[draw=blue!60!black] (3.8,0) rectangle (6.2,-3.6);
-
-\end{tikzpicture}
+\input{images/obrazek-sponge-function.tex}
 
 \end{frame}
 
@@ -1981,138 +1102,14 @@
     \vspace{0.15cm}
     \pause
     \centering
-    \begin{tikzpicture}[
-        x=1cm, y=1cm,
-        scale=0.92,
-        >=latex,
-        arr/.style={->, >=latex, line width=1pt, draw=black},
-        biarr/.style={<->, >=latex, line width=1pt, draw=black},
-        msgbox/.style={
-            rounded corners=1mm,
-            draw=black!60,
-            fill=black!3,
-            inner xsep=3mm,
-            inner ysep=2mm,
-            font=\small,
-            align=center
-        }
-    ]
-
-        % Alice
-        \node[inner sep=0pt] (alice) at (-4.0,0.9)
-            {\includegraphics[height=1.45cm]{images/woman-icon.pdf}};
-        \node[font=\Large, below=0.1cm of alice] {Alice};
-
-        % Bob
-        \node[inner sep=0pt] (bob) at (4.0,0.9)
-            {\includegraphics[height=1.45cm]{images/man-icon.pdf}};
-        \node[font=\Large, below=0.1cm of bob] {Bob};
-
-        % Communication arrow
-        \draw[biarr] (alice) -- (bob);
-
-        % Upper message: Alice -> Bob
-        \node[align=left, text width=4cm] (lefttext) at (-4.2,-1.7)
-        {zprávu \(x\) zašifruje veřejným klíčem Boba \(k_V^{B}\) a~připojí svůj podpis};
-
-        \node[msgbox] (msg1) at (0,-1.7)
-        {\(\,\mathbf{E}\left(x, k_V^{B}\right)\,;\,A\,\)};
-
-        \node[align=left, text width=4cm] (righttext) at (4.2,-1.7)
-        {dešifruje soukromým klíčem \(k_S^{B}\) a~přečte \(x\) i podpis Alice};
-        
-        \draw[arr] (lefttext) -- (msg1.west);
-        \draw[arr] (msg1.east) -- (righttext);
-
-        % Lower message: Bob -> Alice
-        \node[align=left, text width=4cm] (lefttext2) at (-4.2,-3.5)
-        {dešifruje soukromým klíčem \(k_S^{A}\) a~zkontroluje obsah};
-
-        \node[msgbox] (msg2) at (0,-3.5)
-        {\(\,\mathbf{E}\left(x, k_V^{A}\right)\,;\,B\,\)};
-
-        \node[align=left, text width=4cm] (righttext2) at (4.2,-3.5)
-        {odpověď zašifruje veřejným klíčem Alice \(k_V^{A}\) a~připojí svůj podpis};
-
-        \draw[arr] (righttext2) -- (msg2.east);
-        \draw[arr] (msg2.west) -- (lefttext2);
-
-    \end{tikzpicture}
+    \input{images/zprava-s-dorucenkou.tex}
 
 \end{frame}
 
 \begin{frame}{Je protokol bezpečný?}
     
 \centering
-\begin{tikzpicture}[
-    x=1cm, y=1cm,
-    >=latex,
-    scale=0.85,
-    arr/.style={->, >=latex, line width=1pt, draw=black},
-    biarr/.style={<->, >=latex, line width=1pt, draw=black},
-    msgbox/.style={
-        rounded corners=0.8mm,
-        draw=black!60,
-        fill=black!3,
-        inner xsep=3mm,
-        inner ysep=2mm,
-        font=\small,
-        align=center
-    }
-]
-
-    %------------------------------------------------
-    % Postavy
-    %------------------------------------------------
-    \node[inner sep=0pt] (alice) at (-4.8,1.9)
-        {\includegraphics[height=1.5cm]{images/woman-icon.pdf}};
-    \node[font=\Large, below=0.1cm of alice] {Alice};
-
-    \node[inner sep=0pt] (bob) at (4.8,1.9)
-        {\includegraphics[height=1.5cm]{images/man-icon.pdf}};
-    \node[font=\Large, below=0.1cm of bob] {Bob};
-
-    \node[inner sep=0pt] (mallory) at (0.0,2.0)
-        {\includegraphics[height=2.2cm]{images/hacker-icon.pdf}};
-    \node[font=\Large, below=0.1cm of mallory] {Záškodník \(P\)};
-
-    % horní komunikační šipka
-    \draw[biarr] (alice) -- (bob);
-
-    %------------------------------------------------
-    % Horní průchod: Alice -> Bob
-    %------------------------------------------------
-    \node[msgbox] (m1) at (-4.8,-1.3)
-        {\(\mathbf{E}(x,k_V^B)\,;\,A\)};
-    \node[msgbox] (m2) at (0.0,-1.3)
-        {\(\mathbf{E}(x,k_V^B)\,;\,P\)};
-
-    \node[align=left, text width=3.7cm] (righttext1) at (4.8,-1.3)
-    {Dešifruje pomocí \(k_S^B\), přečte \(x\) a podpis \(P\). Zprávu \(x\) zašifruje veřejným klíčem \(k_V^P\), podepíše a~odešle \(P\)};
-
-    %------------------------------------------------
-    % Bobova odpověď útočníkovi
-    %------------------------------------------------
-    \node[msgbox] (m3) at (4.8,-4.0)
-        {\(\mathbf{E}(x,k_V^P)\,;\,B\)};
-    
-    %------------------------------------------------
-    % Útočník přepošle Alice
-    %------------------------------------------------
-    \node[msgbox] (m4) at (0.0,-4.0)
-        {\(\mathbf{E}(x,k_V^A)\,;\,B\)};
-
-    \node[align=left, text width=3.7cm] (lefttext2) at (-4.8,-4.0)
-    {Dešifruje pomocí \(k_S^A\) a~zkontroluje obsah};
-
-    \draw[arr] (righttext1.south) -- (m3.north);
-    \draw[arr] (m1.east) -- (m2.west);
-    \draw[arr] (m2.east) -- (righttext1);
-
-    \draw[arr] (m3.west) -- (m4.east);
-    \draw[arr] (m4.west) -- (lefttext2);
-
-\end{tikzpicture}%
+\input{images/je-protokol-bezpecny.tex}%
 
 \end{frame}
 
@@ -2155,65 +1152,7 @@
     \vspace{0.15cm}
     \pause
     \centering
-    \begin{tikzpicture}[
-        x=1cm, y=1cm,
-        scale=0.90,
-        >=latex,
-        arr/.style={->, >=latex, line width=1pt, draw=black},
-        biarr/.style={<->, >=latex, line width=1pt, draw=black},
-        opbox/.style={
-            rounded corners=1mm,
-            draw=black!60,
-            fill=black!4,
-            inner xsep=3mm,
-            inner ysep=2mm,
-            font=\small,
-            align=center
-        }
-    ]
-
-        % Alice, Bob
-        \node[inner sep=0pt] (alice) at (-4.5,2.8)
-            {\includegraphics[height=1.5cm]{images/woman-icon.pdf}};
-        \node[font=\Large, below=0.1cm of alice] {Alice};
-
-        \node[inner sep=0pt] (bob) at (4.5,2.8)
-            {\includegraphics[height=1.5cm]{images/man-icon.pdf}};
-        \node[font=\Large, below=0.1cm of bob] {Bob};
-
-        \draw[biarr] (alice) -- (bob);
-
-        %------------------------------------------------
-        % Horní řádek: obyčejné šifrování
-        %------------------------------------------------
-        \node[align=left, text width=4.0cm] (lefttext1) at (-4.5,0.5)
-        {Alice spočítá $\mathbf{E}(x,k_V^B)$};
-
-        \node[opbox] (enc) at (0,0.5)
-        {\(\mathbf{E}(x,k_V^B)\)};
-
-        \node[align=left, text width=4.0cm] (righttext1) at (4.5,0.5)
-        {Bob spočítá $\mathbf{D}\left(\mathbf{E}(x,k_V^B),k_S^B\right)=x$};
-
-        \draw[arr] (lefttext1) -- (enc.west);
-        \draw[arr] (enc.east) -- (righttext1);
-
-        %------------------------------------------------
-        % Dolní řádek: podpis
-        %------------------------------------------------
-        \node[align=left, text width=4.0cm] (lefttext2) at (-4.5,-1)
-        {Alice "podepíše" hodnotu \(x\): $\mathbf{D}(x,k_S^A)$};
-
-        \node[opbox] (sig) at (0,-1)
-        {\(\mathbf{D}(x,k_S^A)\)};
-
-        \node[align=left, text width=4.0cm] (righttext2) at (4.5,-1)
-        {Bob ověří podpis pomocí $\mathbf{E}\left(\mathbf{D}(x,k_S^A),k_V^A\right)=x$};
-
-        \draw[arr] (lefttext2) -- (sig.west);
-        \draw[arr] (sig.east) -- (righttext2);
-
-    \end{tikzpicture}%
+    \input{images/komutativita-klicu.tex}%
 
 \end{frame}
 
@@ -2253,79 +1192,7 @@
 \begin{frame}{Elektronický podpis v praxi}
 
 \centering
-\begin{tikzpicture}[
-    x=1cm, y=1cm,
-    >=latex,
-    scale=0.8,
-    arr/.style={->, >=latex, line width=0.95pt, draw=black},
-    brace/.style={decorate, decoration={brace, amplitude=4pt}},
-    lbl/.style={font=\small, align=center}
-]
-
-    \node[font=\Large] at (-4.3,4.3) {Podepsání};
-    \node[font=\Large] at (4.3,4.3) {Ověření};
-    \draw[draw=black!35, line width=0.5pt] (0,4.75) -- (0,-4.7);
-
-    %================================================
-    % LEVÁ ČÁST -- Podepsání
-    %================================================
-
-    \papericon{docL}{(-6.4,2.7)}{Data}
-    \hashbox{hashL}{(-3.00,2.7)}{\texttt{101100110101}}
-    \draw[arr, shorten <= 10pt] (docL.east) -- (hashL)
-        node[midway, above right, font=\scriptsize] {\(H_n\)};
-
-    \node[font=\small, above=0.05cm of hashL] {Hash};
-    \hashbox{sigL}{(-3.00,0.00)}{\texttt{111101101110}}
-    \node[right=-0.3cm of sigL] {\includegraphics[width=0.28cm]{images/lock.pdf}};
-    \node[font=\small, below=0.05cm of sigL] {Podpis};
-
-    \draw[arr] (hashL.south) -- (sigL.north)
-        node[midway, right, font=\scriptsize, align=center]
-        {\(\mathbf{D}(\;\cdot\,,k_S^A)\)};
-
-    \node (certificate) at (-6.2,0.0)
-        {\includegraphics[width=0.85cm]{images/certificate.pdf}};
-    \node[font=\small, below=0.02cm of certificate] {Certifikát};
-
-    \signedpapericon{signedL}{(-3.9,-3.0)}{Digitálně podepsaná data}
-
-    \draw[arr,shorten >= 15pt, shorten <= 15pt] (sigL) -- (signedL);
-    \draw[arr,shorten >= 15pt, shorten <= 18pt] (certificate) -- (signedL);
-
-    %================================================
-    % PRAVÁ ČÁST -- Ověření
-    %================================================
-
-    \signedpapericon{signedR}{(4.0,2.7)}{Digitálně podepsaná data}
-
-    \papericon{docR}{(2.0,0.0)}{Data}
-    \hashbox{sigR}{(6.0,0.0)}{\texttt{111101101110}}
-
-    \draw[arr, shorten <= 30pt, shorten >= 13pt] (signedR) -- (docR);
-    \draw[arr, shorten <= 30pt] (signedR) -- (sigR.north);
-    
-    \node[right=-0.3cm of sigR] {\includegraphics[width=0.28cm]{images/lock.pdf}};
-    \node[font=\small, below=0.05cm of sigR] {Podpis};
-
-    \hashbox{hashR1}{(2.0,-2.65)}{\texttt{101100110101}}
-    \node[font=\small, below=0.05cm of hashR1] {Hash};
-
-    \hashbox{hashR2}{(6.0,-2.65)}{\texttt{101100110101}}
-    \node[font=\small, below=0.05cm of hashR2] {Hash};
-
-    \draw[arr, shorten <= 27pt] (docR) -- (hashR1)
-        node[midway, below right, font=\scriptsize] {\(H_n\)};
-    \draw[arr, shorten <= 16pt] (sigR) -- (hashR2)
-        node[midway, right, font=\scriptsize, align=center]
-        {\(\mathbf{E}(\;\cdot\;,k_V^A)\)};
-
-    \node[font=\Large] at (4.0,-2.5) {\(\stackrel{?}{=}\)};
-
-    \node[lbl, text width=6.6cm] at (4.0,-4.3)
-    {Rovnají-li se otisky,\\ podpis dat je ověřen.};
-
-\end{tikzpicture}%
+\input{images/elektronicky-podpis-v-praxi.tex}%
 
 \end{frame}
 

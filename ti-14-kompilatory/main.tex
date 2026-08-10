@@ -29,47 +29,7 @@
         \vspace{0.25cm}
 
         \centering
-        \begin{tikzpicture}[
-            box/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                minimum width=2.6cm,
-                minimum height=0.8cm
-            },
-            arrow/.style={->, thick},
-            node distance=0.75cm
-        ]
-
-            \visible<3->{\node[box] (src) {zdrojový\\kód};}
-            \visible<2->{\node[box, right=of src] (comp) {kompilátor};}
-            \visible<4->{\node[box, right=of comp] (out) {cílový\\kód};}
-
-            \visible<3->{\draw[arrow] (src) -- (comp);}
-            \visible<4->{\draw[arrow] (comp) -- (out);}
-
-            \visible<5->{
-                \node[below=0.25cm of src, align=center] {
-                    \scriptsize
-                    \shortstack{
-                        \texttt{C}\\[-0.5mm]
-                        \texttt{Java}\\[-0.5mm]
-                        \texttt{C\#}
-                    }
-                };
-
-                \node[below=0.25cm of out, align=center] {
-                    \scriptsize
-                    \shortstack{
-                        assembler\\[-0.5mm]
-                        mezikód\\[-0.5mm]
-                        strojový kód
-                    }
-                };
-            }
-
-        \end{tikzpicture}
+        \input{images/co-je-kompilator.tex}
 
         \vspace{0.3cm}
 
@@ -94,54 +54,7 @@
         \vspace{0.15cm}
 
         \centering
-        \begin{tikzpicture}[
-            file/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                font=\scriptsize,
-                minimum width=1.25cm,
-                minimum height=0.65cm
-            },
-            tool/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                font=\scriptsize,
-                minimum width=1.55cm,
-                minimum height=0.65cm
-            },
-            arrow/.style={->, thick}
-        ]
-
-            \node<3->[file] (c) at (0,0) {\texttt{hello.c}};
-            \node<3->[tool] (pre) at (1.8,0) {preprocesor};
-            \node<3->[file] (i) at (3.6,0) {\texttt{hello.i}};
-
-            \draw<3->[arrow] (c) -- (pre);
-            \draw<3->[arrow] (pre) -- (i);
-
-            \node<4->[tool] (comp) at (5.4,0) {kompilátor};
-            \node<4->[file] (s) at (7.2,0) {\texttt{hello.s}};
-
-            \draw<4->[arrow] (i) -- (comp);
-            \draw<4->[arrow] (comp) -- (s);
-
-            \node<5->[tool] (asm) at (5.4,-1.25) {assembler};
-            \node<5->[file] (o) at (3.6,-1.25) {\texttt{hello.o}};
-
-            \draw<5->[arrow] (s.south) -- ++(0,-0.35) -- (asm.east);
-            \draw<5->[arrow] (asm) -- (o);
-
-            \node<6->[tool] (link) at (1.8,-1.25) {linker};
-            \node<6->[file] (exe) at (0,-1.25) {\texttt{hello}};
-
-            \draw<6->[arrow] (o) -- (link);
-            \draw<6->[arrow] (link) -- (exe);
-
-        \end{tikzpicture}
+        \input{images/od-zdrojoveho-kodu-ke-spustitelnemu-souboru.tex}
 
         \vspace{0.15cm}
 
@@ -190,57 +103,7 @@
         \vspace{0.1cm}
 
         \centering
-        \begin{tikzpicture}[
-            box/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                font=\scriptsize,
-                minimum width=1.35cm,
-                minimum height=0.6cm
-            },
-            widebox/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                font=\scriptsize,
-                minimum width=1.65cm,
-                minimum height=0.6cm
-            },
-            arrow/.style={->, thick}
-        ]
-
-            \visible<4->{
-                \node[box] (c) at (0,0) {\texttt{C/C++}};
-                \node[widebox] (comp1) at (1.9,0) {kompilátor};
-                \node[widebox] (mc1) at (3.9,0) {strojový\\kód};
-                \node[box] (cpu1) at (5.8,0) {procesor};
-
-                \draw[arrow] (c) -- (comp1);
-                \draw[arrow] (comp1) -- (mc1);
-                \draw[arrow] (mc1) -- (cpu1);
-
-                \node[font=\scriptsize, align=right] at (-1.8,0) {přímá\\kompilace};
-            }
-
-            \visible<7->{
-                \node[box] (java) at (0,-1.25) {\texttt{Java}\\\texttt{C\#}};
-                \node[widebox] (comp2) at (1.9,-1.25) {kompilátor};
-                \node[box] (ir) at (3.9,-1.25) {mezikód};
-                \node[box] (jit) at (5.8,-1.25) {VM/JIT};
-                \node[widebox] (mc2) at (7.65,-1.25) {strojový\\kód};
-
-                \draw[arrow] (java) -- (comp2);
-                \draw[arrow] (comp2) -- (ir);
-                \draw[arrow] (ir) -- (jit);
-                \draw[arrow] (jit) -- (mc2);
-
-                \node[font=\scriptsize, align=right] at (-1.8,-1.25) {překlad přes\\mezikód};
-            }
-
-        \end{tikzpicture}
+        \input{images/mezikod-a-strojovy-kod.tex}
 
         \vspace{0.15cm}
 
@@ -272,56 +135,7 @@
         \vspace{0.15cm}
 
         \centering
-        \begin{tikzpicture}[
-            phase/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                font=\scriptsize,
-                minimum width=1.75cm,
-                minimum height=0.65cm
-            },
-            lang/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                font=\scriptsize,
-                minimum width=1.45cm,
-                minimum height=0.65cm
-            },
-            arrow/.style={->, thick}
-        ]
-            % vnější obdélník
-            \visible<2->{
-                \draw[thick, rounded corners] (-1.3,1.5) rectangle (7.8,-2.5);
-                \node[draw, fill=white, font=\small\bfseries, inner xsep=6pt, inner ysep=2pt]
-                    at (3.125,1.5) {Překladač};
-            }
-
-            \node<2->[lang,fill=red!40!white]  (src) at (0,0) {zdrojový\\kód};
-            \node<3->[phase,fill=red!40!white] (lex) at (2.05,0) {lexikální\\analýza};
-            \node<4->[phase,fill=red!40!white] (syn) at (4.10,0) {syntaktická\\analýza};
-            \node<5->[phase,fill=red!40!white] (sem) at (6.15,0) {sémantická\\analýza};
-
-            \node<6->[lang,fill=orange!40!white]  (ir)  at (6.15,-1.15) {mezikód};
-            \node<7->[phase,fill=orange!40!white] (opt) at (4.10,-1.15) {optimalizace};
-            \node<8->[phase,fill=orange!40!white] (gen) at (2.05,-1.15) {generování\\kódu};
-            \node<9->[lang,fill=orange!40!white]  (tgt) at (0,-1.15) {cílový\\kód};
-
-            \draw<3->[arrow] (src) -- (lex);
-            \draw<4->[arrow] (lex) -- (syn);
-            \draw<5->[arrow] (syn) -- (sem);
-            \draw<6->[arrow] (sem) -- (ir);
-            \draw<7->[arrow] (ir) -- (opt);
-            \draw<8->[arrow] (opt) -- (gen);
-            \draw<9->[arrow] (gen) -- (tgt);
-
-            \node<5->[font=\scriptsize] at (3.1,0.85) {\textbf{přední část (front end)}};
-            \node<8->[font=\scriptsize] at (3.1,-2.0) {\textbf{koncová část (back end)}};
-
-        \end{tikzpicture}
+        \input{images/faze-prekladace.tex}
 
     \end{frame}
 
@@ -343,33 +157,7 @@
         \vspace{0.15cm}
 
         \centering
-        \begin{tikzpicture}[
-            box/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                font=\scriptsize,
-                minimum width=2.15cm,
-                minimum height=0.75cm
-            },
-            arrow/.style={->, thick}
-        ]
-
-            \node<3->[box] (src) at (0,0) {zdrojový\\program};
-            \node<2->[box] (lex) at (3.25,0) {lexikální\\analyzátor};
-            \node<4->[box] (tok) at (6.50,0) {posloupnost\\tokenů};
-
-            \draw<3->[arrow] (src) -- (lex);
-            \draw<4->[arrow] (lex) -- (tok);
-
-            \node<6->[font=\scriptsize, align=center] at (0,-0.9)
-                {\texttt{position = speed * 60;}};
-
-            \node<6->[font=\scriptsize, align=center] at (6.50,-0.9)
-                {\texttt{id = id * num ;}};
-
-        \end{tikzpicture}
+        \input{images/lexikalni-analyza.tex}
 
     \end{frame}
 
@@ -392,16 +180,7 @@
         \vspace{-0.1cm}
 
         \centering
-        \begin{tikzpicture}
-            \node<5->[
-                draw,
-                thick,
-                rounded corners,
-                fill=blue!20!white,
-                inner xsep=8pt,
-                inner ysep=6pt
-            ] {\texttt{position = speed * 60;}};
-        \end{tikzpicture}
+        \input{images/lexem-a-token.tex}
 
         \vspace{0.25cm}
 
@@ -442,67 +221,7 @@
         \vspace{0.05cm}
 
         \centering
-        \begin{tikzpicture}[
-            box/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                font=\scriptsize,
-                minimum height=0.72cm
-            },
-            smallbox/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                font=\scriptsize,
-                minimum width=1.45cm,
-                minimum height=0.62cm
-            },
-            arrow/.style={->, thick}
-        ]
-
-            % horní řada: regulární výrazy tokenů
-            \node<2->[box, minimum width=2.45cm] (re1) at (0,0)
-                {identifikátor\\\texttt{[a-zA-Z][a-zA-Z0-9]*}};
-
-            \node<2->[box, minimum width=1.95cm] (re2) at (3.05,0)
-                {číslo\\\texttt{[0-9]+}};
-
-            \node<2->[box, minimum width=2.15cm] (re3) at (5.80,0)
-                {operátor\\\texttt{= \;|\; + \;|\; *}};
-
-            % mezikrok: společný regulární popis
-            \node<3->[box, minimum width=4.8cm] (combined) at (2.90,-1.45)
-                {společný regulární popis\\
-                \texttt{id \;|\; num \;|\; op}};
-
-            \draw<3->[arrow] (re1.south) -- (combined.north west);
-            \draw<3->[arrow] (re2.south) -- (combined.north);
-            \draw<3->[arrow] (re3.south) -- (combined.north east);
-
-            % konstrukce automatů
-            \node<4->[smallbox] (nfa) at (0.60,-2.95) {NKA};
-            \node<5->[smallbox] (dfa) at (3.50,-2.95) {DKA};
-            \node<6->[box, minimum width=2.05cm] (lexer) at (6.00,-2.95)
-                {lexikální\\analyzátor};
-
-            \draw<4->[arrow] (combined.south) -- ++(0,-0.225) -| (nfa.north);
-            \draw<5->[arrow] (nfa) -- node[above, font=\scriptsize, yshift=1mm] {determin.} (dfa);
-            \draw<6->[arrow] (dfa) -- (lexer);
-
-            % spodní ukázka
-            \node<7->[box, minimum width=2.4cm] (src) at (0.65,-4.15)
-                {\texttt{position = 60;}};
-
-            \node<7->[box, minimum width=3.3cm] (tok) at (5.35,-4.15)
-                {\texttt{<id, position>}\\
-                \texttt{<=> <num, 60> <;>}};
-
-            \draw<7->[arrow] (src) -- node[above, font=\scriptsize, yshift=1mm] {čtení znaků} (tok);
-
-        \end{tikzpicture}
+        \input{images/od-regularniho-vyrazu-k-lexeru.tex}
 
     \end{frame}
 
@@ -518,85 +237,7 @@
         \vspace{-0.05cm}
 
         \centering
-        \begin{tikzpicture}[scale=0.82, every node/.style={font=\scriptsize}]
-
-            %-------------------------------------------------
-            % společný počáteční stav
-            %-------------------------------------------------
-            \initialstate<2->{S}{(-1,0)}{$s$}{(-2.0,0.0)}{west}
-            \transitionarrow<3->[loop above]{S}{above}{\scriptsize mezera, tab, EOL}{S}
-
-            %-------------------------------------------------
-            % větev pro komentář
-            %-------------------------------------------------
-            % \draw<3->[green!60!black, thick, rounded corners]
-            %     (-1.15,-2.55) rectangle (1.20,-1.75);
-
-            \state<3->{C1}{(-1.0,-1.80)}{$c_1$}
-            \acceptingstate<3->{C2}{(-1.0,-3.60)}{$c_2$}
-
-            \transitionarrow<3->{S}{left}{\scriptsize zač. komentáře}{C1}
-            \transitionarrow<3->[loop right]{C1}{below}{\scriptsize obsah}{C1}
-            \transitionarrow<3->{C1}{right}{\scriptsize konec}{C2}
-            \transitionarrow<3->[bend left=70]{C2}{left}{\scriptsize přeskočit}{S}
-
-            %-------------------------------------------------
-            % T1
-            %-------------------------------------------------
-            \draw<2->[cyan!70!black, thick, rounded corners]
-                (3.00,0.8) rectangle (10.20,-0.80);
-
-            \node<2->[text=cyan!50!black]
-                at (10.60,0.0) {$T_1$};
-
-            \state<2->{Q1}{(4.10,0)}{$q_1$}
-            \node<2-> (T1dots) at (6.60,0) {\(\cdots\)};
-            \acceptingstate<2->{F1}{(9.10,0)}{$f_1$}
-
-            \transitionarrow<2->{S}{above}{\scriptsize \(\lambda\)}{Q1}
-            \transitionarrow<2->{Q1}{above}{}{T1dots}
-            \transitionarrow<2->{T1dots}{above}{}{F1}
-
-            %-------------------------------------------------
-            % T2
-            %-------------------------------------------------
-            \draw<2->[cyan!70!black, thick, rounded corners]
-                (3.00,-1.25) rectangle (10.20,-2.85);
-
-            \node<2->[text=cyan!50!black]
-                at (10.60,-2.05) {$T_2$};
-
-            \state<2->{Q2}{(4.10,-2.05)}{$q_2$}
-            \node<2-> (T2dots) at (6.60,-2.05) {\(\cdots\)};
-            \acceptingstate<2->{F2}{(9.10,-2.05)}{$f_2$}
-
-            \transitionarrow<2->{S}{above}{\scriptsize \(\lambda\)}{Q2}
-            \transitionarrow<2->{Q2}{above}{}{T2dots}
-            \transitionarrow<2->{T2dots}{above}{}{F2}
-
-            %-------------------------------------------------
-            % Tn
-            %-------------------------------------------------
-            \draw<2->[cyan!70!black, thick, rounded corners]
-                (3.00,-3.40) rectangle (10.20,-5.00);
-
-            \node<2->[text=cyan!50!black]
-                at (10.60,-4.20) {$T_n$};
-
-            \state<2->{Qn}{(4.10,-4.25)}{$q_n$}
-            \node<2-> (Tndots) at (6.60,-4.25) {\(\cdots\)};
-            \acceptingstate<2->{Fn}{(9.10,-4.25)}{$f_n$}
-
-            \transitionarrow<2->{S}{above}{\scriptsize \(\lambda\)}{Qn}
-            \transitionarrow<2->{Qn}{above}{}{Tndots}
-            \transitionarrow<2->{Tndots}{above}{}{Fn}
-
-            %-------------------------------------------------
-            % naznačení dalších větví
-            %-------------------------------------------------
-            \node<2->[font=\Large] at (4.05,-3.15) {\(\vdots\)};
-
-        \end{tikzpicture}
+        \input{images/obecna-konstrukce-lexeru.tex}
 
     \end{frame}
 
@@ -662,25 +303,7 @@
         \vspace{0.1cm}
 
         \centering
-        \begin{tikzpicture}[
-            box/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                minimum width=2.2cm,
-                minimum height=0.8cm,
-                font=\scriptsize
-            },
-            arrow/.style={->, thick}
-        ]
-            \node<3->[box] (lex) at (0,0) {tokeny};
-            \node<2->[box] (parser) at (3.2,0) {syntaktický\\analyzátor};
-            \node<5->[box] (out) at (6.4,0) {správný vstup\\/ chyba / strom};
-
-            \draw<3->[arrow] (lex) -- (parser);
-            \draw<5->[arrow] (parser) -- (out);
-        \end{tikzpicture}
+        \input{images/syntakticka-analyza.tex}
 
     \end{frame}
 
@@ -699,44 +322,7 @@
         \vspace{0.1cm}
 
         \centering
-        \begin{tikzpicture}[
-            tok/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                minimum width=1.1cm,
-                minimum height=0.65cm,
-                font=\scriptsize
-            },
-            box/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                minimum width=2.1cm,
-                minimum height=0.8cm,
-                font=\scriptsize
-            },
-            arrow/.style={->, thick}
-        ]
-            \node<2->[tok] (t1) at (0,0) {\texttt{<id>}};
-            \node<2->[tok] (t2) at (1.5,0) {\texttt{<+>}};
-            \node<2->[tok] (t3) at (3.0,0) {\texttt{<id>}};
-            \node<2->[tok] (t4) at (4.5,0) {\texttt{<*>}};
-            \node<2->[tok] (t5) at (6.0,0) {\texttt{<num>}};
-
-            \node<3->[box] (parser) at (3.0,-1.2) {parser};
-
-            \draw<3->[arrow] (t1.south) -- ++(0,-0.35) -- (parser.north west);
-            \draw<3->[arrow] (t2.south) -- ++(0,-0.30) -- (parser.north west);
-            \draw<3->[arrow] (t3.south) -- (parser.north);
-            \draw<3->[arrow] (t4.south) -- ++(0,-0.30) -- (parser.north east);
-            \draw<3->[arrow] (t5.south) -- ++(0,-0.35) -- (parser.north east);
-
-            \node<4->[font=\scriptsize, align=center] at (3.0,-2.1)
-                {např. ověří, že jde o aritmetický výraz};
-        \end{tikzpicture}
+        \input{images/jak-parser-pracuje-s-tokeny.tex}
 
     \end{frame}
 
@@ -785,33 +371,7 @@
         \vspace{0.15cm}
 
         \centering
-        \begin{tikzpicture}[
-            node distance=0.8cm,
-            every node/.style={font=\scriptsize},
-            nt/.style={draw, circle, thick, minimum size=7mm},
-            t/.style={draw, rounded corners, thick, minimum width=6mm, minimum height=5mm}
-        ]
-            \node<5->[nt] (S) at (0,0) {$S$};
-            \node<6->[t] (a1) at (-1.4,-1.1) {$a$};
-            \node<6->[nt] (S2) at (0,-1.1) {$S$};
-            \node<6->[t] (b1) at (1.4,-1.1) {$b$};
-
-            \node<7->[t] (a2) at (-0.9,-2.2) {$a$};
-            \node<7->[nt] (S3) at (0,-2.2) {$S$};
-            \node<7->[t] (b2) at (0.9,-2.2) {$b$};
-
-            \node<8->[t] (eps) at (0,-3.2) {$\lambda$};
-
-            \draw<6->[thick] (S) -- (a1);
-            \draw<6->[thick] (S) -- (S2);
-            \draw<6->[thick] (S) -- (b1);
-
-            \draw<7->[thick] (S2) -- (a2);
-            \draw<7->[thick] (S2) -- (S3);
-            \draw<7->[thick] (S2) -- (b2);
-
-            \draw<8->[thick] (S3) -- (eps);
-        \end{tikzpicture}
+        \input{images/derivacni-strom.tex}
 
         \vspace{0.05cm}
 
@@ -875,45 +435,7 @@
 
             \begin{column}{0.7\textwidth}
                 \centering
-                \begin{tikzpicture}[
-                    every node/.style={font=\scriptsize},
-                    nt/.style={draw, circle, thick, minimum size=7mm},
-                    t/.style={draw, rounded corners, thick, minimum width=6mm, minimum height=5mm}
-                ]
-                    \node<2->[nt] (E0) at (0,0) {$E$};
-
-                    \node<3->[nt] (E1) at (-2.2,-1.1) {$E$};
-                    \node<3->[t]  (plus) at (0,-1.1) {$+$};
-                    \node<3->[nt] (T1) at (2.2,-1.1) {$T$};
-
-                    \draw<3->[thick] (E0) -- (E1);
-                    \draw<3->[thick] (E0) -- (plus);
-                    \draw<3->[thick] (E0) -- (T1);
-
-                    \node<4->[nt] (Tleft) at (-2.2,-2.2) {$T$};
-                    \node<4->[nt] (T2) at (1.2,-2.2) {$T$};
-                    \node<4->[t]  (times) at (2.2,-2.2) {$*$};
-                    \node<4->[nt] (F3) at (3.2,-2.2) {$F$};
-
-                    \draw<4->[thick] (E1) -- (Tleft);
-                    \draw<4->[thick] (T1) -- (T2);
-                    \draw<4->[thick] (T1) -- (times);
-                    \draw<4->[thick] (T1) -- (F3);
-
-                    \node<5->[nt] (Fleft) at (-2.2,-3.3) {$F$};
-                    \node<5->[nt] (F2) at (1.2,-3.3) {$F$};
-
-                    \draw<5->[thick] (Tleft) -- (Fleft);
-                    \draw<5->[thick] (T2) -- (F2);
-
-                    \node<6->[t] (a1) at (-2.2,-4.2) {$\mathtt{id}$};
-                    \node<6->[t] (a2) at (1.2,-4.2) {$\mathtt{id}$};
-                    \node<6->[t] (a3) at (3.2,-4.2) {$\mathtt{id}$};
-
-                    \draw<6->[thick] (Fleft) -- (a1);
-                    \draw<6->[thick] (F2) -- (a2);
-                    \draw<6->[thick] (F3) -- (a3);
-                \end{tikzpicture}
+                \input{images/priklad-derivacniho-stromu-vyraz-id-id-id.tex}
             \end{column}
         \end{columns}
 
@@ -933,64 +455,7 @@
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.4\textwidth}
                 \centering
-                \begin{tikzpicture}[
-                    scale=0.78,
-                    every node/.style={font=\scriptsize},
-                    nt/.style={draw, circle, thick, minimum size=7mm},
-                    t/.style={draw, rounded corners, thick, minimum width=7mm, minimum height=5mm}
-                ]
-
-                    \node<2->[nt] (E0) at (0,0) {$E$};
-
-                    \node<3->[nt] (T0) at (0,-1.0) {$T$};
-                    \draw<3->[thick] (E0) -- (T0);
-
-                    \node<4->[nt] (T1) at (-1.3,-2.0) {$T$};
-                    \node<4->[t]  (times) at (0,-2.0) {$*$};
-                    \node<4->[nt] (F3) at (1.3,-2.0) {$F$};
-
-                    \draw<4->[thick] (T0) -- (T1);
-                    \draw<4->[thick] (T0) -- (times);
-                    \draw<4->[thick] (T0) -- (F3);
-
-                    \node<5->[nt] (F1) at (-1.3,-3.0) {$F$};
-                    \node<5->[t]  (id3) at (1.3,-3.0) {$\mathtt{id}$};
-
-                    \draw<5->[thick] (T1) -- (F1);
-                    \draw<5->[thick] (F3) -- (id3);
-
-                    \node<6->[t]  (lpar) at (-2.7,-4.0) {$($};
-                    \node<6->[nt] (E1) at (-1.3,-4.0) {$E$};
-                    \node<6->[t]  (rpar) at (0.1,-4.0) {$)$};
-
-                    \draw<6->[thick] (F1) -- (lpar);
-                    \draw<6->[thick] (F1) -- (E1);
-                    \draw<6->[thick] (F1) -- (rpar);
-
-                    \node<7->[nt] (E2) at (-2.3,-5.0) {$E$};
-                    \node<7->[t]  (plus) at (-1.3,-5.0) {$+$};
-                    \node<7->[nt] (T2) at (-0.3,-5.0) {$T$};
-
-                    \draw<7->[thick] (E1) -- (E2);
-                    \draw<7->[thick] (E1) -- (plus);
-                    \draw<7->[thick] (E1) -- (T2);
-
-                    \node<8->[nt] (T3) at (-2.3,-6.0) {$T$};
-                    \node<8->[nt] (F2) at (-0.3,-6.0) {$F$};
-
-                    \draw<8->[thick] (E2) -- (T3);
-                    \draw<8->[thick] (T2) -- (F2);
-
-                    \node<9->[nt] (F4) at (-2.3,-7.0) {$F$};
-                    \node<9->[t] (num1) at (-0.3,-7.0) {$\mathtt{num}$};
-
-                    \draw<9->[thick] (T3) -- (F4);
-                    \draw<9->[thick] (F2) -- (num1);
-
-                    \node<10->[t] (id1) at (-2.3,-7.9) {$\mathtt{id}$};
-                    \draw<10->[thick] (F4) -- (id1);
-
-                \end{tikzpicture}
+                \input{images/priklad-derivacniho-stromu-vyraz-id-num-id.tex}
             \end{column}
 
             \begin{column}{0.58\textwidth}
@@ -1021,16 +486,7 @@
 
     \begin{frame}{Gramatika jednoduchého příkazu v C\#}
         \centering
-        \begin{tikzpicture}
-            \node[
-                draw,
-                thick,
-                rounded corners,
-                fill=blue!20!white,
-                inner xsep=8pt,
-                inner ysep=6pt
-            ] {\texttt{float posX = currPosX + stepsX * directionX * speedX;}};
-        \end{tikzpicture}
+        \input{images/gramatika-jednoducheho-prikazu-v-c.tex}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.52\textwidth}
                 \[
@@ -1061,82 +517,7 @@
     \begin{frame}{Derivační strom}{Příkaz \texttt{float posX = currPosX + stepsX * directionX * speedX;}}
 
         \centering
-        \begin{tikzpicture}[
-            scale=0.85,
-            transform shape,
-            every node/.style={font=\scriptsize},
-            nt/.style={draw, circle, thick, minimum size=8mm},
-            t/.style={draw, rounded corners, thick, minimum width=8mm, minimum height=6mm}
-        ]
-
-            % vrcholy
-            \node[nt] (S) at (0,0) {$S$};
-
-            \node[nt] (Type) at (-5.6,-1.3) {$Type$};
-            \node[t]  (id0)  at (-3.2,-1.3) {$\mathtt{id}$};
-            \node[t]  (eq)   at (-1.5,-1.3) {$=$};
-            \node[nt] (E0)   at (1.0,-1.3) {$E$};
-            \node[t]  (semi) at (5.8,-1.3) {$;$};
-
-            \node[t]  (float)   at (-5.6,-2.5) {$\mathtt{float}$};
-
-            \node[nt] (E1)    at (-0.8,-2.5) {$E$};
-            \node[t]  (plus)  at (1.0,-2.5) {$+$};
-            \node[nt] (T0)    at (3.0,-2.5) {$T$};
-
-            \node[nt] (Tleft)  at (-0.8,-3.7) {$T$};
-
-            \node[nt] (T1)     at (1.6,-3.7) {$T$};
-            \node[t]  (mul2)   at (3.0,-3.7) {$*$};
-            \node[nt] (Fspeed) at (4.4,-3.7) {$F$};
-
-            \node[nt] (Fleft)   at (-0.8,-4.9) {$F$};
-
-            \node[nt] (T2)      at (0.2,-4.9) {$T$};
-            \node[t]  (mul1)    at (1.6,-4.9) {$*$};
-            \node[nt] (Fdir)    at (3.0,-4.9) {$F$};
-
-            \node[t]  (idSpeed) at (4.4,-4.9) {$\mathtt{id}$};
-
-            \node[t]  (idCurr)  at (-0.8,-6.1) {$\mathtt{id}$};
-
-            \node[nt] (Fsteps)  at (0.2,-6.1) {$F$};
-            \node[t]  (idDir)   at (3.0,-6.1) {$\mathtt{id}$};
-
-            \node[t]  (idSteps) at (0.2,-7.3) {$\mathtt{id}$};
-
-            % hrany
-            \draw[thick] (S) -- (Type);
-            \draw[thick] (S) -- (id0);
-            \draw[thick] (S) -- (eq);
-            \draw[thick] (S) -- (E0);
-            \draw[thick] (S) -- (semi);
-
-            \draw[thick] (Type) -- (float);
-
-            \draw[thick] (E0) -- (E1);
-            \draw[thick] (E0) -- (plus);
-            \draw[thick] (E0) -- (T0);
-
-            \draw[thick] (E1) -- (Tleft);
-            \draw[thick] (Tleft) -- (Fleft);
-            \draw[thick] (Fleft) -- (idCurr);
-
-            \draw[thick] (T0) -- (T1);
-            \draw[thick] (T0) -- (mul2);
-            \draw[thick] (T0) -- (Fspeed);
-
-            \draw[thick] (T1) -- (T2);
-            \draw[thick] (T1) -- (mul1);
-            \draw[thick] (T1) -- (Fdir);
-
-            \draw[thick] (T2) -- (Fsteps);
-            \draw[thick] (Fsteps) -- (idSteps);
-
-            \draw[thick] (Fdir) -- (idDir);
-            \draw[thick] (Fspeed) -- (idSpeed);
-
-        \end{tikzpicture}
+        \input{images/derivacni-strom-prikaz-float-posx-currposx-stepsx-directionx-speedx.tex}
 
     \end{frame}
 
@@ -1154,29 +535,7 @@
         \vspace{0.2cm}
 
         \centering
-        \begin{tikzpicture}[
-            box/.style={
-                draw,
-                rounded corners,
-                thick,
-                minimum width=1.4cm,
-                minimum height=0.6cm,
-                align=center,
-                font=\scriptsize
-            },
-            arrow/.style={->, thick}
-        ]
-            \node<5->[box] (s1) at (0,0) {$E$};
-            \node<6->[box] (s2) at (2.0,0) {$E + T$};
-            \node<7->[box] (s3) at (4.4,0) {$T + T$};
-            \node<8->[box] (s4) at (6.8,0) {$F + F$};
-            \node<9->[box] (s5) at (9.2,0) {$a + a$};
-
-            \draw<6->[arrow] (s1) -- (s2);
-            \draw<7->[arrow] (s2) -- (s3);
-            \draw<8->[arrow] (s3) -- (s4);
-            \draw<9->[arrow] (s4) -- (s5);
-        \end{tikzpicture}
+        \input{images/analyza-shora-dolu.tex}
 
         \vspace{0.2cm}
 
@@ -1201,29 +560,7 @@
         \vspace{0.3cm}
 
         \centering
-        \begin{tikzpicture}[
-            box/.style={
-                draw,
-                rounded corners,
-                thick,
-                minimum width=1.4cm,
-                minimum height=0.6cm,
-                align=center,
-                font=\scriptsize
-            },
-            arrow/.style={->, thick}
-        ]
-            \node<5->[box] (s1) at (0,0) {$a + a$};
-            \node<6->[box] (s2) at (2.2,0) {$F + F$};
-            \node<7->[box] (s3) at (4.6,0) {$T + T$};
-            \node<8->[box] (s4) at (7.0,0) {$E + T$};
-            \node<9->[box] (s5) at (9.4,0) {$E$};
-
-            \draw<6->[arrow] (s1) -- (s2);
-            \draw<7->[arrow] (s2) -- (s3);
-            \draw<8->[arrow] (s3) -- (s4);
-            \draw<9->[arrow] (s4) -- (s5);
-        \end{tikzpicture}
+        \input{images/analyza-zdola-nahoru.tex}
 
         \vspace{0.3cm}
 
@@ -1249,29 +586,7 @@
         \vspace{0.3cm}
 
         \visible<5->{\centering
-        \begin{tikzpicture}[
-            box/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                font=\scriptsize,
-                minimum width=2.1cm,
-                minimum height=0.75cm
-            },
-            arrow/.style={->, thick}
-        ]
-
-            \node[box] (parser) at (0,0) {parser};
-            \node[box] (tree) at (2.7,0) {syntaktický\\strom};
-            \node[box] (sem) at (5.4,0) {sémantická\\analýza};
-            \node[box] (out) at (8.1,0) {anotovaný strom\\nebo chyba};
-
-            \draw[arrow] (parser) -- (tree);
-            \draw[arrow] (tree) -- (sem);
-            \draw[arrow] (sem) -- (out);
-
-        \end{tikzpicture}}
+        \input{images/semanticka-analyza.tex}}
 
     \end{frame}
 
@@ -1329,16 +644,7 @@
 
         \visible<4->{
             \centering
-            \begin{tikzpicture}
-                \node[
-                    draw,
-                    thick,
-                    rounded corners,
-                    fill=blue!20!white,
-                    inner xsep=8pt,
-                    inner ysep=6pt
-                ] {\texttt{float posX = currPosX + stepsX * directionX * speedX;}};
-            \end{tikzpicture}
+            \input{images/tabulka-symbolu.tex}
         }
 
         \vspace{0.3cm}
@@ -1376,43 +682,7 @@
         \vspace{0.1cm}
 
         \centering
-        \begin{tikzpicture}[
-            every node/.style={font=\scriptsize},
-            box/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                minimum width=1.8cm,
-                minimum height=0.55cm
-            },
-            arrow/.style={->, thick}
-        ]
-
-            \node<4->[box] (a) at (0,0) {\texttt{stepsX}\\\texttt{int}};
-            \node<4->[box] (b) at (2.2,0) {\texttt{directionX}\\\texttt{int}};
-            \node<5->[box] (mul1) at (1.1,-1.0) {\texttt{*}\\výsledek \texttt{int}};
-
-            \draw<5->[arrow] (a) -- (mul1);
-            \draw<5->[arrow] (b) -- (mul1);
-
-            \node<6->[box] (c) at (4.2,0) {\texttt{speedX}\\\texttt{float}};
-            \node<6->[box] (mul2) at (2.7,-2.0) {\texttt{*}\\výsledek \texttt{float}};
-
-            \draw<6->[arrow] (mul1) -- (mul2);
-            \draw<6->[arrow] (c) -- (mul2);
-
-            \node<6->[box] (d) at (-1.2,-2.0) {\texttt{currPosX}\\\texttt{float}};
-            \node<7->[box] (plus) at (0.8,-3.0) {\texttt{+}\\výsledek \texttt{float}};
-
-            \draw<7->[arrow] (d) -- (plus);
-            \draw<7->[arrow] (mul2) -- (plus);
-
-            \node<8->[box] (assign) at (0.8,-4.0) {\texttt{posX = ...}\\\texttt{float = float}};
-
-            \draw<8->[arrow] (plus) -- (assign);
-
-        \end{tikzpicture}
+        \input{images/typova-kontrola-vyrazu.tex}
 
         \vspace{0.1cm}
 
@@ -1442,33 +712,7 @@
         \vspace{0.1cm}
 
         \centering
-        \begin{tikzpicture}[
-            box/.style={
-                draw,
-                rounded corners,
-                thick,
-                align=center,
-                font=\scriptsize,
-                minimum width=1.75cm,
-                minimum height=0.6cm
-            },
-            arrow/.style={->, thick}
-        ]
-
-            \node<2->[box, fill=red!35] (src) at (0,0) {zdrojový\\kód};
-            \node<2->[box, fill=red!35] (lex) at (2.0,0) {lexikální\\analýza};
-            \node<2->[box, fill=red!35] (syn) at (4.0,0) {syntaktická\\analýza};
-            \node<2->[box, fill=red!35] (sem) at (6.0,0) {sémantická\\analýza};
-            \node<3->[box, fill=yellow!45] (ir) at (6.0,-1.0) {mezikód};
-
-            \draw<2->[arrow] (src) -- (lex);
-            \draw<2->[arrow] (lex) -- (syn);
-            \draw<2->[arrow] (syn) -- (sem);
-            \draw<3->[arrow] (sem) -- (ir);
-
-            \node<2->[font=\scriptsize\bfseries] at (3.0,0.65) {přední část překladače};
-
-        \end{tikzpicture}
+        \input{images/optimalizace-kodu.tex}
 
         \vspace{0.15cm}
 
@@ -1527,21 +771,7 @@
 
         \visible<4->{
             \centering
-            \begin{tikzpicture}[
-                box/.style={
-                    draw,
-                    rounded corners,
-                    thick,
-                align=center,
-                font=\scriptsize,
-                minimum width=2.0cm,
-                minimum height=0.6cm
-            }
-        ]
-            \node[box] (src) at (0,0) {\texttt{x := 2 * 60}\\ \texttt{y := x + 5}};
-            \node[box] (res) at (6,0) {\texttt{y := 125}};
-            \draw[->, thick] (src) -- (res);
-        \end{tikzpicture}}
+            \input{images/constant-folding.tex}}
 
     \end{frame}
 
@@ -1602,19 +832,7 @@
         \vspace{0.1cm}
 
         \centering
-        \begin{tikzpicture}
-
-            \node<4->[task] (b1) at (0,0) {$B_1$};
-            \node<4->[task] (b2) at (-1.8,-1.2) {$B_2$};
-            \node<4->[task] (b3) at (1.8,-1.2) {$B_3$};
-            \node<4->[task] (b4) at (0,-2.4) {$B_4$};
-
-            \draw<4->[diredge] (b1) -- (b2);
-            \draw<4->[diredge] (b1) -- (b3);
-            \draw<4->[diredge] (b2) -- (b4);
-            \draw<4->[diredge] (b3) -- (b4);
-
-        \end{tikzpicture}
+        \input{images/globalni-optimalizace.tex}
 
         \vspace{0.1cm}
 
@@ -1721,30 +939,7 @@
 
                 \vspace{0.1cm}
 
-                \begin{tikzpicture}[
-                    scale=0.75,
-                    transform shape,
-                    box/.style={
-                        draw,
-                        thick,
-                        minimum width=18mm,
-                        minimum height=10mm,
-                        align=center,
-                        font=\scriptsize
-                    },
-                    arrow/.style={->, thick, >=stealth}
-                ]
-                    \node[box] (src) at (0,0) {zdrojový\\program};
-                    \node[box] (comp) at (2.1,0) {překladač};
-                    \node[box] (target) at (4.2,0) {cílový\\program};
-                    \node[box] (data) at (4.2,1.25) {data};
-                    \node[box] (out) at (6.3,0) {výsledky};
-
-                    \draw[arrow] (src) -- (comp);
-                    \draw[arrow] (comp) -- (target);
-                    \draw[arrow] (target) -- (out);
-                    \draw[arrow] (data) -- (target);
-                \end{tikzpicture}
+                \input{images/kompilovany-a-interpretovany-preklad-1.tex}
             \end{column}
 
             \begin{column}{0.49\textwidth}
@@ -1753,28 +948,7 @@
 
                 \vspace{0.1cm}
 
-                \begin{tikzpicture}[
-                    scale=0.75,
-                    transform shape,
-                    box/.style={
-                        draw,
-                        thick,
-                        minimum width=18mm,
-                        minimum height=10mm,
-                        align=center,
-                        font=\scriptsize
-                    },
-                    arrow/.style={->, thick, >=stealth}
-                ]
-                    \node[box] (src) at (0,0) {zdrojový\\program};
-                    \node[box] (interp) at (2.1,0) {interpret};
-                    \node[box] (data) at (2.1,1.25) {data};
-                    \node[box] (out) at (4.2,0) {výsledky};
-
-                    \draw[arrow] (src) -- (interp);
-                    \draw[arrow] (data) -- (interp);
-                    \draw[arrow] (interp) -- (out);
-                \end{tikzpicture}
+                \input{images/kompilovany-a-interpretovany-preklad-2.tex}
             \end{column}
         \end{columns}
 
@@ -1800,28 +974,7 @@
         \vspace{0.3cm}
 
         \centering
-        \begin{tikzpicture}[
-            box/.style={
-                draw,
-                rounded corners,
-                thick,
-                minimum width=22mm,
-                minimum height=8mm,
-                align=center,
-                font=\scriptsize
-            },
-            arrow/.style={->, thick, >=stealth}
-        ]
-            \node<2->[box] (src) at (0,0) {zdrojový\\program};
-            \node<3->[box] (read) at (2.5,0) {načtení\\příkazu};
-            \node<4->[box] (exec) at (5.0,0) {vykonání};
-            \node<5->[box] (next) at (7.5,0) {další\\příkaz};
-
-            \draw<3->[arrow] (src) -- (read);
-            \draw<4->[arrow] (read) -- (exec);
-            \draw<5->[arrow] (exec) -- (next);
-            \draw<5->[arrow] (next.south) to[out=-90,in=-90] (read.south);
-        \end{tikzpicture}
+        \input{images/jak-funguje-interpret.tex}
 
     \end{frame}
 
@@ -1898,27 +1051,7 @@
         \vspace{0.3cm}
 
         \centering
-        \begin{tikzpicture}[
-            box/.style={
-                draw,
-                rounded corners,
-                thick,
-                minimum width=20mm,
-                minimum height=8mm,
-                align=center,
-                font=\scriptsize
-            },
-            arrow/.style={->, thick, >=stealth}
-        ]
-            \node<3->[box] (src) at (0,0) {zdrojový\\kód};
-            \node<4->[box] (bc) at (2.6,0) {bytecode\\/ mezikód};
-            \node<5->[box] (jit) at (5.2,0) {JIT\\kompilátor};
-            \node<6->[box] (native) at (7.8,0) {strojový\\kód};
-
-            \draw<4->[arrow] (src) -- (bc);
-            \draw<5->[arrow] (bc) -- (jit);
-            \draw<6->[arrow] (jit) -- (native);
-        \end{tikzpicture}
+        \input{images/jit-kompilace.tex}
 
         \vspace{0.3cm}
 

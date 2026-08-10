@@ -1,0 +1,12 @@
+\begin{tikzpicture}[x=0.48cm,y=0.35cm,>=stealth]
+    \draw[->] (0,0) -- (7,0);
+    \draw[->] (0,0) -- (0,6);
+
+    \foreach \x/\y in {1/1.2,2/1.7,3/2.3,4/2.8}
+        \fill[blue!70!black] (\x,\y) circle (2pt);
+
+    \draw[red!75!black,thick] (0.7,0.8) -- (6.8,5.5);
+    \draw[dashed,red!75!black,thick] (4.2,3.2) -- (6.8,5.5);
+
+    \node[red!75!black] at (5.8,2.2) {mimo data};
+\end{tikzpicture}

@@ -1,0 +1,15 @@
+\begin{tikzpicture}[x=0.85cm,y=0.55cm,>=stealth]
+    \draw[->] (0,0) -- (7.2,0) node[right] {$x$};
+    \draw[->] (0,0) -- (0,6.2) node[above] {$y$};
+
+    \foreach \x/\y in {1/1.4,2/2.0,3/2.7,4/3.1,5/4.4,6/4.7}
+        \fill[blue!70!black] (\x,\y) circle (2pt);
+
+    \node[orange!90!black,above left] at (4.5,1.6) {$(\average{\mathbf{X}},\average{\mathbf{Y}})$};
+
+    \draw[gray!60,thick] (0.8,2.3) -- (6.7,3.8);
+    \draw[gray!60,thick] (0.8,4.0) -- (6.7,2.1);
+    \draw[red!75!black,thick] (0.8,0.9) -- (6.7,5.2);
+
+    \node[red!75!black] at (5.8,5.5) {nejlepší sklon?};
+\end{tikzpicture}

@@ -1,0 +1,25 @@
+\begin{tikzpicture}[scale=1]
+
+    \node[vertex,fill=green] (V)   at (0,0) {$v$};
+    \node[vertexplain] (VP1)   at (2,1) {};
+    \node[vertexplain] (VP2)   at (2,0) {};
+    \node[vertexplain] (VP3)   at (2,-1) {};
+    \node[vertexplain] (VP4)   at (-2,1) {};
+    \node[vertexplain] (VP5)   at (-2,0) {};
+    \node[vertexplain] (VP6)   at (-2,-1) {};
+    
+    \node[vertexplain] (Vdots1)   at (-2.5,0) {$\dots$};
+    \node[vertexplain] (Vdots2)   at (2.5,0) {$\dots$};
+    \node[vertexplain] (Vdots1)   at (-2.5,-1) {$\dots$};
+    \node[vertexplain] (Vdots2)   at (2.5,-1) {$\dots$};
+    \node[vertexplain] (Vdots1)   at (-2.5,1) {$\dots$};
+    \node[vertexplain] (Vdots2)   at (2.5,1) {$\dots$};
+
+    \draw[edge] (V) -- (VP1);
+    \draw[edge] (V) -- (VP2);
+    \draw[edge] (V) -- (VP3);
+    \draw[edge] (V) -- (VP4);
+    \draw[edge] (V) -- (VP5);
+    \draw[edge] (V) -- (VP6);
+
+\end{tikzpicture}

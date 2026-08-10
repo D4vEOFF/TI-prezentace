@@ -1,0 +1,73 @@
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    >=latex,
+    scale=0.8,
+    arr/.style={->, >=latex, line width=0.95pt, draw=black},
+    brace/.style={decorate, decoration={brace, amplitude=4pt}},
+    lbl/.style={font=\small, align=center}
+]
+
+    \node[font=\Large] at (-4.3,4.3) {Podepsání};
+    \node[font=\Large] at (4.3,4.3) {Ověření};
+    \draw[draw=black!35, line width=0.5pt] (0,4.75) -- (0,-4.7);
+
+    %================================================
+    % LEVÁ ČÁST -- Podepsání
+    %================================================
+
+    \papericon{docL}{(-6.4,2.7)}{Data}
+    \hashbox{hashL}{(-3.00,2.7)}{\texttt{101100110101}}
+    \draw[arr, shorten <= 10pt] (docL.east) -- (hashL)
+        node[midway, above right, font=\scriptsize] {\(H_n\)};
+
+    \node[font=\small, above=0.05cm of hashL] {Hash};
+    \hashbox{sigL}{(-3.00,0.00)}{\texttt{111101101110}}
+    \node[right=-0.3cm of sigL] {\includegraphics[width=0.28cm]{images/lock.pdf}};
+    \node[font=\small, below=0.05cm of sigL] {Podpis};
+
+    \draw[arr] (hashL.south) -- (sigL.north)
+        node[midway, right, font=\scriptsize, align=center]
+        {\(\mathbf{D}(\;\cdot\,,k_S^A)\)};
+
+    \node (certificate) at (-6.2,0.0)
+        {\includegraphics[width=0.85cm]{images/certificate.pdf}};
+    \node[font=\small, below=0.02cm of certificate] {Certifikát};
+
+    \signedpapericon{signedL}{(-3.9,-3.0)}{Digitálně podepsaná data}
+
+    \draw[arr,shorten >= 15pt, shorten <= 15pt] (sigL) -- (signedL);
+    \draw[arr,shorten >= 15pt, shorten <= 18pt] (certificate) -- (signedL);
+
+    %================================================
+    % PRAVÁ ČÁST -- Ověření
+    %================================================
+
+    \signedpapericon{signedR}{(4.0,2.7)}{Digitálně podepsaná data}
+
+    \papericon{docR}{(2.0,0.0)}{Data}
+    \hashbox{sigR}{(6.0,0.0)}{\texttt{111101101110}}
+
+    \draw[arr, shorten <= 30pt, shorten >= 13pt] (signedR) -- (docR);
+    \draw[arr, shorten <= 30pt] (signedR) -- (sigR.north);
+    
+    \node[right=-0.3cm of sigR] {\includegraphics[width=0.28cm]{images/lock.pdf}};
+    \node[font=\small, below=0.05cm of sigR] {Podpis};
+
+    \hashbox{hashR1}{(2.0,-2.65)}{\texttt{101100110101}}
+    \node[font=\small, below=0.05cm of hashR1] {Hash};
+
+    \hashbox{hashR2}{(6.0,-2.65)}{\texttt{101100110101}}
+    \node[font=\small, below=0.05cm of hashR2] {Hash};
+
+    \draw[arr, shorten <= 27pt] (docR) -- (hashR1)
+        node[midway, below right, font=\scriptsize] {\(H_n\)};
+    \draw[arr, shorten <= 16pt] (sigR) -- (hashR2)
+        node[midway, right, font=\scriptsize, align=center]
+        {\(\mathbf{E}(\;\cdot\;,k_V^A)\)};
+
+    \node[font=\Large] at (4.0,-2.5) {\(\stackrel{?}{=}\)};
+
+    \node[lbl, text width=6.6cm] at (4.0,-4.3)
+    {Rovnají-li se otisky,\\ podpis dat je ověřen.};
+
+\end{tikzpicture}

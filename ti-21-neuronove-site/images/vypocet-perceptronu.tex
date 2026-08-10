@@ -1,0 +1,20 @@
+\begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    every node/.style={font=\small}
+]
+
+    \node[vertex] (x1) at (0,1.4) {\(x_{i1}\)};
+    \node[vertex] (x2) at (0,0.4) {\(x_{i2}\)};
+    \node[vertexplain] at (0,-0.35) {\(\vdots\)};
+    \node[vertex] (xp) at (0,-1.2) {\(x_{ip}\)};
+
+    \node[vertex] (y) at (4.2,0.1) {\(\hat{y}_i\)};
+    \node[vertexplain,right=of y] (output) {$\displaystyle \hat{y}_i=f\left(\sum_{j=1}^{p} w_jx_{ij}+\theta\right)$};
+
+    \draw[diredge] (x1) -- node[above, sloped] {\(w_1\)} (y);
+    \draw[diredge] (x2) -- node[above, sloped] {\(w_2\)} (y);
+    \draw[diredge] (xp) -- node[below, sloped] {\(w_p\)} (y);
+    \draw[diredge] (y) -- ++(1,0);
+
+\end{tikzpicture}
