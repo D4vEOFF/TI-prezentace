@@ -1,0 +1,57 @@
+% =====================================================================
+% Varianta 1 -- boční barevný pruh
+%
+% Svislý pruh v hlavní barvě u levého okraje nese název předmětu,
+% vpravo je téma přednášky, autor, e-mail, škola, logo a školní rok.
+% Šablona je nezávislá na předmětu -- vše se bere z \title, \subtitle,
+% \author, \email, \institute, \date a \schoollogo.
+% =====================================================================
+\defbeamertemplate{title page}{bocnipruh}[1][]{%
+    \begin{tikzpicture}[remember picture, overlay]
+        % Podklad
+        \fill[titlepagebg] (current page.north west) rectangle (current page.south east);
+
+        % Svislý pruh v hlavní barvě
+        \fill[maincolor] (current page.north west) rectangle
+            ([xshift=0.28\paperwidth]current page.south west);
+        % Světlejší akcentní proužek na jeho hraně
+        \fill[titlefooterbg] ([xshift=0.28\paperwidth]current page.north west) rectangle
+            ([xshift=0.295\paperwidth]current page.south west);
+
+        % Název předmětu svisle v pruhu
+        \node[rotate=90, white, font=\large\bfseries\scshape, align=center,
+              text width=0.80\paperheight]
+            at ([xshift=0.14\paperwidth]current page.west) {\tpinverse\inserttitle};
+
+        % Logo školy vpravo nahoře
+        \node[anchor=north east, inner sep=0pt]
+            at ([xshift=-0.07\paperwidth, yshift=-0.10\paperheight]current page.north east)
+            {\includegraphics[width=0.13\paperwidth]{\schoollogo}};
+
+        % Téma přednášky (roste směrem nahoru, aby delší název nezasáhl do údajů)
+        \node[anchor=south west, text width=0.56\paperwidth, align=left, inner sep=0pt,
+              text=maincolor]
+            at ([xshift=0.35\paperwidth, yshift=0.545\paperheight]current page.south west)
+            {\tptopic{\insertsubtitle}};
+
+        % Oddělovací linka
+        \fill[maincolor]
+            ([xshift=0.35\paperwidth, yshift=0.495\paperheight]current page.south west)
+            rectangle
+            ([xshift=0.55\paperwidth, yshift=0.4985\paperheight]current page.south west);
+
+        % Autor, kontakt, škola
+        \node[anchor=north west, text width=0.56\paperwidth, align=left, inner sep=0pt]
+            at ([xshift=0.35\paperwidth, yshift=0.435\paperheight]current page.south west) {%
+                {\usebeamerfont{author}\insertauthor\par}%
+                {\small\texttt{\email}\par}%
+                \vskip0.5em
+                {\small\insertinstitute\par}%
+            };
+
+        % Školní rok vpravo dole
+        \node[anchor=south east, inner sep=0pt, font=\small]
+            at ([xshift=-0.07\paperwidth, yshift=0.09\paperheight]current page.south east)
+            {\tpdate{maincolor}};
+    \end{tikzpicture}%
+}

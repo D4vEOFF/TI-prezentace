@@ -22,6 +22,7 @@
 \definecolor{titlefooterfg}{HTML}{000000}
 \colorlet{titlecolorfg}{maincolor}
 \definecolor{titleboxbg}{HTML}{E7E7E7}
+\definecolor{titlepagebg}{HTML}{FFFFFF}   % podklad titulní strany
 \definecolor{datefooterbg}{HTML}{E3E3E3}
 \colorlet{titleframeboxcolor}{maincolor}
 
@@ -106,7 +107,7 @@
     \begin{centering}
         \begin{tikzpicture}
             \node[thick, rectangle, rounded corners=5mm, drop shadow={shadow xshift=0mm, shadow yshift=2mm, opacity=0.2, blur shadow, shadow blur steps=10}, inner sep=5mm, fill=titleboxbg, fill opacity=1] {%
-                {\usebeamerfont{title}\textcolor{titlecolorfg}{\inserttitle}\par}%
+                {\usebeamerfont{title}\textcolor{titlecolorfg}{\textsc{\inserttitle}}\par}%
             };
         \end{tikzpicture}
         \vskip1em\par%

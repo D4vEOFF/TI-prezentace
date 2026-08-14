@@ -1,0 +1,38 @@
+% =====================================================================
+% Varianta 0 -- současná titulní strana (ponecháno pro porovnání)
+% =====================================================================
+\defbeamertemplate{title page}{soucasna}[1][]{%
+    \vbox{}%
+    \vfill%
+    \begin{centering}
+        \begin{tikzpicture}
+            \node[thick, rectangle, rounded corners=5mm, drop shadow={shadow xshift=0mm, shadow yshift=2mm, opacity=0.2, blur shadow, shadow blur steps=10}, inner sep=5mm, fill=titleboxbg, fill opacity=1] {%
+                {\usebeamerfont{title}\textcolor{titlecolorfg}{\textsc{\inserttitle}}\par}%
+            };
+        \end{tikzpicture}
+        \vskip1em\par%
+        \ifx\insertsubtitle\@empty%
+        \else%
+            {\usebeamerfont{subtitle}\insertsubtitle\par}%
+        \fi%
+        \vskip1em\par%
+        \ifx\insertauthor\@empty%
+        \else%
+            {\usebeamerfont{author}\insertauthor}\\%
+            \texttt{\email}
+        \fi
+        \vskip0.3em\par%
+        \vskip1em\par%
+        \ifx\inserttitlegraphic\@empty%
+        \else%
+            \vskip1em\par%
+            \inserttitlegraphic\par%
+        \fi%
+        \vskip1em\par%
+        \ifx\insertdate\@empty%
+        \else%
+            {\usebeamerfont{date}\insertdate\par}%
+        \fi%
+    \end{centering}%
+    \vfill%
+}

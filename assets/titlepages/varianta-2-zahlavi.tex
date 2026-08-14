@@ -1,0 +1,49 @@
+% =====================================================================
+% Varianta 2 -- barevné záhlaví přes celou šířku
+%
+% Horní část strany vyplňuje přechod v hlavní barvě s názvem předmětu
+% a tématem přednášky, spodní světlá část nese autora, kontakt, školu,
+% logo a školní rok.
+% =====================================================================
+\defbeamertemplate{title page}{zahlavi}[1][]{%
+    \begin{tikzpicture}[remember picture, overlay]
+        % Podklad
+        \fill[titlepagebg] (current page.north west) rectangle (current page.south east);
+
+        % Barevné záhlaví s jemným přechodem
+        \shade[top color=maincolor, bottom color=maincolor!72]
+            (current page.north west) rectangle
+            ([yshift=-0.52\paperheight]current page.north east);
+        % Světlejší oddělovací proužek pod záhlavím
+        \fill[titlefooterbg]
+            ([yshift=-0.52\paperheight]current page.north west) rectangle
+            ([yshift=-0.535\paperheight]current page.north east);
+
+        % Název předmětu
+        \node[anchor=north west, white, font=\normalsize\bfseries\scshape,
+              text width=0.84\paperwidth, align=left, inner sep=0pt]
+            at ([xshift=0.08\paperwidth, yshift=-0.13\paperheight]current page.north west)
+            {\tpinverse\inserttitle};
+
+        % Téma přednášky
+        \node[anchor=north west, white, text width=0.84\paperwidth, align=left, inner sep=0pt]
+            at ([xshift=0.08\paperwidth, yshift=-0.20\paperheight]current page.north west)
+            {\tpinverse\tptopic{\insertsubtitle}};
+
+        % Autor, kontakt, škola, školní rok
+        \node[anchor=north west, text width=0.55\paperwidth, align=left, inner sep=0pt]
+            at ([xshift=0.08\paperwidth, yshift=-0.63\paperheight]current page.north west) {%
+                {\usebeamerfont{author}\textcolor{maincolor}{\insertauthor}\par}%
+                {\small\texttt{\email}\par}%
+                \vskip0.5em
+                {\small\insertinstitute\par}%
+                \vskip0.2em
+                {\small\tpdate{maincolor}\par}%
+            };
+
+        % Logo školy vpravo dole
+        \node[anchor=south east, inner sep=0pt]
+            at ([xshift=-0.08\paperwidth, yshift=0.09\paperheight]current page.south east)
+            {\includegraphics[width=0.14\paperwidth]{\schoollogo}};
+    \end{tikzpicture}%
+}

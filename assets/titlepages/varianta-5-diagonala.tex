@@ -1,0 +1,57 @@
+% =====================================================================
+% Varianta 5 -- diagonální rozdělení
+%
+% Stranu dělí šikmá hrana: horní barevná plocha nese název předmětu
+% a téma přednášky, spodní světlá část autora, kontakt, školu, logo
+% a školní rok.
+% =====================================================================
+\defbeamertemplate{title page}{diagonala}[1][]{%
+    \begin{tikzpicture}[remember picture, overlay]
+        % Podklad
+        \fill[titlepagebg] (current page.north west) rectangle (current page.south east);
+
+        % Světlejší doprovodný pruh podél šikmé hrany
+        \fill[titlefooterbg]
+            ([yshift=-0.615\paperheight]current page.north west) --
+            ([yshift=-0.435\paperheight]current page.north east) --
+            ([yshift=-0.475\paperheight]current page.north east) --
+            ([yshift=-0.655\paperheight]current page.north west) -- cycle;
+
+        % Barevná plocha se šikmou hranou
+        \fill[maincolor]
+            (current page.north west) --
+            (current page.north east) --
+            ([yshift=-0.42\paperheight]current page.north east) --
+            ([yshift=-0.60\paperheight]current page.north west) -- cycle;
+
+        % Název předmětu
+        \node[anchor=north west, white, font=\normalsize\bfseries\scshape,
+              text width=0.80\paperwidth, align=left, inner sep=0pt]
+            at ([xshift=0.09\paperwidth, yshift=-0.12\paperheight]current page.north west)
+            {\tpinverse\inserttitle};
+
+        % Téma přednášky
+        \node[anchor=north west, white, text width=0.70\paperwidth, align=left, inner sep=0pt]
+            at ([xshift=0.09\paperwidth, yshift=-0.19\paperheight]current page.north west)
+            {\tpinverse\tptopic{\insertsubtitle}};
+
+        % Autor, kontakt, škola
+        \node[anchor=south west, text width=0.55\paperwidth, align=left, inner sep=0pt]
+            at ([xshift=0.09\paperwidth, yshift=0.16\paperheight]current page.south west) {%
+                {\usebeamerfont{author}\textcolor{maincolor}{\insertauthor}\par}%
+                {\small\texttt{\email}\par}%
+                \vskip0.5em
+                {\small\insertinstitute\par}%
+            };
+
+        % Školní rok vlevo dole
+        \node[anchor=south west, font=\small, inner sep=0pt]
+            at ([xshift=0.09\paperwidth, yshift=0.09\paperheight]current page.south west)
+            {\tpdate{maincolor}};
+
+        % Logo školy vpravo dole
+        \node[anchor=south east, inner sep=0pt]
+            at ([xshift=-0.09\paperwidth, yshift=0.10\paperheight]current page.south east)
+            {\includegraphics[width=0.14\paperwidth]{\schoollogo}};
+    \end{tikzpicture}%
+}

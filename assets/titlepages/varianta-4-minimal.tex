@@ -1,0 +1,63 @@
+% =====================================================================
+% Varianta 4 -- minimalistická typografická
+%
+% Světlý podklad, text zarovnaný vlevo za svislou linkou v hlavní
+% barvě, logo vpravo nahoře, decentní bodová mřížka v pravém dolním
+% rohu. Vhodné pro libovolný předmět bez dalších úprav.
+% =====================================================================
+\defbeamertemplate{title page}{minimal}[1][]{%
+    \begin{tikzpicture}[remember picture, overlay]
+        % Podklad
+        \fill[titlepagebg] (current page.north west) rectangle (current page.south east);
+
+        % Dekorativní bodová mřížka vpravo dole
+        \begin{scope}
+            \clip (current page.south east) rectangle
+                  ([xshift=-0.34\paperwidth, yshift=0.28\paperheight]current page.south east);
+            \foreach \i in {0,...,11} {
+                \foreach \j in {0,...,9} {
+                    \fill[maincolor!25]
+                        ([xshift=-\i*0.028\paperwidth-0.05\paperwidth,
+                          yshift=\j*0.028\paperwidth+0.06\paperheight]current page.south east)
+                        circle (0.5mm);
+                }
+            }
+        \end{scope}
+
+        % Logo školy vpravo nahoře
+        \node[anchor=north east, inner sep=0pt]
+            at ([xshift=-0.08\paperwidth, yshift=-0.10\paperheight]current page.north east)
+            {\includegraphics[width=0.13\paperwidth]{\schoollogo}};
+
+        % Svislá linka v hlavní barvě
+        \fill[maincolor]
+            ([xshift=0.08\paperwidth, yshift=0.30\paperheight]current page.south west)
+            rectangle
+            ([xshift=0.0865\paperwidth, yshift=0.76\paperheight]current page.south west);
+
+        % Název předmětu
+        \node[anchor=north west, font=\normalsize\bfseries\scshape, text=maincolor,
+              text width=0.62\paperwidth, align=left, inner sep=0pt]
+            at ([xshift=0.11\paperwidth, yshift=0.755\paperheight]current page.south west)
+            {\inserttitle};
+
+        % Téma přednášky
+        \node[anchor=north west, text width=0.66\paperwidth, align=left, inner sep=0pt]
+            at ([xshift=0.11\paperwidth, yshift=0.685\paperheight]current page.south west)
+            {\tptopic{\insertsubtitle}};
+
+        % Autor, kontakt, škola
+        \node[anchor=north west, text width=0.6\paperwidth, align=left, inner sep=0pt]
+            at ([xshift=0.11\paperwidth, yshift=0.40\paperheight]current page.south west) {%
+                {\usebeamerfont{author}\insertauthor\par}%
+                {\small\texttt{\email}\par}%
+                \vskip0.5em
+                {\small\insertinstitute\par}%
+            };
+
+        % Školní rok vlevo dole
+        \node[anchor=south west, font=\small, inner sep=0pt]
+            at ([xshift=0.08\paperwidth, yshift=0.10\paperheight]current page.south west)
+            {\tpdate{maincolor}};
+    \end{tikzpicture}%
+}

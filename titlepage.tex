@@ -4,7 +4,13 @@
 }{}
 \makeatother
 
-\title[\presentationtitlefooter]{\textsc{Teoretická informatika}}
+% Název předmětu lze v konkrétní prezentaci přepsat pomocí
+% \def\subjectname{...} před vložením tohoto souboru.
+\providecommand{\subjectname}{Teoretická informatika}
+% Cesta k logu školy (relativně ke složce prezentace).
+\providecommand{\schoollogo}{../images/SPSE-Jecna_Logo.pdf}
+
+\title[\presentationtitlefooter]{\subjectname}
 \subtitle{\presentationtitle}
 \author{David Weber}
 \def\email{weber3@spsejecna.cz}
@@ -17,7 +23,7 @@
     \pgfmathprintnumber[fixed,precision=0,zerofill,1000 sep={}]{\firstyear}/%
     \pgfmathprintnumber[fixed,precision=0,zerofill,1000 sep={}]{\secondyearlasttwo}%
 }
-\titlegraphic{\includegraphics[width=0.25\textwidth]{../images/SPSE-Jecna_Logo.pdf}}
+\titlegraphic{\includegraphics[width=0.25\textwidth]{\schoollogo}}
 
 \begin{frame}[plain]
     \titlepage

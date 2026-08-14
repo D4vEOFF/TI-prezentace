@@ -1,0 +1,62 @@
+% =====================================================================
+% Varianta 3 -- karta se stínem (evoluce současné titulní strany)
+%
+% Zachovává dnešní pojetí (vystředěný box se stínem), ale doplňuje
+% barevnou hlavičku karty s názvem předmětu a školním rokem. Logo je
+% umístěno uvnitř karty.
+% =====================================================================
+\defbeamertemplate{title page}{karta}[1][]{%
+    \begin{tikzpicture}[remember picture, overlay]
+        % Podklad -- jemný tón hlavní barvy
+        \fill[maincolor!6] (current page.north west) rectangle (current page.south east);
+
+        % Tělo karty
+        \node[rectangle, rounded corners=4mm, fill=white,
+              drop shadow={shadow xshift=0mm, shadow yshift=-1.2mm, opacity=0.18,
+                           blur shadow, shadow blur steps=10},
+              minimum width=0.76\paperwidth, minimum height=0.70\paperheight]
+            at (current page.center) {};
+
+        % Hlavička karty v hlavní barvě
+        \begin{scope}
+            \clip[rounded corners=4mm]
+                ([xshift=-0.38\paperwidth, yshift=-0.35\paperheight]current page.center)
+                rectangle
+                ([xshift=0.38\paperwidth, yshift=0.35\paperheight]current page.center);
+            \fill[maincolor]
+                ([xshift=-0.38\paperwidth, yshift=0.25\paperheight]current page.center)
+                rectangle
+                ([xshift=0.38\paperwidth, yshift=0.35\paperheight]current page.center);
+        \end{scope}
+
+        % Název předmětu v hlavičce vlevo
+        \node[anchor=west, white, font=\normalsize\bfseries\scshape, align=left,
+              text width=0.50\paperwidth, inner sep=0pt]
+            at ([xshift=-0.34\paperwidth, yshift=0.30\paperheight]current page.center)
+            {\tpinverse\inserttitle};
+
+        % Školní rok v hlavičce vpravo
+        \node[anchor=east, font=\small, inner sep=0pt]
+            at ([xshift=0.34\paperwidth, yshift=0.30\paperheight]current page.center)
+            {\tpdate{white}};
+
+        % Téma přednášky
+        \node[anchor=north, align=center, text width=0.62\paperwidth, text=maincolor]
+            at ([yshift=0.20\paperheight]current page.center)
+            {\tptopic{\insertsubtitle}};
+
+        % Autor, kontakt, škola -- vlevo v dolní části karty
+        \node[anchor=west, align=left, text width=0.45\paperwidth, inner sep=0pt]
+            at ([xshift=-0.34\paperwidth, yshift=-0.10\paperheight]current page.center) {%
+                {\usebeamerfont{author}\insertauthor\par}%
+                {\small\texttt{\email}\par}%
+                \vskip0.3em
+                {\small\insertinstitute\par}%
+            };
+
+        % Logo školy vpravo dole v kartě
+        \node[anchor=south east, inner sep=0pt]
+            at ([xshift=0.33\paperwidth, yshift=-0.30\paperheight]current page.center)
+            {\includegraphics[width=0.12\paperwidth]{\schoollogo}};
+    \end{tikzpicture}%
+}

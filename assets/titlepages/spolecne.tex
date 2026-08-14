@@ -1,0 +1,38 @@
+% =====================================================================
+% Společné pomůcky pro šablony titulní strany
+% =====================================================================
+
+% Vypnutí dělení slov -- na titulní straně působí rušivě. Kromě
+% penalizace je potřeba i \emergencystretch, jinak TeX slovo rozdělí
+% ve chvíli, kdy jinou přijatelnou sazbu nenajde.
+\newcommand{\tpnohyphen}{%
+    \hyphenpenalty=10000\exhyphenpenalty=10000%
+    \tolerance=9999\emergencystretch=3em\relax
+}
+
+% Školní rok. Čísla se sázejí v matematickém režimu, takže barvu je
+% nutné nastavit i pro "math text" -- jinak zůstanou tmavě modrá.
+% #1 = barva
+\newcommand{\tpdate}[1]{{\setbeamercolor{math text}{fg=#1}\color{#1}\insertdate}}
+
+% Nastavení textu vysázeného na barevném (tmavém) podkladu:
+% matematika i makro \Astar musí být bílé, ne černé/tmavě modré.
+\makeatletter
+\newcommand{\tpinverse}{%
+    \tpnohyphen
+    \setbeamercolor{math text}{fg=white}%
+    \@ifundefined{Astar}{}{\renewcommand{\Astar}{\textup{A}\textsuperscript{*}}}%
+}
+\makeatother
+
+% Téma přednášky (podtitul) -- jednotné sázení ve všech variantách.
+% Pozor: \tpnohyphen musí být mimo skupinu s fontem -- parametry
+% odstavce se čtou až při jeho ukončení. Nastavení \hyphenchar na -1
+% dělení vypne i tam, kde by TeX jinak neměl jiné řešení.
+\newcommand{\tptopic}[1]{%
+    \tpnohyphen
+    {\usebeamerfont{title}\Large
+     \hyphenchar\font=-1\relax
+     #1\par
+     \hyphenchar\font=`\-\relax}%
+}
