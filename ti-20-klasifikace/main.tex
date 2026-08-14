@@ -33,7 +33,7 @@
 
     \vspace{1mm}
     \pause
-    \begin{tinfoframe}[\textwidth]
+    \begin{tinfoframe}
         Klasifikace patří mezi úlohy \textbf{učení s~učitelem}
         (anglicky \markdarkred{supervised learning}), protože při trénování známe správné třídy
         trénovacích dat.
@@ -204,7 +204,7 @@
 
     \vspace{1mm}
     \pause
-    \begin{tinfoframe}[9.5cm]
+    \begin{tinfoframe}
         \begin{center}
             U~binární klasifikace často používáme $ \mathcal{Y}=\set{0,1}$.
         \end{center}
@@ -231,7 +231,7 @@
 
     \vspace{1mm}
     \pause
-    \begin{tinfoframe}[\textwidth]
+    \begin{tinfoframe}
         V~praxi klasifikátor neznáme předem. Vytváříme ho na základě
         trénovací množiny \(D\).
     \end{tinfoframe}
@@ -390,7 +390,7 @@
         (\hat y_1,\hat y_2,\ldots,\hat y_n).
     \]
     \pause
-    \begin{tinfoframe}[12cm]
+    \begin{tinfoframe}
         \begin{center}
             Tedy pro soubory $\mathbf{X}_1,\dots,\mathbf{X}_p,\mathbf{Y}$ jsme získali soubor odhadů $\hat{\mathbf{Y}}$.
         \end{center}
@@ -411,7 +411,7 @@
         \]
     \end{defblock}
     \pause
-    \begin{tinfoframe}[\textwidth]
+    \begin{tinfoframe}
         Rozhodovací hranice odděluje oblasti, v~nichž model přiřazuje
         objektům různé třídy.
     \end{tinfoframe}
@@ -624,7 +624,7 @@
         \]
     \end{itemize}
     \pause
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Parametry \(a\) a~\(b\) určují tvar modelu. Při trénování hledáme
         takové hodnoty, aby model dobře odpovídal trénovacím datům (viz lineární regrese).
     \end{timportantframe}
@@ -856,7 +856,7 @@
 
     \end{columns}
     \pause
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Čím menší hodnotu \(\hat p\) model přiřadí objektu,
         který skutečně patří do třídy~\(1\), tím větší ztrátu dostane.
     \end{timportantframe}
@@ -969,7 +969,7 @@
     \]
     kde \(y_i=1\) znamená, že student test úspěšně zvládl.
     \pause
-    \begin{tnoticebox}[8cm]{Naučený model}
+    \begin{tnoticebox}{Naučený model}
         Trénováním jsme získali logistický model
         \[
             \hat p(x)
@@ -1158,7 +1158,7 @@
         \]
     \end{defblock}
     \pause
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Tyto čtyři hodnoty závisí na statistických souborech
         \(\mathbf{X},\mathbf{Y}\) i~na zvoleném rozhodovacím prahu \(t\).
     \end{timportantframe}
@@ -1246,7 +1246,7 @@
         0{,}8.
     \]
     \pause
-    \begin{timportantframe}[9cm]
+    \begin{timportantframe}
         \begin{center}
             Klasifikátor tedy správně zařadil \(80\,\%\) objektů.
         \end{center}
@@ -1368,12 +1368,12 @@
     V~takové situaci chceme, aby mezi zprávami označenými jako spam
     bylo co nejméně běžných zpráv, tedy aby bylo malé $\FP_{\mathbf{X},\mathbf{Y}}^{(t)}$.
     \pause
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Vysoká přesnost znamená, že pozitivním předpovědím modelu
         můžeme poměrně dobře věřit.
     \end{timportantframe}
     \pause
-    \begin{tinfoframe}[\textwidth]
+    \begin{tinfoframe}
         Samotná přesnost ale nestačí. Model může být velmi přesný,
         a~přitom najít jen malou část všech skutečně pozitivních objektů.
     \end{tinfoframe}
@@ -1434,7 +1434,7 @@
         0{,}75.
     \]
     \pause
-    \begin{timportantframe}[11.5cm]
+    \begin{timportantframe}
         \begin{center}
             Klasifikátor našel \(75\,\%\) všech skutečně pozitivních objektů.
         \end{center}
@@ -1464,7 +1464,7 @@
 
     \vspace{1mm}
     \pause
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Zvýšení rozhodovacího prahu \(t\) obvykle zvyšuje opatrnost modelu:
         pozitivních předpovědí ubývá, což \textbf{může zvýšit přesnost},
         ale \textbf{snížit pokrytí}.
@@ -1498,7 +1498,7 @@
         nazýváme \markdarkred{\(F_1\)-míra} (anglicky \markdarkred{$F_1$-score}).
     \end{defblock}
     \pause
-    \begin{tinfoframe}[\textwidth]
+    \begin{tinfoframe}
         \(F_1\)-míra kombinuje přesnost a~pokrytí do jednoho čísla.
         Vysoká hodnota vyžaduje, aby byly vysoké obě metriky.
     \end{tinfoframe}
@@ -1529,7 +1529,7 @@
 
     \vspace{2mm}
     \pause
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         \(F_1\)-míra nezávisí přímo na počtu správně negativních výsledků
         \(\TN_{\mathbf{X},\mathbf{Y}}^{(t)}\).
         Proto bývá užitečnější než správnost u~nevyvážených tříd.
@@ -1571,7 +1571,7 @@
         0{,}78.
     \]
 
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Výsledná \(F_1\)-míra je přibližně \(0{,}78\), tedy kompromis
         mezi přesností a~pokrytím.
     \end{timportantframe}
@@ -1668,7 +1668,7 @@
         \end{tabular}
     \end{center}
     \pause
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Neexistuje jedna nejlepší metrika pro všechny úlohy.
         Volba metriky závisí na tom, jak "drahé" jsou jednotlivé typy chyb.
     \end{timportantframe}
@@ -1730,7 +1730,7 @@
 
     \vspace{2mm}
     \pause
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Změnou prahu neměníme samotný logistický model \(\hat p(x)\),
         ale pouze pravidlo, kterým jeho výstup převádíme na třídu.
     \end{timportantframe}
@@ -1772,7 +1772,7 @@
         \input{images/presnost-a-pokryti-pri-zmene-prahu.tex}
     \end{center}
     \pause
-    \begin{tinfoframe}[\textwidth]
+    \begin{tinfoframe}
         Graf je pouze ilustrační. Typicky však platí, že zvýšení prahu
         zvyšuje opatrnost modelu a~mění poměr mezi přesností a~pokrytím.
     \end{tinfoframe}
@@ -1783,7 +1783,7 @@
 
 \begin{frame}{Proč nestačí trénovací data?}
     \pause
-    \begin{talertbox}[\textwidth]{Problém}
+    \begin{talertbox}{Problém}
         Pokud model hodnotíme na stejných datech, na kterých jsme ho učili,
         můžeme získat příliš optimistický výsledek.
     \end{talertbox}
@@ -1795,7 +1795,7 @@
 
     \vspace{2mm}
     \pause
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Důležité není pouze to, jak model funguje na známých datech,
         ale především to, jak bude fungovat na nových objektech.
     \end{timportantframe}
@@ -1866,7 +1866,7 @@
         \end{aligned}
     \]
     \pause
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Výsledek na testovacích datech je nejlepší odhad toho,
         jak bude model fungovat na nových datech.
     \end{timportantframe}
@@ -1881,7 +1881,7 @@
 
 \begin{frame}{Myšlenka metody \(k\)-NN}
     \pause
-    \begin{tnoticebox}[8.5cm]{Základní intuice}
+    \begin{tnoticebox}{Základní intuice}
         \begin{center}
             "Podobné" objekty mají často stejnou třídu.
         \end{center}
@@ -1896,7 +1896,7 @@
         \mathbf{Y}=(y_1,\ldots,y_n).
     \]
     \pause
-    \begin{tinfoframe}[\textwidth]
+    \begin{tinfoframe}
         Na rozdíl od logistické regrese zde nehledáme vzorec
         \(\hat p(x)\). Při klasifikaci přímo porovnáváme nový objekt
         s~trénovacími objekty.
@@ -1910,7 +1910,7 @@
         \input{images/nejblizsi-soused.tex}
     \end{center}
     \pause
-    \begin{timportantframe}[11.0cm]
+    \begin{timportantframe}
         \begin{center}
             Při \(k=1\) rozhoduje pouze jeden nejbližší trénovací objekt.
         \end{center}
@@ -2001,7 +2001,7 @@
 
 \begin{frame}{Jak zvolit hodnotu \(k\)?}
     \pause
-    \begin{tnoticebox}[\textwidth]{Volba pomocí validačních dat}
+    \begin{tnoticebox}{Volba pomocí validačních dat}
         Hodnotu \(k\) obvykle nevolíme podle trénovacích dat, ale pomocí
         validační množiny.
     \end{tnoticebox}
@@ -2022,7 +2022,7 @@
     
     \vspace{1mm}
     \pause
-    \begin{tinfoframe}[\textwidth]
+    \begin{tinfoframe}
         U~binární klasifikace se často volí liché hodnoty \(k\), protože
         tím snižujeme riziko nerozhodného hlasování.
     \end{tinfoframe}
@@ -2050,7 +2050,7 @@
         \]
     \end{defblock}
     
-    \begin{tinfoframe}[\textwidth]
+    \begin{tinfoframe}
         V~rovině jde o~běžnou geometrickou vzdálenost dvou bodů.
         Metoda \(k\)-NN pak hledá objekty, které jsou novému objektu
         podle této vzdálenosti nejblíže.
@@ -2116,7 +2116,7 @@
         d_E(\mathbf{x},\mathbf{x}_B)=10\,000.
     \]
     \pause
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Číselně větší měřítko příjmu způsobí, že rozdíl \(10\,000\)~Kč
         zcela převáží rozdíl \(15\)~let věku. To lze vyřešit např. \markdarkred{min-max normalizací}.
     \end{timportantframe}
@@ -2171,7 +2171,7 @@
         \end{itemize}
     }
     \pause
-    \begin{tnoticeframe}[\textwidth]
+    \begin{tnoticeframe}
         Metoda je velmi intuitivní: nový objekt klasifikujeme podle toho,
         jaké třídy mají jemu podobné objekty.
     \end{tnoticeframe}
@@ -2198,7 +2198,7 @@
         \end{itemize}
     }
     \pause
-    \begin{talertframe}[\textwidth]
+    \begin{talertframe}
         Metoda \(k\)-NN přesouvá většinu práce do okamžiku,
         kdy chceme klasifikovat nový objekt.
     \end{talertframe}
@@ -2475,7 +2475,7 @@
 
 %     \end{columns}
 %     \pause
-%     \begin{timportantframe}[9.5cm]
+%     \begin{timportantframe}
 %         \begin{center}
 %             Objekt skončí v~listu se třídou~\(1\), tedy $h(6,2)=1$.
 %         \end{center}
@@ -2611,7 +2611,7 @@
 
 %     \end{columns}
 %     \pause
-%     \begin{tinfoframe}[\textwidth]
+%     \begin{tinfoframe}
 %         Každá podmínka \(x_j\leqslant a\) rozděluje příslušnou část
 %         prostoru nadrovinou \(x_j=a\). Listy stromu tak určují jednotlivé
 %         rozhodovací oblasti.

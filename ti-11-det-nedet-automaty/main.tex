@@ -322,7 +322,7 @@
             Nechť je dán automat $A$ nad abecedou $\Sigma$. Pak \markdarkred{jazykem automatu $A$} rozumíme množinu slov
             \[L(A)=\set{w\in\Sigma^{*}: \text{$A$ přijme slovo $w$}}.\]
         \end{defblock}}
-        \visible<4->{\begin{tnoticeframe}[0.8\textwidth]
+        \visible<4->{\begin{tnoticeframe}
             \begin{center}
                 Jak vypadá $L(A)$ automatu z minulého příkladu?
             \end{center}
@@ -520,13 +520,13 @@
         \begin{itemize}
             \visible<2->{\item Ne vždy je výhodné pro nás konstruovat automat pro nějaký jazyk přímo.}
             \visible<3->{\item Pokud bychom chtěli sestrojit automat např. pro rozpoznání slov $w$ obsahující podslovo $u$, pak jednodušší přístup by mohl být následující.}
-            \visible<4->{\begin{timportantframe}[0.9\textwidth]
+            \visible<4->{\begin{timportantframe}
                 \begin{center}
                     V každém kroku výpočtu budeme "hádat", zdali jsme už nalezli \textbf{první znak} podslova $u$.
                 \end{center}
             \end{timportantframe}}
             \visible<5->{\item Co to znamená? V jednom stav budeme mít \textbf{více přechodů} pro jeden znak.}
-            \visible<6->{\begin{talertframe}[0.9\textwidth]
+            \visible<6->{\begin{talertframe}
                 \begin{center}
                     Pokud budeme mít více vyhovujících přechodů pro jeden znak, automat spustí \textbf{více paralelních výpočtů najednou}.
                 \end{center}
@@ -706,12 +706,12 @@
             \visible<3->{\item V případě, že existuje pro $a$ více přechodů, automat spustí \textbf{více paralelních výpočtů najednou} (každý pro jeden přecho).}
             \visible<4->{\item Nedeterministický konečný automat budeme značit NFA (\textit{nondeterministic finite automaton})}
         \end{itemize}
-        \visible<5->{\begin{tnoticeframe}[0.9\textwidth]
+        \visible<5->{\begin{tnoticeframe}
             \begin{center}
                 Pokud \textbf{alespoň jeden} výpočet přijal vstupní slovo $w$, pak automat $w$ \markdarkred{přijímá}.
             \end{center}
         \end{tnoticeframe}}
-        \visible<6->{\begin{talertframe}[0.9\textwidth]
+        \visible<6->{\begin{talertframe}
             \begin{center}
                 Pokud všechny výpočty slovo $w$ odmítnou, pak automat $w$ také \markdarkred{odmítá}.
             \end{center}
@@ -770,12 +770,12 @@
     \subsection{"Rozpoznávací" schopnost DFA}
 
     \begin{frame}{Co všechno DFA "rozpozná"?}
-        \visible<2->{\begin{tnoticeframe}[0.9\textwidth]
+        \visible<2->{\begin{tnoticeframe}
             \begin{center}
                 Lze pro každý jazyk sestrojit deterministický automat?
             \end{center}
         \end{tnoticeframe}}
-        \visible<3->{\begin{talertframe}[0.9\textwidth]
+        \visible<3->{\begin{talertframe}
             \textbf{Bohužel ne.} Dokonce existují takové jazyky, které nelze zpracovat žádným výpočetním modelem.
         \end{talertframe}}
     \end{frame}
@@ -783,7 +783,7 @@
     \begin{frame}{DFA neumí počítat}
         \visible<2->{Uvažujme jazyk
         \[L_\text{eq}=\set{w\in\set{0,1}^{*}: |w|_0=|w|_1}.\]}
-        \visible<3->{\begin{talertframe}[0.9\textwidth]
+        \visible<3->{\begin{talertframe}
             \begin{center}
                 Pro jazyk $L_\text{eq}$ nelze sestrojit žádný DFA, který by jej přijímal.
             \end{center}
@@ -796,7 +796,7 @@
         \begin{itemize}
             \visible<2->{\item Zkusme pro spor předpokládat, že pro jazyk $L_\text{eq}$ existuje nějaký DFA $A$, tzn.
             \[L(A)=L_\text{eq}.\]}
-            \visible<3->{\begin{talertframe}[0.6\textwidth]
+            \visible<3->{\begin{talertframe}
                 \begin{center}
                     Tento předpoklad povede ke sporu.
                 \end{center}
@@ -827,7 +827,7 @@
             \visible<5->{\item To znamená, že po přečtení podslova $1^{i}$ by měl pro $u$ a $v$ na konci výpočtu být $A$ ve stejném stavu $r\in Q$.}
             \visible<6->{\item Protože $u\in L(A)$, tak $A$ slovo $u$ musí přijmout a tedy přijme i slovo $v$.}
         \end{itemize}
-        \visible<7->{\begin{talertframe}[0.9\textwidth]
+        \visible<7->{\begin{talertframe}
             \begin{center}
                 Jenže $v\notin L(A)$, což znamená, že $A$ přijmul slovo, \textbf{které není v jazyce $L_\text{eq}$!}
             \end{center}

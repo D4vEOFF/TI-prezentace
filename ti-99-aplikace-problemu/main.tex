@@ -35,7 +35,7 @@
             \[I_j=(a_j,b_j)\; ,\; a_j,b_j\in\R,a_j<b_j,\]
             pro $j\in\set{1,\dots,n}$.}
         \end{itemize}
-        \visible<4->{\begin{timportantframe}[0.8\textwidth]
+        \visible<4->{\begin{timportantframe}
             \begin{center}
                 Které aktivity lze vybrat tak, aby si vzájemně časově nekolidovaly?
             \end{center}
@@ -85,7 +85,7 @@
             \centering
             \input{images/int-graf-2.tex}
         \end{figure}
-        \begin{talertframe}[0.9\textwidth]
+        \begin{talertframe}
             \begin{center}
                 Nekolidující aktivity tvoří v intervalovém grafu \textbf{nezávislou množinu}.
             \end{center}
@@ -98,7 +98,7 @@
         \begin{itemize}
             \visible<2->{\item Na vstupu máme systém otevřených intervalů $\mathcal{I}$ a číslo $k\in\N$.}
             \visible<3->{\item Sestrojíme intervalový graf $G_\mathcal{I}$.}
-            \visible<4->{\begin{timportantframe}[0.8\textwidth]
+            \visible<4->{\begin{timportantframe}
                 \begin{center}
                     V grafu $G_\mathcal{I}$ existuje nezávislá množina velikosti alespoň $k$ právě tehdy, když lze vybrat alespoň $k$ vzájemně disjunktních intervalů z $\mathcal{I}$.
                 \end{center}
@@ -124,7 +124,7 @@
             \centering
             \input{images/cyklus-c4.tex}
         \end{figure}}
-        \visible<3->{\begin{talertframe}[0.8\textwidth]
+        \visible<3->{\begin{talertframe}
             \begin{center}
                 Interval $I_c$ má \textbf{neprázdný průnik} s $I_a$, ale v $C_4$ hrana $ac$ chybí.
             \end{center}
@@ -184,7 +184,7 @@
             \visible<3->{\item Seřazení stihneme v čase $\bigO(n\log{n})$.}
             \visible<4->{\item Následně procházíme všechny intevaly, což potrvá $\bigO(n)$.}
         \end{itemize}
-        \visible<5->{\begin{talertframe}[0.9\textwidth]
+        \visible<5->{\begin{talertframe}
             \begin{center}
                 To znamená, že v případě intervalových grafů umíme rozhodnout problém $\NZMNA$ rychle.
             \end{center}

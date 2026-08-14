@@ -163,95 +163,121 @@
 
 \DeclareMathOperator{\regex}{RegE}
 
-\newenvironment{tnoticebox}[2][\linewidth]{%
-  \begin{center}
-    \begin{minipage}{#1}%
-      \begin{tcolorbox}[colback=tnoticeboxcolor!15, colframe=tnoticeboxcolor,
-                        title={#2}, width=\linewidth]
-}{%
-      \end{tcolorbox}
-    \end{minipage}
-  \end{center}
+%%% Barevné boxíky (notice / info / important / alert)
+%
+% Šířka boxu se nezadává ručně -- box se přizpůsobí šířce svého obsahu.
+% Obsah se vysází do prostředí varwidth, takže krátký text zůstane na
+% jednom řádku; delší text se zalomí, nejvýše však na šířku \linewidth
+% (tj. \textwidth mimo sloupce a minipage). Pokud je titulek širší než
+% obsah, řídí šířku boxu titulek.
+
+\newsavebox{\tboxcontentbox}
+\newsavebox{\tboxtitlebox}
+\newlength{\tboxwidth}
+\newlength{\tboxpadding}
+
+% Geometrie boxu (musí odpovídat stylu tautobox níže):
+% 2 * (boxrule + boxsep + left)
+\setlength{\tboxpadding}{\dimexpr 0.5mm+1mm+4mm\relax}
+\setlength{\tboxpadding}{2\tboxpadding}
+
+\tcbset{tautobox/.style={boxrule=0.5mm, boxsep=1mm, left=4mm, right=4mm,
+                         fonttitle=\bfseries}}
+
+% Začátek sběru obsahu do boxu
+\newcommand{\tboxcollect}{%
+  \begin{lrbox}{\tboxcontentbox}%
+    \begin{varwidth}{\dimexpr\linewidth-\tboxpadding\relax}%
 }
 
-\newenvironment{tnoticeframe}[1][\linewidth]{%
-  \begin{center}
-    \begin{minipage}{#1}%
-      \begin{tcolorbox}[colback=tnoticeboxcolor!15, colframe=tnoticeboxcolor,
-                        width=\linewidth]
+% Ukončení sběru a výpočet výsledné šířky
+% #1 = titulek (pro měření; prázdný u variant bez titulku)
+\newcommand{\tboxmeasure}[1]{%
+    \end{varwidth}%
+  \end{lrbox}%
+  \sbox{\tboxtitlebox}{\bfseries #1}%
+  \setlength{\tboxwidth}{\wd\tboxcontentbox}%
+  \ifdim\wd\tboxtitlebox>\tboxwidth
+    \setlength{\tboxwidth}{\wd\tboxtitlebox}%
+  \fi
+  \addtolength{\tboxwidth}{\tboxpadding}%
+  \ifdim\tboxwidth>\linewidth
+    \setlength{\tboxwidth}{\linewidth}%
+  \fi
+}
+
+% Vysázení boxu s titulkem: #1 = barva, #2 = titulek
+\newcommand{\tboxrenderbox}[2]{%
+  \tboxmeasure{#2}%
+  \begin{center}%
+    \begin{tcolorbox}[tautobox, colback=#1!15, colframe=#1,
+                      title={#2}, width=\tboxwidth]
+      \usebox{\tboxcontentbox}%
+    \end{tcolorbox}%
+  \end{center}%
+}
+
+% Vysázení boxu bez titulku: #1 = barva
+\newcommand{\tboxrenderframe}[1]{%
+  \tboxmeasure{}%
+  \begin{center}%
+    \begin{tcolorbox}[tautobox, colback=#1!15, colframe=#1,
+                      width=\tboxwidth]
+      \usebox{\tboxcontentbox}%
+    \end{tcolorbox}%
+  \end{center}%
+}
+
+% Poznámky (notice)
+\newenvironment{tnoticebox}[1]{%
+  \def\tboxtitletext{#1}\tboxcollect
 }{%
-      \end{tcolorbox}
-    \end{minipage}
-  \end{center}
+  \tboxrenderbox{tnoticeboxcolor}{\tboxtitletext}%
+}
+
+\newenvironment{tnoticeframe}{%
+  \tboxcollect
+}{%
+  \tboxrenderframe{tnoticeboxcolor}%
 }
 
 % Informační bloky (info)
-\newenvironment{tinfobox}[2][\linewidth]{%
-  \begin{center}
-    \begin{minipage}{#1}%
-      \begin{tcolorbox}[colback=tinfoboxcolor!15, colframe=tinfoboxcolor,
-                        title={#2}, width=\linewidth]
+\newenvironment{tinfobox}[1]{%
+  \def\tboxtitletext{#1}\tboxcollect
 }{%
-      \end{tcolorbox}
-    \end{minipage}
-  \end{center}
+  \tboxrenderbox{tinfoboxcolor}{\tboxtitletext}%
 }
 
-\newenvironment{tinfoframe}[1][\linewidth]{%
-  \begin{center}
-    \begin{minipage}{#1}%
-      \begin{tcolorbox}[colback=tinfoboxcolor!15, colframe=tinfoboxcolor,
-                        width=\linewidth]
+\newenvironment{tinfoframe}{%
+  \tboxcollect
 }{%
-      \end{tcolorbox}
-    \end{minipage}
-  \end{center}
+  \tboxrenderframe{tinfoboxcolor}%
 }
 
 % Důležité bloky (important)
-\newenvironment{timportantbox}[2][\linewidth]{%
-  \begin{center}
-    \begin{minipage}{#1}%
-      \begin{tcolorbox}[colback=timportantboxcolor!15, colframe=timportantboxcolor,
-                        title={#2}, width=\linewidth]
+\newenvironment{timportantbox}[1]{%
+  \def\tboxtitletext{#1}\tboxcollect
 }{%
-      \end{tcolorbox}
-    \end{minipage}
-  \end{center}
+  \tboxrenderbox{timportantboxcolor}{\tboxtitletext}%
 }
 
-\newenvironment{timportantframe}[1][\linewidth]{%
-  \begin{center}
-    \begin{minipage}{#1}%
-      \begin{tcolorbox}[colback=timportantboxcolor!15, colframe=timportantboxcolor,
-                        width=\linewidth]
+\newenvironment{timportantframe}{%
+  \tboxcollect
 }{%
-      \end{tcolorbox}
-    \end{minipage}
-  \end{center}
+  \tboxrenderframe{timportantboxcolor}%
 }
 
 % Varovné bloky (alert)
-\newenvironment{talertbox}[2][\linewidth]{%
-  \begin{center}
-    \begin{minipage}{#1}%
-      \begin{tcolorbox}[colback=talertboxcolor!15, colframe=talertboxcolor,
-                        title={#2}, width=\linewidth]
+\newenvironment{talertbox}[1]{%
+  \def\tboxtitletext{#1}\tboxcollect
 }{%
-      \end{tcolorbox}
-    \end{minipage}
-  \end{center}
+  \tboxrenderbox{talertboxcolor}{\tboxtitletext}%
 }
 
-\newenvironment{talertframe}[1][\linewidth]{%
-  \begin{center}
-    \begin{minipage}{#1}%
-      \begin{tcolorbox}[colback=talertboxcolor!15, colframe=talertboxcolor,
-                        width=\linewidth]
+\newenvironment{talertframe}{%
+  \tboxcollect
 }{%
-      \end{tcolorbox}
-    \end{minipage}
-  \end{center}
+  \tboxrenderframe{talertboxcolor}%
 }
 
 % Decision problem

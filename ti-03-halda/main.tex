@@ -77,7 +77,7 @@
         \begin{itemize}
             \visible<2->{\item Budeme pracovat s binárním stromem $T=(V,E)$.}
             \visible<3->{\item Každému vrcholu $v$ přiřadíme tzv. \markdarkred{klíč}, který bude v našem případě představovat libovolné celé číslo. Tuto hodnotu budeme značit $\key(v)$.}
-            \visible<4->{\begin{tinfoframe}[0.8\textwidth]
+            \visible<4->{\begin{tinfoframe}
                 \begin{center}
                     Formálně se jedná o zobrazení $\mapping{\key}{V}{\Z}$.
                 \end{center}
@@ -130,7 +130,7 @@
             \centering
             \input{images/binarni-halda-3.tex}
         \end{figure}
-        \visible<2>{\begin{talertframe}[0.75\textwidth]
+        \visible<2>{\begin{talertframe}
             \begin{center}
                 Strom porušuje podmínku na \textbf{tvar haldy}.
             \end{center}
@@ -142,7 +142,7 @@
             \centering
             \input{images/binarni-halda-4.tex}
         \end{figure}
-        \visible<2>{\begin{talertframe}[0.75\textwidth]
+        \visible<2>{\begin{talertframe}
             \begin{center}
                 Strom porušuje \textbf{haldové uspořádání}.
             \end{center}
@@ -154,12 +154,12 @@
             \centering
             \input{images/binarni-halda-min.tex}
         \end{figure}}
-        \visible<3->{\begin{tnoticeframe}[0.9\textwidth]
+        \visible<3->{\begin{tnoticeframe}
             \begin{center}
                 V kořeni je vždy ulořen \textbf{vrchol s minimálním klíčem}. Podobně v maximové binární haldě je v kořeni vždy uloženo maximum.
             \end{center}
         \end{tnoticeframe}}
-        \visible<4->{\begin{timportantframe}[0.9\textwidth]
+        \visible<4->{\begin{timportantframe}
             \begin{center}
                 To má jednu zřejmou výhodu: nalezení minima/maxima v takové struktuře je \textbf{velmi rychlé}.
             \end{center}
@@ -169,7 +169,7 @@
     \subsection{Operace s minimovou binární haldou}
 
     \begin{frame}{Operace s minimovou binární haldou}
-        \visible<2->{\begin{talertframe}[0.9\textwidth]
+        \visible<2->{\begin{talertframe}
             \begin{center}
                 \textbf{To nám ale nestačí!} Haldu musíme nějak udržovat.
             \end{center}
@@ -212,7 +212,7 @@
                 \visible<6->{\item založíme novou hladinu a vrchol přidáme úplně vlevo, pokud je poslední hladina plná.}
             \end{itemize}
         \end{itemize}
-        \visible<7->{\begin{talertframe}[0.8\textwidth]
+        \visible<7->{\begin{talertframe}
             \begin{center}
                 \textbf{Problém:} Tímto krokem může dojít k porušení haldového uspořádání, neboť pro nový vrchol $v$ a jeho rodiče $r$ může nastat, že $\key(v)<\key(r)$.
             \end{center}
@@ -402,7 +402,7 @@
             \visible<2->{\item Rozebereme časovou složitost operací $\textsc{Insert}$ a $\textsc{ExtractMin}$.}
             \visible<3->{\item Operace $\textsc{Min}$ má zjevně složitost konstantní.}
             \visible<4->{\item Největší roli budou hrát procedury $\textsc{BubbleUp}$ a $\textsc{BubbleDown}$. Zbylé operace stihneme v konstantním čase.}
-            \visible<5->{\begin{timportantframe}[0.8\textwidth]
+            \visible<5->{\begin{timportantframe}
                 \begin{center}
                     Každý vrchol "probublá" v nejhorším případě \textbf{všemi hladinami}.
                 \end{center}
@@ -418,12 +418,12 @@
     \end{frame}
 
     \begin{frame}{Rozdíl oproti poli}
-        \visible<2->{\begin{talertframe}[0.8\textwidth]
+        \visible<2->{\begin{talertframe}
             \begin{center}
                 Vylepšili jsme časovou složitost z \textbf{lineární} na \textbf{logaritmickou}!
             \end{center}
         \end{talertframe}}
-        \visible<3->{\begin{tnoticeframe}[0.8\textwidth]
+        \visible<3->{\begin{tnoticeframe}
             \begin{center}
                 Nicméně jak můžeme efektivně haldu implementovat?
             \end{center}
@@ -499,7 +499,7 @@
 
     \begin{frame}{Složitost operací $\textsc{Increase}$ a $\textsc{Decrease}$}
         \visible<2->{Je zjevné, že nejdéle potrvájí procedury $\textsc{BubbleUp}$ a $\textsc{BubbleDown}$, o nicž víme, že trvají $\bigO(\log{n})$.}
-        \visible<3->{\begin{timportantframe}[0.8\textwidth]
+        \visible<3->{\begin{timportantframe}
             \begin{center}
                 Tzn. i tyto operace mají \textbf{logaritmickou časovou složitost}.
             \end{center}
@@ -520,7 +520,7 @@
                 $\textsc{ExtractMax}$   & $\bigO(n)$    & $\bigO(\log{n})$
             \end{tabular}
         \end{table}}
-        \visible<3->{\begin{tinfoframe}[\textwidth]
+        \visible<3->{\begin{tinfoframe}
             \begin{center}
                 Vidíme, že jsme si \markdarkred{polepšili} v případě \textbf{hledání minima/maxima} a jeho \textbf{odstranění}, ale na druhou stranu jsme si \markdarkred{pohoršili} při \textbf{vkládání nového vrcholu}.
             \end{center}
