@@ -87,7 +87,7 @@ Jednotlivé části mají následující význam:
 - `assets/macros.tex` obsahuje společná matematická, grafická a typografická makra;
 - `assets/listing.tex` obsahuje nastavení výpisů zdrojového kódu;
 - `images/` obsahuje společné obrázky, zejména logo školy;
-- `titlepage.tex` definuje společnou titulní stranu;
+- `titlepage.tex` definuje společnou titulní stranu, která není vázaná na konkrétní předmět;
 - `ti-NN-nazev/` obsahuje zdrojové soubory příslušné prezentace;
 - `compile.py` zajišťuje kompilaci prezentací, tvorbu různých poměrů stran a handoutů.
 
@@ -437,6 +437,15 @@ Základ souboru nové prezentace může vycházet z následující struktury:
 ```
 
 Změny v souborech `assets/theme.tex`, `assets/macros.tex`, `assets/packages.tex`, `assets/listing.tex` nebo `titlepage.tex` se mohou projevit ve všech prezentacích.
+
+Titulní strana bere všechny údaje z příkazů `\title`, `\subtitle`, `\author`, `\email`, `\institute`, `\date` a z makra `\schoollogo`, takže ji lze beze změny použít i pro jiný předmět. Název předmětu se přepíše makrem `\subjectname` před vložením souboru `titlepage.tex`:
+
+```latex
+\def\subjectname{Matematika}
+\def\presentationtitle{Derivace a~její geometrický význam}
+```
+
+Bez tohoto zápisu se použije výchozí hodnota `Teoretická informatika`.
 
 ## Autor a licence
 
