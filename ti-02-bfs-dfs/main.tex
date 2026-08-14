@@ -354,7 +354,7 @@ def bfs(graph, start):
         \begin{minipage}{0.5\textwidth}
             \begin{itemize}
                 \visible<2->{\item Průchodem algoritmu BFS vzniká tzv. \markdarkred{strom nejkratších cest}.}
-                \visible<3->{\begin{timportantframe}[\textwidth]
+                \visible<3->{\begin{timportantframe}
                     Již víme, že hodnota $D(v)$ odpovídá délce nejkratší cesty z~$v_0$ do $v$.
                 \end{timportantframe}}
                 \visible<5->{\item otevřením nového vrcholu vznikne nová hrana přidaná do tohoto stromu.}
@@ -890,7 +890,7 @@ def dfs(graph):
 
     \begin{frame}{DFS strom}
         \visible<2->{Stejně jako v~případě BFS, i~při průchodu grafem pomocí DFS vzniká \textbf{strom} jako podgraf původního grafu $G$.}
-        \visible<3->{\begin{talertframe}[0.6\textwidth]
+        \visible<3->{\begin{talertframe}
             \begin{center}
                 \textbf{Pozor!} Nalezené cesty už nemusí být nejkratší!
             \end{center}}
@@ -941,7 +941,7 @@ def dfs(graph):
                 \input{images/v-podstrom-u.tex}
             \end{figure}
         \end{minipage}}
-        \visible<3->{\begin{tinfoframe}[0.9\textwidth]
+        \visible<3->{\begin{tinfoframe}
             \begin{center}
                 Obě situace jsou symetrické (vrcholy si jen prohodí roli).
             \end{center}
@@ -1533,7 +1533,7 @@ def dfs(graph):
 
     \begin{frame}{Mosty v~grafu}
         \visible<3->{Typický případem užití DFS je např. hledání mostů v~grafu.}
-        \visible<3->{\begin{timportantframe}[0.45\textwidth]
+        \visible<3->{\begin{timportantframe}
             \begin{center}
                 BFS zde použít nelze!
             \end{center}
@@ -1578,7 +1578,7 @@ def dfs(graph):
     \begin{frame}{Další užití BFS a DFS}
         \begin{columns}[T]
             \begin{column}{0.48\textwidth}
-                \visible<2->{\begin{tinfobox}[\textwidth]{Možná využití BFS}
+                \visible<2->{\begin{tinfobox}{Možná využití BFS}
                     \begin{itemize}
                         \visible<3->{\item určení vzdáleností od počátečního vrcholu,}
                         \visible<4->{\item hledání řešení s minimálním počtem kroků,}
@@ -1589,7 +1589,7 @@ def dfs(graph):
             \end{column}
 
             \begin{column}{0.48\textwidth}
-                \visible<7->{\begin{tinfobox}[\textwidth]{Možná využití DFS}
+                \visible<7->{\begin{tinfobox}{Možná využití DFS}
                     \begin{itemize}
                         \visible<8->{\item hledání souvislých komponent,}
                         \visible<9->{\item topologické uspořádání,}

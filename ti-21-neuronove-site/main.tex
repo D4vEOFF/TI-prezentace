@@ -43,7 +43,7 @@
 
     \pause
 
-    \begin{timportantbox}[\textwidth]{Základní myšlenka}
+    \begin{timportantbox}{Základní myšlenka}
         Neuronová síť je model složený z~mnoha jednoduchých výpočetních jednotek,
         jejichž propojení a~váhy se nastavují během učení.
     \end{timportantbox}
@@ -53,7 +53,7 @@
 
 \begin{frame}{Co již víme\dots}
     \pause
-    \begin{tinfobox}[\textwidth]{Připomenutí}
+    \begin{tinfobox}{Připomenutí}
         V~úlohách učení s~učitelem (anglicky
         \markdarkred{supervised learning}) pracujeme se statistickými soubory $\mathbf{X}_1,\mathbf{X}_2,\ldots,\mathbf{X}_p$
         a~se statistickým souborem očekávaných výstupů $\mathbf{Y}$.
@@ -92,7 +92,7 @@
 
     \pause
 
-    \begin{timportantbox}[\textwidth]{Myšlenka pro informatiku}
+    \begin{timportantbox}{Myšlenka pro informatiku}
         Biologický neuron slouží jako inspirace pro jednoduchý výpočetní model.
     \end{timportantbox}
 
@@ -119,7 +119,7 @@
 
     \pause
 
-    \begin{timportantbox}[\textwidth]{Zjednodušení}
+    \begin{timportantbox}{Zjednodušení}
         Formální neuron nepopisuje biologické děje uvnitř buňky.
         Formální neuron popisuje jednoduchý výpočet: sečtení vážených vstupů
         a~rozhodnoutí o~výstupu.
@@ -151,7 +151,7 @@
 
     \pause
 
-    \begin{tnoticebox}[\textwidth]{Poznámka}
+    \begin{tnoticebox}{Poznámka}
         V~neuronové síti nejsou váhy předem pevně dané.
         Síť se je snaží nastavit během učení.
     \end{tnoticebox}
@@ -173,7 +173,7 @@
 
     \pause
 
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Na rozdíl od jednoho neuronu může celá síť skládat více výpočtů
         dohromady. Právě tím získává větší vyjadřovací schopnost.
     \end{timportantframe}
@@ -194,7 +194,7 @@
 
     \pause
 
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Formální neuron nejprve spočítá vážený součet vstupů
         a~poté na něj aplikuje přenosovou funkci.
     \end{timportantframe}
@@ -304,7 +304,7 @@
 
 \begin{frame}{Perceptron}
     \pause
-    \begin{tinfoframe}[\textwidth]
+    \begin{tinfoframe}
         Perceptron je nejjednodušší neuronová síť tvořená vstupní vrstvou
         a~jedním výstupním neuronem.
     \end{tinfoframe}
@@ -375,7 +375,7 @@
 
     \pause
 
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Perceptron vytváří lineární rozhodovací hranici.
         V~rovině je to přímka, ve vyšších dimenzích nadrovina.
     \end{timportantframe}
@@ -403,7 +403,7 @@
 
     \pause
 
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Pokud by všechny přenosové funkce byly lineární, pak by i~celá
         vícevrstvá síť představovala pouze lineární model.
         Nelineární přenosové funkce umožňují modelovat složitější vztahy.
@@ -428,7 +428,7 @@
                 \input{images/skokova-funkce-a-sigmoida-1.tex}
             \end{center}
             \pause
-            \begin{tnoticebox}[0.95\textwidth]{Skoková funkce}
+            \begin{tnoticebox}{Skoková funkce}
                 Vhodná pro jednoduché binární rozhodování.
             \end{tnoticebox}
         \end{column}
@@ -442,7 +442,7 @@
                 \input{images/skokova-funkce-a-sigmoida-2.tex}
             \end{center}
 
-            \begin{tnoticebox}[0.95\textwidth]{Sigmoida}
+            \begin{tnoticebox}{Sigmoida}
                 Hladká funkce s~výstupem v~intervalu \((0,1)\).
             \end{tnoticebox}
         \end{column}
@@ -463,7 +463,7 @@
 
     \pause
 
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Skryté vrstvy obvykle potřebují nelineární přenosovou funkci. Na různých vrstvách se tak mohou používat různé přenosové funkce.
     \end{timportantframe}
 
@@ -550,7 +550,7 @@
 
     \pause
 
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Vícevrstvá síť s~nelineárními přenosovými funkcemi může vytvářet
         nelineární rozhodovací hranice a~řešit úlohy, které jediný
         perceptron vyřešit nedokáže.
@@ -599,7 +599,7 @@
 
     \pause
 
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Trénovací množinu tvoří dvojice vstupních dat a~jejich očekávaných
         výstupů:
         \[
@@ -663,7 +663,7 @@
 
 \begin{frame}{Zpětná propagace chyby}
 
-    \begin{tinfoframe}[\textwidth]
+    \begin{tinfoframe}
         Z~hodnoty chyby víme, jak přesný byl výstup celé sítě.
         Potřebujeme však určit, jak jednotlivé váhy a~prahové hodnoty
         k~této chybě přispěly.
@@ -676,7 +676,7 @@
 
     \pause
 
-    \begin{timportantbox}[\textwidth]{Základní myšlenka}
+    \begin{timportantbox}{Základní myšlenka}
         Zpětná propagace chyby (anglicky
         \markdarkred{backpropagation}) postupuje od výstupní vrstvy
         směrem ke vstupní vrstvě a~určuje, jak změna každé váhy
@@ -689,7 +689,7 @@
 
 \begin{frame}{Minimalizace chyby gradientním sestupem}
 
-    \begin{tinfobox}[\textwidth]{Připomenutí}
+    \begin{tinfobox}{Připomenutí}
         Gradientní sestup upravuje parametry modelu ve směru, ve kterém
         se hodnota chybové funkce zmenšuje.
     \end{tinfobox}
@@ -731,14 +731,14 @@
     
     \pause
 
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Parametr \(\eta>0\) se nazývá rychlost učení (anglicky \markdarkred{learning rate}).
         Určuje velikost změny parametrů během jednoho kroku učení.
     \end{timportantframe}
 
     \pause
 
-    \begin{tnoticebox}[\textwidth]{Úloha zpětné propagace}
+    \begin{tnoticebox}{Úloha zpětné propagace}
         Zpětná propagace efektivně vypočítá derivace chybové funkce
         podle všech vah a~prahových hodnot neuronové sítě.
         Gradientní sestup následně tyto parametry upraví.
@@ -767,7 +767,7 @@
 
     \pause
 
-    \begin{timportantbox}[\textwidth]{Hlavní rozdíl}
+    \begin{timportantbox}{Hlavní rozdíl}
         \textbf{Nejde o~jiný princip výpočtu neuronu}, ale o~rozsáhlejší síť,
         která skládá velké množství jednoduchých výpočtů.
     \end{timportantbox}
@@ -801,7 +801,7 @@
 
     \pause
 
-    \begin{tnoticebox}[\textwidth]{Proč nepoužívat vždy celý soubor?}
+    \begin{tnoticebox}{Proč nepoužívat vždy celý soubor?}
         U~velkých trénovacích množin by výpočet chyby nad celým souborem
         mohl být pomalý. Proto se často používají menší dávky dat.
     \end{tnoticebox}
@@ -833,7 +833,7 @@
 
     \pause
 
-    \begin{timportantbox}[\textwidth]{Vztah batch a~epoch}
+    \begin{timportantbox}{Vztah batch a~epoch}
         Jeden batch odpovídá jednomu kroku učení.
         Jedna epocha odpovídá zpracování všech batchů.
     \end{timportantbox}
@@ -901,7 +901,7 @@
 \end{frame}
 
 \begin{frame}{Jak volit počet epoch a~velikost batche?}
-    \begin{timportantbox}[\textwidth]{Praktické pravidlo}
+    \begin{timportantbox}{Praktické pravidlo}
         Neexistuje univerzálně nejlepší počet epoch ani velikost batche.
         Hodnoty volíme experimentálně podle výsledků na validační množině;
         počet epoch lze řídit pomocí předčasného ukončení
@@ -929,7 +929,7 @@
 
     \pause
 
-    \begin{timportantbox}[\textwidth]{Kdy k~přeučení často dochází?}
+    \begin{timportantbox}{Kdy k~přeučení často dochází?}
         Například při příliš dlouhém trénování, příliš složitém modelu,
         malém množství trénovacích dat nebo při slabé regularizaci.
     \end{timportantbox}
@@ -944,7 +944,7 @@
 
     \pause
 
-    \begin{tnoticebox}[\textwidth]{Interpretace}
+    \begin{tnoticebox}{Interpretace}
         Trénovací chyba obvykle s~počtem epoch klesá.
         Pokud však validační chyba začne růst, model se pravděpodobně
         začíná přizpůsobovat trénovacím datům až příliš.
@@ -985,7 +985,7 @@
 
     \pause
 
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Hopfieldova síť je jednoduchý příklad rekurentní neuronové sítě.
         Lze ji chápat jako model asociativní paměti.
     \end{timportantframe}
@@ -1019,7 +1019,7 @@
         \item Stav sítě $\mathcal{H}_n$ můžeme reprezentovat vektorem $\mathbf{s}=(s_1,\dots,s_n)$.
     \end{itemize}
     \pause
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Hopfieldův model představuje \textbf{učení bez učitele}, neboť zde nemáme výstupní hodnoty. Fungováním představuje model asociativní paměti.
     \end{timportantframe}
 \end{frame}
@@ -1040,14 +1040,14 @@
 
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{tnoticebox}[\textwidth]{Synchronní aktualizace}
+            \begin{tnoticebox}{Synchronní aktualizace}
                 Všechny neurony se přepočítají současně.
                 Tato varianta je jednoduchá, ale může vést k~oscilacím.
             \end{tnoticebox}
         \end{column}
 
         \begin{column}{0.48\textwidth}
-            \begin{timportantbox}[\textwidth]{Asynchronní aktualizace}
+            \begin{timportantbox}{Asynchronní aktualizace}
                 Neurony se přepočítávají postupně.
                 Tato varianta lépe souvisí s~konvergencí sítě.
             \end{timportantbox}
@@ -1071,7 +1071,7 @@
 
     \pause
 
-    \begin{timportantframe}[\textwidth]
+    \begin{timportantframe}
         Během vybavování se nemění váhy sítě. Mění se pouze stav
         \[
             \mathbf{s}^{(0)},\mathbf{s}^{(1)},\mathbf{s}^{(2)},\ldots
@@ -1089,7 +1089,7 @@
 
     \pause
 
-    \begin{tinfobox}[\textwidth]{Hebbovo pravidlo}
+    \begin{tinfobox}{Hebbovo pravidlo}
         Váhu mezi \(i\)-tým a~\(j\)-tým neuronem určíme vztahem
         \[
             w_{ij}

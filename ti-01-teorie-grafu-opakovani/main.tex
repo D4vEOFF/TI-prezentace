@@ -93,7 +93,7 @@
         \end{defblock}}
         \visible<4->{Pro neorientované grafy je vzdálenost symetrická, tzn.
         \[d(u,v)=d(v,u).\]}
-        \visible<5->{\begin{talertframe}[0.8\textwidth]
+        \visible<5->{\begin{talertframe}
             \begin{center}
                 Pro \textbf{orientované grafy} to samé ale nemusí platit!
             \end{center}
@@ -147,7 +147,7 @@
 
     \begin{frame}{Reprezentace grafu}
         \visible<2->{Máme libovolný graf $G=(V,E)$. Rádi bych co nejrychleji zjistili pro zadaný vrchol $u\in V$, do jakých vrcholů se z~něj můžeme dostat.}
-        \visible<3->{\begin{talertframe}[0.6\textwidth]
+        \visible<3->{\begin{talertframe}
             \begin{center}
                 Přímá definice není moc praktická.
             \end{center}
@@ -258,7 +258,7 @@
     \begin{frame}{Poznámka k~matici sousednosti}
         \visible<2->{Všimněme si, že matice sousednosti $A$ \textbf{neorientovaného grafu} je vždy \markdarkred{symetrická}, tzn.~pro každé $i,j$ platí
         \[\mathbf{A}_{ij}=\mathbf{A}_{ji}.\]}
-        \visible<3->{\begin{talertframe}[0.9\textwidth]
+        \visible<3->{\begin{talertframe}
             U~neorientovaného grafu nám tedy stačí vyplnit horní polovinu matice $\implies$ zbytek vznikne "zrcadlením" podle hlavní diagonály.
         \end{talertframe}}
     \end{frame}
@@ -430,7 +430,7 @@
     \end{frame}
 
     \begin{frame}{Poznámky k~definici \textrm{II}}
-        \visible<2->{\begin{tinfobox}[\textwidth]{Pozorování}
+        \visible<2->{\begin{tinfobox}{Pozorování}
             Je-li $\mathbf{A}$ matice sousednosti, resp. $\mathbf{I}$ matice incidence, \textbf{neorientovaného} grafu $G$, pak pro libovolný jeho vrchol $v_i$ platí
             \[\deg{v_i}=\sum_{j=1}^{n}\mathbf{A}_{ij}=\sum_{k=1}^{m}\mathbf{I}_{ik},\]
             kde $n=|V|$ a~$m=|E|$.
@@ -440,7 +440,7 @@
 
     \begin{frame}{Poznámky k~definici \textrm{III}}
         \visible<2->{Obdobné jednoduché pozorování lze učinit i~pro \textbf{orientované} grafy.}
-        \visible<3->{\begin{tinfobox}[\textwidth]{Pozorování}
+        \visible<3->{\begin{tinfobox}{Pozorování}
             Je-li $G$ \textbf{orientovaný} graf, pak pro libovolný jeho vrchol $v_i$ platí
             \begin{align*}
                 \deg^{-}{v_i}&=\sum_{j=1}^{n}\mathbf{A}_{ij}=-\sum_{k=1}^{m}\min\set{\mathbf{I}_{ik},0},\\
@@ -477,7 +477,7 @@
                 \visible<4->{\item \markdarkred{Prostorová složitost} udává, \textbf{jak se mění} paměťové nároky algoritmu.}
             \end{itemize}
             \visible<5->{\item Málokdy jsme schopni uvést přesnou dobu běhu v~časových jednotkách, či prostorové nároky v~bytech.}
-            \visible<6->{\begin{timportantframe}[0.8\textwidth]
+            \visible<6->{\begin{timportantframe}
                 Závislé na používaném hardwaru, stavu operačního systému, aktuálních stavech mezipamětí a~dalších jiných aspektech.
             \end{timportantframe}}
             \visible<7->{\item Proto používáme pouze odhad složitosti pomocí velké $\bigO$-notace (Landauova notace).}
@@ -522,7 +522,7 @@
             \visible<2->{\item Typickou otázkou při práci je, zdali mezi zadanými vrcholy vede hrana (orientovaná či neorientovaná).}
             \visible<3->{\item Při práci s~jednotlivými reprezentacemi dává smysl se tedy ptát, jak dlouho takové zjištění potrvá.}
             \visible<4->{\item Předpokládejme, že máme graf $G=(V,E)$ repezentovaný buď \textbf{maticí sousednosti}, \textbf{maticí incidence} nebo \textbf{seznamy sousedů}, a~dále vrcholy $u,v\in V$.}
-            \visible<5->{\begin{timportantbox}[0.7\textwidth]{Otázka}
+            \visible<5->{\begin{timportantbox}{Otázka}
                 \begin{center}
                     Nachází se v~grafu hrana $uv$?
                 \end{center}
@@ -644,7 +644,7 @@ def has_edge_incidence(i: int, j: int) -> bool:
             \visible<3->{\item \textbf{Matice sousednosti} se hodí pro husté grafy obsahující řádově více hran než vrcholů.}
             \visible<4->{\item \textbf{Matice incidence} má svůj užitek spíše v~teoretických výpočtech, nicméně algoritmech se skoro vůbec nepoužívá (příliš velká a~základní grafové operace jsou s~ní pomalé).}
             \visible<5->{\item \textbf{Seznamy sousedů} se hodí pro řídké grafy, tzn.~obsahující méně než kvardraticky mnoho hran.}
-            \visible<6->{\begin{talertframe}[0.8\textwidth]
+            \visible<6->{\begin{talertframe}
                 S~takovými grafy se setkáváme překvapivě často. Např. pro \textbf{stromy} platí, že $|E|=|V|-1$.
             \end{talertframe}}
         \end{itemize}

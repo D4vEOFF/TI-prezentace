@@ -27,7 +27,7 @@
             \visible<6->{\item Binární vyhledávání v poli $\implies\bigO(\log{n})$.}
             \visible<7->{\item Vyhledávání v textu $\implies\bigO((n-m)m)$, kde $m\leqslant n$ je délka hledaného slova.}
         \end{itemize}
-        \visible<8->{\begin{tnoticeframe}[0.9\textwidth]
+        \visible<8->{\begin{tnoticeframe}
             \begin{center}
                 Všechny tyto problémy umíme řešit obecně v čase $\bigO(n^{k})$, kde $k\in\R$.
             \end{center}
@@ -39,7 +39,7 @@
     \begin{frame}{Formální pojetí problémů}
         \begin{itemize}
             \visible<2->{\item Omezíme se na tzv. \markdarkred{rozhodovací problémy}.}
-            \visible<3->{\begin{tinfoframe}[0.9\textwidth]
+            \visible<3->{\begin{tinfoframe}
                 \begin{center}
                     Rozhodovací problém je takový problém, na jehož výstupní hodnoty jsou \textbf{ANO} a \textbf{NE}.
                 \end{center}
@@ -47,7 +47,7 @@
             \visible<4->{\item Označme si $\set{0,1}^{*}$ \textbf{všechny konečné posloupnosti nul a jedniček}.}
             \visible<5->{\item Rozhodovacím problémem formálně rozumíme zobrazení
             \[\mapping{L}{\set{0,1}^{*}}{\set{0,1}}.\]}
-            \visible<6->{\begin{timportantframe}[0.9\textwidth]
+            \visible<6->{\begin{timportantframe}
                 \begin{center}
                     Tzn. vstupní data kódujeme \textbf{binárně}, tj. pomocí nul a jedniček.
                 \end{center}
@@ -68,7 +68,7 @@
             \visible<4->{\item Algoritmus běžící v čase $\bigO(n^{1000})$ je polynomiální, ale v praxi nejspíše jen sotva použitelný.}
             \visible<5->{\item Naopak algoritmus se složitostí $\bigO(0{,}001^{n})$ je sice exponenciální, ale je jistě použitelný na "rozumná" data.}
         \end{itemize}
-        \visible<6->{\begin{talertframe}[0.8\textwidth]
+        \visible<6->{\begin{talertframe}
             \begin{center}
                 Takové případy ale můžeme zanedbat, neboť jsou \textbf{velmi řídké}.
             \end{center}
@@ -97,7 +97,7 @@
             \visible<5->{\item $p_1(p_2(x))=((3x^{2}+5)^{2}-(3x^{2}+5)-6)=9x^{4}+27x^{2}+14$}
         \end{itemize}
         \vspace{1.5em}
-        \visible<6->{\begin{timportantframe}[0.55\textwidth]
+        \visible<6->{\begin{timportantframe}
             \begin{center}
                 Výsledkem je zase polynom.
             \end{center}
@@ -107,7 +107,7 @@
     \subsection{Obecnější pohled}
 
     \begin{frame}{Obecnější pohled}
-        \visible<2->{\begin{talertframe}[0.9\textwidth]
+        \visible<2->{\begin{talertframe}
             \begin{center}
                 Je každý problém řešitelný polynomiálním algoritmem?
             \end{center} 
@@ -172,7 +172,7 @@
             \end{table}}
             \visible<6->{\item Lze odvodit explicitní vzorec $T(n)=2^{n}-1$.}
             \visible<7->{\item Algoritmus je tedy exponenciální, tj. $\bigO(2^{n})$.}
-            \visible<8->{\begin{talertframe}[0.55\textwidth]
+            \visible<8->{\begin{talertframe}
                 \begin{center}
                     Lépe to ani nelze provést!
                 \end{center}
@@ -183,7 +183,7 @@
     \subsection{Rozhodovací Hanojské věže}
 
     \begin{frame}{Rozhodovací Hanojské věže}
-        \visible<2->{\begin{talertframe}[0.9\textwidth]
+        \visible<2->{\begin{talertframe}
             \begin{center}
                 Hanojské věže ale nepředstavují rozhodovací problém (nikde není výstupem \textbf{ANO} nebo \textbf{NE}).
             \end{center}
@@ -227,7 +227,7 @@
             \visible<2->{\item Existence "rychlého" (polynomiálního) řešení problému není vždy samozřejmostí.}
             \visible<3->{\item Některé problémy dokonce nelze řešit vůbec!}
         \end{itemize}
-        \visible<4->{\begin{tinfoframe}[0.8\textwidth]
+        \visible<4->{\begin{tinfoframe}
             \begin{center}
                 Mezi různými problémy však lze nalézt zajímavé vztahy.
             \end{center}

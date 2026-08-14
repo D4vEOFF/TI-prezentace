@@ -80,7 +80,7 @@
             \visible<3->{\item Zavedeme si tzv. \markdarkred{heuristickou funkci} $\mapping{\psi}{V}{\R_0^{+}}$ (nebo zkráceně jen \markdarkred{heuristika}).}
             \visible<4->{\item $\psi(v)$ = odhad délky cesty z vrcholu $v$ do cíle $g$.}
         \end{itemize}
-        \visible<5->{\begin{tnoticeframe}[0.8\textwidth]
+        \visible<5->{\begin{tnoticeframe}
             \begin{center}
                 Pro cílový vrchol $g$ předpokládáme, že $\psi(g)=0$.
             \end{center}
@@ -125,7 +125,7 @@
         \visible<2->{\begin{defblock}
             Nechť $G=(V,E,w)$ je libovolný ohodnocený graf a $g\in V$ cílový vrchol. Heuristická funkce je zobrazení $\mapping{\psi}{V}{\R_0^{+}}$, která je \markdarkred{přípustná}, \markdarkred{konzistentní} a navíc $\psi(g)=0$.
         \end{defblock}}
-        \visible<3->{\begin{talertframe}[0.8\textwidth]
+        \visible<3->{\begin{talertframe}
             Speciálně, když položíme $\psi(v)=0$ pro každý vrchol $v\in V$, tak dostaneme původní Dijkstrův algoritmus.
         \end{talertframe}}
     \end{frame}
@@ -139,7 +139,7 @@
     \begin{frame}{Idea algoritmu}
         \begin{itemize}
             \item Po vzoru Dijkstrova algoritmu budeme používat prioritní frontu pro následné vybírání vrcholů.
-            \begin{timportantframe}[0.8\textwidth]
+            \begin{timportantframe}
                 \begin{center}
                     Vrcholy však nebudeme vybírat podle hodnoty $D$, ale podle tzv. \textbf{$f$-skóre}.
                 \end{center}

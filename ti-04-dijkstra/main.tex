@@ -37,7 +37,7 @@
         \begin{defblock}[Ohodnocený graf]
             \markdarkred{Ohodnocený grafem} rozumíme uspořádanou trojici $(V,E,w)$, přičemž $G=(V,E)$ je libovolný graf a $\mapping{w}{E}{\R}$ je zobrazení přiřazující každé hraně $e\in E$ její \markdarkred{váhu} $w(e)$.
         \end{defblock}
-        \begin{tinfobox}[\textwidth]{Poznámka}
+        \begin{tinfobox}{Poznámka}
             Někdy je výhodnější se odkázat na samotné koncepvé vrcholy hrany $u,v$. Abychom si usnadnili zápis, budeme psát $w(u,v)$ místo $w(\set{u,v})$ v případě \textbf{neorientovaného grafu}, resp. místo $w((u,v))$ v případě \textbf{orientovaného grafu}.
         \end{tinfobox}
     \end{frame}
@@ -70,7 +70,7 @@
             \centering
             \input{images/ohodnoceny-graf-nejkratsi-cesta.tex}
         \end{figure}}
-        \visible<3->{\begin{tinfoframe}[0.6\textwidth]
+        \visible<3->{\begin{tinfoframe}
             \begin{center}
                 Jaká je nejkratší cesta z $u_1$ do $u_4$?
             \end{center}
@@ -95,14 +95,14 @@
         \begin{itemize}
             \visible<2->{\item Egster Dijkstra (1958)}
             \visible<3->{\item Na vstupu máme \textbf{nezáporně} ohodnocený graf $G=(V,E,w)$ a počáteční vrchol $v_0\in V$.}
-            \visible<4->{\begin{tinfoframe}[\textwidth]
+            \visible<4->{\begin{tinfoframe}
                 \begin{center}
                     Zatím není zcela jasné, proč chceme, aby váhy hran byly nezáporné, ale později si to zdůvodníme.
                 \end{center}
             \end{tinfoframe}}
             \visible<5->{\item Stejně jako v případě BFS i zde bychom rádi \textbf{při uzavírání vrcholu} chtěli znát nejkratší cestu do něj.}
             \visible<6->{\item Nicméně již nemusí platit, že \textbf{první nalezená cesta} od libovolného vrcholu $v$ je nutně nejkratší.}
-            \visible<7->{\begin{timportantframe}[0.7\textwidth]
+            \visible<7->{\begin{timportantframe}
                 \begin{center}
                     Cestu do $v$ je třeba postupně \textbf{zlepšovat}!
                 \end{center}
@@ -439,7 +439,7 @@
     \end{frame}
 
     \begin{frame}{Proč to funguje?}
-        \visible<2->{\begin{talertframe}[\textwidth]
+        \visible<2->{\begin{talertframe}
             \begin{center}
                 Co by se stalo, kdyby algoritmus vybral vrchol $v$, jehož $D$ neodpovídá délce nejkratší cesty?
             \end{center}
@@ -472,7 +472,7 @@
                 Všimněte si, že právě díky \textbf{nezápornosti vah} hran grafu na vstupu algoritmus funnguje!
             \end{center}
         \end{talertframe}}
-        \visible<3->{\begin{tnoticeframe}[\textwidth]
+        \visible<3->{\begin{tnoticeframe}
             \begin{center}
                 Kdyby hrany mohly mít i záporné váhy, nejkratší sled mezi některými dvojicemi vrcholů vůbec nemusí existovat!
             \end{center}
@@ -506,7 +506,7 @@
             \visible<2->{\item Zatím jsme vůbec nevyřešili, jak budeme ukládat hodnoty $D$.}
             \visible<3->{\item Jako první varianta se nabízí \markdarkred{obyčejný seznam/pole}.}
         \end{itemize}
-        \visible<4->{\begin{tnoticeframe}[0.8\textwidth]
+        \visible<4->{\begin{tnoticeframe}
             Zkusíme určit \textbf{časovou} a \textbf{prostorovou složitost}.
         \end{tnoticeframe}}
     \end{frame}
@@ -590,7 +590,7 @@
     \end{frame}
 
     \begin{frame}{Shrnutí a závěrečný rozbor}
-        \begin{timportantframe}[\textwidth]
+        \begin{timportantframe}
             \begin{itemize}
                 \item Pro \textbf{řídké} grafy vychází asymptotická složitost lépe v případě \markdarkred{implementace s binární haldou}.
                 \item Pro \textbf{husté} grafy vychází lépe \markdarkred{implementace s polem}.

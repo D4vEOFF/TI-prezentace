@@ -66,7 +66,7 @@
                 \[x\iff y=(\neg x\lor y)\land (\neg y\lor x)\]}
             \end{itemize}
         \end{enumerate}
-        \visible<11->{\begin{talertframe}[0.9\textwidth]
+        \visible<11->{\begin{talertframe}
             \begin{center}
                 Implikaci a ekvivalenci můžeme nahradit pomocí $\land$ a $\lor$.
             \end{center}
@@ -109,7 +109,7 @@
     \subsection{Literály a klauzule}
 
     \begin{frame}{Literály a klauzule}
-        \visible<2->{\begin{tnoticeframe}[0.9\textwidth]
+        \visible<2->{\begin{tnoticeframe}
             \begin{center}
                 Nás budou zajímat logické výrazy v tzv. \textbf{konjunktivní normální formě} (zkráceně \textbf{CNF}, z anglického \emph{conjuctive normal form}).
             \end{center}
@@ -131,7 +131,7 @@
         \end{defblock}}
         \visible<3->{Tzn. každá formule v CNF je tvaru
         \[\varphi(x_1,\dots,x_n)=\overbrace{(\ell^{1}_1\lor\underbrace{\ell^{1}_2}_\text{literál} \dots \lor \ell^{1}_{m_1})}^{\text{klauzule}}\land\dots\land(\ell^{k}_1\lor\dots\lor\ell^{k}_{m_k}).\]}
-        \visible<4->{\begin{timportantframe}[0.9\textwidth]
+        \visible<4->{\begin{timportantframe}
             S formulemi v CNF se lépe pracuje než s obecnými logickými výrazy. Aby to však mělo smysl, musíme umět každou obecnou formuli do CNF nějak rychle převést.
         \end{timportantframe}}
     \end{frame}
@@ -204,7 +204,7 @@
     \subsection{Tseitinova transformace}
 
     \begin{frame}{Tseitinova transformace}
-        \visible<2->{\begin{timportantframe}[0.9\textwidth]
+        \visible<2->{\begin{timportantframe}
             \begin{center}
                 Převod do CNF nás může výrazně zdržet, pokud se budeme snažit za každou cenu \textbf{zachovat stejné proměnné}.
             \end{center}
@@ -231,7 +231,7 @@
             \visible<3->{\item Obecně pokud podformule $\varphi_i$ je v daném ohodnocení \textbf{pravdivá}, pak nastavíme $y_i=1$, jinak $y_i=0$.}
             \visible<4->{\item Pak $y_1$ bude odpovídat pravdivostní hodnotě celé formule $\varphi$.}
         \end{itemize}
-        \visible<5->{\begin{tinfoframe}[0.9\textwidth]
+        \visible<5->{\begin{tinfoframe}
             \begin{center}
                 Není těžké si rozmyslet, že původní formule $\varphi$ je splnitelná právě tehdy, když je splnitelná i nově vzniklá formule $\varphi^{\prime}$ v CNF.
             \end{center}
@@ -314,7 +314,7 @@
     \end{frame}
 
     \begin{frame}{Rozbor Tseitinovy transformace}
-        \visible<2->{\begin{tnoticeframe}[0.9\textwidth]
+        \visible<2->{\begin{tnoticeframe}
             \begin{center}
                 Tseitinova transformace je \textbf{podstatně rychlejší} oproti "tabulkové" metodě.
             \end{center}
@@ -351,12 +351,12 @@
         \visible<3->{\decproblem{Nesplnitelnost formule v CNF ($\UNSAT$)}{
             Logická formule $\varphi$ v CNF.
         }{Je formule $\varphi$ nesplnitelná?}}
-        \visible<4->{\begin{tinfoframe}[0.8\textwidth]
+        \visible<4->{\begin{tinfoframe}
             \begin{center}
                 Je nejspíše zjevné, že $\SAT(\varphi)=\neg \UNSAT(\varphi)$.
             \end{center}
         \end{tinfoframe}}
-        \visible<5->{\begin{talertframe}[0.9\textwidth]
+        \visible<5->{\begin{talertframe}
             \begin{center}
                 Formule $\varphi$ je splnitelná právě tehdy, když $\neg\varphi$ je nesplnitelná, tzn. $\SAT(\varphi)=\UNSAT(\neg\varphi)$.
             \end{center}

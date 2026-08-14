@@ -84,7 +84,7 @@
             \visible<7->{\item Ze vzniklé formule $\varphi^{\prime}$ zkusíme určit, zdali \textbf{je či není splnitelná}.}
             \visible<8->{\item Pokud to nepůjde, formuli "vhodně" upravíme a znovu aplikujeme stejný postup.}
         \end{itemize}
-        \visible<9->{\begin{timportantframe}[0.9\textwidth]
+        \visible<9->{\begin{timportantframe}
             \begin{center}
                 Má-li být formule $\varphi$ splnitelná, pak musíme být schopni splnit \textbf{každou její klauzuli}. 
             \end{center}
@@ -101,13 +101,13 @@
             \visible<3->{\item Na vstupu máme formuli $\varphi$ a nějaký její literál $\ell$.}
             \visible<4->{\item Pokud je $\ell=x_i$, pak $x_i=1$. Naopak pokud $\ell=\neg x_i$, pak $x_i=0$.}
             \visible<5->{\item V takovém případě můžeme odstranit všechny ostatní klauzule obsahující $\ell$.}
-            \visible<6->{\begin{tnoticeframe}[0.9\textwidth]
+            \visible<6->{\begin{tnoticeframe}
                 \begin{center}
                     Klauzule ve tvaru $(\ldots\lor \ell \lor \ldots)$ jsou splněny a dále není třeba je uvažovat (můžeme je odstranit).
                 \end{center}
             \end{tnoticeframe}}
             \visible<7->{\item Naopak pokud nějaká klauzule obsahuje $\ell$ \textbf{v opačné polaritě} (tj. $\neg\ell$), pak jeho hodnota je $0$.}
-            \visible<8->{\begin{tnoticeframe}[0.9\textwidth]
+            \visible<8->{\begin{tnoticeframe}
                 \begin{center}
                     Takový literál můžeme z formule odstranit. Hodnota klauzule je závislá pouze na zbylých literálech.
                 \end{center}
@@ -126,7 +126,7 @@
             \visible<4->{\item V takovém případě existuje jednoznačné ohodnocení literálu $\ell$ takové, že všechny klauzule jej obsahující jsou splněny.}
             \visible<5->{\item Resp. pokud $\ell=x_i$, pak nastavíme $x_i=1$. Jinak pokud $\ell=\neg x_i$, pak nastavíme $x_i=0$.}
         \end{itemize}
-        \visible<6->{\begin{tnoticeframe}[0.8\textwidth]
+        \visible<6->{\begin{tnoticeframe}
             \begin{center}
                 Takové obsahující $\ell$ můžeme z $\varphi$ odstranit, protože už jsou splněny.
             \end{center}
@@ -317,7 +317,7 @@
         \begin{itemize}
             \visible<2->{\item Nejhorší případ nastane, pokud při žádném volání $\operatorname{DPLL}$ neexituje v příslušné formuli \textbf{žádná jednotková klauzule} vyjma té, kterou jsme vytvořili při sestavení formule $\varphi\land\ell$, resp. $\varphi\land\neg\ell$, ani \textbf{čistý literál}.}
             \visible<3->{\item Máme-li formuli ve tvaru $\varphi\land\ell$, resp. $\varphi\land\neg\ell$, pak literál $\ell$ eliminujeme v dalším volání a všechny ostatní zůstanou zachované.}
-            \visible<4->{\begin{timportantframe}[0.8\textwidth]
+            \visible<4->{\begin{timportantframe}
                 \begin{center}
                     Formule se tedy zkrátí pouze o \textbf{jeden literál}.
                 \end{center}
@@ -352,7 +352,7 @@
             \visible<2->{\item Problém $\SAT$ dodnes neumíme řešit v polynomiálním čase.}
             \visible<3->{\item Naštěstí u "velké" části logických formulí však umíme rozhodnout rychle, zdali jsou splnitelné.}
         \end{itemize}
-        \visible<4->{\begin{talertframe}[0.9\textwidth]
+        \visible<4->{\begin{talertframe}
             \begin{center}
                 Dodnes však není známý algoritmus pro $\SAT$, který by běžel nad libovolnou formulí \textbf{v polynomiálním čase}.
             \end{center}
