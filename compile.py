@@ -7,6 +7,25 @@ import shutil
 import subprocess
 
 
+# Prezentace jsou pouze v adresářích ti-* přímo v kořeni repozitáře. Rekurzivní
+# průchod by zabral i pomocné adresáře (např. .claude/worktrees) s vlastním main.tex.
+PRESENTATION_DIR_PATTERN = "ti-*"
+
+
+def find_presentation_folders(root):
+    """
+    Vrátí seřazený seznam adresářů ti-* ležících přímo v `root`, které obsahují
+    main.tex. Do hlubších úrovní se nesestupuje.
+    """
+    folders = []
+
+    for path in sorted(glob.glob(os.path.join(root, PRESENTATION_DIR_PATTERN))):
+        if os.path.isdir(path) and os.path.isfile(os.path.join(path, "main.tex")):
+            folders.append(path)
+
+    return folders
+
+
 def fix_path_for_windows(path):
     if platform.system() == "Windows":
         return path.replace("\\", "/")
@@ -250,10 +269,11 @@ def main():
             "the output PDF. For beamer documents, --handout creates a handout "
             "version for every requested aspect ratio. With -ar "
             "(--aspect-ratios) you can specify one or more aspect ratios, for "
-            "example 43 1610 or 4:3 16:10. If --all is specified, all "
-            "subdirectories containing main.tex are processed; the output PDF "
-            "is named after the folder name. Option --move moves all resulting "
-            "PDFs to the current directory."
+            "example 43 1610 or 4:3 16:10. If --all is specified, every ti-* "
+            "folder directly inside the target directory that contains "
+            "main.tex is processed; the output PDF is named after the folder "
+            "name. Option --move moves all resulting PDFs to the current "
+            "directory."
         )
     )
     parser.add_argument(
@@ -273,7 +293,10 @@ def main():
     parser.add_argument(
         "--all",
         action="store_true",
-        help="Compile main.tex in all subdirectories (each output PDF is named after its folder)",
+        help=(
+            "Compile main.tex in every ti-* folder directly inside the target "
+            "directory (each output PDF is named after its folder)"
+        ),
     )
     parser.add_argument(
         "--handout",
@@ -310,21 +333,26 @@ def main():
     compiled_files = []
 
     if args.all:
-        for root, dirs, files in os.walk(args.folder):
-            if "main.tex" in files:
-                title = os.path.basename(os.path.abspath(root))
-                print(f"Found main.tex in {root}, compiling as '{title}'")
-                compiled_files.extend(
-                    compile_latex(
-                        root,
-                        title,
-                        handout=args.handout,
-                        aspect_ratios=args.aspect_ratios,
-                    )
-                )
+        found_any = False
 
-        if not compiled_files:
-            print("No main.tex files were found in any subdirectories.")
+        for folder in find_presentation_folders(args.folder):
+            found_any = True
+            title = os.path.basename(os.path.abspath(folder))
+            print(f"Found main.tex in {folder}, compiling as '{title}'")
+            compiled_files.extend(
+                compile_latex(
+                    folder,
+                    title,
+                    handout=args.handout,
+                    aspect_ratios=args.aspect_ratios,
+                )
+            )
+
+        if not found_any:
+            print(
+                f"No {PRESENTATION_DIR_PATTERN} folder with main.tex was found "
+                f"in {args.folder}."
+            )
     else:
         compiled_files.extend(
             compile_latex(
