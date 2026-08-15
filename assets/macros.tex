@@ -406,3 +406,14 @@
 \newcommand{\icon}[1]{
   \includegraphics[height=\fontcharht\font`\B]{#1}
 }
+
+% Závěrečný snímek se seznamem zdrojů. Prvním (volitelným) argumentem je název
+% sekce i snímku, druhým čárkou oddělený seznam klíčů z ../assets/literatura.bib.
+% Citace se sázejí podle ČSN ISO 690, v pořadí, v jakém jsou klíče uvedeny.
+\newcommand{\zdrojeframe}[2][Zdroje]{%
+    \section{#1}
+    \nocite{#2}%
+    \begin{frame}[allowframebreaks]{#1}
+        \printbibliography[heading=none]
+    \end{frame}
+}

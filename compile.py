@@ -49,6 +49,10 @@ def cleanup_files(folder):
         "*.nav",
         "*.snm",
         "*.vrb",
+        "*.bbl",
+        "*.bcf",
+        "*.blg",
+        "*.run.xml",
     ]
 
     print("Cleaning up auxiliary files...")
@@ -144,8 +148,29 @@ def create_variant_tex(main_file, variant_file, aspect=None, handout=False):
     print(f"Created TeX file for {description}: {variant_file}")
 
 
+def run_biber(folder, stem):
+    """
+    Sestaví bibliografii pro daný dokument. Biber se spouští s pracovním
+    adresářem prezentace, aby se relativní cesta k ../assets/literatura.bib
+    v \\addbibresource rozřešila stejně jako při běhu pdflatexu.
+    """
+    print(f"Running biber for {stem} in {folder}...")
+    result = subprocess.run(["biber", stem], cwd=folder, check=False)
+    if result.returncode != 0:
+        raise RuntimeError(
+            f"biber failed for {stem} in {folder} (exit code {result.returncode})."
+        )
+
+
 def run_pdflatex(folder, tex_file, description):
-    for i in range(2):
+    """
+    Zkompiluje dokument v pořadí pdflatex, biber, pdflatex, pdflatex.
+    Tři průchody pdflatexem jsou potřeba, aby se ustálily jak citace, tak
+    odkazy a osnova Beameru.
+    """
+    stem = os.path.splitext(os.path.basename(tex_file))[0]
+
+    for i in range(3):
         print(f"Compiling {tex_file} ({description})... (Run {i + 1})")
         result = subprocess.run(
             ["pdflatex", "-output-directory", folder, tex_file],
@@ -156,6 +181,9 @@ def run_pdflatex(folder, tex_file, description):
                 f"pdflatex failed while compiling {tex_file} "
                 f"(run {i + 1}, exit code {result.returncode})."
             )
+
+        if i == 0:
+            run_biber(folder, stem)
 
 
 def compile_variant(folder, title, aspect=None, handout=False):

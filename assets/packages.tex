@@ -33,6 +33,12 @@
 }
 \usepackage{float}
 \usepackage{csquotes}					% české uvozovky
+
+% Citace podle ČSN ISO 690 (biblatex-iso690). Databáze zdrojů je sdílená pro
+% všechny prezentace; sazbu snímku se zdroji obstarává makro \zdrojeframe.
+\usepackage[backend=biber,style=iso-numeric,sorting=none,maxnames=10]{biblatex}
+\addbibresource{../assets/literatura.bib}
+
 \usepackage{enumerate}					% enumerate environment
 \usepackage{indentfirst}
 \usepackage{tcolorbox}                  % Fancy boxíky

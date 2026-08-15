@@ -52,6 +52,7 @@ Repozitář obsahuje zdrojové soubory prezentací. Výsledná PDF lze vytvořit
       - [20 – Klasifikace](#20--klasifikace)
       - [21 – Neuronové sítě](#21--neuronové-sítě)
   - [Úprava prezentací](#úprava-prezentací)
+  - [Citace a seznam zdrojů](#citace-a-seznam-zdrojů)
   - [Autor a licence](#autor-a-licence)
   - [Použitá a doporučená literatura](#použitá-a-doporučená-literatura)
 
@@ -61,6 +62,7 @@ Repozitář obsahuje zdrojové soubory prezentací. Výsledná PDF lze vytvořit
 TI-prezentace/
 ├── assets/
 │   ├── listing.tex
+│   ├── literatura.bib
 │   ├── macros.tex
 │   ├── packages.tex
 │   └── theme.tex
@@ -86,6 +88,7 @@ Jednotlivé části mají následující význam:
 - `assets/theme.tex` definuje vzhled prezentací, barvy a nastavení Beameru;
 - `assets/macros.tex` obsahuje společná matematická, grafická a typografická makra;
 - `assets/listing.tex` obsahuje nastavení výpisů zdrojového kódu;
+- `assets/literatura.bib` obsahuje společnou databázi citovaných zdrojů;
 - `images/` obsahuje společné obrázky, zejména logo školy;
 - `titlepage.tex` definuje společnou titulní stranu, která není vázaná na konkrétní předmět;
 - `ti-NN-nazev/` obsahuje zdrojové soubory příslušné prezentace;
@@ -98,19 +101,20 @@ Hlavním souborem každé prezentace je `main.tex`. Některé prezentace obsahuj
 Pro kompilaci prezentací jsou potřeba:
 
 - **Python 3**;
-- distribuce LaTeXu obsahující program `pdflatex`, například
+- distribuce LaTeXu obsahující programy `pdflatex` a `biber`, například
   - TeX Live nebo
   - MiKTeX;
 - česká jazyková podpora pro balíček `babel`;
 - balíčky LaTeXu uvedené v souboru [`assets/packages.tex`](assets/packages.tex).
 
-Projekt používá mimo jiné balíčky Beamer, TikZ, PGFPlots, `algorithm2e`, `tcolorbox`, `listings`, `pdfx`, `mathtools`, `subcaption`, `tabularx` a `makecell`. Vzhledem k většímu množství závislostí je vhodná úplná instalace TeX Live nebo MiKTeXu.
+Projekt používá mimo jiné balíčky Beamer, TikZ, PGFPlots, `algorithm2e`, `tcolorbox`, `listings`, `pdfx`, `mathtools`, `subcaption`, `tabularx`, `makecell`, `biblatex` a `biblatex-iso690`. Vzhledem k většímu množství závislostí je vhodná úplná instalace TeX Live nebo MiKTeXu.
 
 Dostupnost potřebných programů lze ověřit příkazy:
 
 ```bash
 python --version
 pdflatex --version
+biber --version
 ```
 
 Na některých systémech je nutné místo příkazu `python` použít `python3`.
@@ -121,7 +125,7 @@ Skript [`compile.py`](compile.py):
 
 - vyhledá příslušný soubor `main.tex`;
 - podle zadaných parametrů vytvoří požadovanou variantu prezentace;
-- spustí `pdflatex` dvakrát;
+- zkompiluje ji v pořadí `pdflatex`, `biber`, `pdflatex`, `pdflatex` (druhý běh sestaví seznam zdrojů, další dva ustálí citace a odkazy);
 - přejmenuje výsledné PDF;
 - odstraní dočasné zdrojové a pomocné soubory.
 
@@ -447,6 +451,30 @@ Titulní strana bere všechny údaje z příkazů `\title`, `\subtitle`, `\autho
 
 Bez tohoto zápisu se použije výchozí hodnota `Teoretická informatika`.
 
+## Citace a seznam zdrojů
+
+Citace se sázejí podle **ČSN ISO 690** balíčkem `biblatex` se stylem `iso-numeric` (`biblatex-iso690`). Všechny prezentace čerpají z jediné databáze [`assets/literatura.bib`](assets/literatura.bib), takže se údaje o zdroji píší jen jednou a jsou ve všech prezentacích shodné.
+
+Závěrečný snímek se seznamem zdrojů vytvoří makro `\zdrojeframe`, jehož argumentem je čárkou oddělený seznam klíčů z databáze:
+
+```latex
+\zdrojeframe{mares-valla-labyrint, cormen-algorithms, matousek-diskretni}
+```
+
+Makro samo vytvoří sekci `Zdroje`, vysází snímek se seznamem a v případě potřeby jej rozdělí na více stránek. Volitelným argumentem lze název sekce i snímku změnit:
+
+```latex
+\zdrojeframe[Doporučené zdroje]{mares-valla-labyrint, cormen-algorithms}
+```
+
+Na zdroj uprostřed výkladu se odkazuje příkazem `\cite`, který vysází pořadové číslo ze seznamu zdrojů:
+
+```latex
+{\scriptsize Zdroje: \cite{csu-volby-snemovna,volby-ps2025}}
+```
+
+Nový zdroj se přidává do `assets/literatura.bib`; v prezentaci se pak uvádí pouze jeho klíč. Zdroje se řadí v pořadí, v jakém jsou poprvé citovány.
+
 ## Autor a licence
 
 - **Autor:** David Weber  
@@ -455,13 +483,20 @@ Bez tohoto zápisu se použije výchozí hodnota `Teoretická informatika`.
 
 ## Použitá a doporučená literatura
 
-1. MAREŠ, Martin a VALLA, Tomáš. *Průvodce labyrintem algoritmů.* Druhé vydání. Praha: CZ.NIC, z. s. p. o., 2022. ISBN 978-80-88168-63-8.
-2. CORMEN, Thomas H.; LEISERSON, Charles Eric; RIVEST, Ronald L. a STEIN, Clifford. *Introduction to algorithms.* Fourth edition. Cambridge: The MIT Press, 2022. ISBN 978-0-262-04630-5.
-3. HOPCROFT, John E.; MOTWANI, Rajeev a ULLMAN, Jeffrey D. *Introduction to automata theory, languages, and computation.* 3rd ed. Boston: Pearson/Addison Wesley, 2007.
-4. MATOUŠEK, Jiří a NEŠETŘIL, Jaroslav. *Kapitoly z diskrétní matematiky.* 4., upravené a doplněné vydání. Praha: Karolinum, 2009. ISBN 978-80-246-1740-4.
-5. RUSSELL, Stuart J. a NORVIG, Peter. *Artificial intelligence: A modern approach.* 3rd ed. Englewood Cliffs: Pearson, 2016. ISBN 8120323823.
-6. PAPADIMITRIOU, Christos H. *Computational complexity.* Reading: Addison-Wesley, 1994. ISBN 0-201-53082-1.
-7. BRYANT, Randal E. a O’HALLARON, David R. *Computer Systems: A Programmer's Perspective.* 3rd ed. Boston: Pearson, 2016. ISBN 978-0-13-409266-9.
-8. ČEŠKA, Milan; HRUŠKA, Tomáš a BENEŠ, Miroslav. *Překladače.* Brno: Vysoké učení technické v Brně, Fakulta elektrotechnická, bez roku. Učební texty vysokých škol. [Dostupné online](https://www.fi.muni.cz/usr/kretinsky/prekladace_skripta_VUT.pdf). Citováno 2. 7. 2026.
-9. KATZ, Jonathan a LINDELL, Yehuda. *Introduction to modern cryptography.* Boca Raton: Chapman & Hall/CRC, 2008. ISBN 978-1-58488-551-1.
-10. JAMES, Gareth; WITTEN, Daniela; HASTIE, Trevor; TIBSHIRANI, Robert a TAYLOR, Jonathan E. *An introduction to statistical learning: with applications in Python.* Cham: Springer, 2023. ISBN 978-3-031-39189-7.
+Zdroje jsou udržované v jediné databázi [`assets/literatura.bib`](assets/literatura.bib); prezentace je citují podle ČSN ISO 690 (viz [Citace a seznam zdrojů](#citace-a-seznam-zdrojů)). Seznam níže odpovídá obsahu této databáze.
+
+1. MAREŠ, Martin; VALLA, Tomáš. *Průvodce labyrintem algoritmů.* 2. vyd. Praha: CZ.NIC, z. s. p. o., 2022. ISBN 978-80-88168-63-8.
+2. CORMEN, Thomas H.; LEISERSON, Charles E.; RIVEST, Ronald L.; STEIN, Clifford. *Introduction to Algorithms.* 4. vyd. Cambridge: The MIT Press, 2022. ISBN 978-0-262-04630-5.
+3. HOPCROFT, John E.; MOTWANI, Rajeev; ULLMAN, Jeffrey D. *Introduction to Automata Theory, Languages, and Computation.* 3. vyd. Boston: Pearson/Addison-Wesley, 2007. ISBN 978-0-321-45536-9.
+4. MATOUŠEK, Jiří; NEŠETŘIL, Jaroslav. *Kapitoly z diskrétní matematiky.* 4. vyd. Praha: Karolinum, 2009. ISBN 978-80-246-1740-4.
+5. RUSSELL, Stuart J.; NORVIG, Peter. *Artificial Intelligence: A Modern Approach.* 3. vyd. Englewood Cliffs: Pearson, 2016. ISBN 81-203-2382-3.
+6. PAPADIMITRIOU, Christos H. *Computational Complexity.* Reading: Addison-Wesley, 1994. ISBN 0-201-53082-1.
+7. BRYANT, Randal E.; O’HALLARON, David R. *Computer Systems: A Programmer's Perspective.* 3. vyd. Boston: Pearson, 2016. ISBN 978-0-13-409266-9.
+8. ČEŠKA, Milan; HRUŠKA, Tomáš; BENEŠ, Miroslav. *Překladače.* Učební texty vysokých škol. Brno: Vysoké učení technické v Brně, Fakulta elektrotechnická, [b. r.]. Dostupné z: <https://www.fi.muni.cz/usr/kretinsky/prekladace_skripta_VUT.pdf>. [cit. 2026-07-02].
+9. KATZ, Jonathan; LINDELL, Yehuda. *Introduction to Modern Cryptography.* Chapman & Hall/CRC Cryptography and Network Security. Boca Raton: Chapman & Hall/CRC, 2008. ISBN 978-1-58488-551-1.
+10. MENEZES, Alfred J.; VAN OORSCHOT, Paul C.; VANSTONE, Scott A. *Handbook of Applied Cryptography.* Boca Raton: CRC Press, 1997. ISBN 0-8493-8523-7.
+11. JAMES, Gareth; WITTEN, Daniela; HASTIE, Trevor; TIBSHIRANI, Robert; TAYLOR, Jonathan E. *An Introduction to Statistical Learning: With Applications in Python.* Springer Texts in Statistics. Cham: Springer, 2023. ISBN 978-3-031-39189-7.
+12. NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY. *SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions.* Federal Information Processing Standards Publication FIPS PUB 202. Gaithersburg, 2015. DOI: 10.6028/NIST.FIPS.202.
+13. ČESKO. Zákon č. 297/2016 Sb., o službách vytvářejících důvěru pro elektronické transakce. In: *Sbírka zákonů České republiky.* 2016, částka 115, s. 4466–4472.
+14. ČESKÝ STATISTICKÝ ÚŘAD. *Volby do Poslanecké sněmovny.* Dostupné z: <https://csu.gov.cz/volby-do-poslanecke-snemovny>. [cit. 2026-08-15].
+15. ČESKÝ STATISTICKÝ ÚŘAD. *Volby do Poslanecké sněmovny Parlamentu České republiky 2025: Výsledky voleb.* 2025. Dostupné z: <https://www.volby.cz/app/ps2025/cs/results>. [cit. 2026-08-15].

@@ -96,4 +96,19 @@
 \setbeamertemplate{enumerate items}[circle]
 \setbeamercolor{item projected}{bg=bulletbg}
 
+% U snímků s allowframebreaks se dovětek přidává až od druhého snímku, aby se
+% u jednostránkového seznamu zdrojů nezobrazovalo "Zdroje I".
+\setbeamertemplate{frametitle continuation}{%
+    \ifnum\insertcontinuationcount>1\relax\ (pokračování)\fi
+}
+
+% Bibliografie
+% Místo ikony Beameru se u položky seznamu zdrojů sází její pořadové číslo.
+\setbeamertemplate{bibliography item}[text]
+\setbeamercolor{bibliography item}{fg=black}
+\setbeamercolor{bibliography entry author}{fg=black}
+\setbeamercolor{bibliography entry title}{fg=black}
+\setbeamercolor{bibliography entry location}{fg=black}
+\setbeamercolor{bibliography entry note}{fg=black}
+
 % Titulní strana je definovaná v souboru titlepage.tex.
