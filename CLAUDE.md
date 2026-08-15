@@ -30,7 +30,9 @@ Neexistují testy ani linter. Ověřením změny je úspěšná kompilace a vizu
 
 ## Jak compile.py funguje
 
-Pro každou variantu kromě té úplně základní skript **vygeneruje dočasnou kopii** `main.tex` (`main_<aspect>[_handout].tex`), v ní regulárním výrazem přepíše volby v řádku `\documentclass` (nahradí `aspectratio=`, přidá/odebere `handout`), spustí `pdflatex` dvakrát, přejmenuje výsledek, dočasný `.tex` smaže a uklidí pomocné soubory (`.aux`, `.nav`, `.snm`, …).
+Pro každou variantu kromě té úplně základní skript **vygeneruje dočasnou kopii** `main.tex` (`main_<aspect>[_handout].tex`), v ní regulárním výrazem přepíše volby v řádku `\documentclass` (nahradí `aspectratio=`, přidá/odebere `handout`), zkompiluje ji v pořadí `pdflatex`, `biber`, `pdflatex`, `pdflatex`, přejmenuje výsledek, dočasný `.tex` smaže a uklidí pomocné soubory (`.aux`, `.nav`, `.snm`, `.bbl`, `.bcf`, …).
+
+`biber` se spouští s pracovním adresářem prezentace (`cwd=folder`), aby se relativní cesta `../assets/literatura.bib` z `\addbibresource` rozřešila stejně jako při běhu `pdflatexu` — ten se naopak volá z kořene repozitáře s `-output-directory`.
 
 Důsledky pro editaci zdrojů:
 
@@ -64,6 +66,7 @@ Sdílené soubory a jejich role:
 - `assets/theme.tex` — barvy (`maincolor` a od ní odvozené), motiv Beameru, styl bloků, odrážek a záhlaví.
 - `assets/macros.tex` — společná makra (viz níže).
 - `assets/listing.tex` — styly `listings` pro C (výchozí), Python, C#, Rust; `escapeinside={(*}{*)}`.
+- `assets/literatura.bib` — sdílená databáze zdrojů pro všechny prezentace (viz níže).
 - `titlepage.tex` — titulní strana. Nezávislá na předmětu: bere údaje z `\title`/`\subtitle`/`\author`/`\email`/`\institute`/`\date` a z `\schoollogo`. Název předmětu lze přepsat `\def\subjectname{...}` **před** vložením souboru.
 
 Změna kteréhokoli souboru v `assets/` nebo `titlepage.tex` se projeví ve všech 25 prezentacích — po zásahu je nutné zkontrolovat víc než jednu.
@@ -82,6 +85,26 @@ Definována v `assets/macros.tex`:
 - `algorithm2e` je počeštěné (`Vstup`, `Výstup`, `Funkce`) a číslování algoritmů je vypnuté.
 
 Postupné odkrývání se v existujících prezentacích dělá `\visible<n->{...}`, ne `\pause` (kvůli konzistenci sazby mezi standardní a handout variantou).
+
+## Citace a seznam zdrojů
+
+Zdroje se **nepíší ručně do `itemize`**. Všechny jsou v jediné databázi `assets/literatura.bib`, sazbu obstarává `biblatex` se stylem `iso-numeric` (balíček `biblatex-iso690`) podle ČSN ISO 690. Načtení balíčku je v `assets/packages.tex`, barvy a šablona položky v `assets/theme.tex`.
+
+Závěrečný snímek se sází makrem z `assets/macros.tex`:
+
+```latex
+\zdrojeframe{mares-valla-labyrint, cormen-algorithms, matousek-diskretni}
+\zdrojeframe[Doporučené zdroje]{mares-valla-labyrint, cormen-algorithms}
+```
+
+Makro samo vytvoří sekci, provede `\nocite` a vysází `\printbibliography` ve snímku s `allowframebreaks`. Volitelný argument mění název sekce i snímku (výchozí je `Zdroje`). Na zdroj uprostřed výkladu se odkazuje běžným `\cite{klic}`.
+
+Pravidla:
+
+- Nový zdroj patří do `assets/literatura.bib`, ne do konkrétní prezentace. Změna `.bib` se projeví ve všech prezentacích.
+- Řazení je `sorting=none`, tedy v pořadí prvního výskytu citace. Pokud je zdroj citován `\cite` uprostřed prezentace, dostane nižší číslo než zdroje uvedené až v `\zdrojeframe`.
+- Název s dvojtečkou se zapisuje jako `title` + `subtitle`, ne jako jeden řetězec.
+- Po přidání zdroje je nutná plná kompilace (`pdflatex`, `biber`, `pdflatex`, `pdflatex`); `compile.py` ji dělá sám.
 
 ## Obrázky
 
