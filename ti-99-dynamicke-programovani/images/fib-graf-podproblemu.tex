@@ -1,0 +1,23 @@
+% Graf podproblémů pro $F_5$: strom rekurze, v němž jsme všechny vrcholy
+% se stejným popiskem slepili do jediného. Hrana $x\to y$ znamená, že
+% podproblém $x$ potřebuje ke svému vyřešení podproblém $y$.
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small,
+                    fibnode/.style={vertex, minimum size=7mm, fill=white}]
+
+    \foreach \k/\x in {5/0.0,4/1.5,3/3.0,2/4.5,1/6.0,0/7.5}{
+        \node[fibnode] (g\k) at (\x,0) {$F_\k$};
+    }
+
+    % Závislost na bezprostředním předchůdci
+    \foreach \a/\b in {5/4,4/3,3/2,2/1}{
+        \draw[diredge] (g\a) -- (g\b);
+    }
+    % Závislost na předpředchůdci
+    \foreach \a/\b in {5/3,4/2,3/1,2/0}{
+        \draw[diredge] (g\a) to[bend left=42] (g\b);
+    }
+
+    \node[font=\scriptsize, anchor=north, align=center] at (3.75,-0.75)
+        {$6$ vrcholů a $8$ hran místo $15$ vrcholů stromu rekurze};
+
+\end{tikzpicture}

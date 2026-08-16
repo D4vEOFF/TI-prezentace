@@ -1,0 +1,28 @@
+% Rekurzivní výpočet 4! -- vlevo sestup (rozklad na menší podproblém),
+% vpravo návrat (skládání výsledků).
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
+
+    \node[task, minimum width=26mm] (f4) at (0, 0.00) {$4!=4\cdot 3!$};
+    \node[task, minimum width=26mm] (f3) at (0,-1.40) {$3!=3\cdot 2!$};
+    \node[task, minimum width=26mm] (f2) at (0,-2.80) {$2!=2\cdot 1!$};
+    \node[task, minimum width=26mm] (f1) at (0,-4.20) {$1!=1$};
+
+    % Sestup -- rozklad na menší podproblém
+    \foreach \y in {-0.50,-1.90,-3.30}{
+        \draw[diredge, darkred] (-0.7,\y) -- (-0.7,{\y-0.40});
+    }
+    \draw[diredge, darkred, line width=1.1pt] (-2.20,0.15) -- (-2.20,-4.35);
+    \node[darkred, font=\scriptsize, rotate=90] at (-2.50,-2.10)
+        {rozklad na menší podproblém};
+
+    % Návrat -- skládání výsledků
+    \foreach \y/\val in {-3.70/{$1$},-2.30/{$2$},-0.90/{$6$}}{
+        \draw[diredge, darkgreen] (0.7,\y) -- (0.7,{\y+0.40})
+            node[midway, right, darkgreen, font=\scriptsize] {\val};
+    }
+    \node[anchor=west, font=\small, darkgreen] at (1.20,0) {$=24$};
+    \draw[diredge, darkgreen, line width=1.1pt] (2.20,-4.35) -- (2.20,0.15);
+    \node[darkgreen, font=\scriptsize, rotate=270] at (2.50,-2.10)
+        {skládání výsledků};
+
+\end{tikzpicture}

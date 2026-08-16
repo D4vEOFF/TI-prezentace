@@ -1,0 +1,32 @@
+% Rozklad tyče na první díl délky $i$ a zbytek délky $n-i$. Zbytek je
+% opět úloha téhož druhu, jen menší.
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small,
+                    dil/.style={thick, fill=lightred!25, rounded corners=1pt},
+                    zbytek/.style={thick, fill=darkgreen!20, rounded corners=1pt}]
+
+    % Tyč délky n rozdělená řezem
+    \draw[dil]    (0,0)   rectangle (2.4,0.55);
+    \draw[zbytek] (2.4,0) rectangle (8.0,0.55);
+
+    \node at (1.2,0.275) {$i$};
+    \node at (5.2,0.275) {$n-i$};
+
+    % Řez
+    \draw[darkred, line width=1pt, dashed] (2.4,-0.30) -- (2.4,0.85);
+    \node[darkred, font=\scriptsize, anchor=south] at (2.4,0.90) {řez};
+
+    % Popisky
+    \draw[<->,>=stealth] (0,-0.45) -- (2.4,-0.45);
+    \draw[<->,>=stealth] (2.4,-0.45) -- (8.0,-0.45);
+
+    \node[font=\scriptsize, anchor=north, align=center, text width=3.0cm,
+          lightred!70!black] at (1.2,-0.60)
+        {první díl prodáme\\ za cenu $p_i$};
+    \node[font=\scriptsize, anchor=north, align=center, text width=5.0cm,
+          darkgreen!70!black] at (5.2,-0.60)
+        {zbytek je táž úloha o~velikosti $n-i$\\ $\Rightarrow$ nejlépe za $r_{n-i}$};
+
+    \node[font=\small, anchor=north] at (4.0,-1.85)
+        {$r_n=\max\limits_{1\leqslant i\leqslant n}\left(p_i+r_{n-i}\right)$};
+
+\end{tikzpicture}

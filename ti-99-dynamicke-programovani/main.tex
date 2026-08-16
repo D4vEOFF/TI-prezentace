@@ -8,8 +8,627 @@
 
 \def\presentationtitle{Dynamické programování}
 
+% Obrázek se vždy vejde na snímek: adjustbox jej v případě potřeby
+% zmenší tak, aby nepřesáhl šířku textu ani zadanou část výšky snímku.
+% Díky tomu sedí sazba ve všech používaných poměrech stran.
+\newcommand{\obrazek}[2][0.68\textheight]{%
+    \begin{figure}
+        \centering
+        \begin{adjustbox}{max width=\textwidth, max totalheight=#1, center}
+            \input{#2}
+        \end{adjustbox}
+    \end{figure}%
+}
+
+% Ceník tyčí, se kterým se pracuje v celé kapitole o dělení tyče.
+\newcommand{\tyccenik}{%
+    \begin{center}
+        \renewcommand{\arraystretch}{1.25}
+        \begin{tabular}{|r|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            \rowcolor{decproblembg}
+            délka $i$   & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $10$ \\ \hline
+            cena $p_i$  & $1$ & $5$ & $8$ & $9$ & $10$ & $17$ & $17$ & $20$ & $24$ & $30$ \\ \hline
+        \end{tabular}
+    \end{center}
+}
+
 \begin{document}
 
     \input{../titlepage.tex}
+
+    % =================================================================
+    \section{Opakování: rekurze}
+    % =================================================================
+
+    \begin{frame}{Co je rekurze?}
+        \begin{itemize}
+            \visible<2->{\item \markdarkred{Rekurzivní} je taková funkce, která ve svém těle \textbf{volá sama sebe}.}
+            \visible<3->{\item Aby výpočet skončil, musí každá rekurze obsahovat:}
+            \begin{itemize}
+                \visible<4->{\item \textbf{triviální případ}, který umíme vyřešit přímo,}
+                \visible<5->{\item \textbf{rekurzivní krok}, který úlohu převede na \textbf{menší} úlohu téhož druhu.}
+            \end{itemize}
+        \end{itemize}
+        \visible<6->{\begin{tinfoframe}
+            \begin{center}
+                Rekurze je vlastně recept: \uv{umím-li vyřešit menší úlohu, umím vyřešit i tu svou}.
+            \end{center}
+        \end{tinfoframe}}
+    \end{frame}
+
+    \begin{frame}{Rekurze}{Příklad: faktoriál}
+        \visible<2->{\[
+            n!=
+            \begin{cases}
+                1              & \text{pro } n\leqslant 1,\\
+                n\cdot(n-1)!   & \text{jinak.}
+            \end{cases}
+        \]}
+        \visible<3->{\obrazek[0.55\textheight]{images/rekurze-faktorial.tex}}
+    \end{frame}
+
+    \begin{frame}{Rekurze počítá \uv{shora dolů}}
+        \begin{itemize}
+            \visible<2->{\item Rekurze začíná u \textbf{celého problému} a postupně jej rozkládá na menší a menší podproblémy.}
+            \visible<3->{\item Teprve na dně, u triviálních případů, se začnou skládat výsledky zpět nahoru.}
+            \visible<4->{\item Tomuto směru výpočtu říkáme \markdarkred{shora dolů} (angl. \emph{top-down}).}
+        \end{itemize}
+        \visible<5->{\begin{tnoticeframe}
+            \begin{center}
+                Rekurze \textbf{nijak neřeší}, zda tentýž podproblém neřešíme opakovaně.
+            \end{center}
+        \end{tnoticeframe}}
+    \end{frame}
+
+    % =================================================================
+    \section{Dynamické programování}
+    % =================================================================
+
+    \titleframe{Dynamické programování}
+
+    \subsection{Co to je?}
+
+    \begin{frame}{Co je dynamické programování?}
+        \begin{itemize}
+            \visible<2->{\item Technika návrhu algoritmů, která stejně jako \textbf{Rozděl a panuj} staví na \markdarkred{rekurzivním rozkladu} problému na podproblémy.}
+            \visible<3->{\item Navíc ale využívá toho, že se \textbf{tytéž podproblémy během rekurze opakují}.}
+            \visible<4->{\item Místo opakovaného počítání si už jednou spočítané výsledky \markdarkred{pamatuje v tabulce}.}
+        \end{itemize}
+        \visible<5->{\begin{tinfobox}{Odkud ten název?}
+            Termín zavedl Richard Bellman v~50. letech. \uv{Programováním} se tehdy mínilo \textbf{plánování} a \uv{dynamické} odkazuje na to, že optimální volba v~každém kroku závisí na krocích předchozích.
+        \end{tinfobox}}
+    \end{frame}
+
+    \begin{frame}{Kdy dynamické programování funguje?}
+        \visible<2->{\begin{defblock}[Optimální podstruktura]
+            Úloha má \markdarkred{optimální podstrukturu}, pokud je optimální řešení celé úlohy složené z~optimálních řešení jejích podúloh.
+        \end{defblock}}
+        \visible<3->{\begin{defblock}[Překrývající se podproblémy]
+            Podproblémy se \markdarkred{překrývají}, pokud přímočará rekurze tentýž podproblém řeší \textbf{mnohokrát znovu}.
+        \end{defblock}}
+        \visible<4->{\begin{timportantframe}
+            \begin{center}
+                Teprve obě vlastnosti dohromady dělají dynamické programování výhodným.
+            \end{center}
+        \end{timportantframe}}
+    \end{frame}
+
+    \begin{frame}{Proč se to hodí?}
+        \begin{itemize}
+            \visible<2->{\item Každý podproblém vyřešíme \textbf{právě jednou} a výsledek si zapamatujeme.}
+            \visible<3->{\item Tím se z~exponenciálně pomalého algoritmu často stane \markdarkred{polynomiální}.}
+            \visible<4->{\item Platíme za to pamětí na tabulku $\implies$ jde o~výměnu \textbf{paměti za čas}.}
+            \visible<5->{\item Pokud je počet různých podproblémů polynomiální a každý z~nich vyřešíme v~polynomiálním čase, běží celý algoritmus v~polynomiálním čase.}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Rozdíl oproti rekurzi}
+
+    \begin{frame}{Shora dolů vs. zdola nahoru}
+        \begin{itemize}
+            \visible<2->{\item \markdarkred{Rekurze} jde \textbf{shora dolů}: začíná u celého problému a ptá se na menší podproblémy.}
+            \visible<3->{\item \markdarkred{Dynamické programování} jde \textbf{zdola nahoru}: začne u nejmenších podproblémů a postupuje k~tomu zadanému.}
+        \end{itemize}
+        \visible<4->{\obrazek[0.62\textheight]{images/shora-dolu-zdola-nahoru.tex}}
+    \end{frame}
+
+    \begin{frame}{Shora dolů vs. zdola nahoru}
+        \begin{itemize}
+            \visible<2->{\item Obě cesty řeší \textbf{tutéž množinu podproblémů} -- liší se jen \markdarkred{pořadím}, v~jakém je řeší.}
+            \visible<3->{\item Při postupu zdola nahoru máme v~okamžiku, kdy nějaký podproblém řešíme, \textbf{už spočítané všechny menší}, na kterých závisí.}
+            \visible<4->{\item Nepotřebujeme proto vůbec rekurzi -- stačí obyčejný cyklus a pole.}
+        \end{itemize}
+        \visible<5->{\begin{tnoticeframe}
+            \begin{center}
+                Výpočet zdola nahoru bývá i~o~něco rychlejší -- odpadá režie volání funkcí.
+            \end{center}
+        \end{tnoticeframe}}
+    \end{frame}
+
+    \subsection{Kešování}
+
+    \begin{frame}{Kešování}
+        \begin{itemize}
+            \visible<2->{\item Mezi obyčejnou rekurzí a výpočtem zdola nahoru stojí \markdarkred{kešování} (angl. \emph{memoization}).}
+            \visible<3->{\item Rekurzi ponecháme, jen si pořídíme tabulku $T$ již spočítaných hodnot -- \markdarkred{keš}.}
+            \visible<4->{\item Na začátku každého volání se do keše podíváme:}
+            \begin{itemize}
+                \visible<5->{\item je-li hodnota vyplněná, \textbf{rovnou ji vrátíme},}
+                \visible<6->{\item jinak ji poctivě spočítáme a \textbf{hned uložíme}.}
+            \end{itemize}
+        \end{itemize}
+        \visible<7->{\obrazek[0.44\textheight]{images/kesovani.tex}}
+    \end{frame}
+
+    \begin{frame}{Kešování}
+        \visible<2->{\begin{timportantframe}
+            \begin{center}
+                Kešování \textbf{prořezává strom rekurze}: opakovaná volání se z~něj stanou listy.
+            \end{center}
+        \end{timportantframe}}
+        \begin{itemize}
+            \visible<3->{\item Kešovaná rekurze je pořád \textbf{shora dolů}, ale už neplýtvá časem.}
+            \visible<4->{\item Výpočet zdola nahoru dostaneme tak, že si uvědomíme, v~jakém pořadí se políčka tabulky vyplňují, a~toto pořadí zapíšeme rovnou cyklem.}
+        \end{itemize}
+    \end{frame}
+
+    % =================================================================
+    \section{Fibonacciho čísla}
+    % =================================================================
+
+    \titleframe{Fibonacciho čísla}
+
+    \subsection{Rekurzivní výpočet}
+
+    \begin{frame}{Fibonacciho čísla}
+        \visible<2->{\begin{defblock}[Fibonacciho čísla]
+            Posloupnost $(F_n)_{n=0}^{\infty}$ je dána předpisem
+            \[F_0=0,\qquad F_1=1,\qquad F_n=F_{n-1}+F_{n-2}\ \text{ pro } n\geqslant 2.\]
+        \end{defblock}}
+        \visible<3->{\begin{center}
+            $0,\ 1,\ 1,\ 2,\ 3,\ 5,\ 8,\ 13,\ 21,\ 34,\ 55,\ 89,\dots$
+        \end{center}}
+        \visible<4->{\begin{tinfoframe}
+            \begin{center}
+                Definice je rekurzivní $\implies$ nabízí se ji rovnou přepsat do algoritmu.
+            \end{center}
+        \end{tinfoframe}}
+    \end{frame}
+
+    \begin{frame}{Rekurzivní algoritmus}
+        \begin{center}
+            \begin{minipage}{0.85\textwidth}
+                \begin{algorithm}[H]
+                    \caption{\textsc{Fib}}
+                    \KwIn{Číslo $n\in\N$}
+                    \lIf{$n\leqslant 1$}{\Return{$n$}}
+                    \Return{$\textsc{Fib}(n-1)+\textsc{Fib}(n-2)$}
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+        \visible<2->{\begin{tnoticeframe}
+            \begin{center}
+                Algoritmus je zjevně správný -- je to doslovný přepis definice. \textbf{Jak je ale rychlý?}
+            \end{center}
+        \end{tnoticeframe}}
+    \end{frame}
+
+    \begin{frame}{Strom rekurze pro $F_5$}
+        \obrazek[0.85\textheight]{images/fib-strom.tex}
+    \end{frame}
+
+    \subsection{Složitost rekurzivního výpočtu}
+
+    \begin{frame}{Složitost rekurzivního výpočtu}
+        \begin{itemize}
+            \visible<2->{\item V~listech stromu rekurze stojí samé jedničky a nuly.}
+            \visible<3->{\item Hodnota každého vnitřního vrcholu je součtem hodnot listů pod ním $\implies$ abychom nasčítali $F_n$, musí být ve stromu \textbf{alespoň $F_n$ listů}.}
+            \visible<4->{\item Přitom platí
+            \[F_n\approx\frac{\varphi^{n}}{\sqrt{5}},\qquad \varphi=\frac{1+\sqrt{5}}{2}\approx 1{,}618,\]
+            takže listů je \markdarkred{exponenciálně mnoho}.}
+            \visible<5->{\item Časová složitost tedy činí $\bigO(\varphi^{n})$.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Proč je to tak pomalé?}
+        \obrazek[0.58\textheight]{images/fib-strom-opakovani.tex}
+        \visible<2->{\begin{talertframe}
+            \begin{center}
+                Funkci $\textsc{Fib}$ voláme jen pro argumenty $0,1,\dots,n$, přesto ji voláme \textbf{exponenciálně mnohokrát}!
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \subsection{Kešovaný výpočet}
+
+    \begin{frame}{Kešovaný výpočet}
+        \begin{center}
+            \begin{minipage}{0.92\textwidth}
+                \begin{algorithm}[H]
+                    \caption{\textsc{FibKes}}
+                    \KwIn{Číslo $n\in\N$ a~tabulka $T$ (na počátku prázdná)}
+                    \lIf{\textup{$T[n]$ je vyplněné}}{\Return{$T[n]$}}
+                    \eIf{$n\leqslant 1$}{
+                        $T[n]\gets n$\;
+                    }{
+                        $T[n]\gets\textsc{FibKes}(n-1)+\textsc{FibKes}(n-2)$\;
+                    }
+                    \Return{$T[n]$}
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+        \visible<2->{\begin{tnoticeframe}
+            \begin{center}
+                Rekurze zůstala, přibyl jen pohled do tabulky a~zápis do ní.
+            \end{center}
+        \end{tnoticeframe}}
+    \end{frame}
+
+    \begin{frame}{Prořezaný strom rekurze}
+        \obrazek[0.85\textheight]{images/fib-strom-kes.tex}
+    \end{frame}
+
+    \begin{frame}{Složitost kešovaného výpočtu}
+        \begin{itemize}
+            \visible<2->{\item K~rekurzivnímu volání dojde jen tehdy, vyplňujeme-li políčko, v~němž dosud nic nebylo.}
+            \visible<3->{\item Políček je $n+1$, takže vnitřních vrcholů stromu je nejvýše $n+1$.}
+            \visible<4->{\item Pod každým z~nich leží nejvýše dva listy $\implies$ strom má nejvýše $3(n+1)$ vrcholů.}
+            \visible<5->{\item V~každém vrcholu strávíme konstantní čas, celkem tedy $\bigO(n)$.}
+        \end{itemize}
+        \visible<6->{\begin{tnoticeframe}
+            \begin{center}
+                Z~$\bigO(\varphi^{n})$ jsme se dostali na $\bigO(n)$ -- a to jen díky tabulce.
+            \end{center}
+        \end{tnoticeframe}}
+    \end{frame}
+
+    \subsection{Výpočet zdola nahoru}
+
+    \begin{frame}{Výpočet zdola nahoru}
+        \begin{itemize}
+            \visible<2->{\item K~výpočtu $T[k]$ potřebujeme jen $T[k-1]$ a~$T[k-2]$.}
+            \visible<3->{\item Stačí tedy tabulku plnit v~pořadí $T[0],T[1],T[2],\dots$ a~vždy budeme mít vše, co potřebujeme.}
+            \visible<4->{\item Rekurzi tím zcela odstraníme.}
+        \end{itemize}
+        \visible<5->{\obrazek[0.44\textheight]{images/fib-tabulka.tex}}
+    \end{frame}
+
+    \begin{frame}{Algoritmus zdola nahoru}
+        \begin{center}
+            \begin{minipage}{0.85\textwidth}
+                \begin{algorithm}[H]
+                    \caption{\textsc{FibTab}}
+                    \KwIn{Číslo $n\in\N$}
+                    $T[0]\gets 0,\ T[1]\gets 1$\;
+                    \For{$k=2,3,\dots,n$}{
+                        $T[k]\gets T[k-1]+T[k-2]$\;
+                    }
+                    \Return{$T[n]$}
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+        \begin{itemize}
+            \visible<2->{\item Cyklus proběhne $(n-1)$-krát, každá iterace trvá konstantní čas $\implies$ $\bigO(n)$.}
+            \visible<3->{\item Prostorová složitost je rovněž $\bigO(n)$; pamatujeme-li si jen poslední dvě hodnoty, klesne dokonce na $\bigO(1)$.}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Porovnání výsledků}
+
+    \begin{frame}{Porovnání výsledků}
+        \visible<2->{\begin{center}
+            \renewcommand{\arraystretch}{1.25}
+            \begin{tabular}{|r|r|r|}
+                \hline
+                \rowcolor{decproblembg}
+                $n$  & \textsc{Fib} (počet volání) & \textsc{FibTab} (počet sečtení) \\ \hline
+                $10$ & $177$                       & $9$   \\ \hline
+                $20$ & $21\,891$                   & $19$  \\ \hline
+                $30$ & $2\,692\,537$               & $29$  \\ \hline
+                $40$ & $331\,160\,281$             & $39$  \\ \hline
+                $50$ & $40\,730\,022\,147$         & $49$  \\ \hline
+            \end{tabular}
+        \end{center}}
+        \visible<3->{\begin{talertframe}
+            \begin{center}
+                Pro $n=50$ je rozdíl \textbf{devíti řádů} -- zlomek sekundy proti hodinám výpočtu.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \begin{frame}{Porovnání výsledků}
+        \obrazek[0.85\textheight]{images/slozitost-porovnani.tex}
+    \end{frame}
+
+    \subsection{Proč ten rozdíl vzniká?}
+
+    \begin{frame}{Proč ten rozdíl vzniká?}
+        \begin{itemize}
+            \visible<2->{\item Různých podproblémů je jen $n+1$: hodnoty $F_0,F_1,\dots,F_n$.}
+            \visible<3->{\item Strom rekurze je ale \textbf{exponenciálně velký}, protože tytéž podproblémy v~něm leží mnohokrát vedle sebe.}
+            \visible<4->{\item Slepíme-li všechny vrcholy se stejným popiskem do jediného, dostaneme \markdarkred{graf podproblémů}.}
+        \end{itemize}
+        \visible<5->{\obrazek[0.44\textheight]{images/fib-graf-podproblemu.tex}}
+    \end{frame}
+
+    \begin{frame}{Proč ten rozdíl vzniká?}
+        \visible<2->{\begin{timportantframe}
+            \begin{center}
+                Dynamické programování počítá s~\textbf{grafem podproblémů}, obyčejná rekurze se \textbf{stromem rekurze}.
+            \end{center}
+        \end{timportantframe}}
+        \begin{itemize}
+            \visible<3->{\item Graf podproblémů má $n+1$ vrcholů a~$\bigO(n)$ hran, kdežto strom rekurze $\bigO(\varphi^{n})$ vrcholů.}
+            \visible<4->{\item Doba běhu dynamického programování je řádově \textbf{počet vrcholů plus počet hran} grafu podproblémů.}
+            \visible<5->{\item Kešovaná rekurze je vlastně \textbf{prohledávání grafu podproblémů do hloubky}, výpočet zdola nahoru jeho průchod v~\textbf{obráceném topologickém pořadí}.}
+        \end{itemize}
+    \end{frame}
+
+    % =================================================================
+    \section{Dělení tyče}
+    % =================================================================
+
+    \titleframe{Dělení tyče}
+
+    \subsection{Zadání úlohy}
+
+    \begin{frame}{Dělení tyče}
+        \begin{itemize}
+            \visible<2->{\item Firma kupuje dlouhé ocelové tyče, řeže je na kratší kusy a~ty prodává.}
+            \visible<3->{\item Kus délky $i$ prodá za cenu $p_i$; řezání je zdarma. Délky jsou vždy celá čísla.}
+            \visible<4->{\item Ceny nemusí být úměrné délce -- proto se vyplatí přemýšlet, kde řezat.}
+        \end{itemize}
+        \visible<5->{\tyccenik}
+        \visible<6->{\begin{tinfoframe}
+            \begin{center}
+                Anglicky se úloze říká \emph{rod cutting}.
+            \end{center}
+        \end{tinfoframe}}
+    \end{frame}
+
+    \begin{frame}{Formální zadání}
+        \visible<2->{\decproblem{Dělení tyče}{
+            Ceník $p_1,p_2,\dots,p_n$ a~délka tyče $n\in\N$.
+        }{
+            Jaký nejvyšší výnos $r_n$ lze získat rozřezáním tyče délky $n$ a~prodejem všech vzniklých kusů?
+        }}
+        \visible<3->{\begin{tnoticeframe}
+            \begin{center}
+                Tyč délky $n$ lze rozřezat $2^{n-1}$ způsoby -- na každém z~$n-1$ vnitřních míst se nezávisle rozhodujeme, zda řezat.
+            \end{center}
+        \end{tnoticeframe}}
+    \end{frame}
+
+    \begin{frame}{Všech osm způsobů pro $n=4$}
+        \obrazek[0.62\textheight]{images/tyc-rezy.tex}
+        \visible<2->{\begin{tnoticeframe}
+            \begin{center}
+                Nejlépe vyjde $4=2+2$ s~výnosem $r_4=10$, přestože celá tyč se prodá jen za $9$.
+            \end{center}
+        \end{tnoticeframe}}
+    \end{frame}
+
+    \subsection{Rekurzivní řešení}
+
+    \begin{frame}{Optimální podstruktura}
+        \begin{itemize}
+            \visible<2->{\item Podívejme se na tyč jako na \textbf{první díl délky $i$} a~\textbf{zbytek délky $n-i$}.}
+            \visible<3->{\item Zbytek je opět úloha o~dělení tyče, jen menší $\implies$ vyplatí se jej rozřezat \textbf{optimálně}.}
+            \visible<4->{\item Kdyby totiž šel zbytek rozřezat lépe, zlepšili bychom i~řešení celé úlohy.}
+        \end{itemize}
+        \visible<5->{\obrazek[0.44\textheight]{images/tyc-rozklad.tex}}
+    \end{frame}
+
+    \begin{frame}{Rekurentní vztah}
+        \visible<2->{\begin{propblock}
+            Pro nejvyšší dosažitelný výnos $r_n$ platí
+            \[r_0=0,\qquad r_n=\max_{1\leqslant i\leqslant n}\left(p_i+r_{n-i}\right)\ \text{ pro } n\geqslant 1.\]
+        \end{propblock}}
+        \begin{itemize}
+            \visible<3->{\item Volba $i=n$ odpovídá tomu, že tyč vůbec neřežeme.}
+            \visible<4->{\item Protože předem nevíme, které $i$ je nejlepší, \textbf{vyzkoušíme všechna}.}
+        \end{itemize}
+        \visible<5->{\begin{tinfoframe}
+            \begin{center}
+                Toto je přesně ta \textbf{optimální podstruktura}, o~které jsme mluvili.
+            \end{center}
+        \end{tinfoframe}}
+    \end{frame}
+
+    \begin{frame}{Rekurzivní algoritmus}
+        \begin{center}
+            \begin{minipage}{0.92\textwidth}
+                \begin{algorithm}[H]
+                    \caption{\textsc{DelTyc}}
+                    \KwIn{Ceník $p[1\dots n]$ a~délka tyče $n$}
+                    \lIf{$n=0$}{\Return{$0$}}
+                    $q\gets-\infty$\;
+                    \For{$i=1,2,\dots,n$}{
+                        $q\gets\max\set{q,\ p[i]+\textsc{DelTyc}(p,n-i)}$\;
+                    }
+                    \Return{$q$}
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+        \visible<2->{\begin{talertframe}
+            \begin{center}
+                Algoritmus je správný, ale pro $n=40$ by počítal řádově hodiny.
+            \end{center}
+        \end{talertframe}}
+    \end{frame}
+
+    \begin{frame}{Strom rekurze pro $n=4$}
+        \obrazek[0.85\textheight]{images/tyc-strom.tex}
+    \end{frame}
+
+    \begin{frame}{Složitost rekurzivního řešení}
+        \begin{itemize}
+            \visible<2->{\item Označme $T(n)$ počet volání funkce $\textsc{DelTyc}$ pro tyč délky $n$.}
+            \visible<3->{\item Volání pro $n$ zavolá sebe sama pro všechny menší délky $0,1,\dots,n-1$, tedy
+            \[T(0)=1,\qquad T(n)=1+\sum_{j=0}^{n-1}T(j).\]}
+            \visible<4->{\item Odtud indukcí $T(n)=2^{n}$.}
+            \visible<5->{\item Není divu: algoritmus opravdu probere \textbf{všech $2^{n-1}$ způsobů} rozřezání.}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Dynamické programování}
+
+    \begin{frame}{Graf podproblémů}
+        \begin{itemize}
+            \visible<2->{\item Různých podproblémů je přitom jen $n+1$: délky $0,1,\dots,n$.}
+            \visible<3->{\item Slepením vrcholů stromu se stejným popiskem dostaneme opět \markdarkred{graf podproblémů}.}
+        \end{itemize}
+        \visible<4->{\obrazek[0.55\textheight]{images/tyc-graf-podproblemu.tex}}
+    \end{frame}
+
+    \begin{frame}{Rekurze s keší}
+        \begin{center}
+            \begin{minipage}{0.94\textwidth}
+                \begin{algorithm}[H]
+                    \caption{\textsc{DelTycKes}}
+                    \KwIn{Ceník $p[1\dots n]$, délka $n$, prázdná tabulka $r$}
+                    \lIf{\textup{$r[n]$ je vyplněné}}{\Return{$r[n]$}}
+                    \eIf{$n=0$}{
+                        $q\gets 0$\;
+                    }{
+                        $q\gets-\infty$\;
+                        \For{$i=1,2,\dots,n$}{
+                            $q\gets\max\set{q,\ p[i]+\textsc{DelTycKes}(p,n-i)}$\;
+                        }
+                    }
+                    $r[n]\gets q$\;
+                    \Return{$q$}
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+        \visible<2->{\begin{tnoticeframe}
+            \begin{center}
+                Stejný trik jako u~Fibonacciho čísel -- rekurze zůstává, jen si výsledky pamatujeme.
+            \end{center}
+        \end{tnoticeframe}}
+    \end{frame}
+
+    \begin{frame}{Výpočet zdola nahoru}
+        \begin{itemize}
+            \visible<2->{\item Podproblém délky $j$ závisí jen na kratších tyčích $0,1,\dots,j-1$.}
+            \visible<3->{\item Stačí tedy políčka $r[0],r[1],\dots,r[n]$ vyplňovat \textbf{v pořadí rostoucí délky}.}
+        \end{itemize}
+        \visible<4->{\obrazek[0.50\textheight]{images/tyc-tabulka.tex}}
+    \end{frame}
+
+    \begin{frame}{Algoritmus zdola nahoru}
+        \begin{center}
+            \begin{minipage}{0.92\textwidth}
+                \begin{algorithm}[H]
+                    \caption{\textsc{DelTycTab}}
+                    \KwIn{Ceník $p[1\dots n]$ a~délka tyče $n$}
+                    $r[0]\gets 0$\;
+                    \For{$j=1,2,\dots,n$}{
+                        $q\gets-\infty$\;
+                        \For{$i=1,2,\dots,j$}{
+                            $q\gets\max\set{q,\ p[i]+r[j-i]}$\;
+                        }
+                        $r[j]\gets q$\;
+                    }
+                    \Return{$r[n]$}
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+        \visible<2->{\begin{tnoticeframe}
+            \begin{center}
+                Rekurze je pryč -- zbyly dva vnořené cykly a~jedno pole.
+            \end{center}
+        \end{tnoticeframe}}
+    \end{frame}
+
+    \begin{frame}{Výsledná tabulka pro náš ceník}
+        \visible<2->{\tyccenik}
+        \visible<3->{\begin{center}
+            \renewcommand{\arraystretch}{1.25}
+            \begin{tabular}{|r|c|c|c|c|c|c|c|c|c|c|c|}
+                \hline
+                \rowcolor{decproblembg}
+                $j$    & $0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $10$ \\ \hline
+                $r[j]$ & $0$ & $1$ & $5$ & $8$ & $10$ & $13$ & $17$ & $18$ & $22$ & $25$ & $30$ \\ \hline
+            \end{tabular}
+        \end{center}}
+        \visible<4->{\begin{tinfoframe}
+            \begin{center}
+                Např. $r_7=18$ odpovídá rozřezání $7=1+6$, kdežto $r_{10}=30$ znamená tyč vůbec neřezat.
+            \end{center}
+        \end{tinfoframe}}
+    \end{frame}
+
+    \subsection{Porovnání složitostí}
+
+    \begin{frame}{Porovnání složitostí}
+        \begin{itemize}
+            \visible<2->{\item Vnější cyklus proběhne $n$-krát, vnitřní pro dané $j$ celkem $j$-krát.}
+            \visible<3->{\item Dohromady tedy
+            \[\sum_{j=1}^{n}j=\frac{n(n+1)}{2}=\bigO(n^{2})\]
+            iterací, každá v~konstantním čase.}
+            \visible<4->{\item Prostorová složitost činí $\bigO(n)$ -- jedno pole délky $n+1$.}
+        \end{itemize}
+        \visible<5->{\begin{tinfoframe}
+            \begin{center}
+                Kešovaná rekurze má tutéž časovou složitost $\bigO(n^{2})$ -- řeší přesně tytéž podproblémy, jen v~jiném pořadí.
+            \end{center}
+        \end{tinfoframe}}
+    \end{frame}
+
+    \begin{frame}{Porovnání složitostí}
+        \visible<2->{\begin{center}
+            \renewcommand{\arraystretch}{1.35}
+            \begin{tabular}{|l|c|c|}
+                \hline
+                \rowcolor{decproblembg}
+                                  & čas         & paměť     \\ \hline
+                $\textsc{DelTyc}$ (rekurze) & $\bigO(2^{n})$ & $\bigO(n)$ \\ \hline
+                $\textsc{DelTyc}$ s~keší    & $\bigO(n^{2})$ & $\bigO(n)$ \\ \hline
+                $\textsc{DelTycTab}$ (zdola nahoru) & $\bigO(n^{2})$ & $\bigO(n)$ \\ \hline
+            \end{tabular}
+        \end{center}}
+        \visible<3->{\begin{timportantframe}
+            \begin{center}
+                Z~exponenciálního algoritmu se stal \textbf{kvadratický}, aniž bychom potřebovali víc paměti.
+            \end{center}
+        \end{timportantframe}}
+    \end{frame}
+
+    \subsection{Rekonstrukce řešení}
+
+    \begin{frame}{Jak zjistit, kde řezat?}
+        \begin{itemize}
+            \visible<2->{\item Zatím umíme spočítat jen \textbf{výnos}, nikoli samotné řezy.}
+            \visible<3->{\item Stačí si při vyplňování tabulky navíc pamatovat pole $s$, kde $s[j]$ je délka \textbf{prvního dílu} optimálního rozřezání tyče délky $j$.}
+            \visible<4->{\item Řešení pak vypíšeme postupně: vytiskneme $s[n]$, zkrátíme tyč na $n-s[n]$ a~opakujeme, dokud něco zbývá.}
+        \end{itemize}
+        \visible<5->{\begin{tinfoframe}
+            \begin{center}
+                Je to táž myšlenka jako uchovávání předchůdců při hledání nejkratší cesty v~grafu.
+            \end{center}
+        \end{tinfoframe}}
+    \end{frame}
+
+    % =================================================================
+    \section{Shrnutí}
+    % =================================================================
+
+    \begin{frame}{Princip dynamického programování}
+        \begin{enumerate}
+            \visible<2->{\item Začneme \textbf{rekurzivním algoritmem}, který je exponenciálně pomalý.}
+            \visible<3->{\item Odhalíme \textbf{opakované výpočty} týchž podproblémů.}
+            \visible<4->{\item Pořídíme si \textbf{tabulku} (keš) a~pamatujeme si v~ní, co už jsme spočítali. Tím prořežeme strom rekurze.}
+            \visible<5->{\item Uvědomíme si, v~jakém \textbf{pořadí} lze tabulku vyplňovat, a~rekurzi nahradíme cyklem \textbf{zdola nahoru}.}
+        \end{enumerate}
+        \visible<6->{\begin{timportantframe}
+            \begin{center}
+                Klíčem je vždy \textbf{graf podproblémů}: kolik má vrcholů a~hran, tak dlouho výpočet trvá.
+            \end{center}
+        \end{timportantframe}}
+    \end{frame}
+
+    \zdrojeframe{mares-valla-labyrint, cormen-algorithms}
 
 \end{document}

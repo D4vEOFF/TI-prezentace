@@ -1,0 +1,32 @@
+% Strom rekurzivního výpočtu $F_5$ podle definice $F_n=F_{n-1}+F_{n-2}$.
+% Nad každým vrcholem je hodnota, kterou dané volání vrátí.
+\begin{tikzpicture}[x=1cm,y=1cm,
+                    fibnode/.style={vertex, minimum size=7mm, font=\small, fill=white},
+                    every label/.style={font=\scriptsize, inner sep=1pt}]
+
+    \node[fibnode, label=above:{$5$}]      (n0)  at ( 0.0, 0.0) {$F_5$};
+
+    \node[fibnode, label=above left:{$3$}] (n1)  at (-2.2,-1.1) {$F_4$};
+    \node[fibnode, label=above right:{$2$}](n2)  at ( 2.2,-1.1) {$F_3$};
+
+    \node[fibnode, label=above left:{$2$}] (n3)  at (-3.3,-2.2) {$F_3$};
+    \node[fibnode, label=above right:{$1$}](n4)  at (-1.1,-2.2) {$F_2$};
+    \node[fibnode, label=above left:{$1$}] (n5)  at ( 1.4,-2.2) {$F_2$};
+    \node[fibnode, label=above right:{$1$}](n6)  at ( 3.0,-2.2) {$F_1$};
+
+    \node[fibnode, label=above left:{$1$}] (n7)  at (-4.0,-3.3) {$F_2$};
+    \node[fibnode, label=above right:{$1$}](n8)  at (-2.6,-3.3) {$F_1$};
+    \node[fibnode, label=above left:{$1$}] (n9)  at (-1.6,-3.3) {$F_1$};
+    \node[fibnode, label=above right:{$0$}](n10) at (-0.6,-3.3) {$F_0$};
+    \node[fibnode, label=above left:{$1$}] (n11) at ( 0.9,-3.3) {$F_1$};
+    \node[fibnode, label=above right:{$0$}](n12) at ( 1.9,-3.3) {$F_0$};
+
+    \node[fibnode, label=below:{$1$}]      (n13) at (-4.5,-4.4) {$F_1$};
+    \node[fibnode, label=below:{$0$}]      (n14) at (-3.5,-4.4) {$F_0$};
+
+    \foreach \a/\b in {n0/n1,n0/n2,n1/n3,n1/n4,n2/n5,n2/n6,
+                       n3/n7,n3/n8,n4/n9,n4/n10,n5/n11,n5/n12,n7/n13,n7/n14}{
+        \draw[edge] (\a) -- (\b);
+    }
+
+\end{tikzpicture}

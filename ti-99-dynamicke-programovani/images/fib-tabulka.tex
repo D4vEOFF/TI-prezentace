@@ -1,0 +1,26 @@
+% Výpočet zdola nahoru: tabulku $T$ plníme zleva doprava, každá hodnota
+% se poskládá ze dvou předchozích.
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
+
+    \foreach \i/\val/\col in {0/{$0$}/{darkgreen!18},1/{$1$}/{darkgreen!18},
+                              2/{$1$}/{darkgreen!18},3/{$2$}/{darkgreen!18},
+                              4/{$3$}/{darkgreen!18},5/{$5$}/{lightred!30},
+                              6/{$?$}/{white},7/{$?$}/{white},8/{$?$}/{white}}{
+        \draw[thick, fill=\col] ({\i*0.8},-0.4) rectangle ({\i*0.8+0.8},0.4);
+        \node at ({\i*0.8+0.4},0) {\val};
+        \node[font=\scriptsize, anchor=north] at ({\i*0.8+0.4},-0.5) {$\i$};
+    }
+    \node[anchor=east, font=\small] at (-0.15,0) {$T$};
+
+    % Sčítání dvou předchozích políček
+    \draw[diredge, darkred, thick] (2.8,0.45) to[bend left=32] (4.35,0.55);
+    \draw[diredge, darkred, thick] (3.6,0.45) to[bend left=42] (4.45,0.50);
+    \node[font=\scriptsize, darkred, anchor=south] at (3.6,1.30)
+        {$T[5]\gets T[4]+T[3]$};
+
+    % Směr vyplňování
+    \draw[diredge, darkgreen, line width=1.1pt] (0.1,-1.25) -- (7.1,-1.25);
+    \node[font=\scriptsize, darkgreen, anchor=north] at (3.6,-1.40)
+        {tabulku plníme v~pořadí $k=2,3,\dots,n$ -- vždy máme vše, co potřebujeme};
+
+\end{tikzpicture}

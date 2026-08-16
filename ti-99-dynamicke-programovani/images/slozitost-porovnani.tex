@@ -1,0 +1,22 @@
+% Schematické srovnání růstu počtu kroků: rekurze bez keše roste
+% exponenciálně, výpočet zdola nahoru lineárně.
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
+
+    % Osy
+    \draw[diredge] (0,0) -- (5.6,0) node[anchor=north east, font=\scriptsize] {$n$};
+    \draw[diredge] (0,0) -- (0,4.2)
+        node[anchor=south west, font=\scriptsize, align=left] {počet kroků};
+
+    % Exponenciální růst
+    \draw[domain=0:4.2, smooth, variable=\x, darkred, line width=1pt]
+        plot ({\x},{0.05*exp(1.02*\x)});
+    \node[darkred, font=\scriptsize, anchor=west] at (0.5,3.55)
+        {rekurze bez keše: $\bigO(\varphi^{n})$};
+
+    % Lineární růst
+    \draw[domain=0:5.4, smooth, variable=\x, darkgreen, line width=1pt]
+        plot ({\x},{0.32*\x});
+    \node[darkgreen, font=\scriptsize, anchor=west] at (2.9,0.60)
+        {dynamické programování: $\bigO(n)$};
+
+\end{tikzpicture}

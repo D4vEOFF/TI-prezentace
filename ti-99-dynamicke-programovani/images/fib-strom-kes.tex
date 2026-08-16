@@ -1,0 +1,49 @@
+% Strom rekurze po zavedení keše. Zeleně jsou vrcholy, které hodnotu
+% našly v tabulce a hned se vrátily; šedě podstromy, které se už vůbec
+% neprovedou.
+\begin{tikzpicture}[x=1cm,y=1cm,
+                    fibnode/.style={vertex, minimum size=7mm, font=\small, fill=white},
+                    hit/.style={fibnode, fill=darkgreen!30, thick},
+                    cut/.style={vertex, minimum size=7mm, draw=gray!60, dashed,
+                                fill=gray!8},
+                    cutedge/.style={edge, gray!60, dashed}]
+
+    \node[fibnode] (n0)  at ( 0.0, 0.0) {$F_5$};
+
+    \node[fibnode] (n1)  at (-2.2,-1.1) {$F_4$};
+    \node[hit]     (n2)  at ( 2.2,-1.1) {$F_3$};
+
+    \node[fibnode] (n3)  at (-3.3,-2.2) {$F_3$};
+    \node[hit]     (n4)  at (-1.1,-2.2) {$F_2$};
+    \node[cut]     (n5)  at ( 1.4,-2.2) {};
+    \node[cut]     (n6)  at ( 3.0,-2.2) {};
+
+    \node[fibnode] (n7)  at (-4.0,-3.3) {$F_2$};
+    \node[hit]     (n8)  at (-2.6,-3.3) {$F_1$};
+    \node[cut]     (n9)  at (-1.6,-3.3) {};
+    \node[cut]     (n10) at (-0.6,-3.3) {};
+    \node[cut]     (n11) at ( 0.9,-3.3) {};
+    \node[cut]     (n12) at ( 1.9,-3.3) {};
+
+    \node[fibnode] (n13) at (-4.5,-4.4) {$F_1$};
+    \node[fibnode] (n14) at (-3.5,-4.4) {$F_0$};
+
+    \foreach \a/\b in {n0/n1,n0/n2,n1/n3,n1/n4,n3/n7,n3/n8,n7/n13,n7/n14}{
+        \draw[edge] (\a) -- (\b);
+    }
+    \foreach \a/\b in {n2/n5,n2/n6,n4/n9,n4/n10,n5/n11,n5/n12}{
+        \draw[cutedge] (\a) -- (\b);
+    }
+
+    % Legenda
+    \begin{scope}[shift={(0.3,-4.30)}, font=\scriptsize]
+        \node[vertex, minimum size=4mm, fill=darkgreen!30, thick] at (0,0) {};
+        \node[anchor=west, align=left, text width=3.2cm] at (0.3,0)
+            {hodnota nalezena v~keši};
+        \node[vertex, minimum size=4mm, draw=gray!60, dashed, fill=gray!8]
+            at (0,-0.65) {};
+        \node[anchor=west, align=left, text width=3.2cm] at (0.3,-0.65)
+            {tato větev se už neprovede};
+    \end{scope}
+
+\end{tikzpicture}
