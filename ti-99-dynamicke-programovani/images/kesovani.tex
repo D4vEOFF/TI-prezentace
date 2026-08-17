@@ -1,0 +1,30 @@
+% Princip kešování: tabulka již spočítaných hodnot, do níž se před
+% každým výpočtem nahlédne a po každém výpočtu se do ní zapíše.
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
+
+    % Volající funkce
+    \node[task, minimum width=22mm] (call) at (2.8,2.0) {$\textsc{Fib}(k)$};
+
+    % Tabulka (keš)
+    \foreach \i/\val/\col in {0/{$0$}/{darkgreen!18},1/{$1$}/{darkgreen!18},
+                              2/{$1$}/{darkgreen!18},3/{$2$}/{darkgreen!18},
+                              4/{$3$}/{darkgreen!18},5/{$?$}/{white},
+                              6/{$?$}/{white}}{
+        \draw[thick, fill=\col] ({\i*0.8},-0.4) rectangle ({\i*0.8+0.8},0.4);
+        \node at ({\i*0.8+0.4},0) {\val};
+        \node[font=\scriptsize, anchor=north] at ({\i*0.8+0.4},-0.5) {$\i$};
+    }
+    \node[anchor=east, font=\small] at (-0.15,0) {$T$};
+    \node[font=\scriptsize, anchor=north] at (2.8,-1.05) {keš (tabulka mezivýsledků)};
+
+    % Čtení z keše
+    \draw[diredge, darkgreen, line width=1pt] (2.60,0.50) -- (2.30,1.55);
+    \node[font=\scriptsize, darkgreen, anchor=east, align=right, text width=2.7cm]
+        at (1.95,1.05) {$T[3]$ už známe,\\ rovnou ji vrátíme};
+
+    % Zápis do keše
+    \draw[diredge, darkred, line width=1pt] (3.30,1.55) -- (4.30,0.50);
+    \node[font=\scriptsize, darkred, anchor=west, align=left, text width=2.9cm]
+        at (4.65,1.05) {$T[5]$ chybí: spočítáme\\ ji a hned uložíme};
+
+\end{tikzpicture}

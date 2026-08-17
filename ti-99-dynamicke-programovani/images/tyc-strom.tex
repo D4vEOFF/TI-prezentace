@@ -1,0 +1,43 @@
+% Strom rekurze volání $\textsc{DelTyc}(p,4)$. Popisek vrcholu udává
+% délku zbývající tyče, tedy velikost podproblému.
+\begin{tikzpicture}[x=1.05cm,y=1.0cm,
+                    cutnode/.style={vertex, minimum size=6.5mm, font=\small,
+                                    fill=white}]
+
+    \node[cutnode] (r)   at (4.8333, 0) {$4$};
+
+    \node[cutnode] (a3)  at (1.8333,-1) {$3$};
+    \node[cutnode] (a2)  at (4.5000,-1) {$2$};
+    \node[cutnode] (a1)  at (6.0000,-1) {$1$};
+    \node[cutnode] (a0)  at (7.0000,-1) {$0$};
+
+    \node[cutnode] (b2)  at (0.5000,-2) {$2$};
+    \node[cutnode] (b1)  at (2.0000,-2) {$1$};
+    \node[cutnode] (b0)  at (3.0000,-2) {$0$};
+    \node[cutnode] (c1)  at (4.0000,-2) {$1$};
+    \node[cutnode] (c0)  at (5.0000,-2) {$0$};
+    \node[cutnode] (d0)  at (6.0000,-2) {$0$};
+
+    \node[cutnode] (e1)  at (0.0000,-3) {$1$};
+    \node[cutnode] (e0)  at (1.0000,-3) {$0$};
+    \node[cutnode] (f0)  at (2.0000,-3) {$0$};
+    \node[cutnode] (g0)  at (4.0000,-3) {$0$};
+
+    \node[cutnode] (h0)  at (0.0000,-4) {$0$};
+
+    \foreach \a/\b in {r/a3,r/a2,r/a1,r/a0,
+                       a3/b2,a3/b1,a3/b0,
+                       a2/c1,a2/c0,
+                       a1/d0,
+                       b2/e1,b2/e0,
+                       b1/f0,
+                       c1/g0,
+                       e1/h0}{
+        \draw[edge] (\a) -- (\b);
+    }
+
+    \node[font=\scriptsize, anchor=north, align=center] at (3.5,-4.45)
+        {strom má $2^4=16$ vrcholů, z~toho $2^3=8$ listů\\
+         -- listy odpovídají všem $8$ způsobům rozřezání};
+
+\end{tikzpicture}
