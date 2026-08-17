@@ -1,0 +1,37 @@
+% Optimální podstruktura na známém příkladu nejkratší cesty: úsek cesty
+% z $u$ do $w$ musí být sám nejkratší cestou z $u$ do $w$, jinak bychom
+% jeho výměnou zkrátili i celou cestu z $u$ do $v$.
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small,
+                    cesta/.style={vertex, minimum size=6mm, fill=white}]
+
+    \node[cesta] (u)  at (0.0,0) {$u$};
+    \node[cesta] (a)  at (1.1,0) {};
+    \node[cesta] (b)  at (2.2,0) {};
+    \node[cesta] (w)  at (3.3,0) {$w$};
+    \node[cesta] (c)  at (4.4,0) {};
+    \node[cesta] (v)  at (5.5,0) {$v$};
+
+    \foreach \s/\t in {u/a,a/b,b/w}{
+        \draw[edge, darkgreen, line width=1.1pt] (\s) -- (\t);
+    }
+    \foreach \s/\t in {w/c,c/v}{
+        \draw[edge, darkblue, line width=1.1pt] (\s) -- (\t);
+    }
+
+    % Rozdělení cesty na podúlohu a zbytek
+    \draw[<->,>=stealth, darkgreen] (0.0,0.55) -- (3.3,0.55);
+    \draw[<->,>=stealth, darkblue]  (3.3,0.55) -- (5.5,0.55);
+    \node[font=\scriptsize, darkgreen, anchor=south] at (1.65,0.60)
+        {podúloha: cesta z~$u$ do $w$};
+    \node[font=\scriptsize, darkblue, anchor=south] at (4.40,0.60)
+        {zbytek};
+
+    % Výměnný argument
+    \draw[edge, darkred, dashed, line width=1pt] (u) to[bend right=32] (w);
+    \node[font=\scriptsize, darkred, anchor=north] at (1.65,-1.05)
+        {kratší cesta z~$u$ do $w$?};
+    \node[font=\scriptsize, anchor=north, align=center] at (2.75,-1.60)
+        {Kdyby existovala, vyměnili bychom ji za zelený úsek\\
+         a~zkrátili tím i~celou cestu z~$u$ do $v$ -- to nelze.};
+
+\end{tikzpicture}
