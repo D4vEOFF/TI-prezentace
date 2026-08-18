@@ -8,17 +8,7 @@
 
 \def\presentationtitle{Dynamické programování}
 
-% Obrázek se vždy vejde na snímek: adjustbox jej v případě potřeby
-% zmenší tak, aby nepřesáhl šířku textu ani zadanou část výšky snímku.
-% Díky tomu sedí sazba ve všech používaných poměrech stran.
-\newcommand{\obrazek}[2][0.68\textheight]{%
-    \begin{figure}
-        \centering
-        \begin{adjustbox}{max width=\textwidth, max totalheight=#1, center}
-            \input{#2}
-        \end{adjustbox}
-    \end{figure}%
-}
+% Makro \obrazek je nově sdílené -- viz ../assets/macros.tex.
 
 % Ceník tyčí, se kterým se pracuje v celé kapitole o dělení tyče.
 \newcommand{\tyccenik}{%

@@ -407,6 +407,28 @@
   \includegraphics[height=\fontcharht\font`\B]{#1}
 }
 
+% Obrázek, který se vždy vejde na snímek. Adjustbox jej v případě potřeby
+% zmenší tak, aby nepřesáhl šířku textu ani zadanou část výšky snímku; díky
+% tomu sedí sazba ve všech používaných poměrech stran (4:3, 16:9 i 16:10).
+% Volitelným argumentem je maximální výška (výchozí 0.68\textheight), povinným
+% cesta k souboru s obrázkem (TikZ zdroj vkládaný přes \input).
+\newcommand{\obrazek}[2][0.68\textheight]{%
+    \begin{figure}
+        \centering
+        \begin{adjustbox}{max width=\linewidth, max totalheight=#1, center}
+            \input{#2}
+        \end{adjustbox}
+    \end{figure}%
+}
+
+% Totéž pro rastrové či vektorové obrázky vkládané přes \includegraphics.
+\newcommand{\obrazekgrf}[2][0.68\textheight]{%
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth, max totalheight=#1, center]{#2}
+    \end{figure}%
+}
+
 % Závěrečný snímek se seznamem zdrojů. Prvním (volitelným) argumentem je název
 % sekce i snímku, druhým čárkou oddělený seznam klíčů z ../assets/literatura.bib.
 % Citace se sázejí podle ČSN ISO 690, v pořadí, v jakém jsou klíče uvedeny.
