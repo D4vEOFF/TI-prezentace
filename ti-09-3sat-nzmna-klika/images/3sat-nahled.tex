@@ -1,0 +1,19 @@
+% Náhled k~sekci o~3-SAT: každá klauzule má nejvýše tři literály.
+\begin{tikzpicture}[x=1cm, y=1cm]
+
+    \tikzset{
+        klauzule/.style={draw=maincolor, thick, rounded corners=3pt,
+                         inner sep=4pt, fill=maincolor!8}
+    }
+
+    \node[klauzule] (k1) at (0,0)   {$x_1\lor \neg x_2\lor x_3$};
+    \node               at (2.4,0)  {$\land$};
+    \node[klauzule] (k2) at (4.8,0) {$\neg x_1\lor x_3\lor x_4$};
+    \node               at (7.2,0)  {$\land$};
+    \node[klauzule] (k3) at (9.5,0) {$x_2\lor \neg x_4$};
+
+    \draw[darkred, decorate, decoration={brace, amplitude=4pt, mirror}]
+        (-1.25,-0.55) -- (1.25,-0.55);
+    \node[darkred, font=\small] at (0,-1.15) {nejvýše 3 literály};
+
+\end{tikzpicture}

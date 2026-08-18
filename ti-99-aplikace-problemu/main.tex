@@ -6,22 +6,26 @@
 \input{../assets/macros.tex}
 \input{../assets/listing.tex}
 
-\def\presentationtitle{Aplikace nezávislé množiny a dalších problémů}
-\def\presentationtitlefooter{Aplikace $\NZMNA$ a dalších}
+\def\presentationtitle{Aplikace nezávislé množiny a~dalších problémů}
+\def\presentationtitlefooter{Aplikace $\NZMNA$ a~dalších}
 
 \begin{document}
 
     \input{../titlepage.tex}
 
+    % =================================================================
     \section{Aplikace nezávislé množiny}
+    % =================================================================
 
-    \titleframe{Aplikace $\NZMNA$}
+    \begin{titleframeenv}{Aplikace $\NZMNA$}
+        \obrazek[0.45\textheight]{images/int-graf.tex}
+    \end{titleframeenv}
 
     \begin{frame}{Aplikace nezávislé množiny}
         \begin{itemize}
-            \visible<2->{\item V mnoha praktických situacích máme k dispozici jediný sdílený zdroj a několik aktivit, které chtějí tento zdroj využívat v různých časových intervalech.}
+            \visible<2->{\item V~mnoha praktických situacích máme k~dispozici jediný sdílený zdroj a~několik aktivit, které chtějí tento zdroj využívat v~různých časových intervalech.}
             \visible<3->{\item Např. sestavování rozvrhu pro jednu učebnu, plánování schůzek jedné osoby nebo rezervace jednoho zařízení.}
-            \visible<4->{\item Každá aktivita je určena začátkem a koncem svého trvání.}
+            \visible<4->{\item Každá aktivita je určena začátkem a~koncem svého trvání.}
             \visible<5->{\item Pokud se dvě aktivity časově překrývají, \textbf{nemohou být realizovány současně}.}
         \end{itemize}
     \end{frame}
@@ -30,7 +34,7 @@
 
     \begin{frame}{Rozvrhování}
         \begin{itemize}
-            \visible<2->{\item Máme $n$ aktivit s přiděleným časovým intervalem.}
+            \visible<2->{\item Máme $n$ aktivit s~přiděleným časovým intervalem.}
             \visible<3->{\item Časové intervaly budeme modelovat jako \textbf{intervaly reálných čísel}, tj. každá aktivita má interval
             \[I_j=(a_j,b_j)\; ,\; a_j,b_j\in\R,a_j<b_j,\]
             pro $j\in\set{1,\dots,n}$.}
@@ -46,7 +50,7 @@
         \begin{itemize}
             \visible<2->{\item Na vstupu máme množinu otevřených intervalů
             \[\mathcal{I}=\set{I_1,I_2,\dots,I_n},\]}
-            \visible<3->{\item Pokud spolu dvě úlohy s intervaly $I_k$ a $I_\ell$ kolidují, pak $I_k\cap I_\ell\neq\emptyset$.}
+            \visible<3->{\item Pokud spolu dvě úlohy s~intervaly $I_k$ a~$I_\ell$ kolidují, pak $I_k\cap I_\ell\neq\emptyset$.}
             \visible<4->{\item Zde se nám hodí, že jsou intervaly otevřené, neboť pokud dvojice aktivit na sebe přímo navazuje, tj.
             \[I=(a,b)\quad\text{a}\quad J=(b,c),\]
             pak je jejich \textbf{průnik prázdný}, což dává smysl.}
@@ -55,9 +59,9 @@
 
     \begin{frame}{Formální pojetí problému}
         \visible<2->{\decproblem{Rozvrhování}{
-            Systém otevřených intervalů $\mathcal{I}=\set{I_1,I_2,\dots,I_n}$ a číslo $k\in\N$.
+            Systém otevřených intervalů $\mathcal{I}=\set{I_1,I_2,\dots,I_n}$ a~číslo $k\in\N$.
         }{
-            Existuje podsystém $\mathcal{J}\subseteq\mathcal{I}$ takový, že $|\mathcal{J}|\geqslant k$ a pro každou dvojici intervalů $I,J\in\mathcal{J}$ platí $I\cap J=\emptyset$?
+            Existuje podsystém $\mathcal{J}\subseteq\mathcal{I}$ takový, že $|\mathcal{J}|\geqslant k$ a~pro každou dvojici intervalů $I,J\in\mathcal{J}$ platí $I\cap J=\emptyset$?
         }}
     \end{frame}
 
@@ -74,20 +78,14 @@
     \end{frame}
 
     \begin{frame}{Intervalový graf}{Příklad}
-        \begin{figure}
-            \centering
-            \input{images/int-graf.tex}
-        \end{figure}
+        \obrazek{images/int-graf.tex}
     \end{frame}
 
     \begin{frame}{Intervalový graf}{Příklad: Největší množina nekolidujících aktivit}
-        \begin{figure}
-            \centering
-            \input{images/int-graf-2.tex}
-        \end{figure}
+        \obrazek{images/int-graf-2.tex}
         \begin{talertframe}
             \begin{center}
-                Nekolidující aktivity tvoří v intervalovém grafu \textbf{nezávislou množinu}.
+                Nekolidující aktivity tvoří v~intervalovém grafu \textbf{nezávislou množinu}.
             \end{center}
         \end{talertframe}
     \end{frame}
@@ -96,11 +94,11 @@
 
     \begin{frame}{Převod $\ROZVRH\rightarrow\NZMNA$}
         \begin{itemize}
-            \visible<2->{\item Na vstupu máme systém otevřených intervalů $\mathcal{I}$ a číslo $k\in\N$.}
+            \visible<2->{\item Na vstupu máme systém otevřených intervalů $\mathcal{I}$ a~číslo $k\in\N$.}
             \visible<3->{\item Sestrojíme intervalový graf $G_\mathcal{I}$.}
             \visible<4->{\begin{timportantframe}
                 \begin{center}
-                    V grafu $G_\mathcal{I}$ existuje nezávislá množina velikosti alespoň $k$ právě tehdy, když lze vybrat alespoň $k$ vzájemně disjunktních intervalů z $\mathcal{I}$.
+                    V~grafu $G_\mathcal{I}$ existuje nezávislá množina velikosti alespoň $k$ právě tehdy, když lze vybrat alespoň $k$ vzájemně disjunktních intervalů z~$\mathcal{I}$.
                 \end{center}
             \end{timportantframe}}
             \visible<5->{\item Převod je zjevně polynomiální, neboť graf $G_\mathcal{I}$ má maximálně $\bigO(n^{2})$ hran.}
@@ -113,29 +111,25 @@
 
     \begin{frame}{Převod $\NZMNA\rightarrow\ROZVRH$}
         \begin{itemize}
-            \visible<2->{\item Převod $\NZMNA\rightarrow\ROZVRH$ nelze provést.}
+            \visible<2->{\item Převod $\NZMNA\rightarrow\ROZVRH$ \textbf{neumíme provést}.}
             \visible<3->{\item Obecný graf $G$ totiž \textbf{nemusí nutně představovat} nějaký intervalový graf.}
             \visible<4->{\item Např. cyklus $C_4$ nemůže představovat intervalový graf.}
+            \visible<5->{\item Navíc by z~takového převodu plynulo $\classP=\classNP$, protože $\ROZVRH$ umíme řešit polynomiálně a~$\NZMNA$ je $\classNP$-úplný.}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{$C_4$ není intervalový graf}
-        \visible<2->{\begin{figure}
-            \centering
-            \input{images/cyklus-c4.tex}
-        \end{figure}}
+        \visible<2->{\obrazek[0.4\textheight]{images/cyklus-c4.tex}}
         \visible<3->{\begin{talertframe}
             \begin{center}
-                Interval $I_c$ má \textbf{neprázdný průnik} s $I_a$, ale v $C_4$ hrana $ac$ chybí.
+                Interval $I_c$ má \textbf{neprázdný průnik} s~$I_a$, ale v~$C_4$ hrana $ac$ chybí.
             \end{center}
         \end{talertframe}}
     \end{frame}
 
-    \begin{frame}{Intervalové grafy a rozvrhování}
-        \visible<2->{\begin{figure}
-            \centering
-            \input{images/vstupy-rozvrh-nzmna.tex}
-        \end{figure}}
+    \begin{frame}{Intervalové grafy a~rozvrhování}
+        \small
+        \visible<2->{\obrazek[0.35\textheight]{images/vstupy-rozvrh-nzmna.tex}}
         \visible<3->{\begin{timportantframe}
             \begin{center}
                 Pomocí rozvrhování jsme schopni řešit problém nezávislé množiny pouze pro \textbf{intervalové grafy}.
@@ -150,10 +144,10 @@
         \begin{enumerate}
             \visible<2->{\item Seřadíme intervaly $I_j=(a_j,b_j)$ podle hodnot $a_j$ vzestupně:
             \[a_1\leqslant a_2\leqslant\dots\leqslant a_n.\]}
-            \visible<3->{\item Udržujeme si počet nekolidujících aktivit $c$, který inicializujeme na nulu, tj. $c\gets 0$, a také poslední největší koncovou hodnotu intervalu $b_j$, kterou inicializujeme na $\ell\gets -\infty$.}
-            \visible<4->{\item Vezmeme následující interval $I=(a,b)$ v seřazeném seznamu z kroku 1. Pokud $a>\ell$, pak jsme našli nový nekolidující interval (aktivitu) a zvýšíme počítadlo $c$ a $\ell\gets b$.}
-            \visible<5->{\item Vracíme se ke kroku 3 a postup opakujeme.}
-            \visible<6->{\item Určíme, zdali platí $c\geqslant k$ a končíme.}
+            \visible<3->{\item Udržujeme si počet nekolidujících aktivit $c$, který inicializujeme na nulu, tj. $c\gets 0$, a~také poslední největší koncovou hodnotu intervalu $b_j$, kterou inicializujeme na $\ell\gets -\infty$.}
+            \visible<4->{\item Vezmeme následující interval $I=(a,b)$ v~seřazeném seznamu z~kroku 1. Pokud $a\geqslant\ell$, pak jsme našli nový nekolidující interval (aktivitu) a~zvýšíme počítadlo $c$ a~$\ell\gets b$.}
+            \visible<5->{\item Vracíme se ke kroku 3 a~postup opakujeme.}
+            \visible<6->{\item Určíme, zdali platí $c\geqslant k$ a~končíme.}
         \end{enumerate}
     \end{frame}
 
@@ -162,10 +156,10 @@
             \begin{minipage}{0.9\textwidth}
                 \begin{algorithm}[H]
                     \caption{\textsc{Rozvrhování}}
-                    \KwIn{Systém otevřených intervalů $\mathcal{I}=\set{I_1,\dots,I_n}$ a číslo $k\in\N$}
-                    Seřadíme intervaly v $\mathcal{I}$ podle $a_j$\;
-                    $c\gets 0,\ell\gets 0$\;
-                    \ForEach{\textup{inteval $I=(a,b)\in\mathcal{I}$}}{
+                    \KwIn{Systém otevřených intervalů $\mathcal{I}=\set{I_1,\dots,I_n}$ a~číslo $k\in\N$}
+                    Seřadíme intervaly v~$\mathcal{I}$ podle $a_j$\;
+                    $c\gets 0,\ \ell\gets -\infty$\;
+                    \ForEach{\textup{interval $I=(a,b)\in\mathcal{I}$}}{
                         \If{$a\geqslant\ell$}{
                             $c\gets c+1$\;
                             $\ell\gets b$\;
@@ -181,23 +175,22 @@
     \begin{frame}{Rozbor algoritmu}
         \begin{itemize}
             \visible<2->{\item Algoritmus je zcela zjevně polynomiální.}
-            \visible<3->{\item Seřazení stihneme v čase $\bigO(n\log{n})$.}
-            \visible<4->{\item Následně procházíme všechny intevaly, což potrvá $\bigO(n)$.}
+            \visible<3->{\item Seřazení stihneme v~čase $\bigO(n\log{n})$.}
+            \visible<4->{\item Následně procházíme všechny intervaly, což potrvá $\bigO(n)$.}
         \end{itemize}
         \visible<5->{\begin{talertframe}
             \begin{center}
-                To znamená, že v případě intervalových grafů umíme rozhodnout problém $\NZMNA$ rychle.
+                To znamená, že v~případě intervalových grafů umíme rozhodnout problém $\NZMNA$ rychle.
             \end{center}
         \end{talertframe}}
     \end{frame}
 
+    % =================================================================
     \section{Shrnutí}
+    % =================================================================
 
     \begin{frame}{Shrnutí}
-        \begin{figure}
-            \centering
-            \input{images/shrnuti.tex}
-        \end{figure}
+        \obrazek{images/shrnuti.tex}
     \end{frame}
 
     \zdrojeframe{mares-valla-labyrint, papadimitriou-complexity, cormen-algorithms}

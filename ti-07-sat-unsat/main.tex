@@ -6,15 +6,19 @@
 \input{../assets/macros.tex}
 \input{../assets/listing.tex}
 
-\def\presentationtitle{Problémy SAT a UNSAT}
+\def\presentationtitle{Problémy SAT a~UNSAT}
 
 \begin{document}
 
     \input{../titlepage.tex}
 
+    % =================================================================
     \section{Výroková logika}
+    % =================================================================
 
-    \titleframe{Výroková logika}
+    \begin{titleframeenv}{Výroková logika}
+        \obrazek[0.5\textheight]{images/vyrokova-logika-nahled.tex}
+    \end{titleframeenv}
 
     \subsection{Logické operace}
 
@@ -49,26 +53,26 @@
         \begin{enumerate}
             \visible<2->{\item \textbf{De Morganovy zákony}}
             \begin{itemize}
-                \visible<3->{\item $\neg (x\land y) = \left[\neg x\lor \neg y\right]$
-                \item $\neg (x_1\land x_2\land \dots\land x_n)=\neg x_1 \lor \neg x_2 \lor \dots \lor \neg x_n$}
-                \visible<4->{\item $\neg (x\lor y)=\neg x\land \neg y$
-                \item $\neg (x_1\lor x_2\lor \dots\lor x_n)=\neg x_1 \land \neg x_2 \land \dots \land \neg x_n$}
+                \visible<3->{\item $\neg (x\land y) \equiv \neg x\lor \neg y$
+                \item $\neg (x_1\land x_2\land \dots\land x_n)\equiv\neg x_1 \lor \neg x_2 \lor \dots \lor \neg x_n$}
+                \visible<4->{\item $\neg (x\lor y)\equiv\neg x\land \neg y$
+                \item $\neg (x_1\lor x_2\lor \dots\lor x_n)\equiv\neg x_1 \land \neg x_2 \land \dots \land \neg x_n$}
             \end{itemize}
-            \visible<5->{\item \textbf{Distributivita konjunkce a disjunkce}}
+            \visible<5->{\item \textbf{Distributivita konjunkce a~disjunkce}}
             \begin{itemize}
-                \visible<6->{\item $x\land(y\lor z)=(x\land y)\lor (x\land z)$}
-                \visible<7->{\item $x\lor(y\land z)=(x\lor y)\land(x\lor z)$}
+                \visible<6->{\item $x\land(y\lor z)\equiv(x\land y)\lor (x\land z)$}
+                \visible<7->{\item $x\lor(y\land z)\equiv(x\lor y)\land(x\lor z)$}
             \end{itemize}
-            \visible<8->{\item \textbf{Vztahy mezi implikací, konjunkcí a disjunkcí}}
+            \visible<8->{\item \textbf{Vztahy mezi implikací, konjunkcí a~disjunkcí}}
             \begin{itemize}
-                \visible<9->{\item $x\implies y=\neg x\lor y$}
-                \visible<10->{\item $x\iff y=(x\implies y)\land (y\implies x)$, nebo-li
-                \[x\iff y=(\neg x\lor y)\land (\neg y\lor x)\]}
+                \visible<9->{\item $x\implies y\equiv\neg x\lor y$}
+                \visible<10->{\item $x\iff y\equiv(x\implies y)\land (y\implies x)$, nebo-li
+                \[x\iff y\equiv(\neg x\lor y)\land (\neg y\lor x)\]}
             \end{itemize}
         \end{enumerate}
         \visible<11->{\begin{talertframe}
             \begin{center}
-                Implikaci a ekvivalenci můžeme nahradit pomocí $\land$ a $\lor$.
+                Implikaci a~ekvivalenci můžeme nahradit pomocí $\neg$, $\land$ a~$\lor$.
             \end{center}
         \end{talertframe}}
     \end{frame}
@@ -78,20 +82,24 @@
             \visible<2->{\item \markdarkred{Logická formule} je pro nás libovolný logický výraz obsahující \textbf{volné logické proměnné}.}
             \visible<3->{\item Např.
             \[\varphi(x,y)=(x\land y)\lor \neg y.\]}
-            \visible<4->{\item Zápisem $\varphi=\psi$ rozumíme, že výrazy $\varphi$ a $\psi$ jsou shodné.}
+            \visible<4->{\item Zápisem $\varphi=\psi$ rozumíme, že výrazy $\varphi$ a~$\psi$ jsou shodné.}
             \visible<5->{\item Zápisem $\varphi\equiv\psi$ rozumíme, že výrazy jsou logicky ekvivalentní (nemusí být nutně stejné).}
         \end{itemize}
     \end{frame}
 
-    \section{Splnitelnost a CNF}
+    % =================================================================
+    \section{Splnitelnost a~CNF}
+    % =================================================================
 
-    \titleframe{Splnitelnost a CNF}
+    \begin{titleframeenv}{Splnitelnost a~CNF}
+        \obrazek[0.5\textheight]{images/cnf-nahled.tex}
+    \end{titleframeenv}
 
-    \subsection{Úvod do problému a příklady}
+    \subsection{Úvod do problému a~příklady}
 
     \begin{frame}{Úvod do problému}
         \begin{itemize}
-            \visible<2->{\item Máme \textbf{libovolnou logickou formuli $\varphi$} s proměnnými $x_1,x_2,\dots,x_n$.}
+            \visible<2->{\item Máme \textbf{libovolnou logickou formuli $\varphi$} s~proměnnými $x_1,x_2,\dots,x_n$.}
             \visible<3->{\item Zajímá nás, zdali existuje ohodnocení proměnných $x_1,x_2,\dots,x_n$ takové, že $\varphi$ je pravdivá, tj.
             \[\varphi(x_1,\dots,x_n)=1.\]}
         \end{itemize}
@@ -106,19 +114,19 @@
         \end{itemize}
     \end{frame}
 
-    \subsection{Literály a klauzule}
+    \subsection{Literály a~klauzule}
 
-    \begin{frame}{Literály a klauzule}
+    \begin{frame}{Literály a~klauzule}
         \visible<2->{\begin{tnoticeframe}
             \begin{center}
-                Nás budou zajímat logické výrazy v tzv. \textbf{konjunktivní normální formě} (zkráceně \textbf{CNF}, z anglického \emph{conjuctive normal form}).
+                Nás budou zajímat logické výrazy v~tzv. \textbf{konjunktivní normální formě} (zkráceně \textbf{CNF}, z~anglického \emph{conjunctive normal form}).
             \end{center}
         \end{tnoticeframe}}
-        \visible<3->{\begin{defblock}[Literál a klauzule]
+        \visible<3->{\begin{defblock}[Literál a~klauzule]
             \visible<3->{Mějme logické proměnné $x_1,x_2,\dots,x_n$. Pak definujeme následující:}
             \begin{itemize}
                 \visible<4->{\item \markdarkred{Literál} je jakákoliv \textbf{proměnná $x_i$, nebo její negace $\neg x_i$}.}
-                \visible<5->{\item \markdarkred{Klauzule} sestavá z jednoho nebo více literálů oddělených buď spojkou $\land$, nebo $\lor$.}
+                \visible<5->{\item \markdarkred{Klauzule} sestává z~jednoho nebo více literálů oddělených buď spojkou $\land$, nebo $\lor$.}
             \end{itemize}
         \end{defblock}}
     \end{frame}
@@ -126,24 +134,25 @@
     \subsection{Konjunktivní normální forma}
 
     \begin{frame}{Konjunktivní normální forma}
+        \small
         \visible<2->{\begin{defblock}[Konjunktivní normální forma]
-            Mějme logickou formuli $\varphi$ s proměnnými $x_1,x_2,\dots,x_n$. Pak řekneme, že $\varphi$ je v \markdarkred{konjunktivní normální formě} (CNF), pokud sestává z klauzulí oddělených spojkou $\land$ a literály v každé klauzuli jsou odděleny spojkou $\lor$.
+            Mějme logickou formuli $\varphi$ s~proměnnými $x_1,x_2,\dots,x_n$. Pak řekneme, že $\varphi$ je v~\markdarkred{konjunktivní normální formě} (CNF), pokud sestává z~klauzulí oddělených spojkou $\land$ a~literály v~každé klauzuli jsou odděleny spojkou $\lor$.
         \end{defblock}}
-        \visible<3->{Tzn. každá formule v CNF je tvaru
+        \visible<3->{Tzn. každá formule v~CNF je tvaru
         \[\varphi(x_1,\dots,x_n)=\overbrace{(\ell^{1}_1\lor\underbrace{\ell^{1}_2}_\text{literál} \dots \lor \ell^{1}_{m_1})}^{\text{klauzule}}\land\dots\land(\ell^{k}_1\lor\dots\lor\ell^{k}_{m_k}).\]}
         \visible<4->{\begin{timportantframe}
-            S formulemi v CNF se lépe pracuje než s obecnými logickými výrazy. Aby to však mělo smysl, musíme umět každou obecnou formuli do CNF nějak rychle převést.
+            S~formulemi v~CNF se lépe pracuje než s~obecnými logickými výrazy. Aby to však mělo smysl, musíme umět každou obecnou formuli do CNF nějak rychle převést.
         \end{timportantframe}}
     \end{frame}
 
     \begin{frame}{Konjunktivní normální forma}{Příklady}
         \begin{itemize}
-            \visible<2->{\item $\varphi(x,y)=(\neg x\lor y)\land (\neg y\lor x)$ \markdarkgreen{je v CNF \cmark}}
-            \visible<3->{\item $\psi(x,y)=(\neg x\land y)\land (\neg y\land x)$ \markdarkred{není v CNF \xmark}}
-            \visible<4->{\item $\omega(x)=x$ \markdarkgreen{je v CNF \cmark}}
-            \visible<5->{\item $\tau(a,b)=a\land b$ \markdarkgreen{je v CNF \cmark}}
-            \visible<6->{\item $\zeta(a,b)=a\lor b$ \markdarkgreen{je v CNF \xmark}}
-            \visible<7->{\item $\chi (z,w)=(z\lor (\neg z\land w)\lor w)\land \neg w$ \markdarkred{není v CNF \xmark}}
+            \visible<2->{\item $\varphi(x,y)=(\neg x\lor y)\land (\neg y\lor x)$ \markdarkgreen{je v~CNF \cmark}}
+            \visible<3->{\item $\psi(x,y)=(\neg x\land y)\land (\neg y\land x)$ \markdarkred{není v~CNF \xmark}}
+            \visible<4->{\item $\omega(x)=x$ \markdarkgreen{je v~CNF \cmark}}
+            \visible<5->{\item $\tau(a,b)=a\land b$ \markdarkgreen{je v~CNF \cmark}}
+            \visible<6->{\item $\zeta(a,b)=a\lor b$ \markdarkgreen{je v~CNF \cmark}}
+            \visible<7->{\item $\chi (z,w)=(z\lor (\neg z\land w)\lor w)\land \neg w$ \markdarkred{není v~CNF \xmark}}
         \end{itemize}
     \end{frame}
 
@@ -151,17 +160,18 @@
 
     \begin{frame}{Převod do CNF pomocí tabulky}
         \begin{itemize}
-            \item Mějme libovolnou logickou formuli $\varphi$ s proměnnými $x_1,\dots,x_n$.
-            \item Sestavíme si tabulku pravdivostních hodnot $\varphi$ a podíváme se, pro jaká ohodnocení není $\varphi$ splněna.
+            \item Mějme libovolnou logickou formuli $\varphi$ s~proměnnými $x_1,\dots,x_n$.
+            \item Sestavíme si tabulku pravdivostních hodnot $\varphi$ a~podíváme se, pro jaká ohodnocení není $\varphi$ splněna.
             \item Pro každé \textbf{nesplňující ohodnocení} vytvoříme novou klauzuli, kde obecně $i$-tý literál je
             \begin{itemize}
-                \item $x_i$, pokud v daném ohodnocení je $x_i=0$.
-                \item $\neg x_i$, pokud v daném ohodnocení je $x_i=1$.
+                \item $x_i$, pokud v~daném ohodnocení je $x_i=0$.
+                \item $\neg x_i$, pokud v~daném ohodnocení je $x_i=1$.
             \end{itemize}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Převod do CNF pomocí tabulky}{Příklad}
+        \small
         \visible<2->{Uvažujme formuli $\varphi(x,y,z)=(x\implies y)\implies z$.}
         \visible<3->{\begin{table}
             \centering
@@ -186,6 +196,7 @@
     \end{frame}
 
     \begin{frame}{Převod do CNF pomocí tabulky}{Příklad}
+        \small
         \visible<2->{Tedy celkově sestavíme 3~klauzule:}
         \begin{itemize}
             \visible<3->{\item \((\overbrace{x}^{x=0}\lor \underbrace{y}_{y=0}\lor \overbrace{z}^{z=0})\),}
@@ -194,11 +205,14 @@
         \end{itemize}
         \visible<6->{Výsledná formule v~CNF bude mít tvar:
         \[\varphi^\prime(x,y,z)=(x\lor y\lor z)\land (x\lor \neg y\lor z)\land (\neg x\lor \neg y\lor z).\]}
-        \visible<7->{\begin{talertframe}
-            \begin{center}
-                Problém! Tento postup vyžaduje \textbf{exponenciálně mnoho kroků!} Výsledná formule v CNF může být velmi dlouhá.
-            \end{center}
+    \end{frame}
+
+    \begin{frame}{Převod do CNF pomocí tabulky}{Rozbor}
+        \visible<2->{\begin{talertframe}
+            Problém! Tento postup vyžaduje \textbf{exponenciálně mnoho kroků!}\\
+            Výsledná formule v~CNF může být velmi dlouhá.
         \end{talertframe}}
+        \visible<3->{Tabulka pravdivostních hodnot má pro $n$ proměnných $2^{n}$ řádků, takže i~výsledná formule může mít až $2^{n}$ klauzulí.}
     \end{frame}
 
     \subsection{Tseitinova transformace}
@@ -213,50 +227,55 @@
     \end{frame}
 
     \begin{frame}{Tseitinova transformace}
-        \visible<2->{Mějme opět logickou formuli $\varphi$ s proměnnými $x_1,\dots,x_n$.}
+        \visible<2->{Mějme opět logickou formuli $\varphi$ s~proměnnými $x_1,\dots,x_n$.}
         \begin{enumerate}
             \visible<3->{\item Formuli $\varphi$ si rozdělíme na jednotlivé podformule $\varphi_1,\varphi_2,\dots,\varphi_k$ (až na jednotlivé literály), přičemž $\varphi_1=\varphi$.}
             \visible<4->{\item Pro každou podformuli $\varphi_i$ si zavedeme \textbf{novou proměnnou $y_i$}.}
             \visible<5->{\item Sestavíme novou formuli
             \[\varphi^{\prime}(x_1,\dots,x_n,y_1,\dots,y_k)=y_1\land (y_1\iff\varphi_1)\land\dots\land(y_k\iff\varphi_k).\]}
-            \visible<6->{\item Každý z výrazů $y_i\iff\varphi_i$ převedeme pomocí identity
+            \visible<6->{\item Každý z~výrazů $y_i\iff\varphi_i$ převedeme pomocí identity
             \[y_i\iff\varphi_i\equiv(\neg y_i\lor \varphi_i)\land(\neg\varphi_i\lor y_i),\]
-            a užitím dalších vztahů ještě můžeme upravit $\varphi_i$, čímž dostaneme formuli v CNF.}
+            a~užitím dalších vztahů ještě můžeme upravit $\varphi_i$, čímž dostaneme formuli v~CNF.}
         \end{enumerate}
     \end{frame}
 
     \begin{frame}{Nastavení pomocných proměnných $y_i$}
         \begin{itemize}
             \visible<2->{\item Nové proměnné $y_1,\dots,y_k$ budou závislé na volbě ohodnocení proměnných $x_1,\dots,x_n$.}
-            \visible<3->{\item Obecně pokud podformule $\varphi_i$ je v daném ohodnocení \textbf{pravdivá}, pak nastavíme $y_i=1$, jinak $y_i=0$.}
+            \visible<3->{\item Obecně pokud podformule $\varphi_i$ je v~daném ohodnocení \textbf{pravdivá}, pak nastavíme $y_i=1$, jinak $y_i=0$.}
             \visible<4->{\item Pak $y_1$ bude odpovídat pravdivostní hodnotě celé formule $\varphi$.}
         \end{itemize}
         \visible<5->{\begin{tinfoframe}
             \begin{center}
-                Není těžké si rozmyslet, že původní formule $\varphi$ je splnitelná právě tehdy, když je splnitelná i nově vzniklá formule $\varphi^{\prime}$ v CNF.
+                Není těžké si rozmyslet, že původní formule $\varphi$ je splnitelná právě tehdy, když je splnitelná i~nově vzniklá formule $\varphi^{\prime}$ v~CNF.
             \end{center}
         \end{tinfoframe}}
     \end{frame}
 
     \begin{frame}{Tseitinova transformace}{Příklad}
-        \visible<2->{Mějme logickou formuli $\psi(p,q,r) = ((p \lor q) \land r) \implies \neg p$.} \visible<3->{Pak její podformule jsou}
+        \small
+        \visible<2->{Mějme logickou formuli $\varphi(p,q,r) = ((p \lor q) \land r) \implies \neg p$.} \visible<3->{Pak její podformule jsou}
         \begin{itemize}
             \visible<3->{\item $\neg p$,}
             \visible<4->{\item $p\lor q$,}
             \visible<5->{\item $(p\lor q)\land r$ a}
             \visible<6->{\item $((p \lor q) \land r) \implies \neg p$.}
         \end{itemize}
-        \visible<7->{Pro jednotlivé podformule zavedeme proměnné $y_1,y_2,y_3,y_4$ a sestavíme výrazy:}
+    \end{frame}
+
+    \begin{frame}{Tseitinova transformace}{Příklad}
+        \small
+        \visible<2->{Pro jednotlivé podformule zavedeme proměnné $y_1,y_2,y_3,y_4$ a~sestavíme výrazy:}
         \begin{itemize}
-            \visible<7->{\item $y_4\iff \neg p$,}
-            \visible<8->{\item $y_3\iff [p\lor q]$,}
-            \visible<9->{\item $y_2\iff [\underbrace{(p\lor q)}_{y_2}\land r] \equiv y_2\iff [y_3\land r]$,}
-            \visible<10->{\item $y_1\iff [\underbrace{((p \lor q) \land r)}_{y_2} \implies \overbrace{\neg p}^{y_4}]\equiv y_1\iff [y_2\implies y_4]$.}
+            \visible<3->{\item $y_4\iff \neg p$,}
+            \visible<4->{\item $y_3\iff [p\lor q]$,}
+            \visible<5->{\item $y_2\iff [\underbrace{(p\lor q)}_{y_3}\land r] \equiv y_2\iff [y_3\land r]$,}
+            \visible<6->{\item $y_1\iff [\underbrace{((p \lor q) \land r)}_{y_2} \implies \overbrace{\neg p}^{y_4}]\equiv y_1\iff [y_2\implies y_4]$.}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Tseitinova transformace}{Příklad}
-        \visible<2->{Všechny výrazy nyní upravíme logickými identitami a jsme hotovi:}
+        \visible<2->{Všechny výrazy nyní upravíme logickými identitami a~jsme hotovi:}
         \begin{itemize}
             \visible<3->{\item Výraz $y_4\iff\varphi_4$:
             \begin{align*}
@@ -288,7 +307,7 @@
     \end{frame}
 
     \begin{frame}{Tseitinova transformace}{Příklad}
-        Výsledná formule $\varphi^{\prime}$ v CNF:
+        Výsledná formule $\varphi^{\prime}$ v~CNF:
         \begin{align*}
             \varphi^{\prime}&=y_1\land\overbrace{(\neg y_1 \lor \neg y_2 \lor y_4) \land (y_2 \lor y_1) \land (\neg y_4 \lor y_1)}^{y_1\iff \varphi_1} \\
             &\land\overbrace{(\neg y_2\lor y_3)\land (\neg y_2\lor r) \land (\neg y_3\lor \neg r\lor y_2)}^{y_2\iff\varphi_2} \\
@@ -309,7 +328,7 @@
             \visible<7->{\item $y_2=0$,~protože $y_3\land r=0$ a}
             \visible<8->{\item $y_1=1$,~protože $y_2\implies y_4=1$.}
         \end{itemize}
-        \visible<9->{Nová formule $\varphi^{\prime}$ bude mít v tomto ohodnocení též pravdivostní hodnotu $1$, resp.
+        \visible<9->{Nová formule $\varphi^{\prime}$ bude mít v~tomto ohodnocení též pravdivostní hodnotu $1$, resp.
         \[\varphi^{\prime}(\underbrace{1,0,0}_{p,q,r},\overbrace{1,0,1,0}^{y_1,y_2,y_3,y_4})=1.\]}
     \end{frame}
 
@@ -320,36 +339,40 @@
             \end{center}
         \end{tnoticeframe}}
         \begin{itemize}
-            \visible<3->{\item Lze ukázat, že Tseitinova transformace má \textbf{lineární časovou složitost} $\bigO(n)$ vzhledem k počtu literálů ve formuli $\varphi$.}
+            \visible<3->{\item Lze ukázat, že Tseitinova transformace má \textbf{lineární časovou složitost} $\bigO(n)$ vzhledem k~počtu literálů ve formuli $\varphi$.}
             \visible<4->{\item Podformulí vznikne nejvýše lineárně mnoho.}
             \visible<5->{\item Nad každou podformulí $\varphi_i$ provedeme konstantní počet operací při úpravě do CNF.}
         \end{itemize}
     \end{frame}
 
-    \section{Problémy SAT a UNSAT}
+    % =================================================================
+    \section{Problémy SAT a~UNSAT}
+    % =================================================================
 
-    \titleframe{Problémy SAT a UNSAT}
+    \begin{titleframeenv}{Problémy SAT a~UNSAT}
+        \obrazek[0.5\textheight]{images/sat-unsat-nahled.tex}
+    \end{titleframeenv}
 
     \subsection{Problém SAT}
 
     \begin{frame}{Problém SAT}
         \begin{itemize}
-            \visible<2->{\item Máme již způsob, jak rychle (tj. v pollynomiálním čase) převést formuli $\varphi$ na formuli $\varphi^{\prime}$, která je splnitělná právě tehdy, když je splnitelná i původní formule $\varphi$.}
-            \visible<3->{\item Proto se odteď zaměříme pouze na formule, které jsou v tomto speciálním tvaru.}
-            \visible<4->{\item Bude nás zajímat, zdali je zadaná formule v CNF splnitelná, nebo ne.}
+            \visible<2->{\item Máme již způsob, jak rychle (tj. v~polynomiálním čase) převést formuli $\varphi$ na formuli $\varphi^{\prime}$, která je splnitelná právě tehdy, když je splnitelná i~původní formule $\varphi$.}
+            \visible<3->{\item Proto se odteď zaměříme pouze na formule, které jsou v~tomto speciálním tvaru.}
+            \visible<4->{\item Bude nás zajímat, zdali je zadaná formule v~CNF splnitelná, nebo ne.}
             \visible<5->{\item \emph{SATisfiability (splnitelnost)}}
         \end{itemize}
-        \visible<6->{\decproblem{Splnitelnost formule v CNF ($\SAT$)}{
-            Logická formule $\varphi$ v CNF.
+        \visible<6->{\decproblem{Splnitelnost formule v~CNF ($\SAT$)}{
+            Logická formule $\varphi$ v~CNF.
         }{Je formule $\varphi$ splnitelná?}}
     \end{frame}
 
     \subsection{Problém UNSAT}
 
     \begin{frame}{Problém UNSAT}
-        \visible<2->{Podobně se můžeme ptát, zdali je zadaná formule $\varphi$ \textbf{neplsnitelná}, tzn. pro každé ohodnocení jejích proměnných je $\varphi=0$.}
-        \visible<3->{\decproblem{Nesplnitelnost formule v CNF ($\UNSAT$)}{
-            Logická formule $\varphi$ v CNF.
+        \visible<2->{Podobně se můžeme ptát, zdali je zadaná formule $\varphi$ \textbf{nesplnitelná}, tzn. pro každé ohodnocení jejích proměnných je $\varphi=0$.}
+        \visible<3->{\decproblem{Nesplnitelnost formule v~CNF ($\UNSAT$)}{
+            Logická formule $\varphi$ v~CNF.
         }{Je formule $\varphi$ nesplnitelná?}}
         \visible<4->{\begin{tinfoframe}
             \begin{center}
@@ -358,7 +381,7 @@
         \end{tinfoframe}}
         \visible<5->{\begin{talertframe}
             \begin{center}
-                Formule $\varphi$ je splnitelná právě tehdy, když $\neg\varphi$ je nesplnitelná, tzn. $\SAT(\varphi)=\UNSAT(\neg\varphi)$.
+                Formule $\varphi$ je \textbf{tautologie} (platí pro každé ohodnocení) právě tehdy, když je $\neg\varphi$ \textbf{nesplnitelná}.
             \end{center}
         \end{talertframe}}
     \end{frame}
@@ -368,12 +391,12 @@
     \begin{frame}{Proč je SAT důležitý?}
         \visible<2->{\begin{timportantframe}
             \begin{center}
-                Mnoho rozhodovacích problémů lze zredukovat na problém splnitelnosti nějaké vhodné formule $\varphi$ v CNF.
+                Mnoho rozhodovacích problémů lze zredukovat na problém splnitelnosti nějaké vhodné formule $\varphi$ v~CNF.
             \end{center}
         \end{timportantframe}}
         \visible<3->{\begin{tinfoframe}
             \begin{center}
-                Později uvidíme, že dokonce lze na SAT v jistém smyslu "převést" každý rozhodovací problém z \textbf{určité třídy problémů}.
+                Později uvidíme, že dokonce lze na SAT v~jistém smyslu "převést" každý rozhodovací problém z~\textbf{určité třídy problémů}.
             \end{center}
         \end{tinfoframe}}
     \end{frame}

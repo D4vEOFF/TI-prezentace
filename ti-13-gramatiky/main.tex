@@ -12,32 +12,33 @@
 
     \input{../titlepage.tex}
 
+    % =================================================================
     \section{Formální gramatiky}
+    % =================================================================
 
-    \titleframe{Formální gramatiky}
+    \begin{titleframeenv}{Formální gramatiky}
+        \obrazek[0.45\textheight]{images/priklad-gramatiky-pro-anglickou-vetu.tex}
+    \end{titleframeenv}
 
     \subsection{Rekapitulace}
 
     \begin{frame}{Rekapitulace}
+        \small
         \begin{itemize}
             \visible<2->{\item Již víme, že jazyky můžeme popsat pomocí}
             \begin{itemize}
                 \visible<3->{\item \textbf{(ne)deterministického konečného automatu} a}
                 \visible<4->{\item \textbf{regulárního výrazu}.}
             \end{itemize}
-            \visible<4->{\item Hodilo by se nám ale vědět, jak jazyk "vzniká".}
+            \visible<5->{\item Hodilo by se nám ale vědět, jak jazyk "vzniká".}
         \end{itemize}
-        \medskip
-        \visible<5->{\begin{timportantframe}
+        \visible<6->{\begin{timportantframe}
             \begin{center}
-                K tomu se nám budou hodit právě tzv. \textbf{formální gramatiky}.
+                K~tomu se nám budou hodit právě tzv. \markdarkred{formální gramatiky}.
             \end{center}
         \end{timportantframe}}
-        \medskip
-        \visible<6->{\begin{tnoticebox}{Hlavní myšlenka}
-            \begin{center}
-                Automat slova rozpoznává, gramatika slova generuje.
-            \end{center}
+        \visible<7->{\begin{tnoticebox}{Hlavní myšlenka}
+            Automat slova \markdarkred{rozpoznává}, gramatika slova \markdarkred{generuje}.
         \end{tnoticebox}}
     \end{frame}
 
@@ -49,7 +50,7 @@
             \visible<3->{\item Umožňují popsat strukturu vět, výrazů nebo programů.}
             \visible<4->{\item Používají se například:}
             \begin{itemize}
-                \visible<5->{\item v překladačích,}
+                \visible<5->{\item v~překladačích,}
                 \visible<6->{\item při syntaktické analýze,}
                 \visible<7->{\item při zpracování přirozeného jazyka (tzv. počítačová lingvistika).}
             \end{itemize}
@@ -65,270 +66,210 @@
                 \visible<4->{\item $V$ je množina tzv. \textbf{neterminálů},}
                 \visible<5->{\item $T$ je množina tzv. \textbf{terminálů},}
                 \visible<6->{\item $S\in V$ je počáteční symbol a}
-                \visible<7->{\item $P$ je množina \textbf{přepisovacích pravidel} tvaru $\alpha\to\omega$ (řetězec $\alpha$ se přepíše na řetězec $\omega$), přičemž $\alpha,\omega\in(V\cup T)^*$ a $\alpha$ obsahuje alespoň jeden neterminál.} 
+                \visible<7->{\item $P$ je množina \textbf{přepisovacích pravidel} tvaru $\alpha\to\omega$ (řetězec $\alpha$ se přepíše na řetězec $\omega$), přičemž $\alpha,\omega\in(V\cup T)^*$ a~$\alpha$ obsahuje alespoň jeden neterminál.}
             \end{itemize}
-            \visible<8->{Množiny $V$ a $T$ jsou disjunktní, tj. $V\cap T=\emptyset$.}
+            \visible<8->{Množiny $V$ a~$T$ jsou disjunktní, tj. $V\cap T=\emptyset$.}
         \end{defblock}}
-        \medskip
         \visible<9->{\begin{talertframe}
-            \begin{center}
-                Není přípustné, aby se v~přepisovacím pravidle vyskytovaly na levé straně $\alpha$ pouze terminály.
-            \end{center}
+            Není přípustné, aby se v~přepisovacím pravidle vyskytovaly na levé straně $\alpha$ pouze terminály.
         \end{talertframe}}
     \end{frame}
 
-    \subsection{Derivace a jazyk generovaný gramatikou}
+    \subsection{Derivace a~jazyk generovaný gramatikou}
 
     \begin{frame}{Derivace}
         \begin{itemize}
-            \pause
-            \item Pokud lze slovo \(\alpha\) jedním použitím pravidla z $P$ přepsat na slovo \(\beta\),
-            píšeme
-            \[
-                \alpha \Rightarrow_G \beta.
-            \]
-            \pause 
-
-            \item Pokud lze \(\alpha\) přepsat na \(\omega\) v~několika krocích, píšeme
-            \[
-                \alpha \Rightarrow_G^* \omega.
-            \]
-            tzn. $\alpha = \beta_1 \Rightarrow \beta_2 \Rightarrow \cdots \Rightarrow \beta_n = \omega$ pro nějaké řetězce $\beta_1, \beta_2, \ldots, \beta_n\in(V\cup T)^*$.
-            \pause
-            \item Posloupnost $\beta_1, \beta_2, \ldots, \beta_n$ nazýváme \textbf{derivací}.
+            \visible<2->{\item Pokud lze slovo $\alpha$ jedním použitím pravidla z~$P$ přepsat na slovo $\beta$, píšeme
+            \[\alpha \Rightarrow_G \beta.\]}
+            \visible<3->{\item Pokud lze $\alpha$ přepsat na $\omega$ v~několika krocích, píšeme
+            \[\alpha \Rightarrow_G^* \omega,\]
+            tzn. $\alpha = \beta_1 \Rightarrow \beta_2 \Rightarrow \cdots \Rightarrow \beta_n = \omega$ pro nějaké řetězce $\beta_1, \beta_2, \ldots, \beta_n\in(V\cup T)^*$.}
+            \visible<4->{\item Posloupnost $\beta_1, \beta_2, \ldots, \beta_n$ nazýváme \markdarkred{derivací}.}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Příklad gramatiky a derivace slova}
-        \pause
-        Mějme gramatiku $G=(V,T,P,S)$, kde
+    \begin{frame}{Příklad gramatiky a~derivace slova}
+        \visible<2->{Mějme gramatiku $G=(V,T,P,S)$, kde
         \[
-        V = \set{S}, \quad T = \set{a, b}\quad\text{a}\quad P = \set{S \to aS, S \to abS, S \to abb}.
-        \]
+        V = \set{S}, \quad T = \set{a, b}\quad\text{a}\quad P = \set{S \to aS,\; S \to abS,\; S \to abb}.
+        \]}
 
-        \pause
-        
-        Začneme počátečním symbolem a postupně přepisujeme podle pravidel.
-
+        \visible<3->{Začneme počátečním symbolem a~postupně přepisujeme podle pravidel.
         \[
-            S \Rightarrow aS \Rightarrow abS \Rightarrow abb
-        \]
+            S \Rightarrow aS \Rightarrow aabS \Rightarrow aababb
+        \]}
 
-        \pause
-
-        Výsledkem je slovo složené pouze z terminálních symbolů.
+        \visible<4->{Výsledkem je slovo složené pouze z~terminálních symbolů.}
     \end{frame}
 
     \begin{frame}{Jazyk generovaný gramatikou}
-        \pause
-        \begin{defblock}[Jazyk generovaný gramatikou]
-            Jazyk generovaný gramatikou \(G=(V,T,P,S)\) je množina
+        \visible<2->{\begin{defblock}[Jazyk generovaný gramatikou]
+            \markdarkred{Jazyk generovaný gramatikou} $G=(V,T,P,S)$ je množina
             \[
                 L(G)=\set{w\in T^* : S\Rightarrow_G^* w}.
             \]
-        \end{defblock}
+        \end{defblock}}
 
-        \pause
-
-        Tedy $L(G)$ obsahuje \textbf{všechny řetězce složené z terminálních symbolů}, které lze odvodit z počátečního symbolu $S$ pomocí pravidel z $P$.
+        \visible<3->{Tedy $L(G)$ obsahuje \textbf{všechny řetězce složené z~terminálních symbolů}, které lze odvodit z~počátečního symbolu $S$ pomocí pravidel z~$P$.}
     \end{frame}
 
     \subsection{Příklady}
 
     \begin{frame}{Příklad}{všechna binární slova}
-
-        \pause
-        Mějme gramatiku
-
+        \visible<2->{Mějme gramatiku
         \[
             S\to 0S\mid 1S\mid \lambda.
-        \]
+        \]}
 
-        \pause
+        \visible<3->{Potom $L(G)=\set{0,1}^*$.}
 
-        Potom $L(G)=\{0,1\}^*$.
-
-        \pause
-        \medskip
+        \visible<4->{\medskip
         Ukázka derivace:
-
         \[
             S\Rightarrow 1S\Rightarrow 10S\Rightarrow 101S\Rightarrow 101.
-        \]
+        \]}
     \end{frame}
 
     \begin{frame}{Příklad}{jazyk \texorpdfstring{\(0^n1^n\)}{0n1n}}
-        \pause
-        Mějme gramatiku
-
+        \visible<2->{Mějme gramatiku
         \[
             S\to 0S1\mid \lambda.
-        \]
+        \]}
 
-        \pause
-
-        Potom
-
+        \visible<3->{Potom
         \[
             L(G)=\set{0^n1^n : n\geqslant 0}.
-        \]
+        \]}
 
-        \pause
-
-        Například:
-
+        \visible<4->{Například:
         \[
             S \Rightarrow 0S1 \Rightarrow 00S11 \Rightarrow 0011.
-        \]
+        \]}
 
-        Tento jazyk není regulární.
+        \visible<5->{\begin{talertframe}
+            \begin{center}
+                Tento jazyk \textbf{není regulární!}
+            \end{center}
+        \end{talertframe}}
     \end{frame}
 
     \begin{frame}{Příklad}{jazyk \texorpdfstring{\(a^nb^m\)}{anbm}}
-        \pause
-        Uvažujme gramatiku
-        \[
-            G=(V,T,P,S),
-        \]
-        kde
+        \small
+        \visible<2->{Uvažujme gramatiku $G=(V,T,P,S)$, kde
         \[
             V=\set{S,A,B}, \qquad T=\set{a,b}
         \]
-        a pravidla jsou
+        a~pravidla jsou
         \[
         \begin{aligned}
             S &\to AB,\\
             A &\to aA \mid a,\\
             B &\to bB \mid b.
         \end{aligned}
-        \]
+        \]}
 
-        \pause
+        \visible<3->{Tato gramatika generuje jazyk $L(G)=\set{a^n b^m : n,m\geqslant 1}$.}
 
-        Tato gramatika generuje jazyk $L(G)=\set{a^n b^m : n,m\geqslant 1}$.
-
-        \pause
-
-        Například:
+        \visible<4->{Například:
         \[
             S \Rightarrow AB \Rightarrow aAB \Rightarrow aaB
             \Rightarrow aabB \Rightarrow aabb.
-        \]
+        \]}
 
-        \pause
-
-        Neterminál \(A\) generuje blok písmen \(a\), zatímco neterminál \(B\)
-        generuje blok písmen \(b\).
+        \visible<5->{Neterminál $A$ generuje blok písmen $a$, zatímco neterminál $B$ generuje blok písmen $b$.}
     \end{frame}
 
-    \subsection{Gramatiky a přirozený jazyk}
+    \subsection{Gramatiky a~přirozený jazyk}
 
-    \begin{frame}{Gramatiky a přirozený jazyk}
-        \pause
-        Gramatiky vznikly také jako pokus formálně popsat strukturu přirozeného jazyka.
+    \begin{frame}{Gramatiky a~přirozený jazyk}
+        \small
+        \visible<2->{Gramatiky vznikly také jako pokus formálně popsat strukturu přirozeného jazyka.}
 
-        \pause
-
-        Například jednoduchá anglická (formální) gramatika může obsahovat pravidla:
+        \visible<3->{Například jednoduchá anglická (formální) gramatika může obsahovat pravidla:
         \begin{align*}
-            \text{sentence}&\to \text{noun phrase}\mid\text{verb phrase}\\
-            \text{noun phrase}&\to \text{article}\mid\text{noun}\\
-            \text{verb phrase}&\to \text{verb}\mid\text{noun phrase}\\
+            \text{sentence}&\to \text{noun phrase}\;\text{verb phrase}\\
+            \text{noun phrase}&\to \text{article}\;\text{noun}\\
+            \text{verb phrase}&\to \text{verb}\;\text{noun phrase}\\
             \text{article}&\to \text{the}\\
-            \text{noun}&\to \text{dog}\mid \text{bone},\\
+            \text{noun}&\to \text{dog}\mid \text{bone}\\
             \text{verb}&\to \text{ate}
-        \end{align*}
+        \end{align*}}
 
-        \pause
-
-        Tato gramatika například generuje větu:
-
+        \visible<4->{Tato gramatika například generuje větu
         \[
-            \text{the dog ate the bone}
-        \]
+            \text{the dog ate the bone}.
+        \]}
 
-        \pause
-
-        Gramatika ale popisuje strukturu, nikoli význam.
+        \visible<5->{Gramatika ale popisuje \textbf{strukturu}, nikoli \textbf{význam}.}
     \end{frame}
 
     \begin{frame}{Příklad gramatiky pro anglickou větu}
-    \centering
-    \input{images/priklad-gramatiky-pro-anglickou-vetu.tex}
+        \obrazek{images/priklad-gramatiky-pro-anglickou-vetu.tex}
     \end{frame}
 
+    % =================================================================
     \section{Regulární gramatiky}
+    % =================================================================
 
-    \titleframe{Regulární gramatiky}
+    \begin{titleframeenv}{Regulární gramatiky}
+        \obrazek[0.45\textheight]{images/znazorneni-prevodu-automatu-na-regularni-gramatiku.tex}
+    \end{titleframeenv}
 
     \begin{frame}{Regulární gramatiky}
-        \pause
-        \begin{defblock}[Regulární gramatika]
-            Gramatika $G=(V,T,P,S)$ je \markdarkred{regulární}, pokud každé přepisovací pravidlo z $P$ má tvar
+        \small
+        \visible<2->{\begin{defblock}[Regulární gramatika]
+            Gramatika $G=(V,T,P,S)$ je \markdarkred{regulární}, pokud každé přepisovací pravidlo z~$P$ má tvar
             \[A\to \omega B\quad\text{nebo}\quad A\to\omega,\]
-            kde $A,B\in V$ a $\omega\in T^*$.
-        \end{defblock}
-        \pause
-        Příklady:
+            kde $A,B\in V$ a~$\omega\in T^*$.
+        \end{defblock}}
+        \visible<3->{Příklady:}
         \begin{itemize}
-            \pause
-            \item $S\to aS\mid bS\mid \lambda$ \markdarkgreen{je} regulární gramatika.
-            \pause
-            \item $S\to aSb\mid \lambda$ \markdarkred{není} regulární gramatika.
-            \pause
-            \item $S\to aA\mid bB,\ A\to aS\mid bA\mid \lambda,\ B\to bS\mid aB\mid \lambda$ \markdarkgreen{je} regulární gramatika.
-            \pause
-            \item $S\to aA\mid bB,\ A\to aS\mid bA,\ B\to bS\mid aB$ \markdarkred{není} regulární gramatika.
+            \visible<4->{\item $S\to aS\mid bS\mid \lambda$ \markdarkgreen{je} regulární gramatika.}
+            \visible<5->{\item $S\to aSb\mid \lambda$ \markdarkred{není} regulární gramatika.}
+            \visible<6->{\item $S\to aA\mid bB,\ A\to aS\mid bA\mid \lambda,\ B\to bS\mid aB\mid \lambda$ \markdarkgreen{je} regulární gramatika.}
+            \visible<7->{\item $S\to AB,\ A\to aA\mid a,\ B\to bB\mid b$ \markdarkred{není} regulární gramatika.}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Regulární gramatiky a regulární jazyky}
-        \pause
-        \begin{thmblock}
+    \begin{frame}{Regulární gramatiky a~regulární jazyky}
+        \visible<2->{\begin{thmblock}
             Jazyk $L$ je regulární právě tehdy, když existuje regulární gramatika $G$ taková, že $L=L(G)$.
-        \end{thmblock}
-        \pause
-        Náznak důkazu:
-        \pause
+        \end{thmblock}}
+        \visible<3->{Náznak důkazu:}
         \begin{enumerate}
-            \item konečný automat $\Rightarrow$ regulární gramatika.
-            \item regulární gramatika $\Rightarrow$ konečný automat,\\
+            \visible<4->{\item konečný automat $\Rightarrow$ regulární gramatika,}
+            \visible<5->{\item regulární gramatika $\Rightarrow$ konečný automat.}
         \end{enumerate}
-        \pause
-        \begin{timportantframe}
+        \visible<6->{\begin{timportantframe}
             \begin{center}
                 Tedy regulární gramatiky generují právě regulární jazyky.
             \end{center}
-        \end{timportantframe}
-        \pause
-        \begin{tinfoframe}
+        \end{timportantframe}}
+        \visible<7->{\begin{tinfoframe}
             \begin{center}
                 Ukážeme pouze první bod, druhý je analogický.
             \end{center}
-        \end{tinfoframe}
+        \end{tinfoframe}}
     \end{frame}
 
     \begin{frame}{Konečný automat \(\Rightarrow\) regulární gramatika}
-        Mějme DFA $A=(Q,\Sigma,\delta,q_0,F)$. \pause Sestrojíme gramatiku $G=(V,T,P,S)$, kde
+        \small
+        \visible<2->{Mějme DFA $A=(Q,\Sigma,\delta,q_0,F)$. Sestrojíme gramatiku $G=(V,T,P,S)$, kde
         \[
             V=Q,\qquad T=\Sigma,\qquad S=q_0.
-        \]
+        \]}
 
-        \pause
-
-        Pravidla \(P\) definujeme takto:
+        \visible<3->{Pravidla $P$ definujeme takto:
         \begin{align*}
             \delta(p,a)=q
             \quad &\Longrightarrow \quad
-            p\to aq\\
+            p\to aq,\\
             p\in F
             \quad &\Longrightarrow \quad
             p\to \lambda.
-        \end{align*}
+        \end{align*}}
 
-        \pause
-
-        Přijímající výpočet automatu
+        \visible<4->{Přijímající výpočet automatu
         \[
             q_0 \xrightarrow{a_1} q_1
             \xrightarrow{a_2} \cdots
@@ -341,41 +282,30 @@
             \Rightarrow \cdots
             \Rightarrow a_1\cdots a_nq_n
             \Rightarrow a_1\cdots a_n.
-        \]
+        \]}
 
-        \pause
-
-        Tedy $L(A)=L(G)$.
+        \visible<5->{Tedy $L(A)=L(G)$.}
     \end{frame}
 
     \begin{frame}{Znázornění převodu automatu na regulární gramatiku}
-    \centering
-    \input{images/znazorneni-prevodu-automatu-na-regularni-gramatiku.tex}
+        \obrazek{images/znazorneni-prevodu-automatu-na-regularni-gramatiku.tex}
     \end{frame}
 
     \begin{frame}{Jeden jazyk třemi způsoby}
-        Uvažujme jazyk $L=\set{w\in\{a,b\}^* \mid w \text{ končí na } ab}$.
-
-        \vspace{0.3cm}
+        \small
+        Uvažujme jazyk $L=\set{w\in\set{a,b}^{*} : w \text{ končí na } ab}$.
 
         \begin{columns}[T]
-            %----------------------------------------
-            % Levý sloupec
-            %----------------------------------------
+            % =============================================================
+            % Levý sloupec: regulární výraz a~regulární gramatika
+            % =============================================================
             \begin{column}{0.52\textwidth}
                 \textbf{Regulární výraz:}
                 \[
                     (a\mid b)^*ab
                 \]
 
-                \vspace{0.4cm}
-
-                \textbf{Regulární gramatika:}
-
-                \[
-                    G=(V,T,P,S),
-                \]
-                kde $V=\set{S,A,B}, T=\set{a,b}$ a~pravidla jsou
+                \textbf{Regulární gramatika} $G=(V,T,P,S)$, kde $V=\set{S,A,B}$, $T=\set{a,b}$ a~pravidla jsou
                 \[
                 \begin{aligned}
                     S &\to aA \mid bS,\\
@@ -384,28 +314,21 @@
                 \end{aligned}
                 \]
 
-                \vspace{0.2cm}
-
-                \textbf{Příklad slov z jazyka:}
-                \[
-                    ab,\quad aab,\quad bab,\quad bbab.
-                \]
+                \textbf{Příklad slov z~jazyka:} $ab$, $aab$, $bab$, $bbab$.
             \end{column}
 
-            %----------------------------------------
-            % Pravý sloupec
-            %----------------------------------------
+            % =============================================================
+            % Pravý sloupec: konečný automat
+            % =============================================================
             \begin{column}{0.48\textwidth}
                 \textbf{Konečný automat:}
 
-                \begin{center}
-                \input{images/jeden-jazyk-tremi-zpusoby.tex}
-                \end{center}
+                \obrazek[0.32\textheight]{images/jeden-jazyk-tremi-zpusoby.tex}
 
                 \begin{itemize}
-                    \item \(q_0\): zatím nic podstatného
-                    \item \(q_1\): poslední symbol je \(a\)
-                    \item \(q_2\): poslední dva symboly jsou \(ab\)
+                    \item $q_0$: zatím nic podstatného,
+                    \item $q_1$: poslední symbol je $a$,
+                    \item $q_2$: poslední dva symboly jsou $ab$.
                 \end{itemize}
             \end{column}
         \end{columns}

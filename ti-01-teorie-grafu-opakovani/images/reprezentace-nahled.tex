@@ -1,0 +1,24 @@
+% Náhled k~sekci o~reprezentaci grafů: malý graf a~jeho matice sousednosti.
+\begin{tikzpicture}[scale=1]
+
+\node[vertex,fill=white] (V1) at (0,2)   {$v_1$};
+\node[vertex,fill=white] (V2) at (2,2)   {$v_2$};
+\node[vertex,fill=white] (V3) at (0,0)   {$v_3$};
+\node[vertex,fill=white] (V4) at (2,0)   {$v_4$};
+
+\draw[edge] (V1) -- (V2);
+\draw[edge] (V1) -- (V3);
+\draw[edge] (V2) -- (V4);
+\draw[edge] (V3) -- (V4);
+\draw[edge] (V1) -- (V4);
+
+\node at (3.6,1) {\Large $\longrightarrow$};
+
+\node[anchor=west] at (4.4,1) {$\left(\begin{matrix}
+    0 & 1 & 1 & 1 \\
+    1 & 0 & 0 & 1 \\
+    1 & 0 & 0 & 1 \\
+    1 & 1 & 1 & 0
+\end{matrix}\right)$};
+
+\end{tikzpicture}

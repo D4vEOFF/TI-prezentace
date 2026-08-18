@@ -1,0 +1,22 @@
+% Náhled k~sekci o~optimalizačních problémech: opakovaným dotazem na rozhodovací
+% variantu najdeme optimum.
+\begin{tikzpicture}[x=1cm, y=1cm]
+
+    \tikzset{
+        dotaz/.style={draw, thick, rounded corners=3pt, minimum width=30mm,
+                      minimum height=8mm, align=center, font=\small}
+    }
+
+    \node[dotaz, fill=darkred!10]   (q1) at (0, 0)    {$\NZMNA(G,n)$?\quad \xmark};
+    \node[dotaz, fill=darkred!10]   (q2) at (0,-1.2)  {$\NZMNA(G,n-1)$?\quad \xmark};
+    \node                            (dots) at (0,-2.2) {$\vdots$};
+    \node[dotaz, fill=darkgreen!15] (q3) at (0,-3.2)  {$\NZMNA(G,j)$?\quad \cmark};
+
+    \draw[->, >=stealth, thick] (q1) -- (q2);
+    \draw[->, >=stealth, thick] (q2) -- (dots);
+    \draw[->, >=stealth, thick] (dots) -- (q3);
+
+    \node[font=\small, darkgreen, anchor=west] at (2.6,-3.2)
+        {největší nezávislá množina má $j$ vrcholů};
+
+\end{tikzpicture}

@@ -1,0 +1,19 @@
+% Náhled k~sekci o~převoditelnosti: vstup problému A převedeme na vstup problému B.
+\begin{tikzpicture}[x=1cm, y=1cm]
+
+    \tikzset{
+        krabice/.style={draw, thick, rounded corners=3pt, minimum width=22mm,
+                        minimum height=11mm, align=center}
+    }
+
+    \node[krabice, fill=maincolor!12] (a)  at (0,0)   {vstup $x$\\ problému $A$};
+    \node[krabice, fill=maincolor!12] (b)  at (4.5,0) {vstup $f(x)$\\ problému $B$};
+    \node[krabice, fill=darkgreen!15] (r)  at (9,0)   {odpověď\\ \textbf{ANO}/\textbf{NE}};
+
+    \draw[->, >=stealth, very thick, darkred] (a) -- node[above, font=\small] {převod $f$}
+        node[below, font=\small] {polynomiálně} (b);
+    \draw[->, >=stealth, very thick] (b) -- node[above, font=\small] {algoritmus pro $B$} (r);
+
+    \node[font=\small] at (4.5,-1.7) {$A(x)=B(f(x))$};
+
+\end{tikzpicture}

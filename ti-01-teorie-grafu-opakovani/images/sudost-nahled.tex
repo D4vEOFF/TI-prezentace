@@ -1,0 +1,22 @@
+% Náhled k~sekci o~principu sudosti: součet stupňů je dvojnásobkem počtu hran.
+\begin{tikzpicture}[scale=1.3]
+
+\node[vertex,fill=white] (A) at (0,0)     {};
+\node[vertex,fill=white] (B) at (2,0)     {};
+\node[vertex,fill=white] (C) at (1,1.5)   {};
+\node[vertex,fill=white] (D) at (3,1.5)   {};
+
+\draw[edge] (A) -- (B);
+\draw[edge] (A) -- (C);
+\draw[edge] (B) -- (C);
+\draw[edge] (B) -- (D);
+\draw[edge] (C) -- (D);
+
+\node[left=2mm of A]  {\small $2$};
+\node[below=2mm of B] {\small $3$};
+\node[above left=1mm and 1mm of C] {\small $3$};
+\node[right=2mm of D] {\small $2$};
+
+\node at (1.5,-1) {$2+3+3+2=10=2\cdot 5$};
+
+\end{tikzpicture}

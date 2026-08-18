@@ -1,0 +1,23 @@
+% Náhled k~sekci o~dalších operacích: změna klíče se opraví probubláním
+% nahoru ($\textsc{BubbleUp}$), nebo dolů ($\textsc{BubbleDown}$).
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+\node[vertex,minimum size=6mm] (r)  at (0,0)       {$2$};
+\node[vertex,minimum size=6mm] (a)  at (-1.6,-1.3) {$5$};
+\node[vertex,minimum size=6mm] (b)  at ( 1.6,-1.3) {$7$};
+\node[vertex,minimum size=6mm,fill=orange!40] (c) at (-2.4,-2.6) {$9$};
+\node[vertex,minimum size=6mm] (d)  at (-0.8,-2.6) {$6$};
+\node[vertex,minimum size=6mm] (e)  at ( 0.8,-2.6) {$8$};
+
+\draw[edge] (r)--(a);
+\draw[edge] (r)--(b);
+\draw[edge] (a)--(c);
+\draw[edge] (a)--(d);
+\draw[edge] (b)--(e);
+
+\draw[->, >=stealth, very thick, darkred]
+    (-3.3,-2.6) -- (-3.3,-0.2) node[midway, left] {\small $\textsc{BubbleUp}$};
+\draw[->, >=stealth, very thick, darkblue]
+    (2.7,-0.2) -- (2.7,-2.6) node[midway, right] {\small $\textsc{BubbleDown}$};
+
+\end{tikzpicture}

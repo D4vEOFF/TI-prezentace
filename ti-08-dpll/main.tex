@@ -14,33 +14,39 @@
 
     \input{../titlepage.tex}
 
+    % =================================================================
     \section{Připomenutí}
+    % =================================================================
 
     \begin{frame}{Konjunktivní normální forma}
-        \visible<2->{\begin{defblock}[Literál a klauzule]
+        \visible<2->{\begin{defblock}[Literál a~klauzule]
             Mějme logické proměnné $x_1,x_2,\dots,x_n$. Pak definujeme následující:
             \begin{itemize}
-                \item \markdarkred{Literál} je jakákoliv \textbf{proměnná $x_i$, nebo její negace $\neg x_i$}
-                \item \markdarkred{Klauzule} sestavá z jednoho nebo více literálů oddělených buď spojkou $\land$, nebo $\lor$.
+                \item \markdarkred{Literál} je jakákoliv \textbf{proměnná $x_i$, nebo její negace $\neg x_i$}.
+                \item \markdarkred{Klauzule} sestává z~jednoho nebo více literálů oddělených buď spojkou $\land$, nebo $\lor$.
             \end{itemize}
         \end{defblock}}
         \visible<3->{\begin{defblock}[Konjunktivní normální forma]
-            Mějme logickou formuli $\varphi$ s proměnnými $x_1,x_2,\dots,x_n$. Pak řekneme, že $\varphi$ je v \markdarkred{konjunktivní normální formě} (CNF), pokud sestává z klauzulí oddělených spojkou $\land$ a literály v každé klauzuli jsou odděleny spojkou $\lor$.
+            Mějme logickou formuli $\varphi$ s~proměnnými $x_1,x_2,\dots,x_n$. Pak řekneme, že $\varphi$ je v~\markdarkred{konjunktivní normální formě} (CNF), pokud sestává z~klauzulí oddělených spojkou $\land$ a~literály v~každé klauzuli jsou odděleny spojkou $\lor$.
         \end{defblock}}
     \end{frame}
 
-    \begin{frame}{Problémy SAT a UNSAT}
-        \visible<2->{\decproblem{Splnitelnost formule v CNF ($\SAT$)}{
-            Logická formule $\varphi$ v CNF.
+    \begin{frame}{Problémy SAT a~UNSAT}
+        \visible<2->{\decproblem{Splnitelnost formule v~CNF ($\SAT$)}{
+            Logická formule $\varphi$ v~CNF.
         }{Je formule $\varphi$ splnitelná?}}
-        \visible<3->{\decproblem{Nesplnitelnost formule v CNF ($\UNSAT$)}{
-            Logická formule $\varphi$ v CNF.
+        \visible<3->{\decproblem{Nesplnitelnost formule v~CNF ($\UNSAT$)}{
+            Logická formule $\varphi$ v~CNF.
         }{Je formule $\varphi$ nesplnitelná?}}
     \end{frame}
 
+    % =================================================================
     \section{Algoritmus DPLL}
+    % =================================================================
 
-    \titleframe{Algoritmus DPLL}
+    \begin{titleframeenv}{Algoritmus DPLL}
+        \obrazek[0.5\textheight]{images/dpll-nahled.tex}
+    \end{titleframeenv}
 
     \subsection{Úvod}
 
@@ -48,13 +54,13 @@
         \begin{itemize}
             \visible<2->{\item Algoritmus řešící $\SAT$ (tzv. \textbf{SAT solver})}
             \visible<3->{\item Martin \markdarkred{D}avis, Hilary \markdarkred{P}utnam, George \markdarkred{L}ogemann, Donald W. \markdarkred{L}oveland (1961)}
-            \visible<4->{\item Postup založený na rekurzivním "zkracování" logické formule v CNF.}
+            \visible<4->{\item Postup založený na rekurzivním "zkracování" logické formule v~CNF.}
         \end{itemize}
     \end{frame}
 
-    \subsection{Jednotková klauzule, polarita a čisté literály}
+    \subsection{Jednotková klauzule, polarita a~čisté literály}
 
-    \begin{frame}{Jednotková klauzule, polarita a čisté literály}
+    \begin{frame}{Jednotková klauzule, polarita a~čisté literály}
         \visible<2->{\begin{defblock}[Polarita literálu]
             Je-li literál buď proměnná $x$, nebo její negace $\neg x$, pak říkáme, že
             \begin{itemize}
@@ -66,7 +72,7 @@
             Klauzule se nazývá \markdarkred{jednotková}, pokud obsahuje \textbf{právě jeden literál}.
         \end{defblock}}
         \visible<4->{\begin{defblock}[Čistý literál]
-            Literál $\ell$ v logické formuli $\varphi$ nazveme \markdarkred{čistý}, pokud se v ní vyskytuje \textbf{pouze v jedné polaritě}.
+            Literál $\ell$ v~logické formuli $\varphi$ nazveme \markdarkred{čistý}, pokud se v~ní vyskytuje \textbf{pouze v~jedné polaritě}.
         \end{defblock}}
     \end{frame}
 
@@ -74,7 +80,7 @@
 
     \begin{frame}{Princip algoritmu DPLL}
         \begin{itemize}
-            \visible<2->{\item Na vstupu máme logickou formuli $\varphi$ v CNF s proměnnými $x_1,\dots,x_n$.}
+            \visible<2->{\item Na vstupu máme logickou formuli $\varphi$ v~CNF s~proměnnými $x_1,\dots,x_n$.}
             \visible<3->{\item Chceme zjistit, zdali je $\varphi$ splnitelná.}
             \visible<4->{\item Algoritmus \textbf{opakovaně} aplikuje na $\varphi$ postupně dvojici procedur:}
             \begin{itemize}
@@ -82,11 +88,11 @@
                 \visible<6->{\item \markdarkred{eliminace čistých literálů} (pure literal elimination).}
             \end{itemize}
             \visible<7->{\item Ze vzniklé formule $\varphi^{\prime}$ zkusíme určit, zdali \textbf{je či není splnitelná}.}
-            \visible<8->{\item Pokud to nepůjde, formuli "vhodně" upravíme a znovu aplikujeme stejný postup.}
+            \visible<8->{\item Pokud to nepůjde, formuli "vhodně" upravíme a~znovu aplikujeme stejný postup.}
         \end{itemize}
         \visible<9->{\begin{timportantframe}
             \begin{center}
-                Má-li být formule $\varphi$ splnitelná, pak musíme být schopni splnit \textbf{každou její klauzuli}. 
+                Má-li být formule $\varphi$ splnitelná, pak musíme být schopni splnit \textbf{každou její klauzuli}.
             \end{center}
         \end{timportantframe}}
     \end{frame}
@@ -98,66 +104,63 @@
         \[\ldots\land(\ldots)\land(\ell)\land(\ldots)\land\ldots,\]
         pak nutně musí být $\ell=1$.}
         \begin{itemize}
-            \visible<3->{\item Na vstupu máme formuli $\varphi$ a nějaký její literál $\ell$.}
+            \visible<3->{\item Na vstupu máme formuli $\varphi$ a~nějaký její literál $\ell$.}
             \visible<4->{\item Pokud je $\ell=x_i$, pak $x_i=1$. Naopak pokud $\ell=\neg x_i$, pak $x_i=0$.}
-            \visible<5->{\item V takovém případě můžeme odstranit všechny ostatní klauzule obsahující $\ell$.}
+            \visible<5->{\item V~takovém případě můžeme odstranit všechny ostatní klauzule obsahující $\ell$.}
             \visible<6->{\begin{tnoticeframe}
                 \begin{center}
-                    Klauzule ve tvaru $(\ldots\lor \ell \lor \ldots)$ jsou splněny a dále není třeba je uvažovat (můžeme je odstranit).
+                    Klauzule ve tvaru $(\ldots\lor \ell \lor \ldots)$ jsou splněny a~dále není třeba je uvažovat (můžeme je odstranit).
                 \end{center}
             \end{tnoticeframe}}
-            \visible<7->{\item Naopak pokud nějaká klauzule obsahuje $\ell$ \textbf{v opačné polaritě} (tj. $\neg\ell$), pak jeho hodnota je $0$.}
-            \visible<8->{\begin{tnoticeframe}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Jednotková propagace}
+        \begin{itemize}
+            \visible<2->{\item Naopak pokud nějaká klauzule obsahuje $\ell$ \textbf{v~opačné polaritě} (tj. $\neg\ell$), pak jeho hodnota je $0$.}
+            \visible<3->{\begin{tnoticeframe}
                 \begin{center}
-                    Takový literál můžeme z formule odstranit. Hodnota klauzule je závislá pouze na zbylých literálech.
+                    Takový literál můžeme z~formule odstranit. Hodnota klauzule je závislá pouze na zbylých literálech.
                 \end{center}
             \end{tnoticeframe}}
+            \visible<4->{\item Zůstane-li klauzule bez literálů, vznikne \markdarkred{prázdná klauzule} a~formuli už nelze splnit.}
         \end{itemize}
     \end{frame}
 
     \subsection{Eliminace čistých literálů}
 
     \begin{frame}{Eliminace čistých literálů}
-        \visible<2->{Pokud se vyskytuje nějaký literál $\ell$ ve formuli $\varphi$ \textbf{pouze v jedné polaritě}, tj.
-        \[\ldots(\ldots\lor\ell\lor\ldots)\land\ldots\land(\ldots\land\ell\land\ldots)\land\ldots\]
-        Formule $\varphi$ tedy neobsahuje $\neg\ell$.}
+        \visible<2->{Pokud se nějaký literál $\ell$ vyskytuje ve formuli $\varphi$ \textbf{pouze v~jedné polaritě}, tj.
+        \[\ldots\land(\ldots\lor\ell\lor\ldots)\land\ldots\land(\ldots\lor\ell\lor\ldots)\land\ldots,\]
+        pak formule $\varphi$ neobsahuje $\neg\ell$.}
         \begin{itemize}
-            \visible<3->{\item Na vstupu máme formuli $\varphi$ a její literál $\ell$.}
-            \visible<4->{\item V takovém případě existuje jednoznačné ohodnocení literálu $\ell$ takové, že všechny klauzule jej obsahující jsou splněny.}
+            \visible<3->{\item Na vstupu máme formuli $\varphi$ a~její literál $\ell$.}
+            \visible<4->{\item V~takovém případě existuje jednoznačné ohodnocení literálu $\ell$ takové, že všechny klauzule jej obsahující jsou splněny.}
             \visible<5->{\item Resp. pokud $\ell=x_i$, pak nastavíme $x_i=1$. Jinak pokud $\ell=\neg x_i$, pak nastavíme $x_i=0$.}
         \end{itemize}
         \visible<6->{\begin{tnoticeframe}
             \begin{center}
-                Takové obsahující $\ell$ můžeme z $\varphi$ odstranit, protože už jsou splněny.
+                Všechny klauzule obsahující $\ell$ můžeme z~$\varphi$ odstranit, protože už jsou splněny.
             \end{center}
         \end{tnoticeframe}}
     \end{frame}
 
-    \begin{frame}{Jak nám procedury pomůžou?}
-        \begin{itemize}
-            \item 
-        \end{itemize}
-    \end{frame}
-
     \begin{frame}{Postup algoritmu}
-        \visible<2->{Na vstupu dostaneme formuli $\varphi$ v CNF.}
+        \visible<2->{Na vstupu dostaneme formuli $\varphi$ v~CNF.}
         \begin{enumerate}
-            \visible<3->{\item Opakovaně aplikujeme \textbf{jednotkovou eliminaci} na formuli $\varphi$, dokud v ní existují jednotkové klauzule.}
-            \visible<4->{\item Opakovaně aplikujeme \textbf{eliminaci čistých literálů} na formuli $\varphi$, dokud v ní existují čisté literály.}
-            \visible<5->{\item Pokud je výsledná formule $\varphi^{\prime}$ prázdná (tzn. splnili jsme všechny klauzule), pak \textbf{prohlásíme $\varphi$ za splnitelnou} a skončíme.}
-            \visible<6->{\item Jinak pokud výsledná formule $\varphi^{\prime}$ obsahuje prázdnou klauzuli, pak \textbf{prohlásíme $\varphi$ za nesplnitelnou} a skončíme.}
-            \visible<7->{\item Vybereme náhodně literál $\ell$ ve formuli $\varphi^{\prime}$ a zavoláme rekurzivně DPLL na formule $\varphi^{\prime}\land\ell$ a $\varphi^{\prime}\land\neg\ell$.}
-            \visible<8->{\item Je-li $\varphi^{\prime}\land\ell$ nebo $\varphi^{\prime}\land\neg\ell$ splnitelná, je i $\varphi$ splnitelná.}
+            \visible<3->{\item Opakovaně aplikujeme \textbf{jednotkovou propagaci} na formuli $\varphi$, dokud v~ní existují jednotkové klauzule.}
+            \visible<4->{\item Opakovaně aplikujeme \textbf{eliminaci čistých literálů} na formuli $\varphi$, dokud v~ní existují čisté literály.}
+            \visible<5->{\item Pokud je výsledná formule $\varphi^{\prime}$ prázdná (tzn. splnili jsme všechny klauzule), pak \textbf{prohlásíme $\varphi$ za splnitelnou} a~skončíme.}
+            \visible<6->{\item Jinak pokud výsledná formule $\varphi^{\prime}$ obsahuje prázdnou klauzuli, pak \textbf{prohlásíme $\varphi$ za nesplnitelnou} a~skončíme.}
+            \visible<7->{\item Vybereme náhodně literál $\ell$ ve formuli $\varphi^{\prime}$ a~zavoláme rekurzivně DPLL na formule $\varphi^{\prime}\land\ell$ a~$\varphi^{\prime}\land\neg\ell$.}
+            \visible<8->{\item Je-li $\varphi^{\prime}\land\ell$ nebo $\varphi^{\prime}\land\neg\ell$ splnitelná, je i~$\varphi$ splnitelná.}
         \end{enumerate}
     \end{frame}
 
-    \subsection{Znázornění a pseudokód algoritmu}
+    \subsection{Znázornění a~pseudokód algoritmu}
 
     \begin{frame}{Znázornění algoritmu}
-        \begin{figure}
-            \centering
-            \input{images/dpll-automat.tex}
-        \end{figure}
+        \obrazek{images/dpll-automat.tex}
     \end{frame}
 
     \begin{frame}{Pseudokód algoritmu}
@@ -201,7 +204,7 @@
         {žádné přiřazení}
         {
             \DPLLclause{(c1)}{dpllunitclause}{(a)}
-            \DPLLclause{(c2)}{dpllclause}{(\neg a \lor b)}
+            \DPLLclause{(c2)}{dpllclause}{(\neg a~\lor b)}
             \DPLLclause{(c3)}{dpllclause}{(e \lor c)}
             \DPLLclause{(c4)}{dpllclause}{(c \lor d)}
             \DPLLclause{(c5)}{dpllclause}{(\neg c \lor d)}
@@ -220,7 +223,7 @@
     {$a=1,\; b=1$}
     {
         \DPLLclause{(c1)}{dpllremovedclause}{(a)}
-        \DPLLclause{(c2)}{dpllremovedclause}{(\neg a \lor b)}
+        \DPLLclause{(c2)}{dpllremovedclause}{(\neg a~\lor b)}
         \DPLLclause{(c3)}{dpllpureclause}{(e \lor c)}
         \DPLLclause{(c4)}{dpllclause}{(c \lor d)}
         \DPLLclause{(c5)}{dpllclause}{(\neg c \lor d)}
@@ -240,7 +243,7 @@
     {$a=1,\; b=1,\; e=1$}
     {
         \DPLLclause{(c1)}{dpllremovedclause}{(a)}
-        \DPLLclause{(c2)}{dpllremovedclause}{(\neg a \lor b)}
+        \DPLLclause{(c2)}{dpllremovedclause}{(\neg a~\lor b)}
         \DPLLclause{(c3)}{dpllremovedclause}{(e \lor c)}
         \DPLLclause{(c4)}{dpllclause}{(c \lor d)}
         \DPLLclause{(c5)}{dpllclause}{(\neg c \lor d)}
@@ -266,13 +269,13 @@
     {$a=1,\; b=1,\; e=1,\; c=0$}
     {
         \DPLLclause{(c1)}{dpllremovedclause}{(a)}
-        \DPLLclause{(c2)}{dpllremovedclause}{(\neg a \lor b)}
+        \DPLLclause{(c2)}{dpllremovedclause}{(\neg a~\lor b)}
         \DPLLclause{(c3)}{dpllremovedclause}{(e \lor c)}
         \DPLLclause{(c4)}{dpllunitclause}{(d)}
         \DPLLclause{(c5)}{dpllremovedclause}{(\neg c \lor d)}
         \DPLLclause{(c6)}{dpllunitclause}{(\neg d)}
     }
-    {Po dosazení $c=0$ vzniknou klauzule $(d)$ a $(\neg d)$,\\
+    {Po dosazení $c=0$ vzniknou klauzule $(d)$ a~$(\neg d)$,\\
     tedy konflikt. Tato větev je nesplnitelná.}
     {
         \node[dpllplainnode] at (root) {};
@@ -292,7 +295,7 @@
     {$a=1,\; b=1,\; e=1,\; c=1,\; d=1$}
     {
         \DPLLclause{(c1)}{dpllremovedclause}{(a)}
-        \DPLLclause{(c2)}{dpllremovedclause}{(\neg a \lor b)}
+        \DPLLclause{(c2)}{dpllremovedclause}{(\neg a~\lor b)}
         \DPLLclause{(c3)}{dpllremovedclause}{(e \lor c)}
         \DPLLclause{(c4)}{dpllremovedclause}{(c \lor d)}
         \DPLLclause{(c5)}{dpllremovedclause}{(\neg c \lor d)}
@@ -315,46 +318,47 @@
 
     \begin{frame}{Časová složitost DPLL}
         \begin{itemize}
-            \visible<2->{\item Nejhorší případ nastane, pokud při žádném volání $\operatorname{DPLL}$ neexituje v příslušné formuli \textbf{žádná jednotková klauzule} vyjma té, kterou jsme vytvořili při sestavení formule $\varphi\land\ell$, resp. $\varphi\land\neg\ell$, ani \textbf{čistý literál}.}
-            \visible<3->{\item Máme-li formuli ve tvaru $\varphi\land\ell$, resp. $\varphi\land\neg\ell$, pak literál $\ell$ eliminujeme v dalším volání a všechny ostatní zůstanou zachované.}
+            \visible<2->{\item Nejhorší případ nastane, pokud při žádném volání $\operatorname{DPLL}$ neexistuje v~příslušné formuli \textbf{žádná jednotková klauzule} vyjma té, kterou jsme vytvořili při sestavení formule $\varphi\land\ell$, resp. $\varphi\land\neg\ell$, ani \textbf{čistý literál}.}
+            \visible<3->{\item Máme-li formuli ve tvaru $\varphi\land\ell$, resp. $\varphi\land\neg\ell$, pak literál $\ell$ eliminujeme v~dalším volání a~všechny ostatní zůstanou zachované.}
             \visible<4->{\begin{timportantframe}
                 \begin{center}
-                    Formule se tedy zkrátí pouze o \textbf{jeden literál}.
+                    Formule se tedy zkrátí pouze o~\textbf{jeden literál}.
                 \end{center}
             \end{timportantframe}}
             \visible<5->{\item Označme si $n$ počet literálů vstupní formule $\varphi$.}
             \visible<6->{\item Dále si označme:}
             \begin{itemize}
-                \visible<7->{\item $T(n)$ = počet kroků algoritmu nad formulí o $n$ literálech,}
+                \visible<7->{\item $T(n)$ = počet kroků algoritmu nad formulí o~$n$ literálech,}
                 \visible<8->{\item $r(n)$ = režie jednoho volání.}
             \end{itemize}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Časová složitost DPLL}
+        \small
         \begin{itemize}
-            \visible<2->{\item V jednom volání DPLL strávíme $r(n)$ kroků eliminací \textbf{jednotkových klauzulí} a \textbf{čistých literálů}.}
+            \visible<2->{\item V~jednom volání DPLL strávíme $r(n)$ kroků eliminací \textbf{jednotkových klauzulí} a~\textbf{čistých literálů}.}
             \visible<3->{\item Na konci voláme dvakrát DPLL na vstup velikosti $n-1$, čímž strávíme $2\cdot T(n-1)$ kroků.}
-            \visible<4->{\item Můžeme předpokládat, že režíí strávíme polynomiální čas, tzn. $r(n)=\bigO(n^{k})$, kde $k\in\R^{+}$.}
+            \visible<4->{\item Můžeme předpokládat, že režií strávíme polynomiální čas, tzn. $r(n)=\bigO(n^{k})$, kde $k\in\R^{+}$.}
             \visible<5->{\item Tím dostáváme následující rovnici:
             \[T(n)=2\cdot T(n-1)+r(n)=2\cdot T(n-1)+\bigO(n^{k}).\]}
             \visible<6->{\begin{tinfoframe}
                 \begin{center}
-                    Tzv. \textbf{rekurentní rovnice}, kdy hodnota zkoumané funkce zavisí na "sobě samotné".
+                    Tzv. \textbf{rekurentní rovnice}, kdy hodnota zkoumané funkce závisí na "sobě samotné".
                 \end{center}
             \end{tinfoframe}}
-            \visible<7->{\item Lze ukázat, že $T(n)=\bigO(2^{n})$. Algoritmus DPLL je tedy v nejhorším případě exponenciální.}
+            \visible<7->{\item Lze ukázat, že $T(n)=\bigO(2^{n})$. Algoritmus DPLL je tedy v~nejhorším případě exponenciální.}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Řešitelnost problému $\SAT$}
         \begin{itemize}
-            \visible<2->{\item Problém $\SAT$ dodnes neumíme řešit v polynomiálním čase.}
-            \visible<3->{\item Naštěstí u "velké" části logických formulí však umíme rozhodnout rychle, zdali jsou splnitelné.}
+            \visible<2->{\item Problém $\SAT$ dodnes neumíme řešit v~polynomiálním čase.}
+            \visible<3->{\item Naštěstí u~"velké" části logických formulí však umíme rozhodnout rychle, zdali jsou splnitelné.}
         \end{itemize}
         \visible<4->{\begin{talertframe}
             \begin{center}
-                Dodnes však není známý algoritmus pro $\SAT$, který by běžel nad libovolnou formulí \textbf{v polynomiálním čase}.
+                Dodnes však není známý algoritmus pro $\SAT$, který by běžel nad libovolnou formulí \textbf{v~polynomiálním čase}.
             \end{center}
         \end{talertframe}}
     \end{frame}

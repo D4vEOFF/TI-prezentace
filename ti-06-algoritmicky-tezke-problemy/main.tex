@@ -12,24 +12,28 @@
 
     \input{../titlepage.tex}
 
+    % =================================================================
     \section{Těžké problémy}
+    % =================================================================
 
-    \titleframe{Těžké problémy}
+    \begin{titleframeenv}{Těžké problémy}
+        \obrazek[0.55\textheight]{images/tezke-problemy-nahled.tex}
+    \end{titleframeenv}
 
     \subsection{Opakování}
 
-    \begin{frame}{S čím jsme se již setkali\dots}
+    \begin{frame}{S~čím jsme se již setkali\dots}
         \begin{itemize}
-            \visible<2->{\item Řazení prvků v poli $\implies\bigO(n\log{n})$.}
-            \visible<3->{\item Hledání nejkratší cesty v neohodnoceném grafu $\implies\bigO(n+m)$, přičemž $m\leqslant \frac{n(n-1)}{2}$}
-            \visible<4->{\item Hledání nejkratší cesty v nezáporně ohodnoceném grafu $\implies\bigO((n+m)\log{n})$.}
-            \visible<5->{\item Sekvenční vyhledávání v poli $\implies\bigO(n)$.}
-            \visible<6->{\item Binární vyhledávání v poli $\implies\bigO(\log{n})$.}
-            \visible<7->{\item Vyhledávání v textu $\implies\bigO((n-m)m)$, kde $m\leqslant n$ je délka hledaného slova.}
+            \visible<2->{\item Řazení prvků v~poli $\implies\bigO(n\log{n})$.}
+            \visible<3->{\item Hledání nejkratší cesty v~neohodnoceném grafu $\implies\bigO(n+m)$, přičemž $m\leqslant \frac{n(n-1)}{2}$.}
+            \visible<4->{\item Hledání nejkratší cesty v~nezáporně ohodnoceném grafu $\implies\bigO((n+m)\log{n})$.}
+            \visible<5->{\item Sekvenční vyhledávání v~poli $\implies\bigO(n)$.}
+            \visible<6->{\item Binární vyhledávání v~poli $\implies\bigO(\log{n})$.}
+            \visible<7->{\item Vyhledávání v~textu $\implies\bigO((n-m)m)$, kde $m\leqslant n$ je délka hledaného slova.}
         \end{itemize}
         \visible<8->{\begin{tnoticeframe}
             \begin{center}
-                Všechny tyto problémy umíme řešit obecně v čase $\bigO(n^{k})$, kde $k\in\R$.
+                Všechny tyto problémy umíme řešit obecně v~čase $\bigO(n^{k})$, kde $k\in\R$.
             \end{center}
         \end{tnoticeframe}}
     \end{frame}
@@ -41,15 +45,15 @@
             \visible<2->{\item Omezíme se na tzv. \markdarkred{rozhodovací problémy}.}
             \visible<3->{\begin{tinfoframe}
                 \begin{center}
-                    Rozhodovací problém je takový problém, na jehož výstupní hodnoty jsou \textbf{ANO} a \textbf{NE}.
+                    \markdarkred{Rozhodovací problém} je takový problém, jehož výstupními hodnotami jsou pouze \textbf{ANO} a~\textbf{NE}.
                 \end{center}
             \end{tinfoframe}}
-            \visible<4->{\item Označme si $\set{0,1}^{*}$ \textbf{všechny konečné posloupnosti nul a jedniček}.}
+            \visible<4->{\item Označme si $\set{0,1}^{*}$ \textbf{všechny konečné posloupnosti nul a~jedniček}.}
             \visible<5->{\item Rozhodovacím problémem formálně rozumíme zobrazení
             \[\mapping{L}{\set{0,1}^{*}}{\set{0,1}}.\]}
             \visible<6->{\begin{timportantframe}
                 \begin{center}
-                    Tzn. vstupní data kódujeme \textbf{binárně}, tj. pomocí nul a jedniček.
+                    Tzn. vstupní data kódujeme \textbf{binárně}, tj. pomocí nul a~jedniček.
                 \end{center}
             \end{timportantframe}}
         \end{itemize}
@@ -60,13 +64,13 @@
     \begin{frame}{Efektivně řešitelné problémy}
         \visible<2->{\begin{tnoticeframe}
             \begin{center}
-                S jistou rezervou lze říci, že problémy, které lze řešit algoritmem, který běží v polynomiálním čase vzhledem k délce vstupu, jsou \textbf{"efektivně řešitelné"}.
+                S~jistou rezervou lze říci, že problémy, které lze řešit algoritmem, který běží v~polynomiálním čase vzhledem k~délce vstupu, jsou \textbf{"efektivně řešitelné"}.
             \end{center}
         \end{tnoticeframe}}
         \visible<3->{Co představuje zmíněnou rezervu?}
         \begin{itemize}
-            \visible<4->{\item Algoritmus běžící v čase $\bigO(n^{1000})$ je polynomiální, ale v praxi nejspíše jen sotva použitelný.}
-            \visible<5->{\item Naopak algoritmus se složitostí $\bigO(0{,}001^{n})$ je sice exponenciální, ale je jistě použitelný na "rozumná" data.}
+            \visible<4->{\item Algoritmus běžící v~čase $\bigO(n^{1000})$ je polynomiální, ale v~praxi nejspíše jen sotva použitelný.}
+            \visible<5->{\item Naopak algoritmus se složitostí $\bigO(1{,}001^{n})$ je sice exponenciální, ale na "rozumná" data je jistě použitelný.}
         \end{itemize}
         \visible<6->{\begin{talertframe}
             \begin{center}
@@ -77,20 +81,18 @@
 
     \begin{frame}{Proč zrovna polynomy?}
         \begin{enumerate}
-            \visible<2->{\item Polynomy jsou tzv. \textbf{uzavřeny} na sčítání, násobení a skládání. Mějme polynomy $p_1(x)$ a $p_2(y)$. Pak
+            \visible<2->{\item Polynomy jsou tzv. \textbf{uzavřeny} na sčítání, násobení a~skládání. Mějme polynomy $p_1(x)$ a~$p_2(x)$. Pak
             \begin{itemize}
-                \item $p_1(x)+p_2(x)$ je polynom
-                \item $p_1(x)\cdot p_2(x)$ je polynom
-                \item $p_1(p_2(x))$ je polynom
+                \item $p_1(x)+p_2(x)$ je polynom,
+                \item $p_1(x)\cdot p_2(x)$ je polynom,
+                \item $p_1(p_2(x))$ je polynom.
             \end{itemize}}
             \visible<3->{\item Polynomy obvykle nerostou "příliš rychle".}
         \end{enumerate}
     \end{frame}
 
     \begin{frame}{Proč zrovna polynomy?}{Příklad}
-        \centering
-        \visible<2->{\input{images/proc-zrovna-polynomy-priklad.tex}}
-        \vspace{1.5em}
+        \visible<2->{\obrazek[0.3\textheight]{images/proc-zrovna-polynomy-priklad.tex}}
         \begin{itemize}
             \visible<3->{\item $p_1(x)+p_2(x)=(x^{2}-x-6)+(3x^{2}+5)=4x^{2}-x-1$}
             \visible<4->{\item $p_1(x)\cdot p_2(x)=(x^{2}-x-6)\cdot(3x^{2}+5)=3x^{4}-3x^{3}-13x^{2}-5x-30$}
@@ -121,14 +123,11 @@
     \subsection{Hanojské věže}
 
     \begin{frame}{Hanojské věže}
-        \visible<2->{\begin{figure}
-            \centering
-            \input{images/hanoj.tex}
-        \end{figure}}
+        \visible<2->{\obrazek{images/hanoj.tex}}
         \vspace{1.5em}
         \visible<3->{\textbf{Pravidla:}}
         \begin{itemize}
-            \visible<4->{\item V každém kroku můžeme přesunout jen jeden disk.}
+            \visible<4->{\item V~každém kroku můžeme přesunout jen jeden disk.}
             \visible<5->{\item Větší disk nesmí ležet na menším.}
         \end{itemize}
     \end{frame}
@@ -139,10 +138,10 @@
                 \begin{algorithm}[H]
                     \caption{\textsc{Hanoj}}
                     \KwIn{Výška věže $n$; sloupy $A$ (zdrojový), $B$ (cílový), $C$ (pomocný)}
-                    \lIf{$n=1$}{přesuň disk $1$ z $A$ na $B$}
+                    \lIf{$n=1$}{přesuň disk $1$ z~$A$ na $B$}
                     \Else{
                         Zavolej $\textsc{Hanoj}(n-1,A,C,B)$\\
-                        Přesuneme disk $n$ z $A$ na $B$\\
+                        Přesuneme disk $n$ z~$A$ na $B$\\
                         Zavolej $\textsc{Hanoj}(n-1,C,B,A)$
                     }
                 \end{algorithm}
@@ -151,17 +150,14 @@
     \end{frame}
 
     \begin{frame}{Znázornění algoritmu}
-        \begin{figure}
-            \centering
-            \input{images/hanoj2.tex}
-        \end{figure}
+        \obrazek{images/hanoj2.tex}
     \end{frame}
 
     \begin{frame}{Časová složitost algoritmu}
         \begin{itemize}
-            \visible<2->{\item Označme si počet kroků algorimu $T(n)$.}
-            \visible<3->{\item Zjevně pro $n=1$ stačí jen přesunout disk z počítečního na cílový kolík, tzn. $T(1)=1$.}
-            \visible<4->{\item Jinak rekurzivně voláme dvakrát $T(n)$ a navíc provedeme přesun největšího disku.
+            \visible<2->{\item Označme si počet kroků algoritmu $T(n)$.}
+            \visible<3->{\item Zjevně pro $n=1$ stačí jen přesunout disk z~počátečního na cílový kolík, tzn. $T(1)=1$.}
+            \visible<4->{\item Jinak rekurzivně voláme dvakrát $T(n-1)$ a~navíc provedeme přesun největšího disku.
             \[T(n)=2\cdot T(n-1)+1.\]}
             \visible<5->{\begin{table}
                 \centering
@@ -189,9 +185,9 @@
             \end{center}
         \end{talertframe}}
         \begin{itemize}
-            \visible<3->{\item Zkusíme mírně změnit zadání: Ke vstupu přídáme ještě číslo $k\in\N$.}
-            \visible<4->{\item \textbf{Otázka:} Lze přemístit celou věž ze sloupu $A$ na sloup $B$ v nejvýše $k$ tazích?}
-            \visible<5->{\item K rozhodnutí odpovědi použijeme upravený původní algoritmus.}
+            \visible<3->{\item Zkusíme mírně změnit zadání: ke vstupu přidáme ještě číslo $k\in\N$.}
+            \visible<4->{\item \textbf{Otázka:} Lze přemístit celou věž ze sloupu $A$ na sloup $B$ v~nejvýše $k$ tazích?}
+            \visible<5->{\item K~rozhodnutí odpovědi použijeme upravený původní algoritmus.}
         \end{itemize}
     \end{frame}
 
@@ -199,30 +195,21 @@
 
     \begin{frame}{Problém zastavení}
         \begin{itemize}
-            \visible<2->{\item Máme na vstupu program $P$ a jeho vstup $x$.}
-            \visible<3->{\item Uvažujme problém $\HALT(P,x)$, který rozhodne, zdali se program $P$ nad vstupem $x$ \markdarkred{zastaví}, a nebo se \markdarkred{zacyklí}.}
+            \visible<2->{\item Máme na vstupu program $P$ a~jeho vstup $x$.}
+            \visible<3->{\item Uvažujme problém $\HALT(P,x)$, který rozhodne, zdali se program $P$ nad vstupem $x$ \markdarkred{zastaví}, a~nebo se \markdarkred{zacyklí}.}
         \end{itemize}
-        \visible<4->{\begin{figure}
-            \centering
-            \input{images/halt1.tex}
-        \end{figure}}
+        \visible<4->{\obrazek{images/halt1.tex}}
     \end{frame}
 
     \begin{frame}{Problém $\HALT$ nelze rozhodnout}
-        \begin{figure}
-            \centering
-            \input{images/halt2.tex}
-        \end{figure}
+        \obrazek{images/halt2.tex}
     \end{frame}
 
     \begin{frame}{Problém $\HALT$ nelze rozhodnout}
-        \begin{figure}
-            \centering
-            \input{images/halt3.tex}
-        \end{figure}
+        \obrazek{images/halt3.tex}
     \end{frame}
 
-    \begin{frame}{Co z toho plyne?}
+    \begin{frame}{Co z~toho plyne?}
         \begin{itemize}
             \visible<2->{\item Existence "rychlého" (polynomiálního) řešení problému není vždy samozřejmostí.}
             \visible<3->{\item Některé problémy dokonce nelze řešit vůbec!}

@@ -1,0 +1,27 @@
+% Náhled k~sekci o~implementaci haldy polem: strom a~jeho zápis do pole.
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+% strom
+\node[vertex,minimum size=6mm] (t1) at (0,0)      {$2$};
+\node[vertex,minimum size=6mm] (t2) at (-1.4,-1.2) {$5$};
+\node[vertex,minimum size=6mm] (t3) at ( 1.4,-1.2) {$7$};
+\node[vertex,minimum size=6mm] (t4) at (-2.1,-2.4) {$9$};
+\node[vertex,minimum size=6mm] (t5) at (-0.7,-2.4) {$6$};
+
+\draw[edge] (t1)--(t2);
+\draw[edge] (t1)--(t3);
+\draw[edge] (t2)--(t4);
+\draw[edge] (t2)--(t5);
+
+% pole
+\begin{scope}[shift={(-2.5,-4.8)}]
+    \foreach \i/\val in {0/2, 1/5, 2/7, 3/9, 4/6} {
+        \draw (\i,0) rectangle ++(1,0.7);
+        \node at (\i+0.5,0.35) {$\val$};
+        \node[font=\small] at (\i+0.5,-0.35) {$\the\numexpr\i+1\relax$};
+    }
+\end{scope}
+
+\draw[->, >=stealth, thick, darkred] (0,-2.9) -- (0,-4.0);
+
+\end{tikzpicture}

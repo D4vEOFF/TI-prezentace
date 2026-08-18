@@ -6,27 +6,31 @@
 \input{../assets/macros.tex}
 \input{../assets/listing.tex}
 
-\def\presentationtitle{Problém 3-SAT, problém nezávislé množiny a kliky}
-\def\presentationtitlefooter{3-SAT, NzMna a klika}
+\def\presentationtitle{Problém 3-SAT, problém nezávislé množiny a~kliky}
+\def\presentationtitlefooter{3-SAT, NzMna a~klika}
 
 \begin{document}
 
     \input{../titlepage.tex}
 
-    \section{Problém 3SAT}
+    % =================================================================
+    \section{Problém 3-SAT}
+    % =================================================================
 
-    \titleframe{Problém $\THREESAT$}
+    \begin{titleframeenv}{Problém $\THREESAT$}
+        \obrazek[0.5\textheight]{images/3sat-nahled.tex}
+    \end{titleframeenv}
 
     \begin{frame}{Problém $\THREESAT$}
         \begin{itemize}
-            \visible<2->{\item Problém $\SAT$ neumíme řešit v polynomiálním čase.}
-            \visible<3->{\item Zkusíme proto původní problém trochu zjednodušit, a to tak, že budeme uvažovat formule v CNF, kde každá klauzule má maximálně 3 literály.}
+            \visible<2->{\item Problém $\SAT$ neumíme řešit v~polynomiálním čase.}
+            \visible<3->{\item Zkusíme proto původní problém trochu zjednodušit, a~to tak, že budeme uvažovat formule v~CNF, kde každá klauzule má maximálně 3 literály.}
         \end{itemize}
         \visible<4->{\begin{defblock}[3-CNF]
-            Formule $\varphi$ je v 3-CNF právě tehdy, když je v CNF a každá klauzule obsahuje maximálně 3 literály.
+            Formule $\varphi$ je v~3-CNF právě tehdy, když je v~CNF a~každá klauzule obsahuje maximálně 3 literály.
         \end{defblock}}
         \visible<5->{\decproblem{Problém $\THREESAT$}{
-            Formule $\varphi$ v 3-CNF.
+            Formule $\varphi$ v~3-CNF.
         }{
             Je $\varphi$ splnitelná?
         }}
@@ -40,7 +44,7 @@
         \end{tinfoframe}}
         \begin{itemize}
             \visible<3->{\item Jeden problém jsme schopni "převést" na druhý.}
-            \visible<4->{\item Přesněji k zadané formuli $\varphi$ v CNF jsme schopni najít formuli $\psi$ v 3-CNF, která je splnitelná právě tehdy, když je i původní formule $\varphi$ splnitelná.}
+            \visible<4->{\item Přesněji k~zadané formuli $\varphi$ v~CNF jsme schopni najít formuli $\psi$ v~3-CNF, která je splnitelná právě tehdy, když je i~původní formule $\varphi$ splnitelná.}
         \end{itemize}
         \visible<5->{\begin{timportantframe}
             \begin{center}
@@ -49,9 +53,13 @@
         \end{timportantframe}}
     \end{frame}
 
+    % =================================================================
     \section{Polynomiální převoditelnost problémů}
+    % =================================================================
 
-    \titleframe{Převoditelnost problémů}
+    \begin{titleframeenv}{Převoditelnost problémů}
+        \obrazek[0.5\textheight]{images/prevoditelnost-nahled.tex}
+    \end{titleframeenv}
 
     \subsection{Zavedení polynomiální převoditelnosti}
 
@@ -64,7 +72,7 @@
         \visible<5->{\begin{defblock}[Polynomiální převoditelnost]
             Nechť $A,B$ jsou rozhodovací problémy. Říkáme, že $A$ lze \markdarkred{převést} na $B$, píšeme $A\rightarrow B$, právě tehdy, když existuje zobrazení $\mapping{f}{\set{0,1}^{*}}{\set{0,1}^{*}}$ takové, že
             \[\forall x\in\set{0,1}^{*}: A(x)=B(f(x)),\]
-            a navíc $f(x)$ lze spočítat v polynomiálním čase. Funkci $f$ říkáme \markdarkred{převod} nebo také \markdarkred{redukce}.
+            a~navíc $f(x)$ lze spočítat v~polynomiálním čase. Funkci $f$ říkáme \markdarkred{převod} nebo také \markdarkred{redukce}.
         \end{defblock}}
     \end{frame}
 
@@ -74,20 +82,20 @@
         \begin{itemize}
             \visible<2->{\item Problém $A$ je převoditelný na problém $B$, pokud každý vstup $x$ pro $A$ jsme schopni \textbf{rychle sestrojit} odpovídající vstup $f(x)$ pro $B$.}
             \visible<3->{\item Přitom musí platit, že odpověď $A$ na $x$ musí být stejná jako odpověď $B$ na $f(x)$.}
-            \visible<4->{\item V našem případě: Máme $\varphi$ v CNF a chceme v polynomiálím čase zkonstruovat formuli $\psi$ v 3-CNF takovou, aby
+            \visible<4->{\item V~našem případě: Máme $\varphi$ v~CNF a~chceme v~polynomiálím čase zkonstruovat formuli $\psi$ v~3-CNF takovou, aby
             \[\SAT(\varphi)=\THREESAT(\psi).\]}
             \visible<5->{\item Tato konstrukce představuje ono zobrazení $f$, tj. $f(\varphi)=\psi$, nebo-li
             \[\SAT(\varphi)=\THREESAT(f(\varphi)).\]}
         \end{itemize}
     \end{frame}
 
-    \subsection{Poznámky k převoditelnosti}
+    \subsection{Poznámky k~převoditelnosti}
 
-    \begin{frame}{Poznámky k převoditelnosti}
+    \begin{frame}{Poznámky k~převoditelnosti}
         \begin{itemize}
-            \visible<2->{\item Nemusí nutně platit, že problémy $A$ a $B$ jsou na sebe \textbf{vzájemne} převoditelné.}
+            \visible<2->{\item Nemusí nutně platit, že problémy $A$ a~$B$ jsou na sebe \textbf{vzájemně} převoditelné.}
             \visible<3->{\begin{center}
-                Tj. $A\rightarrow B$ nutně ještě neznamená, že i $B\rightarrow A$.
+                Tj. $A\rightarrow B$ nutně ještě neznamená, že i~$B\rightarrow A$.
             \end{center}}
             \visible<4->{\item Např. uvažujme dvojici jednoduchých problémů $K,L$ definovaných následovně:}
             \begin{align*}
@@ -102,7 +110,7 @@
         \end{itemize}
     \end{frame}
 
-    \subsection{Příklad: Převod mezi SAT a HALT}
+    \subsection{Příklad: Převod mezi SAT a~HALT}
 
     \begin{frame}{Převod $\SAT\rightarrow\HALT$}
         \visible<2->{Převod $\SAT$ na $\HALT$ lze provést jednoduše: Sestrojíme program $P$ se vstupem $\varphi$, který}
@@ -111,12 +119,12 @@
             \visible<4->{\item pokud najde splňující ohodnocení, \textbf{zastaví se},}
             \visible<5->{\item jinak vstoupí do nekonečného cyklu.}
         \end{enumerate}
-        \visible<6->{Text programu jsme schopni sestrojit \textbf{v konstantním čase}.}
+        \visible<6->{Text programu jsme schopni sestrojit \textbf{v~lineárním čase} vzhledem k~délce formule $\varphi$.}
 
         \visible<7->{\begin{tnoticeframe}
             Tedy skutečně platí, že
-            \[\varphi\;\text{je splnitelná} \implies \text{program $P$ se nad $\varphi$ zastaví},\]
-            nebo-li $\SAT(\varphi)=1\implies \HALT(P,\varphi)=1$.
+            \[\varphi\;\text{je splnitelná} \iff \text{program $P$ se nad $\varphi$ zastaví},\]
+            nebo-li $\SAT(\varphi)=\HALT(P,\varphi)$.
         \end{tnoticeframe}}
     \end{frame}
 
@@ -124,7 +132,7 @@
         \begin{itemize}
             \visible<2->{\item Už jsme si zdůvodnili, že ne pro všechny páry $(P,x)$ lze rozhodnout, zda se program $P$ nad $x$ zastaví.}
             \visible<3->{\item Konkrétně myšlenka byla založena na konstrukci programu $D$, který invertoval výstup $\HALT$.}
-            \visible<4->{\item Pro spor předpokládejme, že umíme přesvést \textbf{problém zastavení} na pro \textbf{problém splnitelnosti formule v CNF}.}
+            \visible<4->{\item Pro spor předpokládejme, že umíme převést \textbf{problém zastavení} na \textbf{problém splnitelnosti formule v~CNF}.}
             \begin{enumerate}
                 \visible<5->{\item Instanci $(P,x)$ převedeme polynomiálně na formuli $\varphi=f(P,x)$.}
                 \visible<6->{\item Následně rozhodneme, zda $\SAT(f(P,x))=1$, tj. zdali je formule $f(P,x)$ splnitelná.}
@@ -132,23 +140,27 @@
         \end{itemize}
         \visible<7->{\begin{talertframe}
             \begin{center}
-                Jenže pro $P=D$ nelze problém zastavení rozhodnout, zatímco v tomto případě bychom jednoduše mohli sestrojit formuli $\psi=f(D,D)$ a rozhodnout, zdali $\SAT(\psi)=1$. \markdarkred{To je spor!}
+                Jenže pro $P=D$ nelze problém zastavení rozhodnout, zatímco v~tomto případě bychom jednoduše mohli sestrojit formuli $\psi=f(D,D)$ a~rozhodnout, zdali $\SAT(\psi)=1$. \markdarkred{To je spor!}
             \end{center}
         \end{talertframe}}
     \end{frame}
 
-    \section{Převod mezi SAT a 3-SAT}
+    % =================================================================
+    \section{Převod mezi SAT a~3-SAT}
+    % =================================================================
 
-    \titleframe{Převod mezi $\SAT$ a $\THREESAT$}
+    \begin{titleframeenv}{Převod mezi $\SAT$ a~$\THREESAT$}
+        \obrazek[0.45\textheight]{images/sat-3sat.tex}
+    \end{titleframeenv}
 
     \subsection{Převod 3-SAT na SAT}
 
     \begin{frame}{Převod $\THREESAT\rightarrow\SAT$}
         \begin{itemize}
-            \visible<2->{\item Na začátku máme formuli $\varphi$ v 3-CNF a chceme k ní sestrojit formuli $\psi$ v CNF, která je splnitelná právě tehdy, když je splnitelná i $\varphi$.}
+            \visible<2->{\item Na začátku máme formuli $\varphi$ v~3-CNF a~chceme k~ní sestrojit formuli $\psi$ v~CNF, která je splnitelná právě tehdy, když je splnitelná i~$\varphi$.}
             \visible<3->{\begin{talertframe}
                 \begin{center}
-                    Každá formule ve 3-CNF je zároveň i v CNF $\implies$ ponecháme původní formuli $\varphi$.
+                    Každá formule ve 3-CNF je zároveň i~v CNF $\implies$ ponecháme původní formuli $\varphi$.
                 \end{center}
             \end{talertframe}}
             \visible<4->{\item Za převodní zobrazení $f$ stačí zvolit identitu, tj. $f(x)=x$.}
@@ -159,21 +171,21 @@
 
     \begin{frame}{Převod $\SAT\rightarrow\THREESAT$}
         \begin{itemize}
-            \visible<2->{\item Zde je již zjevné, že ne každá formule $\varphi$ v CNF je automaticky i v 3-CNF.}
-            \visible<3->{\item U vstupní formule proto musíme rozdělit "dlouhé" klauzule na menší.}
-            \visible<4->{\item Na vstupu tedy máme formuli $\varphi$ v CNF. Mohou nastat 2 scénáře:}
+            \visible<2->{\item Zde je již zjevné, že ne každá formule $\varphi$ v~CNF je automaticky i~v 3-CNF.}
+            \visible<3->{\item U~vstupní formule proto musíme rozdělit "dlouhé" klauzule na menší.}
+            \visible<4->{\item Na vstupu tedy máme formuli $\varphi$ v~CNF. Mohou nastat 2 scénáře:}
             \begin{enumerate}
-                \visible<5->{\item Formule $\varphi$ neobsahuje klauzuli s více než 3 literály. Pak jsme hotovi. \cmark}
-                \visible<6->{\item Jinak vybereme nějakou klazuli $C$, která obsahuje $k>3$ literálů a rozdělíme ji dvě části $\alpha,\beta$:
+                \visible<5->{\item Formule $\varphi$ neobsahuje klauzuli s~více než 3 literály. Pak jsme hotovi. \cmark}
+                \visible<6->{\item Jinak vybereme nějakou klauzuli $C$, která obsahuje $k>3$ literálů, a~rozdělíme ji na dvě části $\alpha,\beta$:
                 \[C=(\underbrace{\ell_1\lor \ell_2}_\alpha\lor\overbrace{\ell_3\lor\ldots\lor\ell_k}^\beta).\]
-                Tedy $\alpha=\ell_1\lor\ell_2$ a $\beta=\ell_3\lor\ldots\lor\ell_k$.}
+                Tedy $\alpha=\ell_1\lor\ell_2$ a~$\beta=\ell_3\lor\ldots\lor\ell_k$.}
             \end{enumerate}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Nové klauzule s $\alpha$ a $\beta$}
+    \begin{frame}{Nové klauzule s~$\alpha$ a~$\beta$}
         \begin{itemize}
-            \visible<2->{\item Přidáme novou proměnnou $x$ a pro původní klauzuli zapíšeme pomocí dvojice nových klauzulí následovně:
+            \visible<2->{\item Přidáme novou proměnnou $x$ a~původní klauzuli zapíšeme pomocí dvojice nových klauzulí následovně:
             \[(\ell_1\lor \ell_2\lor\ldots\lor\ell_k)\equiv(\alpha\lor x)\land(\beta\lor\neg x).\]}
             \visible<3->{\item Všimněme si, že}
             \begin{itemize}
@@ -193,7 +205,7 @@
         \begin{itemize}
             \item Nyní zbývá dořešit, jak nastavit hodnotu proměnné $x$.
             \begin{enumerate}
-                \item Pokud $\alpha=1$, pak je klauzule $(\alpha\lor x)$ splněna $\implies$ nastavením $x=0$ splníme i druhou klauzuli $(\beta\lor\neg x)$.
+                \item Pokud $\alpha=1$, pak je klauzule $(\alpha\lor x)$ splněna $\implies$ nastavením $x=0$ splníme i~druhou klauzuli $(\beta\lor\neg x)$.
                 \item Pokud $\alpha=0$, pak nutně $\beta=1$. Jinak by původní klauzule
                 \[(\ell_1\lor\ldots\lor\ell_k)=(\alpha\lor\beta)\]
                 nebyla splněna. $\implies$ Nastavíme $x=1$, abychom splnili klauzuli $(\alpha\lor x)$.
@@ -201,44 +213,49 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Závěrem k převodu $\SAT\rightarrow\THREESAT$}
+    \begin{frame}{Závěrem k~převodu $\SAT\rightarrow\THREESAT$}
         \begin{itemize}
-            \visible<2->{\item Opakovanou aplikací tohoto postupu dostaneme formuli $\psi$, která je v 3-CNF a je splnitelná právě tehdy, když i $\varphi$ je splnitelná.}
+            \visible<2->{\item Opakovanou aplikací tohoto postupu dostaneme formuli $\psi$, která je v~3-CNF a~je splnitelná právě tehdy, když i~$\varphi$ je splnitelná.}
             \visible<3->{\item Rozdělení klauzule
             \[C=(\ell_1\lor\ell_2\lor \ldots\lor \ell_k)\]
-            délky $k$ provedeme v $k-3$ krocích. Tím postupně dostaneme
+            délky $k$ provedeme v~$k-3$ krocích. Tím postupně dostaneme
             \begin{align*}
                 C&\equiv(\ell_1\lor\ell_2\lor x_1)\land(\neg x_1\lor\ell_3\lor x_2)\land\dots\land(\neg x_{k-4}\lor\ell_{k-2}\lor x_{k-3})\\ 
                 &\land(\neg x_{k-3}\lor\ell_{k-1}\lor\ell_k),
             \end{align*}
             kde $x_1,x_2,\dots,x_{k-3}$ jsou nové proměnné.}
-            \visible<4->{\item Tento rozklad potrvá lineárně dlouho vzhledem k délce klauzule, tj. $\bigO(k)$.}
-            \visible<5->{\item Celkově převod všech dlouhých kaluzulí tedy potrvá $\bigO(n)$, kde $n$ je počet literálů.}
+            \visible<4->{\item Tento rozklad potrvá lineárně dlouho vzhledem k~délce klauzule, tj. $\bigO(k)$.}
+            \visible<5->{\item Celkově převod všech dlouhých klauzulí tedy potrvá $\bigO(n)$, kde $n$ je počet literálů.}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{$\SAT$ a $\THREESAT$ jsou vzájemne převoditelné}
-        \begin{figure}
-            \centering
-            \input{images/sat-3sat.tex}
-        \end{figure}
+    \begin{frame}{$\SAT$ a~$\THREESAT$ jsou vzájemně převoditelné}
+        \obrazek{images/sat-3sat.tex}
     \end{frame}
 
     \begin{frame}{Převod $\SAT\rightarrow\THREESAT$}{Příklad}
-        Mějme formuli $\varphi$ v CNF s jednou klauzulí:
+        \small
+        Mějme formuli $\varphi$ v~CNF s~jednou klauzulí:
         \[\varphi=a\lor b\lor \neg c\lor \neg b\lor d\lor \neg d.\]
         \begin{itemize}
             \item Rozdělíme $\varphi$ na dvě klauzule pomocí nové proměnné $x$:
             \[(a\lor b\lor \markdarkred{x})\land(\neg c\lor \neg b\lor d\lor \neg d\lor \markdarkred{\neg x}).\]
-            \item Pro druhou klauzuli nyní opakujeme stejný postup: Zavedeme si novou proměnnou $y$ a rozdělíme ji na dovjici nových klauzulí, tj.
+            \item Pro druhou klauzuli nyní opakujeme stejný postup: Zavedeme si novou proměnnou $y$ a~rozdělíme ji na dvojici nových klauzulí, tj.
             \[(a\lor b\lor x)\land(\neg c\lor \neg b\lor \markdarkred{y})\land(d\lor \neg d\lor \neg x\lor \markdarkred{\neg y}).\]
-            \item A nyní ještě poslední klauzuli rozdělíme pomocí nové proměnné $z$:
-            \[(a\lor b\lor x)\land(\neg c\lor \neg b\lor y)\land(d\lor \neg d\lor \markdarkred{z})\land(\neg x\lor \neg y\lor \markdarkred{\neg z}).\]
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Převod $\SAT\rightarrow\THREESAT$}{Příklad}
-        \visible<2->{Výsledná formule v 3-CNF je tedy
+        \small
+        \begin{itemize}
+            \item A~nyní ještě poslední klauzuli rozdělíme pomocí nové proměnné $z$:
+            \[(a\lor b\lor x)\land(\neg c\lor \neg b\lor y)\land(d\lor \neg d\lor \markdarkred{z})\land(\neg x\lor \neg y\lor \markdarkred{\neg z}).\]
+            \item Všechny klauzule už mají nejvýše 3~literály, takže jsme hotovi. \cmark
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Převod $\SAT\rightarrow\THREESAT$}{Příklad}
+        \visible<2->{Výsledná formule v~3-CNF je tedy
         \[\psi=(a\lor b\lor x)\land(\neg c\lor \neg b\lor y)\land(d\lor \neg d\lor z)\land(\neg x\lor \neg y\lor \neg z).\]}
         \visible<3->{Zkusíme ohodnocení proměnných $a=0,b=1,c=1,d=1$. Jak musíme nastavit $x,y,z$?}
         \begin{itemize}
@@ -250,86 +267,88 @@
         \visible<8->{Platí, že $\varphi(\ldots)=\psi(\ldots)=1$.}
     \end{frame}
 
+    % =================================================================
     \section{Obtížnost problémů}
+    % =================================================================
 
-    \titleframe{Obtížnost problémů}
+    \begin{titleframeenv}{Obtížnost problémů}
+        \obrazek[0.45\textheight]{images/obtiznost.tex}
+    \end{titleframeenv}
 
-    \begin{frame}{Převoditelnost a "obtížnost" problému}
+    \begin{frame}{Převoditelnost a~"obtížnost" problému}
         \begin{itemize}
-            \visible<2->{\item $A\rightarrow B$ v podstatě říká, že problém $B$ alespoň tak těžký jako problém $A$.}
+            \visible<2->{\item $A\rightarrow B$ v~podstatě říká, že problém $B$ je alespoň tak těžký jako problém $A$.}
             \visible<3->{\begin{tnoticeframe}
                 \begin{center}
                     Pokud umíme vyřešit $B$, pak vyřešit $A$ je nanejvýše "polynomiálně obtížnější".
                 \end{center}
             \end{tnoticeframe}}
-            \visible<4->{\item Zároveň to znamená, že pomocí problému $B$ můžeme vyřešit $A$ s maximálně polynomiálním zpomalením (kvůli převodu vstupu).}
-            \visible<5->{\item Mnomotechnická pomůcka: \emph{Obtížnost teče ve směru šipky.}}
+            \visible<4->{\item Zároveň to znamená, že pomocí problému $B$ můžeme vyřešit $A$ s~maximálně polynomiálním zpomalením (kvůli převodu vstupu).}
+            \visible<5->{\item Mnemotechnická pomůcka: \emph{Obtížnost teče ve směru šipky.}}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Umíme-li $B$ rychle, umíme i $A$ rychle}
+    \begin{frame}{Umíme-li $B$ rychle, umíme i~$A$ rychle}
         \visible<2->{\begin{propblock}
-            Pokud $A\rightarrow B$ a $B$ lze řešit v polynomiálním čase, pak i $A$ lze řešit v polynomiálním čase.
+            Pokud $A\rightarrow B$ a~$B$ lze řešit v~polynomiálním čase, pak i~$A$ lze řešit v~polynomiálním čase.
         \end{propblock}}
         \begin{itemize}
-            \visible<3->{\item Uvažujme algoritmus řešící problém $B$ v čase $\bigO(b^{k})$, kde $b$ je délka vstupu tohoto problému a $k\in\R^{+}$.}
-            \visible<4->{\item Dále mějme zobrazení $f$ převádějící $A$ na $B$ v čase $\bigO(a^{\ell})$ pro vstup délky $a$ a konstantu $\ell\in\R^{+}$.}
-            \visible<5->{\item Chceme-li spočítat $A(x)$ pro vstup $x$ délky $a$, spočítáme nejprve $f(x)$ v čase $\bigO(a^{\ell})$}
+            \visible<3->{\item Uvažujme algoritmus řešící problém $B$ v~čase $\bigO(b^{k})$, kde $b$ je délka vstupu tohoto problému a~$k\in\R^{+}$.}
+            \visible<4->{\item Dále mějme zobrazení $f$ převádějící $A$ na $B$ v~čase $\bigO(a^{\ell})$ pro vstup délky $a$ a~konstantu $\ell\in\R^{+}$.}
+            \visible<5->{\item Chceme-li spočítat $A(x)$ pro vstup $x$ délky $a$, spočítáme nejprve $f(x)$ v~čase $\bigO(a^{\ell})$}
             \visible<6->{\begin{center}
                 $\implies$ Tím dostaneme výstup délky $\bigO(a^{\ell})$ (delší bychom ani nestihli vypsat).
             \end{center}}
             \visible<7->{\item Tento výstup $f(x)$ předáme na vstup algoritmu řešící problém $B$, který nad ním stráví $\bigO((a^{\ell})^{k})=\bigO(a^{k\ell}).$}
-            \visible<8->{\item Celkově strávíme výpočtem $\bigO(a^{\ell}+a^{k\ell})$, což je polynom v délce původního vstupu $x$.}
+            \visible<8->{\item Celkově strávíme výpočtem $\bigO(a^{\ell}+a^{k\ell})$, což je polynom v~délce původního vstupu $x$.}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Znázornění tvrzení}
-        \begin{figure}
-            \centering
-            \input{images/obtiznost.tex}
-        \end{figure}
+        \obrazek{images/obtiznost.tex}
     \end{frame}
 
-    \begin{frame}{Co z toho plyne?}
+    \begin{frame}{Co z~toho plyne?}
         \visible<2->{\begin{tnoticeframe}
             \begin{center}
-                Speciálně to znamená, že problém $\THREESAT$ a $\SAT$ jsou \textbf{stejně těžké problémy}.
+                Speciálně to znamená, že problém $\THREESAT$ a~$\SAT$ jsou \textbf{stejně těžké problémy}.
             \end{center}
         \end{tnoticeframe}}
         \visible<3->{\begin{tinfoframe}
             \begin{center}
-                Zkrácení délky klauzulí pro nás bude mít jednu zásadní výhodu u dalších problémů.
+                Zkrácení délky klauzulí pro nás bude mít jednu zásadní výhodu u~dalších problémů.
             \end{center}
         \end{tinfoframe}}
     \end{frame}
 
     \begin{frame}{Tranzitivita převoditelnosti}
         \visible<2->{\begin{propblock}
-            Nechť $A,B,C$ jsou rozhodovací problémy, přičemž $A\rightarrow B$ a $B\rightarrow C$. Pak platí $A\rightarrow C$.
+            Nechť $A,B,C$ jsou rozhodovací problémy, přičemž $A\rightarrow B$ a~$B\rightarrow C$. Pak platí $A\rightarrow C$.
         \end{propblock}}
         \begin{itemize}
-            \visible<3->{\item Z definice máme, že existují polynomiálně vyčíslitelná zobrazení $f,g$ taková, že
+            \visible<3->{\item Z~definice máme, že existují polynomiálně vyčíslitelná zobrazení $f,g$ taková, že
             \[A(x)=B(f(x))\quad\text{a}\quad B(x)=C(g(x))\;,\; x\in\set{0,1}^{*}.\]}
-            \visible<4->{\item Z toho tedy plyne, že $A(x)=B(f(g(x)))$.}
-            \visible<5->{\item Definujeme zobrazení $h$ jako $h(x)=f(g(x))$.}
-            \visible<6->{\item Jsme-li schopni spočítat $f$ v čase $\bigO(a^{k})$ a $g$ v čase $\bigO(b^{\ell})$, kde $a,b$ jsou délky vstupů a $k,\ell\in\R^{+}$, pak zobrazení $h$ spočítáme v čase
+            \visible<4->{\item Z~toho tedy plyne, že $A(x)=C(g(f(x)))$.}
+            \visible<5->{\item Definujeme zobrazení $h$ jako $h(x)=g(f(x))$.}
+            \visible<6->{\item Jsme-li schopni spočítat $f$ v~čase $\bigO(a^{k})$ a~$g$ v~čase $\bigO(b^{\ell})$, kde $a,b$ jsou délky vstupů a~$k,\ell\in\R^{+}$, pak zobrazení $h$ spočítáme v~čase
             \[\bigO((a^{k})^{\ell})=\bigO(a^{k\ell}),\]
-            což je polynom v délce původního vstupu $x$.}
+            což je polynom v~délce původního vstupu $x$.}
         \end{itemize}
     \end{frame}
 
+    % =================================================================
     \section{Problém nezávislé množiny}
+    % =================================================================
 
-    \titleframe{Problém nezávislé množiny}
+    \begin{titleframeenv}{Problém nezávislé množiny}
+        \obrazek[0.45\textheight]{images/nzmna.tex}
+    \end{titleframeenv}
 
     \begin{frame}{Nezávislá množina}
         \visible<2->{\begin{defblock}[Nezávislá množina]
             Mějme libovolný graf $G=(V,E)$. Množina vrcholů $M\subseteq V$ je \markdarkred{nezávislá}, pokud žádné dva vrcholy $u,v\in M$ nejsou spojeny hranou.
         \end{defblock}}
-        \visible<3->{\begin{figure}
-            \centering
-            \input{images/nzmna.tex}
-        \end{figure}}
+        \visible<3->{\obrazek[0.45\textheight]{images/nzmna.tex}}
     \end{frame}
 
     \subsection{Existence nezávislé množiny}
@@ -344,41 +363,32 @@
     \end{frame}
 
     \begin{frame}{Nezávislá množina}{Příklad: Úplný graf}
-        \begin{figure}
-            \centering
-            \input{images/uplny-graf-nzmna.tex}
-        \end{figure}
+        \obrazek{images/uplny-graf-nzmna.tex}
         \visible<2->{\begin{center}
-            Největší nezávislá v úplném grafu obsahuje pouze jeden vrchol.
+            Největší nezávislá množina v~úplném grafu obsahuje pouze jeden vrchol.
         \end{center}}
     \end{frame}
 
     \begin{frame}{Nezávislá množina}{Příklad: Cyklus}
-        \begin{figure}
-            \centering
-            \input{images/cyklus-nzmna.tex}
-        \end{figure}
+        \obrazek{images/cyklus-nzmna.tex}
         \visible<2->{\begin{center}
-            Největší nezávislá množina v cyklu $C_n$ má velikost $\lfloor n/2\rfloor$.
+            Největší nezávislá množina v~cyklu $C_n$ má velikost $\lfloor n/2\rfloor$.
         \end{center}}
     \end{frame}
 
     \begin{frame}{Nezávislá množina}{Příklad: Strom}
-        \begin{figure}
-            \centering
-            \input{images/strom-nzmna.tex}
-        \end{figure}
-        \visible<2->{V obecném stromu $T$ na $n$ vrcholech platí pro největší nezávislá množina $N$ následující odhad:
+        \obrazek{images/strom-nzmna.tex}
+        \visible<2->{V~obecném stromu $T$ na $n$ vrcholech platí pro největší nezávislou množinu $N$ následující odhad:
         \[\left\lceil\frac{n}{2}\right\rceil\leqslant|N|\leqslant n-1.\]}
     \end{frame}
 
-    \subsection{Problém nezávislé množiny v grafu}
+    \subsection{Problém nezávislé množiny v~grafu}
 
-    \begin{frame}{Problém nezávislé množiny v grafu}
-        \visible<2->{\decproblem{Problém nezávislé množiny v grafu ($\NZMNA$)}{
-            Graf $G$ a číslo $k\in\N$.
+    \begin{frame}{Problém nezávislé množiny v~grafu}
+        \visible<2->{\decproblem{Problém nezávislé množiny v~grafu ($\NZMNA$)}{
+            Graf $G$ a~číslo $k\in\N$.
         }{
-            Existuje v grafu $G$ nezávislá množina velikosti alespoň $k$?
+            Existuje v~grafu $G$ nezávislá množina velikosti alespoň $k$?
         }}
         \visible<3->{\begin{talertframe}
             \begin{center}
@@ -391,50 +401,44 @@
 
     \begin{frame}{Převod $\THREESAT\rightarrow\NZMNA$}
         \begin{itemize}
-            \visible<2->{\item Máme zadanou formuli $\varphi$ v 3-CNF s $n$ literály. Chceme pro ni sestrojit graf $G$ a číslo $k$ takové, že platí:
+            \visible<2->{\item Máme zadanou formuli $\varphi$ v~3-CNF s~$n$ literály. Chceme pro ni sestrojit graf $G$ a~číslo $k$ takové, že platí:
             \begin{center}
-                $\varphi$ je splnitelná $\implies$ V grafu $G$ existuje nezávislá množina velikosti alespoň $k$.
+                $\varphi$ je splnitelná právě tehdy, když v~grafu $G$ existuje nezávislá množina velikosti alespoň $k$.
             \end{center}}
             \visible<3->{\item Označme si jako $k$ počet klauzulí formule $\varphi$.}
-            \visible<4->{\item Z každé klauzule vybereme jeden literál, který ji bude splňovat.}
+            \visible<4->{\item Z~každé klauzule vybereme jeden literál, který ji bude splňovat.}
             \visible<5->{\begin{talertframe}
                 \begin{center}
-                    \textbf{Pozor! Literály nesmíme vybírat konfliktně}. Když vybereme z jedné klauzule literál $\ell$, nemůžeme pak z jiné vybrat $\neg\ell$.
+                    \textbf{Pozor! Literály nesmíme vybírat konfliktně}. Když vybereme z~jedné klauzule literál $\ell$, nemůžeme pak z~jiné vybrat $\neg\ell$.
                 \end{center}
             \end{talertframe}}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Převod klazulí na trojcykly}
+    \begin{frame}{Převod klauzulí na trojcykly}
         \begin{itemize}
-            \visible<2->{\item Každou klauzuli s $i$ literály, kde $i=\set{1,2,3}$, převedeme na graf úplný graf $K_i$. Tzn. pro každý literál $\ell$ zavedeme jeden vrchol.}
-            \visible<3->{\begin{figure}
-                \centering
-                \input{images/prevod-3sat-nzmna.tex}
-            \end{figure}}
-            \visible<4->{\item Nakonec spojíme hranou ještě všechny literály (příslušné vrcholy) s jejich negacemi.}
+            \visible<2->{\item Každou klauzuli s~$i$ literály, kde $i\in\set{1,2,3}$, převedeme na úplný graf $K_i$. Tzn. pro každý literál $\ell$ zavedeme jeden vrchol.}
+            \visible<3->{\obrazek{images/prevod-3sat-nzmna.tex}}
+            \visible<4->{\item Nakonec spojíme hranou ještě všechny literály (příslušné vrcholy) s~jejich negacemi.}
             \visible<5->{\item Tím jsme sestrojili příslušný graf $G$.}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Převod klazulí na trojcykly}{Příklad}
-        \begin{figure}
-            \centering
-            \input{images/prevod-3sat-nzmna-priklad.tex}
-        \end{figure}
+    \begin{frame}{Převod klauzulí na trojcykly}{Příklad}
+        \obrazek{images/prevod-3sat-nzmna-priklad.tex}
     \end{frame}
 
     \begin{frame}{Korektnost převodu}
         \begin{itemize}
             \visible<2->{\item Uvažujme, že existuje splňující ohodnocení formule $\varphi$.}
-            \visible<3->{\item Vybereme z každé klauzule \textbf{jeden literál}, který ji splňuje.}
+            \visible<3->{\item Vybereme z~každé klauzule \textbf{jeden literál}, který ji splňuje.}
         \end{itemize}
         \visible<4->{\begin{tnoticeframe}
             \begin{center}
-                Příslušné vrcholy vybraných literálů tvoří nezávislou množinu velikosti $k$ v grafu $G$.
+                Příslušné vrcholy vybraných literálů tvoří nezávislou množinu velikosti $k$ v~grafu $G$.
             \end{center}
         \end{tnoticeframe}}
-        \visible<5->{Polynomialita převodu je zřejmá: Graf $G$ má maximálně $n$ vrcholů a hran může mít maximálně \textbf{kvadraticky mnoho}.}
+        \visible<5->{Polynomialita převodu je zřejmá: Graf $G$ má maximálně $n$ vrcholů a~hran může mít maximálně \textbf{kvadraticky mnoho}.}
     \end{frame}
 
     \subsection{Převod NzMna na 3-SAT}
@@ -442,35 +446,30 @@
     \begin{frame}{Převod $\NZMNA\rightarrow\THREESAT$}
         \begin{itemize}
             \visible<2->{\item Tento převod je již trochu složitější $\implies$ vynecháme.}
-            \visible<3->{\item Myšlenka je taková, že problém převedeme na $\SAT$ a pak využijeme nám již známý převod $\SAT$ na $\THREESAT$.}
+            \visible<3->{\item Myšlenka je taková, že problém převedeme na $\SAT$ a~pak využijeme nám již známý převod $\SAT$ na $\THREESAT$.}
         \end{itemize}
-        \visible<4->{\begin{figure}
-            \centering
-            \input{images/nzmna-3sat.tex}
-        \end{figure}}
+        \visible<4->{\obrazek{images/nzmna-3sat.tex}}
     \end{frame}
 
-    \section{Problém kliky v grafu}
+    % =================================================================
+    \section{Problém kliky v~grafu}
+    % =================================================================
 
-    \titleframe{Problém kliky v grafu}
+    \begin{titleframeenv}{Problém kliky v~grafu}
+        \obrazek[0.45\textheight]{images/klika.tex}
+    \end{titleframeenv}
 
-    \subsection{Klika v grafu}
+    \subsection{Klika v~grafu}
 
-    \begin{frame}{Klika v grafu}
+    \begin{frame}{Klika v~grafu}
         \visible<2->{\begin{defblock}[Klika]
-            Nechť $G=(V,E)$ je libovolný graf. Pak \markdarkred{klikou} nazveme libovolný úplný podgraf $H=(V^{\prime},E^{\prime})$ grafu $G$, tzn. $V^{\prime}\subseteq V$ a $E^{\prime}\subseteq E$.
+            Nechť $G=(V,E)$ je libovolný graf. Pak \markdarkred{klikou} nazveme libovolný úplný podgraf $H=(V^{\prime},E^{\prime})$ grafu $G$, tzn. $V^{\prime}\subseteq V$ a~$E^{\prime}\subseteq E$.
         \end{defblock}}
-        \visible<3->{\begin{figure}
-            \centering
-            \input{images/klika.tex}
-        \end{figure}}
+        \visible<3->{\obrazek[0.4\textheight]{images/klika.tex}}
     \end{frame}
 
     \begin{frame}{Ještě jeden příklad}
-        \begin{figure}
-            \centering
-            \input{images/klika-2.tex}
-        \end{figure}
+        \obrazek{images/klika-2.tex}
     \end{frame}
 
     \subsection{Doplněk grafu}
@@ -478,53 +477,47 @@
     \begin{frame}{Doplněk grafu}
         \visible<2->{\begin{defblock}[Doplněk grafu]
             \markdarkred{Doplňkem} grafu $G=(V,E)$ je graf $\bar{G}=(V,E^{\prime})$, kde pro každé $u,v\in V$ platí, že
-            \[uv\in E^{\prime}\iff uv\notin E.\]
+            \[uv\in E^{\prime}\iff uv\notin E,\quad u\neq v.\]
         \end{defblock}}
-        \visible<3->{Tzn. doplněk grafu $G$ obsahuje všechny hrany, které nejsou obsaženy v $G$.}
-        \visible<4->{\begin{figure}
-            \centering
-            \input{images/doplnek.tex}
-        \end{figure}}
+        \visible<3->{Tzn. doplněk grafu $G$ obsahuje všechny hrany, které nejsou obsaženy v~$G$.}
+        \visible<4->{\obrazek[0.3\textheight]{images/doplnek.tex}}
     \end{frame}
 
-    \subsection{Problém kliky v grafu}
+    \subsection{Problém kliky v~grafu}
 
-    \begin{frame}{Problém kliky v grafu}
-        \visible<2->{\decproblem{Problém kliky v grafu ($\KLIKA$)}{
-            Graf $G$ a číslo $k\in\N$.
+    \begin{frame}{Problém kliky v~grafu}
+        \visible<2->{\decproblem{Problém kliky v~grafu ($\KLIKA$)}{
+            Graf $G$ a~číslo $k\in\N$.
         }{
-            Obsahuje $G$ kliku o alespoň $k$ vrcholech?
+            Obsahuje $G$ kliku o~alespoň $k$ vrcholech?
         }}
         \visible<3->{\begin{talertframe}
             \begin{center}
-                Problém kliky v grafu \textbf{je komplementární} k problému nezávislé množiny v grafu.
+                Problém kliky v~grafu \textbf{je komplementární} k~problému nezávislé množiny v~grafu.
             \end{center}
         \end{talertframe}}
     \end{frame}
 
-    \subsection{Převody mezi Klika a NzMna}
+    \subsection{Převody mezi Klika a~NzMna}
 
-    \begin{frame}{Převody mezi $\KLIKA$ a $\NZMNA$}
+    \begin{frame}{Převody mezi $\KLIKA$ a~$\NZMNA$}
         \begin{itemize}
             \visible<2->{\item Jeden problém lze převést na druhý jednoduše sestrojením \textbf{doplňku grafu}.}
-            \visible<3->{\item Jsou-li libovolné vrcholy spojeny v $G$ hranou, pak v $\bar{G}$ již nejsou spojeny hranou.}
+            \visible<3->{\item Jsou-li libovolné vrcholy spojeny v~$G$ hranou, pak v~$\bar{G}$ již nejsou spojeny hranou.}
             \visible<4->{\begin{tnoticeframe}
                 \begin{center}
-                    Z kliky vznikne nezávislá množina stejné velikosti a naopak.
+                    Z~kliky vznikne nezávislá množina stejné velikosti a~naopak.
                 \end{center}
             \end{tnoticeframe}}
-            \visible<5->{\begin{figure}
-                \centering
-                \input{images/klika-nzmna.tex}
-            \end{figure}}
+            \visible<5->{\obrazek{images/klika-nzmna.tex}}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Převody mezi $\KLIKA$ a $\NZMNA$}
+    \begin{frame}{Převody mezi $\KLIKA$ a~$\NZMNA$}
         \begin{itemize}
-            \visible<2->{\item Máme zadaný graf $G$ a číslo $k\in\N$.}
-            \visible<3->{\item Sestrojíme doplněk $\bar{G}$ grafu $G$ a ponecháme číslo $k$.}
-            \visible<4->{\item Pak v grafu $G$ existuje klika velikosti alespoň $k$ právě tehdy, když v $\bar{G}$ existuje nezávislá množina velikosti alespoň $k$.}
+            \visible<2->{\item Máme zadaný graf $G$ a~číslo $k\in\N$.}
+            \visible<3->{\item Sestrojíme doplněk $\bar{G}$ grafu $G$ a~ponecháme číslo $k$.}
+            \visible<4->{\item Pak v~grafu $G$ existuje klika velikosti alespoň $k$ právě tehdy, když v~$\bar{G}$ existuje nezávislá množina velikosti alespoň $k$.}
         \end{itemize}
         \visible<5->{\begin{tinfoframe}
             \begin{center}
@@ -544,13 +537,12 @@
         \end{tnoticeframe}}
     \end{frame}
 
+    % =================================================================
     \section{Shrnutí}
+    % =================================================================
 
     \begin{frame}{Shrnutí}
-        \visible<2->{\begin{figure}
-            \centering
-            \input{images/shrnuti.tex}
-        \end{figure}}
+        \visible<2->{\obrazek{images/shrnuti.tex}}
         \visible<3->{\begin{talertframe}
             \begin{center}
                 Převod $\NZMNA\rightarrow\SAT$ jsme si pouze naznačili.

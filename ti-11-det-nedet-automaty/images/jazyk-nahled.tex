@@ -1,0 +1,22 @@
+% Náhled k~sekci o~formálních jazycích: jazyk je podmnožina všech slov nad abecedou.
+\begin{tikzpicture}[x=1cm, y=1cm]
+
+    % množina všech slov
+    \draw[thick, rounded corners=6pt] (-3.4,-2.2) rectangle (3.4,2.2);
+    \node[anchor=north east] at (3.3,2.1) {$\Sigma^{*}$};
+
+    % jazyk jako podmnožina
+    \draw[thick, fill=maincolor!15] (-0.6,-0.2) ellipse (2.3 and 1.5);
+    \node[maincolor] at (1.4,0.9) {$L$};
+
+    \node at (-0.9,0.45) {$\texttt{ab}$};
+    \node at (-1.7,-0.35) {$\texttt{aab}$};
+    \node at (-0.3,-0.75) {$\texttt{bab}$};
+    \node at (0.5,0.1)  {$\lambda$};
+
+    \node at (2.3,-1.6) {$\texttt{ba}$};
+    \node at (-2.6,1.5) {$\texttt{bb}$};
+
+    \node[font=\small] at (0,-2.8) {jazyk $L\subseteq\Sigma^{*}$ je \markdarkred{množina slov}};
+
+\end{tikzpicture}

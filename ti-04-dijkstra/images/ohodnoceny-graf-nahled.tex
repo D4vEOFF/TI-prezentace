@@ -1,0 +1,15 @@
+% Náhled k~sekci o~ohodnocených grafech: hrany nesou váhy.
+\begin{tikzpicture}[scale=1.1]
+
+    \node[vertex] (A) at (0,0)     {};
+    \node[vertex] (B) at (2,1.2)   {};
+    \node[vertex] (C) at (2,-1.2)  {};
+    \node[vertex] (D) at (4,0)     {};
+
+    \draw[edge] (A) -- node[fill=white, inner sep=1.5pt] {$2$} (B);
+    \draw[edge] (A) -- node[fill=white, inner sep=1.5pt] {$5$} (C);
+    \draw[edge] (B) -- node[fill=white, inner sep=1.5pt] {$4$} (D);
+    \draw[edge] (B) -- node[fill=white, inner sep=1.5pt] {$1$} (C);
+    \draw[edge] (C) -- node[fill=white, inner sep=1.5pt] {$3$} (D);
+
+\end{tikzpicture}

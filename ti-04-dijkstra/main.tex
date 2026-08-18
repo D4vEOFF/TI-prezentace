@@ -6,7 +6,7 @@
 \input{../assets/macros.tex}
 \input{../assets/listing.tex}
 
-\def\presentationtitle{Dijsktrův algoritmus}
+\def\presentationtitle{Dijkstrův algoritmus}
 
 \input{images/dijkstra.tex}
 
@@ -14,123 +14,122 @@
 
     \input{../titlepage.tex}
 
+    % =================================================================
     \section{Opakování}
+    % =================================================================
 
     \begin{frame}{Co již známe\dots}
         \begin{itemize}
-            \visible<2->{\item Již známe algoritmy BFS a DFS.}
-            \visible<3->{\item Algoritmus BFS nalezne vždy nejkratší cestu do všech \textbf{dosažitelných vrcholů} v \textbf{neohodnoceném grafu}.}
-            \visible<4->{\item Časová i prostorová složitost činí $\bigO(n+m)$.}
+            \visible<2->{\item Již známe algoritmy BFS a~DFS.}
+            \visible<3->{\item Algoritmus BFS nalezne vždy nejkratší cestu do všech \textbf{dosažitelných vrcholů} v~\textbf{neohodnoceném grafu}.}
+            \visible<4->{\item Časová i~prostorová složitost činí $\bigO(n+m)$.}
         \end{itemize}
         \visible<5->{\begin{tnoticeframe}
-            Co když budeme hledat cestu v \textbf{ohodnoceném grafu}?
+            Co když budeme hledat cestu v~\textbf{ohodnoceném grafu}?
         \end{tnoticeframe}}
     \end{frame}
 
+    % =================================================================
     \section{Ohodnocené grafy}
+    % =================================================================
 
-    \titleframe{Ohodnocené grafy}
+    \begin{titleframeenv}{Ohodnocené grafy}
+        \obrazek[0.5\textheight]{images/ohodnoceny-graf-nahled.tex}
+    \end{titleframeenv}
 
     \subsection{Definice ohodnoceného grafu}
 
     \begin{frame}{Ohodnocený graf}
         \begin{defblock}[Ohodnocený graf]
-            \markdarkred{Ohodnocený grafem} rozumíme uspořádanou trojici $(V,E,w)$, přičemž $G=(V,E)$ je libovolný graf a $\mapping{w}{E}{\R}$ je zobrazení přiřazující každé hraně $e\in E$ její \markdarkred{váhu} $w(e)$.
+            \markdarkred{Ohodnoceným grafem} rozumíme uspořádanou trojici $(V,E,w)$, přičemž $G=(V,E)$ je libovolný graf a~$\mapping{w}{E}{\R}$ je zobrazení přiřazující každé hraně $e\in E$ její \markdarkred{váhu} $w(e)$.
         \end{defblock}
         \begin{tinfobox}{Poznámka}
-            Někdy je výhodnější se odkázat na samotné koncepvé vrcholy hrany $u,v$. Abychom si usnadnili zápis, budeme psát $w(u,v)$ místo $w(\set{u,v})$ v případě \textbf{neorientovaného grafu}, resp. místo $w((u,v))$ v případě \textbf{orientovaného grafu}.
+            Někdy je výhodnější se odkázat na samotné koncové vrcholy hrany $u,v$. Abychom si usnadnili zápis, budeme psát $w(u,v)$ místo $w(\set{u,v})$ v~případě \textbf{neorientovaného grafu}, resp. místo $w((u,v))$ v~případě \textbf{orientovaného grafu}.
         \end{tinfobox}
     \end{frame}
 
     \begin{frame}{Ohodnocený graf}{Příklad}
-        \begin{figure}
-            \centering
-            \input{images/ohodnoceny-graf.tex}
-        \end{figure}
+        \obrazek{images/ohodnoceny-graf.tex}
     \end{frame}
 
-    \subsection{Vzdálenost vrcholů v ohodnoceném grafu}
+    \subsection{Vzdálenost vrcholů v~ohodnoceném grafu}
 
-    \begin{frame}{Vzdálenost vrcholů v ohodnoceném grafu}
+    \begin{frame}{Vzdálenost vrcholů v~ohodnoceném grafu}
         \visible<2->{\begin{defblock}
             Nechť $G=(V,E,w)$ je ohodnocený graf, vrcholy $u,v\in V$. Pak vzdáleností vrcholů $u,v$ rozumíme hodnotu
-            \[d(u,v)=\min\set{\sum_{e\in P,e\in E}w(e):\text{$P$ je cesta z $u$ do $v$}}.\]
-            Pokud $v$ není z $u$ dosažitelný, pak definujeme $d(u,v)=\infty$.
+            \[d(u,v)=\min\set{\sum_{e\in P}w(e):\text{$P$ je cesta z~$u$ do~$v$}}.\]
+            Pokud $v$ není z~$u$ dosažitelný, pak definujeme $d(u,v)=\infty$.
         \end{defblock}}
-        \visible<3->{\begin{figure}
-            \centering
-            \input{images/ohodnoceny-graf-vzdalenost-vrcholu.tex}
-        \end{figure}}
+        \visible<3->{\obrazek[0.32\textheight]{images/ohodnoceny-graf-vzdalenost-vrcholu.tex}}
     \end{frame}
 
-    \subsection{Hledání cest v ohodnocených grafech}
+    \subsection{Hledání cest v~ohodnocených grafech}
 
-    \begin{frame}{Hledání cest v ohodnocených grafech}
-        \visible<2->{\begin{figure}
-            \centering
-            \input{images/ohodnoceny-graf-nejkratsi-cesta.tex}
-        \end{figure}}
+    \begin{frame}{Hledání cest v~ohodnocených grafech}
+        \visible<2->{\obrazek[0.2\textheight]{images/ohodnoceny-graf-nejkratsi-cesta.tex}}
         \visible<3->{\begin{tinfoframe}
             \begin{center}
-                Jaká je nejkratší cesta z $u_1$ do $u_4$?
+                Jaká je nejkratší cesta z~$u_1$ do $u_4$?
             \end{center}
         \end{tinfoframe}}
         \visible<4->{\begin{itemize}
             \item BFS by nalezl cestu $(u_1,u_3,u_4)$.
             \item Nicméně nejkratší cesta je $(u_1,u_2,u_3,u_4)$, \textbf{přestože má více hran!}
         \end{itemize}}
-        \visible<5->{\begin{figure}
-            \centering
-            \input{images/ohodnoceny-graf-nejkratsi-cesta-2.tex}
-        \end{figure}}
+        \visible<5->{\obrazek[0.2\textheight]{images/ohodnoceny-graf-nejkratsi-cesta-2.tex}}
     \end{frame}
 
+    % =================================================================
     \section{Dijkstrův algoritmus}
+    % =================================================================
 
-    \titleframe{Dijkstrův algoritmus}
+    \begin{titleframeenv}{Dijkstrův algoritmus}
+        \obrazek[0.5\textheight]{images/dijkstra-nahled.tex}
+    \end{titleframeenv}
 
-    \subsection{Myšlenka a postup Dijkstrova algoritmu}
+    \subsection{Myšlenka a~postup Dijkstrova algoritmu}
 
     \begin{frame}{Dijkstrův algoritmus}
         \begin{itemize}
-            \visible<2->{\item Egster Dijkstra (1958)}
-            \visible<3->{\item Na vstupu máme \textbf{nezáporně} ohodnocený graf $G=(V,E,w)$ a počáteční vrchol $v_0\in V$.}
+            \visible<2->{\item Edsger Dijkstra (1959)}
+            \visible<3->{\item Na vstupu máme \textbf{nezáporně} ohodnocený graf $G=(V,E,w)$ a~počáteční vrchol $v_0\in V$.}
             \visible<4->{\begin{tinfoframe}
                 \begin{center}
                     Zatím není zcela jasné, proč chceme, aby váhy hran byly nezáporné, ale později si to zdůvodníme.
                 \end{center}
             \end{tinfoframe}}
-            \visible<5->{\item Stejně jako v případě BFS i zde bychom rádi \textbf{při uzavírání vrcholu} chtěli znát nejkratší cestu do něj.}
+            \visible<5->{\item Stejně jako v~případě BFS i~zde bychom rádi \textbf{při uzavírání vrcholu} chtěli znát nejkratší cestu do něj.}
             \visible<6->{\item Nicméně již nemusí platit, že \textbf{první nalezená cesta} od libovolného vrcholu $v$ je nutně nejkratší.}
             \visible<7->{\begin{timportantframe}
                 \begin{center}
                     Cestu do $v$ je třeba postupně \textbf{zlepšovat}!
                 \end{center}
             \end{timportantframe}}
-            \visible<8->{\item Stejně jako v případě BFS si budeme uchovávat \markdarkred{stavy} a \markdarkred{vzdáleností} vrcholů.}
+            \visible<8->{\item Stejně jako v~případě BFS si budeme uchovávat \markdarkred{stavy} a~\markdarkred{vzdálenosti} vrcholů.}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Postup Dijkstrova algoritmu}
         \begin{enumerate}
-            \visible<2->{\item Inicializujeme seznamy stavů a vzdáleností vrcholů (vrcholy budou z počátku nenalezené a jejich vzdálenosti $\infty$).}
-            \visible<3->{\item Označíme počáteční vrchol $v_0$ jako \textbf{otevřený} a nastavíme $D(v_0)=0$.}
-            \visible<4->{\item Vybereme otevřený vrchol (pokud nějaký existuje) $v$ s nejmenší hodnotou $D(v)$.}
-            \visible<5->{\item Vezmeme všechny sousedy $s$ vrcholu $v$ a pokud z některého vede kratší cesta do $v$, \textbf{aktualizujeme $D(v)$} a $s$ označíme jako \textbf{otevřený}.}
-            \visible<6->{\item \textbf{Uzavřeme} vrchol $v$, vracíme ke 3. kroku a postup opakujeme.}
+            \visible<2->{\item Inicializujeme seznamy stavů a~vzdáleností vrcholů (vrcholy budou z~počátku nenalezené a~jejich vzdálenosti $\infty$).}
+            \visible<3->{\item Označíme počáteční vrchol $v_0$ jako \textbf{otevřený} a~nastavíme $D(v_0)=0$.}
+            \visible<4->{\item Vybereme otevřený vrchol (pokud nějaký existuje) $v$ s~nejmenší hodnotou $D(v)$.}
+            \visible<5->{\item Vezmeme všechny sousedy $s$ vrcholu $v$ a~pokud přes $v$ vede do některého z~nich kratší cesta, \textbf{aktualizujeme $D(s)$} a~vrchol $s$ označíme jako \textbf{otevřený}.}
+            \visible<6->{\item \textbf{Uzavřeme} vrchol $v$, vracíme se ke 3. kroku a~postup opakujeme.}
         \end{enumerate}
     \end{frame}
 
     \begin{frame}{Pseudokód Dijkstrova algoritmu}
         \begin{center}
+            \begin{adjustbox}{max width=\linewidth, max totalheight=0.8\textheight}
             \begin{minipage}{0.9\textwidth}
                 \begin{algorithm}[H]
                     \caption{\textsc{Dijkstra}}
                     \KwIn{Nezáporně ohodnocený graf $G=(V,E,w)$ a~počáteční vrchol $v_0\in V$}
                     \ForEach{\textup{vrchol $v\in V$}}{
-                        $stav(v)\gets\textit{nenalezený},D(v)\gets\infty$\\
+                        $\operatorname{stav}(v)\gets\textit{nenalezený},D(v)\gets\infty$\\
                     }
-                    $stav(v_0)\gets\textit{otevřený},D(v_0)\gets 0$\\
+                    $\operatorname{stav}(v_0)\gets\textit{otevřený},D(v_0)\gets 0$\\
                     \While{\textup{existují otevřené vrcholy}}{
                         % \tcp{Kandidát na nejkraší cestu do sousedních vrcholů}
                         $v\gets$ otevřený vrchol s~nejmenším $D$\\
@@ -139,18 +138,19 @@
                             % \tcp{Našli jsme lepší cestu}
                             \If{$D(v)+w(v,s)<D(s)$}{
                                 $D(s)\gets D(v)+w(v,s)$\\
-                                $stav(s)\gets\textit{otevřený}$
+                                $\operatorname{stav}(s)\gets\textit{otevřený}$
                             }
                         }
-                        $stav(v)\gets\textit{uzavřený}$
+                        $\operatorname{stav}(v)\gets\textit{uzavřený}$
                     }
                     \KwOut{Seznam vzdáleností $D$}
                 \end{algorithm}
             \end{minipage}
+            \end{adjustbox}
         \end{center}
     \end{frame}
 
-    \subsection{Dijkstrův algoritmus - příklad}
+    \subsection{Dijkstrův algoritmus -- příklad}
 
     \begin{frame}{Dijkstrův algoritmus}{Příklad}
     \centering
@@ -241,7 +241,7 @@
     \centering
     \DijkstraState
     {Krok 4: uzavíráme $v_5$}
-    {$v_4:7,\ v_6:7,\ v_8:10,\ v_9:11,\ v_7:12,\ v_{10}:17$}
+    {$v_4:7,\ v_6:7,\ v_8:10,\ v_9:11,\ v_7:12$}
     {
         \draw[dijtreeedge] (v1)--(v3);
         \draw[dijtreeedge] (v3)--(v2);
@@ -257,7 +257,7 @@
         \dijnode{v7}{dijopen}{$v_7$}{$12$}
         \dijnode{v8}{dijopen}{$v_8$}{$10$}
         \dijnode{v9}{dijopen}{$v_9$}{$11$}
-        \dijnode{v10}{dijopen}{$v_{10}$}{$17$}
+        \dijnode{v10}{dijunknown}{$v_{10}$}{$\infty$}
     }
     \end{frame}
 
@@ -265,7 +265,7 @@
     \centering
     \DijkstraState
     {Krok 5: uzavíráme $v_4$}
-    {$v_6:7,\ v_8:10,\ v_9:11,\ v_7:12,\ v_{10}:17$}
+    {$v_6:7,\ v_8:10,\ v_9:11,\ v_7:12$}
     {
         \draw[dijtreeedge] (v1)--(v3);
         \draw[dijtreeedge] (v3)--(v2);
@@ -282,7 +282,7 @@
         \dijnode{v7}{dijopen}{$v_7$}{$12$}
         \dijnode{v8}{dijopen}{$v_8$}{$10$}
         \dijnode{v9}{dijopen}{$v_9$}{$11$}
-        \dijnode{v10}{dijopen}{$v_{10}$}{$17$}
+        \dijnode{v10}{dijunknown}{$v_{10}$}{$\infty$}
     }
     \end{frame}
 
@@ -290,7 +290,7 @@
     \centering
     \DijkstraState
     {Krok 6: uzavíráme $v_6$}
-    {$v_9:9,\ v_8:10,\ v_7:10,\ v_{10}:14$}
+    {$v_9:9,\ v_8:10,\ v_7:10$}
     {
         \draw[dijtreeedge] (v1)--(v3);
         \draw[dijtreeedge] (v3)--(v2);
@@ -308,7 +308,7 @@
         \dijnode{v7}{dijopen}{$v_7$}{$10$}
         \dijnode{v8}{dijopen}{$v_8$}{$10$}
         \dijnode{v9}{dijopen}{$v_9$}{$9$}
-        \dijnode{v10}{dijopen}{$v_{10}$}{$14$}
+        \dijnode{v10}{dijunknown}{$v_{10}$}{$\infty$}
     }
     \end{frame}
 
@@ -444,10 +444,7 @@
                 Co by se stalo, kdyby algoritmus vybral vrchol $v$, jehož $D$ neodpovídá délce nejkratší cesty?
             \end{center}
         \end{talertframe}}
-        \visible<3->{\begin{figure}
-            \centering
-            \input{images/dijkstra-spravnost.tex}
-        \end{figure}}
+        \visible<3->{\obrazek[0.4\textheight]{images/dijkstra-spravnost.tex}}
         \begin{itemize}
             \visible<4->{\item $D(v)$ = spočítaná cesta do $v$.}
             \visible<5->{\item $D(s)+w(v,s)$ = nejkratší cesta do $v$ vedoucí přes souseda $s$.}
@@ -469,35 +466,33 @@
     \begin{frame}{Nezápornost vah}
         \visible<2->{\begin{talertframe}
             \begin{center}
-                Všimněte si, že právě díky \textbf{nezápornosti vah} hran grafu na vstupu algoritmus funnguje!
+                Všimněte si, že právě díky \textbf{nezápornosti vah} hran grafu na vstupu algoritmus funguje!
             \end{center}
         \end{talertframe}}
         \visible<3->{\begin{tnoticeframe}
             \begin{center}
-                Kdyby hrany mohly mít i záporné váhy, nejkratší sled mezi některými dvojicemi vrcholů vůbec nemusí existovat!
+                Kdyby hrany mohly mít i~záporné váhy, nejkratší sled mezi některými dvojicemi vrcholů vůbec nemusí existovat!
             \end{center}
         \end{tnoticeframe}}
-        \visible<4->{\begin{figure}
-            \centering
-            \input{images/zaporny-cyklus.tex}
-        \end{figure}}
+        \visible<4->{\obrazek[0.28\textheight]{images/zaporny-cyklus.tex}}
     \end{frame}
 
     \begin{frame}{Nezápornost vah}
         \visible<2->{\begin{talertframe}
             \begin{center}
-                Dále se také může stát, že hledání nejkratší cesty přejde na problém hledání \textbf{Hamiltonovské cesty} $\implies$ $\classNP$-úplný problém.
+                Dále se také může stát, že hledání nejkratší cesty přejde na problém hledání \textbf{hamiltonovské cesty} $\implies$ $\classNP$-úplný problém.
             \end{center}
         \end{talertframe}}
-        \visible<3->{\begin{figure}
-            \centering
-            \input{images/hamilton.tex}
-        \end{figure}}
+        \visible<3->{\obrazek[0.45\textheight]{images/hamilton.tex}}
     \end{frame}
 
-    \section{Časová a prostorová složitost}
+    % =================================================================
+    \section{Časová a~prostorová složitost}
+    % =================================================================
 
-    \titleframe{Složitost algoritmu}
+    \begin{titleframeenv}{Složitost algoritmu}
+        \obrazek[0.5\textheight]{images/slozitost-nahled.tex}
+    \end{titleframeenv}
 
     \subsection{Kam ukládat vrcholy?}
 
@@ -507,54 +502,54 @@
             \visible<3->{\item Jako první varianta se nabízí \markdarkred{obyčejný seznam/pole}.}
         \end{itemize}
         \visible<4->{\begin{tnoticeframe}
-            Zkusíme určit \textbf{časovou} a \textbf{prostorovou složitost}.
+            Zkusíme určit \textbf{časovou} a~\textbf{prostorovou složitost}.
         \end{tnoticeframe}}
     \end{frame}
 
-    \subsection{Složitost s polem}
+    \subsection{Složitost s~polem}
 
-    \begin{frame}{Časová složitost s polem}
+    \begin{frame}{Časová složitost s~polem}
         \begin{itemize}
-            \visible<2->{\item Opět si označíme $n=|V|$ a $m=|E|$.}
-            \visible<3->{\item Inicializace potrvá $\bigO(2n)=\bigO(n)$, neboť zavádíme seznam stavů a vzdáleností \textbf{pro všechny vrcholy}.}
+            \visible<2->{\item Opět si označíme $n=|V|$ a~$m=|E|$.}
+            \visible<3->{\item Inicializace potrvá $\bigO(2n)=\bigO(n)$, neboť zavádíme seznam stavů a~vzdáleností \textbf{pro všechny vrcholy}.}
             \visible<4->{\item Každý vrchol uzavřeme \textbf{nejvýše jednou} $\implies$ vnější cyklus provede nejvýše $\bigO(n)$ iterací.}
-            \visible<5->{\item Hledáním minimální hodnoty $D$ strávíme $\bigO(n)$ $\impliedby$ \textbf{hledáme minimum v poli}.}
+            \visible<5->{\item Hledáním minimální hodnoty $D$ strávíme $\bigO(n)$ $\impliedby$ \textbf{hledáme minimum v~poli}.}
             \visible<6->{\item Každou hranu při procházení sousedů projdeme \textbf{nejvýše dvakrát} $\implies$ to dává řádově $\bigO(2m)=\bigO(m)$ kroků.}
-            \visible<7->{\item Aktualizaci hodnoty $D(v)$ libovolného vrcholu $v$ provedeme v konstantním čase.}
+            \visible<7->{\item Aktualizaci hodnoty $D(v)$ libovolného vrcholu $v$ provedeme v~konstantním čase.}
             \visible<8->{\item Dohromady:
-            \[\bigO(\underbrace{n}_\text{inicializace}+\overbrace{n}^{\text{vnejší cyklus}}\cdot\overbrace{n}^{\text{minimum}}+\underbrace{m}_\text{sousedé})=\bigO(n^{2}+m).\]}
+            \[\bigO(\underbrace{n}_\text{inicializace}+\overbrace{n}^{\text{vnější cyklus}}\cdot\overbrace{n}^{\text{minimum}}+\underbrace{m}_\text{sousedé})=\bigO(n^{2}+m).\]}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Prostorová složitost s polem}
+    \begin{frame}{Prostorová složitost s~polem}
         \begin{itemize}
             \visible<2->{\item Pokud budeme reprezentovat graf pomocí \textbf{seznamu sousedů}, spotřebujeme $\bigO(n+m)$ paměti.}
-            \visible<3->{\item Dále již potřebujeme jen pole pro uchování stavů a vzdáleností.}
+            \visible<3->{\item Dále již potřebujeme jen pole pro uchování stavů a~vzdáleností.}
             \visible<4->{\item Celkově činí prostorová složitost $\bigO(n+m)$.}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Shrnutí}
-        \visible<2->{S polem jsme dosáhli následujících výsledků:}
+        \visible<2->{S~polem jsme dosáhli následujících výsledků:}
         \begin{itemize}
             \visible<3->{\item Časová složitost: $\bigO(n^{2}+m)$.}
             \visible<4->{\item Prostorová složitost $\bigO(n+m)$.}
         \end{itemize}
         \visible<5->{\begin{tnoticeframe}
             \begin{center}
-                S prostorovou složitostí toho moc nezmůžeme, nicméně v případě časové složitosti \textbf{lze výsledek o něco zlepšit} $\implies$ máme přeci \markdarkred{binární haldu}!
+                S~prostorovou složitostí toho moc nezmůžeme, nicméně v~případě časové složitosti \textbf{lze výsledek o~něco zlepšit} $\implies$ máme přeci \markdarkred{binární haldu}!
             \end{center}
         \end{tnoticeframe}}
-        \visible<6->{Ta se nám bude hodit v případě \textbf{výběru minima} z hodnot $D$.}
+        \visible<6->{Ta se nám bude hodit v~případě \textbf{výběru minima} z~hodnot $D$.}
     \end{frame}
 
-    \subsection{Složitost s binární haldou}
+    \subsection{Složitost s~binární haldou}
 
-    \begin{frame}{Časová složitost s binární haldou}
+    \begin{frame}{Časová složitost s~binární haldou}
         \begin{itemize}
-            \item Z počátku spotřebujeme $\bigO(n)$ času na zavedení pole stavů.
-            \item V případě haldy provedeme $n$-krát operaci $\textsc{Insert}$, tzn. spotřebujeme $\bigO(n\log{n})$ času.
-            \item Při výběru vrcholu s nejnižším $D$ provádíme operaci $\textsc{ExtractMin}$. Celkově ji provedeme $n$-krát (vnější cyklus), tzn. spotřebujeme $\bigO(n\log{n})$ času.
+            \item Z~počátku spotřebujeme $\bigO(n)$ času na zavedení pole stavů.
+            \item V~případě haldy provedeme $n$-krát operaci $\textsc{Insert}$, tzn. spotřebujeme $\bigO(n\log{n})$ času.
+            \item Při výběru vrcholu s~nejnižším $D$ provádíme operaci $\textsc{ExtractMin}$. Celkově ji provedeme $n$-krát (vnější cyklus), tzn. spotřebujeme $\bigO(n\log{n})$ času.
             \item Při aktualizaci hodnoty $D(v)$ libovolného vrcholu provádíme operaci $\textsc{Decrease}$. Nejvýše jej provedeme $m$-krát (za každou hranu) $\implies$ spotřebujeme $\bigO(m\log{n})$.
             \item Dohromady:
             \begin{align*}
@@ -564,36 +559,36 @@
         \end{itemize}
     \end{frame}
 
-    \subsection{Shrnutí a závěrečný rozbor}
+    \subsection{Shrnutí a~závěrečný rozbor}
 
-    \begin{frame}{Shrnutí a závěrečný rozbor}
+    \begin{frame}{Shrnutí a~závěrečný rozbor}
         \visible<2->{\begin{tinfoframe}
-            Časová složitost \textbf{s polem} vs. \textbf{s haldou}:
+            Časová složitost \textbf{s~polem} vs. \textbf{s~haldou}:
             \begin{itemize}
-                \item Dijkstrův algoritmus s polem: $\bigO(n^{2}+m)$
-                \item Dijkstrův algoritmus s binární haldou: $\bigO((n+m)\log{n})$
+                \item Dijkstrův algoritmus s~polem: $\bigO(n^{2}+m)$
+                \item Dijkstrův algoritmus s~binární haldou: $\bigO((n+m)\log{n})$
             \end{itemize}
         \end{tinfoframe}}
-        \visible<3->{Nyní se nybízí dvojice případů:}
+        \visible<3->{Nyní se nabízí dvojice případů:}
         \begin{itemize}
-            \visible<4->{\item Graf $G$ je řídký, tj. má \markdarkred{nejvýše lineárně mnoho} hran vzhledem k počtu vrcholů, tj. $m=\bigO(n)$. Pak}
+            \visible<4->{\item Graf $G$ je řídký, tj. má \markdarkred{nejvýše lineárně mnoho} hran vzhledem k~počtu vrcholů, tj. $m=\bigO(n)$. Pak}
             \begin{itemize}
-                \visible<5->{\item S polem: $\bigO(n^{2}+m)=\bigO(n^{2}+n)=\bigO(n^{2})$.}
-                \visible<6->{\item S haldou: $\bigO((n+m)\log{n})=\bigO(2n\log{n})=\bigO(n\log{n})$}
+                \visible<5->{\item S~polem: $\bigO(n^{2}+m)=\bigO(n^{2}+n)=\bigO(n^{2})$.}
+                \visible<6->{\item S~haldou: $\bigO((n+m)\log{n})=\bigO(2n\log{n})=\bigO(n\log{n})$.}
             \end{itemize}
-            \visible<7->{\item Graf $G$ je hustý, tj. má \markdarkred{kvadraticky mnoho} hran vzhledem k počtu vrcholů, tj. $m=\bigO(n^{2})$. Pak}
+            \visible<7->{\item Graf $G$ je hustý, tj. má \markdarkred{kvadraticky mnoho} hran vzhledem k~počtu vrcholů, tj. $m=\bigO(n^{2})$. Pak}
             \begin{itemize}
-                \visible<8->{\item S polem: $\bigO(n^{2}+n^{2})=\bigO(2n^{2})=\bigO(n^{2})$.}
-                \visible<9->{\item S haldou: $\bigO((n+n^{2})\log{n})=\bigO(n\log{n}+n^{2}\log{n})=\bigO(n^{2}\log{n})$.}
+                \visible<8->{\item S~polem: $\bigO(n^{2}+n^{2})=\bigO(2n^{2})=\bigO(n^{2})$.}
+                \visible<9->{\item S~haldou: $\bigO((n+n^{2})\log{n})=\bigO(n\log{n}+n^{2}\log{n})=\bigO(n^{2}\log{n})$.}
             \end{itemize}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Shrnutí a závěrečný rozbor}
+    \begin{frame}{Shrnutí a~závěrečný rozbor}
         \begin{timportantframe}
             \begin{itemize}
-                \item Pro \textbf{řídké} grafy vychází asymptotická složitost lépe v případě \markdarkred{implementace s binární haldou}.
-                \item Pro \textbf{husté} grafy vychází lépe \markdarkred{implementace s polem}.
+                \item Pro \textbf{řídké} grafy vychází asymptotická složitost lépe v~případě \markdarkred{implementace s~binární haldou}.
+                \item Pro \textbf{husté} grafy vychází lépe \markdarkred{implementace s~polem}.
             \end{itemize}
         \end{timportantframe}
     \end{frame}

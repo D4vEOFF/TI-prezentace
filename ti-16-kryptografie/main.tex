@@ -63,21 +63,25 @@
 
 \input{../titlepage.tex}
 
+% =================================================================
 \section{Kryptologie}
+% =================================================================
 
-\titleframe{Kryptologie}
+\begin{titleframeenv}{Kryptologie}
+    \obrazek[0.4\textheight]{images/formulace-problemu.tex}
+\end{titleframeenv}
 
 \subsection{Základní pojmy}
 
 \begin{frame}{Kryptologie}
-    \pause
-    $\kappa\rho\upsilon\pi\tau o\sigma$ (skrytý) a $\lambda o \gamma o \sigma$ (věda), tedy věda o šifrování a dešifrování zpráv.
+
+    \visible<2->{$\kappa\rho\upsilon\pi\tau o\sigma$ (skrytý) a~$\lambda o \gamma o \sigma$ (věda), tedy věda o~šifrování a~dešifrování zpráv.
     \begin{itemize}
-        \pause
-        \item \textbf{Kryptografie} se zabývá teoretickými aspekty návrhu šifrovacích metod.
-        \pause
-        \item \textbf{Kryptanalýza} se zabývá metodami prolomení šifrovacích metod.
-    \end{itemize}    
+
+        \visible<3->{\item \textbf{Kryptografie} se zabývá teoretickými aspekty návrhu šifrovacích metod.}
+
+        \visible<4->{\item \textbf{Kryptanalýza} se zabývá metodami prolomení šifrovacích metod.}
+    \end{itemize}}    
 \end{frame}
 
 \subsection{Formulace problému}
@@ -91,48 +95,50 @@
         \end{center}
     \end{tnoticeframe}
 
-    \input{images/formulace-problemu.tex}
+    \obrazek[0.4\textheight]{images/formulace-problemu.tex}
 \end{frame}
 
+% =================================================================
 \section{Historické metody}
+% =================================================================
 
-\titleframe{Historické metody}
+\begin{titleframeenv}{Historické metody}
+    \obrazek[0.35\textheight]{images/substitucni-metoda.tex}
+\end{titleframeenv}
 
 \subsection{Substituční metoda}
 
 \begin{frame}{Substituční metoda}
-    \pause
-    \begin{itemize}
-        \item Mějme abecedu $\Sigma = \set{a_0,a_1,\ldots,a_{q-1}}$.\pause
-        \item Zvolíme tajný posun \(0<k<q\).\pause
-        \item Znak \(a_i\) zašifrujeme jako $a_i \mapsto a_{(i+k)\bmod q}$.\pause
-        \item Tedy pro slovo $w=a_1\dots a_n\in\Sigma^{*}$ je jeho šifra
-        \[
-            s(w)=s(a_1\dots a_n)=a_{(1+k)\bmod q}\dots a_{(n+k)\bmod q}.
-        \]
-    \end{itemize}
-    \pause
-    \centering
-    \input{images/substitucni-metoda.tex}
 
-    \vspace{0.35cm}
-    \pause
-    \begin{tnoticeframe}
-        Například pro $k=3$ v případě standardní abecedy:
+    \visible<2->{\begin{itemize}
+        \item Mějme abecedu $\Sigma = \set{a_0,a_1,\ldots,a_{q-1}}$.
+        \visible<3->{\item Zvolíme tajný posun \(0<k<q\).}
+        \visible<4->{\item Znak \(a_i\) zašifrujeme jako $a_i \mapsto a_{(i+k)\bmod q}$.}
+        \visible<5->{\item Tedy pro slovo $w=a_{i_1}\dots a_{i_n}\in\Sigma^{*}$ je jeho šifra
+        \[
+            s(w)=s(a_{i_1}\dots a_{i_n})=a_{(i_1+k)\bmod q}\dots a_{(i_n+k)\bmod q}.
+        \]}
+    \end{itemize}}
+
+    \visible<6->{\obrazek[0.2\textheight]{images/substitucni-metoda.tex}}
+
+    \visible<7->{\begin{tnoticeframe}
+        Například pro $k=3$ v~případě standardní abecedy:
         \begin{center}
             $\texttt{TAJNE}\longmapsto \texttt{WDMQH}$.
         \end{center}
-    \end{tnoticeframe}
+    \end{tnoticeframe}}
 
 \end{frame}
 
 \begin{frame}{Nevýhoda substituční šifry}
-    \pause
-    \begin{talertframe}
+    \small
+
+    \visible<2->{\begin{talertframe}
         \textbf{Jednoduše prolomitelná!} Stačí zkusit všechna možná posunutí $k=1,\dots,q-1$.
-    \end{talertframe}
-    \pause
-    \centering
+    \end{talertframe}}
+
+    \visible<3->{\centering
     \small
     \begin{tabular}{c|c@{\qquad}c|c}
         \(k\) & dešifrování & \(k\) & dešifrování \\
@@ -150,165 +156,161 @@
         10 & \texttt{NFJGV} & 23 & \texttt{ASWTI} \\
         11 & \texttt{MEIFU} & 24 & \texttt{ZRVSH} \\
         12 & \texttt{LDHET} & 25 & \texttt{YQURG}
-    \end{tabular}
+    \end{tabular}}
 \end{frame}
 
 \subsection{Obecná substituční šifra}
 
 \begin{frame}{Obecná substituční šifra}
-    \pause
-    Místo pevného posunu zvolíme libovolné přeuspořádání abecedy
+
+    \visible<2->{Místo pevného posunu zvolíme libovolné přeuspořádání abecedy
     \[
         \mapping{\pi}{\Sigma}{\Sigma}.
-    \]
-    \pause
-    Každý znak \(a\in\Sigma\) zašifrujeme jako $a \mapsto \pi(a)$.
-    \pause
-    \begin{timportantframe}
+    \]}
+
+    \visible<3->{Každý znak \(a\in\Sigma\) zašifrujeme jako $a \mapsto \pi(a)$.}
+
+    \visible<4->{\begin{timportantframe}
         \begin{center}
             Klíčem je tedy celá permutace abecedy $\pi$.
         \end{center}
-    \end{timportantframe}
-    \pause
-    \centering
-    \input{images/obecna-substitucni-sifra.tex}
+    \end{timportantframe}}
+
+    \visible<5->{\obrazek[0.4\textheight]{images/obecna-substitucni-sifra.tex}}
 
 \end{frame}
 
 \begin{frame}{Příklad}{Obecná substituční šifra}
-    \pause
-    Klíčem je například následující substituce:
-    \begin{figure}
-        \centering
-        \input{images/priklad-obecna-substitucni-sifra.tex}
-    \end{figure}
 
-    \vspace{0.35cm}
-    \pause
-    Zašifrujeme slovo
+    \visible<2->{Klíčem je například následující substituce:
+    \obrazek[0.4\textheight]{images/priklad-obecna-substitucni-sifra.tex}}
+
+    \visible<3->{Zašifrujeme slovo
     \[
         \texttt{TAJEMSTVI}.
-    \]
-    \pause
-    Podle tabulky
+    \]}
+
+    \visible<4->{Podle tabulky
     \begin{align*}
         &T\mapsto Z,\quad A\mapsto Q,\quad J\mapsto P,\quad E\mapsto T,\\
         &M\mapsto D,\quad S\mapsto L,\quad V\mapsto C,\quad I\mapsto O.
     \end{align*}
-    dostáváme $\texttt{TAJEMSTVI}\quad\longmapsto\quad\texttt{ZQPTDLZCO}$.
+    dostáváme $\texttt{TAJEMSTVI}\quad\longmapsto\quad\texttt{ZQPTDLZCO}$.}
 
 \end{frame}
 
 \begin{frame}{Nevýhody obecné substituční šifry}
-    \pause
-    \begin{tnoticeframe}
+
+    \visible<2->{\begin{tnoticeframe}
         Obecná substituční šifra je teoreticky bezpečná, neboť pro abecedu o~$q$ znacích existuje $q!$ různých permutací.
-    \end{tnoticeframe}
-    \pause
-    \begin{talertbox}{Hlavní problém}
+    \end{tnoticeframe}}
+
+    \visible<3->{\begin{talertbox}{Hlavní problém}
         \begin{center}
             Šifra stále zachovává strukturu původního jazyka.
         \end{center}
     \end{talertbox}
 
-    \vspace{0.25cm}
-    \pause
-    \begin{itemize}
-        \item Často používaná písmena zůstávají rozpoznatelná.\pause
-        \item Zachovávají se opakování znaků a vzory ve slovech.\pause
-        \item Delší zprávy lze prolomit frekvenční analýzou.\pause
-        \item Četnosti různých znaků \href{https://en.wikipedia.org/wiki/Letter_frequency}{\underline{zde}}.
-    \end{itemize}
+    \vspace{0.25cm}}
+
+    \visible<4->{\begin{itemize}
+        \item Často používaná písmena zůstávají rozpoznatelná.
+        \visible<5->{\item Zachovávají se opakování znaků a~vzory ve slovech.}
+        \visible<6->{\item Delší zprávy lze prolomit frekvenční analýzou.}
+        \visible<7->{\item Četnosti různých znaků \href{https://en.wikipedia.org/wiki/Letter_frequency}{\underline{zde}}.}
+    \end{itemize}}
 
 \end{frame}
 
+% =================================================================
 \section{Symetrická kryptografie}
+% =================================================================
 
-\titleframe{Symetrická kryptografie}
+\begin{titleframeenv}{Symetrická kryptografie}
+    \obrazek[0.4\textheight]{images/schema-jednorazove-sifry.tex}
+\end{titleframeenv}
 
 \subsection{Perfektní schéma symetrického šifrování}
 
 \begin{frame}{Symetrická kryptografie}
-    \pause
-    Alice i~Bob používají stejný tajný klíč $k\in\set{0,1}^{n}$.
+
+    \visible<2->{Alice i~Bob používají stejný tajný klíč $k\in\set{0,1}^{n}$.
     \[
         c = \mathbf{E}(m, k),
         \qquad
         m = \mathbf{D}(c, k).
-    \]
-    \pause
-    Tzn. klíč $k$ lze použít k~\markdarkred{šifrování i~dešifrování}.
+    \]}
+
+    \visible<3->{Tzn. klíč $k$ lze použít k~\markdarkred{šifrování i~dešifrování}.}
 
 \end{frame}
 
 \begin{frame}{Perfektní schéma}
-    \centering
-    \input{images/perfektni-schema.tex}
+    \obrazek[0.4\textheight]{images/perfektni-schema.tex}
 \end{frame}
 
 \subsection{Jednorázová šifra}
 
 \begin{frame}{Jednorázová šifra}
-    \pause
-    \begin{itemize}
-        \item Anglicky \emph{one-time pad}.\pause
-        \item Alice i~Bob sdílí náhodný tajný klíč $k \in \set{0,1}^n$. Zprávu $m \in \set{0,1}^n$ Alice zašifruje pomocí operace XOR:
+
+    \visible<2->{\begin{itemize}
+        \item Anglicky \emph{one-time pad}.
+        \visible<3->{\item Alice i~Bob sdílí náhodný tajný klíč $k \in \set{0,1}^n$. Zprávu $m \in \set{0,1}^n$ Alice zašifruje pomocí operace XOR:
         \[
             c = m \oplus k.
-        \]
-        \pause
-        \item Bob zprávu \markdarkred{dešifruje stejným klíčem}:
+        \]}
+
+        \visible<4->{\item Bob zprávu \markdarkred{dešifruje stejným klíčem}:
         \[
             c \oplus k=(m \oplus k)\oplus k=m.
-        \]
-        \pause
-        \item Použita během 2. světové války, studené války, \dots
-    \end{itemize}
+        \]}
+
+        \visible<5->{\item Použita během 2. světové války, studené války, \dots}
+    \end{itemize}}
 
 \end{frame}
 
 \begin{frame}{Schéma jednorázové šifry}
 
-    \centering
-    \input{images/schema-jednorazove-sifry.tex}
+    \obrazek[0.4\textheight]{images/schema-jednorazove-sifry.tex}
 
 \end{frame}
 
 \begin{frame}{Bezpečnost jednorázové šifry}
-    \pause
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Jednorázová šifra splňuje:
         \[
             \Pr(M=m \mid C=c)=\Pr(M=m).
         \]
         Zachycený šifrový text tedy útočníkovi neposkytuje žádnou informaci
         o~původní zprávě.
-        \pause
-        \item Pro každou zprávu \(m\) a každý šifrový text \(c\) existuje právě jeden klíč $k = m \oplus c$.\pause
-        \item Protože \(k\) je vybrán rovnoměrně náhodně z \(2^n\) možností,
+
+        \visible<3->{\item Pro každou zprávu \(m\) a~každý šifrový text \(c\) existuje právě jeden klíč $k = m \oplus c$.}
+        \visible<4->{\item Protože \(k\) je vybrán rovnoměrně náhodně z~\(2^n\) možností,
         \[
             \Pr(C=c \mid M=m)=\Pr(K=m\oplus c)=\frac{1}{2^n}.
         \]
-        Výsledná pravděpodobnost je \markdarkred{nezávislá na původní zprávě $m$}.
-    \end{itemize}
-    \pause
-    \begin{talertbox}{Důležité podmínky}
+        Výsledná pravděpodobnost je \markdarkred{nezávislá na původní zprávě $m$}.}
+    \end{itemize}}
+
+    \visible<5->{\begin{talertbox}{Důležité podmínky}
         Klíč $k$ musí být \textbf{náhodný}, \textbf{stejně dlouhý} jako zpráva $m$ a~\textbf{použitý pouze jednou}.
-    \end{talertbox}
+    \end{talertbox}}
 
 \end{frame}
 
 \begin{frame}{Proč se klíč nesmí použít vícekrát?}
-    \pause
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Nechť Alice zašifruje dvě zprávy stejným klíčem \(k\):
         \[
             c_1 = m_1 \oplus k,
             \qquad
             c_2 = m_2 \oplus k.
         \]
-        \pause
-        \item Útočník může spočítat:
+
+        \visible<3->{\item Útočník může spočítat:
         \[
             c_1 \oplus c_2
             =
@@ -316,121 +318,126 @@
             =
             m_1 \oplus m_2.
         \]
-        Klíč se tedy vyruší.
-    \end{itemize}
-    \pause
-    \begin{timportantbox}{Důsledek}
-        Útočník nezíská přímo \(m_1\) a \(m_2\), ale získá informaci
+        Klíč se tedy vyruší.}
+    \end{itemize}}
+
+    \visible<4->{\begin{timportantbox}{Důsledek}
+        Útočník nezíská přímo \(m_1\) a~\(m_2\), ale získá informaci
         o~ jejich vzájemném vztahu. Pokud jednu zprávu zná nebo odhadne,
-        může snadno získat i druhou.
-    \end{timportantbox}
+        může snadno získat i~druhou.
+    \end{timportantbox}}
 
 \end{frame}
 
 \begin{frame}{Nevýhoda jednorázové šifry}
-    \pause
-    \begin{talertframe}
+
+    \visible<2->{\begin{talertframe}
         Klíč $k$ musí být stejně dlouhý jako zpráva $m$. Bezpečně předat klíč délky \(n\) může být stejně obtížné
         jako bezpečně předat samotnou zprávu délky \(n\).
-    \end{talertframe}
-    \pause
-    To představuje problém, pokud klíč $k$ nemůžeme druhé straně předat bezpečně.
+    \end{talertframe}}
+
+    \visible<3->{To představuje problém, pokud klíč $k$ nemůžeme druhé straně předat bezpečně.}
 \end{frame}
 
+% =================================================================
 \section{Asymetrická kryptografie}
+% =================================================================
 
-\titleframe{Asymetrická kryptografie}
+\begin{titleframeenv}{Asymetrická kryptografie}
+    \obrazek[0.4\textheight]{images/schema-asymetrickeho-sifrovani.tex}
+\end{titleframeenv}
 
 \subsection{Princip asymetrické kryptografie}
 
 \begin{frame}{Asymetrická kryptografie}
-    \pause
-    Každý uživatel má dvojici klíčů:
+
+    \visible<2->{Každý uživatel má dvojici klíčů:
     \[
         \text{veřejný klíč}\;k_V
         \qquad
         \text{a}
         \qquad
         \text{soukromý klíč}\;k_S.
-    \]
-    \pause
-    Veřejný klíč \markdarkred{může znát kdokoliv}. Soukromý klíč si uživatel \markdarkred{musí
+    \]}
+
+    \visible<3->{Veřejný klíč \markdarkred{může znát kdokoliv}. Soukromý klíč si uživatel \markdarkred{musí
     nechat pouze pro sebe}.
 
-    \vspace{0.15cm}
-    \pause
-    \begin{tinfobox}{Princip}
+    \vspace{0.15cm}}
+
+    \visible<4->{\begin{tinfobox}{Princip}
         Chce-li Alice poslat zprávu Bobovi, použije Bobův veřejný klíč:
         \[
             c = \mathbf{E}(m, k_V).
         \]
         Bob zprávu dešifruje svým soukromým klíčem $m = \mathbf{D}(c, k_S)$.
-    \end{tinfobox}
+    \end{tinfobox}}
 
 \end{frame}
 
 \begin{frame}{Schéma asymetrického šifrování}
 
-\centering
-
-\input{images/schema-asymetrickeho-sifrovani.tex}
+    \obrazek[0.4\textheight]{images/schema-asymetrickeho-sifrovani.tex}
 
 \end{frame}
 
+% =================================================================
 \section{Algoritmus RSA}
+% =================================================================
 
-\titleframe{Algoritmus RSA}
+\begin{titleframeenv}{Algoritmus RSA}
+    \obrazek[0.4\textheight]{images/schema-rsa.tex}
+\end{titleframeenv}
 
 \subsection{Základní princip}
 
 \begin{frame}{Algoritmus RSA}
-    \pause
-    Zkratka \textbf{RSA} pochází ze jmen autorů Ron \textbf{R}ivest, Adi \textbf{S}hamir a~Leonard \textbf{A}dleman.
-    \pause
-    \begin{enumerate}
-        \item Vygeneruj \markdarkred{tři velká prvočísla}: největší označíme $s$ a~zbylá $p,q$.\pause
-        \item Spočtáme $n=p\cdot q$.\pause
-        \item Spočítáme číslo $v$ tak, aby
-        \[v\cdot s\bmod (p-1)(q-1)=1.\]\pause
-        \item Položíme veřejný a soukromý klíč uspořádaným dvojicím
-        \[k_V=(v,n)\quad\text{a}\quad k_S=(s,n).\]\pause
-        \item Šifrování a dešifrování pro $x<n$:
-        \[\markdarkred{y=}\;\mathbf{E}(x, k_V)=x^{v}\bmod n\quad\text{a}\quad\mathbf{D}(y, k_S)=y^{s}\bmod n.\]
-    \end{enumerate}
+
+    \visible<2->{Zkratka \textbf{RSA} pochází ze jmen autorů Ron \textbf{R}ivest, Adi \textbf{S}hamir a~Leonard \textbf{A}dleman.}
+
+    \visible<3->{\begin{enumerate}
+        \item Vygeneruj \markdarkred{dvě velká prvočísla} $p,q$ a~zvol \markdarkred{soukromý exponent} $s$ nesoudělný s~$(p-1)(q-1)$.
+        \visible<4->{\item Spočítáme $n=p\cdot q$.}
+        \visible<5->{\item Spočítáme číslo $v$ tak, aby
+        \[v\cdot s\bmod (p-1)(q-1)=1.\]}
+        \visible<6->{\item Položíme veřejný a~soukromý klíč rovny uspořádaným dvojicím
+        \[k_V=(v,n)\quad\text{a}\quad k_S=(s,n).\]}
+        \visible<7->{\item Šifrování a~dešifrování pro $x<n$:
+        \[\markdarkred{y=}\;\mathbf{E}(x, k_V)=x^{v}\bmod n\quad\text{a}\quad\mathbf{D}(y, k_S)=y^{s}\bmod n.\]}
+    \end{enumerate}}
 \end{frame}
 
 \begin{frame}{Schéma RSA}
-    \centering
-    \input{images/schema-rsa.tex}
+    \obrazek[0.4\textheight]{images/schema-rsa.tex}
 \end{frame}
 
 \subsection{Malá Fermatova věta}
 
 \begin{frame}{Malá Fermatova věta}
-    \pause
-    \begin{thmblock}[Malá Fermatova věta]
-        Nechť \(p\) je prvočíslo a nechť \(a\in\mathbb{Z}\) není dělitelné číslem \(p\). Potom platí
+
+    \visible<2->{\begin{thmblock}[Malá Fermatova věta]
+        Nechť \(p\) je prvočíslo a~nechť \(a\in\mathbb{Z}\) není dělitelné číslem \(p\). Potom platí
         \[
             a^{p-1} \bmod p = 1.
         \]
     \end{thmblock}
 
-    \vspace{0.25cm}
-    \pause
-    \begin{tnoticeframe}
+    \vspace{0.25cm}}
+
+    \visible<3->{\begin{tnoticeframe}
         Ekvivalentně lze psát, že pro každé \(a\in\mathbb{Z}\) platí
         \[
-            a^{p} \bmod p = a.
+            a^{p} \bmod p = a \bmod p.
         \]
-    \end{tnoticeframe}
+    \end{tnoticeframe}}
 
 \end{frame}
 
-\subsection{Čínská věta o zbytcích}
+\subsection{Čínská věta o~zbytcích}
 
-\begin{frame}{Čínská věta o zbytcích}
-    \pause
-    \begin{thmblock}[Čínská věta o zbytcích]
+\begin{frame}{Čínská věta o~zbytcích}
+
+    \visible<2->{\begin{thmblock}[Čínská věta o~zbytcích]
         Nechť \(m_1,m_2,\ldots,m_k\in\N\) jsou po dvou nesoudělná.
 
         Potom pro libovolná celá čísla \(a_1,a_2,\ldots,a_k\) má soustava kongruencí
@@ -441,85 +448,86 @@
             x\bmod m_k &= a_k
         \end{align*}
         právě jedno řešení.
-    \end{thmblock}
-    \pause
-    \begin{tnoticeframe}
+    \end{thmblock}}
+
+    \visible<3->{\begin{tnoticeframe}
         Toto řešení je určeno jednoznačně modulo $M=m_1m_2\cdots m_k$.
-    \end{tnoticeframe}
+    \end{tnoticeframe}}
 
 \end{frame}
 
-\begin{frame}{Důsledek čínské věty o zbytcích}
-    \pause
-    \begin{corblock}
+\begin{frame}{Důsledek čínské věty o~zbytcích}
+
+    \visible<2->{\begin{corblock}
         Nechť $m_1,m_2\in\N$ jsou nesoudělná. Pak pro každé $x,a\in\N$ platí
         \[\left.\begin{aligned}
             x\bmod m_1&=a\\
             x\bmod m_2&=a
         \end{aligned}\right\}\iff x\bmod m_1m_2=a.\]
-    \end{corblock}
+    \end{corblock}}
 \end{frame}
 
 \subsection{Korektnost RSA}
 
 \begin{frame}{Korektnost RSA}
-    \pause
-    Chceme ukázat, že $\mathbf{D}(\mathbf{E}(x, k_V), k_S)=x$, neboli že
-    \[\left(x^{v}\bmod n\right)^{s}\bmod n=x^{vs}\bmod n=x.\]
-    \pause
-    Důkaz rozdělíme na dva případy:
+    \footnotesize
+
+    \visible<2->{Chceme ukázat, že $\mathbf{D}(\mathbf{E}(x, k_V), k_S)=x$, neboli že
+    \[\left(x^{v}\bmod n\right)^{s}\bmod n=x^{vs}\bmod n=x.\]}
+
+    \visible<3->{Důkaz rozdělíme na dva případy:
     \begin{enumerate}
-        \pause
-        \item \textbf{$p$ dělí číslo $x$.} Pak platí
-        \[x^{vs}\bmod p = 0 = x\bmod p.\]\pause
-        \item \textbf{$p$ nedělí číslo $x$.} Protože platí $vs\bmod(p-1)(q-1)=1$, existuje $t\in\N$ takové, že
-        \[vs=1+t(p-1)(q-1).\]\pause
-        Pak dostáváme
+
+        \visible<4->{\item \textbf{$p$ dělí číslo $x$.} Pak platí
+        \[x^{vs}\bmod p = 0 = x\bmod p.\]}
+        \visible<5->{\item \textbf{$p$ nedělí číslo $x$.} Protože platí $vs\bmod(p-1)(q-1)=1$, existuje $t\in\N$ takové, že
+        \[vs=1+t(p-1)(q-1).\]}
+        \visible<6->{Pak dostáváme
         \begin{align*}
             x^{vs}\bmod p&=x^{1+t(p-1)(q-1)}\bmod p\stackrel{\text{MFV}}{=}x(x^{p-1})^{t(q-1)}\bmod p\\
             &=x\cdot 1^{t(q-1)}\bmod p=x\bmod p.
-        \end{align*}
-        \pause
-        Podobně pro $q$ dostaneme, že též platí $x^{vs}\bmod q=x\bmod q$.
-    \end{enumerate}
+        \end{align*}}
+
+        \visible<7->{Podobně pro $q$ dostaneme, že též platí $x^{vs}\bmod q=x\bmod q$.}
+    \end{enumerate}}
 
 \end{frame}
 
 \begin{frame}{Korektnost RSA}
-    \pause
-    Tedy víme, že platí
+
+    \visible<2->{Tedy víme, že platí
     \begin{align*}
         x\bmod p&=x^{vs}\bmod p\\
         x\bmod q&=x^{vs}\bmod q.
-    \end{align*}
-    \pause
-    Podle \markdarkred{důsledku čínské věty o~zbytcích} platí
-    \[x^{vs}\bmod pq=x\bmod pq=x\bmod n\stackrel{x<n}{=}x.\]
+    \end{align*}}
+
+    \visible<3->{Podle \markdarkred{důsledku čínské věty o~zbytcích} platí
+    \[x^{vs}\bmod pq=x\bmod pq=x\bmod n\stackrel{x<n}{=}x.\]}
 \end{frame}
 
 \begin{frame}{Příklad}{Algoritmus RSA pro malá prvočísla}
 
     \begin{itemize}
-        \pause
-        \item Volme prvočísla
+
+        \visible<2->{\item Volme prvočísla $p=5$ a~$q=11$ a~exponent
         \[
-        s=27,\quad p=5,\quad q=11.
-        \]
-        \pause
-        \item Pak $n=pq=55$. Spočítáme hodnotu $v$ tak, aby platilo
+        s=27,\quad\text{který je nesoudělný s~}(p-1)(q-1)=40.
+        \]}
+
+        \visible<3->{\item Pak $n=pq=55$. Spočítáme hodnotu $v$ tak, aby platilo
         \[vs\bmod (p-1)(q-1)=27v\bmod 40=1.\]
-        Tuto rovnost splňuje např. $v=3$.
-        \pause
-        \item Máme tedy veřejný klíč $k_V=(3, 55)$ a soukromý klíč $k_S=(27,55)$.
-        \pause
-        \item Alice zašifruje zprávu \(x=7\):
+        Tuto rovnost splňuje např. $v=3$.}
+
+        \visible<4->{\item Máme tedy veřejný klíč $k_V=(3, 55)$ a~soukromý klíč $k_S=(27,55)$.}
+
+        \visible<5->{\item Alice zašifruje zprávu \(x=7\):
         \[
         c=x^v \bmod n = 7^3 \bmod 55 = 343 \bmod 55 = 13.
         \]
         Bob dešifruje:
         \[
         x=c^s \bmod n = 13^{27}\bmod 55 = 7.
-        \]
+        \]}
     \end{itemize}
 
 \end{frame}
@@ -527,118 +535,124 @@
 \subsection{Bezpečnost RSA}
 
 \begin{frame}{Bezpečnost RSA}
-    \pause
-    U RSA je veřejný klíč $ k_V=(v,n)$, kde
+
+    \visible<2->{U~RSA je veřejný klíč $ k_V=(v,n)$, kde
     \[
         n=pq
     \]
-    je součin dvou \markdarkred{velkých prvočísel}.
-    \pause
-    \vspace{0.2cm}
+    je součin dvou \markdarkred{velkých prvočísel}.}
+
+    \visible<3->{\vspace{0.2cm}
 
     \begin{talertframe}
         Pokud útočník zná rozklad
         \[
             n=pq,
         \]
-        může z rovnosti
+        může z~rovnosti
         \[vs\bmod(p-1)(q-1)=1\]
         snadno dopočítat $s$.
-    \end{talertframe}
+    \end{talertframe}}
 \end{frame}
 
 \begin{frame}{Faktorizace}
-    \pause
-    \begin{talertbox}{Základní předpoklad bezpečnosti}
-        Je snadné spočítat součin \(n=pq\), ale je těžké z čísla \(n\)
-        zpětně zjistit prvočísla \(p\) a \(q\).
-    \end{talertbox}
-    \pause
-    \decproblem{Faktorizace ($\FACTOR$)}{
+    \small
+
+    \visible<2->{\begin{talertbox}{Základní předpoklad bezpečnosti}
+        Je snadné spočítat součin \(n=pq\), ale je těžké z~čísla \(n\)
+        zpětně zjistit prvočísla \(p\) a~\(q\).
+    \end{talertbox}}
+
+    \visible<3->{\decproblem{Faktorizace ($\FACTOR$)}{
         Přirozená čísla $n,b\in\N,b\leqslant n$.
     }{
-        Existuje $d\in\N$ takové, že $1<d<b$ a $d$ dělí $n$?
-    }
-    \pause
-    Protože pracujeme s binárními hodnotami $n$, platí
-    \[|\binary{n}|=\lceil\log_2{n}\rceil.\]
-    \pause
-    Naivní algoritmus by musel mít složitost $2^{|\binary{n}|}$.
+        Existuje $d\in\N$ takové, že $1<d<b$ a~$d$ dělí $n$?
+    }}
+
+    \visible<4->{Protože pracujeme s~binárními hodnotami $n$, platí
+    \[|\binary{n}|=\lceil\log_2{n}\rceil.\]}
+
+    \visible<5->{Naivní algoritmus by musel mít složitost $2^{|\binary{n}|}$.}
 \end{frame}
 
 \begin{frame}{Problém $\FACTOR$ patří do $\classNP$}
-    \pause
-    \begin{propblock}
+
+    \visible<2->{\begin{propblock}
         Platí $\FACTOR\in\classNP$.
-    \end{propblock}
-    \pause
-    \begin{itemize}
-        \item Na vstupu mějme dvojici $(n,b)$ a číslo $d\in\N$.\pause
-        \item Celková délka vstupu je $L_n=|\binary{n}|+|\binary{b}|$.\pause
-        \item Mějme algoritmus níže.\pause
-        \begin{center}
+    \end{propblock}}
+
+    \visible<3->{\begin{itemize}
+        \item Na vstupu mějme dvojici $(n,b)$ a~číslo $d\in\N$.
+        \visible<4->{\item Celková délka vstupu je $L_n=|\binary{n}|+|\binary{b}|$.}
+        \visible<5->{\item Mějme algoritmus níže.}
+        \visible<6->{\begin{center}
             \begin{minipage}{0.7\textwidth}
                 \begin{algorithm}[H]
                     \caption{Verifikátor}
-                    \If{\textup{$(d=1\lor d\geqslant b)\land n\bmod d\neq 0$}}{
+                    \If{\textup{$d\leqslant 1\lor d\geqslant b\lor n\bmod d\neq 0$}}{
                         \Return{\textup{\textbf{false}}}
                     }
                     \Return{\textup{\textbf{true}}}
                 \end{algorithm}
             \end{minipage}
-        \end{center}
-        \pause
-        \item Porovnání binárně zapsaných čísel i~výpočet zbytku po dělení lze provést v~čase polynomiálním vzhledem k~počtu bitů vstupu $L_n$.\pause
-        \item Ověřovač tedy běží v~polynomiálním čase.
-    \end{itemize}
+        \end{center}}
+
+        \visible<7->{\item Porovnání binárně zapsaných čísel i~výpočet zbytku po dělení lze provést v~čase polynomiálním vzhledem k~počtu bitů vstupu $L_n$.}
+        \visible<8->{\item Ověřovač tedy běží v~polynomiálním čase.}
+    \end{itemize}}
 
 \end{frame}
 
-\begin{frame}{Co víme o faktorizaci?}
-    \pause
-    \begin{tnoticeframe}
+\begin{frame}{Co víme o~faktorizaci?}
+
+    \visible<2->{\begin{tnoticeframe}
         \begin{center}
             Víme, že $\FACTOR\in\classNP$.
         \end{center}
-    \end{tnoticeframe}
-    \pause
-    \begin{talertbox}{Otevřený problém}
+    \end{tnoticeframe}}
+
+    \visible<3->{\begin{talertbox}{Otevřený problém}
         \begin{center}
             Není známo, zdali $\FACTOR$ je $\classNP$-úplný problém nebo $\FACTOR\in\classP$.
         \end{center}
-    \end{talertbox}
-    \pause
-    Kdyby $\FACTOR\in\classP$, pak ze znalosti čísla $n$ bychom mohli nalézt prvočísla $p,q$ a~odtud odvodit $s$.
+    \end{talertbox}}
+
+    \visible<4->{Kdyby $\FACTOR\in\classP$, pak ze znalosti čísla $n$ bychom mohli nalézt prvočísla $p,q$ a~odtud odvodit $s$.}
 \end{frame}
 
-\section{Pseudonáhodné generátory a jednosměrné funkce}
+% =================================================================
+\section{Pseudonáhodné generátory a~jednosměrné funkce}
+% =================================================================
 
-\titleframe{\huge Pseudonáhodné generátory\\ a~jednosměrné funkce}
+\begin{titleframeenv}{\huge Pseudonáhodné generátory\\ a~jednosměrné funkce}
+    \obrazek[0.35\textheight]{images/idea-jednosmerne-funkce.tex}
+\end{titleframeenv}
 
 \subsection{Pseudonáhodné generátory}
 
 \begin{frame}{Pseudonáhodný generátor}
-    \pause
-    Funkce
+
+    \visible<2->{Funkce
     \[
         G:\set{0,1}^n \to \set{0,1}^{\ell(n)}
     \]
-    je \markdarkred{pseudonáhodný generátor (PRG)}, pokud:\pause
-    \begin{itemize}
-        \item \(G\) je vyčíslitelná deterministickým polynomiálním algoritmem,\pause
-        \item \(\ell(n)>n\) pro každé \(n\in\mathbb{N}\) (\markdarkred{stretch}),\pause
-        \item žádný \markdarkred{pravděpodobnostní polynomiální algoritmus $\mathcal{A}$} neumí "rozlišit"
-        \(G(y_n)\) od \(y_{\ell(n)}\), kromě zanedbatelné chyby.\pause
-    \end{itemize}
-    Vstup \(s\in\{0,1\}^n\), tzv. \markdarkred{seed}, se "natáhne" na delší řetězec \(G(s)\).
+    je \markdarkred{pseudonáhodný generátor (PRG)}, pokud:}
+    \visible<3->{\begin{itemize}
+        \item \(G\) je vyčíslitelná deterministickým polynomiálním algoritmem,
+        \visible<4->{\item \(\ell(n)>n\) pro každé \(n\in\mathbb{N}\) (\markdarkred{stretch}),}
+        \visible<5->{\item žádný \markdarkred{pravděpodobnostní polynomiální algoritmus $\mathcal{A}$} neumí "rozlišit"
+        \(G(y_n)\) od \(y_{\ell(n)}\), kromě zanedbatelné chyby.}
+    \end{itemize}}
+    \visible<6->{Vstup \(s\in\{0,1\}^n\), tzv. \markdarkred{seed}, se "natáhne" na delší řetězec \(G(s)\).}
 
 \end{frame}
 
 \subsection{Nerozlišitelnost výstupu PRG}
 
 \begin{frame}{Nerozlišitelnost výstupu PRG}
-    \pause
-    \begin{tinfobox}{Třetí podmínka}
+    \small
+
+    \visible<2->{\begin{tinfobox}{Třetí podmínka}
         Pro každý pravděpodobnostní polynomiální algoritmus \(\mathcal{A}\) platí:
         \[
         \left|
@@ -648,307 +662,299 @@
         \right|
         \leqslant \varepsilon(n),
         \]
-        kde \(\varepsilon(n)\) je zanedbatelná funkce. Funkce \(\varepsilon(n)\) je \textbf{zanedbatelná}, pokud pro každé
-        \(k\in\mathbb{N}\) existuje \(n_k\) takové, že pro každé \(n>n_k\) platí
-        \[
-            \varepsilon(n) < \frac{1}{n^k}.
-        \]
-    \end{tinfobox}
-    \pause
-    \begin{tnoticeframe}
-        Algoritmus \(\mathcal{A}\) dostane řetězec délky \(\ell(n)\) a snaží se
+        kde \(\varepsilon(n)\) je \textbf{zanedbatelná} funkce, tj. pro každé
+        \(k\in\mathbb{N}\) existuje \(n_k\) takové, že pro každé \(n>n_k\) platí \(\varepsilon(n) < 1/n^k\).
+    \end{tinfobox}}
+
+    \visible<3->{\begin{tnoticeframe}
+        Algoritmus \(\mathcal{A}\) dostane řetězec délky \(\ell(n)\) a~snaží se
         rozhodnout, zda je skutečně náhodný, nebo vznikl jako výstup \(G\).
-    \end{tnoticeframe}
+    \end{tnoticeframe}}
 
 \end{frame}
 
 \subsection{Existence PRG, když P=NP}
 
 \begin{frame}{Žádné PRG, pokud $\classP=\classNP$}
-    \pause
-    \begin{timportantframe}
+    \small
+
+    \visible<2->{\begin{timportantframe}
         Pokud by platilo $\classP=\classNP$, pak by žádné pseudonáhodné generátory neexistovaly.
     \end{timportantframe}
 
-    \vspace{0.2cm}
-    \pause
-    \textbf{Důvod:} Pro daný výstup \(y\in\set{0,1}^{n}\) bychom uměli efektivně rozhodnout, zda existuje seed \(s\) takový, že
+    \vspace{0.2cm}}
+
+    \visible<3->{\textbf{Důvod:} Pro daný výstup \(y\in\set{0,1}^{n}\) bychom uměli efektivně rozhodnout, zda existuje seed \(s\) takový, že
     \[
         G(s)=y.
-    \]
-    \pause
-    \begin{itemize}
+    \]}
+
+    \visible<4->{\begin{itemize}
         \item Uvažujme jazyk
         \[
             L_G =\set{y : \exists s\in\{0,1\}^n: G(s)=y}.
         \]
-        Tento jazyk patří do \(\classNP\), protože certifikátem (nápovědou) je seed~\(s\).\pause
-        \item Rozlišovač \(\mapping{\mathcal{D}}{\set{0,1}^{\ell(n)}}{\set{0,1}}\) se vstupem \(y\) udělá:
+        Tento jazyk patří do \(\classNP\), protože certifikátem (nápovědou) je seed~\(s\).
+        \visible<5->{\item Rozlišovač \(\mapping{\mathcal{D}}{\set{0,1}^{\ell(n)}}{\set{0,1}}\) se vstupem \(y\) udělá:
         \[
             \mathcal{D}(y)=1
             \quad\Longleftrightarrow\quad
             y\in L_G.
-        \]
-    \end{itemize}
+        \]}
+    \end{itemize}}
 
 \end{frame}
 
 \begin{frame}{Žádné PRG, pokud $\classP=\classNP$}
-    \pause
-    \begin{itemize}
-        \item Pokud \(y=G(s)\), pak vždy platí $\mathcal{D}(y)=1$ a tedy
-        \[\Pr[\mathcal{D}(y)=1]=1.\]\pause
-        \item Pokud je \(y\) skutečně náhodný řetězec délky \(\ell(n)\), pak pravděpodobnost, že leží v~\(L_G\), je nejvýše
+
+    \visible<2->{\begin{itemize}
+        \item Pokud \(y=G(s)\), pak vždy platí $\mathcal{D}(y)=1$ a~tedy
+        \[\Pr[\mathcal{D}(y)=1]=1.\]
+        \visible<3->{\item Pokud je \(y\) skutečně náhodný řetězec délky \(\ell(n)\), pak pravděpodobnost, že leží v~\(L_G\), je nejvýše
         \[
             \frac{2^n}{2^{\ell(n)}}=2^{n-\ell(n)}.
-        \]\pause
-        \item Pak dostáváme
+        \]}
+        \visible<4->{\item Pak dostáváme
         \begin{align*}
              &\left|\Pr_{y\in\{0,1\}^{\ell(n)}}[\mathcal{D}(y)=1]-\Pr_{y\in\{0,1\}^{n}}[\mathcal{D}(G(y))=1]\right|\\
              &=\left|2^{n-\ell(n)}-1\right|=1-2^{n-\ell(n)}\geqslant 1-\frac{1}{2}=\frac{1}{2},
         \end{align*}
-        což není zanedbatelná funkce.
-    \end{itemize}
+        což není zanedbatelná funkce.}
+    \end{itemize}}
 \end{frame}
 
 \subsection{Jednosměrné funkce}
 
 \begin{frame}{Jednosměrná funkce}
-    \pause
-    \[
+
+    \visible<2->{\[
         \mapping{f}{\set{0,1}^{*}}{\set{0,1}^{*}}
     \]
-    je \markdarkred{jednosměrná funkce (OWF)}, pokud\pause
-    \begin{itemize}
-        \item $f(x)$ lze spočítat v polynomiálním čase pro každé $x\in\set{0,1}^{*}$ a\pause
-        \item je \markdarkred{"těžko" invertovatelná}.
-    \end{itemize}
-    \pause
-    Druhá podmínka formálně říká, že pro každý pravděpodobnostní polynomiální algoritmus $\mathcal{A}$ existuje zanedbatelná funkce $\varepsilon(n)$ taková, že pro každé $n\in\N$ 
-    \[\Pr_{x\in\set{0,1}^{n}}\left[f(\mathcal{A}(f(x)))=f(x)\right]\leqslant\varepsilon(n).\]
-    \pause
-    \begin{timportantframe}
-        Když náhodně vybereme $y$ a dáme jej útočníkovi, pak útočník má \textbf{zanedbatelně malou šanci}, že se mu podaří najít vstup~$x$ takový, že $y=f(x)$.
-    \end{timportantframe}
+    je \markdarkred{jednosměrná funkce (OWF)}, pokud}
+    \visible<3->{\begin{itemize}
+        \item $f(x)$ lze spočítat v~polynomiálním čase pro každé $x\in\set{0,1}^{*}$ a
+        \visible<4->{\item je \markdarkred{"těžko" invertovatelná}.}
+    \end{itemize}}
+
+    \visible<5->{Druhá podmínka formálně říká, že pro každý pravděpodobnostní polynomiální algoritmus $\mathcal{A}$ existuje zanedbatelná funkce $\varepsilon(n)$ taková, že pro každé $n\in\N$ 
+    \[\Pr_{x\in\set{0,1}^{n}}\left[f(\mathcal{A}(f(x)))=f(x)\right]\leqslant\varepsilon(n).\]}
+
+    \visible<6->{\begin{timportantframe}
+        Když náhodně vybereme $x$ a~útočníkovi dáme pouze $y=f(x)$, pak má \textbf{zanedbatelně malou šanci}, že najde nějaký vzor~$x'$ takový, že $f(x')=y$.
+    \end{timportantframe}}
 
 \end{frame}
 
 \begin{frame}{Idea jednosměrné funkce}
 
-    \centering
-    \input{images/idea-jednosmerne-funkce.tex}
+    \obrazek[0.4\textheight]{images/idea-jednosmerne-funkce.tex}
 
 \end{frame}
 
 \begin{frame}{Možní kandidáti na jednosměrné funkce}
-    \pause
-    \begin{talertframe}
+
+    \visible<2->{\begin{talertframe}
         Dodnes není známé, zdali nějaké jednosměrné funkce existují.
-    \end{talertframe}
-    \pause
-    Existují kandidáti na jednosměrné funkce:
-    \pause
-    \begin{itemize}
-        \item Násobení prvočísel: $f(p,q)=pq$.\pause
-        \item Součet podmnožiny:
+    \end{talertframe}}
+
+    \visible<3->{Existují kandidáti na jednosměrné funkce:}
+
+    \visible<4->{\begin{itemize}
+        \item Násobení prvočísel: $f(p,q)=pq$.
+        \visible<5->{\item Součet podmnožiny:
         \[f(x_1,\dots,x_n,J)=\left(x_1,\dots,x_n,\left(\sum_{j\in J}x_j\right)\bmod 2^{n}\right),\]
-        kde $x_1,\dots,x_n\in\set{0,1}^{n}$ a $J\subseteq\set{1,\dots,n}$.
-    \end{itemize}
+        kde $x_1,\dots,x_n\in\set{0,1}^{n}$ a~$J\subseteq\set{1,\dots,n}$.}
+    \end{itemize}}
 
 \end{frame}
 
-\begin{frame}{Souvislost OWF a PRG}
-    \pause
-    \begin{itemize}
-        \item Existence jednosměrných funkcí je~úzce spojena s~existencí pseudonáhodných generátorů.\pause
-        \item Ve skutečnosti platí:
+\begin{frame}{Souvislost OWF a~PRG}
+
+    \visible<2->{\begin{itemize}
+        \item Existence jednosměrných funkcí je~úzce spojena s~existencí pseudonáhodných generátorů.
+        \visible<3->{\item Ve skutečnosti platí:
         \[
             \text{existují OWF}
             \quad\Longleftrightarrow\quad
             \text{existují PRG}.
-        \]\pause
-        \item Jednosměrná funkce poskytuje výpočetní těžkost. Z této těžkosti lze konstruovat bity, které vypadají náhodně.
-    \end{itemize}
+        \]}
+        \visible<4->{\item Jednosměrná funkce poskytuje výpočetní těžkost. Z~této těžkosti lze konstruovat bity, které vypadají náhodně.}
+    \end{itemize}}
 
 \end{frame}
 
-\subsection{Souvislost PRG s kryptografií}
+\subsection{Souvislost PRG s~kryptografií}
 
-\begin{frame}{Souvislost s kryptografií}
-    \pause
-    \begin{itemize}
-        \item V~praxi nechceme používat opravdu náhodný klíč délky celé zprávy.\pause
-        \item Místo toho použijeme krátký tajný seed \(s\) a z něj vytvoříme dlouhý proud bitů $G(s)$.\pause
-        \item Potom šifrujeme podobně jako u jednorázové šifry:
+\begin{frame}{Souvislost s~kryptografií}
+
+    \visible<2->{\begin{itemize}
+        \item V~praxi nechceme používat opravdu náhodný klíč délky celé zprávy.
+        \visible<3->{\item Místo toho použijeme krátký tajný seed \(s\) a~z něj vytvoříme dlouhý proud bitů $G(s)$.}
+        \visible<4->{\item Potom šifrujeme podobně jako u~jednorázové šifry:
         \[
             c=m\oplus G(s).
-        \]
-    \end{itemize}
-    \pause
-    \vspace{0.2cm}
+        \]}
+    \end{itemize}}
+
+    \visible<5->{\vspace{0.2cm}
 
     \begin{talertframe}
         Bezpečnost pak nestojí na dokonalé náhodnosti, ale na tom, že
         \(G(s)\) je \textbf{nerozlišitelný od náhodného řetězce}.
-    \end{talertframe}
+    \end{talertframe}}
 
 \end{frame}
 
 \begin{frame}{Využití PRG pro šifrování}
-    \centering
-    \input{images/vyuziti-prg-pro-sifrovani.tex}
+    \obrazek[0.4\textheight]{images/vyuziti-prg-pro-sifrovani.tex}
 \end{frame}
 
+% =================================================================
 \section{Hešovací funkce}
+% =================================================================
 
-\titleframe{Hešovací funkce}
+\begin{titleframeenv}{Hešovací funkce}
+    \obrazek[0.4\textheight]{images/kolize-jsou-nevyhnutelne.tex}
+\end{titleframeenv}
 
-\subsection{Definice a vlastnosti hešovací funkce}
+\subsection{Definice a~vlastnosti hešovací funkce}
 
 \begin{frame}{Hešovací funkce}
-    \pause
-    \begin{defblock}
-        \markdarkred{Hešovací funkce} je jakákoliv funkce z~$\set{0,1}^{*}$ do~$\set{0,1}^{n}$. Je-li $H$ hešovací funkce a $x\in\set{0,1}^{*}$, pak $H(x)$ se nazývá \markdarkred{hash} nebo též \markdarkred{otisk}.
-    \end{defblock}
-    \pause
-    Požadavky na hešovací funkci:
-    \pause
-    \begin{enumerate}
-        \item otisk je \textbf{rychle vyčíslitelný} a\pause
-        \item malá změna vstupu má \textbf{výrazně} změnit výstup.
-    \end{enumerate}
+
+    \visible<2->{\begin{defblock}
+        \markdarkred{Hešovací funkce} je jakákoliv funkce z~$\set{0,1}^{*}$ do~$\set{0,1}^{n}$. Je-li $H$ hešovací funkce a~$x\in\set{0,1}^{*}$, pak $H(x)$ se nazývá \markdarkred{hash} nebo též \markdarkred{otisk}.
+    \end{defblock}}
+
+    \visible<3->{Požadavky na hešovací funkci:}
+
+    \visible<4->{\begin{enumerate}
+        \item otisk je \textbf{rychle vyčíslitelný} a
+        \visible<5->{\item malá změna vstupu má \textbf{výrazně} změnit výstup.}
+    \end{enumerate}}
 \end{frame}
 
 \begin{frame}{Kolize jsou nevyhnutelné}
-    \pause
-    Funkce
+
+    \visible<2->{Funkce
     \[\mapping{H}{\set{0,1}^{*}}{\set{0,1}^{n}}\]
-    uvažuje vstupy z nekonečné množiny do množiny s~$2^{n}$ prvky.
-    \pause
-    \begin{talertframe}
+    uvažuje vstupy z~nekonečné množiny do množiny s~$2^{n}$ prvky.}
+
+    \visible<3->{\begin{talertframe}
         \begin{center}
             Musí existovat dvojice $x,y\in\set{0,1}^{*}$ taková, že $H(x)=H(y)$.
         \end{center}
-    \end{talertframe}
-    \pause
-    \vspace{0.15cm}
+    \end{talertframe}}
+
 
     
-    \begin{figure}
-        \centering
-        \input{images/kolize-jsou-nevyhnutelne.tex}
-    \end{figure}
+    \visible<4->{\obrazek[0.4\textheight]{images/kolize-jsou-nevyhnutelne.tex}}
 
-    \vspace{0.15cm}
-    \pause
-    \textbf{Nový požadavek:} Chceme, aby bylo "výpočetně složité" nějakou kolizi najít. 
+    \visible<5->{\textbf{Nový požadavek:} Chceme, aby bylo "výpočetně složité" nějakou kolizi najít.} 
 \end{frame}
 
-\subsection{Narozeninový paradox a hledání kolizí}
+\subsection{Narozeninový paradox a~hledání kolizí}
 
 \begin{frame}{Narozeninový paradox}
-    \pause
-    \begin{tinfobox}{Otázka}
+    \footnotesize
+
+    \visible<2->{\begin{tinfobox}{Otázka}
         Jaká je pravděpodobnost, že mezi \(n\) lidmi existují alespoň dva,
         kteří mají narozeniny ve stejný den?
-    \end{tinfobox}
-    \pause
-    Nechť \(C\) značí počet dvojic lidí, které \markdarkred{mají narozeniny ve stejný den}.
-    \pause
-    \begin{align*}
-        \Pr[C>0]&=1-\Pr(C=0)\\
+    \end{tinfobox}}
+
+    \visible<3->{Nechť \(C\) značí počet dvojic lidí, které \markdarkred{mají narozeniny ve stejný den}.}
+
+    \visible<4->{\begin{align*}
+        \Pr[C>0]&=1-\Pr[C=0]\\
         \Pr[C=0]&=\frac{365}{365}\cdot\frac{364}{365}\cdot\frac{363}{365}\cdots\frac{365-n+1}{365}\\
         \Pr[C>0]&=1-\prod_{i=0}^{n-1}\frac{365-i}{365}
-    \end{align*}
-    \pause
-    \begin{tnoticeframe}
+    \end{align*}}
+
+    \visible<5->{\begin{tnoticeframe}
         Už pro \(n=23\) vychází pravděpodobnost přibližně \(50{,}7\ \%\).
-    \end{tnoticeframe}
+    \end{tnoticeframe}}
 
 \end{frame}
 
 \begin{frame}{Kolik vzniká dvojic?}
 
-    \centering
-
-    \input{images/kolik-vznika-dvojic.tex}
+    \obrazek[0.4\textheight]{images/kolik-vznika-dvojic.tex}
 
 \end{frame}
 
-\begin{frame}{Narozeninový paradox a kolize hashů}
-    \pause
-    \begin{itemize}
-        \item Uvažujme hešovací funkci $H_r:\set{0,1}^* \to \set{0,1}^r$. Možných hashů je~$2^r$.\pause
-        \item Mějme celkově $k$ různých zpráv
-        \[x_1,\dots,x_k\;\text{a jejich hashe}\;H_r(x_1),\dots,H_r(x_k).\]
-        \pause
-        \item Označme si počet vzniklých kolizí opět jako $C$. Zajímá nás $\Pr[C>0]$.\pause
-        \item Postupujeme podobně:
+\begin{frame}{Narozeninový paradox a~kolize hashů}
+    \small
+
+    \visible<2->{\begin{itemize}
+        \item Uvažujme hešovací funkci $H_r:\set{0,1}^* \to \set{0,1}^r$. Možných hashů je~$2^r$.
+        \visible<3->{\item Mějme celkově $k$ různých zpráv
+        \[x_1,\dots,x_k\;\text{a jejich hashe}\;H_r(x_1),\dots,H_r(x_k).\]}
+
+        \visible<4->{\item Označme si počet vzniklých kolizí opět jako $C$. Zajímá nás $\Pr[C>0]$.}
+        \visible<5->{\item Postupujeme podobně:
         \begin{align*}
-            \Pr[C>0]&=1-\Pr[C=0]=1-\prod_{j=1}^{k-1}\left(1-\frac{j}{2^{r}}\right)\stackrel{1-x\approx e^{-x}}{=\approx}1-\prod_{j=1}^{k-1}e^{-j/2^{r}}\\
+            \Pr[C>0]&=1-\Pr[C=0]=1-\prod_{j=1}^{k-1}\left(1-\frac{j}{2^{r}}\right)\stackrel{1-x\approx e^{-x}}{\approx}1-\prod_{j=1}^{k-1}e^{-j/2^{r}}\\
             &=1-e^{-1/2^{r}}\cdot e^{-2/2^{r}}\cdots e^{-(k-1)/2^{r}}=1-e^{-\frac{1}{2^{r}}\sum_{j=1}^{k-1}j}=1-e^{-\frac{k(k-1)}{2^{r+1}}}
-        \end{align*}
-    \end{itemize}
+        \end{align*}}
+    \end{itemize}}
 
 \end{frame}
 
-\begin{frame}{Narozeninový paradox a kolize hashů}
-    \pause
-    \begin{figure}
-        \centering
-        \input{images/narozeninovy-paradox-a-kolize-hashu.tex}
-    \end{figure}
-    \pause
-    \begin{itemize}
+\begin{frame}{Narozeninový paradox a~kolize hashů}
+    \small
+
+    \visible<2->{\obrazek[0.18\textheight]{images/narozeninovy-paradox-a-kolize-hashu.tex}}
+
+    \visible<3->{\begin{itemize}
         \item Pokud budeme předpokládat, že $k$ je "velké", potom řádově porovnáme
         \[\binom{k}{2}=\frac{k(k-1)}{2}=\frac{k^{2}-k}{2}\approx \frac{k^{2}}{2}\]
-        dvojic.\pause
-        \item Kolize začne být pravděpodobná, pokud $\frac{k^{2}}{2}\approx 2^{r}$, neboli $k\approx 2^{r/2}$.\pause
-        \item Pak totiž
-        \[\Pr[C>0]=1-\exp\left(\frac{2^{r/2}(2^{r/2}-1)}{2^{r+1}}\right)\approx 1-e^{\frac{2^{r}}{2^{r+1}}}=1-e^{1/2}\approx 0{,}3935.\]
-    \end{itemize}
-    \pause
-    \begin{talertframe}
+        dvojic.
+        \visible<4->{\item Kolize začne být pravděpodobná, pokud $\frac{k^{2}}{2}\approx 2^{r}$, neboli $k\approx 2^{r/2}$. Pak totiž
+        \[\Pr[C>0]=1-\exp\left(-\frac{2^{r/2}(2^{r/2}-1)}{2^{r+1}}\right)\approx 1-e^{-\frac{2^{r}}{2^{r+1}}}=1-e^{-1/2}\approx 0{,}3935.\]}
+    \end{itemize}}
+
+    \visible<5->{\begin{talertframe}
         \begin{center}
-            Kolize v $r$-bitovém hashi lze hrubou silou hledat přibližně v~čase $2^{r/2}$.
+            Kolize v~$r$-bitovém hashi lze hrubou silou hledat přibližně v~čase $2^{r/2}$.
         \end{center}
-    \end{talertframe}
+    \end{talertframe}}
 \end{frame}
 
 \subsection{Bezpečnostní vlastnosti hešovacích funkcí}
 
 \begin{frame}{Bezpečnostní vlastnosti hešovacích funkcí}
-    \pause
-    Uvažujme hešovací funkci
+    \small
+
+    \visible<2->{Uvažujme hešovací funkci
     \[
         \mapping{H_n}{\set{0,1}^{*}}{\set{0,1}^{n}}
-    \]
-    \pause
-    Dále nechť $\varepsilon$ značí nějakou zanedbatelnou funkci a $\mathcal{A}$ pravděpodobnostní polynomiální algoritmus (útočníka).
-    \pause
-    \begin{center}
+    \]}
+
+    \visible<3->{Dále nechť $\varepsilon$ značí nějakou zanedbatelnou funkci a~$\mathcal{A}$ pravděpodobnostní polynomiální algoritmus (útočníka).}
+
+    \visible<4->{\begin{center}
         \begin{tabular}{@{}p{0.25\textwidth}@{\hspace{0.5em}}p{0.7\textwidth}@{}}
             \markdarkred{Odolnost vůči nalezení vzoru} &
-            Z hashe \(y\) je těžké najít nějaké \(x\), pro které
+            Z~hashe \(y\) je těžké najít nějaké \(x\), pro které
             \(H_n(x)=y\), tzn. 
             \[
                 \Pr_{y\in\set{0,1}^{n}}\left[
-                H_n(\mathcal{A}(f(x)))=f(x)
+                H_n(\mathcal{A}(y))=y
                 \right]\leqslant \varepsilon(n).
             \]
             pro každé $n\in\N$.\\
-            \pause
-            \markdarkred{Odolnost vůči kolizím} &
-            Je těžké najít libovolnou dvojici \(x\neq y\), pro kterou $H_n(x)=H_n(y)$, tj.
+            \visible<5->{\markdarkred{Odolnost vůči kolizím}} &
+            \visible<5->{Je těžké najít libovolnou dvojici \(x\neq y\), pro kterou $H_n(x)=H_n(y)$, tj.
             \[
-                \Pr_{x,y\in\set{0,1}^{n}}\left[
+                \Pr\left[
+                (x,y)\gets\mathcal{A}(n):\;
                 x\neq y \land H_n(x)=H_n(y)
                 \right]\leqslant \varepsilon(n).
             \]
-            pro každé $n\in\N$.
+            pro každé $n\in\N$.}
 
         \end{tabular}
-    \end{center}
+    \end{center}}
 
 \end{frame}
 
@@ -956,9 +962,7 @@
 
 \begin{frame}{Hešovací funkce vs. jednosměrná funkce}
 
-\centering
-
-\input{images/hesovaci-funkce-vs-jednosmerna-funkce.tex}
+    \obrazek[0.4\textheight]{images/hesovaci-funkce-vs-jednosmerna-funkce.tex}
 
 \begin{tnoticeframe}
     \begin{center}
@@ -968,37 +972,41 @@
 
 \end{frame}
 
+% =================================================================
 \section{Secure Hash Algorithm (SHA)}
+% =================================================================
 
-\titleframe{Secure Hash Algorithm}
+\begin{titleframeenv}{Secure Hash Algorithm}
+    \obrazek[0.35\textheight]{images/obrazek-sponge-function.tex}
+\end{titleframeenv}
 
 \subsection{Historie SHA}
 
 \begin{frame}{Historie SHA}
-    \pause
-    \begin{itemize}
-        \item SHA = \textit{Secure Hash Algorithm}\pause
-        \item Rodina standardizovaných kryptografických hešovacích funkcí.
-    \end{itemize}
-    \pause
-    \begin{table}
+
+    \visible<2->{\begin{itemize}
+        \item SHA = \textit{Secure Hash Algorithm}
+        \visible<3->{\item Rodina standardizovaných kryptografických hešovacích funkcí.}
+    \end{itemize}}
+
+    \visible<4->{\begin{table}
         \centering
         \renewcommand{\arraystretch}{1.5}
         \begin{tabular}{ccl}
-            \markdarkred{1993} & SHA-0 & původní Secure Hash Standard \\ \pause
-            \markdarkred{1995} & SHA-1 & nahrazení SHA-0; dnes se již nedoporučuje \\ \pause
-            \markdarkred{2002} & SHA-2 & rodina SHA-224, SHA-256, SHA-384, SHA-512 \\ \pause
-            \markdarkred{2015} & SHA-3 & založena na algoritmu Keccak \\
+            \visible<4->{\markdarkred{1993}} & \visible<4->{SHA-0} & \visible<4->{původní Secure Hash Standard} \\
+            \visible<5->{\markdarkred{1995}} & \visible<5->{SHA-1} & \visible<5->{nahrazení SHA-0; dnes se již nedoporučuje} \\
+            \visible<6->{\markdarkred{2002}} & \visible<6->{SHA-2} & \visible<6->{rodina SHA-224, SHA-256, SHA-384, SHA-512} \\
+            \visible<7->{\markdarkred{2015}} & \visible<7->{SHA-3} & \visible<7->{založena na algoritmu Keccak} \\
         \end{tabular}
-    \end{table}
-    \pause
-    \begin{tnoticeframe}
-        V současnosti se pro nové kryptografické použití volí zejména
+    \end{table}}
+
+    \visible<8->{\begin{tnoticeframe}
+        V~současnosti se pro nové kryptografické použití volí zejména
         \begin{center}
             \textbf{SHA-2} nebo \textbf{SHA-3}.
         \end{center}
         SHA-1 byla nahrazena.
-    \end{tnoticeframe}
+    \end{tnoticeframe}}
 
 \end{frame}
 
@@ -1006,224 +1014,212 @@
 
 % 1
 \begin{frame}{Sponge function}
-    \pause
-    Sponge function (SF) pracuje s vnitřním stavem délky
+
+    \visible<2->{Sponge function (SF) pracuje s~vnitřním stavem délky
     \[
         b=\underbrace{r}_{\text{rate}}+\overbrace{c}^{\text{capacity}}.
     \]
 
-    \vspace{0.15cm}
-    \pause
-    Zpráva $m$ se nejprve doplní paddingem a rozdělí na bloky délky \(r\):
+    \vspace{0.15cm}}
+
+    \visible<3->{Zpráva $m$ se nejprve doplní paddingem a~rozdělí na bloky délky \(r\):
     \[
         M \longrightarrow p_1p_2\ldots p_t.
-    \]
-    \pause
-    Každý blok \(p_i\) má délku \(r\) bitů.
+    \]}
+
+    \visible<4->{Každý blok \(p_i\) má délku \(r\) bitů.}
 
 \end{frame}
 
 \begin{frame}{Fáze SF}
-    \pause
-    % Fáze 1
-    \begin{figure}
-        \centering
-        \input{images/faze-sf-1.tex}
-    \end{figure}
-    \pause
-    \begin{itemize}
-        \item Začneme s nulovým stavem $S_0=0^b$.\pause
-        \item Pro každý blok \(P_i\) položíme
+
+    \visible<2->{% Fáze 1
+    \obrazek[0.4\textheight]{images/faze-sf-1.tex}}
+
+    \visible<3->{\begin{itemize}
+        \item Začneme s~nulovým stavem $S_0=0^b$.
+        \visible<4->{\item Pro každý blok \(p_i\) položíme
         \[
             S_i=f\left(S_{i-1}\oplus(p_i 0^c)\right),
         \]
-        kde $\mapping{f}{\set{0,1}^{r}}{\set{0,1}^{r}}$ je \markdarkred{pseudonáhodná permutace}.
-    \end{itemize}
-    \pause
-    % Fáze 2
-    \begin{figure}
-        \centering
-        \input{images/faze-sf-2.tex}
-    \end{figure}
-    \pause
-    \begin{itemize}
-        \item Z výsledného stavu \(S_t\) čteme prvních \(r\) bitů.\pause
-        \item Pokud potřebujeme delší výstup, opakujeme:
+        kde $\mapping{f}{\set{0,1}^{b}}{\set{0,1}^{b}}$ je \markdarkred{pseudonáhodná permutace}.}
+    \end{itemize}}
+
+    \visible<5->{% Fáze 2
+    \obrazek[0.4\textheight]{images/faze-sf-2.tex}}
+
+    \visible<6->{\begin{itemize}
+        \item Z~výsledného stavu \(S_t\) čteme prvních \(r\) bitů.
+        \visible<7->{\item Pokud potřebujeme delší výstup, opakujeme:
         \[
             S_{k+1}=f(S_k)\;,\; k>t.
-        \]
-    \end{itemize}
+        \]}
+    \end{itemize}}
 
 \end{frame}
 
 \begin{frame}{Obrázek sponge function}
 
-\centering
-
-\input{images/obrazek-sponge-function.tex}
+    \obrazek[0.4\textheight]{images/obrazek-sponge-function.tex}
 
 \end{frame}
 
 \subsection{SHA-3}
 
 \begin{frame}{SHA-3 jako konkrétní sponge function}
-    \pause
-    \begin{itemize}
-        \item Vnitřní stav má délku $b=1600$ bitů.\pause
-        \item Pro SHA3-\(d\) platí:
+
+    \visible<2->{\begin{itemize}
+        \item Vnitřní stav má délku $b=1600$ bitů.
+        \visible<3->{\item Pro SHA3-\(d\) platí:
         \[
             c=2d,
             \qquad
             r=1600-c.
         \]
-        Například pro SHA3-256: $d=256, c=512, r=1088$.\pause
-        \item Typicky se používají SHA3-224, SHA3-256, SHA3-384 a~SHA3-512.
-    \end{itemize}
-    \pause
-    \begin{talertframe}
+        Například pro SHA3-256: $d=256, c=512, r=1088$.}
+        \visible<4->{\item Typicky se používají SHA3-224, SHA3-256, SHA3-384 a~SHA3-512.}
+    \end{itemize}}
+
+    \visible<5->{\begin{talertframe}
         Dodnes není známo, zdali je SHA3-$d$ jednosměrná funkce. Jedná se o~potenciálního kandidáta.
-    \end{talertframe}
+    \end{talertframe}}
 
 \end{frame}
 
+% =================================================================
 \section{Elektronický podpis}
+% =================================================================
 
-\titleframe{Elektronický podpis}
+\begin{titleframeenv}{Elektronický podpis}
+    \obrazek[0.4\textheight]{images/elektronicky-podpis-v-praxi.tex}
+\end{titleframeenv}
 
-\subsection{Zpráva s doručenkou}
+\subsection{Zpráva s~doručenkou}
 
-\begin{frame}{Zpráva s doručenkou}
-    \pause
-    \begin{tinfobox}{Motivace}
+\begin{frame}{Zpráva s~doručenkou}
+
+    \visible<2->{\begin{tinfobox}{Motivace}
         Alice chce mít jistotu, že její zpráva pro Boba byla skutečně doručena
-        adresátovi a že ji Bob obdržel v původním stavu.
+        adresátovi a~že ji Bob obdržel v~původním stavu.
     \end{tinfobox}
 
-    \vspace{0.15cm}
-    \pause
-    \centering
-    \input{images/zprava-s-dorucenkou.tex}
+    \vspace{0.15cm}}
+
+    \visible<3->{\obrazek[0.4\textheight]{images/zprava-s-dorucenkou.tex}}
 
 \end{frame}
 
 \begin{frame}{Je protokol bezpečný?}
     
-\centering
-\input{images/je-protokol-bezpecny.tex}%
+    \obrazek[0.4\textheight]{images/je-protokol-bezpecny.tex}
 
 \end{frame}
 
 \begin{frame}{Proč tento protokol nestačí?}
-    \pause
-    \begin{talertbox}{Hlavní problém}
+    \small
+
+    \visible<2->{\begin{talertbox}{Hlavní problém}
         Bob sice obdrží zprávu, kterou dokáže dešifrovat svým soukromým klíčem,
         ale nemá jistotu, že zpráva skutečně pochází od Alice.
     \end{talertbox}
 
-    \vspace{0.2cm}
-    \pause
-    \begin{itemize}
-        \item Záškodník může zprávu zachytit, změnit připojený podpis a vydávat se za jiného odesílatele.\pause
-        \item Bob potom přečte správnou zprávu \(x\), ale mylně se domnívá, že ji poslal někdo jiný.
-    \end{itemize}
-    \vspace{0.15cm}
-    \pause
-    \begin{timportantbox}{Co zde chybí?}
-        Musí být kryptograficky "svázán" se zprávou.
+    \vspace{0.2cm}}
+
+    \visible<3->{\begin{itemize}
+        \item Záškodník může zprávu zachytit, změnit připojený podpis a~vydávat se za jiného odesílatele.
+        \visible<4->{\item Bob potom přečte správnou zprávu \(x\), ale mylně se domnívá, že ji poslal někdo jiný.}
+    \end{itemize}}
+    \visible<4->{\vspace{0.15cm}}
+
+    \visible<5->{\begin{timportantbox}{Co zde chybí?}
+        Podpis musí být kryptograficky "svázán" se zprávou.
         \begin{center}
             \markdarkred{Podpis závisí na obsahu zprávy i~na~soukromém klíči odesílatele.}
         \end{center}
-    \end{timportantbox}
+    \end{timportantbox}}
 
 \end{frame}
 
 \subsection{Komutativita klíčů}
 
 \begin{frame}{Komutativita klíčů}
-    \pause
-    \begin{itemize}
-        \item Chceme používat \textbf{stejnou dvojici klíčů} jak pro šifrování, tak pro podpis.\pause
-        \item Proto potřebujeme, aby platilo nejen
+
+    \visible<2->{\begin{itemize}
+        \item Chceme používat \textbf{stejnou dvojici klíčů} jak pro šifrování, tak pro podpis.
+        \visible<3->{\item Proto potřebujeme, aby platilo nejen
         \[
             \mathbf{D}\left(\mathbf{E}(x,k_V),k_S\right)=x,\quad\text{ale také}\quad\mathbf{E}\left(\mathbf{D}(x,k_S),k_V\right)=x.
-        \]
-    \end{itemize}
+        \]}
+    \end{itemize}}
 
-    \vspace{0.15cm}
-    \pause
-    \centering
-    \input{images/komutativita-klicu.tex}%
+    \visible<3->{\vspace{0.15cm}}
+
+    \visible<4->{\obrazek[0.4\textheight]{images/komutativita-klicu.tex}}
 
 \end{frame}
 
 \begin{frame}{Podpis hashe}
-    \pause
-    Podepisovat přímo celou zprávu
+    \small
+
+    \visible<2->{Podepisovat přímo celou zprávu
     \[
         \sigma=\mathbf{D}(m,k_S^A)
     \]
-    není praktické.
-    \pause
-    \begin{talertframe}
+    není praktické.}
+
+    \visible<3->{\begin{talertframe}
         Zpráva může být dlouhá a~asymetrické operace jsou pomalé.
     \end{talertframe}
 
-    \vspace{0.2cm}
-    \pause
-    Mějme libovolnou \markdarkred{hešovací funkci $\mapping{H_n}{\set{0,1}^{*}}{\set{0,1}^{n}}$}
-    \pause
-    \begin{itemize}
-        \item Alice nejprve spočítá krátký otisk zprávy $h=H_n(m)$.\pause
-        \item Podepíše až tento hash:
-        \[
-            \sigma=\mathbf{D}\left(H_n(m),k_S^A\right).
-        \]\pause
-        \item Bob spočítá hash přijaté zprávy a porovná:
-        \[
-            \mathbf{E}\left(\sigma,k_V^A\right)\stackrel{?}{=}H_n(m).
-        \]\pause
-        \item Pokud se zpráva změní, změní se i~její hash a~podpis přestane sedět.
-    \end{itemize}
+    \vspace{0.2cm}}
+
+    \visible<4->{Mějme libovolnou \markdarkred{hešovací funkci $\mapping{H_n}{\set{0,1}^{*}}{\set{0,1}^{n}}$}}
+
+    \visible<5->{\begin{itemize}
+        \item Alice nejprve spočítá krátký otisk zprávy $h=H_n(m)$.
+        \visible<6->{\item Podepíše až tento hash: $\sigma=\mathbf{D}\left(H_n(m),k_S^A\right)$.}
+        \visible<7->{\item Bob spočítá hash přijaté zprávy a~porovná: $\mathbf{E}\left(\sigma,k_V^A\right)\stackrel{?}{=}H_n(m)$.}
+        \visible<8->{\item Pokud se zpráva změní, změní se i~její hash a~podpis přestane sedět.}
+    \end{itemize}}
 
 \end{frame}
 
-\subsection{Elektronický podpis v praxi}
+\subsection{Elektronický podpis v~praxi}
 
-\begin{frame}{Elektronický podpis v praxi}
+\begin{frame}{Elektronický podpis v~praxi}
 
-\centering
-\input{images/elektronicky-podpis-v-praxi.tex}%
+    \obrazek[0.4\textheight]{images/elektronicky-podpis-v-praxi.tex}
 
 \end{frame}
 
-\subsection{Elektronický podpis v právním rámci}
+\subsection{Elektronický podpis v~právním rámci}
 
-\begin{frame}{Elektronický podpis v právním rámci}
-    \pause
-    \begin{itemize}
-        \item První českou úpravou byl zákon č. 227/2000 Sb., \href{https://www.zakonyprolidi.cz/cs/2000-227}{\emph{\underline{o elektronickém podpisu}}}.\pause
-        \item Účinný byl od 1.10.2000 a~byl zrušen k 19.9.2016.\pause
-        \item Dnes oblast upravuje zejména: nařízení eIDAS a~český zákon č. 297/2016 Sb., \href{https://www.zakonyprolidi.cz/cs/2016-297}{\emph{\underline{o službách vytvářejících důvěru pro elektronické transakce}}}.
-    \end{itemize}
+\begin{frame}{Elektronický podpis v~právním rámci}
 
-    \vspace{0.15cm}
-    \pause
-    \begin{tnoticebox}{297/2016 Sb., § 13 odst. 3}
+    \visible<2->{\begin{itemize}
+        \item První českou úpravou byl zákon č. 227/2000 Sb., \href{https://www.zakonyprolidi.cz/cs/2000-227}{\emph{\underline{o~elektronickém podpisu}}}.
+        \visible<3->{\item Účinný byl od 1.~10.~2000 a~byl zrušen k~19.~9.~2016.}
+        \visible<4->{\item Dnes oblast upravuje zejména: nařízení eIDAS a~český zákon č. 297/2016 Sb., \href{https://www.zakonyprolidi.cz/cs/2016-297}{\emph{\underline{o~službách vytvářejících důvěru pro elektronické transakce}}}.}
+    \end{itemize}}
+
+    \visible<4->{\vspace{0.15cm}}
+
+    \visible<5->{\begin{tnoticebox}{297/2016 Sb., § 13 odst. 3}
         \textit{Agentura zveřejňuje způsobem umožňujícím dálkový přístup důvěryhodné seznamy obsahující informace týkající se~kvalifikovaných poskytovatelů služeb vytvářejících důvěru spolu s~informacemi o~jimi poskytovaných kvalifikovaných službách vytvářejících důvěru.}
-    \end{tnoticebox}
+    \end{tnoticebox}}
 
 \end{frame}
 
-\begin{frame}{Elektronický podpis v právním rámci}
-    \pause
-    Příklady kvalifikovaných poskytovatelů v~ČR (celý seznam \href{https://www.dia.gov.cz/cs/legislativa/eidas-sluzby-vytvarejici-duveru-a-elektronicka-identifikace/povinne-zverejnovane-informace/seznam-kvalifikovanych-poskytovatelu-sluzeb-vytvarejicich-duveru-a-poskytovanych-kvalifikovanych-sluzeb-vytvarejicich-duveru}{\underline{zde}}):
-    \pause
-    \begin{itemize}
+\begin{frame}{Elektronický podpis v~právním rámci}
+
+    \visible<2->{Příklady kvalifikovaných poskytovatelů v~ČR (celý seznam \href{https://www.dia.gov.cz/cs/legislativa/eidas-sluzby-vytvarejici-duveru-a-elektronicka-identifikace/povinne-zverejnovane-informace/seznam-kvalifikovanych-poskytovatelu-sluzeb-vytvarejicich-duveru-a-poskytovanych-kvalifikovanych-sluzeb-vytvarejicich-duveru}{\underline{zde}}):}
+
+    \visible<3->{\begin{itemize}
         \item První certifikační autorita, a. s.
         \item Česká pošta, s. p. / PostSignum
         \item eIdentity a. s.
         \item Komerční banka, a. s.
-    \end{itemize}
+    \end{itemize}}
 \end{frame}
 
 \zdrojeframe{katz-lindell-crypto, menezes-handbook, nist-fips202, zakon-297-2016}

@@ -1,0 +1,21 @@
+% Náhled k~sekci o~heuristice: odhad zbývající vzdálenosti do cíle.
+\begin{tikzpicture}[scale=0.75]
+
+    % mřížka
+    \draw[gray!50, thin] (0,0) grid (7,5);
+
+    % počáteční a~cílové pole
+    \fill[maincolor!35] (0,0) rectangle ++(1,1);
+    \fill[darkred!25]   (6,4) rectangle ++(1,1);
+    \node at (0.5,0.5) {$v$};
+    \node at (6.5,4.5) {$g$};
+
+    % eukleidovský odhad
+    \draw[darkred, very thick] (0.5,0.5) -- (6.5,4.5)
+        node[midway, above left] {$\psi_e$};
+
+    % manhattanský odhad
+    \draw[darkblue, very thick, dashed] (0.5,0.5) -- (6.5,0.5) -- (6.5,4.5);
+    \node[darkblue] at (3.5,0.15) {$\psi_m$};
+
+\end{tikzpicture}

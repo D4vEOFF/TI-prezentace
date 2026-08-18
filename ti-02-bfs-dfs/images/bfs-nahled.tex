@@ -1,0 +1,35 @@
+% Náhled k~sekci o~BFS: prohledávání postupuje po vrstvách od počátečního vrcholu.
+\begin{tikzpicture}[scale=1]
+
+    \node[vertex, fill=maincolor!35] (S)  at (0,0)      {};
+
+    \node[vertex, fill=maincolor!20] (A1) at (1.8,1.2)  {};
+    \node[vertex, fill=maincolor!20] (A2) at (1.8,0)    {};
+    \node[vertex, fill=maincolor!20] (A3) at (1.8,-1.2) {};
+
+    \node[vertex, fill=white] (B1) at (3.6,1.8)   {};
+    \node[vertex, fill=white] (B2) at (3.6,0.6)   {};
+    \node[vertex, fill=white] (B3) at (3.6,-0.6)  {};
+    \node[vertex, fill=white] (B4) at (3.6,-1.8)  {};
+
+    \draw[edge, very thick, darkred] (S) -- (A1);
+    \draw[edge, very thick, darkred] (S) -- (A2);
+    \draw[edge, very thick, darkred] (S) -- (A3);
+
+    \draw[edge, very thick, darkred] (A1) -- (B1);
+    \draw[edge, very thick, darkred] (A1) -- (B2);
+    \draw[edge, very thick, darkred] (A2) -- (B3);
+    \draw[edge, very thick, darkred] (A3) -- (B4);
+
+    \draw[edge] (A2) -- (B2);
+    \draw[edge] (A3) -- (B3);
+
+    \draw[dashed, rounded corners=4mm, thin] (-0.5,-2.4) rectangle (0.5,2.4);
+    \draw[dashed, rounded corners=4mm, thin] (1.3,-2.4) rectangle (2.3,2.4);
+    \draw[dashed, rounded corners=4mm, thin] (3.1,-2.4) rectangle (4.1,2.4);
+
+    \node at (0,-2.9)   {$V_0$};
+    \node at (1.8,-2.9) {$V_1$};
+    \node at (3.6,-2.9) {$V_2$};
+
+\end{tikzpicture}

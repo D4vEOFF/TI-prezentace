@@ -12,42 +12,45 @@
 
 \input{../titlepage.tex}
 
+% =================================================================
 \section{Lineární regrese}
+% =================================================================
 
-\titleframe{Lineární regrese}
+\begin{titleframeenv}{Lineární regrese}
+    \obrazek[0.4\textheight]{images/metoda-nejmensich-ctvercu.tex}
+\end{titleframeenv}
 
-\begin{frame}{Motivace: z dat k předpovědi}
-    \pause
-    \begin{columns}[T]
+\begin{frame}{Motivace: z~dat k~předpovědi}
+
+    \visible<2->{\begin{columns}[T]
         \begin{column}{0.46\textwidth}
             \begin{itemize}
                 \item Máme dvojice hodnot
                 \[
                     (x_1,y_1),\ldots,(x_n,y_n).
-                \]\pause
-                \item Z hodnoty $x$ chceme odhadnout odpovídající hodnotu $y$.\pause
-                \item Bodový graf může naznačovat přibližně lineární vztah.
+                \]
+                \visible<3->{\item Z~hodnoty $x$ chceme odhadnout odpovídající hodnotu $y$.}
+                \visible<4->{\item Bodový graf může naznačovat přibližně lineární vztah.}
             \end{itemize}
         \end{column}
-        \pause
-        \begin{column}{0.50\textwidth}
-            \centering
-            \input{images/motivace-z-dat-k-predpovedi.tex}
-        \end{column}
-    \end{columns}
-    \pause
-    \begin{timportantframe}
+
+        \begin{column}{0.50\textwidth}\visible<5->{
+    \obrazek[0.4\textheight]{images/motivace-z-dat-k-predpovedi.tex}
+        }\end{column}
+    \end{columns}}
+
+    \visible<6->{\begin{timportantframe}
         \begin{center}
             Jak najít přímku, která body vystihuje nejlépe?
         \end{center}
-    \end{timportantframe}
+    \end{timportantframe}}
 \end{frame}
 
 \subsection{Co je lineární regrese?}
 
 \begin{frame}{Co je lineární regrese?}
-    \pause
-    Lineární regrese hledá lineární funkci
+
+    \visible<2->{Lineární regrese hledá lineární funkci
     \[
         f(x)=ax+b,
     \]
@@ -56,25 +59,25 @@
         \mathbf X=(x_1,\ldots,x_n),
         \qquad
         \mathbf Y=(y_1,\ldots,y_n).
-    \]
-    \pause
+    \]}
 
-    \begin{itemize}
-        \item Hodnota $f(x_i)$ je předpověď modelu pro vstup $x_i$.\pause
-        \item Koeficient $a$ určuje směrnici přímky.\pause
-        \item Koeficient $b$ určuje její posunutí.
-    \end{itemize}
-    \pause
-    \begin{tinfoframe}
+
+    \visible<3->{\begin{itemize}
+        \item Hodnota $f(x_i)$ je předpověď modelu pro vstup $x_i$.
+        \visible<4->{\item Koeficient $a$ určuje směrnici přímky.}
+        \visible<5->{\item Koeficient $b$ určuje její posunutí.}
+    \end{itemize}}
+
+    \visible<6->{\begin{tinfoframe}
         Cílem není najít přímku procházející všemi body, ale přímku s~co nejmenší celkovou chybou.
-    \end{tinfoframe}
+    \end{tinfoframe}}
 \end{frame}
 
-\subsection{Predikce a rezidua}
+\subsection{Predikce a~rezidua}
 
-\begin{frame}{Predikce a rezidua}
-    \pause
-    Pro každé pozorování budeme značit
+\begin{frame}{Predikce a~rezidua}
+
+    \visible<2->{Pro každé pozorování budeme značit
     \[
         \hat y_i=f(x_i)
     \]
@@ -82,9 +85,9 @@
     \[
         e_i=y_i-\hat y_i
     \]
-    nazýváme \markdarkred{reziduum}.
-    \pause
-    \vspace{0.2cm}
+    nazýváme \markdarkred{reziduum}.}
+
+    \visible<3->{\vspace{0.2cm}
 
     \begin{columns}[T]
         \begin{column}{0.45\textwidth}
@@ -94,12 +97,11 @@
                 \item $e_i=0$: bod leží přesně na přímce.
             \end{itemize}
         \end{column}
-        \pause
-        \begin{column}{0.50\textwidth}
-            \centering
-            \input{images/predikce-a-rezidua.tex}
-        \end{column}
-    \end{columns}
+
+        \begin{column}{0.50\textwidth}\visible<4->{
+    \obrazek[0.4\textheight]{images/predikce-a-rezidua.tex}
+        }\end{column}
+    \end{columns}}
 \end{frame}
 
 \subsection{Měření chyby}
@@ -109,20 +111,20 @@
         \item Pouhý součet reziduí není vhodný:
         \[
             \sum_{i=1}^n e_i
-        \]\pause
-        protože kladné a~záporné chyby se mohou vyrušit.
+        \]
+        \visible<2->{protože kladné a~záporné chyby se mohou vyrušit.
         \item Proto používáme čtverce reziduí:
         \[
             e_i^2=(y_i-f(x_i))^2.
-        \]
+        \]}
     \end{itemize}
 \end{frame}
 
-\subsection{Součet čtvercových chyb a střední kvadratická chyba}
+\subsection{Součet čtvercových chyb a~střední kvadratická chyba}
 
 \begin{frame}{SSE a~MSE}
     \begin{defblock}
-        Nechť jsou dány statistické soubory $\mathbf X=(x_1,\ldots,x_n)$ a $\mathbf Y=(y_1,\ldots,y_n)$ a~funkce $\mapping{f}{\R}{\R}$. Pak
+        Nechť jsou dány statistické soubory $\mathbf X=(x_1,\ldots,x_n)$ a~$\mathbf Y=(y_1,\ldots,y_n)$ a~funkce $\mapping{f}{\R}{\R}$. Pak
         \begin{itemize}
             \item \markdarkred{součet čtvercových chyb} (sum of squared errors) funkce $f$ definujeme jako
             \[
@@ -147,34 +149,32 @@
 \subsection{Metoda nejmenších čtverců}
 
 \begin{frame}{Metoda nejmenších čtverců}
-    \pause
-    \begin{itemize}
+    \small
+
+    \visible<2->{\begin{itemize}
         \item Metoda nejmenších čtverců vybírá takovou funkci $f$, pro kterou je hodnota
         \[
             \sum_{i=1}^n
             \left(y_i-f(x_i)\right)^2
         \]
-        nejmenší.\pause
-        \item Pro lineární regresi tedy hledáme dvojici
+        nejmenší.
+        \visible<3->{\item Pro lineární regresi tedy hledáme dvojici
         \[
             (a,b)=\argmin_{(a,b)\in\mathbb R^{2}}
             \sum_{i=1}^n
             (y_i-ax_i-b)^2.
-        \]\pause
-        \item Takovou optimální přímku budeme nazývat \markdarkred{regresní přímka souborů $\mathbf{X}$ a $\mathbf{Y}$}, nebo též jejich \markdarkred{lineární model}.
-    \end{itemize}
-    \pause
-    \begin{tinfoframe}
+        \]}
+        \visible<4->{\item Takovou optimální přímku budeme nazývat \markdarkred{regresní přímka souborů $\mathbf{X}$ a~$\mathbf{Y}$}, nebo též jejich \markdarkred{lineární model}.}
+    \end{itemize}}
+
+    \visible<5->{\begin{tinfoframe}
         Minimalizace $\SSE$ a~$\MSE$ vede ke stejnému modelu, protože se liší pouze násobkem $\frac1n$. Proto budeme dále používat pro zjednodušení situace $\SSE$.
-    \end{tinfoframe}
+    \end{tinfoframe}}
 \end{frame}
 
 
 \begin{frame}{Metoda nejmenších čtverců}
-    \centering
-    \input{images/metoda-nejmensich-ctvercu.tex}
-
-    \vspace{0.2cm}
+    \obrazek[0.4\textheight]{images/metoda-nejmensich-ctvercu.tex}
 
     \begin{timportantframe}
         Hledáme přímku, pro kterou je součet obsahů těchto čtverců nejmenší.
@@ -182,35 +182,35 @@
 \end{frame}
 
 
-\begin{frame}{Souvislost s aritmetickým průměrem}
-    \pause
-    V prezentaci o statistice jsme ukázali, že aritmetický průměr minimalizuje součet čtvercových odchylek:
+\begin{frame}{Souvislost s~aritmetickým průměrem}
+
+    \visible<2->{V~prezentaci o~statistice jsme ukázali, že aritmetický průměr minimalizuje součet čtvercových odchylek:
     \[
         \average{\mathbf{X}}
         =
         \argmin_{c\in\mathbb R}
-        \overbrace{\sum_{i=1}^n (x_i-c)^2}^{\SSE_{\mathbf X,\mathbf Y}(x\mapsto c)}.
-    \]
+        \overbrace{\sum_{i=1}^n (x_i-c)^2}^{\SSE_{\mathbf X,\mathbf X}(x\mapsto c)}.
+    \]}
 
-    \pause
 
-    \begin{tinfoframe}
+
+    \visible<3->{\begin{tinfoframe}
         Aritmetický průměr je tedy nejlepší konstantní odhad hodnot souboru $\mathbf X$ ve~smyslu čtvercové chyby.
-    \end{tinfoframe}
+    \end{tinfoframe}}
 
-    \pause
 
-    Lineární regrese tuto myšlenku zobecňuje:
+
+    \visible<4->{Lineární regrese tuto myšlenku zobecňuje:
     \begin{itemize}
         \item místo jedné konstanty hledáme přímku,
         \item místo odchylek od čísla měříme odchylky od hodnot $f(x_i)$.
-    \end{itemize}
+    \end{itemize}}
 \end{frame}
 
 
 \begin{frame}{Nejlepší konstantní model}
-    \pause
-    Nejprve uvažujme pouze konstantní model
+
+    \visible<2->{Nejprve uvažujme pouze konstantní model
     \[
         f(x)=b.
     \]
@@ -218,51 +218,51 @@
     \[
         \SSE_{\mathbf{X},\mathbf{Y}}(f)=\sum_{i=1}^n
         (y_i-b)^2.
-    \]
+    \]}
 
-    \pause
 
-    Podle tvrzení o~aritmetickém průměru platí
+
+    \visible<3->{Podle tvrzení o~aritmetickém průměru platí
     \[
         b=\average{\mathbf{Y}},\quad \text{a tedy}\;f(x)=\average{\mathbf{Y}}.
-    \]
-    \pause
-    \begin{tinfoframe}
+    \]}
+
+    \visible<4->{\begin{tinfoframe}
         \begin{center}
             Tento model později porovnáme s~regresní přímkou.
         \end{center}
-    \end{tinfoframe}
+    \end{tinfoframe}}
 \end{frame}
 
 \subsection{Hledání nejlepší přímky}
 
 \begin{frame}{Hledání nejlepší přímky}
-    \pause
-    Pro lineární model
+
+    \visible<2->{Pro lineární model
     \[
         f_{a,b}(x)=ax+b
     \]
     se soubory $\mathbf{X},\mathbf{Y}$ definujeme chybovou funkci
     \[
         E(a,b)=\SSE_{\mathbf{X},\mathbf{Y}}(f_{a,b})=\sum_{i=1}^n(y_i-ax_i-b)^2.
-    \]
-    \pause
-    \begin{timportantframe}
+    \]}
+
+    \visible<3->{\begin{timportantframe}
         Cílem je najít dvojici $(a,b)$ takovou, aby hodnota $E(a,b)$ byla nejmenší.
-    \end{timportantframe}
-    \pause
-    Výpočet rozdělíme na dva kroky:
-    \pause
-    \begin{enumerate}
-        \item najdeme nejlepší $b$ pro pevně zvolené $a$,\pause
-        \item potom najdeme nejlepší směrnici $a$.
-    \end{enumerate}
+    \end{timportantframe}}
+
+    \visible<4->{Výpočet rozdělíme na dva kroky:}
+
+    \visible<5->{\begin{enumerate}
+        \item najdeme nejlepší $b$ pro pevně zvolené $a$,
+        \visible<6->{\item potom najdeme nejlepší směrnici $a$.}
+    \end{enumerate}}
 \end{frame}
 
 
 \begin{frame}{Nejlepší hodnota $b$ pro pevné $a$}
-    \pause
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Pro pevné $a$ můžeme psát
         \[
             E(a,b)
@@ -271,49 +271,48 @@
             =
             \sum_{i=1}^n
             \left((y_i-ax_i)-b\right)^2.
-        \]\pause
-        \item To je opět úloha hledání nejlepší konstanty pro soubor hodnot
+        \]
+        \visible<3->{\item To je opět úloha hledání nejlepší konstanty pro soubor hodnot
         \[
             \mathbf{Y}-a\mathbf{X}=(y_1-ax_1,\dots,y_n-ax_n).
-        \]\pause
-        \item Proto dostáváme
+        \]}
+        \visible<4->{\item Proto dostáváme
         \[
             b=\average{\mathbf{Y}-a\mathbf{X}}=\average{\mathbf{Y}}-a\average{\mathbf{X}}.
-        \]
-    \end{itemize}
+        \]}
+    \end{itemize}}
     
 \end{frame}
 
 
 \begin{frame}{Přímka procházející bodem průměrů}
-    \pause
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Po dosazení
         \[
             b=\average{\mathbf{Y}}-a\average{\mathbf{X}}
-        \]\pause
-        lze model zapsat ve tvaru
+        \]
+        \visible<3->{lze model zapsat ve tvaru
         \[
             f(x)=\average{\mathbf{Y}}+a(x-\average{\mathbf{X}}).
-        \]\pause
-        \item Odtud ihned plyne
+        \]}
+        \visible<4->{\item Odtud ihned plyne
         \[
             f(\average{\mathbf{X}})=\average{\mathbf{Y}}.
-        \]
-    \end{itemize}
-    \pause
-    \begin{tnoticeframe}
+        \]}
+    \end{itemize}}
+
+    \visible<5->{\begin{tnoticeframe}
         \begin{center}
             Každý "kandidát" na~nejlepší přímku prochází bodem $(\average{\mathbf{X}},\average{\mathbf{Y}})$.
         \end{center}
-    \end{tnoticeframe}
+    \end{tnoticeframe}}
 
 \end{frame}
 
 
 \begin{frame}{Přímky procházející bodem $(\average{\mathbf{X}},\average{\mathbf{Y}})$}
-    \centering
-    \input{images/primky-prochazejici-bodem-x-y.tex}
+    \obrazek[0.4\textheight]{images/primky-prochazejici-bodem-x-y.tex}
 
     \begin{tinfoframe}
         Zbývá zvolit směrnici $a$ tak, aby výsledná přímka měla nejmenší chybu $E(a,b)$.
@@ -322,8 +321,9 @@
 
 
 \begin{frame}{Odvození směrnice $a$}
-    \pause
-    Po dosazení
+    \small
+
+    \visible<2->{Po dosazení
     \[
         b=\average{\mathbf{Y}}-a\average{\mathbf{X}}
     \]
@@ -332,7 +332,7 @@
         E(a)=E(a,\average{\mathbf{Y}}-a\average{\mathbf{X}})
         =
         \sum_{i=1}^n
-        \left(y_i-ax_i-(\average{\mathbf{Y}}-a\average{\mathbf{X}})\right)
+        \left(y_i-ax_i-(\average{\mathbf{Y}}-a\average{\mathbf{X}})\right)^2
         =
         \sum_{i=1}^n
         \left(
@@ -340,26 +340,26 @@
         -
         a(x_i-\average{\mathbf{X}})
         \right)^2.
-    \]
+    \]}
 
-    \pause
 
-    Po roznásobení:
+
+    \visible<3->{Po roznásobení:
     \[
         E(a)
         =
         \sum_{i=1}^n
         (y_i-\average{\mathbf{Y}})^2 -\boxed{a}\cdot 2\sum_{i=1}^n
         (x_i-\average{\mathbf{X}})(y_i-\average{\mathbf{Y}})+\boxed{a^2}\sum_{i=1}^n (x_i-\average{\mathbf{X}})^2.
-    \]
+    \]}
 \end{frame}
 
 
 \begin{frame}{Vzorec pro směrnici regresní přímky}
-    \pause
-    \begin{itemize}
-        \item Funkce $E(a)$ je kvadratická funkce v proměnné $a$.\pause
-        \item Minimum nastává pro
+
+    \visible<2->{\begin{itemize}
+        \item Funkce $E(a)$ je kvadratická funkce v~proměnné $a$.
+        \visible<3->{\item Minimum nastává pro
         \[
             a=
             \frac{
@@ -379,25 +379,25 @@
             }
             =
             \boxed{\frac{\Cov(\mathbf{X},\mathbf{Y})}{\Var(\mathbf{X})}}.
-        \]\pause
-        \item Jakmile známe $a$, dopočítáme
+        \]}
+        \visible<4->{\item Jakmile známe $a$, dopočítáme
         \[
             \boxed{
             b=\average{\mathbf{Y}}-a\average{\mathbf{X}}
             }.
-        \]
-    \end{itemize}
-    \pause
-    \begin{talertframe}
+        \]}
+    \end{itemize}}
+
+    \visible<5->{\begin{talertframe}
         \begin{center}
             \textbf{Podmínka:} hodnoty $x_i$ nesmějí být všechny stejné.
         \end{center}
-    \end{talertframe}
+    \end{talertframe}}
 \end{frame}
 
-\subsection{Tvrzení o nejlepší regresní přímce}
+\subsection{Tvrzení o~nejlepší regresní přímce}
 
-\begin{frame}{Tvrzení o nejlepší regresní přímce}
+\begin{frame}{Tvrzení o~nejlepší regresní přímce}
     \begin{propblock}
         Nechť jsou dány statistické soubory $\mathbf{X},\mathbf{Y}$. Potom \markdarkred{existuje právě jedna} lineární funkce
         \[
@@ -418,16 +418,16 @@
 
 
 \begin{frame}{Geometrická interpretace výsledku}
-    \pause
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Regresní přímka prochází bodem
         \[
             (\average{\mathbf{X}},\average{\mathbf{Y}}).
-        \]\pause
-        \item Minimalizuje součet čtverců svislých odchylek bodů od přímky.
-    \end{itemize}
-    \pause
-    \begin{talertframe}
+        \]
+        \visible<3->{\item Minimalizuje součet čtverců svislých odchylek bodů od přímky.}
+    \end{itemize}}
+
+    \visible<4->{\begin{talertframe}
         Směr regrese je podstatný:
         \[
             \text{regrese }\mathbf{Y}\text{ podle }\mathbf{X}
@@ -435,27 +435,27 @@
             \text{regrese }\mathbf{X}\text{ podle }\mathbf{Y}.
         \]
         Výsledné přímky nejsou stejné.
-    \end{talertframe}
+    \end{talertframe}}
 \end{frame}
 
-\subsection{Směrnice regresní přímky a korelace}
+\subsection{Směrnice regresní přímky a~korelace}
 
-\begin{frame}{Směrnice regresní přímky a korelace}
-    \pause
-    \begin{itemize}
+\begin{frame}{Směrnice regresní přímky a~korelace}
+
+    \visible<2->{\begin{itemize}
         \item Korelační koeficient je
         \[
             \rho_{\mathbf{X}\mathbf{Y}}
             =
             \frac{\Cov(\mathbf X,\mathbf Y)}
             {\sigma_\mathbf{X}\sigma_\mathbf{Y}}.
-        \]\pause
-        \item Proto $\Cov(\mathbf{X},\mathbf{Y})=\rho_{\mathbf{X}\mathbf{Y}}\sigma_\mathbf{X}\sigma_\mathbf{Y}$.\pause
-        \item Po dosazení do vzorce pro $a$ dostaneme
+        \]
+        \visible<3->{\item Proto $\Cov(\mathbf{X},\mathbf{Y})=\rho_{\mathbf{X}\mathbf{Y}}\sigma_\mathbf{X}\sigma_\mathbf{Y}$.}
+        \visible<4->{\item Po dosazení do vzorce pro $a$ dostaneme
         \[
             a=\frac{\Cov(\mathbf X,\mathbf Y)}{\Var(\mathbf X)}=\frac{\rho_{\mathbf{X}\mathbf{Y}}\sigma_\mathbf{X}\sigma_\mathbf{Y}}{\sigma^{2}_\mathbf{X}}=\rho_{\mathbf{X}\mathbf{Y}}\frac{\sigma_\mathbf{Y}}{\sigma_\mathbf{X}}.
-        \]\pause
-        \item Regresní přímku můžeme tedy vyjádřit jako
+        \]}
+        \visible<5->{\item Regresní přímku můžeme tedy vyjádřit jako
         \[
             \boxed{
             f(x)=
@@ -464,39 +464,39 @@
             \frac{\sigma_\mathbf{Y}}{\sigma_\mathbf{X}}
             (x-\average{\mathbf{X}})
             }.
-        \]
-    \end{itemize}
+        \]}
+    \end{itemize}}
     
 \end{frame}
 
 
 \begin{frame}{Co ze vztahu se směrnicí plyne?}
-    \pause
-    Ze vztahu
+
+    \visible<2->{Ze vztahu
     \[
         a=
         \rho_{\mathbf{X}\mathbf{Y}}
         \frac{\sigma_\mathbf{Y}}{\sigma_\mathbf{X}}
     \]
-    plyne:
-    \pause
-    \begin{itemize}
-        \item znaménko směrnice je stejné jako znaménko korelace,\pause
-        \item pokud $\rho_{\mathbf{X}\mathbf{Y}}>0$, přímka je rostoucí,\pause
-        \item pokud $\rho_{\mathbf{X}\mathbf{Y}}<0$, přímka je klesající,\pause
-        \item pokud $\rho_{\mathbf{X}\mathbf{Y}}=0$, potom $a=0$.
-    \end{itemize}
+    plyne:}
 
-    \begin{corblock}
+    \visible<3->{\begin{itemize}
+        \item znaménko směrnice je stejné jako znaménko korelace,
+        \visible<4->{\item pokud $\rho_{\mathbf{X}\mathbf{Y}}>0$, přímka je rostoucí,}
+        \visible<5->{\item pokud $\rho_{\mathbf{X}\mathbf{Y}}<0$, přímka je klesající,}
+        \visible<6->{\item pokud $\rho_{\mathbf{X}\mathbf{Y}}=0$, potom $a=0$.}
+    \end{itemize}}
+
+    \visible<6->{\begin{corblock}
         Jestliže $\rho_{\mathbf{X}\mathbf{Y}}=0$, nejlepší lineární model je $f(x)=\average{\mathbf{Y}}$.
-    \end{corblock}
+    \end{corblock}}
 \end{frame}
 
 \subsection{Korelace jako směrnice po standardizaci}
 
 \begin{frame}{Korelace jako směrnice po standardizaci}
-    \pause
-    Definujme standardizované hodnoty souborů $\mathbf{X}$ a~$\mathbf{Y}$
+
+    \visible<2->{Definujme standardizované hodnoty souborů $\mathbf{X}$ a~$\mathbf{Y}$
     \[
         u_i=
         \frac{x_i-\average{\mathbf{X}}}{\sigma_\mathbf{X}},
@@ -505,113 +505,117 @@
         \quad
         \text{a}
         \quad
-        \mathbf{U}=\set{u_1,\dots,u_n},\mathbf{V}=\set{v_1,\dots,v_n},
-    \]\pause
-    Pro standardizované soubory $\mathbf{U}$ a~$\mathbf{V}$ má regresní přímka tvar
+        \mathbf{U}=(u_1,\dots,u_n),\quad\mathbf{V}=(v_1,\dots,v_n),
+    \]}
+    \visible<3->{Pro standardizované soubory $\mathbf{U}$ a~$\mathbf{V}$ má regresní přímka tvar
     \[
         \boxed{
         v=\rho_{\mathbf{X}\mathbf{Y}}u
         }.
-    \]
-    \pause
-    \begin{timportantframe}
+    \]}
+
+    \visible<4->{\begin{timportantframe}
         Korelační koeficient je směrnicí regresní přímky mezi standardizovanými hodnotami.
-    \end{timportantframe}
-    \pause
-    \begin{itemize}
-        \item Korelační koeficient nemá jednotky.\pause
-        \item Změna jednotek nezmění korelační koeficient.
-    \end{itemize}
+    \end{timportantframe}}
+
+    \visible<5->{\begin{itemize}
+        \item Korelační koeficient nemá jednotky.
+        \visible<6->{\item Změna jednotek nezmění korelační koeficient.}
+    \end{itemize}}
 \end{frame}
 
-\subsection{Minimální chyba a korelace}
+\subsection{Minimální chyba a~korelace}
 
-\begin{frame}{Minimální chyba a korelace}
-    \pause
-    \begin{propblock}[Bez důkazu]
-        Pro soubory $\mathbf{X},\mathbf{Y}$ a jejich regresní přímku $f$ platí
+\begin{frame}{Minimální chyba a~korelace}
+
+    \visible<2->{\begin{propblock}[Bez důkazu]
+        Pro soubory $\mathbf{X},\mathbf{Y}$ a~jejich regresní přímku $f$ platí
         \[
             \MSE_{\mathbf{X},\mathbf{Y}}(f)
             =
             \sigma_\mathbf{Y}^2(1-\rho_{\mathbf{X}\mathbf{Y}}^2).
         \]
-    \end{propblock}
+    \end{propblock}}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<3->{\begin{itemize}
         \item Pokud $|\rho_{\mathbf{X}\mathbf{Y}}|=1$, potom
         \[
             \MSE_{\mathbf{X},\mathbf{Y}}(f)=0.
         \]
         Všechny body leží přesně na jedné přímce.
-        \pause
-        \item Pokud $\rho_{\mathbf{X}\mathbf{Y}}=0$, potom
+
+        \visible<4->{\item Pokud $\rho_{\mathbf{X}\mathbf{Y}}=0$, potom
         \[
             \MSE_{\mathbf{X},\mathbf{Y}}(f)=\sigma_\mathbf{Y}^2=\Var(\mathbf{Y}).
         \]
-        Nejlepší lineární model se nezlepší oproti konstantnímu modelu.
-    \end{itemize}
+        Nejlepší lineární model se nezlepší oproti konstantnímu modelu.}
+    \end{itemize}}
 \end{frame}
 
+% =================================================================
 \section{Koeficient determinace}
+% =================================================================
 
-\titleframe{Koeficient determinace}
+\begin{titleframeenv}{Koeficient determinace}
+    \obrazek[0.4\textheight]{images/koeficient-determinace.tex}
+\end{titleframeenv}
 
 \subsection{Definice}
 
 \begin{frame}{Koeficient determinace}
-    \pause
-    Chybu regresní přímky porovnáme s~chybou konstantního modelu
+    \small
+
+    \visible<2->{Chybu regresní přímky porovnáme s~chybou konstantního modelu
     \[
         f(x)=\average{\mathbf{Y}}.
-    \]
-    \pause
-    \begin{defblock}[Koeficient determinace]
-        Nechť jsou dány soubory $\mathbf X=(x_1,\ldots,x_n)$ a $\mathbf Y=(y_1,\ldots,y_n)$, kde $\sigma_\mathbf{Y}>0$ a~dále $f$ je jejich regresní přímka. \markdarkred{Koeficient determinace} modelu $f$ definujeme jako
+    \]}
+
+    \visible<3->{\begin{defblock}[Koeficient determinace]
+        Nechť jsou dány soubory $\mathbf X=(x_1,\ldots,x_n)$ a~$\mathbf Y=(y_1,\ldots,y_n)$, kde $\sigma_\mathbf{Y}>0$ a~dále $f$ je jejich regresní přímka. \markdarkred{Koeficient determinace} modelu $f$ definujeme jako
         \[
-            R^2=1-\frac{\MSE_{\mathbf X,\mathbf Y}(f)}{\MSE_{\mathbf X,\mathbf Y}(x\mapsto\average{\mathbf{Y}})}=1-\frac{\MSE_{\mathbf X,\mathbf Y}(f)}{\Var{\mathbf{Y}}}.
+            R^2=1-\frac{\MSE_{\mathbf X,\mathbf Y}(f)}{\MSE_{\mathbf X,\mathbf Y}(x\mapsto\average{\mathbf{Y}})}=1-\frac{\MSE_{\mathbf X,\mathbf Y}(f)}{\Var(\mathbf{Y})}.
         \]
-    \end{defblock}
-    \pause
-    Pro jednoduchou lineární regresi platí
+    \end{defblock}}
+
+    \visible<4->{Pro jednoduchou lineární regresi platí
     \[
         R^2=\rho_{\mathbf{X}\mathbf{Y}}^2.
-    \]
+    \]}
 \end{frame}
 
 \begin{frame}{Koeficient determinace}
-\centering
-\input{images/koeficient-determinace.tex}
+    \obrazek[0.4\textheight]{images/koeficient-determinace.tex}
 \end{frame}
 
 \subsection{Příklad výpočtu}
 
 \begin{frame}{Příklad}
-    \pause
-    Uvažujme statistické soubory
+
+    \visible<2->{Uvažujme statistické soubory
     \[
         \mathbf X=(1,2,3,4,5),
         \qquad
         \mathbf Y=(2,3,5,4,6).
-    \]
-    \pause
-    Dvojice $(x_i,y_i)$ představují jednotlivá pozorování:
+    \]}
+
+    \visible<3->{Dvojice $(x_i,y_i)$ představují jednotlivá pozorování:
     \[
         \begin{array}{c|ccccc}
             i   & 1 & 2 & 3 & 4 & 5 \\ \hline
             x_i & 1 & 2 & 3 & 4 & 5 \\
             y_i & 2 & 3 & 5 & 4 & 6
         \end{array}
-    \]
-    \pause
-    \centering
-    \input{images/priklad.tex}
+    \]}
+
+    \visible<4->{\obrazek[0.28\textheight]{images/priklad.tex}}
 \end{frame}
 
 \begin{frame}{Příklad}{Výpočet regresní přímky}
-    \pause
-    Nejprve spočítáme aritmetické průměry:
+    \small
+
+    \visible<2->{Nejprve spočítáme aritmetické průměry:
     \[
         \average{\mathbf{X}}
         =
@@ -623,9 +627,9 @@
         \frac{2+3+5+4+6}{5}
         =
         4.
-    \]
-    \pause
-    Směrnice regresní přímky je
+    \]}
+
+    \visible<3->{Směrnice regresní přímky je
     \[
         a
         =
@@ -645,9 +649,9 @@
         \frac9{10}
         =
         0{,}9.
-    \]
-    \pause
-    Absolutní člen je
+    \]}
+
+    \visible<4->{Absolutní člen je
     \[
         b
         =
@@ -656,25 +660,26 @@
         4-0{,}9\cdot 3
         =
         1{,}3.
-    \]
-    \pause
-    \begin{timportantframe}
+    \]}
+
+    \visible<5->{\begin{timportantframe}
         \begin{center}
             Hledaná regresní přímka je $f(x)=0{,}9x+1{,}3$.
         \end{center}
-    \end{timportantframe}
+    \end{timportantframe}}
 \end{frame}
 
 % 3
-\begin{frame}{Příklad}{Předpovědi a rezidua}
-    \pause
-    Pro regresní model
+\begin{frame}{Příklad}{Předpovědi a~rezidua}
+    \small
+
+    \visible<2->{Pro regresní model
     \[
         f(x)=0{,}9x+1{,}3
     \]
-    vypočítáme předpovědi $\hat y_i=f(x_i)$ a~rezidua $e_i=y_i-\hat y_i$.
-    \pause
-    \[
+    vypočítáme předpovědi $\hat y_i=f(x_i)$ a~rezidua $e_i=y_i-\hat y_i$.}
+
+    \visible<3->{\[
         \begin{array}{c|ccccc}
             i
                 & 1 & 2 & 3 & 4 & 5 \\ \hline
@@ -687,28 +692,27 @@
             e_i
                 & -0{,}2 & -0{,}1 & 1{,}0 & -0{,}9 & 0{,}2
         \end{array}
-    \]
-    \pause
-    \begin{align*}
+    \]}
+
+    \visible<4->{\begin{align*}
         \SSE_{\mathbf{X},\mathbf{Y}}(f)&=\sum_{i=1}^5 e_i^2=0{,}04+0{,}01+1+0{,}81+0{,}04=1{,}9.\\
         \MSE_{\mathbf{X},\mathbf{Y}}(f)&=\frac{1{,}9}{5}=0{,}38.
-    \end{align*}
+    \end{align*}}
 \end{frame}
 
-\begin{frame}{Příklad}{Předpovědi a rezidua}
-    \centering
-    \input{images/priklad-predpovedi-a-rezidua.tex}
+\begin{frame}{Příklad}{Předpovědi a~rezidua}
+    \obrazek[0.4\textheight]{images/priklad-predpovedi-a-rezidua.tex}
 \end{frame}
 
 % 4
 \begin{frame}{Příklad}{Koeficient determinace}
-    \pause
-    Nejlepší konstantní model je
+
+    \visible<2->{Nejlepší konstantní model je
     \[
         c(x)=\average{\mathbf{Y}}=4.
-    \]
-    \pause
-    Jeho chyba je
+    \]}
+
+    \visible<3->{Jeho chyba je
     \[
     \begin{aligned}
         \MSE_{\mathbf X,\mathbf Y}(c)
@@ -721,11 +725,11 @@
             (-2)^2+(-1)^2+1^2+0^2+2^2
         \right)=2.
     \end{aligned}
-    \]
-    \pause
-    Pro regresní přímku jsme vypočítali $\MSE_{\mathbf X,\mathbf Y}(f)=0{,}38$.
-    \pause
-    Proto
+    \]}
+
+    \visible<4->{Pro regresní přímku jsme vypočítali $\MSE_{\mathbf X,\mathbf Y}(f)=0{,}38$.}
+
+    \visible<5->{Proto
     \[
         R^2
         =
@@ -741,12 +745,12 @@
         0{,}81.
     \]
 
-    Regresní přímka odstranila $81\,\%$ střední kvadratické chyby nejlepšího konstantního modelu.
+    Regresní přímka odstranila $81\,\%$ střední kvadratické chyby nejlepšího konstantního modelu.}
 \end{frame}
 
 \begin{frame}{Příklad}{Souvislost s~korelací}
-    \pause
-    Pro zadané soubory $\mathbf{X},\mathbf{Y}$ platí
+
+    \visible<2->{Pro zadané soubory $\mathbf{X},\mathbf{Y}$ platí
     \[
         \sigma_\mathbf{X}
         =
@@ -758,9 +762,9 @@
         =
         \sqrt{2}
     \]
-    a stejně $\sigma_\mathbf{Y}=\sqrt{\frac15\sum_{i=1}^5(y_i-\average{\mathbf{Y}})^2}=\sqrt{2}$.\\[1mm]
-    \pause
-    Kovariance je $\Cov(\mathbf X,\mathbf Y)=\frac15\cdot 9=1{,}8$. Proto
+    a~stejně $\sigma_\mathbf{Y}=\sqrt{\frac15\sum_{i=1}^5(y_i-\average{\mathbf{Y}})^2}=\sqrt{2}$.\\[1mm]}
+
+    \visible<3->{Kovariance je $\Cov(\mathbf X,\mathbf Y)=\frac15\cdot 9=1{,}8$. Proto
     \[
         \rho_{\mathbf X\mathbf Y}=
         \frac{
@@ -771,153 +775,157 @@
         \frac{1{,}8}{\sqrt2\sqrt2}
         =
         0{,}9.
-    \]
-    \pause
-    Pro jednoduchou lineární regresi tedy skutečně platí
+    \]}
+
+    \visible<4->{Pro jednoduchou lineární regresi tedy skutečně platí
     \[
         \boxed{
             R^2=\rho_{\mathbf X\mathbf Y}^2=0{,}9^2=0{,}81
         }.
-    \]
+    \]}
 \end{frame}
 
+% =================================================================
 \section{Omezení modelu}
+% =================================================================
 
-\titleframe{Omezení modelu}
+\begin{titleframeenv}{Omezení modelu}
+    \obrazek[0.4\textheight]{images/omezeni-nelinearni-vztah.tex}
+\end{titleframeenv}
 
 \subsection{Kdy dává lineární regrese smysl?}
 
 \begin{frame}{Kdy dává lineární regrese smysl?}
-    \pause
-    Před použitím lineární regrese očekáváme zejména:
-    \pause
-    \begin{itemize}
-        \item vztah mezi $\mathbf{X}$ a $\mathbf{Y}$ je přibližně lineární,\pause
-        \item pozorování nejsou vzájemně závislá,\pause
-        \item rezidua nevykazují systematický vzor,\pause
-        \item velikost reziduí se s~rostoucími hodnotami v~$\mathbf{X}$ výrazně nemění.
-    \end{itemize}
-    \pause
-    \begin{tinfoframe}
+
+    \visible<2->{Před použitím lineární regrese očekáváme zejména:}
+
+    \visible<3->{\begin{itemize}
+        \item vztah mezi $\mathbf{X}$ a~$\mathbf{Y}$ je přibližně lineární,
+        \visible<4->{\item pozorování nejsou vzájemně závislá,}
+        \visible<5->{\item rezidua nevykazují systematický vzor,}
+        \visible<6->{\item velikost reziduí se s~rostoucími hodnotami v~$\mathbf{X}$ výrazně nemění.}
+    \end{itemize}}
+
+    \visible<7->{\begin{tinfoframe}
         Tyto podmínky zde chápeme intuitivně: bodový graf a~rezidua by neměly ukazovat zjevný problém.
-    \end{tinfoframe}
+    \end{tinfoframe}}
 \end{frame}
 
 \subsection{Omezení}
 
 \begin{frame}{Omezení}{Nelineární vztah}
-    \pause
-    Lineární regrese zachycuje \markdarkred{pouze lineární vztahy}.
+
+    \visible<2->{Lineární regrese zachycuje \markdarkred{pouze lineární vztahy}.
 
     \begin{columns}[T]
         \begin{column}{0.45\textwidth}
             \begin{itemize}
-                \item Mezi veličinami může být přesná závislost.\pause
-                \item Přesto může být korelace nulová.\pause
-                \item Přímka pak vztah nevystihne.
+                \item Mezi veličinami může být přesná závislost.
+                \visible<3->{\item Přesto může být korelace nulová.}
+                \visible<4->{\item Přímka pak vztah nevystihne.}
             \end{itemize}
         \end{column}
-        \pause
-        \begin{column}{0.50\textwidth}
-            \centering
-            \input{images/omezeni-nelinearni-vztah.tex}
-        \end{column}
-    \end{columns}
-    \pause
-    \begin{talertframe}
+
+        \begin{column}{0.50\textwidth}\visible<5->{
+    \obrazek[0.4\textheight]{images/omezeni-nelinearni-vztah.tex}
+        }\end{column}
+    \end{columns}}
+
+    \visible<6->{\begin{talertframe}
         \begin{center}
             Nulová korelace neznamená, že mezi daty není žádný vztah.
         \end{center}
-    \end{talertframe}
+    \end{talertframe}}
 \end{frame}
 
 
-\begin{frame}{Omezení}{odlehlé hodnoty a extrapolace}
+\begin{frame}{Omezení}{odlehlé hodnoty a~extrapolace}
     \begin{columns}[T]
         \begin{column}{0.47\textwidth}
-            \pause
-            \centering
+
+            \visible<2->{\centering
             \textbf{Odlehlá hodnota}
 
-            \vspace{0.15cm}
 
-            \input{images/omezeni-odlehle-hodnoty-a-extrapolace-1.tex}
+            \obrazek[0.4\textheight]{images/omezeni-odlehle-hodnoty-a-extrapolace-1.tex}}
         \end{column}
 
-        \begin{column}{0.47\textwidth}
-            \pause
-            \centering
+        \begin{column}{0.47\textwidth}\visible<2->{
+
+            \visible<3->{\centering
             \textbf{Extrapolace}
 
-            \vspace{0.15cm}
 
-            \input{images/omezeni-odlehle-hodnoty-a-extrapolace-2.tex}
-        \end{column}
+            \obrazek[0.4\textheight]{images/omezeni-odlehle-hodnoty-a-extrapolace-2.tex}}
+        }\end{column}
     \end{columns}
-    \pause
-    \begin{talertframe}
+
+    \visible<4->{\begin{talertframe}
         Jeden vzdálený bod může přímku výrazně změnit. Model také nemusí fungovat mimo rozsah naměřených dat.
-    \end{talertframe}
+    \end{talertframe}}
 \end{frame}
 
 
 \begin{frame}{Omezení}{Regrese není kauzalita}
-    \pause
-    Silný regresní vztah neznamená, že změna $\mathbf{X}$ způsobuje změnu $\mathbf{Y}$.
-    \pause
-    \begin{talertbox}{Pozor}
+
+    \visible<2->{Silný regresní vztah neznamená, že změna $\mathbf{X}$ způsobuje změnu $\mathbf{Y}$.}
+
+    \visible<3->{\begin{talertbox}{Pozor}
         Lineární regrese popisuje vztah v~datech, ale sama nedokazuje příčinnou souvislost.
-    \end{talertbox}
-    \pause
-    \begin{itemize}
-        \item Může existovat třetí proměnná, která ovlivňuje obě sledované veličiny.\pause
-        \item Vztah může vzniknout náhodně.\pause
-        \item Závěr vždy závisí na kontextu a~smyslu dat.
-    \end{itemize}
-    \pause
-    \begin{tinfoframe}
+    \end{talertbox}}
+
+    \visible<4->{\begin{itemize}
+        \item Může existovat třetí proměnná, která ovlivňuje obě sledované veličiny.
+        \visible<5->{\item Vztah může vzniknout náhodně.}
+        \visible<6->{\item Závěr vždy závisí na kontextu a~smyslu dat.}
+    \end{itemize}}
+
+    \visible<7->{\begin{tinfoframe}
         Regrese odpovídá na otázku "jak spolu hodnoty souvisí v~datech", nikoli automaticky na~otázku "co je příčinou čeho".
-    \end{tinfoframe}
+    \end{tinfoframe}}
 \end{frame}
 
+% =================================================================
 \section{Shrnutí}
+% =================================================================
 
 \begin{frame}{Shrnutí}
-    \pause
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item \textbf{Lineární regrese} hledá přímku
         \[
             f(x)=ax+b,
         \]
         která co nejlépe odhaduje hodnoty souboru $\mathbf Y$
-        z hodnot souboru $\mathbf X$.\pause
+        z~hodnot souboru $\mathbf X$.
 
-        \item Koeficienty určujeme \textbf{metodou nejmenších čtverců},
+        \visible<3->{\item Koeficienty určujeme \textbf{metodou nejmenších čtverců},
         tedy minimalizujeme
         \[
             \MSE_{\mathbf X,\mathbf Y}(f)
             =
             \frac1n\sum_{i=1}^n
             (y_i-f(x_i))^2.
-        \]
-        \pause
-        \item Nejlepší regresní přímka prochází bodem $(\average{\mathbf{X}},\average{\mathbf{Y}})$ a~její koeficienty jsou
+        \]}
+
+        \visible<4->{\item Nejlepší regresní přímka prochází bodem $(\average{\mathbf{X}},\average{\mathbf{Y}})$ a~její koeficienty jsou
         \[
             a=
             \frac{\Cov(\mathbf X,\mathbf Y)}
                  {\Var(\mathbf X)}
             =
-            \rho_{\mathbf{X}\mathbf{Y}}\frac{\sigma_Y}{\sigma_X},
+            \rho_{\mathbf{X}\mathbf{Y}}\frac{\sigma_\mathbf{Y}}{\sigma_\mathbf{X}},
             \qquad
             b=\average{\mathbf{Y}}-a\average{\mathbf{X}}.
-        \]
-    \end{itemize}
+        \]}
+    \end{itemize}}
 
 \end{frame}
 
 \begin{frame}{Shrnutí}
-    \pause
-    \begin{itemize}
+    \footnotesize
+
+    \visible<2->{\begin{itemize}
         \item \textbf{Koeficient determinace} porovnává regresní přímku $f$ s~nejlepším konstantním modelem $c(x)=\average{\mathbf{Y}}$:
         \[
             R^2
@@ -930,19 +938,19 @@
                 (x\mapsto\average{\mathbf{Y}})
             }.
         \]
-    \end{itemize}
-    \pause
-    \begin{timportantframe}
+    \end{itemize}}
+
+    \visible<3->{\begin{timportantframe}
         Pro jednoduchou lineární regresi platí
         \[
             \boxed{R^2=\rho_{\mathbf{X}\mathbf{Y}}^2}.
         \]
         Čím je $R^2$ blíže jedné, tím větší část chyby konstantního modelu odstraníme použitím regresní přímky.
-    \end{timportantframe}
-    \pause
-    \begin{talertframe}
+    \end{timportantframe}}
+
+    \visible<4->{\begin{talertframe}
         Lineární regrese zachycuje pouze lineární vztah, je citlivá na~odlehlé hodnoty a~sama o~sobě nedokazuje příčinnou souvislost.
-    \end{talertframe}
+    \end{talertframe}}
     
 \end{frame}
 

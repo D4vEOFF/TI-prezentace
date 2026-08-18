@@ -1,0 +1,19 @@
+% Náhled k~sekci o~Kleeneho větě: regulární výraz, NFA a~DFA popisují tutéž třídu jazyků.
+\begin{tikzpicture}[x=1cm, y=1cm]
+
+    \tikzset{
+        krabice/.style={draw, thick, rounded corners=3pt, minimum width=26mm,
+                        minimum height=10mm, align=center, fill=maincolor!10}
+    }
+
+    \node[krabice] (re)  at (0,0)     {regulární\\ výraz};
+    \node[krabice] (nfa) at (5,0)     {NFA};
+    \node[krabice] (dfa) at (2.5,-2.2) {DFA};
+
+    \draw[<->, >=stealth, very thick, darkred] (re) -- (nfa);
+    \draw[<->, >=stealth, very thick, darkred] (nfa) -- (dfa);
+    \draw[<->, >=stealth, very thick, darkred] (re) -- (dfa);
+
+    \node[font=\small] at (2.5,-3.4) {tatáž třída \markdarkred{regulárních jazyků}};
+
+\end{tikzpicture}
