@@ -1,0 +1,85 @@
+% Výsledná formule převodu Sudoku na SAT. Každá část podmínky je zvýrazněna
+% vlastní barvou a doplněna bublinou s vysvětlivkou.
+\begin{tikzpicture}[
+    font=\small,
+    cast/.style={
+        anchor=west,
+        rounded corners=3pt,
+        inner xsep=5pt,
+        inner ysep=4pt,
+        minimum height=11mm,
+        line width=0.5pt
+    },
+    spojka/.style={anchor=east},
+    bublina/.style={
+        rectangle callout,
+        anchor=west,
+        rounded corners=3pt,
+        line width=0.6pt,
+        inner sep=4pt,
+        text width=27mm,
+        align=left,
+        font=\scriptsize,
+        xshift=7mm
+    }
+]
+
+    % ------------------------------------------------------------------
+    % Jednotlivé části formule
+    % ------------------------------------------------------------------
+    \node[cast, fill=green!8, draw=exampleblocktitlefg!60] (bunkyA) at (0.2,0)
+        {$\displaystyle\bigwedge_{r,c}\;\bigvee_{d}x_{r,c,d}$};
+
+    \node[cast, fill=red!8, draw=alertblocktitlefg!60] (bunkyN) at (0.2,-1.35)
+        {$\displaystyle\bigwedge_{r,c}\;\bigwedge_{d\neq d^{\prime}}(\neg x_{r,c,d}\lor\neg x_{r,c,d^{\prime}})$};
+
+    \node[cast, fill=blue!7, draw=darkblue!60] (radky) at (0.2,-2.9)
+        {$\displaystyle\bigwedge_{r,d}\left[\bigvee_{c}x_{r,c,d}\;\land\bigwedge_{c\neq c^{\prime}}(\neg x_{r,c,d}\lor\neg x_{r,c^{\prime},d})\right]$};
+
+    \node[cast, fill=yellow!12, draw=timportantboxcolor!60] (sloupce) at (0.2,-4.5)
+        {$\displaystyle\bigwedge_{c,d}\left[\bigvee_{r}x_{r,c,d}\;\land\bigwedge_{r\neq r^{\prime}}(\neg x_{r,c,d}\lor\neg x_{r^{\prime},c,d})\right]$};
+
+    \node[cast, fill=violet!8, draw=violet!60] (bloky) at (0.2,-6.15)
+        {$\displaystyle\bigwedge_{B,d}\left[\bigvee_{(r,c)\in B}x_{r,c,d}\;\land\bigwedge_{\substack{(r,c),(r^{\prime},c^{\prime})\in B\\ (r,c)\neq(r^{\prime},c^{\prime})}}(\neg x_{r,c,d}\lor\neg x_{r^{\prime},c^{\prime},d})\right]$};
+
+    \node[cast, fill=maincolor!8, draw=maincolor!60] (zadani) at (0.2,-7.75)
+        {$\displaystyle\bigwedge_{(r,c,d)\in\mathcal{Z}}x_{r,c,d}$};
+
+    % ------------------------------------------------------------------
+    % Levý sloupec se spojkami
+    % ------------------------------------------------------------------
+    \node[spojka] at (0.1,0)     {$\varphi\;=$};
+    \node[spojka] at (0.1,-1.35) {$\land$};
+    \node[spojka] at (0.1,-2.9)  {$\land$};
+    \node[spojka] at (0.1,-4.5) {$\land$};
+    \node[spojka] at (0.1,-6.15)  {$\land$};
+    \node[spojka] at (0.1,-7.75) {$\land$};
+
+    % ------------------------------------------------------------------
+    % Bubliny s vysvětlivkami (zarovnané k nejširší části formule)
+    % ------------------------------------------------------------------
+    \node[bublina, fill=green!8, draw=exampleblocktitlefg,
+        callout absolute pointer={(bunkyA.east)}]
+        at (bloky.east |- bunkyA) {Každá buňka obsahuje \textbf{alespoň} jednu číslici};
+
+    \node[bublina, fill=red!8, draw=alertblocktitlefg,
+        callout absolute pointer={(bunkyN.east)}]
+        at (bloky.east |- bunkyN) {Každá buňka obsahuje \textbf{nejvýše} jednu číslici};
+
+    \node[bublina, fill=blue!7, draw=darkblue,
+        callout absolute pointer={(radky.east)}]
+        at (bloky.east |- radky) {V~každém \textbf{řádku} je každá číslice právě jednou};
+
+    \node[bublina, fill=yellow!12, draw=timportantboxcolor,
+        callout absolute pointer={(sloupce.east)}]
+        at (bloky.east |- sloupce) {V~každém \textbf{sloupci} je každá číslice právě jednou};
+
+    \node[bublina, fill=violet!8, draw=violet,
+        callout absolute pointer={(bloky.east)}]
+        at (bloky.east |- bloky) {V~každém \textbf{bloku} je každá číslice právě jednou};
+
+    \node[bublina, fill=maincolor!8, draw=maincolor,
+        callout absolute pointer={(zadani.east)}]
+        at (bloky.east |- zadani) {Buňky \textbf{zadané} v~počáteční tabulce};
+
+\end{tikzpicture}
