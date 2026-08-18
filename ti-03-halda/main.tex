@@ -16,44 +16,46 @@
 
     \input{../titlepage.tex}
 
+    % =================================================================
     \section{Binární stromy}
+    % =================================================================
 
-    \titleframe{Binární stromy}
+    \begin{titleframeenv}{Binární stromy}
+        \obrazek[0.5\textheight]{images/binarni-strom.tex}
+    \end{titleframeenv}
 
     \begin{frame}{Binární strom}
         \visible<2->{\begin{defblock}[Binární strom]
-            Strom $T$ nazveme \markdarkred{binární}, pokud je \textbf{zakořeněný} a každý vrchol (rodič) má maximálně \textbf{dva syny}, u nichž rozlišujeme, který je levý a který pravý.
+            Strom $T$ nazveme \markdarkred{binární}, pokud je \textbf{zakořeněný} a~každý vrchol (rodič) má maximálně \textbf{dva syny}, u~nichž rozlišujeme, který je levý a~který pravý.
         \end{defblock}}
-        \visible<3->{\begin{figure}
-            \centering
-            \input{images/binarni-strom.tex}
-        \end{figure}}
+        \visible<3->{\obrazek{images/binarni-strom.tex}}
     \end{frame}
 
-    \begin{frame}{Hladiny v binárním stromě}
+    \begin{frame}{Hladiny v~binárním stromě}
         \begin{defblock}[Hladina]
-            Nechť $T=(V,E)$ je binární strom, $v_0$ jeho kořen a číslo $k\in\N_0$. Pak $k$-tou hladinou stromu $T$ rozumíme množinu vrcholů
+            Nechť $T=(V,E)$ je binární strom, $v_0$ jeho kořen a~číslo $k\in\N_0$. Pak $k$-tou hladinou stromu $T$ rozumíme množinu vrcholů
             \[L_k=\set{v\in V: d(v,v_0)=k}.\]
             Tedy hladina $L_k$ je množina všech vrcholů, které mají stejnou vzdálenost od kořene.
         \end{defblock}
     \end{frame}
 
     \begin{frame}{Znázornění hladin}
-        \begin{figure}
-            \centering
-            \input{images/hladiny.tex}
-        \end{figure}
+        \obrazek{images/hladiny.tex}
     \end{frame}
 
+    % =================================================================
     \section{Binární halda}
+    % =================================================================
 
-    \titleframe{Binární halda}
+    \begin{titleframeenv}{Binární halda}
+        \obrazek[0.5\textheight]{images/binarni-halda-1.tex}
+    \end{titleframeenv}
 
     \subsection{Minimová binární halda}
 
     \begin{frame}{Příklad na začátek \dots}
         \begin{itemize}
-            \visible<2->{\item Máme zadaný soubor čísel, v němž chceme rychle najít \textbf{minimum}, resp. \textbf{maximum}.}
+            \visible<2->{\item Máme zadaný soubor čísel, v~němž chceme rychle najít \textbf{minimum}, resp. \textbf{maximum}.}
             \visible<3->{\item Prvky lze uložit do seznamu/pole.}
             \visible<4->{\begin{center}
                 \begin{minipage}{0.8\textwidth}
@@ -61,8 +63,8 @@
                         \caption{Minimum}
                         \KwIn{Seznam prvků $x_1,x_2,\dots,x_n$}
                         $\textup{min}\gets x_1$\;
-                        \For{$i=1,2,\dots,n$}{
-                            \lIf{$\textup{min}<x_i$}{$\textup{min}\gets x_i$}
+                        \For{$i=2,3,\dots,n$}{
+                            \lIf{$x_i<\textup{min}$}{$\textup{min}\gets x_i$}
                         }
                         \Return{$\textup{min}$}
                     \end{algorithm}
@@ -75,19 +77,19 @@
 
     \begin{frame}{Minimová binární halda}
         \begin{itemize}
-            \visible<2->{\item Budeme pracovat s binárním stromem $T=(V,E)$.}
-            \visible<3->{\item Každému vrcholu $v$ přiřadíme tzv. \markdarkred{klíč}, který bude v našem případě představovat libovolné celé číslo. Tuto hodnotu budeme značit $\key(v)$.}
+            \visible<2->{\item Budeme pracovat s~binárním stromem $T=(V,E)$.}
+            \visible<3->{\item Každému vrcholu $v$ přiřadíme tzv. \markdarkred{klíč}, který bude v~našem případě představovat libovolné celé číslo. Tuto hodnotu budeme značit $\key(v)$.}
             \visible<4->{\begin{tinfoframe}
                 \begin{center}
-                    Formálně se jedná o zobrazení $\mapping{\key}{V}{\Z}$.
+                    Formálně se jedná o~zobrazení $\mapping{\key}{V}{\Z}$.
                 \end{center}
             \end{tinfoframe}}
         \end{itemize}
         \visible<5->{\begin{defblock}[Minimová binární halda]
-            \markdarkred{Minimová binární halda} je datová struktura tvaru binárního stromu, v jehož každém vrcholu je uložen jeden prvek. Přitom platí:
+            \markdarkred{Minimová binární halda} je datová struktura tvaru binárního stromu, v~jehož každém vrcholu je uložen jeden prvek. Přitom platí:
             \begin{enumerate}
                 \item \textbf{Tvar haldy:} Všechny hladiny kromě poslední jsou plně obsazené. Poslední hladina je zaplněna zleva.
-                \item \textbf{Haldové uspořádání:} Je-li $v$ vrchol a $s$ jeho syn, pak platí $\key(v)\leqslant \key(s)$.
+                \item \textbf{Haldové uspořádání:} Je-li $v$ vrchol a~$s$ jeho syn, pak platí $\key(v)\leqslant \key(s)$.
             \end{enumerate}
         \end{defblock}}
     \end{frame}
@@ -96,40 +98,28 @@
 
     \begin{frame}{Maximová binární halda}
         \begin{defblock}[Maximová binární halda]
-            \markdarkred{Minimová binární halda} je datová struktura tvaru binárního stromu, v jehož každém vrcholu je uložen jeden prvek. Přitom platí:
+            \markdarkred{Maximová binární halda} je datová struktura tvaru binárního stromu, v~jehož každém vrcholu je uložen jeden prvek. Přitom platí:
             \begin{enumerate}
                 \item \textbf{Tvar haldy:} Všechny hladiny kromě poslední jsou plně obsazené. Poslední hladina je zaplněna zleva.
-                \item \textbf{Haldové uspořádání:} Je-li $v$ vrchol a $s$ jeho syn, pak platí $\key(v)\geqslant \key(s)$.
+                \item \textbf{Haldové uspořádání:} Je-li $v$ vrchol a~$s$ jeho syn, pak platí $\key(v)\geqslant \key(s)$.
             \end{enumerate}
         \end{defblock}
     \end{frame}
 
     \begin{frame}{Minimová binární halda}{Příklad \textrm{I}}
-        \begin{figure}
-            \centering
-            \input{images/binarni-halda-1.tex}
-        \end{figure}
+        \obrazek{images/binarni-halda-1.tex}
     \end{frame}
 
     \begin{frame}{Minimová binární halda}{Příklad \textrm{II}}
-        \begin{figure}
-            \centering
-            \input{images/binarni-halda-2.tex}
-        \end{figure}
+        \obrazek{images/binarni-halda-2.tex}
     \end{frame}
 
     \begin{frame}{Maximová binární halda}{Příklad}
-        \begin{figure}
-            \centering
-            \input{images/max-binarni-halda.tex}
-        \end{figure}
+        \obrazek{images/max-binarni-halda.tex}
     \end{frame}
 
     \begin{frame}{Minimová binární halda}{Protipříklad \textrm{I}}
-        \begin{figure}
-            \centering
-            \input{images/binarni-halda-3.tex}
-        \end{figure}
+        \obrazek{images/binarni-halda-3.tex}
         \visible<2>{\begin{talertframe}
             \begin{center}
                 Strom porušuje podmínku na \textbf{tvar haldy}.
@@ -138,10 +128,7 @@
     \end{frame}
 
     \begin{frame}{Minimová binární halda}{Protipříklad \textrm{II}}
-        \begin{figure}
-            \centering
-            \input{images/binarni-halda-4.tex}
-        \end{figure}
+        \obrazek{images/binarni-halda-4.tex}
         \visible<2>{\begin{talertframe}
             \begin{center}
                 Strom porušuje \textbf{haldové uspořádání}.
@@ -150,53 +137,49 @@
     \end{frame}
 
     \begin{frame}{Pozorování}
-        \visible<2->{\begin{figure}
-            \centering
-            \input{images/binarni-halda-min.tex}
-        \end{figure}}
+        \visible<2->{\obrazek{images/binarni-halda-min.tex}}
         \visible<3->{\begin{tnoticeframe}
             \begin{center}
-                V kořeni je vždy ulořen \textbf{vrchol s minimálním klíčem}. Podobně v maximové binární haldě je v kořeni vždy uloženo maximum.
+                V~kořeni je vždy uložen \textbf{vrchol s~minimálním klíčem}. Podobně v~maximové binární haldě je v~kořeni vždy uloženo maximum.
             \end{center}
         \end{tnoticeframe}}
         \visible<4->{\begin{timportantframe}
             \begin{center}
-                To má jednu zřejmou výhodu: nalezení minima/maxima v takové struktuře je \textbf{velmi rychlé}.
+                To má jednu zřejmou výhodu: nalezení minima/maxima v~takové struktuře je \textbf{velmi rychlé}.
             \end{center}
         \end{timportantframe}}
     \end{frame}
 
-    \subsection{Operace s minimovou binární haldou}
+    \subsection{Operace s~minimovou binární haldou}
 
-    \begin{frame}{Operace s minimovou binární haldou}
+    \begin{frame}{Operace s~minimovou binární haldou}
         \visible<2->{\begin{talertframe}
             \begin{center}
                 \textbf{To nám ale nestačí!} Haldu musíme nějak udržovat.
             \end{center}
         \end{talertframe}}
-        \visible<3->{Rádi bychom v haldě uměli provádět následující operace:}
+        \visible<3->{Rádi bychom v~haldě uměli provádět následující operace:}
         \begin{enumerate}
-            \visible<4->{\item $\textsc{Min}$ = vrátí minimální hodnotu klíče uloženou v haldě.}
+            \visible<4->{\item $\textsc{Min}$ = vrátí minimální hodnotu klíče uloženou v~haldě.}
             \visible<5->{\item $\textsc{Insert}(x)$ = vloží nový prvek $x$ do haldy.}
-            \visible<6->{\item $\textsc{ExtractMin}$ = odebere vrchol s nejmenším klíčem a vrátí jej.}
+            \visible<6->{\item $\textsc{ExtractMin}$ = odebere vrchol s~nejmenším klíčem a~vrátí jej.}
         \end{enumerate}
-        \visible<7->{V případě \textbf{maximové binární haldy} bude situace obdobná -- budeme chtít operace $\textsc{Max}$ a $\textsc{ExtractMax}$}
+        \visible<7->{V~případě \textbf{maximové binární haldy} bude situace obdobná -- budeme chtít operace $\textsc{Max}$ a~$\textsc{ExtractMax}$.}
     \end{frame}
 
-    \subsection{Tvrzení a počtu hladin}
+    \subsection{Tvrzení o~počtu hladin}
 
     \begin{frame}{Počet hladin haldy}
         \visible<2->{\begin{propblock}
-            Binární halda s $n$ prvky má $\lceil\log_2(n+1)\rceil$ hladin.
+            Binární halda s~$n$ prvky má $\lceil\log_2(n+1)\rceil$ hladin.
         \end{propblock}}
         \begin{itemize}
-            \visible<3->{\item Předpokládejme, že uvažovaná halda má všechny hladiny plně obsazené. Jejich počet si označme $h$ a počet vrcholů $n$.}
+            \visible<3->{\item Předpokládejme, že uvažovaná halda má všechny hladiny plně obsazené. Jejich počet si označme $h$ a~počet vrcholů $n$.}
             \visible<4->{\item Pak počet vrcholů lze spočítat jako
             \[n=2^{0}+2^{1}+2^{2}+\dots+2^{h-1}=2^{h}-1.\]}
             \visible<5->{\item Úpravou získáme
             \[n=2^{h}-1\iff n+1=2^{h}\iff h=\log_2(n+1).\]}
-            \visible<6->{\item Pokud poslední hladina není zcela zaplněná, bude pak nebude $h$ celé číslo. To lze "opravit" přidáním zaokrouhlení nahoru:
-            \[h=\lceil\log_2(n+1)\rceil.\]}
+            \visible<6->{\item Pokud poslední hladina není zcela zaplněná, pak nebude $h$ celé číslo. To lze \uv{opravit} přidáním zaokrouhlení nahoru, tzn.~$h=\lceil\log_2(n+1)\rceil$.}
         \end{itemize}
     \end{frame}
 
@@ -206,15 +189,15 @@
         \begin{itemize}
             \visible<2->{\item Prázdnou nebo jednoprvkovou haldu lze vytvořit snadno.}
             \visible<3->{\item Uvažujme, že do obecné (minimové) haldy chceme přidat nový prvek.}
-            \visible<4->{\item Z podmínky na \textbf{tvar haldy} plyne, že nový vrchol buď}
+            \visible<4->{\item Z~podmínky na \textbf{tvar haldy} plyne, že nový vrchol buď}
             \begin{itemize}
                 \visible<5->{\item přidáme na konec poslední hladiny, nebo}
-                \visible<6->{\item založíme novou hladinu a vrchol přidáme úplně vlevo, pokud je poslední hladina plná.}
+                \visible<6->{\item založíme novou hladinu a~vrchol přidáme úplně vlevo, pokud je poslední hladina plná.}
             \end{itemize}
         \end{itemize}
         \visible<7->{\begin{talertframe}
             \begin{center}
-                \textbf{Problém:} Tímto krokem může dojít k porušení haldového uspořádání, neboť pro nový vrchol $v$ a jeho rodiče $r$ může nastat, že $\key(v)<\key(r)$.
+                \textbf{Problém:} Tímto krokem může dojít k~porušení haldového uspořádání, neboť pro nový vrchol $v$ a~jeho rodiče $r$ může nastat, že $\key(v)<\key(r)$.
             \end{center}
         \end{talertframe}}
     \end{frame}
@@ -224,18 +207,15 @@
     \begin{frame}{Procedura $\textsc{BubbleUp}$}
         \begin{itemize}
             \visible<2->{\item Po vložení nového vrcholu musíme haldu upravit tak, aby platilo haldové uspořádání, není-li splněno.}
-            \visible<3->{\item Jako první prohodíme nový vrchol $v$ s jeho rodičem $r$, pokud $\key(v)<\key(r)$.}
-            \visible<4->{\item Prohozením vrcholů jsme opravili uvedenou nerovnost, ale mohli jsme způsobit chybu o hladinu výš.}
-            \visible<5->{\item V takovém případě postup opakujeme pro vrchol $v$ a jeho rodičem $r^{\prime}$ atd.}
-            \visible<6->{\item Takový procedura se někdy nazývá $\textsc{BubbleUp}$, neboť vrchol postupně "probublá" nahoru (potenciálně až do kořene, kde se procedura zastaví).}
+            \visible<3->{\item Jako první prohodíme nový vrchol $v$ s~jeho rodičem $r$, pokud $\key(v)<\key(r)$.}
+            \visible<4->{\item Prohozením vrcholů jsme opravili uvedenou nerovnost, ale mohli jsme způsobit chybu o~hladinu výš.}
+            \visible<5->{\item V~takovém případě postup opakujeme pro vrchol $v$ a~jeho rodiče $r^{\prime}$ atd.}
+            \visible<6->{\item Taková procedura se někdy nazývá \markdarkred{$\textsc{BubbleUp}$}, neboť vrchol postupně "probublá" nahoru (potenciálně až do kořene, kde se procedura zastaví).}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Znázornění $\textsc{BubbleUp}$}
-        \begin{figure}
-            \centering
-            \input{images/binarni-halda-novy-vrchol.tex}
-        \end{figure}
+        \obrazek{images/binarni-halda-novy-vrchol.tex}
     \end{frame}
 
     \begin{frame}{Procedura $\textsc{BubbleUp}$}{1. krok}
@@ -267,23 +247,23 @@
         \begin{center}
             \begin{minipage}{0.8\textwidth}
                 \begin{algorithm}[H]
-                    \caption{$\textsc{BubbleUp}$ (oprava haldy směrem nahorů)}
-                    \KwIn{Vrchol $v$ v minimové binární haldě}
-                    \While{\textup{$v$ má rodiče $r$ a $\key(v) < \key(r)$}}{
-                        \textup{prohoď klíče ve vrcholech $v$ a $r$}\;
+                    \caption{$\textsc{BubbleUp}$ (oprava haldy směrem nahoru)}
+                    \KwIn{Vrchol $v$ v~minimové binární haldě}
+                    \While{\textup{$v$ má rodiče $r$ a~$\key(v) < \key(r)$}}{
+                        \textup{prohoď klíče ve vrcholech $v$ a~$r$}\;
                         $v \gets r$\;
                     }
                 \end{algorithm}
             \end{minipage}
         \end{center}
-        \visible<2->{V případě maximové binární haldy bychom zkrátka jen uvedli opačnou nerovnost:
+        \visible<2->{V~případě maximové binární haldy bychom zkrátka jen uvedli opačnou nerovnost:
         \[\key(v) > \key(r).\]}
     \end{frame}
 
-    \begin{frame}{Zpět k operaci $\textsc{Insert}$}
+    \begin{frame}{Zpět k~operaci $\textsc{Insert}$}
         \visible<2->{\begin{tinfoframe}
             \begin{center}
-                Stačí nám tedy přidal vrchol $v$ na první volné místo na poslední hladině, popř. vytvořit novou hladinu, a následně zavolat $\textsc{BubbleUp}$.
+                Stačí nám tedy přidat vrchol $v$ na první volné místo na poslední hladině, popř. vytvořit novou hladinu, a~následně zavolat $\textsc{BubbleUp}$.
             \end{center}
         \end{tinfoframe}}
         \visible<3->{\begin{center}
@@ -292,7 +272,7 @@
                     \caption{Operace $\textsc{Insert}$}
                     \KwIn{Nový vrchol $v$}
                     $n\gets n+1$\;
-                    \If{\textup{\textup{poslední hladina je plná}}}{
+                    \If{\textup{poslední hladina je plná}}{
                         \textup{vlož $v$ do nové hladiny co nejvíce vlevo}
                     }
                     \Else{\textup{vlož $v$ do poslední hladiny zleva}}
@@ -306,8 +286,8 @@
 
     \begin{frame}{Operace $\textsc{ExtractMin}$ -- odstranění minima}
         \begin{itemize}
-            \visible<2->{\item Již víme, že přečtení minima zvládneme v konstantním čase (stačí se podívat na klíč v kořeni haldy a vrátit jej).}
-            \visible<3->{\item Pokud budeme ale chtít odstranit minimum, bude situace již o trochu složitější.}
+            \visible<2->{\item Již víme, že přečtení minima zvládneme v~konstantním čase (stačí se podívat na klíč v~kořeni haldy a~vrátit jej).}
+            \visible<3->{\item Pokud budeme ale chtít odstranit minimum, bude situace již o~trochu složitější.}
         \end{itemize}
         \visible<4->{\begin{tnoticeframe}
             Musíme vyřešit dvě otázky:
@@ -320,22 +300,19 @@
 
     \begin{frame}{Operace $\textsc{ExtractMin}$}
         \begin{itemize}
-            \item Abychom zachovali tvar haldy, přemístíme \textbf{nejpravější vrchol z poslední hladiny} a umístíme jej na pozici kořene.
-            \item Tím však může dojít k porušení haldového uspořádání.
-            \item Idea opravy bude podobná jako v případě operace $\textsc{Insert}$, ale nový kořen bude tentokrát "probublávat" směrem dolů.
+            \item Abychom zachovali tvar haldy, přemístíme \textbf{nejpravější vrchol z~poslední hladiny} a~umístíme jej na pozici kořene.
+            \item Tím však může dojít k~porušení haldového uspořádání.
+            \item Idea opravy bude podobná jako v~případě operace $\textsc{Insert}$, ale nový kořen bude tentokrát "probublávat" směrem dolů.
             \begin{itemize}
-                \item Pokud klíč v novém kořeni $v$ je větší než než klíč jedom z jeho synů, prohodíme je.
-                \item Pokud je hodnota klíče v novém kořeni větším než klíče v obou jeho synech, prohodíme jej s tím, jehož klíč je menší.
+                \item Pokud je klíč v~novém kořeni $v$ větší než klíč jednoho z~jeho synů, prohodíme je.
+                \item Pokud je hodnota klíče v~novém kořeni větší než klíče v~obou jeho synech, prohodíme jej s~tím, jehož klíč je menší.
                 \item Pokud stále není splněno haldové uspořádání, tak postup opakujeme.
             \end{itemize}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Nahrazení původního kořene}
-        \begin{figure}
-            \centering
-            \input{images/binarni-halda-novy-koren.tex}
-        \end{figure}
+        \obrazek{images/binarni-halda-novy-koren.tex}
     \end{frame}
 
     \subsection{Operace BubbleDown}
@@ -360,24 +337,24 @@
         \BubbleDownFrame{4}
     \end{frame}
 
-    \begin{frame}{Pseudoḱod $\textsc{BubbleDown}$}
+    \begin{frame}{Pseudokód $\textsc{BubbleDown}$}
         \begin{center}
             \begin{minipage}{0.8\textwidth}
                 \begin{algorithm}[H]
                     \caption{$\textsc{BubbleDown}$ (oprava haldy směrem dolů)}
-                    \KwIn{Vrchol $v$ v minimové binární haldě}
+                    \KwIn{Vrchol $v$ v~minimové binární haldě}
                     \While{\textup{$v$ má alespoň jednoho syna}}{
-                        $s \gets$ syn vrcholu $v$ s nejmenší hodnotou\;
+                        $s \gets$ syn vrcholu $v$ s~nejmenší hodnotou\;
                         \If{$\key(v) \leqslant \key(s)$}{
                             \textbf{break}\;
                         }
-                        prohoď klíče ve vrcholech $v$ a $u$\;
+                        prohoď klíče ve vrcholech $v$ a~$s$\;
                         $v \gets s$\;
                     }
                 \end{algorithm}
             \end{minipage}
         \end{center}
-        \visible<2->{V případě maximové binární haldy bychom opět jen použili opačnou nerovnost:
+        \visible<2->{V~případě maximové binární haldy bychom opět jen použili opačnou nerovnost:
         \[\key(v) \geqslant \key(s).\]}
     \end{frame}
 
@@ -399,12 +376,12 @@
 
     \begin{frame}{Rozbor časové složitosti}
         \begin{itemize}
-            \visible<2->{\item Rozebereme časovou složitost operací $\textsc{Insert}$ a $\textsc{ExtractMin}$.}
+            \visible<2->{\item Rozebereme časovou složitost operací $\textsc{Insert}$ a~$\textsc{ExtractMin}$.}
             \visible<3->{\item Operace $\textsc{Min}$ má zjevně složitost konstantní.}
-            \visible<4->{\item Největší roli budou hrát procedury $\textsc{BubbleUp}$ a $\textsc{BubbleDown}$. Zbylé operace stihneme v konstantním čase.}
+            \visible<4->{\item Největší roli budou hrát procedury $\textsc{BubbleUp}$ a~$\textsc{BubbleDown}$. Zbylé operace stihneme v~konstantním čase.}
             \visible<5->{\begin{timportantframe}
                 \begin{center}
-                    Každý vrchol "probublá" v nejhorším případě \textbf{všemi hladinami}.
+                    Každý vrchol "probublá" v~nejhorším případě \textbf{všemi hladinami}.
                 \end{center}
             \end{timportantframe}}
             \visible<6->{\item Podle dokázaného tvrzení víme, že binární halda má celkově $\lceil\log_2(n+1)\rceil$ hladin.}
@@ -420,7 +397,7 @@
     \begin{frame}{Rozdíl oproti poli}
         \visible<2->{\begin{talertframe}
             \begin{center}
-                Vylepšili jsme časovou složitost z \textbf{lineární} na \textbf{logaritmickou}!
+                Vylepšili jsme časovou složitost z~\textbf{lineární} na \textbf{logaritmickou}!
             \end{center}
         \end{talertframe}}
         \visible<3->{\begin{tnoticeframe}
@@ -430,78 +407,80 @@
         \end{tnoticeframe}}
     \end{frame}
 
+    % =================================================================
     \section{Implementace haldy pomocí pole}
+    % =================================================================
 
-    \titleframe{Halda jako pole}
+    \begin{titleframeenv}{Halda jako pole}
+        \obrazek[0.5\textheight]{images/halda-pole-nahled.tex}
+    \end{titleframeenv}
 
     \begin{frame}{Halda jako pole}
         \begin{itemize}
             \visible<2->{\item Binární haldu lze jistě implementovat jako graf.}
-            \visible<3->{\item Nicméně díky "pravidelnosti" haldy (díky haldovému uspořádání a tvaru) lze využít jednodušší strukturu $\implies$ \markdarkred{pole}.}
-            \visible<4->{\item Představme si, že vrcholy budeme číslovat od $1$ do $n$, přičemž začínáme od kořene a postupujeme po hladinách zleva doporava.}
+            \visible<3->{\item Nicméně díky "pravidelnosti" haldy (díky haldovému uspořádání a~tvaru) lze využít jednodušší strukturu $\implies$ \markdarkred{pole}.}
+            \visible<4->{\item Představme si, že vrcholy budeme číslovat od $1$ do $n$, přičemž začínáme od kořene a~postupujeme po hladinách zleva doprava.}
         \end{itemize}
-        \visible<5->{\begin{figure}
-            \centering
-            \input{images/binarni-halda-ocislovani.tex}
-        \end{figure}}
+        \visible<5->{\obrazek{images/binarni-halda-ocislovani.tex}}
     \end{frame}
 
-    \begin{frame}{Indexy dětí a rodiče}
+    \begin{frame}{Indexy dětí a~rodiče}
         \visible<2->{\begin{tnoticeframe}
             \begin{center}
-                Všimněme si, že když rodič má index $i$, pak jeho levý syn má index $2i$ a pravý syn $2i+1$.
+                Všimněme si, že když rodič má index $i$, pak jeho levý syn má index $2i$ a~pravý syn $2i+1$.
             \end{center}
         \end{tnoticeframe}}
-        \visible<3->{\begin{figure}
-            \centering
-            \input{images/binarni-halda-indexy.tex}
-        \end{figure}}
+        \visible<3->{\obrazek[0.32\textheight]{images/binarni-halda-indexy.tex}}
         \visible<4->{\begin{tinfoframe}
             \begin{center}
-                Resp. indexy dětí budou $2i+1$ a $2i+2$ v případě indexace od nuly.
+                Resp. indexy dětí budou $2i+1$ a~$2i+2$ v~případě indexace od nuly.
             \end{center}
         \end{tinfoframe}}
     \end{frame}
 
+    % =================================================================
     \section{Další operace na haldě}
+    % =================================================================
 
-    \titleframe{Další operace}
+    \begin{titleframeenv}{Další operace}
+        \obrazek[0.5\textheight]{images/dalsi-operace-nahled.tex}
+    \end{titleframeenv}
 
     \begin{frame}{Změna klíče ve vrcholu}
         \begin{itemize}
-            \visible<2->{\item Ještě se nabízí otázka, jak zařídit udržování haldy v případě, že budeme chtít upravovat klíče ve vrcholech.}
-            \visible<3->{\item K tomu se nám opět budou operace $\textsc{BubbleUp}$ a $\textsc{BubbleDown}$.}
-            \visible<4->{\item Opět uvažujme, že pracujeme s minimovou binární haldou (pro maximovou bude postup analogický).}
-            \visible<5->{\item Budeme chtít přídat následující operace:}
+            \visible<2->{\item Ještě se nabízí otázka, jak zařídit udržování haldy v~případě, že budeme chtít upravovat klíče ve vrcholech.}
+            \visible<3->{\item K~tomu se nám opět budou hodit procedury $\textsc{BubbleUp}$ a~$\textsc{BubbleDown}$.}
+            \visible<4->{\item Opět uvažujme, že pracujeme s~minimovou binární haldou (pro maximovou bude postup analogický).}
+            \visible<5->{\item Budeme chtít přidat následující operace:}
             \begin{itemize}
-                \visible<6->{\item $\textsc{Increase}(v,x)$ = zvýší hodnotu klíče $\key(v)$ o $x>0$.}
-                \visible<7->{\item $\textsc{Decrease}(v,x)$ = sníží hodnotu klíče $\key(v)$ o $x>0$.}
+                \visible<6->{\item $\textsc{Increase}(v,x)$ = zvýší hodnotu klíče $\key(v)$ o~$x>0$.}
+                \visible<7->{\item $\textsc{Decrease}(v,x)$ = sníží hodnotu klíče $\key(v)$ o~$x>0$.}
             \end{itemize}
         \end{itemize}
     \end{frame}
 
-    \subsection{Operace Increase a Decrease}
+    \subsection{Operace Increase a~Decrease}
 
-    \begin{frame}{Operace $\textsc{Increase}$ a $\textsc{Decrease}$}
+    \begin{frame}{Operace $\textsc{Increase}$ a~$\textsc{Decrease}$}
         \begin{itemize}
-            \visible<2->{\item Když budeme chtít zvýšit hodnotu klíče ve vrcholu $v$ o hodnotu $x$, opět se musíme zamyslet, jak se může strom "pokazit".}
-            \visible<3->{\item Pokud zvýšíme hodnotu klíče vrcholu $v$, pak v rodiči $r$ hodnota klíče stále splňuje požadovanou nerovnost:
+            \visible<2->{\item Když budeme chtít zvýšit hodnotu klíče ve vrcholu $v$ o~hodnotu $x$, opět se musíme zamyslet, jak se může strom "pokazit".}
+            \visible<3->{\item Pokud zvýšíme hodnotu klíče vrcholu $v$, pak v~rodiči $r$ hodnota klíče stále splňuje požadovanou nerovnost:
             \[\key(r)<\key(v)<\key(v)+x.\]}
-            \visible<4->{\item Ovšem mohlo se pokazit haldové uspořádání v synech upraveného vrcholu $v$.}
+            \visible<4->{\item Ovšem mohlo se pokazit haldové uspořádání v~synech upraveného vrcholu $v$.}
             \visible<5->{\begin{talertframe}
                 \begin{center}
-                    To však již umíme vyřešit procedurou $\textsc{BubbleDown}$! Stačí nám tedy zavolat $\textsc{BubbleDown}(v)$ a jsme hotovi.
+                    To však již umíme vyřešit procedurou $\textsc{BubbleDown}$! Stačí nám tedy zavolat $\textsc{BubbleDown}(v)$ a~jsme hotovi.
                 \end{center}
             \end{talertframe}}
-            \visible<6->{\item Podobně budeme postupovat v případě operace $\textsc{Decrease}\implies$ zavoláme $\textsc{BubbleUp}(v)$.}
+            \visible<6->{\item Podobně budeme postupovat v~případě operace $\textsc{Decrease}\implies$ zavoláme $\textsc{BubbleUp}(v)$.}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Složitost operací $\textsc{Increase}$ a $\textsc{Decrease}$}
-        \visible<2->{Je zjevné, že nejdéle potrvájí procedury $\textsc{BubbleUp}$ a $\textsc{BubbleDown}$, o nicž víme, že trvají $\bigO(\log{n})$.}
+    \begin{frame}{Složitost operací $\textsc{Increase}$ a~$\textsc{Decrease}$}
+        \visible<2->{Je zjevné, že nejdéle potrvají procedury $\textsc{BubbleUp}$ a~$\textsc{BubbleDown}$, o~nichž víme, že trvají $\bigO(\log{n})$.}
         \visible<3->{\begin{timportantframe}
             \begin{center}
-                Tzn. i tyto operace mají \textbf{logaritmickou časovou složitost}.
+                Tzn. i~tyto operace mají \textbf{logaritmickou časovou složitost}.
             \end{center}
         \end{timportantframe}}
     \end{frame}
@@ -513,8 +492,8 @@
             \centering
             \begin{tabular}{r|cc}
                 Operace                 & Pole          & Binární halda     \\ \hline
-                $\textsc{Min}$          & $\bigO(n)$    & $\bigO(\log{n})$  \\
-                $\textsc{Max}$          & $\bigO(n)$    & $\bigO(\log{n})$  \\
+                $\textsc{Min}$          & $\bigO(n)$    & $\bigO(1)$       \\
+                $\textsc{Max}$          & $\bigO(n)$    & $\bigO(1)$       \\
                 $\textsc{Insert}$       & $\bigO(1)$    & $\bigO(\log{n})$  \\
                 $\textsc{ExtractMin}$   & $\bigO(n)$    & $\bigO(\log{n})$  \\
                 $\textsc{ExtractMax}$   & $\bigO(n)$    & $\bigO(\log{n})$
@@ -522,7 +501,7 @@
         \end{table}}
         \visible<3->{\begin{tinfoframe}
             \begin{center}
-                Vidíme, že jsme si \markdarkred{polepšili} v případě \textbf{hledání minima/maxima} a jeho \textbf{odstranění}, ale na druhou stranu jsme si \markdarkred{pohoršili} při \textbf{vkládání nového vrcholu}.
+                Vidíme, že jsme si \markdarkred{polepšili} v~případě \textbf{hledání minima/maxima} a~jeho \textbf{odstranění}, ale na druhou stranu jsme si \markdarkred{pohoršili} při \textbf{vkládání nového vrcholu}.
             \end{center}
         \end{tinfoframe}}
     \end{frame}

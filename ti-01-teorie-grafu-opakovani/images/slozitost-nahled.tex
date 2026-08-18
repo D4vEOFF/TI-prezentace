@@ -1,0 +1,21 @@
+% Náhled k~sekci o~složitosti: růst typických funkcí složitosti.
+\begin{tikzpicture}
+\begin{axis}[
+    width=9cm, height=6cm,
+    domain=1:10, samples=100,
+    xlabel={$n$}, ylabel={počet kroků},
+    xmin=1, xmax=10, ymin=0, ymax=30,
+    axis lines=left,
+    xtick=\empty, ytick=\empty,
+    legend pos=north west,
+    legend cell align=left,
+    legend style={draw=none, fill=none, font=\small},
+    every axis plot/.append style={very thick},
+]
+\addplot[darkgreen]  {3};                       \addlegendentry{$\bigO(1)$}
+\addplot[darkblue]   {2*ln(x)};                 \addlegendentry{$\bigO(\log n)$}
+\addplot[codebeige]  {2*x};                     \addlegendentry{$\bigO(n)$}
+\addplot[lightred]   {x*ln(x)};                 \addlegendentry{$\bigO(n\log n)$}
+\addplot[darkred]    {0.3*x^2};                 \addlegendentry{$\bigO(n^{2})$}
+\end{axis}
+\end{tikzpicture}

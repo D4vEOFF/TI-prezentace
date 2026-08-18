@@ -12,9 +12,13 @@
 
     \input{../titlepage.tex}
 
+    % =================================================================
     \section{Kompilátory}
+    % =================================================================
 
-    \titleframe{Kompilátory}
+    \begin{titleframeenv}{Kompilátory}
+        \obrazek[0.45\textheight]{images/co-je-kompilator.tex}
+    \end{titleframeenv}
 
     \subsection{Úvod}
 
@@ -28,12 +32,11 @@
 
         \vspace{0.25cm}
 
-        \centering
-        \input{images/co-je-kompilator.tex}
+        \obrazek[0.4\textheight]{images/co-je-kompilator.tex}
 
         \vspace{0.3cm}
 
-        \visible<6->{
+        \visible<5->{
             \begin{tinfoframe}
                 Program, který napíše člověk, se musí převést do podoby,
                 se kterou dokáže pracovat počítač nebo běhové prostředí.
@@ -47,14 +50,13 @@
     \begin{frame}{Od zdrojového kódu ke spustitelnému souboru}
 
         \begin{itemize}
-            \visible<2->{\item Překlad programu často neprobíhá v jednom kroku.}
-            \visible<3->{\item Například u jazyka C může mít překladový řetězec několik částí.}
+            \visible<2->{\item Překlad programu často neprobíhá v~jednom kroku.}
+            \visible<3->{\item Například u~jazyka C může mít překladový řetězec několik částí.}
         \end{itemize}
 
         \vspace{0.15cm}
 
-        \centering
-        \input{images/od-zdrojoveho-kodu-ke-spustitelnemu-souboru.tex}
+        \obrazek[0.4\textheight]{images/od-zdrojoveho-kodu-ke-spustitelnemu-souboru.tex}
 
         \vspace{0.15cm}
 
@@ -69,17 +71,17 @@
             \begin{column}{0.48\textwidth}
                 \begin{itemize}
                     \visible<5->{\item \textbf{Assembler}: vytvoří objektový soubor.}
-                    \visible<6->{\item \textbf{Linker}: spojí části programu a knihovny.}
+                    \visible<6->{\item \textbf{Linker}: spojí části programu a~knihovny.}
                 \end{itemize}
             \end{column}
         \end{columns}
 
     \end{frame}
 
-    \subsection{Mezikód a strojový kód}
+    \subsection{Mezikód a~strojový kód}
 
-    \begin{frame}{Mezikód a strojový kód}
-        \pause
+    \begin{frame}{Mezikód a~strojový kód}
+        \small
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.49\textwidth}
                 \textbf{Strojový kód}
@@ -100,12 +102,7 @@
             \end{column}
         \end{columns}
 
-        \vspace{0.1cm}
-
-        \centering
-        \input{images/mezikod-a-strojovy-kod.tex}
-
-        \vspace{0.15cm}
+        \obrazek[0.28\textheight]{images/mezikod-a-strojovy-kod.tex}
 
         \visible<9->{
             \begin{tinfoframe}
@@ -134,14 +131,17 @@
 
         \vspace{0.15cm}
 
-        \centering
-        \input{images/faze-prekladace.tex}
+        \obrazek[0.4\textheight]{images/faze-prekladace.tex}
 
     \end{frame}
 
+    % =================================================================
     \section{Lexikální analýza}
+    % =================================================================
 
-    \titleframe{Lexikální analýza}
+    \begin{titleframeenv}{Lexikální analýza}
+        \obrazek[0.45\textheight]{images/lexikalni-analyza.tex}
+    \end{titleframeenv}
 
     \subsection{Hlavní činnost}
 
@@ -156,14 +156,14 @@
 
         \vspace{0.15cm}
 
-        \centering
-        \input{images/lexikalni-analyza.tex}
+        \obrazek[0.4\textheight]{images/lexikalni-analyza.tex}
 
     \end{frame}
 
-    \subsection{Lexémy a tokeny}
+    \subsection{Lexémy a~tokeny}
 
-    \begin{frame}{Lexém a token}
+    \begin{frame}{Lexém a~token}
+        \small
 
         \begin{itemize}
             \visible<2->{\item \textbf{Lexém} je konkrétní část zdrojového textu.}
@@ -177,12 +177,7 @@
             \]
         }
 
-        \vspace{-0.1cm}
-
-        \centering
-        \input{images/lexem-a-token.tex}
-
-        \vspace{0.25cm}
+        \obrazek[0.18\textheight]{images/lexem-a-token.tex}
 
         \visible<5->{
             \begin{center}
@@ -220,8 +215,7 @@
 
         \vspace{0.05cm}
 
-        \centering
-        \input{images/od-regularniho-vyrazu-k-lexeru.tex}
+        \obrazek[0.4\textheight]{images/od-regularniho-vyrazu-k-lexeru.tex}
 
     \end{frame}
 
@@ -230,21 +224,20 @@
         \small
         \begin{itemize}
             \visible<2->{\item Pro každý typ tokenu sestrojíme automat \(T_1,\dots,T_n\).}
-            \visible<3->{\item Přidáme společný počáteční stav \(s\) a \(\lambda\)-přechody;
-            mezery a komentáře pouze přeskočíme.}
+            \visible<3->{\item Přidáme společný počáteční stav \(s\) a~\(\lambda\)-přechody;
+            mezery a~komentáře pouze přeskočíme.}
         \end{itemize}
 
         \vspace{-0.05cm}
 
-        \centering
-        \input{images/obecna-konstrukce-lexeru.tex}
+        \obrazek[0.4\textheight]{images/obecna-konstrukce-lexeru.tex}
 
     \end{frame}
 
     \begin{frame}{Jak lexer vybere správný token?}
 
         \begin{itemize}
-            \visible<2->{\item Lexer čte vstup zleva doprava a hledá nejdelší prefix,
+            \visible<2->{\item Lexer čte vstup zleva doprava a~hledá nejdelší prefix,
             který tvoří platný lexém.}
             \visible<3->{\item Pokud může vytvořit delší lexém, pokračuje ve čtení.}
             \visible<4->{\item Pokud se na stejný lexém hodí více pravidel,
@@ -261,7 +254,7 @@
                 \textbf{vstup} & \textbf{během čtení lze přijmout} & \textbf{výsledek lexeru} \\
                 \hline
                 \visible<5->{\texttt{==}} &
-                \visible<5->{\texttt{=} i \texttt{==}} &
+                \visible<5->{\texttt{=} i~\texttt{==}} &
                 \visible<5->{\texttt{==}} \\
                 \hline
                 \visible<6->{\texttt{abc123}} &
@@ -269,7 +262,7 @@
                 \visible<6->{\texttt{<id, abc123>}} \\
                 \hline
                 \visible<7->{\texttt{then}} &
-                \visible<7->{klíčové slovo i identifikátor} &
+                \visible<7->{klíčové slovo i~identifikátor} &
                 \visible<7->{klíčové slovo} \\
                 \hline
             \end{tabular}
@@ -277,9 +270,13 @@
 
     \end{frame}
 
+    % =================================================================
     \section{Syntaktická analýza}
+    % =================================================================
 
-    \titleframe{Syntaktická analýza}
+    \begin{titleframeenv}{Syntaktická analýza}
+        \obrazek[0.45\textheight]{images/syntakticka-analyza.tex}
+    \end{titleframeenv}
 
     \subsection{Co je to parser?}
 
@@ -302,27 +299,25 @@
 
         \vspace{0.1cm}
 
-        \centering
-        \input{images/syntakticka-analyza.tex}
+        \obrazek[0.4\textheight]{images/syntakticka-analyza.tex}
 
     \end{frame}
 
-    \subsection{Jak parser pracuje s tokeny?}
+    \subsection{Jak parser pracuje s~tokeny?}
 
-    \begin{frame}{Jak parser pracuje s tokeny?}
+    \begin{frame}{Jak parser pracuje s~tokeny?}
 
         \begin{itemize}
             \visible<2->{\item Lexer už rozdělil zdrojový text na tokeny.}
-            \visible<3->{\item Parser už nepracuje s jednotlivými znaky,
-            ale s \textbf{posloupností tokenů}.}
+            \visible<3->{\item Parser už nepracuje s~jednotlivými znaky,
+            ale s~\textbf{posloupností tokenů}.}
             \visible<4->{\item Snaží se zjistit, zda tuto posloupnost lze odvodit
-            z počátečního symbolu gramatiky.}
+            z~počátečního symbolu gramatiky.}
         \end{itemize}
 
         \vspace{0.1cm}
 
-        \centering
-        \input{images/jak-parser-pracuje-s-tokeny.tex}
+        \obrazek[0.4\textheight]{images/jak-parser-pracuje-s-tokeny.tex}
 
     \end{frame}
 
@@ -340,12 +335,12 @@
     \begin{frame}{Příklad bezkontextové gramatiky}{Jazyk $a^n b^n$}
 
         \visible<2->{
-            Uvažujme gramatiku $G=(V,T,P,S)$, kde $V=\set{S},T=\set{a,b}$ a pravidla jsou
+            Uvažujme gramatiku $G=(V,T,P,S)$, kde $V=\set{S},T=\set{a,b}$ a~pravidla jsou
             \[
                 S \to aSb \mid \lambda.
             \]
         }
-        \visible<3->{Pak $G$ generuje jazyk $L(G)=\set{a^n b^n \mid n \geqslant 0}$.}
+        \visible<3->{Pak $G$ generuje jazyk $L(G)=\set{a^n b^n : n \geqslant 0}$.}
 
         \[
             \visible<4->{S}
@@ -363,15 +358,14 @@
 
         \begin{itemize}
             \visible<2->{\item Derivační strom názorně ukazuje,
-            jak byl řetězec odvozen z gramatiky.}
+            jak byl řetězec odvozen z~gramatiky.}
             \visible<3->{\item Vnitřní vrcholy odpovídají neterminálům,}
             \visible<4->{\item listy odpovídají terminálům výsledného řetězce.}
         \end{itemize}
 
         \vspace{0.15cm}
 
-        \centering
-        \input{images/derivacni-strom.tex}
+        \obrazek[0.4\textheight]{images/derivacni-strom.tex}
 
         \vspace{0.05cm}
 
@@ -407,15 +401,14 @@
                     \visible<4->{\item \(T\) = term}
                     \visible<5->{\item \(F\) = faktor}
                     \visible<6->{\item gramatika zachycuje prioritu operátorů}
-                    \visible<7->{\item násobení a dělení mají vyšší prioritu než sčítání a odčítání}
+                    \visible<7->{\item násobení a~dělení mají vyšší prioritu než sčítání a~odčítání}
                 \end{itemize}
             \end{column}
         \end{columns}
 
         \vspace{0.4cm}
 
-        \onslide<8->
-        \textbf{Příklady správných výrazů:} \texttt{a + b}, \texttt{a * (b + 3)}, \texttt{(a + b) * c}
+        \visible<8->{\textbf{Příklady správných výrazů:} \texttt{a~+ b}, \texttt{a~* (b + 3)}, \texttt{(a~+ b) * c}}
 
     \end{frame}
 
@@ -423,30 +416,28 @@
 
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.3\textwidth}
-                \pause
-                \[
+                \visible<2->{\[
                 \begin{aligned}
                     E &\to E + T \mid E - T \mid T \\
                     T &\to T * F \mid T / F \mid F \\
                     F &\to (E) \mid \mathtt{id} \mid \mathtt{num}
                 \end{aligned}
-                \]
+                \]}
             \end{column}
 
             \begin{column}{0.7\textwidth}
-                \centering
-                \input{images/priklad-derivacniho-stromu-vyraz-id-id-id.tex}
+                \obrazek[0.55\textheight]{images/priklad-derivacniho-stromu-vyraz-id-id-id.tex}
             \end{column}
         \end{columns}
 
         \vspace{0.2cm}
 
-        \onslide<7->
+        \visible<7->{
         \begin{timportantframe}
             \begin{center}
                 Strom odpovídá slovu $\mathtt{id} + \mathtt{id} * \mathtt{id}$.
             \end{center}
-        \end{timportantframe}
+        \end{timportantframe}}
 
     \end{frame}
 
@@ -454,13 +445,12 @@
 
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.4\textwidth}
-                \centering
-                \input{images/priklad-derivacniho-stromu-vyraz-id-num-id.tex}
+        \obrazek[0.4\textheight]{images/priklad-derivacniho-stromu-vyraz-id-num-id.tex}
             \end{column}
 
             \begin{column}{0.58\textwidth}
+                \small
                 \begin{align*}
-                    \small
                     E
                     &\visible<3->{\Rightarrow T}
                     \visible<4->{\Rightarrow T * F}
@@ -473,20 +463,19 @@
                     \visible<11->{\Rightarrow (\mathtt{id} + \mathtt{num}) * \mathtt{id}}
                 \end{align*}
 
-                \onslide<12->
+                \visible<12->{
                 \begin{timportantframe}
-                    Strom odpovídá například zdrojovému výrazu \texttt{(a + 3) * b},
+                    Strom odpovídá například zdrojovému výrazu \texttt{(a~+ 3) * b},
                     který lexer převede na
                     \((\mathtt{id} + \mathtt{num}) * \mathtt{id}\).
-                \end{timportantframe}
+                \end{timportantframe}}
             \end{column}
         \end{columns}
 
     \end{frame}
 
-    \begin{frame}{Gramatika jednoduchého příkazu v C\#}
-        \centering
-        \input{images/gramatika-jednoducheho-prikazu-v-c.tex}
+    \begin{frame}{Gramatika jednoduchého příkazu v~C\#}
+        \obrazek[0.4\textheight]{images/gramatika-jednoducheho-prikazu-v-c.tex}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.52\textwidth}
                 \[
@@ -516,8 +505,7 @@
 
     \begin{frame}{Derivační strom}{Příkaz \texttt{float posX = currPosX + stepsX * directionX * speedX;}}
 
-        \centering
-        \input{images/derivacni-strom-prikaz-float-posx-currposx-stepsx-directionx-speedx.tex}
+        \obrazek[0.4\textheight]{images/derivacni-strom-prikaz-float-posx-currposx-stepsx-directionx-speedx.tex}
 
     \end{frame}
 
@@ -529,64 +517,65 @@
             \visible<2->{\item Parser začíná počátečním symbolem gramatiky.}
             \visible<3->{\item Postupně rozvíjí neterminály tak,
             aby odvodil vstupní posloupnost tokenů.}
-            \visible<4->{\item Strom tedy vzniká \textbf{od kořene k listům}.}
+            \visible<4->{\item Strom tedy vzniká \textbf{od kořene k~listům}.}
         \end{itemize}
 
         \vspace{0.2cm}
 
-        \centering
-        \input{images/analyza-shora-dolu.tex}
+        \obrazek[0.4\textheight]{images/analyza-shora-dolu.tex}
 
         \vspace{0.2cm}
 
-        \onslide<10->
+        \visible<10->{
         \begin{tinfoframe}
             Shora dolů tedy "předpovídáme", jaká pravidla bude třeba použít.
-        \end{tinfoframe}
+        \end{tinfoframe}}
 
     \end{frame}
 
-    \subsection{Analýza zdola nahorů}
+    \subsection{Analýza zdola nahoru}
 
     \begin{frame}{Analýza zdola nahoru}
 
         \begin{itemize}
             \visible<2->{\item Parser začíná vstupní posloupností tokenů.}
             \visible<3->{\item Postupně hledá části vstupu, které odpovídají pravým stranám pravidel,
-            a nahrazuje je levými stranami.}
+            a~nahrazuje je levými stranami.}
             \visible<4->{\item Strom tedy vzniká \textbf{od listů ke kořeni}.}
         \end{itemize}
 
         \vspace{0.3cm}
 
-        \centering
-        \input{images/analyza-zdola-nahoru.tex}
+        \obrazek[0.4\textheight]{images/analyza-zdola-nahoru.tex}
 
         \vspace{0.3cm}
 
-        \onslide<10->
+        \visible<10->{
         \begin{tinfoframe}
             Zdola nahoru tedy postupně \textbf{redukujeme} vstup až na počáteční symbol.
-        \end{tinfoframe}
+        \end{tinfoframe}}
 
     \end{frame}
 
+    % =================================================================
     \section{Sémantická analýza}
+    % =================================================================
 
-    \titleframe{Sémantická analýza}
+    \begin{titleframeenv}{Sémantická analýza}
+        \obrazek[0.45\textheight]{images/semanticka-analyza.tex}
+    \end{titleframeenv}
 
     \begin{frame}{Sémantická analýza}
 
         \begin{itemize}
             \visible<2->{\item Parser ověří, zda má program správnou \textbf{syntaxi}.}
             \visible<3->{\item \textbf{Sémantická analýza} ověřuje, zda má program správný \textbf{význam}.}
-            \visible<4->{\item Kontroluje například deklarace proměnných, typy výrazů a platnost operací.}
+            \visible<4->{\item Kontroluje například deklarace proměnných, typy výrazů a~platnost operací.}
         \end{itemize}
 
         \vspace{0.3cm}
 
-        \visible<5->{\centering
-        \input{images/semanticka-analyza.tex}}
+        \visible<5->{        \obrazek[0.4\textheight]{images/semanticka-analyza.tex}}
 
     \end{frame}
 
@@ -613,7 +602,7 @@
             \visible<5->{chyba} &
             \visible<5->{--} \\
             \hline
-            \visible<6->{\texttt{string s = 5;}} &
+            \visible<6->{\texttt{string s~= 5;}} &
             \visible<6->{správně} &
             \visible<6->{chyba typu} \\
             \hline
@@ -625,26 +614,25 @@
 
         \vspace{0.15cm}
 
-        \onslide<8->
+        \visible<8->{
         \begin{timportantframe}
             Syntaxe říká, \textbf{jak má být program zapsán}.  
             Sémantika říká, \textbf{zda tento zápis dává smysl}.
-        \end{timportantframe}
+        \end{timportantframe}}
 
     \end{frame}
 
     \begin{frame}{Tabulka symbolů}
 
         \begin{itemize}
-            \visible<2->{\item Sémantická analýza pracuje s \textbf{tabulkou symbolů}.}
-            \visible<3->{\item Ukládá si do ní informace o proměnných, funkcích a jejich typech.}
+            \visible<2->{\item Sémantická analýza pracuje s~\textbf{tabulkou symbolů}.}
+            \visible<3->{\item Ukládá si do ní informace o~proměnných, funkcích a~jejich typech.}
         \end{itemize}
 
         \vspace{0.1cm}
 
         \visible<4->{
-            \centering
-            \input{images/tabulka-symbolu.tex}
+        \obrazek[0.4\textheight]{images/tabulka-symbolu.tex}
         }
 
         \vspace{0.3cm}
@@ -657,15 +645,15 @@
                 \hline
                 \textbf{identifikátor} & \textbf{typ} & \textbf{poznámka} \\
                 \hline
-                \texttt{posX} & \texttt{int} & deklarovaná proměnná \\
+                \texttt{posX} & \texttt{float} & deklarovaná proměnná \\
                 \hline
-                \texttt{currPosX} & \texttt{int} & musí být deklarována dříve \\
+                \texttt{currPosX} & \texttt{float} & musí být deklarována dříve \\
                 \hline
                 \texttt{stepsX} & \texttt{int} & musí být deklarována dříve \\
                 \hline
                 \texttt{directionX} & \texttt{int} & musí být deklarována dříve \\
                 \hline
-                \texttt{speedX} & \texttt{int} & musí být deklarována dříve \\
+                \texttt{speedX} & \texttt{float} & musí být deklarována dříve \\
                 \hline
             \end{tabular}
         }
@@ -681,24 +669,27 @@
 
         \vspace{0.1cm}
 
-        \centering
-        \input{images/typova-kontrola-vyrazu.tex}
+        \obrazek[0.4\textheight]{images/typova-kontrola-vyrazu.tex}
 
         \vspace{0.1cm}
 
-        \onslide<8->
+        \visible<8->{
         \begin{timportantframe}
             \begin{center}
                 Výraz má typ \texttt{float}, takže jej lze přiřadit do proměnné
                 \texttt{posX} typu \texttt{float}.
             \end{center}
-        \end{timportantframe}
+        \end{timportantframe}}
 
     \end{frame}
 
+    % =================================================================
     \section{Optimalizace}
+    % =================================================================
 
-    \titleframe{Optimalizace}
+    \begin{titleframeenv}{Optimalizace}
+        \obrazek[0.45\textheight]{images/optimalizace-kodu.tex}
+    \end{titleframeenv}
 
     \subsection{Optimalizace kódu}
 
@@ -711,8 +702,7 @@
 
         \vspace{0.1cm}
 
-        \centering
-        \input{images/optimalizace-kodu.tex}
+        \obrazek[0.4\textheight]{images/optimalizace-kodu.tex}
 
         \vspace{0.15cm}
 
@@ -726,12 +716,12 @@
 
     \end{frame}
 
-    \subsection{Lokální a globální optimalizace}
+    \subsection{Lokální a~globální optimalizace}
 
     \begin{frame}{Lokální a~globální optimalizace}
 
         \begin{itemize}
-            \visible<2->{\item Některé optimalizace pracují pouze s krátkým úsekem kódu.}
+            \visible<2->{\item Některé optimalizace pracují pouze s~krátkým úsekem kódu.}
             \visible<3->{\item Takovému úseku se často říká \textbf{základní blok}.}
 
             \visible<4->{\item \textbf{Lokální optimalizace} řeší jeden základní blok.}
@@ -739,7 +729,7 @@
                 \begin{itemize}
                     \item constant folding,
                     \item propagace kopií,
-                    \item odstranění mrtvého kódu v bloku,
+                    \item odstranění mrtvého kódu v~bloku,
                     \item odstranění společných podvýrazů.
                 \end{itemize}
             }
@@ -770,14 +760,13 @@
         \vspace{0.3cm}
 
         \visible<4->{
-            \centering
-            \input{images/constant-folding.tex}}
+        \obrazek[0.4\textheight]{images/constant-folding.tex}}
 
     \end{frame}
 
-    \subsection{Mrtvý kód a společné podvýrazy}
+    \subsection{Mrtvý kód a~společné podvýrazy}
 
-    \begin{frame}{Mrtvý kód a společné podvýrazy}
+    \begin{frame}{Mrtvý kód a~společné podvýrazy}
 
         \visible<2->{\textbf{Odstranění mrtvého kódu}
 
@@ -824,15 +813,14 @@
     \begin{frame}{Globální optimalizace}
 
         \begin{itemize}
-            \visible<2->{\item Globální optimalizace už nestačí provádět v jednom bloku.}
+            \visible<2->{\item Globální optimalizace už nestačí provádět v~jednom bloku.}
             \visible<3->{\item Překladač musí znát \textbf{tok řízení programu}.}
             \visible<4->{\item Program se proto často reprezentuje jako graf základních bloků.}
         \end{itemize}
 
         \vspace{0.1cm}
 
-        \centering
-        \input{images/globalni-optimalizace.tex}
+        \obrazek[0.4\textheight]{images/globalni-optimalizace.tex}
 
         \vspace{0.1cm}
 
@@ -840,18 +828,18 @@
             \begin{center}
                 \scriptsize
                 Globální optimalizace řeší například živost proměnných,
-                optimalizace přes větve programu a optimalizace cyklů.
+                optimalizace přes větve programu a~optimalizace cyklů.
             \end{center}
         }
 
     \end{frame}
 
-    \begin{frame}{Živé a mrtvé bloky programu}
+    \begin{frame}{Živé a~mrtvé bloky programu}
 
         \begin{itemize}
             \visible<2->{\item Hrana \((B_i, B_j)\) znamená, že po vykonání bloku \(B_i\)
             může program pokračovat blokem \(B_j\).}
-            \visible<3->{\item Blok je \textbf{živý}, pokud je dosažitelný z počátečního bloku.}
+            \visible<3->{\item Blok je \textbf{živý}, pokud je dosažitelný z~počátečního bloku.}
             \visible<4->{\item Blok, do kterého se program nikdy nemůže dostat, je \textbf{mrtvý}.}
         \end{itemize}
 
@@ -859,17 +847,18 @@
 
         \visible<5->{\scriptsize
         \begin{center}
+            \begin{adjustbox}{max width=\linewidth, max totalheight=0.56\textheight}
             \begin{minipage}{0.9\textwidth}
                 \begin{algorithm}[H]
                     \caption{Detekce mrtvých bloků}
                     \KwIn{Graf toku řízení \(G=(B,E)\), počáteční blok \(B_0\)}
-                    \KwOut{Rozdělení bloků na živé a mrtvé}
+                    \KwOut{Rozdělení bloků na živé a~mrtvé}
 
                     \ForEach{\textup{blok \(B_i\in B\)}}{
                         $\operatorname{stav}(B_i)\gets\textit{mrtvý}$
                     }
 
-                    Založ zásobník \(S\) a vlož do něj \(B_0\)\\
+                    Založ zásobník \(S\) a~vlož do něj \(B_0\)\\
                     $\operatorname{stav}(B_0)\gets\textit{živý}$\\
 
                     \While{\textup{zásobník \(S\) není prázdný}}{
@@ -884,6 +873,7 @@
                     }
                 \end{algorithm}
             \end{minipage}
+            \end{adjustbox}
         \end{center}}
 
     \end{frame}
@@ -904,7 +894,7 @@
                 \begin{algorithm}[H]
                     \caption{Zjednodušená analýza živých proměnných}
                     \KwIn{Základní blok instrukcí}
-                    \KwOut{Množiny živých proměnných před a za instrukcemi}
+                    \KwOut{Množiny živých proměnných před a~za instrukcemi}
 
                     $L\gets$ proměnné živé na konci bloku\\
 
@@ -912,7 +902,7 @@
                         \tcp{\(\operatorname{liveAfter}(I)\) jsou proměnné, jejichž hodnoty mohou být potřeba po vykonání instrukce \(I\).}
                         $\operatorname{liveAfter}(I)\gets L$\\
 
-                        Odstraň z $L$ proměnnou, do které instrukce $I$ zapisuje\\
+                        Odstraň z~$L$ proměnnou, do které instrukce $I$ zapisuje\\
                         Přidej do $L$ proměnné, které instrukce $I$ čte\\
 
                         \tcp{\(\operatorname{liveBefore}(I)\) jsou proměnné, jejichž hodnoty musí být známy před vykonáním instrukce \(I\).}
@@ -924,13 +914,17 @@
 
     \end{frame}
 
+    % =================================================================
     \section{Interpretované jazyky}
+    % =================================================================
 
-    \titleframe{Interpretované jazyky}
+    \begin{titleframeenv}{Interpretované jazyky}
+        \obrazek[0.45\textheight]{images/jak-funguje-interpret.tex}
+    \end{titleframeenv}
 
     \subsection{Kompilovaný vs. interpretovaný překlad}
 
-    \begin{frame}{Kompilovaný a interpretovaný překlad}
+    \begin{frame}{Kompilovaný a~interpretovaný překlad}
 
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.49\textwidth}
@@ -939,7 +933,7 @@
 
                 \vspace{0.1cm}
 
-                \input{images/kompilovany-a-interpretovany-preklad-1.tex}
+                \obrazek[0.4\textheight]{images/kompilovany-a-interpretovany-preklad-1.tex}
             \end{column}
 
             \begin{column}{0.49\textwidth}
@@ -948,15 +942,15 @@
 
                 \vspace{0.1cm}
 
-                \input{images/kompilovany-a-interpretovany-preklad-2.tex}
+                \obrazek[0.4\textheight]{images/kompilovany-a-interpretovany-preklad-2.tex}
             \end{column}
         \end{columns}
 
         \vspace{0.3cm}
 
         \begin{itemize}
-            \visible<2->{\item U kompilovaného jazyka nejprve vznikne \textbf{cílový program}.}
-            \visible<3->{\item U interpretovaného jazyka program vykonává přímo \textbf{interpret}.}
+            \visible<2->{\item U~kompilovaného jazyka nejprve vznikne \textbf{cílový program}.}
+            \visible<3->{\item U~interpretovaného jazyka program vykonává přímo \textbf{interpret}.}
         \end{itemize}
 
     \end{frame}
@@ -966,21 +960,20 @@
     \begin{frame}{Jak funguje interpret?}
 
         \begin{itemize}
-            \visible<2->{\item \textbf{Interpret} je program, který čte zdrojový program a rovnou jej vykonává.}
+            \visible<2->{\item \textbf{Interpret} je program, který čte zdrojový program a~rovnou jej vykonává.}
             \visible<3->{\item Obvykle postupuje po jednotlivých příkazech nebo instrukcích.}
             \visible<4->{\item Nepřekládá celý program předem do samostatného spustitelného souboru.}
         \end{itemize}
 
         \vspace{0.3cm}
 
-        \centering
-        \input{images/jak-funguje-interpret.tex}
+        \obrazek[0.4\textheight]{images/jak-funguje-interpret.tex}
 
     \end{frame}
 
-    \subsection{Výhody a nevýhody}
+    \subsection{Výhody a~nevýhody}
 
-    \begin{frame}{Výhody a nevýhody}
+    \begin{frame}{Výhody a~nevýhody}
 
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.48\textwidth}
@@ -988,8 +981,8 @@
                     \begin{itemize}
                         \visible<2->{\item jednodušší spuštění programu,}
                         \visible<3->{\item dobrá přenositelnost mezi platformami,}
-                        \visible<4->{\item snadnější ladění a testování,}
-                        \visible<5->{\item rychlejší vývoj a úpravy programu.}
+                        \visible<4->{\item snadnější ladění a~testování,}
+                        \visible<5->{\item rychlejší vývoj a~úpravy programu.}
                     \end{itemize}
                 \end{timportantbox}
             \end{column}
@@ -1015,10 +1008,10 @@
             \visible<3->{\item Při každém spuštění se může znovu opakovat část práce:}
             \visible<4->{
                 \begin{itemize}
-                    \item načítání a rozbor programu,
+                    \item načítání a~rozbor programu,
                     \item převod příkazů na vnitřní reprezentaci,
                     \item kontrola typů za běhu,
-                    \item vyhledávání proměnných a funkcí,
+                    \item vyhledávání proměnných a~funkcí,
                     \item rozhodování, jakou operaci právě provést.
                 \end{itemize}
             }
@@ -1029,11 +1022,11 @@
 
         \vspace{0.1cm}
 
-        \onslide<6->
+        \visible<6->{
         \begin{tinfoframe}
             \textbf{Zjednodušeně:} U~kompilovaného programu mnoho rozhodnutí proběhne už při překladu.
             U~interpretovaného programu se část těchto rozhodnutí přesouvá až do běhu programu.
-        \end{tinfoframe}
+        \end{tinfoframe}}
 
     \end{frame}
 
@@ -1050,18 +1043,17 @@
 
         \vspace{0.3cm}
 
-        \centering
-        \input{images/jit-kompilace.tex}
+        \obrazek[0.4\textheight]{images/jit-kompilace.tex}
 
         \vspace{0.3cm}
 
-        \onslide<7->
+        \visible<7->{
         \begin{timportantframe}
             \begin{center}
-                JIT spojuje výhody interpretace a kompilace:
-                \textbf{přenositelnost mezikódu} a \textbf{vyšší rychlost běhu}.
+                JIT spojuje výhody interpretace a~kompilace:
+                \textbf{přenositelnost mezikódu} a~\textbf{vyšší rychlost běhu}.
             \end{center}
-        \end{timportantframe}
+        \end{timportantframe}}
 
     \end{frame}
 
@@ -1077,7 +1069,7 @@
 
     \end{frame}
 
-    \begin{frame}{Příklady jazyků a prostředí s JIT}
+    \begin{frame}{Příklady jazyků a~prostředí s~JIT}
 
         \begin{itemize}
             \visible<2->{\item \textbf{Java} -- program se překládá do bytecode pro JVM,
@@ -1097,11 +1089,11 @@
 
         \vspace{0.1cm}
 
-        \onslide<7->
+        \visible<7->{
         \begin{tinfoframe}
-            Dnes se proto v praxi často nesetkáváme s "čistě interpretovanými"
-            jazyky, ale spíše s běhovými prostředími, která využívají JIT kompilaci.
-        \end{tinfoframe}
+            Dnes se proto v~praxi často nesetkáváme s~"čistě interpretovanými"
+            jazyky, ale spíše s~běhovými prostředími, která využívají JIT kompilaci.
+        \end{tinfoframe}}
 
     \end{frame}
 

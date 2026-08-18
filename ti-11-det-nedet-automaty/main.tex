@@ -16,38 +16,37 @@
 
     \input{../titlepage.tex}
 
-    \section{Úvod k automatům}
+    % =================================================================
+    \section{Úvod k~automatům}
+    % =================================================================
 
-    \titleframe{Úvod k automatům}
+    \begin{titleframeenv}{Úvod k~automatům}
+        \obrazek[0.4\textheight]{images/spinac.tex}
+    \end{titleframeenv}
 
-    \begin{frame}{Úvod k automatům}
+    \begin{frame}{Úvod k~automatům}
         \visible<2->{Mnoho situací lze za běhu programu prezentovat jako určité \textbf{stavy} během výpočtu.}
         \begin{itemize}
             \visible<3->{\item \textbf{Spínač}
-            \begin{figure}
-                \centering
-                \input{images/spinac.tex}
-            \end{figure}}
+            \obrazek{images/spinac.tex}}
             \visible<4->{\item \textbf{Automat rozpoznávající slovo \texttt{then}}
-            \begin{figure}
-                \centering
-                \input{images/slovo-then.tex}
-            \end{figure}}
+            \obrazek{images/slovo-then.tex}}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Jak automaty fungují?}
-        \visible<2->{Obecně konečné automaty pracují se vstupem, který se skládá z konečného počtu znaků, tzn. \textbf{slovo}.}
-        \visible<3->{\begin{figure}
-            \centering
-            \input{images/automat-obecne.tex}
-        \end{figure}}
+        \visible<2->{Obecně konečné automaty pracují se vstupem, který se skládá z~konečného počtu znaků, tzn. \textbf{slovo}.}
+        \visible<3->{\obrazek{images/automat-obecne.tex}}
         \visible<4->{Na konci výpočtu vydá automat odpověď, zdali slovo bylo \textbf{přijato}, či \textbf{odmítnuto}.}
     \end{frame}
 
+    % =================================================================
     \section{Formální jazyky}
+    % =================================================================
 
-    \titleframe{Formální jazyky}
+    \begin{titleframeenv}{Formální jazyky}
+        \obrazek[0.45\textheight]{images/jazyk-nahled.tex}
+    \end{titleframeenv}
 
     \subsection{Definice jazyka}
 
@@ -55,10 +54,10 @@
         \visible<2->{\begin{defblock}
             \visible<2->{Mějme konečnou množinu znaků $\Sigma\neq\emptyset$, kterou budeme nazývat \markdarkred{abeceda}. Pak}
             \begin{itemize}
-                \visible<3->{\item \markdarkred{slovo (řetězec)} je libovolná posloupnost znaků z abecedy $\Sigma$.}
+                \visible<3->{\item \markdarkred{slovo (řetězec)} je libovolná posloupnost znaků z~abecedy $\Sigma$.}
                 \visible<4->{\item \markdarkred{prázdné slovo} je slovo neobsahující žádné znaky. Značíme jej $\lambda$.}
-                \visible<5->{\item \markdarkred{množina všech slov v abecedě $\Sigma$} značíme $\Sigma^{*}$.}
-                \visible<6->{\item \markdarkred{množina všech neprázdných slov v abecedě $\Sigma$} se značí $\Sigma^{+}=\Sigma^{*}\setminus\set{\lambda}$.}
+                \visible<5->{\item \markdarkred{množinu všech slov v~abecedě $\Sigma$} značíme $\Sigma^{*}$.}
+                \visible<6->{\item \markdarkred{množina všech neprázdných slov v~abecedě $\Sigma$} se značí $\Sigma^{+}=\Sigma^{*}\setminus\set{\lambda}$.}
                 \visible<7->{\item \markdarkred{jazyk nad abecedou $\Sigma$} je libovolná podmnožina slov $L\subseteq\Sigma^{*}$.}
                 \visible<8->{\item \markdarkred{délka slova $w$} se značí $|w|$ (počet znaků ve slově $w$).}
                 \visible<9->{\item \markdarkred{počet výskytů znaku $z$ ve slově $w$} značíme $|w|_z$.}
@@ -72,7 +71,7 @@
         \visible<2->{\begin{defblock}[Operace nad slovy]
             \visible<2->{Nechť $u=u_1\dots u_n,v=v_1\dots v_m$ jsou slova nad abecedou $\Sigma$. Pak definujeme}
             \begin{itemize}
-                \visible<3->{\item \markdarkred{konkantenaci (zřetězení)} slov $u$ a $v$ jako slovo
+                \visible<3->{\item \markdarkred{konkatenaci (zřetězení)} slov $u$ a~$v$ jako slovo
                 \[uv=u_1\dots u_nv_1\dots v_m.\]}
                 \visible<4->{\item \markdarkred{mocninu slova $u$} následovně:
                 \begin{itemize}
@@ -85,18 +84,25 @@
     \end{frame}
 
     \begin{frame}{Formální jazyky}{Příklady}
+        \small
         \visible<2->{Mějme abecedu znaků $\Sigma=\set{\texttt{a},\texttt{b}}$.}
         \begin{itemize}
             \visible<3->{\item Slovo $w=\texttt{abba}$ má délku $|w|=4$.}
             \visible<4->{\item $w^{5}=\texttt{abba} \texttt{abba} \texttt{abba} \texttt{abba} \texttt{abba}$.}
             \visible<5->{\item Množina všech slov $\Sigma^{*}=\set{\lambda,\texttt{a},\texttt{b},\texttt{aa},\texttt{ab},\texttt{ba},\texttt{bb},\texttt{aaa},\texttt{aab},\texttt{aba},\texttt{abb},\texttt{baa},\dots}$.}
             \visible<6->{\item Příklady \textbf{triviálních} jazyků nad abecedou: $\emptyset$, $\set{\lambda}$, $\Sigma^{*}$, $\set{\texttt{aa},\texttt{bb}}$.}
-            \visible<7->{\item Další příklady}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Formální jazyky}{Příklady jazyků}
+        \small
+        \begin{itemize}
+            \visible<2->{\item Další příklady jazyků nad $\Sigma=\set{\texttt{a},\texttt{b}}$:}
             \begin{align*}
-                \visible<8->{L_1&=\set{a^{2n}: n\in\N}=\set{\lambda,\texttt{aa},\texttt{aaaa},\texttt{aaaaaa},\dots}}\\
-                \visible<9->{L_2&=\set{w\in\Sigma^{*}: \text{$w$ končí na $\texttt{ab}$}}=\set{w\in\Sigma^{*}: \exists u\in\Sigma^{*}: w=u\texttt{ab}}\\
+                \visible<3->{L_1&=\set{\texttt{a}^{2n}: n\in\N_0}=\set{\lambda,\texttt{aa},\texttt{aaaa},\texttt{aaaaaa},\dots}}\\
+                \visible<4->{L_2&=\set{w\in\Sigma^{*}: \text{$w$ končí na $\texttt{ab}$}}=\set{w\in\Sigma^{*}: \exists u\in\Sigma^{*}: w=u\texttt{ab}}\\
                 &=\set{\texttt{\markdarkred{ab}},\texttt{a\markdarkred{ab}},\texttt{b\markdarkred{ab}},\texttt{aa\markdarkred{ab}},\texttt{ab\markdarkred{ab}},\texttt{ba\markdarkred{ab}},\dots}}\\
-                \visible<10->{L_3&=\set{w\in\Sigma^{*}: \text{$w$ neobsahuje jako podslovo $\texttt{bb}$}}\\
+                \visible<5->{L_3&=\set{w\in\Sigma^{*}: \text{$w$ neobsahuje jako podslovo $\texttt{bb}$}}\\
                 &=\set{w\in\Sigma^{*}: \forall u,v\in\Sigma^{*}: w\neq u\texttt{bb}v}\\
                 &=\set{\lambda,\texttt{a},\texttt{b},\texttt{aa},\texttt{ab},\texttt{ba},\xcancel{\texttt{\markdarkred{bb}}},\texttt{aaa},\texttt{aab},\texttt{aba},\xcancel{\texttt{a\markdarkred{bb}}},\dots}}
             \end{align*}
@@ -105,35 +111,40 @@
 
     \subsection{Rozhodovací problém vs. jazyk}
 
-    \begin{frame}{Poznámka k rozhodovacím problémům}
-        \visible<2->{U rozhodovacích problémů jsme kódovali vstupy pomocí $0$ a $1$.}
+    \begin{frame}{Poznámka k~rozhodovacím problémům}
+        \small
+        \visible<2->{U~rozhodovacích problémů jsme kódovali vstupy pomocí $0$ a~$1$.}
         \begin{itemize}
             \visible<3->{\item Mějme \textbf{binární} abecedu $\Sigma=\set{0,1}$.}
             \visible<4->{\item Rozhodovací problémy lze chápat jako jazyky nad $\set{0,1}^{*}$.}
             \visible<5->{\item Označme si $\binary{x}$ binární zakódování libovolného objektu $x$.}
-            \visible<6->{\item Pak např. $\SAT$ lze chápat jako množinu všech \textbf{binárních řetězců} reprezentující takové logické formule $\varphi$, které jsou v CNF a jsou splnitelné. Tzn.
+            \visible<6->{\item Pak např. $\SAT$ lze chápat jako množinu všech \textbf{binárních řetězců} reprezentující takové logické formule $\varphi$, které jsou v~CNF a~jsou splnitelné. Tzn.
             \[\SAT=\set{\binary{\varphi}: \text{$\varphi$ je v CNF a je splnitelná}}.\]}
             \visible<7->{\item Podobně:}
             \begin{align*}
-                \visible<8->{\THREESAT&=\set{\binary{\varphi}: \text{$\varphi$ je v 3-CNF a je splnitelná}},\\}
-                \visible<9->{\NZMNA&=\set{\binary{(G,k)}: \text{V grafu $G$ existuje nez. mn. velikosti aspoň $k$}},\\}
-                \visible<10->{\KLIKA&=\set{\binary{(G,k)}: \text{V grafu $G$ existuje klika velikosti aspoň $k$}}.}
+                \visible<8->{\THREESAT&=\set{\binary{\varphi}: \text{$\varphi$ je v~3-CNF a~je splnitelná}},\\}
+                \visible<9->{\NZMNA&=\set{\binary{(G,k)}: \text{V~grafu $G$ existuje nez. mn. velikosti aspoň $k$}},\\}
+                \visible<10->{\KLIKA&=\set{\binary{(G,k)}: \text{V~grafu $G$ existuje klika velikosti aspoň $k$}}.}
             \end{align*}
         \end{itemize}
     \end{frame}
 
+    % =================================================================
     \section{Deterministické konečné automaty}
+    % =================================================================
 
-    \titleframe{Deterministické\\ konečné automaty}
+    \begin{titleframeenv}{Deterministické\\ konečné automaty}
+        \obrazek[0.4\textheight]{images/det-automat-1-bez-pozn.tex}
+    \end{titleframeenv}
 
-    \subsection{Úvod k NFA}
+    \subsection{Úvod k~NFA}
 
     \begin{frame}{Deterministický konečný automat}
         \visible<2->{\begin{defblock}[Deterministický konečný automat]
             \markdarkred{Deterministický konečný automat (DFA)} je uspořádaná pětice $A=(Q,\Sigma,\delta,q_0,F)$, kde
             \begin{itemize}
                 \visible<3->{\item $Q$ je \textbf{množina stavů},}
-                \visible<4->{\item $\Sigma$ je \textbf{abeceda}, z niž sestávají slova na vstupu,}
+                \visible<4->{\item $\Sigma$ je \textbf{abeceda}, z~níž sestávají slova na vstupu,}
                 \visible<5->{\item $\mapping{\delta}{Q\times\Sigma}{Q}$ je tzv. \textbf{přechodová funkce} značící přechody mezi stavy,}
                 \visible<6->{\item $q_0\in Q$ je \textbf{počáteční stav} a}
                 \visible<7->{\item $F\subseteq Q$ je \textbf{množina přijímajících stavů}.}
@@ -147,10 +158,8 @@
     \end{frame}
 
     \begin{frame}{Deterministický konečný automat}{Příklad}
-        \visible<2->{\begin{figure}
-            \centering
-            \input{images/det-automat-1.tex}
-        \end{figure}}
+        \small
+        \visible<2->{\obrazek[0.25\textheight]{images/det-automat-1.tex}}
         \begin{itemize}
             \visible<3->{\item \textbf{Počáteční stav $q_0$} značíme šipkou vedoucí "odnikud".}
             \visible<4->{\item \textbf{Přijímající stav(y)} zvýrazňujeme dvojitým okrajem.}
@@ -182,12 +191,12 @@
     \begin{frame}{Výpočet deterministického automatu}
         \visible<2->{Automat $A=(Q,\Sigma,\delta,q_0,F)$ dostane na vstupu slovo $w\in\Sigma^{*}$.}
         \begin{enumerate}
-            \visible<3->{\item Na začátku se automat nachází v počátečním stavu $q_0$.}
-            \visible<4->{\item Vstupní slovo $w$ čte $A$ zprava doleva po jednotlivých znacích.}
-            \visible<5->{\item Nachází-li se obecně automat ve stavu $q\in Q$, pak podle přečteného znaku $a$ určí podle přechodové funkce stav $s$, do kterého se ná přesunout:
+            \visible<3->{\item Na začátku se automat nachází v~počátečním stavu $q_0$.}
+            \visible<4->{\item Vstupní slovo $w$ čte $A$ \textbf{zleva doprava} po jednotlivých znacích.}
+            \visible<5->{\item Nachází-li se obecně automat ve stavu $q\in Q$, pak podle přečteného znaku $a$ určí podle přechodové funkce stav $s$, do kterého se má přesunout:
             \[\delta(q,a)=s.\]}
             \visible<6->{\item Pokud pro přečtený znak neexistuje žádný odpovídající stav, kam se má výpočet automatu přesunout, pak automat slovo $w$ \markdarkred{odmítá}.}
-            \visible<7->{\item Pokud automat po přečtení celého slova $w$ skončil v přijímajícím stavu, pak slovo $w$ \markdarkred{přijímá}. V opačném připadě jej odmítá.}
+            \visible<7->{\item Pokud automat po přečtení celého slova $w$ skončil v~přijímajícím stavu, pak slovo $w$ \markdarkred{přijímá}. V~opačném případě jej odmítá.}
         \end{enumerate}
     \end{frame}
 
@@ -324,18 +333,15 @@
         \end{defblock}}
         \visible<4->{\begin{tnoticeframe}
             \begin{center}
-                Jak vypadá $L(A)$ automatu z minulého příkladu?
+                Jak vypadá $L(A)$ automatu z~minulého příkladu?
             \end{center}
         \end{tnoticeframe}}
     \end{frame}
 
     \begin{frame}{Jazyk automatu $A$}
-        \visible<2->{\begin{figure}
-            \centering
-            \input{images/det-automat-1-bez-pozn.tex}
-        \end{figure}}
+        \visible<2->{\obrazek{images/det-automat-1-bez-pozn.tex}}
         \begin{itemize}
-            \visible<3->{\item Abychom se dostali do přijímajícího stavu $q_2$, musíme nejprve na začátku přečíst znaky $0$ a $1$.}
+            \visible<3->{\item Abychom se dostali do přijímajícího stavu $q_2$, musíme nejprve na začátku přečíst znaky $0$ a~$1$.}
             \visible<4->{\item Když se výpočet dostane do $q_2$, pak už na zbytku slova nezáleží (smyčka pro oba znaky $0,1$).}
             \visible<5->{\item Tzn. vstupní slovo $w$ musí obsahovat na začátku znaky $01$.}
         \end{itemize}
@@ -510,9 +516,13 @@
             \FAResult[fill=red!20]{Automat slovo odmítl.}
         }
 
+    % =================================================================
     \section{Nedeterministické konečné automaty}
+    % =================================================================
 
-    \titleframe{Nedeterministické\\ konečné automaty}
+    \begin{titleframeenv}{Nedeterministické\\ konečné automaty}
+        \obrazek[0.4\textheight]{images/nedet-automat-podslovo-101.tex}
+    \end{titleframeenv}
 
     \subsection{Definice NFA}
 
@@ -522,10 +532,10 @@
             \visible<3->{\item Pokud bychom chtěli sestrojit automat např. pro rozpoznání slov $w$ obsahující podslovo $u$, pak jednodušší přístup by mohl být následující.}
             \visible<4->{\begin{timportantframe}
                 \begin{center}
-                    V každém kroku výpočtu budeme "hádat", zdali jsme už nalezli \textbf{první znak} podslova $u$.
+                    V~každém kroku výpočtu budeme "hádat", zdali jsme už nalezli \textbf{první znak} podslova $u$.
                 \end{center}
             \end{timportantframe}}
-            \visible<5->{\item Co to znamená? V jednom stav budeme mít \textbf{více přechodů} pro jeden znak.}
+            \visible<5->{\item Co to znamená? V~jednom stavu budeme mít \textbf{více přechodů} pro jeden znak.}
             \visible<6->{\begin{talertframe}
                 \begin{center}
                     Pokud budeme mít více vyhovujících přechodů pro jeden znak, automat spustí \textbf{více paralelních výpočtů najednou}.
@@ -542,22 +552,16 @@
             \visible<3->{\item Zkusíme proto následující strategii:}
             \begin{itemize}
                 \visible<4->{\item Označme si první znak (pod)slova $u$ jako $a\in\Sigma$.}
-                \visible<5->{\item Pokud uvidíme znak $a$, spustíme dva paralelní výpočty: první bude odpovídat situaci, kdy jsme \textbf{nenašli podslovo $u$} a druhý \textbf{situaci, kdy ano}.}
-                \visible<6->{\item Pokud jeden z těchto výpočtů přijme slovo $w$ na vstupu, pak výpočet \textbf{prohlásíme za přijímající}.}
+                \visible<5->{\item Pokud uvidíme znak $a$, spustíme dva paralelní výpočty: první bude odpovídat situaci, kdy jsme \textbf{nenašli podslovo $u$} a~druhý \textbf{situaci, kdy ano}.}
+                \visible<6->{\item Pokud jeden z~těchto výpočtů přijme slovo $w$ na vstupu, pak výpočet \textbf{prohlásíme za přijímající}.}
             \end{itemize}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Návrh automatu}
-        \begin{figure}
-            \centering
-            \input{images/nedet-automat-podslovo-u.tex}
-        \end{figure}\
+        \obrazek[0.32\textheight]{images/nedet-automat-podslovo-u.tex}
         Konkrétní automat pro podslovo $u=101$ nad abecedou $\Sigma=\set{0,1}$:
-        \begin{figure}
-            \centering
-            \input{images/nedet-automat-podslovo-101.tex}
-        \end{figure}
+        \obrazek[0.32\textheight]{images/nedet-automat-podslovo-101.tex}
     \end{frame}
 
     % -------------------------------------------------
@@ -703,8 +707,8 @@
     \begin{frame}{Jak nedeterministický automat funguje?}
         \begin{itemize}
             \visible<2->{\item Pro jeden znak $a\in\Sigma$ můžeme mít ze stavu $q$ \textbf{více přechodů}.}
-            \visible<3->{\item V případě, že existuje pro $a$ více přechodů, automat spustí \textbf{více paralelních výpočtů najednou} (každý pro jeden přecho).}
-            \visible<4->{\item Nedeterministický konečný automat budeme značit NFA (\textit{nondeterministic finite automaton})}
+            \visible<3->{\item V~případě, že existuje pro $a$ více přechodů, automat spustí \textbf{více paralelních výpočtů najednou} (každý pro jeden přechod).}
+            \visible<4->{\item Nedeterministický konečný automat budeme značit \markdarkred{NFA} (\textit{nondeterministic finite automaton}).}
         \end{itemize}
         \visible<5->{\begin{tnoticeframe}
             \begin{center}
@@ -718,7 +722,7 @@
         \end{talertframe}}
     \end{frame}
 
-    \subsection{Definice DFA}
+    \subsection{Definice NFA}
 
     \begin{frame}{Formální definice NFA}
         \visible<2->{\begin{defblock}[Nedeterministický konečný automat]
@@ -735,26 +739,23 @@
         \visible<4->{\[\powset(X)=\set{A: A\subseteq X}\]}
     \end{frame}
 
-    \begin{frame}{Čísla s konečným desetinným rozvojem}
+    \begin{frame}{Čísla s~konečným desetinným rozvojem}
         \visible<2->{Mějme automat $D$ níže nad abecedou $\Sigma=\set{0,1,\dots,9,.}$:}
-        \visible<3->{\begin{figure}
-            \centering
-            \input{images/des-rozvoj.tex}
-        \end{figure}}
+        \visible<3->{\obrazek{images/des-rozvoj.tex}}
         \visible<4->{\begin{align*}
             L(D)&=\set{d_1\dots d_k: k\geqslant 1,d_i\in\set{0,\dots,9}}\\
             &\cup\set{d_1\dots d_k.d_{k+1}\dots d_n:k\geqslant 1,n>k,d_i\in\set{0,\dots,9}}.
         \end{align*}}
     \end{frame}
 
-    \subsection{Vztah DFA a NFA}
+    \subsection{Vztah DFA a~NFA}
 
-    \begin{frame}{Vztah DFA a NFA}
+    \begin{frame}{Vztah DFA a~NFA}
         \begin{itemize}
             \item NFA $N$ \textbf{lze vždy převést} na DFA $A$ takový, že
             \[L(N)=L(A),\]
-            tzn. $A$ a $N$ přijímají stejné jazyky.
-            \item Triválně každý DFA je zároveň i NFA.
+            tzn. $A$ a~$N$ přijímají stejné jazyky.
+            \item Triviálně každý DFA je zároveň i~NFA.
         \end{itemize}
         \begin{tnoticeframe}
             \begin{center}
@@ -763,9 +764,13 @@
         \end{tnoticeframe}
     \end{frame}
 
+    % =================================================================
     \section{Regulární jazyky}
+    % =================================================================
 
-    \titleframe{Regulární jazyky}
+    \begin{titleframeenv}{Regulární jazyky}
+        \obrazek[0.45\textheight]{images/reg-jazyky.tex}
+    \end{titleframeenv}
 
     \subsection{"Rozpoznávací" schopnost DFA}
 
@@ -802,7 +807,7 @@
                 \end{center}
             \end{talertframe}}
             \visible<4->{\item Označme si \textbf{počet stavů} automatu $A$ jako $m=|Q|$.}
-            \visible<5->{\item Pokusíme se najít takové slovo $w$, které automat $A$ přijme, \textbf{i když by neměl}.}
+            \visible<5->{\item Pokusíme se najít takové slovo $w$, které automat $A$ přijme, \textbf{i~když by neměl}.}
         \end{itemize}
     \end{frame}
 
@@ -810,7 +815,7 @@
         \begin{itemize}
             \visible<2->{\item Uvažujme $m+1$ slov tvaru
             \[\lambda,0,00,\dots,0^{m}.\]}
-            \visible<3->{\item Protože těchto slov je $m+1$ a stavů automatu $A$ je jen $m$, musí nutně z těchto slov existovat slova
+            \visible<3->{\item Protože těchto slov je $m+1$ a~stavů automatu $A$ je jen $m$, musí nutně z~těchto slov existovat slova
             \[0^{i}\quad\text{a}\quad 0^{j},\]
             kde $0\leqslant i<j\leqslant m$, po jejichž přečtení skončí automat ve stejném stavu $q\in Q$.}
             \visible<4->{\item Uvažujme slova
@@ -822,23 +827,20 @@
         \centering
         \visible<2->{\input{images/pro-jazyk-l-eq-neexistuje-dfa.tex}}
         \begin{itemize}
-            \visible<3->{\item Automat $A$ skočí po přečtení prvních $i$ znaků slova $u$ ve stavu $q$.}
+            \visible<3->{\item Automat $A$ skončí po přečtení prvních $i$ znaků slova $u$ ve stavu $q$.}
             \visible<4->{\item Podobně po přečtení prvních $j$ znaků slova $v$ skončí ve stejném stavu $q$.}
-            \visible<5->{\item To znamená, že po přečtení podslova $1^{i}$ by měl pro $u$ a $v$ na konci výpočtu být $A$ ve stejném stavu $r\in Q$.}
-            \visible<6->{\item Protože $u\in L(A)$, tak $A$ slovo $u$ musí přijmout a tedy přijme i slovo $v$.}
+            \visible<5->{\item To znamená, že po přečtení podslova $1^{i}$ by měl pro $u$ a~$v$ na konci výpočtu být $A$ ve stejném stavu $r\in Q$.}
+            \visible<6->{\item Protože $u\in L(A)$, tak $A$ slovo $u$ musí přijmout a~tedy přijme i~slovo $v$.}
         \end{itemize}
         \visible<7->{\begin{talertframe}
             \begin{center}
-                Jenže $v\notin L(A)$, což znamená, že $A$ přijmul slovo, \textbf{které není v jazyce $L_\text{eq}$!}
+                Jenže $v\notin L(A)$, což znamená, že $A$ přijal slovo, \textbf{které není v~jazyce $L_\text{eq}$!}
             \end{center}
         \end{talertframe}}
     \end{frame}
 
     \begin{frame}{Znázornění situace}
-        \begin{figure}
-            \centering
-            \input{images/jazyk-Leq.tex}
-        \end{figure}
+        \obrazek{images/jazyk-Leq.tex}
     \end{frame}
 
     \subsection{Definice regulárního jazyka}
@@ -847,10 +849,7 @@
         \visible<2->{\begin{defblock}[Regulární jazyk]
             Jazyk $L$ nazveme \markdarkred{regulární}, pokud existuje DFA, který jej přijímá.
         \end{defblock}}
-        \visible<3->{\begin{figure}
-            \centering
-            \input{images/reg-jazyky.tex}
-        \end{figure}}
+        \visible<3->{\obrazek{images/reg-jazyky.tex}}
     \end{frame}
 
     \subsection{Další příklady (ne)regulárních jazyků}
@@ -861,8 +860,8 @@
             \visible<3->{\item $L_\text{pref}=\set{01u: u\in\Sigma^{*}}$}
             \visible<4->{\item $L_\text{suff}=\set{u01: u\in\Sigma^{*}}$}
             \visible<5->{\item $L_\text{dec}=\set{d\in\set{0,\dots,9,.}^{*}:\text{$d$ je číslo s konečným desetinným rozvojem}}$}
-            \visible<6->{\item $L_\text{prev}\cap L_\text{suff}$}
-            \visible<7->{\item $L_\text{prev}\cup L_\text{suff}$}
+            \visible<6->{\item $L_\text{pref}\cap L_\text{suff}$}
+            \visible<7->{\item $L_\text{pref}\cup L_\text{suff}$}
         \end{itemize}
         \visible<8->{Jazyky, které nejsou regulární:}
         \begin{itemize}

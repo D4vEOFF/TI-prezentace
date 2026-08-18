@@ -1,0 +1,19 @@
+% Náhled k~sekci o~těžkých problémech: polynomiální versus exponenciální růst.
+\begin{tikzpicture}
+\begin{axis}[
+    width=9cm, height=6cm,
+    domain=1:12, samples=100,
+    xlabel={velikost vstupu $n$}, ylabel={počet kroků},
+    xmin=1, xmax=12, ymin=0, ymax=1200,
+    axis lines=left,
+    xtick=\empty, ytick=\empty,
+    legend pos=north west,
+    legend cell align=left,
+    legend style={draw=none, fill=none, font=\small},
+    every axis plot/.append style={very thick},
+]
+\addplot[darkgreen] {5*x};        \addlegendentry{$\bigO(n)$}
+\addplot[darkblue]  {8*x^2};      \addlegendentry{$\bigO(n^{2})$}
+\addplot[darkred]   {2^x};        \addlegendentry{$\bigO(2^{n})$}
+\end{axis}
+\end{tikzpicture}

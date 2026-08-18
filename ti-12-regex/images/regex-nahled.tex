@@ -1,0 +1,20 @@
+% Náhled k~sekci o~regulárních výrazech: výraz a~slova, která popisuje.
+\begin{tikzpicture}[x=1cm, y=1cm]
+
+    \node[draw, thick, rounded corners=3pt, inner sep=5pt, fill=maincolor!10]
+        (r) at (0,0) {\large $(0\mid 1)^{*}01$};
+
+    \node[darkgreen] (w1) at (-2.4,-1.8) {$01$};
+    \node[darkgreen] (w2) at (-0.8,-1.8) {$1101$};
+    \node[darkgreen] (w3) at ( 0.8,-1.8) {$00001$};
+    \node[darkred]   (w4) at ( 2.8,-1.8) {$110$};
+
+    \draw[->, >=stealth, darkgreen] (r.south) -- (w1.north);
+    \draw[->, >=stealth, darkgreen] (r.south) -- (w2.north);
+    \draw[->, >=stealth, darkgreen] (r.south) -- (w3.north);
+    \draw[->, >=stealth, darkred, dashed] (r.south) -- (w4.north);
+
+    \node[darkgreen, font=\small] at (-0.8,-2.6) {slova končící na $01$ \cmark};
+    \node[darkred,   font=\small] at ( 2.8,-2.6) {\xmark};
+
+\end{tikzpicture}

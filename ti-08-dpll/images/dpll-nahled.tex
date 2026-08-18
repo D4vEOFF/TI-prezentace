@@ -1,0 +1,29 @@
+% Náhled k~sekci o~DPLL: větvení podle literálu, listy jsou SAT nebo konflikt.
+\begin{tikzpicture}[x=1.5cm, y=1.3cm]
+
+    \tikzset{
+        uzel/.style={draw, circle, thick, minimum size=6mm, inner sep=0pt,
+                     fill=white},
+        sat/.style={uzel, fill=darkgreen!25},
+        unsat/.style={uzel, fill=darkred!20},
+        vetev/.style={thick}
+    }
+
+    \node[uzel] (r)  at (0,0)      {};
+    \node[uzel] (l)  at (-1.4,-1)  {};
+    \node[uzel] (p)  at ( 1.4,-1)  {};
+    \node[unsat] (ll) at (-2.1,-2) {\scriptsize\ding{55}};
+    \node[unsat] (lr) at (-0.7,-2) {\scriptsize\ding{55}};
+    \node[unsat] (pl) at ( 0.7,-2) {\scriptsize\ding{55}};
+    \node[sat]   (pr) at ( 2.1,-2) {\scriptsize\ding{51}};
+
+    \draw[vetev] (r) -- node[above left,  font=\scriptsize] {$x_1=0$} (l);
+    \draw[vetev] (r) -- node[above right, font=\scriptsize] {$x_1=1$} (p);
+    \draw[vetev] (l) -- node[left,  font=\scriptsize] {$x_2=0$} (ll);
+    \draw[vetev] (l) -- node[right, font=\scriptsize] {$x_2=1$} (lr);
+    \draw[vetev] (p) -- node[left,  font=\scriptsize] {$x_2=0$} (pl);
+    \draw[vetev] (p) -- node[right, font=\scriptsize] {$x_2=1$} (pr);
+
+    \node[font=\small] at (0,-2.9) {formule je \markdarkgreen{splnitelná}};
+
+\end{tikzpicture}

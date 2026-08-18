@@ -1,0 +1,18 @@
+% Náhled k~sekci o~složitosti: porovnání implementace polem a~binární haldou.
+\begin{tikzpicture}
+\begin{axis}[
+    width=9cm, height=6cm,
+    domain=2:40, samples=100,
+    xlabel={$n$}, ylabel={počet kroků},
+    xmin=2, xmax=40, ymin=0, ymax=1600,
+    axis lines=left,
+    xtick=\empty, ytick=\empty,
+    legend pos=north west,
+    legend cell align=left,
+    legend style={draw=none, fill=none, font=\small},
+    every axis plot/.append style={very thick},
+]
+\addplot[darkred]  {x^2};                 \addlegendentry{pole: $\bigO(n^{2})$}
+\addplot[darkblue] {8*x*ln(x)};           \addlegendentry{halda: $\bigO((n+m)\log n)$}
+\end{axis}
+\end{tikzpicture}

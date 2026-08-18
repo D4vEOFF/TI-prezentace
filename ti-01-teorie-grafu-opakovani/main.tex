@@ -12,31 +12,24 @@
 
     \input{../titlepage.tex}
 
+    % =================================================================
     \section{Teorie grafů}
+    % =================================================================
 
     \begin{titleframeenv}{Teorie grafů}
-        \begin{figure}
-            \centering
-            \input{images/petersen.tex}
-        \end{figure}
+        \obrazek[0.6\textheight]{images/petersen.tex}
     \end{titleframeenv}
 
     \subsection{Kde se s~grafy setkáváme}
 
     \begin{frame}{Kde se s~grafy setkáváme}
         Mapa města a~cesty
-        \begin{figure}
-            \centering
-            \includegraphics[width=\textwidth]{images/city-map.jpg}
-        \end{figure}
+        \obrazekgrf[0.78\textheight]{images/city-map.jpg}
     \end{frame}
 
     \begin{frame}{Kde se s~grafy setkáváme}
         Schéma počítačové sítě
-        \begin{figure}
-            \centering
-            \input{images/kde-se-s-grafy-setkavame.tex}
-        \end{figure}
+        \obrazek[0.78\textheight]{images/kde-se-s-grafy-setkavame.tex}
     \end{frame}
 
     \subsection{Definice grafu}
@@ -47,70 +40,59 @@
                 \markdarkred{Neorientovaným grafem} $G$ nazveme uspořádanou dvojici $(V,E)$, kde
                 \begin{itemize}
                     \item $V$ je množina \textbf{vrcholů} a
-                    \item $E\subseteq\set{\set{u,v}: u,v\in V}$ je množina \textbf{hran}.
+                    \item $E\subseteq\set{\set{u,v}: u,v\in V,\ u\neq v}$ je množina \textbf{hran}.
                 \end{itemize}
             \end{defblock}
         }
 
         \visible<3->{
             Pokud chceme, aby hrany byly \markdarkred{orientované}, stačí v~definici upravit množinu $E$ takto:
-            \[E\subseteq\set{(u,v): u,v\in V}.\]
+            \[E\subseteq\set{(u,v): u,v\in V,\ u\neq v}.\]
         }
     \end{frame}
 
     \begin{frame}{Příklad}{Neorientovaný graf}
-        \begin{figure}
-            \centering
-            \input{images/priklad-neorientovany-graf.tex}
-        \end{figure}
+        \obrazek{images/priklad-neorientovany-graf.tex}
     \end{frame}
 
-    \begin{frame}{Příklad}{{Orientovaný graf}}
-        \begin{figure}
-            \centering
-            \input{images/priklad-orientovany-graf.tex}
-        \end{figure}
+    \begin{frame}{Příklad}{Orientovaný graf}
+        \obrazek{images/priklad-orientovany-graf.tex}
     \end{frame}
 
     \begin{frame}{Incidence}
         \visible<2->{\begin{defblock}[Incidence]
-            Nechť $G=(V,E)$ je graf, $u\in V$ a~$e\in E$. Pak říkáme, že $e$ je incidentní s~vrcholem $u$, když je $u$ jedním z~koncových vrcholů hrany $e$.
+            Nechť $G=(V,E)$ je graf, $u\in V$ a~$e\in E$. Pak říkáme, že hrana $e$ je \markdarkred{incidentní} s~vrcholem $u$, když je $u$ jedním z~\textbf{koncových vrcholů} hrany $e$.
         \end{defblock}}
-        \visible<3->{\begin{figure}
-            \centering
-            \input{images/incidence.tex}
-        \end{figure}}
+        \visible<3->{\obrazek[0.45\textheight]{images/incidence.tex}}
     \end{frame}
 
     \subsection{Vzdálenosti}
 
     \begin{frame}{Vzdálenosti vrcholů}
         \visible<2->{\begin{defblock}[Dosažitelný vrchol]
-            Nechť \(G=(V,E)\) je graf a \(u,v\in V\). Řekneme, že $v$ je \markdarkred{dosažitelný} z vrcholu $u$, pokud \textbf{existuje cesta} z vrcholu $u$ do vrcholu $v$.
+            Nechť \(G=(V,E)\) je graf a~\(u,v\in V\). Řekneme, že $v$ je \markdarkred{dosažitelný} z~vrcholu $u$, pokud \textbf{existuje cesta} z~vrcholu $u$ do vrcholu $v$.
         \end{defblock}}
         \visible<3->{\begin{defblock}[Vzdálenost vrcholů]
-            Nechť \(G=(V,E)\) je graf a \(u,v\in V\). \markdarkred{Vzdálenost vrcholů} \(u\) a \(v\), značená \(d(u,v)\), je \textbf{délka nejkratší cesty} z vrcholu \(u\) do vrcholu \(v\) měřená počtem jejích hran, existuje-li taková cesta. Pokud cesta z \(u\) do \(v\) neexistuje, definujeme $d(u,v)=\infty$.
+            Nechť \(G=(V,E)\) je graf a~\(u,v\in V\). \markdarkred{Vzdálenost vrcholů} \(u\) a~\(v\), značená \(d(u,v)\), je \textbf{délka nejkratší cesty} z~vrcholu \(u\) do vrcholu \(v\) měřená počtem jejích hran, existuje-li taková cesta. Pokud cesta z~\(u\) do \(v\) neexistuje, definujeme $d(u,v)=\infty$.
         \end{defblock}}
-        \visible<4->{Pro neorientované grafy je vzdálenost symetrická, tzn.
-        \[d(u,v)=d(v,u).\]}
+        \visible<4->{Pro neorientované grafy je vzdálenost \markdarkred{symetrická}, tzn.~$d(u,v)=d(v,u)$.}
         \visible<5->{\begin{talertframe}
-            \begin{center}
-                Pro \textbf{orientované grafy} to samé ale nemusí platit!
-            \end{center}
+            Pro \textbf{orientované grafy} to samé ale nemusí platit!
         \end{talertframe}}
     \end{frame}
 
     \begin{frame}{Asymetričnost vzdálenosti vrcholů}{Příklad}
-        \begin{figure}
-            \centering
-            \input{images/asymetricnost-vzdalenosti.tex}
-        \end{figure}
+        \obrazek[0.55\textheight]{images/asymetricnost-vzdalenosti.tex}
         \visible<2>{\[d(u,v)=2,\qquad d(v,u)=1.\]}
     \end{frame}
 
+    % =================================================================
     \section{Reprezentace grafů}
+    % =================================================================
 
-    \titleframe{Reprezentace grafů}
+    \begin{titleframeenv}{Reprezentace grafů}
+        \obrazek[0.55\textheight]{images/reprezentace-nahled.tex}
+    \end{titleframeenv}
 
     \subsection{Matice}
 
@@ -146,16 +128,11 @@
     \end{frame}
 
     \begin{frame}{Reprezentace grafu}
-        \visible<2->{Máme libovolný graf $G=(V,E)$. Rádi bych co nejrychleji zjistili pro zadaný vrchol $u\in V$, do jakých vrcholů se z~něj můžeme dostat.}
+        \visible<2->{Máme libovolný graf $G=(V,E)$. Rádi bychom co nejrychleji zjistili pro zadaný vrchol $u\in V$, do jakých vrcholů se z~něj můžeme dostat.}
         \visible<3->{\begin{talertframe}
-            \begin{center}
-                Přímá definice není moc praktická.
-            \end{center}
+            Přímá definice není moc praktická.
         \end{talertframe}}
-        \visible<4->{\begin{figure}
-                \centering
-                \input{images/graf-matice-sousednosti.tex}
-            \end{figure}}
+        \visible<4->{\obrazek[0.28\textheight]{images/graf-matice-sousednosti.tex}}
         \visible<5->{Grafy můžeme reprezentovat třemi způsoby:}
         \visible<6->{\begin{itemize}
             \visible<6->{\item \markdarkred{maticí sousednosti},}
@@ -180,14 +157,12 @@
     \end{frame}
 
     \begin{frame}{Matice sousednosti}{Příklad \textrm{I}}
-        \visible<2->{\begin{minipage}{0.45\textwidth}
+        \small
+        \visible<2->{\begin{minipage}[t]{0.44\textwidth}
             Graf $G$
-            \begin{figure}
-                \centering
-                \input{images/graf-matice-sousednosti.tex}
-            \end{figure}
-        \end{minipage}}
-        \visible<3->{\begin{minipage}{0.45\textwidth}
+            \obrazek[0.2\textheight]{images/graf-matice-sousednosti.tex}
+        \end{minipage}}\hfill
+        \visible<3->{\begin{minipage}[t]{0.52\textwidth}
             \begin{table}
                 \centering
                 \begin{tabular}{c|cccccc}
@@ -214,10 +189,7 @@
 
     \begin{frame}{Matice sousednosti}{Příklad \textrm{II}}
         \visible<2>{Graf $H$ (prasátko)
-        \begin{figure}
-            \centering
-            \input{images/graf-prasatko.tex}
-        \end{figure}}
+        \obrazek[0.72\textheight]{images/graf-prasatko.tex}}
     \end{frame}
 
     \begin{frame}{Matice sousednosti}{Příklad \textrm{II}}
@@ -256,7 +228,7 @@
     \end{frame}
 
     \begin{frame}{Poznámka k~matici sousednosti}
-        \visible<2->{Všimněme si, že matice sousednosti $A$ \textbf{neorientovaného grafu} je vždy \markdarkred{symetrická}, tzn.~pro každé $i,j$ platí
+        \visible<2->{Všimněme si, že matice sousednosti $\mathbf{A}$ \textbf{neorientovaného grafu} je vždy \markdarkred{symetrická}, tzn.~pro každé $i,j$ platí
         \[\mathbf{A}_{ij}=\mathbf{A}_{ji}.\]}
         \visible<3->{\begin{talertframe}
             U~neorientovaného grafu nám tedy stačí vyplnit horní polovinu matice $\implies$ zbytek vznikne "zrcadlením" podle hlavní diagonály.
@@ -266,6 +238,7 @@
     \subsection{Matice incidence}
 
     \begin{frame}{Matice incidence}
+        \small
         \visible<2->{\begin{itemize}
             \visible<2->{\item Mějme graf $G=(V,E)$, kde
             \[V=\set{v_1,v_2,\dots,v_n}\quad\text{a}\quad E=\set{e_1,e_2,\dots,e_m}.\]}
@@ -279,7 +252,7 @@
                 \end{cases}\]}
                 \visible<5->{\item Je-li graf $G$ \markdarkred{neorientovaný}, pak
                 \[\mathbf{I}_{ij}=\begin{cases}
-                    1 & \text{je-li hrana $e_i$ incidentní s~vrcholem $v_i$}, \\
+                    1 & \text{je-li hrana $e_j$ incidentní s~vrcholem $v_i$}, \\
                     0 & \text{jinak}.
                 \end{cases}\]}
             \end{itemize}}
@@ -288,18 +261,16 @@
     \end{frame}
 
     \begin{frame}{Matice incidence}{Příklad \textrm{I}}
-        \visible<2->{\begin{minipage}{0.45\textwidth}
+        \small
+        \visible<2->{\begin{minipage}[t]{0.44\textwidth}
             Graf $G$
-            \begin{figure}
-                \centering
-                \input{images/graf-matice-incidence.tex}
-            \end{figure}
-        \end{minipage}}
-        \visible<3->{\begin{minipage}{0.45\textwidth}
+            \obrazek[0.2\textheight]{images/graf-matice-incidence.tex}
+        \end{minipage}}\hfill
+        \visible<3->{\begin{minipage}[t]{0.52\textwidth}
             \begin{table}
                 \centering
                 \begin{tabular}{c|cccccc}
-                    $\mathbf{I_G}$ & $e_1$ & $e_2$ & $e_3$ & $e_4$ & $e_5$ & $e_6$ \\ \hline
+                    $\mathbf{I}_G$ & $e_1$ & $e_2$ & $e_3$ & $e_4$ & $e_5$ & $e_6$ \\ \hline
                     $u_1$ & \visible<4->{$-1$ & $-1$ & $0$ & $0$ & $0$ & $0$ \\}
                     $u_2$ & \visible<5->{$1$ & $0$ & $-1$ & $0$ & $0$ & $0$ \\}
                     $u_3$ & \visible<6->{$0$ & $1$ & $1$ & $0$ & $0$ & $0$ \\}
@@ -310,7 +281,7 @@
             \end{table}
         \end{minipage}}
         \visible<10->{Výsledná matice incidence grafu $G$:
-        \[\mathbf{I_G}=\left(\begin{matrix}
+        \[\mathbf{I}_G=\left(\begin{matrix}
             -1 & -1 & 0 & 0 & 0 & 0 \\
             1 & 0 & -1 & 0 & 0 & 0 \\
             0 & 1 & 1 & 0 & 0 & 0 \\
@@ -326,33 +297,31 @@
         \begin{itemize}
             \visible<2->{\item Patrně nejznámější způsob reprezentace grafu.}
             \visible<2->{\item Pro graf $G=(V,E)$ definujeme \markdarkred{seznam sousedů} vrcholu $v\in V$ jako množinu
-            \[S[v]=\set{u\in V: \text{Z vrcholu $v$ vede hrana do $u$}}.\]}
+            \[S[v]=\set{u\in V: \text{z~vrcholu $v$ vede hrana do $u$}}.\]}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Seznamy sousedů}{Příklad \textrm{II}}
         \visible<2->{Prasátkový graf a~seznamy sousedů jeho vrcholů
-        \begin{figure}
-            \centering
-            \input{images/graf-prasatko.tex}
-        \end{figure}}
-        \begin{minipage}{0.3\textwidth}
+        \obrazek[0.28\textheight]{images/graf-prasatko.tex}}
+        \small
+        \begin{minipage}[t]{0.32\textwidth}
             \begin{align*}
-                \visible<3->{S[v_0]&=\set{v_1,v_3} \\ }
+                \visible<3->{S[v_0]&=\set{v_1,v_3,v_9} \\ }
                 \visible<4->{S[v_1]&=\set{v_2,v_3} \\ }
                 \visible<5->{S[v_2]&=\emptyset \\ }
                 \visible<6->{S[v_3]&=\set{v_4}}
             \end{align*}
-        \end{minipage}
-        \begin{minipage}{0.3\textwidth}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.32\textwidth}
             \begin{align*}
                 \visible<7->{S[v_4]&=\emptyset \\}
                 \visible<8->{S[v_5]&=\set{v_3} \\ }
                 \visible<9->{S[v_6]&=\set{v_0,v_3,v_7} \\ }
                 \visible<10->{S[v_7]&=\emptyset}
             \end{align*}
-        \end{minipage}
-        \begin{minipage}{0.3\textwidth}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.32\textwidth}
             \begin{align*}
                 \visible<11->{S[v_8]&=\set{v_6} \\}
                 \visible<12->{S[v_9]&=\set{v_6}}
@@ -360,37 +329,38 @@
         \end{minipage}
     \end{frame}
 
+    % =================================================================
     \section{Stupeň vrcholu a~princip sudosti}
+    % =================================================================
 
-    \titleframe{Princip sudosti}
+    \begin{titleframeenv}{Princip sudosti}
+        \obrazek[0.5\textheight]{images/sudost-nahled.tex}
+    \end{titleframeenv}
 
     \subsection{Stupeň vrcholu}
 
     \begin{frame}{Stupeň vrcholu}
         \begin{defblock}[Stupeň vrcholu]
             Nechť $G=(V,E)$ je neorientovaný graf a~$v\in V$ jeho libovolný vrchol. Pak definujeme \markdarkred{stupeň vrcholu $v$}
-            \[\deg{v}=|\set{e\in E: u\in e}|.\]
+            \[\deg{v}=|\set{e\in E: v\in e}|.\]
         \end{defblock}
     \end{frame}
 
-    \begin{frame}{Stupeň vrcholu v orintovaném grafu}
+    \begin{frame}{Stupeň vrcholu v~orientovaném grafu}
         \begin{defblock}[Stupeň vrcholu]
             Nechť $G=(V,E)$ je orientovaný graf a~$v\in V$ jeho libovolný vrchol. Pak definujeme
             \begin{itemize}
                 \item \markdarkred{vstupní stupeň vrcholu $v$}
-                \[\deg^{+}{v}=|\set{e\in E: \exists u\in V: e=(u,v)}|\]
+                \[\deg^{-}{v}=|\set{e\in E: \exists u\in V: e=(u,v)}|,\]
                 \item \markdarkred{výstupní stupeň vrcholu $v$}
-                \[\deg^{-}{v}=|\set{e\in E: \exists u\in V: e=(v,u)}|.\]
-                \item \markdarkred{stupeň vrcholu $v$} jako $\deg{v}=\deg^{+}{v}+\deg^{-}{v}$.
+                \[\deg^{+}{v}=|\set{e\in E: \exists u\in V: e=(v,u)}|,\]
+                \item \markdarkred{stupeň vrcholu $v$} jako $\deg{v}=\deg^{-}{v}+\deg^{+}{v}$.
             \end{itemize}
         \end{defblock}
     \end{frame}
 
     \begin{frame}{Stupeň vrcholu}{Příklad}
-        \visible<2->{\begin{figure}
-            \centering
-            \input{images/stupen-vrcholu-priklad.tex}
-        \end{figure}}
+        \visible<2->{\obrazek[0.6\textheight]{images/stupen-vrcholu-priklad.tex}}
     \end{frame}
 
     % \begin{frame}{Vstupní a~výstupní stupeň vrcholu}{Příklad}
@@ -425,7 +395,7 @@
     \begin{frame}{Poznámky k~definici \textrm{I}}
         \begin{itemize}
             \visible<2->{\item Definice říká, že stupeň vrcholu $v$ je jednoduše počet hran incidentních s~$v$.}
-            \visible<3->{\item Vstupní a~výstupní stupeň vrcholu $v$ je počet všech hran vycházejících, resp. přicházejících do vrcholu $v$.}
+            \visible<3->{\item \markdarkred{Vstupní}, resp. \markdarkred{výstupní stupeň} vrcholu $v$ je počet všech hran do vrcholu $v$ \textbf{přicházejících}, resp. z~vrcholu $v$ \textbf{vycházejících}.}
         \end{itemize}
     \end{frame}
 
@@ -435,7 +405,7 @@
             \[\deg{v_i}=\sum_{j=1}^{n}\mathbf{A}_{ij}=\sum_{k=1}^{m}\mathbf{I}_{ik},\]
             kde $n=|V|$ a~$m=|E|$.
         \end{tinfobox}}
-        \visible<3->{Tedy pro zvolený vrchol $v_i$ lze stanovit jeho stupeň jako součet jedniček v~příslušném řádku matice sousednosti, resp. matici incidence}.
+        \visible<3->{Tedy pro zvolený vrchol $v_i$ lze stanovit jeho stupeň jako součet jedniček v~příslušném řádku matice sousednosti, resp. matice incidence.}
     \end{frame}
 
     \begin{frame}{Poznámky k~definici \textrm{III}}
@@ -443,8 +413,8 @@
         \visible<3->{\begin{tinfobox}{Pozorování}
             Je-li $G$ \textbf{orientovaný} graf, pak pro libovolný jeho vrchol $v_i$ platí
             \begin{align*}
-                \deg^{-}{v_i}&=\sum_{j=1}^{n}\mathbf{A}_{ij}=-\sum_{k=1}^{m}\min\set{\mathbf{I}_{ik},0},\\
-                \deg^{+}{v_i}&=\sum_{j=1}^{n}\mathbf{A}_{ji}=\sum_{k=1}^{m}\max\set{\mathbf{I}_{ik},0},
+                \deg^{+}{v_i}&=\sum_{j=1}^{n}\mathbf{A}_{ij}=-\sum_{k=1}^{m}\min\set{\mathbf{I}_{ik},0},\\
+                \deg^{-}{v_i}&=\sum_{j=1}^{n}\mathbf{A}_{ji}=\sum_{k=1}^{m}\max\set{\mathbf{I}_{ik},0},
             \end{align*}
             kde $n=|V|$ a~$m=|E|$.
         \end{tinfobox}}
@@ -453,27 +423,28 @@
     \subsection{Princip sudosti}
 
     \begin{frame}{Princip sudosti}
-        \visible<2->{V angličtině nazývaný \textbf{Handshaking lemma}.}
+        \visible<2->{V~angličtině nazývaný \textbf{handshaking lemma}.}
         \visible<3->{\begin{propblock}[Princip sudosti]
             V~každém grafu $G=(V,E)$ platí:
             \[\sum_{v\in V}\deg{v}=2|E|.\]
         \end{propblock}}
         \visible<4->{Tvrzení plyne jednoduše ze skutečnosti, že každou hranu $uv$ započítáme dvakrát.}
-        \visible<5->{\begin{figure}
-            \centering
-            \input{images/princip-sudosti.tex}
-        \end{figure}}
+        \visible<5->{\obrazek[0.3\textheight]{images/princip-sudosti.tex}}
     \end{frame}
 
+    % =================================================================
     \section{Časová a~prostorová složitost}
+    % =================================================================
 
-    \titleframe{Asymptotická složitost}
+    \begin{titleframeenv}{Asymptotická složitost}
+        \obrazek[0.55\textheight]{images/slozitost-nahled.tex}
+    \end{titleframeenv}
 
     \begin{frame}{Připomenutí}
         \begin{itemize}
             \visible<2->{\item \textbf{Časová} vs. \textbf{prostorová složitost}:}
             \begin{itemize}
-                \visible<3->{\item \markdarkred{Časová složitost} udává, \textbf{jak se mění} doběš běhu algoritmu v~závislosti na změně velikosti vstupních dat.}
+                \visible<3->{\item \markdarkred{Časová složitost} udává, \textbf{jak se mění} doba běhu algoritmu v~závislosti na změně velikosti vstupních dat.}
                 \visible<4->{\item \markdarkred{Prostorová složitost} udává, \textbf{jak se mění} paměťové nároky algoritmu.}
             \end{itemize}
             \visible<5->{\item Málokdy jsme schopni uvést přesnou dobu běhu v~časových jednotkách, či prostorové nároky v~bytech.}
@@ -497,7 +468,7 @@
                 \end{itemize}
             \end{multicols}}
             \visible<8->{\item Srovnávací "škála" funkcí (posloupností):
-            \[c\preccurlyeq\log{n}\preccurlyeq n\log{n}\preccurlyeq n^{k}\preccurlyeq 2^{n},\]
+            \[c\preccurlyeq\log{n}\preccurlyeq n\preccurlyeq n\log{n}\preccurlyeq n^{k}\preccurlyeq 2^{n},\]
             kde zápis $f(n)\preccurlyeq g(n)$ zjednodušeně říká, že $f(n)$ roste "řádově pomaleji" než $g(n)$.}
         \end{itemize}
     \end{frame}
@@ -521,7 +492,7 @@
         \begin{itemize}
             \visible<2->{\item Typickou otázkou při práci je, zdali mezi zadanými vrcholy vede hrana (orientovaná či neorientovaná).}
             \visible<3->{\item Při práci s~jednotlivými reprezentacemi dává smysl se tedy ptát, jak dlouho takové zjištění potrvá.}
-            \visible<4->{\item Předpokládejme, že máme graf $G=(V,E)$ repezentovaný buď \textbf{maticí sousednosti}, \textbf{maticí incidence} nebo \textbf{seznamy sousedů}, a~dále vrcholy $u,v\in V$.}
+            \visible<4->{\item Předpokládejme, že máme graf $G=(V,E)$ reprezentovaný buď \textbf{maticí sousednosti}, \textbf{maticí incidence} nebo \textbf{seznamy sousedů}, a~dále vrcholy $u,v\in V$.}
             \visible<5->{\begin{timportantbox}{Otázka}
                 \begin{center}
                     Nachází se v~grafu hrana $uv$?
@@ -545,7 +516,7 @@
     \begin{frame}[fragile]{Hledání hrany v~matici sousednosti}
         Ukázka v~jazyce Python
         \begin{lstlisting}[style=python]
-def has_edge_incidence(i: int, j: int) -> bool:
+def has_edge_adjacency(i: int, j: int) -> bool:
     return bool(A[i][j])
         \end{lstlisting}
     \end{frame}
@@ -555,9 +526,10 @@ def has_edge_incidence(i: int, j: int) -> bool:
             \visible<2->{\item Máme zadaná čísla vrcholů $i,j$. Potřebujeme zjistit, jestli některá z~hran
             \[e_1,e_2,\dots,e_m\]
             obsahuje za koncové vrcholy právě $v_i$ a~$v_j$.}
-            \visible<3->{\item Každá hrana má právě dva koncepvé vrcholy $\implies$ v~každém sloupci jsou \textbf{právě dvě nenulové hodnoty}.}
+            \visible<3->{\item Každá hrana má právě dva koncové vrcholy $\implies$ v~každém sloupci jsou \textbf{právě dvě nenulové hodnoty}.}
             \visible<4->{\begin{table}
                 \centering
+                \small
                 \begin{tabular}{c|cccccc}
                     $\mathbf{I}$                    & $e_1$     & $e_2$     & $e_3$     & $e_4$     & $\cdots$ & $e_m$      \\ \hline
                     $v_1$                           & $1$       & $0$       & $1$       & $0$       & $\cdots$ & $0$        \\
@@ -579,7 +551,7 @@ def has_edge_incidence(i: int, j: int) -> bool:
             v~případě \textbf{neorientovaného grafu}}\visible<3->{, resp.
             \[\overbrace{(\mathbf{I}_{ik}=-1 \land \mathbf{I}_{jk}=1)}^{\text{hrana $(v_i,v_j)$}}\quad\text{nebo}\quad\underbrace{(\mathbf{I}_{ik}=1 \land \mathbf{I}_{jk}=-1)}_{\text{hrana $(v_j,v_i)$}}\]
             v~případě \textbf{orientovaného grafu}.}
-            \visible<4->{\item Celkově projdeme $m$ sloupců, přičemž v~každém z~nich provedeme koonstantní počet porovnání. $\implies$ Celkový počet kroků bude řádově $\bigO(m)$.}
+            \visible<4->{\item Celkově projdeme $m$ sloupců, přičemž v~každém z~nich provedeme konstantní počet porovnání. $\implies$ Celkový počet kroků bude řádově $\bigO(m)$.}
         \end{itemize}
     \end{frame}
 
@@ -607,17 +579,17 @@ def has_edge_incidence(i: int, j: int) -> bool:
         \begin{itemize}
             \visible<2->{\item Máme indexy vrcholů $i,j$.}
             \visible<3->{\item Projdeme seznam sousedů $S[v_i]$, přičemž hledáme druhý vrchol $\implies$ \textbf{sekvenční vyhledávání}.}
-            \visible<4->{\item Počet kroků bude tedy \textbf{lineární v~počtu sousedů} $\deg{v_i}$, resp. $\deg^{-}{v_i}$ pro orientované grafy.}
-            \visible<5->{\item Nicméně vrchol $v_i$ může mít až $n-1$ sousedů (nepovolujeme "smyčky" nad~vrcholy), tzn.~v nejhorším případě bude složitost \markdarkred{lineární v~počtu vrcholů} $\implies\bigO(n)$.}
+            \visible<4->{\item Počet kroků bude tedy \textbf{lineární v~počtu sousedů} $\deg{v_i}$, resp. $\deg^{+}{v_i}$ pro orientované grafy.}
+            \visible<5->{\item Nicméně vrchol $v_i$ může mít až $n-1$ sousedů (nepovolujeme \textbf{smyčky}, tj.~hrany z~vrcholu do něj samého), tzn.~v nejhorším případě bude složitost \markdarkred{lineární v~počtu vrcholů} $\implies\bigO(n)$.}
         \end{itemize}
     \end{frame}
 
     \begin{frame}[fragile]{Hledání hrany v~seznamu sousedů}
         Ukázka implementace v~Pythonu:
         \begin{lstlisting}[style=python]
-def has_edge_incidence(i: int, j: int) -> bool:
+def has_edge_adjacency_list(i: int, j: int) -> bool:
     """
-    Vrati True, pokud v~grafu existuje hrana mezi vrcholy v_i a v_j.
+    Vrati True, pokud v grafu existuje hrana mezi vrcholy v_i a v_j.
 
     adj ... seznamy sousedu vsech vrcholu
     V ... seznam vrcholu grafu G
@@ -633,6 +605,7 @@ def has_edge_incidence(i: int, j: int) -> bool:
     \begin{frame}{Shrnutí}
         \visible<2->{\begin{table}
             \centering
+            \small
             \begin{tabular}{c|ccc}
                                         & Prostorová složitost      & Nalezení hrany    \\ \hline
                 Matice sousednosti      & $\bigO(n^{2})$            & $\bigO(1)$        \\
@@ -641,56 +614,44 @@ def has_edge_incidence(i: int, j: int) -> bool:
             \end{tabular}
         \end{table}}
         \begin{itemize}
-            \visible<3->{\item \textbf{Matice sousednosti} se hodí pro husté grafy obsahující řádově více hran než vrcholů.}
-            \visible<4->{\item \textbf{Matice incidence} má svůj užitek spíše v~teoretických výpočtech, nicméně algoritmech se skoro vůbec nepoužívá (příliš velká a~základní grafové operace jsou s~ní pomalé).}
-            \visible<5->{\item \textbf{Seznamy sousedů} se hodí pro řídké grafy, tzn.~obsahující méně než kvardraticky mnoho hran.}
+            \visible<3->{\item \textbf{Matice sousednosti} se hodí pro \markdarkred{husté grafy}, tzn.~obsahující řádově kvadraticky mnoho hran.}
+            \visible<4->{\item \textbf{Matice incidence} má svůj užitek spíše v~teoretických výpočtech, nicméně v~algoritmech se skoro vůbec nepoužívá (příliš velká a~základní grafové operace jsou s~ní pomalé).}
+            \visible<5->{\item \textbf{Seznamy sousedů} se hodí pro \markdarkred{řídké grafy}, tzn.~obsahující méně než kvadraticky mnoho hran.}
             \visible<6->{\begin{talertframe}
                 S~takovými grafy se setkáváme překvapivě často. Např. pro \textbf{stromy} platí, že $|E|=|V|-1$.
             \end{talertframe}}
         \end{itemize}
     \end{frame}
 
+    % =================================================================
     \section{Stromy}
-
-    % \titleframe{Stromy}
+    % =================================================================
 
     \begin{titleframeenv}{Stromy}
-        \begin{figure}
-            \centering
-            \input{images/strom-nahled.tex}
-        \end{figure}
+        \obrazek[0.6\textheight]{images/strom-nahled.tex}
     \end{titleframeenv}
 
-    \subsection{Souvislý graf a strom}
+    \subsection{Souvislý graf a~strom}
 
-    \begin{frame}{Souvislý graf a strom}
+    \begin{frame}{Souvislý graf a~strom}
         \visible<2->{\begin{defblock}[Souvislý graf]
-            Neorientovaný graf $G$ nazveme \markdarkred{souvislým}, pokud mezi každou jeho dvojicí vrcholů $u,v\in V$ existuje cesta.
+            Neorientovaný graf $G$ nazveme \markdarkred{souvislým}, pokud mezi každou jeho dvojicí vrcholů $u,v\in V$ \textbf{existuje cesta}.
         \end{defblock}}
         \visible<3->{\begin{defblock}[Strom]
-            Graf $T=(V,E)$ nazveme \markdarkred{stromem}, pokud je \textbf{souvislý} a \textbf{neobsahuje kružnici}.
+            Graf $T=(V,E)$ nazveme \markdarkred{stromem}, pokud je \textbf{souvislý} a~\textbf{neobsahuje kružnici}.
         \end{defblock}}
     \end{frame}
 
     \begin{frame}{Stromy}{Příklad \textrm{I}}
-        \begin{figure}
-            \centering
-            \input{images/strom-1.tex}
-        \end{figure}
+        \obrazek{images/strom-1.tex}
     \end{frame}
 
     \begin{frame}{Stromy}{Příklad \textrm{II}}
-        \begin{figure}
-            \centering
-            \input{images/strom-2.tex}
-        \end{figure}
+        \obrazek{images/strom-2.tex}
     \end{frame}
 
-    \begin{frame}{Stromy}{Příklad grafu, který není stromem \textrm{I}}
-        \begin{figure}
-            \centering
-            \input{images/nestrom-1.tex}
-        \end{figure}
+    \begin{frame}{Stromy}{Příklad grafu, který není stromem}
+        \obrazek{images/nestrom-1.tex}
     \end{frame}
 
     \subsection{Charakterizace stromů}
@@ -699,11 +660,11 @@ def has_edge_incidence(i: int, j: int) -> bool:
         \begin{thmblock}[Charakterizace stromů]
             Nechť $G=(V,E)$ je graf. Pak jsou následující výroky ekvivalentní:
             \begin{enumerate}
-                \item $G$ je strom.
-                \item Pro každou dvojici vrcholů $u,v\in V$ existuje \textbf{právě jedna} cesta z $u$ do $v$.
-                \item Graf $G$ je souvislý a odebráním kterékoliv hrany z grafu $G$ vznikne nesouvislý graf.
-                \item Graf $G$ neobsahuje kružnici a přidáním jakékoliv hrany mezi libovolnou dvojicí vrcholů vznikne v grafu $G$ kružnice.
-                \item Graf $G$ je souvislý a platí $|E|=|V|-1$.
+                \item $G$ je \markdarkred{strom}.
+                \item Pro každou dvojici vrcholů $u,v\in V$ existuje \textbf{právě jedna} cesta z~$u$ do~$v$.
+                \item Graf $G$ je souvislý a~odebráním kterékoliv hrany z~grafu $G$ vznikne \textbf{nesouvislý} graf.
+                \item Graf $G$ neobsahuje kružnici a~přidáním jakékoliv hrany mezi libovolnou dvojici \textbf{nesousedních} vrcholů vznikne v~grafu $G$ \textbf{kružnice}.
+                \item Graf $G$ je souvislý a~platí $|E|=|V|-1$.
             \end{enumerate}
         \end{thmblock}
     \end{frame}

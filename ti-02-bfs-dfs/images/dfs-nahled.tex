@@ -1,0 +1,30 @@
+% Náhled k~sekci o~DFS: prohledávání se noří co nejhlouběji po jedné větvi.
+\begin{tikzpicture}[scale=1]
+
+    \node[vertex, fill=maincolor!35] (V1) at (0,2)      {};
+    \node[vertex, fill=maincolor!20] (V2) at (1.6,2)    {};
+    \node[vertex, fill=maincolor!20] (V3) at (1.6,0.6)  {};
+    \node[vertex, fill=maincolor!20] (V4) at (3.2,0.6)  {};
+    \node[vertex, fill=maincolor!20] (V5) at (3.2,-0.8) {};
+    \node[vertex, fill=white]        (V6) at (1.6,-0.8) {};
+    \node[vertex, fill=white]        (V7) at (0,0.6)    {};
+    \node[vertex, fill=white]        (V8) at (0,-0.8)   {};
+
+    % všechny hrany grafu
+    \draw[edge] (V1) -- (V7);
+    \draw[edge] (V7) -- (V3);
+    \draw[edge] (V3) -- (V6);
+    \draw[edge] (V6) -- (V8);
+    \draw[edge] (V7) -- (V8);
+    \draw[edge] (V4) -- (V6);
+
+    % větev, po které se DFS zanořuje
+    \draw[edge, very thick, darkred] (V1) -- (V2);
+    \draw[edge, very thick, darkred] (V2) -- (V3);
+    \draw[edge, very thick, darkred] (V3) -- (V4);
+    \draw[edge, very thick, darkred] (V4) -- (V5);
+
+    \draw[->, >=stealth, thick, darkred, dashed]
+        (4.0,2) to[bend left=45] node[midway, right] {\small hloubka} (4.0,-0.8);
+
+\end{tikzpicture}

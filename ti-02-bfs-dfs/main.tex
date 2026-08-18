@@ -17,9 +17,13 @@
 
     \input{../titlepage.tex}
 
+    % =================================================================
     \section{Prohledávání do šířky}
+    % =================================================================
 
-    \titleframe{Prohledávání do šířky}
+    \begin{titleframeenv}{Prohledávání do šířky}
+        \obrazek[0.55\textheight]{images/bfs-nahled.tex}
+    \end{titleframeenv}
 
     \subsection{Grafové algoritmy}
 
@@ -41,7 +45,7 @@
             \visible<2->{\item Na vstupu máme graf $G=(V,E)$ a~libovolný počáteční vrchol $v_0\in V$.}
             \visible<3->{\item Všechny vrcholy z~$V$ označíme jako \textbf{neprozkoumané}.}
             \visible<4->{\item Vrchol $v_0$ označíme jako \textbf{otevřený}.}
-            \visible<5->{\item Prozkoumáme sousedy otevřených vrcholů (z počátku tedy sousedy $v_0$) a~označíme je jako \textbf{otevřené}.}
+            \visible<5->{\item Prozkoumáme sousedy otevřených vrcholů (z~počátku tedy sousedy $v_0$) a~označíme je jako \textbf{otevřené}.}
             \visible<6->{\item Vrcholy, u~nichž jsme prozkoumávali sousedy, označíme jako \textbf{uzavřené}.}
             \visible<7->{\item Vrátíme se ke 4. kroku a~postup opakujeme.}
         \end{enumerate}
@@ -229,6 +233,7 @@
 
     \begin{frame}{Pseudokód BFS}
         \begin{center}
+            \begin{adjustbox}{max width=\linewidth, max totalheight=0.8\textheight}
             \begin{minipage}{0.9\textwidth}
                 \begin{algorithm}[H]
                     \caption{BFS (prohledávání do šířky)}
@@ -241,7 +246,7 @@
                     $\operatorname{stav}(v_0)\gets\textit{otevřený},D(v_0)\gets 0$\\
                     Založ frontu $Q$ a~přidej do ní vrchol $v_0$\\
                     \While{\textup{fronta $Q$ je neprázdná}}{
-                        Odeber první vrtchol ve frontě $Q$ a~označ jej $v$\\
+                        Odeber první vrchol ve frontě $Q$ a~označ jej $v$\\
                         % \tcp{Prozkomáváme všechny dosud neobjevené sousedy}
                         \ForEach{\textup{sousední vrchol $w$ vrcholu $v$}}{
                             \If{$\operatorname{stav}(w)=\textit{nenalezený}$}{
@@ -254,12 +259,13 @@
                     }
                 \end{algorithm}
             \end{minipage}
+            \end{adjustbox}
         \end{center}
     \end{frame}
 
-    \subsection{Implementace BFS v Pythonu}
+    \subsection{Implementace BFS v~Pythonu}
 
-    \begin{frame}[fragile]{Implementace BFS v Pythonu}
+    \begin{frame}[fragile]{Implementace BFS v~Pythonu}
         \begin{lstlisting}[style=python]
 def bfs(graph, start):
     state = {v: Stav.UNDISCOVERED for v in graph}
@@ -285,17 +291,14 @@ def bfs(graph, start):
 
     \begin{frame}{Rozdělení vrcholů do vrstev}
         \begin{itemize}
-            \visible<2->{\item BFS prochází vrcholy "po vrstvách"}
+            \visible<2->{\item BFS prochází vrcholy \markdarkred{po vrstvách}.}
             \visible<3->{\begin{itemize}
                 \item Nejdříve zpracuje počáteční vrchol.
                 \item Pak zpracuje jeho sousedy.
                 \item Pak sousedy jeho sousedů atd.
             \end{itemize}}
-            \visible<4->{\item Tzn.~kdykoliv uzavíráme vrtchol ve vrstvě $V_k$, pak jeho neprozkoumané sousedy umístíme do vrstvy $V_{k+1}$.}
-            \visible<5->{\begin{figure}
-                \centering
-                \input{images/vrstvy.tex}
-            \end{figure}}
+            \visible<4->{\item Tzn.~kdykoliv uzavíráme vrchol ve vrstvě $V_k$, pak jeho neprozkoumané sousedy umístíme do vrstvy $V_{k+1}$.}
+            \visible<5->{\obrazek[0.32\textheight]{images/vrstvy.tex}}
             \visible<6->{\item Pro libovolný vrchol $v$ ve vrstvě $V_k$ tedy platí, že $D(v)=k$.}
         \end{itemize}
     \end{frame}
@@ -315,9 +318,9 @@ def bfs(graph, start):
     \begin{frame}{Zdůvodnění $D(v)\geqslant d(v,v_0)$}
         \begin{itemize}
             \visible<2->{\item Pokud je $v$ dosažitelný, algoritmus BFS jej musel během výpočtu nalézt.}
-            \visible<3->{\item $\implies$ $v$ musel zařazený do nějaké vrstvy $V_k$.}
+            \visible<3->{\item $\implies$ $v$ musel být zařazen do nějaké vrstvy $V_k$.}
             \visible<4->{\item $\implies D(v)=k$.}
-            \visible<5->{\item $\implies$ Do vrcholu $v$ musí existovat nějaká cesty délky $k$, přičemž $d(v,v_0)$ je délka nekratší z~nich.}
+            \visible<5->{\item $\implies$ Do vrcholu $v$ musí existovat nějaká cesta délky $k$, přičemž $d(v,v_0)$ je délka nejkratší z~nich.}
             \visible<6->{\item $\implies D(v)=k\geqslant d(v,v_0)$.}
         \end{itemize}
     \end{frame}
@@ -325,7 +328,7 @@ def bfs(graph, start):
     \begin{frame}{Zdůvodnění $D(v)\leqslant d(v,v_0)$}
         \begin{itemize}
             \visible<2->{\item Předpokládejme pro spor, že existují nějaké \emph{špatné} vrcholy, pro které platí $D(u)>d(u,v_0)$.}
-            \visible<3->{\item Vybereme si \textbf{z nich} takový vrchol $s$, jehož skutečná vzdálenost $d(s,v_0)$ je nejmenší.}
+            \visible<3->{\item Vybereme si \textbf{z~nich} takový vrchol $s$, jehož skutečná vzdálenost $d(s,v_0)$ je nejmenší.}
             \visible<3->{\item Tento vrchol musel algoritmus BFS objevit (otevřít) přes nějakého předchůdce, označme jej $p$.}
             \visible<4->{\item Protože
             \[d(p,v_0)=d(s,v_0)-1<d(s,v_0),\]
@@ -333,16 +336,13 @@ def bfs(graph, start):
             \visible<5->{\item Vrchol $s$ musel být objeven jako následník $p$ a~musel tedy padnout do vrstvy
             \[D(s)=d(p,v_0)+1\]
             a~tedy $D(s)=d(s,v_0)$.}
-            \visible<6->{\item To je spor, neboť jsme předpokládali. že $D(s)>d(s,v_0)$.}
+            \visible<6->{\item To je spor, neboť jsme předpokládali, že $D(s)>d(s,v_0)$.}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Závěr tvrzení}
         \visible<2->{Znázornění situace v~důkazu
-        \begin{figure}
-            \centering
-            \input{images/dukaz-lemmatu.tex}
-        \end{figure}}
+        \obrazek[0.45\textheight]{images/dukaz-lemmatu.tex}}
         \visible<3->{Celkově jsme zdůvodnili dvě nerovnosti:
         \[D(v)\geqslant d(v,v_0)\quad\text{a}\quad D(v)\leqslant d(v,v_0),\]
         z~čehož již plyne $D(v)=d(v,v_0)$, což jsme chtěli.}
@@ -351,22 +351,18 @@ def bfs(graph, start):
     \subsection{Strom nejkratších cest}
 
     \begin{frame}{Strom nejkratších cest}
-        \begin{minipage}{0.5\textwidth}
+        \begin{minipage}[t]{0.5\textwidth}
             \begin{itemize}
                 \visible<2->{\item Průchodem algoritmu BFS vzniká tzv. \markdarkred{strom nejkratších cest}.}
                 \visible<3->{\begin{timportantframe}
                     Již víme, že hodnota $D(v)$ odpovídá délce nejkratší cesty z~$v_0$ do $v$.
                 \end{timportantframe}}
-                \visible<5->{\item otevřením nového vrcholu vznikne nová hrana přidaná do tohoto stromu.}
-                \visible<6->{\item Protože uzavřené vrcholy již znovu neotvíráme, nemůže nám vzniknout takovém grafu kružnice.}
+                \visible<5->{\item Otevřením nového vrcholu vznikne nová hrana přidaná do tohoto stromu.}
+                \visible<6->{\item Protože uzavřené vrcholy již znovu neotvíráme, nemůže nám v~takovém grafu vzniknout kružnice.}
             \end{itemize}
-        \end{minipage}
-        \qquad
-        \begin{minipage}{0.45\textwidth}
-            \visible<4->{\begin{figure}
-                \centering
-                \input{images/bfs-strom.tex}
-            \end{figure}}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.45\textwidth}
+            \visible<4->{\obrazek[0.6\textheight]{images/bfs-strom.tex}}
         \end{minipage}
     \end{frame}
 
@@ -382,9 +378,9 @@ def bfs(graph, start):
         \end{propblock}}
         \begin{itemize}
             \visible<5->{\item Inicializace algoritmu trvá $n$-kroků.}
-            \visible<6->{\item Každý vrchol otevřene a~uzavřeme nejvýše jednou $\implies$ vnější cyklus proběhne maximálně $n$-krát.}
+            \visible<6->{\item Každý vrchol otevřeme a~uzavřeme nejvýše jednou $\implies$ vnější cyklus proběhne maximálně $n$-krát.}
             \visible<7->{\begin{itemize}
-                \item V~každé iteraci spotřebuje konstantní čas na svou režii a~dále konstantní čas na každého následníka.
+                \item V~každé iteraci algoritmus spotřebuje konstantní čas na svou režii a~dále konstantní čas na každého následníka.
             \end{itemize}}
             \visible<8->{\item Tedy celkově
             \[\bigO\left(n+\sum_{i=1}^{n}\deg{v_i}\right)=\bigO(n+m),\]
@@ -401,16 +397,20 @@ def bfs(graph, start):
         \end{itemize}
     \end{frame}
 
+    % =================================================================
     \section{Prohledávání do hloubky}
+    % =================================================================
 
-    \titleframe{Prohledávání do hloubky}
+    \begin{titleframeenv}{Prohledávání do hloubky}
+        \obrazek[0.55\textheight]{images/dfs-nahled.tex}
+    \end{titleframeenv}
 
-    \subsection{Postup BFS a~příklad}
+    \subsection{Postup DFS a~příklad}
 
     \begin{frame}{Prohledávání do hloubky}
         \begin{itemize}
             \visible<2->{\item Postup algoritmu bude podobný jako u~BFS, ale vrcholy budeme zpracovávat rekurzivně.}
-            \visible<4->{\item Později uvidíme, že časová i~prostorová složitost vyjde stejně.}
+            \visible<3->{\item Později uvidíme, že časová i~prostorová složitost vyjde stejně.}
         \end{itemize}
     \end{frame}
 
@@ -418,7 +418,7 @@ def bfs(graph, start):
         \begin{enumerate}
             \visible<2->{\item Na vstupu máme graf $G=(V,E)$ a~libovolný počáteční vrchol $v_0\in V$.}
             \visible<3->{\item Všechny vrcholy z~$V$ označíme jako \textbf{neprozkoumané}.}
-            \visible<4->{\item Na vrchol $v_0$ aplikujeme proceduru níže}
+            \visible<4->{\item Na vrchol $v_0$ aplikujeme proceduru níže.}
         \end{enumerate}
         \visible<5->{\markdarkred{Procedura} (vstupní vrchol $v$)}
         \begin{enumerate}
@@ -819,11 +819,12 @@ def bfs(graph, start):
 
     \begin{frame}{Pseudokód DFS}
         \begin{center}
+            \begin{adjustbox}{max width=\linewidth, max totalheight=0.8\textheight}
             \begin{minipage}{0.9\textwidth}
                 \begin{algorithm}[H]
                     \caption{DFS (prohledávání do hloubky)}
                     \KwIn{Graf $G=(V,E)$ a~počáteční vrchol $v_0\in V$}
-                    \ForEach{\textup{vrchol $v\in v$}}{
+                    \ForEach{\textup{vrchol $v\in V$}}{
                         $\operatorname{stav}(v)\gets\textit{nenalezený}$\\
                         $\inlist(v),\outlist(v)\gets\textit{nedefinováno}$
                     }
@@ -842,13 +843,14 @@ def bfs(graph, start):
                     }
                 \end{algorithm}
             \end{minipage}
+            \end{adjustbox}
         \end{center}
     \end{frame}
 
-    \subsection{Implementace DFS v Pythonu}
+    \subsection{Implementace DFS v~Pythonu}
 
-    \begin{frame}[fragile]{Implementace DFS v Pythonu}
-        \begin{lstlisting}
+    \begin{frame}[fragile]{Implementace DFS v~Pythonu}
+        \begin{lstlisting}[style=python, basicstyle=\scriptsize\ttfamily, aboveskip=0pt, belowskip=0pt]
 def dfs(graph):
     state, tin, tout = {v: Stav.UNDISCOVERED for v in graph}, {}, {}
     time = 0
@@ -883,7 +885,7 @@ def dfs(graph):
         \begin{itemize}
             \visible<4->{\item Časová složitost plyne zcela triviálně ze skutečnosti, že DFS prochází vrcholy grafu pouze v~jiném pořadí oproti BFS.}
             \visible<5->{\item Dále spotřebujeme $\bigO(n+m)$ paměti na reprezentaci grafu.}
-            \visible<6->{\item Dále budeme potřebovat ještě lineární množiství paměti na zásobník rekurzivního volání funkce DFS2 a~na pomocné seznamy (stavy vrcolů, seznamy $\inlist$ a~$\outlist$).}
+            \visible<6->{\item Dále budeme potřebovat ještě lineární množství paměti na zásobník rekurzivního volání funkce DFS2 a~na pomocné seznamy (stavy vrcholů, seznamy $\inlist$ a~$\outlist$).}
             \visible<7->{\[\bigO(\underbrace{2n}_\text{seznamy $\inlist$ a~$\outlist$}+\overbrace{n}^{\text{zásobník}}+\underbrace{n}_\text{stavy}+\overbrace{n+m}^{\text{seznamy sousedů}})=\bigO(n+m).\]}
         \end{itemize}
     \end{frame}
@@ -893,12 +895,9 @@ def dfs(graph):
         \visible<3->{\begin{talertframe}
             \begin{center}
                 \textbf{Pozor!} Nalezené cesty už nemusí být nejkratší!
-            \end{center}}
-        \end{talertframe}
-        \visible<4->{\begin{figure}
-            \centering
-            \input{images/dfs-strom.tex}
-        \end{figure}}
+            \end{center}
+        \end{talertframe}}
+        \visible<4->{\obrazek[0.45\textheight]{images/dfs-strom.tex}}
     \end{frame}
 
     \subsection{Seznamy in a~out}
@@ -920,26 +919,16 @@ def dfs(graph):
     \end{frame}
 
     \begin{frame}{Případ $\langle \inlist(u),\outlist(u)\rangle\cap\langle \inlist(v),\outlist(v)\rangle = \emptyset$}
-        \visible<2->{\begin{figure}
-            \centering
-            \input{images/u-v-disjunktni.tex}
-        \end{figure}}
+        \visible<2->{\obrazek[0.55\textheight]{images/u-v-disjunktni.tex}}
         \visible<3->{$T_u,T_v$ jsou (pod)stromy v~grafu $G$, kde po řadě vrcholy $u$ a~$v$ jsou jejich kořeny.}
     \end{frame}
 
     \begin{frame}{Případ $\langle \inlist(u),\outlist(u)\rangle\subseteq\langle \inlist(v),\outlist(v)\rangle$}
-        \visible<2->{\begin{minipage}{0.45\textwidth}
-            \begin{figure}
-                \centering
-                \input{images/u-podstrom-v.tex}
-            \end{figure}
-        \end{minipage}
-        \qquad
-        \begin{minipage}{0.45\textwidth}
-            \begin{figure}
-                \centering
-                \input{images/v-podstrom-u.tex}
-            \end{figure}
+        \visible<2->{\begin{minipage}[t]{0.47\textwidth}
+            \obrazek[0.5\textheight]{images/u-podstrom-v.tex}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.47\textwidth}
+            \obrazek[0.5\textheight]{images/v-podstrom-u.tex}
         \end{minipage}}
         \visible<3->{\begin{tinfoframe}
             \begin{center}
@@ -1532,7 +1521,7 @@ def dfs(graph):
     \subsection{Hledání mostů}
 
     \begin{frame}{Mosty v~grafu}
-        \visible<3->{Typický případem užití DFS je např. hledání mostů v~grafu.}
+        \visible<2->{Typickým případem užití DFS je např. hledání mostů v~grafu.}
         \visible<3->{\begin{timportantframe}
             \begin{center}
                 BFS zde použít nelze!
@@ -1541,20 +1530,14 @@ def dfs(graph):
         \visible<4->{\begin{defblock}[Most]
             Nechť $G=(V,E)$ je graf. Hrana $e\in E$ je \markdarkred{most}, pokud po jejím odebrání z~grafu $G$ vznikne graf $G^{\prime}=(V^{\prime},E^{\prime})$ takový, že v~něm existují vrcholy $u,v\in V^{\prime}$, mezi nimiž neexistuje cesta.
         \end{defblock}}
-        \visible<5->{\begin{figure}
-            \centering
-            \input{images/mosty.tex}
-        \end{figure}}
+        \visible<5->{\obrazek[0.3\textheight]{images/mosty.tex}}
     \end{frame}
 
     \begin{frame}{Idea algoritmu pro hledání mostů}
-        \visible<2->{\begin{figure}
-            \centering
-            \input{images/mosty-idea.tex}
-        \end{figure}}
+        \visible<2->{\obrazek[0.45\textheight]{images/mosty-idea.tex}}
         \visible<3->{\begin{timportantframe}
             \begin{center}
-                Pokud během výpočtu nalezneme hranu z~podstromu $T_y$, která vede do již otevřeného vrcholu $t$ nacházejícího se v~DFS stromě "nad" vrchlem $y$, pak \textbf{$xy$ nemůže být most!}
+                Pokud během výpočtu nalezneme hranu z~podstromu $T_y$, která vede do již otevřeného vrcholu $t$ nacházejícího se v~DFS stromě \uv{nad} vrcholem $y$, pak \textbf{$xy$ nemůže být most!}
             \end{center}
         \end{timportantframe}}
     \end{frame}
@@ -1570,20 +1553,20 @@ def dfs(graph):
             \end{talertframe}}
             \visible<4->{\item Pro každý vrchol $v$ si budeme uchovávat, jak "vysoko" se z~něj můžeme dostat v~DFS stromu.}
             \visible<5->{\begin{tinfoframe}
-                To lze zjistit tak, že vezmeme minimum z~$\inlist$ů všech vrcholů, do který se můžeme dostat z~podstromu $y$. 
+                To lze zjistit tak, že vezmeme minimum z~$\inlist$ů všech vrcholů, do kterých se můžeme dostat z~podstromu $y$.
             \end{tinfoframe}}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Další užití BFS a DFS}
+    \begin{frame}{Další užití BFS a~DFS}
         \begin{columns}[T]
             \begin{column}{0.48\textwidth}
                 \visible<2->{\begin{tinfobox}{Možná využití BFS}
                     \begin{itemize}
                         \visible<3->{\item určení vzdáleností od počátečního vrcholu,}
-                        \visible<4->{\item hledání řešení s minimálním počtem kroků,}
+                        \visible<4->{\item hledání řešení s~minimálním počtem kroků,}
                         \visible<5->{\item procházení stavového prostoru po vrstvách,}
-                        \visible<6->{\item hledání řešení s minimálním počtem kroků.}
+                        \visible<6->{\item nalezení souvislé komponenty počátečního vrcholu.}
                     \end{itemize}
                 \end{tinfobox}}
             \end{column}
@@ -1593,10 +1576,10 @@ def dfs(graph):
                     \begin{itemize}
                         \visible<8->{\item hledání souvislých komponent,}
                         \visible<9->{\item topologické uspořádání,}
-                        \visible<10->{\item hledání mostů a artikulací,}
+                        \visible<10->{\item hledání mostů a~artikulací,}
                         \visible<11->{\item analýza struktury grafu pomocí DFS stromu.}
-                    \end{itemize}}
-                \end{tinfobox}
+                    \end{itemize}
+                \end{tinfobox}}
             \end{column}
         \end{columns}
     \end{frame}

@@ -12,20 +12,24 @@
 
 \input{../titlepage.tex}
 
+% =================================================================
 \section{Úvod}
+% =================================================================
 
-\titleframe{Úvod do strojového učení}
+\begin{titleframeenv}{Úvod do strojového učení}
+    \obrazek[0.4\textheight]{images/proc-nas-zajima-ai-a-strojove-uceni.tex}
+\end{titleframeenv}
 
-\subsection{Proč nás zajímá AI a strojové učení?}
+\subsection{Proč nás zajímá AI a~strojové učení?}
 
-\begin{frame}{Proč nás zajímá AI a strojové učení?}
+\begin{frame}{Proč nás zajímá AI a~strojové učení?}
 
     \begin{columns}[T,onlytextwidth]
         \begin{column}{0.54\textwidth}
             \begin{itemize}
-                \visible<2->{\item Umělá inteligence často pracuje s \textbf{daty}.}
-                \visible<3->{\item Data sama o sobě ale ještě nejsou poznání.}
-                \visible<4->{\item Z dat chceme získat}
+                \visible<2->{\item Umělá inteligence často pracuje s~\textbf{daty}.}
+                \visible<3->{\item Data sama o~sobě ale ještě nejsou poznání.}
+                \visible<4->{\item Z~dat chceme získat}
                 \visible<5->{
                     \begin{itemize}
                         \item užitečné vzory,
@@ -38,8 +42,7 @@
         \end{column}
 
         \begin{column}{0.42\textwidth}
-            \centering
-            \input{images/proc-nas-zajima-ai-a-strojove-uceni.tex}
+    \obrazek[0.4\textheight]{images/proc-nas-zajima-ai-a-strojove-uceni.tex}
         \end{column}
     \end{columns}
 
@@ -58,7 +61,7 @@
 \begin{frame}{Data, model, rozhodnutí}
 
     \begin{center}
-        \input{images/data-model-rozhodnuti.tex}
+        \obrazek[0.2\textheight]{images/data-model-rozhodnuti.tex}
     \end{center}
 
     \vspace{0.25cm}
@@ -80,7 +83,7 @@
 
         \begin{tnoticeframe}
             \begin{center}
-                Model je pouze zjednodušený popis vztahů v datech.
+                Model je pouze zjednodušený popis vztahů v~datech.
             \end{center}
         \end{tnoticeframe}
     }
@@ -88,7 +91,7 @@
     \visible<6->{
         \vspace{0.15cm}
         \begin{center}
-            \small
+            \scriptsize
             \[
                 \text{špatná data}
                 \quad\Longrightarrow\quad
@@ -109,12 +112,12 @@
         \begin{column}{0.55\textwidth}
             \begin{itemize}
                 \visible<2->{\item \textbf{Statistické učení} je soubor metod pro práci se složitými daty.}
-                \visible<3->{\item Pomáhá nám z dat získat model, který lze použít například pro}
+                \visible<3->{\item Pomáhá nám z~dat získat model, který lze použít například pro}
                 \visible<4->{
                     \begin{itemize}
                         \item predikci číselných hodnot,
                         \item klasifikaci objektů,
-                        \item hledání skupin v datech,
+                        \item hledání skupin v~datech,
                         \item popis vztahů mezi proměnnými.
                     \end{itemize}
                 }
@@ -122,8 +125,7 @@
         \end{column}
 
         \begin{column}{0.43\textwidth}
-            \centering
-            \input{images/statisticke-uceni.tex}
+    \obrazek[0.4\textheight]{images/statisticke-uceni.tex}
         \end{column}
     \end{columns}
 
@@ -134,7 +136,7 @@
             \begin{center}
                 \small
                 Statistické učení poskytuje matematický jazyk pro mnoho metod,
-                které se v informatice často označují jako \textbf{strojové učení}.
+                které se v~informatice často označují jako \textbf{strojové učení}.
             \end{center}
         \end{tinfoframe}
     }
@@ -153,7 +155,7 @@
     \vspace{0.25cm}
 
     \begin{center}
-        \input{images/co-je-umela-inteligence.tex}
+        \obrazek[0.4\textheight]{images/co-je-umela-inteligence.tex}
     \end{center}
 
     \vspace{0.1cm}
@@ -174,14 +176,13 @@
         \begin{column}{0.48\textwidth}
             \begin{itemize}
                 \visible<2->{\item Strojové učení je důležitá část AI.}
-                \visible<3->{\item AI ale zahrnuje i metody, které se z dat přímo neučí.}
+                \visible<3->{\item AI ale zahrnuje i~metody, které se z~dat přímo neučí.}
                 \visible<4->{\item Ne každý inteligentně vypadající algoritmus je algoritmus strojového učení.}
             \end{itemize}
         \end{column}
 
         \begin{column}{0.48\textwidth}
-            \centering
-            \input{images/ai-neni-jen-strojove-uceni.tex}
+    \obrazek[0.4\textheight]{images/ai-neni-jen-strojove-uceni.tex}
         \end{column}
     \end{columns}
 
@@ -189,7 +190,7 @@
 
     \visible<5->{
         \begin{itemize}
-            \item Příklady algoritmů a technik spojovaných s AI:
+            \item Příklady algoritmů a~technik spojovaných s~AI:
             \begin{itemize}
                 \item prohledávání stavového prostoru,
                 \item hledání nejkratší cesty,
@@ -255,7 +256,7 @@
         \begin{center}
             \scriptsize
             Podle členění v~Russell, Norvig:
-            \emph{Artificial Intelligence: A Modern Approach}, kap. 1.1.
+            \emph{Artificial Intelligence: A~Modern Approach}, kap. 1.1.
         \end{center}
     }
 
@@ -268,15 +269,14 @@
     \begin{columns}[T,onlytextwidth]
         \begin{column}{0.5\textwidth}
             \begin{itemize}
-                \visible<2->{\item Jeden z pohledů na AI: \textbf{jednat jako člověk}.}
-                \visible<3->{\item Turingův test zkoumá, zda člověk podle odpovědí pozná, zda komunikuje s člověkem nebo strojem.}
+                \visible<2->{\item Jeden z~pohledů na AI: \textbf{jednat jako člověk}.}
+                \visible<3->{\item Turingův test zkoumá, zda člověk podle odpovědí pozná, zda komunikuje s~člověkem nebo strojem.}
                 \visible<4->{\item Důraz je tedy na \textbf{pozorovatelné chování}.}
             \end{itemize}
         \end{column}
 
         \begin{column}{0.46\textwidth}
-            \centering
-            \input{images/turinguv-test.tex}
+    \obrazek[0.4\textheight]{images/turinguv-test.tex}
         \end{column}
     \end{columns}
 
@@ -286,8 +286,8 @@
         \begin{tinfoframe}
             \begin{center}
                 \small
-                Aby systém takový test zvládl, potřebuje například práci s jazykem,
-                reprezentaci znalostí, odvozování a učení.
+                Aby systém takový test zvládl, potřebuje například práci s~jazykem,
+                reprezentaci znalostí, odvozování a~učení.
             \end{center}
         \end{tinfoframe}
     }
@@ -299,7 +299,7 @@
 \begin{frame}{AI jako inteligentní agent}
 
     \begin{center}
-        \input{images/ai-jako-inteligentni-agent.tex}
+        \obrazek[0.4\textheight]{images/ai-jako-inteligentni-agent.tex}
     \end{center}
 
     \vspace{0.25cm}
@@ -307,15 +307,19 @@
     \begin{itemize}
         \visible<2->{\item Agent \textbf{vnímá} své okolí.}
         \visible<3->{\item Na základě vjemů volí \textbf{akce}.}
-        \visible<4->{\item Racionální agent volí takové akce, které vedou k co nejlepšímu výsledku.}
+        \visible<4->{\item Racionální agent volí takové akce, které vedou k~co nejlepšímu výsledku.}
         \visible<5->{\item Učící se agent může své chování zlepšovat na základě zkušenosti.}
     \end{itemize}
 
 \end{frame}
 
+% =================================================================
 \section{Strojové učení}
+% =================================================================
 
-\titleframe{Strojové učení}
+\begin{titleframeenv}{Strojové učení}
+    \obrazek[0.4\textheight]{images/co-se-rozumi-strojovym-ucenim.tex}
+\end{titleframeenv}
 
 \subsection{Vymezení pojmu "strojové učení"}
 
@@ -323,10 +327,10 @@
 
     \small
 
-    \pause
 
-    \begin{itemize}
-        \item Ve statistice jsme pracovali se statistickými soubory zachycující jeden, nebo více statistických znaků:
+
+    \visible<2->{\begin{itemize}
+        \item Ve statistice jsme pracovali se statistickými soubory zachycujícími jeden, nebo více statistických znaků:
     \end{itemize}
 
     \[
@@ -360,177 +364,177 @@
                 \mathbf{x}_n
             \end{array}
         \end{array}.
-    \]
+    \]}
 
-    \pause
 
-    \begin{itemize}
-        \item Typicky jsme však pracovali se soubory popisující \markdarkred{jeden statistický znak}, tj. $\mathbf{X}=(x_1,\dots,x_n)$.
-    \end{itemize}
 
-    \pause
+    \visible<3->{\begin{itemize}
+        \item Typicky jsme však pracovali se soubory popisujícími \markdarkred{jeden statistický znak}, tj. $\mathbf{X}=(x_1,\dots,x_n)$.
+    \end{itemize}}
 
-    \begin{center}
-        \input{images/co-se-rozumi-strojovym-ucenim.tex}
-    \end{center}
 
-    \pause
 
-    \begin{center}
+    \visible<4->{\begin{center}
+        \obrazek[0.4\textheight]{images/co-se-rozumi-strojovym-ucenim.tex}
+    \end{center}}
+
+
+
+    \visible<5->{\begin{center}
         \textbf{Strojové učení:} Část chování systému se nastavuje
         podle dat. 
-    \end{center}
+    \end{center}}
 
 \end{frame}
 
 \begin{frame}{Co se rozumí strojovým učením?}
 
     \begin{tinfoframe}
-        Obecně strojovým učením rozumíme skupinu statistických algoritmů učící se \markdarkred{ze~známých dat} a~zobecňující výsledky \markdarkred{na data neznámá}.
+        Obecně strojovým učením rozumíme skupinu statistických algoritmů, které se učí \markdarkred{ze~známých dat} a~zobecňují výsledky \markdarkred{na data neznámá}.
     \end{tinfoframe}
 
 \end{frame}
 
-\subsection{Trénovací a testovací data}
+\subsection{Trénovací a~testovací data}
 
-\begin{frame}{Trénovací a testovací data}
+\begin{frame}{Trénovací a~testovací data}
 
-    \small
+    \footnotesize
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Mějme statistické soubory
         \[
             \mathbf{X}_1,\mathbf{X}_2,\dots,\mathbf{X}_k,
         \]
-        kde hodnota $x_{ij}$ popisuje $j$-tý znak u $i$-tého objektu.
-    \end{itemize}
+        kde hodnota $x_{ij}$ popisuje $j$-tý znak u~$i$-tého objektu.
+    \end{itemize}}
 
-    \pause
 
-    \[
+
+    \visible<3->{\[
         \mathbf{x}_i=(x_{i1},x_{i2},\dots,x_{ik})
-    \]
+    \]}
 
-    \pause
 
-    \begin{center}
-        \input{images/trenovaci-a-testovaci-data.tex}
-    \end{center}
 
-    \pause
+    \visible<4->{\begin{center}
+        \obrazek[0.28\textheight]{images/trenovaci-a-testovaci-data.tex}
+    \end{center}}
 
-    \begin{itemize}
-        \item \textbf{Trénovací data} používáme k nastavení modelu.
+
+
+    \visible<5->{\begin{itemize}
+        \item \textbf{Trénovací data} používáme k~nastavení modelu.
         \item \textbf{Testovací data} model při trénování nevidí;
-        používáme je až k ověření, zda model funguje i na nových datech.
-    \end{itemize}
+        používáme je až k~ověření, zda model funguje i~na nových datech.
+    \end{itemize}}
 
-    \pause
 
-    \begin{center}
+
+    \visible<6->{\begin{center}
         \textbf{Dobrý model se nemá jen naučit trénovací data nazpaměť.}
-    \end{center}
+    \end{center}}
 
 \end{frame}
 
-\subsection{Učení a trénování modelu}
+\subsection{Učení a~trénování modelu}
 
-\begin{frame}{Učení a trénování modelu}
+\begin{frame}{Učení a~trénování modelu}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item \textbf{Učení} je obecný proces, při němž model získává
-        z dat nebo zkušenosti informaci a přizpůsobuje jí své chování.
-    \end{itemize}
+        z~dat nebo zkušenosti informaci a~přizpůsobuje jí své chování.
+    \end{itemize}}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<3->{\begin{itemize}
         \item \textbf{Trénování} je konkrétní fáze učení, během níž
         algoritmus upravuje model podle \textbf{trénovacích dat}
-        a podle toho, jaké chyby model dělá.
-    \end{itemize}
+        a~podle toho, jaké chyby model dělá.
+    \end{itemize}}
 
-    \pause
 
-    \vspace{0.2cm}
+
+    \visible<4->{\vspace{0.2cm}
 
     \begin{center}
-        \input{images/uceni-a-trenovani-modelu.tex}
-    \end{center}
+        \obrazek[0.4\textheight]{images/uceni-a-trenovani-modelu.tex}
+    \end{center}}
 
-    \pause
 
-    \vspace{0.15cm}
+
+    \visible<5->{\vspace{0.15cm}
 
     \begin{itemize}
         \item Data $\mathbf{X}_1,\dots,\mathbf{X}_k$ zde chápeme obecně:
         mohou to být různé statistické znaky, pozorování nebo jiné
         informace, z~nichž se model učí.
-    \end{itemize}
+    \end{itemize}}
 
 \end{frame}
 
-\begin{frame}{Učení a trénování modelu}
+\begin{frame}{Učení a~trénování modelu}
 
-    \pause
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Při trénování model vytváří výstupy, ty se vyhodnocují
         a~podle vzniklé chyby se upravují parametry
-        $\boldsymbol{\theta}=(\theta_1,\dots,\theta_m)$.\pause
-        \item Pomocí výsledného $f_{\boldsymbol{\theta}}$ modelu spočítá
+        $\boldsymbol{\theta}=(\theta_1,\dots,\theta_m)$.
+        \visible<3->{\item Pomocí výsledného modelu $f_{\boldsymbol{\theta}}$ spočítá
         \[\hat{y}_{ij} = f_{\boldsymbol{\theta}}(x_{ij}),\]
-        přičemž $\mathbf{X}_i=(x_{i1},\dots,x_{in})$ a $\hat{\mathbf{Y}}_i=(\hat{y}_{i1},\dots,\hat{y}_{in})$.
-    \end{itemize}
+        přičemž $\mathbf{X}_i=(x_{i1},\dots,x_{in})$ a~$\hat{\mathbf{Y}}_i=(\hat{y}_{i1},\dots,\hat{y}_{in})$.}
+    \end{itemize}}
 
-    \pause
 
-    \begin{tinfoframe}
+
+    \visible<4->{\begin{tinfoframe}
         \begin{center}
             \textbf{Po skončení trénování} používáme model pro nová data.
         \end{center}
-    \end{tinfoframe}
+    \end{tinfoframe}}
 
-    \pause
 
-    \begin{tnoticeframe}
-        Pro jednoduchost se zaměříme na modely, které mají navstupu pouze statistických souborů (trénovacích dat) $\mathbf{X}$, popř. dvojici souborů $\mathbf{X},\mathbf{Y}$.
-    \end{tnoticeframe}
+
+    \visible<5->{\begin{tnoticeframe}
+        Pro jednoduchost se zaměříme na modely, které mají na vstupu pouze statistický soubor (trénovací data) $\mathbf{X}$, popř. dvojici souborů $\mathbf{X},\mathbf{Y}$.
+    \end{tnoticeframe}}
 
 \end{frame}
 
 \begin{frame}{Základní členění strojového učení}
 
-    \pause
 
-    \begin{center}
-        \input{images/zakladni-cleneni-strojoveho-uceni-1.tex}
+
+    \visible<2->{\begin{center}
+        \obrazek[0.4\textheight]{images/zakladni-cleneni-strojoveho-uceni-1.tex}
     \end{center}
 
-    \vspace{0.1cm}
+    \vspace{0.1cm}}
 
-    \pause
 
-    \begin{itemize}
-        \item \textbf{Učení s učitelem:}
+
+    \visible<3->{\begin{itemize}
+        \item \textbf{Učení s~učitelem:}
         Máme spárované statistické soubory
         \[
             (x_1,y_1),\ldots,(x_n,y_n),
         \]
-        tedy vstupy $\mathbf{X}$ a známé výstupy $\mathbf{Y}$.
-        Cílem je odhadovat $y$ pro nové vstupy $x$.\pause
-        \vspace{0.1cm}
+        tedy vstupy $\mathbf{X}$ a~známé výstupy $\mathbf{Y}$.
+        Cílem je odhadovat $y$ pro nové vstupy $x$.
+        \visible<4->{\vspace{0.1cm}
         \item \textbf{Učení bez učitele:}
         Máme pouze statistický soubor
         \[
             x_1,\ldots,x_n,
         \]
         tedy data $\mathbf{X}$ bez známého výstupu $\mathbf{Y}$.
-        Cílem je hledat strukturu, podobnosti nebo skupiny v~datech.
-    \end{itemize}
+        Cílem je hledat strukturu, podobnosti nebo skupiny v~datech.}
+    \end{itemize}}
 
 \end{frame}
 
@@ -538,21 +542,21 @@
 
 \begin{frame}{Základní členění strojového učení}
 
-    \pause
 
-    \begin{center}
-        \input{images/zakladni-cleneni-strojoveho-uceni-2.tex}
+
+    \visible<2->{\begin{center}
+        \obrazek[0.4\textheight]{images/zakladni-cleneni-strojoveho-uceni-2.tex}
     \end{center}
 
-    \vspace{0.1cm}
+    \vspace{0.1cm}}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<3->{\begin{itemize}
         \item \textbf{Zpětnovazební učení:}
         data obvykle nevznikají jako předem připravené soubory
-        $\mathbf{X}$ a $\mathbf{Y}$, ale postupnou interakcí agenta
-        s prostředím:
+        $\mathbf{X}$ a~$\mathbf{Y}$, ale postupnou interakcí agenta
+        s~prostředím:
         \[
             \text{stav}
             \longrightarrow
@@ -560,90 +564,94 @@
             \longrightarrow
             \text{odměna a nový stav}.
         \]
-    \end{itemize}
+    \end{itemize}}
     
 \end{frame}
 
-\section{Učení s učitelem}
+% =================================================================
+\section{Učení s~učitelem}
+% =================================================================
 
-\titleframe{Učení s učitelem}
+\begin{titleframeenv}{Učení s~učitelem}
+    \obrazek[0.4\textheight]{images/jak-probiha-uceni-s-ucitelem.tex}
+\end{titleframeenv}
 
 \subsection{Vymezení}
 
-\begin{frame}{Učení s učitelem}
+\begin{frame}{Učení s~učitelem}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Máme dva statistické soubory
         \[
             \mathbf{X}=(x_1,x_2,\dots,x_n),
             \qquad
             \mathbf{Y}=(y_1,y_2,\dots,y_n).
-        \]\pause
-        \item Každé vstupní hodnotě $x_j$ odpovídá známý výstup $y_j$:
+        \]
+        \visible<3->{\item Každé vstupní hodnotě $x_j$ odpovídá známý výstup $y_j$:
         \[
             (x_1,y_1),(x_2,y_2),\dots,(x_n,y_n).
-        \]\pause
-        \item Při trénování používáme dvojice $(x_j,y_j)$.
-    \end{itemize}
+        \]}
+        \visible<4->{\item Při trénování používáme dvojice $(x_j,y_j)$.}
+    \end{itemize}}
 
-    \pause
 
-    \begin{tnoticeframe}
+
+    \visible<5->{\begin{tnoticeframe}
         \begin{center}
             \textbf{"Učitel"} znamená, že při trénování známe
             požadovaný výstup pro každý trénovací vstup.
         \end{center}
-    \end{tnoticeframe}
+    \end{tnoticeframe}}
 
 \end{frame}
 
-\begin{frame}{Jak probíhá učení s učitelem?}
+\begin{frame}{Jak probíhá učení s~učitelem?}
     
-    \pause
 
-    \begin{center}
-        \input{images/jak-probiha-uceni-s-ucitelem.tex}
-    \end{center}
 
-    \pause
+    \visible<2->{\begin{center}
+        \obrazek[0.4\textheight]{images/jak-probiha-uceni-s-ucitelem.tex}
+    \end{center}}
 
-    \begin{itemize}
-        \item Model se z trénovacích dat učí vztah mezi
-        vstupem $\mathbf{X}$ a~výstupem~$\mathbf{Y}$.\pause
-        \item Po skončení trénování odhaduje výstup také
-        pro nové vstupní hodnoty.
-    \end{itemize}
+
+
+    \visible<3->{\begin{itemize}
+        \item Model se z~trénovacích dat učí vztah mezi
+        vstupem $\mathbf{X}$ a~výstupem~$\mathbf{Y}$.
+        \visible<4->{\item Po skončení trénování odhaduje výstup také
+        pro nové vstupní hodnoty.}
+    \end{itemize}}
 
 \end{frame}
 
-\subsection{Regrese a klasifikace}
+\subsection{Regrese a~klasifikace}
 
-\begin{frame}{Regrese a klasifikace}
+\begin{frame}{Regrese a~klasifikace}
 
     \small
 
     \begin{center}
-        \input{images/regrese-a-klasifikace.tex}
+        \obrazek[0.4\textheight]{images/regrese-a-klasifikace.tex}
     \end{center}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item \textbf{Regrese:} chceme odhadnout číselnou hodnotu.
         \[
             \text{počet odpracovaných hodin}
             \longmapsto
             \text{výše mzdy}
-        \]\pause
-        \item \textbf{Klasifikace:} chceme určit kategorii.
+        \]
+        \visible<3->{\item \textbf{Klasifikace:} chceme určit kategorii.
         \[
             \text{počet bodů}
             \longmapsto
             \text{prospěl / neprospěl}
-        \]
-    \end{itemize}
+        \]}
+    \end{itemize}}
 
 \end{frame}
 
@@ -651,23 +659,23 @@
 
 \begin{frame}{Regrese}
 
-    \pause
 
-    \begin{itemize}
-        \item Při regresi je výstupní statistický soubor $\mathbf{Y}$ číselný, tj. $y_j\in\mathbb{R}$.\pause
-        \item Model se snaží popsat závislost výstupu $\mathbf{Y}$ na~vstupu $\mathbf{X}$.\pause
-        \[
+
+    \visible<2->{\begin{itemize}
+        \item Při regresi je výstupní statistický soubor $\mathbf{Y}$ číselný, tj. $y_j\in\mathbb{R}$.
+        \visible<3->{\item Model se snaží popsat závislost výstupu $\mathbf{Y}$ na~vstupu $\mathbf{X}$.}
+        \visible<4->{\[
             \hat y=\hat f(x).
-        \]\pause
-        \item Výsledkem je číselný odhad pro novou vstupní hodnotu $x$.
-    \end{itemize}
+        \]}
+        \visible<5->{\item Výsledkem je číselný odhad pro novou vstupní hodnotu $x$.}
+    \end{itemize}}
 
-    \pause
 
-    \begin{center}
+
+    \visible<6->{\begin{center}
         \textbf{Regrese nemusí být lineární.}\\
-        Lineární regrese je pouze jedním z možných regresních modelů.
-    \end{center}
+        Lineární regrese je pouze jedním z~možných regresních modelů.
+    \end{center}}
 
 \end{frame}
 
@@ -681,28 +689,26 @@
 
         \begin{column}{0.48\textwidth}
 
-            \pause
 
-            \begin{itemize}
-                \item Máme vstupní statistický soubor $\mathbf{X}$ a číselný výstupní soubor $\mathbf{Y}$,
+
+            \visible<2->{\begin{itemize}
+                \item Máme vstupní statistický soubor $\mathbf{X}$ a~číselný výstupní soubor $\mathbf{Y}$,
                 \[
                     y_j=\beta_0+\beta_1x_j+\varepsilon_j.
-                \]\pause
-                \item Z trénovacích dvojic $(x_j,y_j)$
-                odhadneme koeficienty $\beta_0$ a $\beta_1$.
+                \]
+                \visible<3->{\item Z~trénovacích dvojic $(x_j,y_j)$
+                odhadneme koeficienty $\beta_0$ a~$\beta_1$.
                 \[
                     \hat y=\hat\beta_0+\hat\beta_1x.
-                \]
-            \end{itemize}       
+                \]}
+            \end{itemize}}       
 
         \end{column}
 
-        \begin{column}{0.48\textwidth}
-            \centering
+        \begin{column}{0.48\textwidth}\visible<3->{
+    \obrazek[0.4\textheight]{images/jednoducha-linearni-regrese.tex}
 
-            \input{images/jednoducha-linearni-regrese.tex}
-
-        \end{column}
+        }\end{column}
     \end{columns}
 
 \end{frame}
@@ -713,53 +719,53 @@
 
     \small
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Při klasifikaci výstupní statistický soubor
         $\mathbf{Y}$ obsahuje místo číselných hodnot označení tříd:
         \[
             y_j\in\set{A,B,C,\dots}.
-        \]\pause
-        \item Model pro nový vstup $x$ určí odhadovanou třídu:
+        \]
+        \visible<3->{\item Model pro nový vstup $x$ určí odhadovanou třídu:
         \[
             \hat y=\hat f(x).
-        \]\pause
-        \item \textbf{Binární klasifikace:} máme dvě možné třídy.
-        \pause
-        \item \textbf{Vícetřídní klasifikace:} máme více možných tříd.
-    \end{itemize}
+        \]}
+        \visible<4->{\item \textbf{Binární klasifikace:} máme dvě možné třídy.}
+
+        \visible<5->{\item \textbf{Vícetřídní klasifikace:} máme více možných tříd.}
+    \end{itemize}}
 
 \end{frame}
 
 \begin{frame}{Rozhodovací hranice}
 
-    \pause
 
-    \begin{itemize}
-        \item Uvažujme objekty popsané jediným vstupním znakem $\mathbf{X}$.\pause
-        \item Klasifikační model rozdělí možné hodnoty $\mathbf{X}$
-        na oblasti odpovídající různým třídám.
-    \end{itemize}
 
-    \pause
+    \visible<2->{\begin{itemize}
+        \item Uvažujme objekty popsané jediným vstupním znakem $\mathbf{X}$.
+        \visible<3->{\item Klasifikační model rozdělí možné hodnoty $\mathbf{X}$
+        na oblasti odpovídající různým třídám.}
+    \end{itemize}}
 
-    \begin{center}
-        \input{images/rozhodovaci-hranice-1.tex}
-    \end{center}
 
-    \pause
 
-    \begin{center}
+    \visible<4->{\begin{center}
+        \obrazek[0.4\textheight]{images/rozhodovaci-hranice-1.tex}
+    \end{center}}
+
+
+
+    \visible<5->{\begin{center}
         Například:
         \[
             \hat y=
             \begin{cases}
                 A, & x<c,\\
-                B, & x\geq c.
+                B, & x\geqslant c.
             \end{cases}
         \]
-    \end{center}
+    \end{center}}
 
 \end{frame}
 
@@ -767,9 +773,9 @@
 
     \small
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Mějme dva vstupní statistické soubory
         \[
             \mathbf{X}_1=(x_{11},\dots,x_{1n}),
@@ -780,130 +786,133 @@
         \[
             \mathbf{Y}=(y_1,\dots,y_n),
             \qquad
-            y_j\in\{A,B\}.
-        \]\pause
-        \item $j$-tý objekt je popsán bodem $(x_{1j},x_{2j})$ a~přísluší mu třída $y_j$.
-    \end{itemize}
+            y_j\in\set{A,B}.
+        \]
+        \visible<3->{\item $j$-tý objekt je popsán bodem $(x_{1j},x_{2j})$ a~přísluší mu třída $y_j$.}
+    \end{itemize}}
 
-    \pause
 
-    \begin{columns}[T,onlytextwidth]
+
+    \visible<4->{\begin{columns}[T,onlytextwidth]
 
         \begin{column}{0.60\textwidth}
-            \centering
-
-            \input{images/rozhodovaci-hranice-2.tex}
+    \obrazek[0.4\textheight]{images/rozhodovaci-hranice-2.tex}
         \end{column}
 
-        \pause
 
-        \begin{column}{0.36\textwidth}
 
-            Model rozdělí rovinu možných hodnot na~dvě oblasti.\pause
-            \[
+        \begin{column}{0.36\textwidth}\visible<5->{
+
+            Model rozdělí rovinu možných hodnot na~dvě oblasti.
+            \visible<6->{\[
                 \hat y=
                 \begin{cases}
                     A,
                     & x_1+x_2<5,\\[1mm]
                     B,
-                    & x_1+x_2\geq 5.
+                    & x_1+x_2\geqslant 5.
                 \end{cases}
-            \]
+            \]}
 
-        \end{column}
+        }\end{column}
 
-    \end{columns}
+    \end{columns}}
 
 \end{frame}
 
 \subsection{Vyhodnocení modelu}
 
-\begin{frame}{Vyhodnocení modelu u učení s učitelem}
+\begin{frame}{Vyhodnocení modelu u~učení s~učitelem}
+    \small
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Pro každý index $j$ model vytvoří odhad
         \[
             \hat y_j=\hat f(x_j).
-        \]\pause
-        \item Odhad $\hat y_j$ porovnáme se známou skutečnou hodnotou $y_j$.\pause
-        \item U regrese lze sledovat chybu
+        \]
+        \visible<3->{\item Odhad $\hat y_j$ porovnáme se známou skutečnou hodnotou $y_j$.}
+        \visible<4->{\item U~regrese lze sledovat chybu
         \[
             e_j=y_j-\hat y_j.
-        \]\pause
-        \item U klasifikace sledujeme, zda model určil správnou třídu:
+        \]}
+        \visible<5->{\item U~klasifikace sledujeme, zda model určil správnou třídu:
         \[
             \hat y_j=y_j
             \qquad\text{nebo}\qquad
             \hat y_j\neq y_j.
-        \]
-    \end{itemize}
+        \]}
+    \end{itemize}}
 
-    \pause
 
-    \begin{timportantframe}
+
+    \visible<6->{\begin{timportantframe}
         \begin{center}
             Testovací data ukazují, jak model funguje na dosud neviděných vstupních hodnotách.
         \end{center}
-    \end{timportantframe}
+    \end{timportantframe}}
 
 \end{frame}
 
+% =================================================================
 \section{Učení bez učitele}
+% =================================================================
 
-\titleframe{Učení bez učitele}
+\begin{titleframeenv}{Učení bez učitele}
+    \obrazek[0.4\textheight]{images/shlukova-analyza.tex}
+\end{titleframeenv}
 
 \subsection{Vymezení}
 
 \begin{frame}{Učení bez učitele}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Máme pouze vstupní statistický soubor
         \[
             \mathbf{X}=(x_1,x_2,\dots,x_n).
-        \]\pause
-        \item Výstupní soubor
+        \]
+        \visible<3->{\item Výstupní soubor
         \[
             \mathbf{Y}=(y_1,y_2,\dots,y_n)
         \]
-        není znám.
-    \end{itemize}
+        není znám.}
+    \end{itemize}}
 
-    \pause
 
-    \begin{center}
+
+    \visible<4->{\begin{center}
         \[
             \text{učení s učitelem: } \boxed{\mathbf{X},\mathbf{Y}}
             \qquad\qquad
             \text{učení bez učitele: } \boxed{\mathbf{X}}
         \]
-    \end{center}
+    \end{center}}
 
-    \pause
 
-    \begin{timportantframe}
+
+    \visible<5->{\begin{timportantframe}
         \begin{center}
             \textbf{"Bez učitele"} znamená, že nemáme předem dané "správné odpovědi".
         \end{center}
-    \end{timportantframe}
+    \end{timportantframe}}
 
 \end{frame}
 
 \begin{frame}{Co je cílem učení bez učitele?}
 
-    \pause
 
-    \begin{itemize}
-        \item Cílem není odhadovat známý výstup $\mathbf{Y}$.\pause
-        \item Cílem je hledat určitou \textbf{strukturu} uvnitř samotných $\mathbf{X}$.
-    \end{itemize}
 
-    \pause
+    \visible<2->{\begin{itemize}
+        \item Cílem není odhadovat známý výstup $\mathbf{Y}$.
+        \visible<3->{\item Cílem je hledat určitou \textbf{strukturu} uvnitř samotných $\mathbf{X}$.}
+    \end{itemize}}
 
-    \begin{itemize}
+
+
+    \visible<4->{\begin{itemize}
         \item Typicky hledáme například:
         \begin{itemize}
             \item skupiny podobných objektů,
@@ -911,37 +920,37 @@
             \item skryté vztahy mezi objekty,
             \item jednodušší reprezentaci dat.
         \end{itemize}
-    \end{itemize}
+    \end{itemize}}
 \end{frame}
 
 \begin{frame}{Příklad}{Hledání skupin v~datech}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Mějme dva vstupní statistické soubory
         \[
             \mathbf{X}_1=(x_{11},\dots,x_{1n}),
             \qquad
             \mathbf{X}_2=(x_{21},\dots,x_{2n}).
-        \]\pause
-        \item Každý objekt $j$ je popsán bodem $(x_{1j},x_{2j})$.
-    \end{itemize}
+        \]
+        \visible<3->{\item Každý objekt $j$ je popsán bodem $(x_{1j},x_{2j})$.}
+    \end{itemize}}
 
-    \pause
 
-    \begin{center}
-        \input{images/priklad-hledani-skupin-v-datech.tex}
-    \end{center}
 
-    \pause
+    \visible<4->{\begin{center}
+        \obrazek[0.28\textheight]{images/priklad-hledani-skupin-v-datech.tex}
+    \end{center}}
 
-    \begin{tinfoframe}
+
+
+    \visible<5->{\begin{tinfoframe}
         \begin{center}
             Algoritmus se snaží skupiny odhalit \textbf{bez znalosti tříd}
             nebo \textbf{známých výstupů}.
         \end{center}
-    \end{tinfoframe}
+    \end{tinfoframe}}
 
 \end{frame}
 
@@ -949,59 +958,59 @@
 
 \begin{frame}{Shluková analýza}
 
-    \pause
 
-    \begin{itemize}
-        \item \textbf{Shlukování} rozděluje objekty do~shluků (anglicky \markdarkred{cluster}) podle jejich podobnosti.\pause
-        \item Objekty ve stejném shluku mají být navzájem podobné.\pause
-        \item Objekty v různých shlucích mají být naopak odlišné.
-    \end{itemize}
 
-    \vspace{0.15cm}
+    \visible<2->{\begin{itemize}
+        \item \textbf{Shlukování} rozděluje objekty do~shluků (anglicky \markdarkred{cluster}) podle jejich podobnosti.
+        \visible<3->{\item Objekty ve stejném shluku mají být navzájem podobné.}
+        \visible<4->{\item Objekty v~různých shlucích mají být naopak odlišné.}
+    \end{itemize}}
+
+    \visible<4->{\vspace{0.15cm}
 
     \begin{center}
-        \input{images/shlukova-analyza.tex}
-    \end{center}
+        \obrazek[0.4\textheight]{images/shlukova-analyza.tex}
+    \end{center}}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<5->{\begin{itemize}
         \item Při shlukování musíme rozhodnout například:
         \begin{itemize}
             \item jak budeme měřit podobnost,
             \item kolik shluků očekáváme,
             \item jaký tvar shluků považujeme za přirozený.
         \end{itemize}
-    \end{itemize}
+    \end{itemize}}
 
 \end{frame}
 
-\begin{frame}{Podobnost a vzdálenost}
+\begin{frame}{Podobnost a~vzdálenost}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item U~bodů v~rovině lze podobnost měřit např. \markdarkred{eukleidovskou vzdáleností}.
         \[
             d(P,Q)
             =
             \sqrt{(p_1-q_1)^2+(p_2-q_2)^2}.
         \]
-    \end{itemize}
+    \end{itemize}}
 
-    \pause
 
-    \begin{center}
-        \input{images/podobnost-a-vzdalenost.tex}
-    \end{center}
 
-    \pause
+    \visible<3->{\begin{center}
+        \obrazek[0.4\textheight]{images/podobnost-a-vzdalenost.tex}
+    \end{center}}
 
-    \begin{timportantframe}
+
+
+    \visible<4->{\begin{timportantframe}
         \begin{center}
             Výsledek shlukování závisí na~tom, jak podobnost definujeme.
         \end{center}
-    \end{timportantframe}
+    \end{timportantframe}}
 
 \end{frame}
 
@@ -1009,67 +1018,66 @@
 
 \begin{frame}{Algoritmus $k$-means}
 
-    \pause
 
-    \begin{itemize}
-        \item Chceme rozdělit body do $k$ shluků.\pause
-        \item Každý shluk reprezentuje jeho \textbf{střed} (anglicky \markdarkred{centroid}).
-    \end{itemize}
 
-    \pause
+    \visible<2->{\begin{itemize}
+        \item Chceme rozdělit body do $k$ shluků.
+        \visible<3->{\item Každý shluk reprezentuje jeho \textbf{střed} (anglicky \markdarkred{centroid}).}
+    \end{itemize}}
 
-    \begin{center}
-        \input{images/algoritmus-k-means-1.tex}
-    \end{center}
 
-    \pause
 
-    \begin{tinfoframe}
+    \visible<4->{\begin{center}
+        \obrazek[0.4\textheight]{images/algoritmus-k-means-1.tex}
+    \end{center}}
+
+
+
+    \visible<5->{\begin{tinfoframe}
         \begin{center}
             Algoritmus končí ve~chvíli, kdy se přiřazení bodů nebo poloha středů už "výrazně" nemění.
         \end{center}
-    \end{tinfoframe}
+    \end{tinfoframe}}
 
 \end{frame}
 
 \begin{frame}{Algoritmus k-means}
 
-    \pause
 
-    \begin{columns}[T,onlytextwidth]
+
+    \visible<2->{\begin{columns}[T,onlytextwidth]
 
         \begin{column}{0.52\textwidth}
-            \centering
-
-            \input{images/algoritmus-k-means-2.tex}
+    \obrazek[0.4\textheight]{images/algoritmus-k-means-2.tex}
 
         \end{column}
 
         \begin{column}{0.44\textwidth}
 
-            \pause
 
-            \begin{itemize}
-                \item Body jsou přiřazeny k nejbližšímu středu.\pause
-                \item Nový střed je průměr bodů v daném shluku.\pause
-                \item Pro každý shluk tak vznikne jeho reprezentant.
-            \end{itemize}
+
+            \visible<3->{\begin{itemize}
+                \item Body jsou přiřazeny k~nejbližšímu středu.
+                \visible<4->{\item Nový střed je průměr bodů v~daném shluku.}
+                \visible<5->{\item Pro každý shluk tak vznikne jeho reprezentant.}
+            \end{itemize}}
 
         \end{column}
 
-    \end{columns}
+    \end{columns}}
 
-    \pause
 
-    \begin{center}
+
+    \visible<6->{\begin{center}
         Shluk je tedy reprezentován jeho středem.
-    \end{center}
+    \end{center}}
 
 \end{frame}
 
 \begin{frame}{Pseudokód $k$-means}
     \scriptsize
     \begin{center}
+        \begin{adjustbox}{max width=\linewidth, max totalheight=0.8\textheight}
         \begin{minipage}{0.9\textwidth}
             \begin{algorithm}[H]
                 \caption{$k$-means}
@@ -1090,10 +1098,10 @@
                 \While{$\operatorname{cont}= 1$}{
                     $\operatorname{cont}\gets 0$\\
 
-                    \tcp{Přiřazení objektů k nejbližším středům}
+                    \tcp{Přiřazení objektů k~nejbližším středům}
                     \ForEach{$i=1,\dots,n$}{
                         $j\gets
-                        \argmin_{1\leq \ell\leq k}
+                        \argmin_{1\leqslant \ell\leqslant k}
                         d(\mathbf{x}_i,\boldsymbol{\mu}_{\ell})$
 
                         \If{$c(i)\neq j$}{
@@ -1117,72 +1125,75 @@
                 }
             \end{algorithm}
         \end{minipage}
+        \end{adjustbox}
     \end{center}
 \end{frame}
 
-\begin{frame}{Co víme o $k$-means?}
+\begin{frame}{Co víme o~$k$-means?}
     \begin{propblock}[Bez důkazu]
         Algoritmus $k$-means se vždy zastaví.
     \end{propblock}
 
-    \pause
-    \textbf{Nevýhody:}
+
+    \visible<2->{\textbf{Nevýhody:}
     \begin{itemize}
-        \item Počet shluků $k$ zadáváme předem.\pause
-        \item Výsledek může záviset na počáteční volbě středů.\pause
-        \item Algoritmus nemusí najít nejlepší možné rozdělení.\pause
-        \item Nehodí se pro všechny tvary shluků.
-    \end{itemize}
+        \item Počet shluků $k$ zadáváme předem.
+        \visible<3->{\item Výsledek může záviset na počáteční volbě středů.}
+        \visible<4->{\item Algoritmus nemusí najít nejlepší možné rozdělení.}
+        \visible<5->{\item Nehodí se pro všechny tvary shluků.}
+    \end{itemize}}
 
 \end{frame}
 
 \begin{frame}{Další úlohy učení bez učitele}
 
-    \pause
 
-    \begin{itemize}
-        \item \textbf{Redukce dimenze:} zjednodušení dat při zachování důležitých informací.\pause
-        \item \textbf{Hledání odlehlých hodnot:} nalezení objektů,
-        které se výrazně liší od ostatních.\pause
-        \item \textbf{Asociace a pravidelnosti:} hledání často společně
-        se vyskytujících jevů.\pause
-        \item \textbf{Vizualizace dat:} převod složitých dat do podoby,
-        ve které je možné je lépe pochopit.
-    \end{itemize}
+
+    \visible<2->{\begin{itemize}
+        \item \textbf{Redukce dimenze:} zjednodušení dat při zachování důležitých informací.
+        \visible<3->{\item \textbf{Hledání odlehlých hodnot:} nalezení objektů,
+        které se výrazně liší od ostatních.}
+        \visible<4->{\item \textbf{Asociace a~pravidelnosti:} hledání často společně
+        se vyskytujících jevů.}
+        \visible<5->{\item \textbf{Vizualizace dat:} převod složitých dat do podoby,
+        ve které je možné je lépe pochopit.}
+    \end{itemize}}
 
 \end{frame}
 
+% =================================================================
 \section{Zpětnovazební učení}
+% =================================================================
 
-\titleframe{Zpětnovazební učení}
-
-\subsection{Vymezení}
+\begin{titleframeenv}{Zpětnovazební učení}
+    \obrazek[0.4\textheight]{images/agent-a-prostredi.tex}
+\end{titleframeenv}
 
 \subsection{Zpětnovazební učení}
 
 \begin{frame}{Zpětnovazební učení}
 
-    \pause
 
-    \begin{itemize}
-        \item Mějme množinu možných stavů prostředí $\mathcal{S}$ a~pro každý stav $s\in\mathcal{S}$ množinu přípustných akcí $\mathcal{A}(s)$.\pause
-        \item V čase $t$ se agent nachází ve stavu $s_t\in\mathcal{S}$ a~zvolí akci $a_t\in\mathcal{A}(s_t)$.\pause
-        \item Prostředí následně agentovi poskytne
+
+    \visible<2->{\begin{itemize}
+        \item Mějme množinu možných stavů prostředí $\mathcal{S}$ a~pro každý stav $s\in\mathcal{S}$ množinu přípustných akcí $\mathcal{A}(s)$.
+        \visible<3->{\item V~čase $t$ se agent nachází ve stavu $s_t\in\mathcal{S}$ a~zvolí akci $a_t\in\mathcal{A}(s_t)$.}
+        \visible<4->{\item Prostředí následně agentovi poskytne
         \begin{itemize}
             \item číselnou odměnu $r_{t+1}\in\mathbb{R}$ a
             \item nový stav $s_{t+1}\in\mathcal{S}$.
         \end{itemize}
         \[
             \left(s_t,a_t,r_{t+1},s_{t+1}\right)
-        \]
-    \end{itemize}
-    \pause
+        \]}
+    \end{itemize}}
 
-    \begin{tinfoframe}
+
+    \visible<5->{\begin{tinfoframe}
         \begin{center}
             Jedna taková čtveřice představuje jednu \markdarkred{zkušenost agenta}.
         \end{center}
-    \end{tinfoframe}
+    \end{tinfoframe}}
 
 \end{frame}
 
@@ -1190,58 +1201,56 @@
 
 \begin{frame}{Posloupnost zkušeností}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Agent při interakci s~prostředím získává posloupnost
         \[
             s_0,a_0,r_1,s_1,a_1,r_2,s_2,a_2,r_3,\dots
-        \]\pause
-        \item Po každé akci tedy pozoruje její následek:
+        \]
+        \visible<3->{\item Po každé akci tedy pozoruje její následek:
         \[
             (s_t,a_t)
             \longrightarrow
             (r_{t+1},s_{t+1}).
-        \]\pause
-        \item Odměna $r_{t+1}$ vyjadřuje, nakolik byl bezprostřední následek akce žádoucí.\pause
-        \item Odměna však obvykle přímo neříká, která akce byla správná.
-    \end{itemize}
+        \]}
+        \visible<4->{\item Odměna $r_{t+1}$ vyjadřuje, nakolik byl bezprostřední následek akce žádoucí.}
+        \visible<5->{\item Odměna však obvykle přímo neříká, která akce byla správná.}
+    \end{itemize}}
 
-    \pause
 
-    \begin{tinfoframe}
+
+    \visible<6->{\begin{tinfoframe}
         \begin{center}
             Agent se učí z~následků vlastních rozhodnutí.
         \end{center}
-    \end{tinfoframe}
+    \end{tinfoframe}}
 
 \end{frame}
 
-\subsection{Agent a prostředí}
+\subsection{Agent a~prostředí}
 
 \begin{frame}{Příklad}{Agent v~"mřížkovém světě"}
 
     \begin{columns}[T,onlytextwidth]
 
         \begin{column}{0.40\textwidth}
-            \centering
-
-            \input{images/priklad-agent-v-mrizkovem-svete.tex}
+    \obrazek[0.4\textheight]{images/priklad-agent-v-mrizkovem-svete.tex}
 
         \end{column}
 
         \begin{column}{0.55\textwidth}
 
-            \pause
 
-            \begin{itemize}
-                \item \textbf{Stav} $s_t$: aktuální políčko agenta.\pause
-                \item \textbf{Akce} $a_t$: nahoru, dolů, vlevo, vpravo.
-            \end{itemize}
 
-            \pause
+            \visible<2->{\begin{itemize}
+                \item \textbf{Stav} $s_t$: aktuální políčko agenta.
+                \visible<3->{\item \textbf{Akce} $a_t$: nahoru, dolů, vlevo, vpravo.}
+            \end{itemize}}
 
-            \begin{itemize}
+
+
+            \visible<4->{\begin{itemize}
                 \item \textbf{Odměna $r_{t+1}$}:
                 \[
                     \begin{array}{rcl}
@@ -1250,44 +1259,44 @@
                     \text{past} &:& -10.
                     \end{array}
                 \]
-            \end{itemize}
+            \end{itemize}}
 
         \end{column}
 
     \end{columns}
 
-    \pause
 
-    \begin{tnoticeframe}
+
+    \visible<5->{\begin{tnoticeframe}
         \begin{center}
             Agent se učí volit cestu, která vede k~co nejvyšší celkové odměně.
         \end{center}
-    \end{tnoticeframe}
+    \end{tnoticeframe}}
 
 \end{frame}
 
 \begin{frame}{Agent a~prostředí}
 
     \begin{center}
-        \input{images/agent-a-prostredi.tex}
+        \obrazek[0.4\textheight]{images/agent-a-prostredi.tex}
     \end{center}
 
-    \pause
 
-    \begin{enumerate}
-        \item Agent pozoruje současný stav prostředí $s_t$.\pause
-        \item Na jeho základě zvolí akci $a_t$.\pause
-        \item Prostředí přejde do~nového stavu $s_{t+1}$ a~poskytne agentovi odměnu $r_{t+1}$.
-    \end{enumerate}
 
-    \pause
+    \visible<2->{\begin{enumerate}
+        \item Agent pozoruje současný stav prostředí $s_t$.
+        \visible<3->{\item Na jeho základě zvolí akci $a_t$.}
+        \visible<4->{\item Prostředí přejde do~nového stavu $s_{t+1}$ a~poskytne agentovi odměnu $r_{t+1}$.}
+    \end{enumerate}}
 
-    \begin{center}
-        Tento cyklus se opakuje v čase
+
+
+    \visible<5->{\begin{center}
+        Tento cyklus se opakuje v~čase
         \[
             t=0,1,2,\dots
         \]
-    \end{center}
+    \end{center}}
 
 \end{frame}
 
@@ -1295,42 +1304,42 @@
 
 \begin{frame}{Cíl zpětnovazebního učení}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Agent nechce maximalizovat pouze okamžitou odměnu,
-        ale celkový dlouhodobý zisk $\sum_{i=0}^{\infty}r_i$.\pause
-        \item Často proto používáme diskontovaný součet odměn
+        ale celkový dlouhodobý zisk $\sum_{i=0}^{\infty}r_i$.
+        \visible<3->{\item Často proto používáme diskontovaný součet odměn
         \[
             G(t)
             =
             \sum_{i=0}^{\infty}\gamma^{i}r_{t+i+1},
         \]
-        kde $0\leqslant\gamma<1$.
-    \end{itemize}
+        kde $0\leqslant\gamma<1$.}
+    \end{itemize}}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<4->{\begin{itemize}
         \item Parametr $\gamma$ určuje, jak velkou váhu mají budoucí odměny.
-    \end{itemize}
+    \end{itemize}}
 
-    \pause
 
-    \begin{align*}
+
+    \visible<5->{\begin{align*}
         \gamma \approx 0
         \quad&\Rightarrow\quad
         \text{důraz na okamžitou odměnu}\\
         \gamma \approx 1
         \quad&\Rightarrow\quad
         \text{důraz na dlouhodobý výsledek}
-    \end{align*}
+    \end{align*}}
 
-    \pause
 
-    \begin{center}
+
+    \visible<6->{\begin{center}
         Cílem je naučit se volit akce tak, aby \markdarkred{očekávaný dlouhodobý zisk byl co největší}.
-    \end{center}
+    \end{center}}
 
 \end{frame}
 
@@ -1340,26 +1349,26 @@
 
     \small
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item \textbf{Politika} určuje, jakou akci agent zvolí v~daném stavu $\pi(s)=a$.
-    \end{itemize}
+    \end{itemize}}
 
-    \pause
 
-    \begin{center}
-        \input{images/politika-agenta.tex}
-    \end{center}
 
-    \pause
+    \visible<3->{\begin{center}
+        \obrazek[0.4\textheight]{images/politika-agenta.tex}
+    \end{center}}
 
-    \begin{itemize}
+
+
+    \visible<4->{\begin{itemize}
         \item Při použití politiky $\pi$ získá agent posloupnost odměn
         \[
             r_1^\pi,r_2^\pi,r_3^\pi,\dots
         \]
-        a celkovou diskontovanou odměnu
+        a~celkovou diskontovanou odměnu
         \[
             G^\pi=G^{\pi}(0)
             =
@@ -1370,19 +1379,19 @@
             \gamma^2r_3^\pi
             +
             \cdots.
-        \]\pause
-        \item Cílem je nalézt politiku s nejvyšší celkovou odměnou:
+        \]
+        \visible<5->{\item Cílem je nalézt politiku s~nejvyšší celkovou odměnou:
         \[
             \pi^*=\argmax_{\pi} G^\pi.
-        \]
-    \end{itemize}
+        \]}
+    \end{itemize}}
 
-    \pause
 
-    \begin{center}
+
+    \visible<6->{\begin{center}
         \textbf{Agent se tedy neučí jednu akci,
         ale celou strategii chování.}
-    \end{center}
+    \end{center}}
 
 \end{frame}
 
@@ -1390,9 +1399,9 @@
 
 \begin{frame}{Q-learning}{základní myšlenka}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Agent si pro každou dvojici
         \[
             (s,a)
@@ -1401,34 +1410,34 @@
         \[
             Q(s,a).
         \]
-    \end{itemize}
+    \end{itemize}}
 
-    \pause
 
-    \begin{center}
+
+    \visible<3->{\begin{center}
         \textbf{$Q(s,a)$ říká, jak výhodné se zatím jeví provést akci $a$ ve stavu $s$.}
-    \end{center}
+    \end{center}}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<4->{\begin{itemize}
         \item Po každé zkušenosti
         \[
             (s_t,a_t,r_{t+1},s_{t+1})
         \]
-        agent hodnotu $Q(s_t,a_t)$ upraví.\pause
-        \item Čím větší je $Q(s,a)$, tím lákavější je akci $a$ ve stavu $s$ zvolit.
-    \end{itemize}
+        agent hodnotu $Q(s_t,a_t)$ upraví.
+        \visible<5->{\item Čím větší je $Q(s,a)$, tím lákavější je akci $a$ ve stavu $s$ zvolit.}
+    \end{itemize}}
 
 \end{frame}
 
 \begin{frame}{Aktualizace hodnot $Q(s,a)$}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Po provedení akce $a_t$ ve stavu $s_t$ agent získá odměnu
-        $r_{t+1}$ a nový stav $s_{t+1}$.
+        $r_{t+1}$ a~nový stav $s_{t+1}$.
         \[
             Q(s_t,a_t)
             \gets
@@ -1447,30 +1456,30 @@
         \item $\alpha$ určuje rychlost učení.
         \item $\gamma$ určuje váhu budoucích odměn.
         \item $\max_a Q(s_{t+1},a)$ odhaduje nejlepší možné pokračování.
-    \end{itemize}
+    \end{itemize}}
 
-    \pause
 
-    \begin{tinfoframe}
+
+    \visible<3->{\begin{tinfoframe}
         \begin{center}
             Agent tedy postupně opravuje své odhady podle toho, jaké možnosti prozkoumal.
         \end{center}
-    \end{tinfoframe}
+    \end{tinfoframe}}
 
 \end{frame}
 
 \begin{frame}{Výsledná politika $\pi$}
 
-    \pause
 
-    \begin{itemize}
+
+    \visible<2->{\begin{itemize}
         \item Po dostatečném množství zkušeností má agent
-        pro každý stav a každou přípustnou akci hodnotu $Q(s,a)$.
-    \end{itemize}
+        pro každý stav a~každou přípustnou akci hodnotu $Q(s,a)$.
+    \end{itemize}}
 
-    \pause
 
-    \begin{center}
+
+    \visible<3->{\begin{center}
         \begin{tabular}{c|c}
             akce $a$ & $Q(s,a)$\\
             \hline
@@ -1479,17 +1488,17 @@
             dolů    & $-0{,}5$\\
             vlevo   & $0{,}8$
         \end{tabular}
-    \end{center}
+    \end{center}}
 
-    \pause
 
-    \begin{itemize}
-        \item Agent ve stavu $s$ zvolí akci s nejvyšší hodnotou:
+
+    \visible<4->{\begin{itemize}
+        \item Agent ve stavu $s$ zvolí akci s~nejvyšší hodnotou:
         \[
             \pi(s)=\argmax_{a}Q(s,a)=\text{doprava}.
-        \]\pause
-        \item Naučená politika je tedy tvořena nejlepší akcí pro každý možný stav.
-    \end{itemize}
+        \]
+        \visible<5->{\item Naučená politika je tedy tvořena nejlepší akcí pro každý možný stav.}
+    \end{itemize}}
 
 \end{frame}
 
