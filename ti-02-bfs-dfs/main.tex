@@ -22,7 +22,7 @@
     % =================================================================
 
     \begin{titleframeenv}{Prohledávání do šířky}
-        \obrazek[0.55\textheight]{images/bfs-nahled.tex}
+        \obrazek[0.66\textheight]{images/bfs-nahled.tex}
     \end{titleframeenv}
 
     \subsection{Grafové algoritmy}
@@ -298,7 +298,7 @@ def bfs(graph, start):
                 \item Pak sousedy jeho sousedů atd.
             \end{itemize}}
             \visible<4->{\item Tzn.~kdykoliv uzavíráme vrchol ve vrstvě $V_k$, pak jeho neprozkoumané sousedy umístíme do vrstvy $V_{k+1}$.}
-            \visible<5->{\obrazek[0.32\textheight]{images/vrstvy.tex}}
+            \visible<5->{\obrazek[0.41\textheight]{images/vrstvy.tex}}
             \visible<6->{\item Pro libovolný vrchol $v$ ve vrstvě $V_k$ tedy platí, že $D(v)=k$.}
         \end{itemize}
     \end{frame}
@@ -897,7 +897,7 @@ def dfs(graph):
                 \textbf{Pozor!} Nalezené cesty už nemusí být nejkratší!
             \end{center}
         \end{talertframe}}
-        \visible<4->{\obrazek[0.45\textheight]{images/dfs-strom.tex}}
+        \visible<4->{\obrazek[0.47\textheight]{images/dfs-strom.tex}}
     \end{frame}
 
     \subsection{Seznamy in a~out}
@@ -925,10 +925,10 @@ def dfs(graph):
 
     \begin{frame}{Případ $\langle \inlist(u),\outlist(u)\rangle\subseteq\langle \inlist(v),\outlist(v)\rangle$}
         \visible<2->{\begin{minipage}[t]{0.47\textwidth}
-            \obrazek[0.5\textheight]{images/u-podstrom-v.tex}
+            \obrazek[0.53\textheight]{images/u-podstrom-v.tex}
         \end{minipage}\hfill
         \begin{minipage}[t]{0.47\textwidth}
-            \obrazek[0.5\textheight]{images/v-podstrom-u.tex}
+            \obrazek[0.53\textheight]{images/v-podstrom-u.tex}
         \end{minipage}}
         \visible<3->{\begin{tinfoframe}
             \begin{center}
@@ -1534,7 +1534,7 @@ def dfs(graph):
     \end{frame}
 
     \begin{frame}{Idea algoritmu pro hledání mostů}
-        \visible<2->{\obrazek[0.45\textheight]{images/mosty-idea.tex}}
+        \visible<2->{\obrazek[0.51\textheight]{images/mosty-idea.tex}}
         \visible<3->{\begin{timportantframe}
             \begin{center}
                 Pokud během výpočtu nalezneme hranu z~podstromu $T_y$, která vede do již otevřeného vrcholu $t$ nacházejícího se v~DFS stromě \uv{nad} vrcholem $y$, pak \textbf{$xy$ nemůže být most!}
