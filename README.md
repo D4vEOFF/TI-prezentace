@@ -131,6 +131,25 @@ Skript [`compile.py`](compile.py):
 
 Příkazy v následujících příkladech se spouštějí z kořenového adresáře repozitáře.
 
+### Výstup skriptu
+
+Upovídaný výpis LaTeXu se nevypisuje. Pro každou variantu se zobrazí jeden řádek s výsledkem, počtem stran, velikostí souboru a dobou překladu:
+
+```text
+▶ Compiling ti-04-dijkstra (aspect ratio 43, standard)
+✔ Successfully compiled ti-04-dijkstra_43.pdf (101 pages, 323.8 kB, 33.2 s)
+✔ Done: 1 document(s) in 33.2 s
+```
+
+Pokud se překlad nezdaří, skript vypíše z logu místo chyby, její hlášení i okolní řádky vstupu, pokračuje dalšími variantami a nakonec skončí s návratovým kódem `1`:
+
+```text
+✘ Failed to compile ti-04-dijkstra_43.pdf: pdflatex exited with status 1 on pass 1 of 3
+    ti-04-dijkstra/main_43.tex:13: Undefined control sequence.
+```
+
+Nerozřešené odkazy (`??`) a citace (`[?]`) skript hlásí jako varování, překlad kvůli nim ale neselže. Syrový výstup `pdflatexu` a `biberu` lze vrátit přepínačem `--verbose`.
+
 ### Kompilace jedné prezentace
 
 Při kompilaci jedné prezentace je třeba zadat její adresář a název výsledného souboru:
@@ -240,6 +259,7 @@ python compile.py --all --handout --move -ar 43 169 1610
 | `--handout` | Vytvoří také handout pro každý požadovaný poměr stran. |
 | `-ar`, `-ars`, `--aspect-ratios` | Určuje jeden nebo více poměrů stran. |
 | `--move` | Přesune všechna vytvořená PDF do aktuálního adresáře. |
+| `--verbose`, `-v` | Vypíše syrový výstup `pdflatexu` a `biberu` místo krátkého shrnutí. |
 | `-h`, `--help` | Vypíše nápovědu skriptu. |
 
 Parametry `--folder` a `--title` jsou povinné, pokud není použit parametr `--all`.
