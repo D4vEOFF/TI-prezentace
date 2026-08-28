@@ -34,6 +34,8 @@ Pro každou variantu kromě té úplně základní skript **vygeneruje dočasnou
 
 `biber` se spouští s pracovním adresářem prezentace (`cwd=folder`), aby se relativní cesta `../assets/literatura.bib` z `\addbibresource` rozřešila stejně jako při běhu `pdflatexu` — ten se naopak volá z kořene repozitáře s `-output-directory`.
 
+Výstup nástrojů se zachytává; skript tiskne jen řádek na variantu (počet stran, velikost, čas) a po neúspěchu vypíše z `.log` místo chyby s okolními řádky vstupu. Nerozřešené odkazy a citace hlásí jako varování. Neúspěšná varianta překlad dalších nezastaví, skript ale skončí s návratovým kódem `1`. Syrový výstup vrátí `--verbose`.
+
 Důsledky pro editaci zdrojů:
 
 - `\documentclass[...]{beamer}` musí zůstat na **jednom řádku**; jinak jej regulární výraz v `update_documentclass_options()` nerozpozná a varianta se vygeneruje beze změny voleb.

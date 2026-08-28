@@ -5,11 +5,311 @@ import platform
 import re
 import shutil
 import subprocess
+import sys
+import time
 
 
 # Prezentace jsou pouze v adresářích ti-* přímo v kořeni repozitáře. Rekurzivní
 # průchod by zabral i pomocné adresáře (např. .claude/worktrees) s vlastním main.tex.
 PRESENTATION_DIR_PATTERN = "ti-*"
+
+
+# ---------------------------------------------------------------------------
+# Výpis do terminálu
+# ---------------------------------------------------------------------------
+#
+# Nástroje LaTeXu jsou nesmírně upovídané: jediný průchod vypíše několik set
+# řádků se seznamem všech načtených balíčků a fontů, mezi nimiž zanikne ten
+# jeden řádek, na kterém záleží. Celý výstup se proto zachytí a vypíše se jen
+# krátké shrnutí; zachycený log se rozebere a ukáže podrobně teprve tehdy,
+# když se něco pokazí. Přepínač --verbose vrátí syrový výstup.
+
+class Style:
+    """ANSI sekvence, vypnuté tam, kde je terminál neumí zobrazit."""
+
+    ENABLED = False
+
+    RESET = ''
+    BOLD = ''
+    DIM = ''
+    RED = ''
+    GREEN = ''
+    YELLOW = ''
+    CYAN = ''
+
+    @classmethod
+    def enable(cls):
+        cls.ENABLED = True
+        cls.RESET = '\033[0m'
+        cls.BOLD = '\033[1m'
+        cls.DIM = '\033[2m'
+        cls.RED = '\033[31m'
+        cls.GREEN = '\033[32m'
+        cls.YELLOW = '\033[33m'
+        cls.CYAN = '\033[36m'
+
+
+def setup_colors():
+    # https://no-color.org/ -- výslovné odhlášení, které respektuje řada nástrojů
+    if os.environ.get('NO_COLOR') is not None:
+        return
+    if not sys.stdout.isatty():
+        return
+    if os.name == 'nt':
+        # Konzole Windows rozumí ANSI sekvencím teprve tehdy, když se pro
+        # výstupní handle zapne zpracování virtuálního terminálu.
+        try:
+            import ctypes
+
+            kernel32 = ctypes.windll.kernel32
+            handle = kernel32.GetStdHandle(-11)  # STD_OUTPUT_HANDLE
+            mode = ctypes.c_uint32()
+            if not kernel32.GetConsoleMode(handle, ctypes.byref(mode)):
+                return
+            # ENABLE_VIRTUAL_TERMINAL_PROCESSING
+            if not kernel32.SetConsoleMode(handle, mode.value | 0x0004):
+                return
+        except Exception:
+            return
+    Style.enable()
+
+
+# Značky výsledku jednotlivých kroků; konzole starších Windows je nemusí umět
+# zakódovat, proto prostá náhrada.
+def pick_symbols():
+    marks = {'ok': '✔', 'fail': '✘', 'warn': '⚠', 'run': '▶'}
+    try:
+        for mark in marks.values():
+            mark.encode(sys.stdout.encoding or 'ascii')
+    except (UnicodeEncodeError, LookupError):
+        marks = {'ok': '+', 'fail': 'x', 'warn': '!', 'run': '>'}
+    return marks
+
+
+SYMBOLS = pick_symbols()
+
+# Syrový výstup spouštěných programů se vypisuje místo krátkého shrnutí
+VERBOSE = False
+
+
+def say(message=''):
+    print(message, flush=True)
+
+
+def step_started(what):
+    say('%s%s Compiling %s%s' % (Style.BOLD, SYMBOLS['run'], what, Style.RESET))
+
+
+def step_succeeded(what, details):
+    suffix = ' %s(%s)%s' % (Style.DIM, details, Style.RESET) if details else ''
+    say('%s%s Successfully compiled %s%s%s'
+        % (Style.GREEN, SYMBOLS['ok'], what, Style.RESET, suffix))
+
+
+def step_failed(what, reason):
+    say('%s%s Failed to compile %s: %s%s'
+        % (Style.RED, SYMBOLS['fail'], what, reason, Style.RESET))
+
+
+def note(message):
+    say('  %s%s %s%s' % (Style.YELLOW, SYMBOLS['warn'], message, Style.RESET))
+
+
+def detail(message):
+    say('  %s%s%s' % (Style.DIM, message, Style.RESET))
+
+
+def human_size(byte_count):
+    for unit in ('B', 'kB', 'MB', 'GB'):
+        if byte_count < 1024 or unit == 'GB':
+            if unit == 'B':
+                return '%d %s' % (byte_count, unit)
+            return '%.1f %s' % (byte_count, unit)
+        byte_count /= 1024.0
+
+
+# ---------------------------------------------------------------------------
+# Čtení logu pdflatexu
+# ---------------------------------------------------------------------------
+
+# pdflatex láme log na 79 znacích, každý vzor níže se proto musí vejít na
+# začátek řádku. To všechny splňují: každá zde uvedená hláška začíná v nultém
+# sloupci a na další řádek se může přelít jen její konec.
+LOG_LINE_LIMIT = 120
+
+# S přepínačem -file-line-error hlásí pdflatex chyby ve tvaru 'file.tex:12: ...',
+# takže je místo chyby známé bez sledování zanoření vkládaných souborů v logu.
+FILE_LINE_ERROR = re.compile(r'^(?:\./)?([^:()\s]\S*\.\w+):(\d+): (.*)$')
+
+# Chyby bez udané pozice, např. 'Emergency stop' nebo chybějící balíček
+BARE_ERROR = re.compile(r'^! (.*)$')
+
+# "LaTeX Warning: Reference `foo' on page 12 undefined on input line 34."
+UNDEFINED_REFERENCE = re.compile(r"^LaTeX Warning: Reference [`']([^']+)'")
+
+# Neznámý klíč citace hlásí biblatex jménem LaTeXu i vlastním jménem, a to
+# v jednoduchých uvozovkách, kdežto samotný LaTeX otevírá obrácenou čárkou.
+UNDEFINED_CITATION = re.compile(
+    r"^(?:LaTeX|Package biblatex) Warning: Citation [`']([^']+)'")
+
+# 'Output written on main_43.pdf (32 pages, 1204830 bytes).'
+OUTPUT_WRITTEN = re.compile(r'Output written on \S+ \((\d+) pages?, (\d+) bytes\)')
+
+
+def read_log(folder, stem):
+    log_path = os.path.join(folder, stem + '.log')
+    if not os.path.exists(log_path):
+        return None
+    with open(log_path, 'r', encoding='utf-8', errors='replace') as log_file:
+        return log_file.read()
+
+
+def parse_log(text):
+    """Vybere z logu pdflatexu to podstatné."""
+    report = {
+        'errors': [],            # (pozice, hláška, okolní řádky)
+        'fatal': [],             # chyby, které pdflatex hlásí bez pozice
+        'undefined_refs': [],    # návěští
+        'undefined_cites': [],   # klíče citací
+        'pages': None,
+        'bytes': None,
+    }
+    if not text:
+        return report
+
+    lines = text.split('\n')
+    for index, line in enumerate(lines):
+        match = FILE_LINE_ERROR.match(line)
+        if match:
+            message = match.group(3).strip()
+            # '==> Fatal error occurred' jen zopakuje, že byl překlad vzdán;
+            # skutečná příčina už je zaznamenaná výše.
+            if message.startswith('==>'):
+                report['fatal'].append((None, shorten(message), []))
+                continue
+            location = '%s:%s' % (match.group(1), match.group(2))
+            report['errors'].append((location, shorten(message),
+                                     error_context(lines, index)))
+            continue
+
+        match = BARE_ERROR.match(line)
+        if match:
+            # Díky -file-line-error se chyba se známou pozicí hlásí výše ve
+            # tvaru 'file:line:', takže co stále začíná '!', je buď závěrečné
+            # shrnutí 'Fatal error', nebo problém, na který nelze ukázat,
+            # např. chybějící balíček.
+            report['fatal'].append((None, shorten(match.group(1).strip()),
+                                    error_context(lines, index)))
+            continue
+
+        match = UNDEFINED_REFERENCE.match(line)
+        if match:
+            report['undefined_refs'].append(match.group(1))
+            continue
+
+        match = UNDEFINED_CITATION.match(line)
+        if match:
+            report['undefined_cites'].append(match.group(1))
+            continue
+
+        match = OUTPUT_WRITTEN.search(line)
+        if match:
+            report['pages'] = int(match.group(1))
+            report['bytes'] = int(match.group(2))
+
+    return report
+
+
+def shorten(message):
+    message = message.rstrip()
+    if len(message) > LOG_LINE_LIMIT:
+        return message[:LOG_LINE_LIMIT - 3] + '...'
+    return message
+
+
+# Řádky, které ukončují citovaný vstup a zahajují závěrečné hlášení pdflatexu
+CONTEXT_END = re.compile(r'^(Here is how much|No pages of output|Output written|'
+                         r'Transcript written|\s*\d+ strings out of)')
+
+
+def error_context(lines, index, limit=4):
+    """Pár řádků za chybou, které obvykle citují vadný vstup."""
+    context = []
+    for line in lines[index + 1:index + 1 + limit]:
+        stripped = line.rstrip()
+        if not stripped:
+            break
+        if stripped.startswith('!') or FILE_LINE_ERROR.match(stripped):
+            break
+        if CONTEXT_END.match(stripped):
+            break
+        context.append(shorten(stripped))
+    return context
+
+
+def report_errors(report):
+    # Užitečné jsou chyby s pozicí; holé shrnutí 'Fatal error occurred' se
+    # vypíše, jen když pdflatex nic lepšího neposkytl.
+    errors = report['errors'] or report['fatal']
+    for location, message, context in errors[:5]:
+        if location:
+            say('    %s%s%s: %s%s%s'
+                % (Style.CYAN, location, Style.RESET,
+                   Style.RED, message, Style.RESET))
+        else:
+            say('    %s%s%s' % (Style.RED, message, Style.RESET))
+        for line in context:
+            detail('  ' + line)
+    remaining = len(errors) - 5
+    if remaining > 0:
+        detail('  ... and %d further error(s), see the .log file' % remaining)
+    if not errors:
+        detail('  pdflatex reported no error in the .log file')
+
+
+def report_undefined(report, name):
+    """Upozorní na odkazy a citace, které se nepodařilo rozřešit.
+
+    Nerozřešený odkaz vysází LaTeX jako '??', chybějící citaci jako '[?]';
+    klíč citace musí být v assets/literatura.bib.
+    """
+    if report['undefined_refs']:
+        labels = sorted(set(report['undefined_refs']))
+        note('%d undefined reference(s) in %s, %d distinct label(s):'
+             % (len(report['undefined_refs']), name, len(labels)))
+        for label in labels[:10]:
+            detail('  %s' % label)
+        if len(labels) > 10:
+            detail('  ... and %d more' % (len(labels) - 10))
+    if report['undefined_cites']:
+        labels = sorted(set(report['undefined_cites']))
+        note('%d undefined citation(s): %s' % (len(report['undefined_cites']),
+                                               ', '.join(labels[:10])))
+
+
+# ---------------------------------------------------------------------------
+# Spouštění jednotlivých programů
+# ---------------------------------------------------------------------------
+
+def run_tool(command, cwd=None):
+    """Spustí jeden program řetězce a zachytí jeho výstup, není-li --verbose."""
+    if VERBOSE:
+        return subprocess.run(command, cwd=cwd or None)
+    return subprocess.run(
+        command,
+        cwd=cwd or None,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+
+
+def show_captured_output(result):
+    """Vypíše zachycený výstup programu, který selhal."""
+    if VERBOSE or not getattr(result, 'stdout', None):
+        return
+    for line in result.stdout.decode('utf-8', 'replace').splitlines():
+        if line.strip():
+            detail('  ' + line.rstrip())
 
 
 def find_presentation_folders(root):
@@ -34,7 +334,8 @@ def fix_path_for_windows(path):
 
 def delete_if_exists(file_path):
     if os.path.exists(file_path):
-        print(f"File {file_path} exists, deleting it...")
+        if VERBOSE:
+            detail(f"Deleting {file_path}")
         os.remove(file_path)
 
 
@@ -55,12 +356,14 @@ def cleanup_files(folder):
         "*.run.xml",
     ]
 
-    print("Cleaning up auxiliary files...")
     for ext in extensions:
         for file in glob.glob(os.path.join(folder, ext)):
-            print(f"Deleting {file}")
-            os.remove(file)
-    print("Cleanup completed.")
+            if VERBOSE:
+                detail(f"Deleting {file}")
+            try:
+                os.remove(file)
+            except OSError as e:
+                note(f"could not remove {file}: {e}")
 
 
 def normalize_aspect_ratio(aspect):
@@ -138,14 +441,8 @@ def create_variant_tex(main_file, variant_file, aspect=None, handout=False):
     with open(variant_file, "w", encoding="utf8") as fout:
         fout.writelines(new_lines)
 
-    variant_description = []
-    if aspect is not None:
-        variant_description.append(f"aspect ratio {normalize_aspect_ratio(aspect)}")
-    if handout:
-        variant_description.append("handout")
-
-    description = ", ".join(variant_description) or "standard"
-    print(f"Created TeX file for {description}: {variant_file}")
+    if VERBOSE:
+        detail(f"Created TeX file: {variant_file}")
 
 
 def run_biber(folder, stem):
@@ -153,42 +450,54 @@ def run_biber(folder, stem):
     Sestaví bibliografii pro daný dokument. Biber se spouští s pracovním
     adresářem prezentace, aby se relativní cesta k ../assets/literatura.bib
     v \\addbibresource rozřešila stejně jako při běhu pdflatexu.
+
+    Vrátí popis chyby, nebo None, pokud vše proběhlo v pořádku.
     """
-    print(f"Running biber for {stem} in {folder}...")
-    result = subprocess.run(["biber", stem], cwd=folder, check=False)
+    result = run_tool(["biber", stem], folder)
     if result.returncode != 0:
-        raise RuntimeError(
-            f"biber failed for {stem} in {folder} (exit code {result.returncode})."
-        )
+        show_captured_output(result)
+        return 'biber exited with status %d' % result.returncode
+    return None
 
 
-def run_pdflatex(folder, tex_file, description):
+def run_pdflatex(folder, tex_file, stem):
     """
     Zkompiluje dokument v pořadí pdflatex, biber, pdflatex, pdflatex.
     Tři průchody pdflatexem jsou potřeba, aby se ustálily jak citace, tak
     odkazy a osnova Beameru.
+
+    Vrátí popis chyby, nebo None, pokud vše proběhlo v pořádku.
     """
-    stem = os.path.splitext(os.path.basename(tex_file))[0]
+    # -file-line-error nechá pdflatex hlásit chyby ve tvaru 'file.tex:12: ...',
+    # takže lze místo chyby ukázat bez hádání.
+    command = [
+        "pdflatex",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "-output-directory",
+        folder,
+        tex_file,
+    ]
 
     for i in range(3):
-        print(f"Compiling {tex_file} ({description})... (Run {i + 1})")
-        result = subprocess.run(
-            ["pdflatex", "-output-directory", folder, tex_file],
-            check=False,
-        )
+        result = run_tool(command)
         if result.returncode != 0:
-            raise RuntimeError(
-                f"pdflatex failed while compiling {tex_file} "
-                f"(run {i + 1}, exit code {result.returncode})."
-            )
+            return ('pdflatex exited with status %d on pass %d of 3'
+                    % (result.returncode, i + 1))
 
         if i == 0:
-            run_biber(folder, stem)
+            reason = run_biber(folder, stem)
+            if reason is not None:
+                return reason
+
+    return None
 
 
 def compile_variant(folder, title, aspect=None, handout=False):
     """
-    Zkompiluje jednu variantu prezentace.
+    Zkompiluje jednu variantu prezentace a vrátí cestu k výslednému PDF,
+    nebo None, pokud se překlad nezdařil.
 
     Příklady výstupů:
       - bez poměru stran: prezentace.pdf
@@ -214,6 +523,7 @@ def compile_variant(folder, title, aspect=None, handout=False):
 
     source_stem = "_".join(stem_parts)
     output_stem = "_".join(output_parts)
+    output_name = output_stem + ".pdf"
 
     # Původní main.tex lze použít přímo pouze pro základní standardní variantu.
     is_original_main = aspect is None and not handout
@@ -223,7 +533,7 @@ def compile_variant(folder, title, aspect=None, handout=False):
         tex_file = fix_path_for_windows(os.path.join(folder, f"{source_stem}.tex"))
         create_variant_tex(main_file, tex_file, aspect=aspect, handout=handout)
 
-    output_pdf = fix_path_for_windows(os.path.join(folder, f"{output_stem}.pdf"))
+    output_pdf = fix_path_for_windows(os.path.join(folder, output_name))
     source_pdf = fix_path_for_windows(os.path.join(folder, f"{source_stem}.pdf"))
 
     delete_if_exists(output_pdf)
@@ -234,34 +544,53 @@ def compile_variant(folder, title, aspect=None, handout=False):
     description_parts.append("handout" if handout else "standard")
     description = ", ".join(description_parts)
 
-    try:
-        run_pdflatex(folder, tex_file, description)
+    step_started('%s (%s)' % (title, description))
+    started_at = time.time()
 
-        if not os.path.exists(source_pdf):
-            raise FileNotFoundError(
-                f"Expected output file {source_pdf} was not created."
-            )
+    try:
+        reason = run_pdflatex(folder, tex_file, source_stem)
+
+        # Prázdný dokument nechá pdflatex vypsat 'No pages of output' a přesto
+        # skončit s nulou, proto se ověřuje, že PDF opravdu vzniklo.
+        if reason is None and not os.path.exists(source_pdf):
+            reason = 'no PDF was produced'
+
+        # Log posledního průchodu popisuje dokument, který byl skutečně zapsán;
+        # čte se ještě před úklidem pomocných souborů.
+        report = parse_log(read_log(folder, source_stem))
+
+        if reason is not None:
+            step_failed(output_name, reason)
+            report_errors(report)
+            return None
 
         os.replace(source_pdf, output_pdf)
-        print(f"Compilation completed. Output file: {output_pdf}")
+
+        facts = []
+        if report['pages']:
+            facts.append('%d pages' % report['pages'])
+        facts.append(human_size(os.path.getsize(output_pdf)))
+        facts.append('%.1f s' % (time.time() - started_at))
+        step_succeeded(output_name, ', '.join(facts))
+        report_undefined(report, output_name)
+        return output_pdf
     finally:
         if not is_original_main:
             delete_if_exists(tex_file)
         cleanup_files(folder)
 
-    return output_pdf
-
 
 def compile_latex(folder, title, handout=False, aspect_ratios=None):
     """
-    Zkompiluje požadované varianty a vrátí seznam vytvořených PDF.
+    Zkompiluje požadované varianty a vrátí seznam výsledků; neúspěšná varianta
+    je v něm zastoupena hodnotou None.
 
     Pokud jsou zadány poměry stran, vytvoří se standardní varianta pro každý
     z nich a při --handout také odpovídající handout varianta pro každý poměr.
     Pokud poměry stran zadány nejsou, zachovává se původní chování:
     title.pdf a případně title_handout.pdf.
     """
-    compiled_files = []
+    results = []
     aspect_ratios = aspect_ratios or []
 
     if aspect_ratios:
@@ -271,23 +600,17 @@ def compile_latex(folder, title, handout=False, aspect_ratios=None):
         )
 
         for aspect in normalized_aspects:
-            compiled_files.append(
-                compile_variant(folder, title, aspect=aspect, handout=False)
-            )
+            results.append(compile_variant(folder, title, aspect=aspect, handout=False))
             if handout:
-                compiled_files.append(
+                results.append(
                     compile_variant(folder, title, aspect=aspect, handout=True)
                 )
     else:
-        compiled_files.append(
-            compile_variant(folder, title, aspect=None, handout=False)
-        )
+        results.append(compile_variant(folder, title, aspect=None, handout=False))
         if handout:
-            compiled_files.append(
-                compile_variant(folder, title, aspect=None, handout=True)
-            )
+            results.append(compile_variant(folder, title, aspect=None, handout=True))
 
-    return compiled_files
+    return results
 
 
 def main():
@@ -347,8 +670,21 @@ def main():
             "When supplied, output filenames contain the normalized ratio."
         ),
     )
+    parser.add_argument(
+        "--verbose",
+        "-v",
+        action="store_true",
+        help=(
+            "Show the raw output of pdflatex and of the other programs instead "
+            "of the short summary"
+        ),
+    )
 
     args = parser.parse_args()
+
+    global VERBOSE
+    VERBOSE = args.verbose
+    setup_colors()
 
     if not args.all:
         if not args.folder:
@@ -359,15 +695,22 @@ def main():
         args.folder = os.getcwd()
 
     compiled_files = []
+    documents = 0
+    failures = 0
+    started_at = time.time()
+
+    def record(results):
+        nonlocal documents, failures
+        documents += len(results)
+        failures += sum(1 for pdf in results if pdf is None)
+        compiled_files.extend(pdf for pdf in results if pdf is not None)
 
     if args.all:
-        found_any = False
+        folders = find_presentation_folders(args.folder)
 
-        for folder in find_presentation_folders(args.folder):
-            found_any = True
+        for folder in folders:
             title = os.path.basename(os.path.abspath(folder))
-            print(f"Found main.tex in {folder}, compiling as '{title}'")
-            compiled_files.extend(
+            record(
                 compile_latex(
                     folder,
                     title,
@@ -376,13 +719,11 @@ def main():
                 )
             )
 
-        if not found_any:
-            print(
-                f"No {PRESENTATION_DIR_PATTERN} folder with main.tex was found "
-                f"in {args.folder}."
-            )
+        if not folders:
+            note("no %s folder with main.tex was found in %s."
+                 % (PRESENTATION_DIR_PATTERN, args.folder))
     else:
-        compiled_files.extend(
+        record(
             compile_latex(
                 args.folder,
                 args.title,
@@ -391,22 +732,33 @@ def main():
             )
         )
 
-    if args.move:
+    if args.move and compiled_files:
         dest = os.getcwd()
-        print(f"Moving compiled PDFs to {dest}")
+        moved = 0
 
         for pdf in compiled_files:
             if not os.path.exists(pdf):
-                print(f"File {pdf} does not exist and cannot be moved.")
+                note('%s does not exist and cannot be moved.' % pdf)
                 continue
 
             dest_file = os.path.join(dest, os.path.basename(pdf))
             if os.path.abspath(pdf) == os.path.abspath(dest_file):
-                print(f"File {pdf} is already in the destination directory.")
                 continue
 
-            print(f"Moving {pdf} to {dest_file}")
             shutil.move(pdf, dest_file)
+            moved += 1
+
+        detail('Moved %d PDF file(s) to %s' % (moved, dest))
+
+    elapsed = time.time() - started_at
+    if failures:
+        say('%s%s Finished with errors after %.1f s: %d of %d document(s) failed%s'
+            % (Style.RED, SYMBOLS['fail'], elapsed, failures, documents,
+               Style.RESET))
+        raise SystemExit(1)
+
+    say('%s%s Done: %d document(s) in %.1f s%s'
+        % (Style.GREEN, SYMBOLS['ok'], documents, elapsed, Style.RESET))
 
 
 if __name__ == "__main__":
