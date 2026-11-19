@@ -38,7 +38,6 @@
 
         \visible<7->{
             \begin{tinfoframe}
-                \footnotesize
                 V~této prezentaci se zaměříme hlavně na
                 \textbf{procesor} a~\textbf{paměťový subsystém},
                 tedy na části, které přímo souvisejí s~vykonáváním programu.
@@ -52,10 +51,8 @@
         \obrazek[0.62\textheight]{images/zakladni-casti-pocitace.tex}
 
 
-        {\small
         Program, data a~instrukce se přesouvají mezi procesorem,
         pamětí a~vstupně/výstupními zařízeními.
-        }
 
     \end{frame}
 
@@ -63,7 +60,6 @@
 
     \begin{frame}{Von Neumannova architektura}
 
-        \small
         \begin{itemize}
             \visible<2->{\item Program i~data jsou uloženy ve \textbf{společné paměti}.}
 
@@ -77,20 +73,19 @@
 
         \visible<6->{
             \begin{tinfoframe}
-                \footnotesize
                 Paměť zde nerozlišuje, zda uložené bity představují
                 \textbf{data}, nebo \textbf{instrukce}. Rozhoduje až způsob,
                 jakým je procesor použije.
             \end{tinfoframe}
         }
 
-        \obrazek[0.3\textheight]{images/von-neumannova-architektura.tex}
+    \end{frame}
 
+    \begin{frame}{Von Neumannova architektura}
+        \obrazek[0.75\textheight]{images/von-neumannova-architektura.tex}
     \end{frame}
 
     \begin{frame}{Von Neumannova vs. harvardská architektura}
-
-        \small
 
         \begin{itemize}
             \visible<2->{\item \textbf{Von Neumannova architektura} používá \textbf{společnou paměť} pro instrukce i~data.}
@@ -105,7 +100,6 @@
 
         \visible<6->{
             \begin{tinfoframe}
-                \footnotesize
                 Navenek se dnešní počítače obvykle chovají jako
                 \textbf{von Neumannovy}, ale uvnitř procesoru mohou mít
                 například \textbf{oddělenou instrukční a~datovou cache}.
@@ -115,14 +109,12 @@
     \end{frame}
 
     \begin{frame}{Von Neumannova vs. harvardská architektura}
-        \obrazek[0.37\textheight]{images/von-neumannova-vs-harvardska-architektura.tex}
+        \obrazek[0.75\textheight]{images/von-neumannova-vs-harvardska-architektura.tex}
     \end{frame}
 
     \subsection{Stavba procesoru}
 
     \begin{frame}{Co CPU obsahuje?}
-
-        \small
 
         \begin{itemize}
             \visible<2->{\item \textbf{Aritmeticko-logická jednotka (ALU)} provádí aritmetické a~logické operace.}
@@ -134,16 +126,13 @@
             \visible<5->{\item Procesor komunikuje s~pamětí a~zařízeními pomocí \textbf{sběrnic}.}
         \end{itemize}
 
+    \end{frame}
 
-        \visible<6->{
-        \obrazek[0.45\textheight]{images/co-cpu-obsahuje.tex}
-        }
-
+    \begin{frame}{Procesor, paměť a~sběrnice}
+        \obrazek[0.75\textheight]{images/co-cpu-obsahuje.tex}
     \end{frame}
 
     \begin{frame}{Instrukční cyklus}
-
-        \small
 
         \begin{itemize}
             \visible<2->{\item Procesor zpracovává program jako posloupnost \textbf{strojových instrukcí}.}
@@ -154,25 +143,21 @@
 
         \visible<5->{
             \begin{tinfoframe}
-                \footnotesize
                 Instrukční cyklus je základní \uv{pracovní rytmus} procesoru:
                 \textbf{načti instrukci}, \textbf{zjisti její význam},
                 \textbf{zpracuj data} a~\textbf{ulož výsledek}.
             \end{tinfoframe}
         }
 
+    \end{frame}
 
-        \visible<6->{
-        \obrazek[0.32\textheight]{images/instrukcni-cyklus.tex}
-        }
-
+    \begin{frame}{Instrukční cyklus}
+        \obrazek[0.78\textheight]{images/instrukcni-cyklus.tex}
     \end{frame}
 
     \subsection{Registry a~cache}
 
     \begin{frame}{Registry}
-
-        \small
 
         \begin{itemize}
             \visible<2->{\item \textbf{Registry} jsou malé, velmi rychlé paměti přímo uvnitř CPU.}
@@ -180,16 +165,19 @@
             \visible<4->{\item Procesor s~registry pracuje mnohem rychleji než s~hlavní pamětí.}
         \end{itemize}
 
+    \end{frame}
 
-        \visible<5->{
-        \obrazek[0.24\textheight]{images/registry.tex}
-        }
+    \begin{frame}{Registry uvnitř procesoru}
+        \obrazek[0.75\textheight]{images/registry.tex}
+    \end{frame}
+
+    \begin{frame}{Speciální registry}
 
         \begin{itemize}
-            \item \textbf{PC} (program counter) ukazuje na adresu další instrukce v~paměti.
-            \item \textbf{IR} (instruction register) uchovává právě prováděnou instrukci.
-            \item \textbf{SP} (stack pointer) ukazuje na vrchol zásobníku v~paměti.
-            \item \textbf{FLAGS} uchovává příznaky, které informují o~výsledku poslední operace (např. přetečení, záporný výsledek, nulový výsledek).
+            \visible<2->{\item \textbf{PC} (\textit{program counter}) ukazuje na adresu další instrukce v~paměti.}
+            \visible<3->{\item \textbf{IR} (\textit{instruction register}) uchovává právě prováděnou instrukci, kterou dekóduje řadič.}
+            \visible<4->{\item \textbf{SP} (\textit{stack pointer}) ukazuje na vrchol zásobníku v~paměti.}
+            \visible<5->{\item \textbf{FLAGS} uchovává příznaky, které nastavuje ALU podle výsledku poslední operace (např. přetečení, záporný výsledek, nulový výsledek).}
         \end{itemize}
 
     \end{frame}
@@ -202,27 +190,24 @@
             \visible<4->{\item Jejím cílem je zkrátit dobu, po kterou procesor čeká na data z~hlavní paměti.}
         \end{itemize}
 
+    \end{frame}
 
-        \visible<5->{
-        \obrazek[0.40\textheight]{images/cache.tex}
-        }
-        \visible<6->{\scriptsize
-        \begin{multicols}{2}
-            \begin{enumerate}
-                \visible<7->{\item CPU požádá o~data}
-                \visible<8->{\item Cache ověří, zda je obsahuje}
-                \visible<9->{\item Při cache miss se data načtou z~RAM}
-                \visible<10->{\item Data se uloží do cache a~předají CPU}
-            \end{enumerate}
-        \end{multicols}}
+    \begin{frame}{Jak cache funguje}
+
+        \obrazek[0.42\textheight]{images/cache.tex}
+
+        \begin{enumerate}
+            \visible<2->{\item CPU požádá o~data.}
+            \visible<3->{\item Cache ověří, zda je obsahuje -- pokud ano, jde o~\textbf{cache hit}.}
+            \visible<4->{\item Při \textbf{cache miss} se data načtou z~RAM.}
+            \visible<5->{\item Data se uloží do cache a~předají CPU.}
+        \end{enumerate}
 
     \end{frame}
 
     \subsection{Operační paměť}
 
     \begin{frame}{Random Access Memory (RAM)}
-
-        \small
 
         \begin{itemize}
             \visible<2->{\item \textbf{RAM} (\textit{Random Access Memory}) je \textbf{hlavní pracovní paměť} počítače.}
@@ -237,19 +222,20 @@
 
         \visible<6->{
             \begin{tinfoframe}
-                \footnotesize
                 Z~pohledu programu se RAM chová jako \textbf{lineárně adresovaná paměť}:
                 každé paměťové místo má svou \textbf{adresu} a~procesor může
                 z~dané adresy \textbf{číst} nebo na ni \textbf{zapisovat}.
             \end{tinfoframe}
         }
+    \end{frame}
 
-        \obrazek[0.3\textheight]{images/random-access-memory-ram.tex}
+    \begin{frame}{Random Access Memory (RAM)}
+        \obrazek[0.7\textheight]{images/random-access-memory-ram.tex}
+
+        Procesor pošle \textbf{adresu} a~paměť vrátí (nebo zapíše) \textbf{obsah} paměťového místa na této adrese.
     \end{frame}
 
     \begin{frame}{RAM jako fyzická 2D matice}
-
-        \small
 
         \begin{itemize}
             \visible<2->{\item Z~pohledu programu je RAM \textbf{lineárně adresovaná}.}
@@ -257,18 +243,15 @@
             \visible<4->{\item Adresa určuje, \textbf{která buňka} se má číst nebo zapisovat.}
         \end{itemize}
 
+    \end{frame}
 
-        \visible<5->{
-        \obrazek[0.52\textheight]{images/ram-jako-fyzicka-2d-matice.tex}
-        }
-
+    \begin{frame}{RAM jako fyzická 2D matice}
+        \obrazek[0.78\textheight]{images/ram-jako-fyzicka-2d-matice.tex}
     \end{frame}
 
     \subsection{Externí paměti}
 
     \begin{frame}{Externí paměti: SSD a~HDD}
-
-        \small
 
         \begin{itemize}
             \visible<2->{\item \textbf{HDD} ukládá data magneticky na rotující plotny.}
@@ -279,13 +262,7 @@
 
 
         \visible<6->{
-        \obrazek[0.3\textheight]{images/externi-pameti-ssd-a-hdd.tex}
-        }
-
-
-        \visible<7->{
             \begin{tinfoframe}
-                \footnotesize
                 SSD je obvykle rychlejší při spouštění systému a~aplikací,
                 zatímco HDD se často používá tam, kde rozhoduje hlavně
                 \textbf{velká kapacita} a~\textbf{nízká cena za GB}.
@@ -294,19 +271,29 @@
 
     \end{frame}
 
+    \begin{frame}{Externí paměti: SSD a~HDD}
+        \obrazek[0.55\textheight]{images/externi-pameti-ssd-a-hdd.tex}
+
+        \begin{tinfoframe}
+            Obě paměti jsou \textbf{nevolatilní} -- data v~nich zůstanou uložena i~po vypnutí počítače.
+        \end{tinfoframe}
+    \end{frame}
+
     \begin{frame}{Struktura HDD}
-        \obrazekgrf[0.8\textheight]{images/hdd.jpg}
+        \obrazek[0.82\textheight]{images/struktura-hdd.tex}
     \end{frame}
 
     \begin{frame}{Struktura plotny HDD}
-        \obrazek[0.73\textheight]{images/struktura-plotny-hdd.tex}
+        \obrazek[0.6\textheight]{images/struktura-plotny-hdd.tex}
+
+        \begin{tinfoframe}
+            Plotna je rozdělena na soustředné \textbf{stopy}. Každá stopa se dále dělí na \textbf{sektory}, které tvoří nejmenší adresovatelné oblasti pro ukládání dat.
+        \end{tinfoframe}
     \end{frame}
 
     \subsection{Paměťová hierarchie}
 
     \begin{frame}{Paměťová hierarchie}
-
-        \small
 
         \begin{itemize}
             \visible<2->{\item Počítač nepoužívá jen jeden druh paměti, ale \textbf{celou hierarchii pamětí}.}
@@ -318,18 +305,16 @@
 
 
         \visible<5->{
-        \obrazek[0.34\textheight]{images/pametova-hierarchie.tex}
-        }
-
-
-        \visible<6->{
             \begin{tinfoframe}
-                \footnotesize
                 Paměťová hierarchie umožňuje spojit \textbf{vysokou rychlost}
                 blízko procesoru s~\textbf{velkou kapacitou} na~nižších úrovních.
             \end{tinfoframe}
         }
 
+    \end{frame}
+
+    \begin{frame}{Paměťová hierarchie}
+        \obrazek[0.8\textheight]{images/pametova-hierarchie.tex}
     \end{frame}
 
     \zdrojeframe{bryant-csapp}

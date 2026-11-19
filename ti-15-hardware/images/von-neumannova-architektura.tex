@@ -1,67 +1,53 @@
 \begin{tikzpicture}[
     x=1cm, y=1cm,
+    >=stealth,
     every node/.style={font=\small},
     unit/.style={
         draw,
         thick,
         rounded corners,
-        align=center,
-        minimum width=2.55cm,
-        minimum height=0.80cm
+        align=center
     },
     subunit/.style={
         draw,
         rounded corners,
         align=center,
-        fill=black!5,
-        minimum width=2.25cm,
-        minimum height=0.43cm,
-        font=\scriptsize
+        fill=white,
+        minimum width=1.9cm,
+        minimum height=0.6cm
+    },
+    memcell/.style={
+        draw,
+        align=center,
+        minimum width=1.25cm,
+        minimum height=0.5cm,
+        font=\footnotesize
     },
     arr/.style={->, thick},
     barr/.style={<->, thick}
 ]
 
-    % CPU
-    \node[
-        unit,
-        fill=blue!8,
-        minimum width=3.00cm,
-        minimum height=1.00cm,
-        font=\bfseries
-    ] (cpu) at (0,0) {Procesor};
+    % Procesor s řadičem a ALU
+    \node[unit, fill=blue!8, minimum width=4.6cm, minimum height=2.1cm] (cpu) at (0,0) {};
+    \node[font=\bfseries] at (0,0.7) {Procesor};
+    \node[subunit] (ctrl) at (-1.1,-0.25) {řadič};
+    \node[subunit] (alu)  at (1.1,-0.25) {ALU};
+    \draw[arr] (ctrl.east) -- (alu.west);
 
-    % Memory
-    \node[
-        unit,
-        fill=green!10,
-        minimum width=3.30cm,
-        minimum height=1.20cm
-    ] (memory) at (0,-2.00) {Společná paměť\\ instrukce i data};
+    % Vstup a výstup
+    \node[unit, fill=orange!12, minimum width=1.6cm, minimum height=0.8cm] (in)  at (-4.0,0) {Vstup};
+    \node[unit, fill=orange!12, minimum width=1.6cm, minimum height=0.8cm] (out) at (4.0,0) {Výstup};
+    \draw[arr] (in.east) -- (cpu.west);
+    \draw[arr] (cpu.east) -- (out.west);
 
-    % I/O
-    \node[
-        unit,
-        fill=orange!12,
-        minimum width=1.65cm,
-        minimum height=0.65cm,
-        font=\scriptsize
-    ] (inputnode) at (-2.85,0) {Vstup};
+    % Společná paměť: instrukce i data v týchž buňkách
+    \node[unit, fill=green!10, minimum width=7.0cm, minimum height=1.55cm] (mem) at (0,-3.2) {};
+    \node[font=\bfseries] at (0,-2.7) {Společná paměť};
+    \foreach \i/\t/\c in {0/instr./blue!12, 1/instr./blue!12, 2/instr./blue!12, 3/data/yellow!35, 4/data/yellow!35}{
+        \node[memcell, fill=\c] at (-2.5+1.25*\i,-3.45) {\t};
+    }
 
-    \node[
-        unit,
-        fill=orange!12,
-        minimum width=1.65cm,
-        minimum height=0.65cm,
-        font=\scriptsize
-    ] (outputnode) at (2.85,0) {Výstup};
-
-    % Arrows
-    \draw[arr] (inputnode.east) -- (cpu.west);
-    \draw[arr] (cpu.east) -- (outputnode.west);
-
-    \draw[barr] (cpu.south) -- node[right, font=\scriptsize] {
-        data / instrukce
-    } (memory.north);
+    % Jediná sběrnice mezi procesorem a pamětí
+    \draw[barr] (cpu.south) -- node[right, align=left, font=\footnotesize] {instrukce i data\\po jedné sběrnici} (mem.north);
 
 \end{tikzpicture}

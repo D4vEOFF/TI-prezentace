@@ -7,43 +7,43 @@
         thick,
         rounded corners,
         align=center,
-        minimum height=0.85cm
+        minimum height=0.9cm
     },
-    smallbox/.style={
-        draw,
-        thick,
-        rounded corners,
-        align=center,
-        minimum height=0.65cm
+    numstep/.style={
+        circle,
+        fill=maincolor,
+        text=white,
+        font=\footnotesize\bfseries,
+        inner sep=1pt,
+        minimum size=0.42cm
     },
+    lab/.style={font=\footnotesize, align=center},
     arr/.style={->, thick}
 ]
 
-    % Main path
-    \node[
-        mainbox,
-        fill=blue!12,
-        minimum width=1.9cm
-    ] (cpu) at (-5.0,0.8) {\textbf{CPU}};
+    % Hlavní cesta
+    \node[mainbox, fill=blue!12,   minimum width=1.8cm] (cpu)   at (-3.9,0) {\textbf{CPU}};
+    \node[mainbox, fill=orange!18, minimum width=2.0cm] (cache) at ( 0.0,0) {\textbf{Cache}};
+    \node[mainbox, fill=green!15,  minimum width=1.8cm] (ram)   at ( 3.9,0) {\textbf{RAM}};
 
-    \node[
-        mainbox,
-        fill=orange!18,
-        minimum width=2.2cm
-    ] (cache) at (0,0.8) {\textbf{Cache}};
+    % 1: požadavek, 2: kontrola v cache, 3: miss -> dotaz do RAM
+    \draw[arr] (cpu.east) -- node[above, lab] {požadavek\\na data} (cache.west);
+    \draw[arr] (cache.east) -- node[above, lab] {data nejsou\\v cache} (ram.west);
 
-    \node[
-        mainbox,
-        fill=green!15,
-        minimum width=2.0cm
-    ] (ram) at (5.0,0.8) {\textbf{RAM}};
+    \node[numstep] at (-1.95,-0.3) {1};
+    \node[numstep] at (0,-0.8) {2};
+    \node[numstep] at (1.95,-0.3) {3};
 
-    \draw[arr] (cpu.east) -- node[above, font=\scriptsize] {požadavek na data} (cache.west);
-    \draw[arr] (cache.east) -- node[above, font=\scriptsize] {není-li nalezeno} (ram.west);
+    % Cache hit
+    \draw[arr, bend right=40, green!50!black] (cache.north) to
+        node[above, font=\small\bfseries] {cache hit} (cpu.north);
 
-    \draw[arr,bend left=30,red] (ram.south) to node[midway,below] {\textbf{cache miss}} (cache.south);
-    \draw[arr,bend left=30,red] (cache.south) to (cpu.south);
+    % Cache miss: data z RAM do cache a dál do CPU
+    \draw[arr, bend left=30, red!80!black] (ram.south) to
+        node[below, font=\small\bfseries] {cache miss} (cache.south east);
+    \draw[arr, bend left=30, red!80!black] (cache.south west) to
+        node[below, lab, text=black, pos=0.45] (back) {uložení kopie\\a předání CPU} (cpu.south);
 
-    \draw[arr,bend right=30,green!80!black] (cache.north) to node[midway,above] {\textbf{cache hit}} (cpu.north);
+    \node[numstep, left=2pt of back] {4};
 
 \end{tikzpicture}

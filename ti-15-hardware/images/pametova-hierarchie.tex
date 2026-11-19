@@ -1,70 +1,38 @@
 \begin{tikzpicture}[
-    scale=0.92,
-    transform shape,
     x=1cm, y=1cm,
     >=stealth,
     every node/.style={font=\small},
     level/.style={
         draw,
         thick,
-        rounded corners,
+        rounded corners=2pt,
         align=center,
-        minimum height=0.58cm
+        minimum height=0.62cm
     },
-    arrowlabel/.style={
-        font=\scriptsize,
-        align=center
-    }
+    head/.style={font=\footnotesize\bfseries, align=center},
+    val/.style={font=\small, align=center}
 ]
 
-    % Levels of hierarchy
-    \node[
-        level,
-        fill=red!15,
-        minimum width=2.3cm
-    ] (reg) at (0,1.80) {\textbf{registry}};
+    % Úroveň: y, šířka, barva, název, typická kapacita, doba přístupu (řádově)
+    \foreach \y/\w/\c/\name/\cap/\lat in {
+        2.5/1.9/red!15/registry/stovky B/\textless{} 1 ns,
+        1.8/2.6/orange!20/cache (L1--L3)/KB -- MB/1--10 ns,
+        1.1/3.3/yellow!25/RAM/GB/$\approx$ 100 ns,
+        0.4/4.0/green!18/SSD/stovky GB -- TB/$\approx$ 0{,}1 ms,
+        -0.3/4.7/green!8/HDD/TB/$\approx$ 10 ms,
+        -1.0/5.4/blue!12/{záloha, páska, cloud}/TB -- PB/s až min%
+    }{
+        \node[level, fill=\c, minimum width=\w cm] at (0,\y) {\textbf{\name}};
+        \node[val] at (4.15,\y) {\cap};
+        \node[val] at (6.35,\y) {\lat};
+    }
 
-    \node[
-        level,
-        fill=orange!20,
-        minimum width=3.3cm
-    ] (cache) at (0,1.05) {\textbf{cache}};
+    % Záhlaví tabulky
+    \node[head] at (4.15,3.2) {typická\\kapacita};
+    \node[head] at (6.35,3.2) {doba přístupu\\(řádově)};
+    \node[head] at (0,3.05) {nejblíže CPU};
 
-    \node[
-        level,
-        fill=yellow!25,
-        minimum width=4.4cm
-    ] (ram) at (0,0.30) {\textbf{RAM}};
-
-    \node[
-        level,
-        fill=green!18,
-        minimum width=5.5cm
-    ] (ssd) at (0,-0.45) {\textbf{SSD / HDD}};
-
-    \node[
-        level,
-        fill=blue!12,
-        minimum width=6.5cm
-    ] (archive) at (0,-1.20) {\textbf{záloha / cloud / páska}};
-
-    % Vertical arrows between levels
-    \draw[->, thick] (reg.south) -- (cache.north);
-    \draw[->, thick] (cache.south) -- (ram.north);
-    \draw[->, thick] (ram.south) -- (ssd.north);
-    \draw[->, thick] (ssd.south) -- (archive.north);
-
-    % Left side arrow - speed and price per bit increase upwards
-    \draw[->, very thick] (-4.25,-1.45) -- (-4.25,2.10);
-    \node[arrowlabel, anchor=east] at (-4.45,0.35)
-        {rychlost};
-
-    % Right side arrow - capacity increases downwards
-    \draw[->, very thick] (4.25,2.10) -- (4.25,-1.45);
-    \node[arrowlabel, anchor=west] at (4.45,0.35)
-        {kapacita};
-
-    % CPU label above
-    \node[font=\scriptsize\bfseries] at (0,2.35) {nejblíže CPU};
+    % Šipky po stranách
+    \draw[->, very thick] (-3.15,-1.3) -- node[sloped, above, font=\footnotesize] {rychlost, cena za bit} (-3.15,2.8);
 
 \end{tikzpicture}
