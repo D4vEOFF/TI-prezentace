@@ -8,91 +8,50 @@
         rounded corners,
         align=center
     },
+    lab/.style={font=\footnotesize, align=center},
     arr/.style={->, thick},
-    line/.style={thick},
-    cell/.style={draw, minimum width=0.42cm, minimum height=0.42cm},
-    hilite/.style={draw, fill=yellow!45, minimum width=0.42cm, minimum height=0.42cm}
+    cell/.style={draw, minimum size=0.36cm, inner sep=0pt, fill=white},
+    hilite/.style={draw, very thick, minimum size=0.36cm, inner sep=0pt, fill=yellow!60}
 ]
 
-    % Address input
-    \node[
-        box,
-        fill=orange!18,
-        minimum width=2.3cm,
-        minimum height=0.8cm
-    ] (addr) at (-4.8,1.4) {\textbf{Adresa}};
+    % Vybraná buňka: řádek 1 (počítáno odspodu od 0), sloupec 5
+    \def\selrow{1}
+    \def\selcol{5}
 
-    % Row decoder
-    \node[
-        box,
-        fill=blue!12,
-        minimum width=1.9cm,
-        minimum height=1.0cm
-    ] (rowdec) at (-4.8,-1.0) {\textbf{Řádkový}\\ dekodér};
-
-    % Column decoder
-    \node[
-        box,
-        fill=blue!12,
-        minimum width=2.0cm,
-        minimum height=1.0cm
-    ] (coldec) at (0.35,2.8) {\textbf{Sloupcový}\\ dekodér};
-
-    % Data box
-    \node[
-        box,
-        fill=green!12,
-        minimum width=1.9cm,
-        minimum height=0.85cm
-    ] (data) at (4.9,1.4) {\textbf{Data}};
-
-    % Memory matrix outline
-    \draw[thick] (2.9,1.95) rectangle (-2.9,-1.45);
-
-    % Matrix cells 6 x 8
-    \foreach \row/\y in {
-        1/1.5,
-        2/1.0,
-        3/0.5,
-        4/0.0,
-        5/-0.5,
-        6/-1.0
-    }{
-        \foreach \col/\x in {
-            1/-2.45,
-            2/-1.75,
-            3/-1.05,
-            4/-0.35,
-            5/0.35,
-            6/1.05,
-            7/1.75,
-            8/2.45
-        }{
-            \ifnum\row=6
-                \ifnum\col=5
-                    \node[hilite] at (\x,\y) {};
-                \else
-                    \node[cell] at (\x,\y) {};
-                \fi
-            \else
-                \node[cell] at (\x,\y) {};
-            \fi
+    % Matice paměťových buněk 6 x 8
+    \draw[thick, fill=gray!8] (-0.35,-0.35) rectangle (4.2,3.1);
+    \foreach \r in {0,...,5}{
+        \foreach \c in {0,...,7}{
+            \node[cell] at (0.55*\c, 0.55*\r) {};
         }
     }
 
-    % Address arrows
-    \draw[arr] (addr.south) -- (-4.8,0.35) -- (rowdec.north);
-    \draw[arr] (addr.east) -- (-3.5,1.4) -- (-3.5,2.8) -- (coldec.west);
+    % Aktivní řádek a sloupec
+    \draw[red!75!black, very thick] (-0.35,0.55*\selrow) -- (4.2,0.55*\selrow);
+    \draw[red!75!black, very thick] (0.55*\selcol,-0.35) -- (0.55*\selcol,3.1);
+    \node[hilite] (sel) at (0.55*\selcol,0.55*\selrow) {};
 
-    % Row decoder to matrix
-    \draw[arr] (rowdec.east) -- (-3.05,-1.0);
-    \draw[line, red!70] (-3.05,-1.00) -- (2.75,-1.00);
+    \node[lab, anchor=south] (sellab) at (0.55*\selcol,3.35) {vybraná buňka};
+    \draw[->, thick] (sellab.south) ++(0.15,0) -- ([xshift=1.5pt,yshift=1.5pt]sel.north east);
 
-    % Column decoder to matrix
-    \draw[arr] (coldec.south) -- (0.35,2.0);
-    \draw[line, red!70] (0.35,1.9) -- (0.35,-1.3);
+    % Řádkový dekodér vlevo
+    \node[box, fill=blue!12, minimum width=1.6cm, minimum height=3.45cm] (rowdec) at (-1.3,1.375)
+        {\textbf{Řádkový}\\ dekodér};
 
-    % Data connection
-    \draw[arr] (2.9,-1.05) -| (data.south);
+    % Sloupcový dekodér pod maticí
+    \node[box, fill=blue!12, minimum width=4.55cm, minimum height=0.8cm] (coldec) at (1.925,-1.1)
+        {\textbf{Sloupcový dekodér}};
+
+    % Adresa vlevo dole
+    \node[box, fill=orange!18, minimum width=1.6cm, minimum height=0.8cm] (addr) at (-1.3,-2.6)
+        {\textbf{Adresa}};
+
+    \draw[arr] (addr.north) -- node[left, lab] {číslo\\řádku} (rowdec.south);
+    \draw[arr] (addr.east) -| node[pos=0.25, below, lab] {číslo sloupce} (coldec.south);
+
+    % Data
+    \node[box, fill=green!12, minimum width=1.5cm, minimum height=0.8cm] (data) at (6.5,-1.1)
+        {\textbf{Data}};
+    \draw[<->, thick] (coldec.east) -- node[below, lab] {čtení/\\zápis} (data.west);
 
 \end{tikzpicture}

@@ -1,5 +1,6 @@
 \begin{tikzpicture}[
     x=1cm, y=1cm,
+    >=stealth,
     every node/.style={font=\small},
     title/.style={font=\bfseries},
     unit/.style={
@@ -7,58 +8,42 @@
         thick,
         rounded corners,
         align=center,
-        minimum width=2.25cm,
-        minimum height=0.72cm
+        minimum height=0.9cm
     },
-    arr/.style={<->, thick}
+    arr/.style={<->, thick},
+    lab/.style={font=\footnotesize, align=center}
 ]
 
-    % Left title
-    \node[title] at (-3.0, 1.35) {Von Neumannova architektura};
+    % =====================================================
+    % Von Neumannova architektura
+    % =====================================================
+    \node[title] at (-3.0, 1.5) {Von Neumannova};
 
-    % Left diagram
-    \node[
-        unit,
-        fill=blue!8,
-        minimum width=2.30cm,
-        minimum height=0.82cm
-    ] (cpuA) at (-3.0, 0.45) {Procesor};
+    \node[unit, fill=blue!8, minimum width=2.4cm] (cpuA) at (-3.0, 0.4) {Procesor};
+    \node[unit, fill=green!10, minimum width=3.4cm, minimum height=1.1cm] (memA) at (-3.0, -2.0)
+        {Společná paměť\\ instrukce i data};
 
-    \node[
-        unit,
-        fill=green!10,
-        minimum width=2.90cm,
-        minimum height=0.95cm
-    ] (memA) at (-3.0, -1.05) {Společná paměť\\ instrukce i data};
+    \draw[arr] (cpuA.south) -- node[right, lab] {instrukce\\i data} (memA.north);
 
-    \draw[arr] (cpuA.south) -- (memA.north);
+    \node[lab, text=gray!40!black] at (-3.0, -3.1) {jedna sběrnice: instrukce\\a data se střídají};
 
-    % Right title
-    \node[title] at (3.0, 1.35) {Harvardská architektura};
+    % Oddělovač
+    \draw[gray!50, dashed] (0, 1.8) -- (0, -3.5);
 
-    % Right diagram
-    \node[
-        unit,
-        fill=blue!8,
-        minimum width=2.30cm,
-        minimum height=0.82cm
-    ] (cpuB) at (3.0, 0.45) {Procesor};
+    % =====================================================
+    % Harvardská architektura
+    % =====================================================
+    \node[title] at (3.0, 1.5) {Harvardská};
 
-    \node[
-        unit,
-        fill=green!10,
-        minimum width=1.95cm,
-        minimum height=0.95cm
-    ] (imem) at (1.40, -1.05) {Paměť\\ instrukcí};
+    \node[unit, fill=blue!8, minimum width=2.4cm] (cpuB) at (3.0, 0.4) {Procesor};
+    \node[unit, fill=blue!12, minimum width=2.1cm, minimum height=1.1cm] (imem) at (1.6, -2.0)
+        {Paměť\\ instrukcí};
+    \node[unit, fill=yellow!30, minimum width=2.1cm, minimum height=1.1cm] (dmem) at (4.4, -2.0)
+        {Paměť\\ dat};
 
-    \node[
-        unit,
-        fill=green!10,
-        minimum width=1.95cm,
-        minimum height=0.95cm
-    ] (dmem) at (4.55, -1.05) {Paměť\\ dat};
+    \draw[->, thick] (imem.north) -- node[left, lab] {instrukce} (1.6,-0.05);
+    \draw[arr] (dmem.north) -- node[right, lab] {data} (4.4,-0.05);
 
-    \draw[arr] (cpuB.west) -| node[left, font=\scriptsize] {instr.} (imem.north);
-    \draw[arr] (cpuB.east) -| node[right, font=\scriptsize] {data} (dmem.north);
+    \node[lab, text=gray!40!black] at (3.0, -3.1) {dvě sběrnice: instrukce\\a data současně};
 
 \end{tikzpicture}

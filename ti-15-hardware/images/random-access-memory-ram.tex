@@ -11,62 +11,39 @@
     cell/.style={
         draw,
         thick,
-        minimum width=1.1cm,
-        minimum height=0.8cm,
-        align=center,
-        fill=green!8
+        minimum width=0.8cm,
+        minimum height=0.7cm,
+        fill=green!8,
+        font=\small\ttfamily
     },
+    lab/.style={font=\footnotesize, align=center},
     arr/.style={->, thick}
 ]
 
     % CPU
-    \node[
-        box,
-        fill=blue!12,
-        minimum width=2.2cm,
-        minimum height=1.0cm
-    ] (cpu) at (-5.5,0.8) {\textbf{CPU}};
+    \node[box, fill=blue!12, minimum width=1.7cm, minimum height=1.9cm] (cpu) at (-4.3,0) {\textbf{CPU}};
 
-    % RAM title
-    \node[
-        box,
-        fill=yellow!20,
-        minimum width=7.3cm,
-        minimum height=1.2cm
-    ] (rambox) at (1.0,0.8) {};
+    % RAM
+    \draw[thick, rounded corners, fill=yellow!20] (-1.9,-1.3) rectangle (5.9,1.3);
+    \node[font=\bfseries] at (2.0,0.95) {RAM};
 
-    \node[font=\bfseries\large] at (1.0,1.05) {RAM};
-    \node[font=\scriptsize] at (1.0,0.55) {hlavní paměť};
+    % Popisky řádků
+    \node[lab, anchor=east] at (-0.05, 0.35) {adresa};
+    \node[lab, anchor=east] at (-0.05,-0.5)  {obsah};
 
-    % Arrow CPU -> RAM
-    \draw[arr] (cpu.east) -- node[above, font=\scriptsize] {čtení / zápis} (-2.65,0.8);
+    % Paměťová místa
+    \foreach \v [count=\i from 0] in {A7, 3C, F1, 00, 2B, 9D}{
+        \node[font=\footnotesize] at (0.45+0.85*\i, 0.35) {\i};
+        \node[cell] (c\i) at (0.45+0.85*\i,-0.5) {\v};
+    }
+    \node[cell, fill=white, font=\small] at (0.45+0.85*6,-0.5) {\dots};
+    \node[font=\footnotesize] at (0.45+0.85*6, 0.35) {\dots};
 
-    % Linear memory cells
-    \node[cell] (c0) at (-2.0,-0.7) {};
-    \node[cell] (c1) at (-0.8,-0.7) {};
-    \node[cell] (c2) at (0.4,-0.7) {};
-    \node[cell] (c3) at (1.6,-0.7) {};
-    \node[cell] (c4) at (2.8,-0.7) {};
-    \node[cell] (c5) at (4.0,-0.7) {};
+    % Zvýraznění čteného místa
+    \node[cell, fill=yellow!60, very thick] at (c2) {F1};
 
-    % Cell values
-    \node[font=\scriptsize] at (-2.0,-0.7) {A7};
-    \node[font=\scriptsize] at (-0.8,-0.7) {3C};
-    \node[font=\scriptsize] at (0.4,-0.7) {F1};
-    \node[font=\scriptsize] at (1.6,-0.7) {00};
-    \node[font=\scriptsize] at (2.8,-0.7) {2B};
-    \node[font=\scriptsize] at (4.0,-0.7) {9D};
-
-    % Addresses
-    \node[font=\scriptsize] at (-2.0,-1.35) {0};
-    \node[font=\scriptsize] at (-0.8,-1.35) {1};
-    \node[font=\scriptsize] at (0.4,-1.35) {2};
-    \node[font=\scriptsize] at (1.6,-1.35) {3};
-    \node[font=\scriptsize] at (2.8,-1.35) {4};
-    \node[font=\scriptsize] at (4.0,-1.35) {5};
-
-    % Labels
-    \node[anchor=west, font=\scriptsize] at (-2.75,-2.0) {adresy paměťových míst};
-    \node[anchor=west, font=\scriptsize] at (-2.75,-2.35) {uložené hodnoty};
+    % Komunikace CPU s RAM: adresa tam, data tam i zpět
+    \draw[arr] (-3.45,0.45) -- node[above, lab] {adresa: 2} (-1.9,0.45);
+    \draw[<->, thick] (-3.45,-0.45) -- node[below, lab] {data: F1} (-1.9,-0.45);
 
 \end{tikzpicture}

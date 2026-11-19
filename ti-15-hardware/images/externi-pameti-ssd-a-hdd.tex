@@ -8,67 +8,60 @@
         rounded corners,
         align=center
     },
-    label/.style={font=\scriptsize, align=center}
+    lab/.style={font=\footnotesize, align=center},
+    callout/.style={->, thin}
 ]
 
-    % HDD box
-    \node[
-        box,
-        fill=blue!8,
-        minimum width=4.7cm,
-        minimum height=2.4cm
-    ] (hddbox) at (-3.0,0) {};
+    % =====================================================
+    % HDD
+    % =====================================================
+    \node[box, fill=blue!8, minimum width=5.0cm, minimum height=4.0cm] (hddbox) at (-2.8,0) {};
+    \node[font=\large\bfseries] at (-2.8,1.6) {HDD};
 
-    \node[font=\large\bfseries] at (-3.0,0.85) {HDD};
+    % Plotna
+    \draw[thick, fill=gray!20] (-3.5,0.3) circle (0.95);
+    \foreach \r in {0.4,0.55,0.7,0.85}{
+        \draw[gray!60] (-3.5,0.3) circle (\r);
+    }
+    \draw[thick, fill=white] (-3.5,0.3) circle (0.2);
 
-    % HDD platter
-    \draw[thick, fill=gray!20] (-3.45,0.0) circle (0.55);
-    \draw[thick, fill=white] (-3.45,0.0) circle (0.12);
-    \draw[thick] (-3.45,0.0) circle (0.34);
+    % Raménko s hlavou
+    \draw[thick, fill=gray!40] (-1.55,1.0) circle (0.16);
+    \draw[line width=2.5pt, gray!60!black] (-1.55,1.0) -- (-2.85,0.5);
+    \draw[fill=black] (-2.85,0.5) circle (0.07);
 
-    % HDD arm
-    \draw[thick] (-2.45,0.45) -- (-3.25,0.12);
-    \draw[thick, fill=black] (-3.25,0.12) circle (0.04);
-    \draw[thick, fill=gray!40] (-2.35,0.50) circle (0.10);
+    \node[lab, anchor=west] (lhead) at (-2.05,0.25) {hlava};
+    \draw[callout] (lhead.west) -- (-2.8,0.45);
+    \node[lab, anchor=west] (lplat) at (-2.05,-0.4) {plotna};
+    \draw[callout] (lplat.west) -- (-2.75,-0.15);
 
-    \node[label] at (-3.0,-0.85)
-        {magnetické plotny\\ mechanický pohyb};
+    \node[lab] at (-2.8,-1.45) {magnetický záznam,\\ pohyblivé části};
 
-    % SSD box
-    \node[
-        box,
-        fill=green!10,
-        minimum width=4.7cm,
-        minimum height=2.4cm
-    ] (ssdbox) at (3.0,0) {};
+    % =====================================================
+    % SSD
+    % =====================================================
+    \node[box, fill=green!10, minimum width=5.0cm, minimum height=4.0cm] (ssdbox) at (2.8,0) {};
+    \node[font=\large\bfseries] at (2.8,1.6) {SSD};
 
-    \node[font=\large\bfseries] at (3.0,0.85) {SSD};
+    % Deska plošných spojů
+    \draw[thick, rounded corners, fill=green!35] (1.0,-0.4) rectangle (4.3,0.85);
 
-    % SSD board
-    \draw[thick, rounded corners, fill=green!35]
-        (1.85,-0.35) rectangle (4.15,0.45);
+    % Řadič
+    \draw[thick, rounded corners=2pt, fill=gray!70] (1.2,-0.15) rectangle (1.85,0.6);
 
-    % NAND chips
-    \foreach \x in {2.25,2.95,3.65}{
-        \draw[thick, rounded corners=2pt, fill=black!70]
-            (\x-0.25,-0.12) rectangle (\x+0.25,0.25);
+    % Flash čipy NAND
+    \foreach \x in {2.45,3.15,3.85}{
+        \draw[thick, rounded corners=2pt, fill=black!75] (\x-0.27,-0.25) rectangle (\x+0.27,0.65);
     }
 
-    % Connector
-    \draw[thick, fill=yellow!60]
-        (4.15,-0.18) rectangle (4.45,0.28);
+    % Konektor
+    \draw[thick, fill=yellow!60] (4.3,-0.2) rectangle (4.55,0.6);
 
-    \node[label] at (3.0,-0.85)
-        {flash paměť\\ bez pohyblivých částí};
+    \node[lab, anchor=north] (lctrl) at (1.525,-0.6) {řadič};
+    \draw[callout] (lctrl.north) -- (1.525,-0.17);
+    \node[lab, anchor=north] (lnand) at (3.4,-0.6) {flash čipy (NAND)};
+    \draw[callout] (lnand.north) -- (3.15,-0.27);
 
-    % Comparison note
-    \node[
-        box,
-        fill=yellow!18,
-        minimum width=8.7cm,
-        minimum height=0.7cm,
-        font=\footnotesize
-    ] at (0,-2.05)
-        {Obě slouží k dlouhodobému uložení dat i po vypnutí počítače.};
+    \node[lab] at (2.8,-1.6) {elektronický záznam};
 
 \end{tikzpicture}
