@@ -100,11 +100,11 @@
                 \visible<5->{K(x)&=0\qquad\text{Na každý vstup odpověz nulou},\\}
                 \visible<6->{L(x)&=1\qquad\text{Na každý vstup odpověz jedničkou}.}
             \end{align*}
-            \visible<7->{\begin{talertframe}
+            \visible<7->{\begin{talertframe*}
                 \begin{center}
                     Takovou dvojici problémů na sebe nepřevedeme \textbf{ani jedním směrem}.
                 \end{center}
-            \end{talertframe}}
+            \end{talertframe*}}
         \end{itemize}
     \end{frame}
 
@@ -136,11 +136,11 @@
                 \visible<6->{\item Následně rozhodneme, zda $\SAT(f(P,x))=1$, tj. zdali je formule $f(P,x)$ splnitelná.}
             \end{enumerate}
         \end{itemize}
-        \visible<7->{\begin{talertframe}
+        \visible<7->{\begin{talertframe*}
             \begin{center}
                 Jenže pro $P=D$ nelze problém zastavení rozhodnout, zatímco v~tomto případě bychom jednoduše mohli sestrojit formuli $\psi=f(D,D)$ a~rozhodnout, zdali $\SAT(\psi)=1$. \markdarkred{To je spor!}
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
     \end{frame}
 
     % =================================================================
@@ -155,11 +155,11 @@
     \begin{frame}{Převod $\THREESAT\rightarrow\SAT$}
         \begin{itemize}
             \visible<2->{\item Na začátku máme formuli $\varphi$ v~3-CNF a~chceme k~ní sestrojit formuli $\psi$ v~CNF, která je splnitelná právě tehdy, když je splnitelná i~$\varphi$.}
-            \visible<3->{\begin{talertframe}
+            \visible<3->{\begin{talertframe*}
                 \begin{center}
                     Každá formule ve 3-CNF je zároveň i~v CNF $\implies$ ponecháme původní formuli $\varphi$.
                 \end{center}
-            \end{talertframe}}
+            \end{talertframe*}}
             \visible<4->{\item Za převodní zobrazení $f$ stačí zvolit identitu, tj. $f(x)=x$.}
         \end{itemize}
     \end{frame}
@@ -385,11 +385,11 @@
         }{
             Existuje v~grafu $G$ nezávislá množina velikosti alespoň $k$?
         }}
-        \visible<3->{\begin{talertframe}
+        \visible<3->{\begin{talertframe*}
             \begin{center}
                 Ukážeme, že problém $\NZMNA$ je \textbf{stejně těžký} jako $\SAT$.
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
     \end{frame}
 
     \subsection{Převod 3-SAT na NzMna}
@@ -485,11 +485,11 @@
         }{
             Obsahuje $G$ kliku o~alespoň $k$ vrcholech?
         }}
-        \visible<3->{\begin{talertframe}
+        \visible<3->{\begin{talertframe*}
             \begin{center}
                 Problém kliky v~grafu \textbf{je komplementární} k~problému nezávislé množiny v~grafu.
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
     \end{frame}
 
     \subsection{Převody mezi Klika a~NzMna}
@@ -537,11 +537,11 @@
 
     \begin{frame}{Shrnutí}
         \visible<2->{\obrazek{images/shrnuti.tex}}
-        \visible<3->{\begin{talertframe}
+        \visible<3->{\begin{talertframe*}
             \begin{center}
                 Převod $\NZMNA\rightarrow\SAT$ jsme si pouze naznačili.
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
     \end{frame}
 
     \zdrojeframe{papadimitriou-complexity, mares-valla-labyrint}

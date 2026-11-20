@@ -393,11 +393,11 @@
     \end{frame}
 
     \begin{frame}{Rozdíl oproti poli}
-        \visible<2->{\begin{talertframe}
+        \visible<2->{\begin{talertframe*}
             \begin{center}
                 Vylepšili jsme časovou složitost z~\textbf{lineární} na \textbf{logaritmickou}!
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
         \visible<3->{\begin{tnoticeframe}
             \begin{center}
                 Nicméně jak můžeme efektivně haldu implementovat?
@@ -463,11 +463,11 @@
             \visible<3->{\item Pokud zvýšíme hodnotu klíče vrcholu $v$, pak v~rodiči $r$ hodnota klíče stále splňuje požadovanou nerovnost:
             \[\key(r)<\key(v)<\key(v)+x.\]}
             \visible<4->{\item Ovšem mohlo se pokazit haldové uspořádání v~synech upraveného vrcholu $v$.}
-            \visible<5->{\begin{talertframe}
+            \visible<5->{\begin{talertframe*}
                 \begin{center}
                     To však již umíme vyřešit procedurou $\textsc{BubbleDown}$! Stačí nám tedy zavolat $\textsc{BubbleDown}(v)$ a~jsme hotovi.
                 \end{center}
-            \end{talertframe}}
+            \end{talertframe*}}
             \visible<6->{\item Podobně budeme postupovat v~případě operace $\textsc{Decrease}\implies$ zavoláme $\textsc{BubbleUp}(v)$.}
         \end{itemize}
     \end{frame}

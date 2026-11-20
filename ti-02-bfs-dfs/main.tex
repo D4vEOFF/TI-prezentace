@@ -1543,12 +1543,12 @@ def dfs(graph):
     \begin{frame}{Idea algoritmu pro hledání mostů}
         \begin{itemize}
             \visible<2->{\item Jak ale poznat, jestli $t$ leží "nad" vrcholem $y$?}
-            \visible<3->{\begin{talertframe}
+            \visible<3->{\begin{talertframe*}
                 \begin{center}
                     $\implies$ To lze poznat podle hodnoty $\inlist$! V~takovém případě totiž musí platit
                     \[\inlist(t)<\inlist(y).\]
                 \end{center}
-            \end{talertframe}}
+            \end{talertframe*}}
             \visible<4->{\item Pro každý vrchol $v$ si budeme uchovávat, jak "vysoko" se z~něj můžeme dostat v~DFS stromu.}
             \visible<5->{\begin{tinfoframe}
                 To lze zjistit tak, že vezmeme minimum z~$\inlist$ů všech vrcholů, do kterých se můžeme dostat z~podstromu $y$.

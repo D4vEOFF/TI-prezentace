@@ -437,11 +437,11 @@
     \end{frame}
 
     \begin{frame}{Proč to funguje?}
-        \visible<2->{\begin{talertframe}
+        \visible<2->{\begin{talertframe*}
             \begin{center}
                 Co by se stalo, kdyby algoritmus vybral vrchol $v$, jehož $D$ neodpovídá délce nejkratší cesty?
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
         \visible<3->{\obrazek[0.4\textheight]{images/dijkstra-spravnost.tex}}
         \begin{itemize}
             \visible<4->{\item $D(v)$ = spočítaná cesta do $v$.}
@@ -462,11 +462,11 @@
     \end{frame}
 
     \begin{frame}{Nezápornost vah}
-        \visible<2->{\begin{talertframe}
+        \visible<2->{\begin{talertframe*}
             \begin{center}
                 Všimněte si, že právě díky \textbf{nezápornosti vah} hran grafu na vstupu algoritmus funguje!
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
         \visible<3->{\begin{tnoticeframe}
             \begin{center}
                 Kdyby hrany mohly mít i~záporné váhy, nejkratší sled mezi některými dvojicemi vrcholů vůbec nemusí existovat!

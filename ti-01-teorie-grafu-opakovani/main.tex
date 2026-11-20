@@ -228,9 +228,9 @@
     \begin{frame}{Poznámka k~matici sousednosti}
         \visible<2->{Všimněme si, že matice sousednosti $\mathbf{A}$ \textbf{neorientovaného grafu} je vždy \markdarkred{symetrická}, tzn.~pro každé $i,j$ platí
         \[\mathbf{A}_{ij}=\mathbf{A}_{ji}.\]}
-        \visible<3->{\begin{talertframe}
+        \visible<3->{\begin{talertframe*}
             U~neorientovaného grafu nám tedy stačí vyplnit horní polovinu matice $\implies$ zbytek vznikne "zrcadlením" podle hlavní diagonály.
-        \end{talertframe}}
+        \end{talertframe*}}
     \end{frame}
 
     \subsection{Matice incidence}
@@ -613,9 +613,9 @@ def has_edge_adjacency_list(i: int, j: int) -> bool:
             \visible<3->{\item \textbf{Matice sousednosti} se hodí pro \markdarkred{husté grafy}, tzn.~obsahující řádově kvadraticky mnoho hran.}
             \visible<4->{\item \textbf{Matice incidence} má svůj užitek spíše v~teoretických výpočtech, nicméně v~algoritmech se skoro vůbec nepoužívá (příliš velká a~základní grafové operace jsou s~ní pomalé).}
             \visible<5->{\item \textbf{Seznamy sousedů} se hodí pro \markdarkred{řídké grafy}, tzn.~obsahující méně než kvadraticky mnoho hran.}
-            \visible<6->{\begin{talertframe}
+            \visible<6->{\begin{talertframe*}
                 S~takovými grafy se setkáváme překvapivě často. Např. pro \textbf{stromy} platí, že $|E|=|V|-1$.
-            \end{talertframe}}
+            \end{talertframe*}}
         \end{itemize}
     \end{frame}
 
