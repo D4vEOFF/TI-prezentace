@@ -928,11 +928,11 @@ def dfs(graph):
         \begin{minipage}[t]{0.47\textwidth}
             \obrazek[0.53\textheight]{images/v-podstrom-u.tex}
         \end{minipage}}
-        \visible<3->{\begin{tinfoframe}
+        \visible<3->{\begin{tinfoframe*}
             \begin{center}
                 Obě situace jsou symetrické (vrcholy si jen prohodí roli).
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
     \end{frame}
 
     \begin{frame}{Příklad}{DFS -- krok 1}
@@ -1543,41 +1543,41 @@ def dfs(graph):
     \begin{frame}{Idea algoritmu pro hledání mostů}
         \begin{itemize}
             \visible<2->{\item Jak ale poznat, jestli $t$ leží "nad" vrcholem $y$?}
-            \visible<3->{\begin{talertframe}
+            \visible<3->{\begin{talertframe*}
                 \begin{center}
                     $\implies$ To lze poznat podle hodnoty $\inlist$! V~takovém případě totiž musí platit
                     \[\inlist(t)<\inlist(y).\]
                 \end{center}
-            \end{talertframe}}
+            \end{talertframe*}}
             \visible<4->{\item Pro každý vrchol $v$ si budeme uchovávat, jak "vysoko" se z~něj můžeme dostat v~DFS stromu.}
-            \visible<5->{\begin{tinfoframe}
+            \visible<5->{\begin{tinfoframe*}
                 To lze zjistit tak, že vezmeme minimum z~$\inlist$ů všech vrcholů, do kterých se můžeme dostat z~podstromu $y$.
-            \end{tinfoframe}}
+            \end{tinfoframe*}}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Další užití BFS a~DFS}
         \begin{columns}[T]
             \begin{column}{0.48\textwidth}
-                \visible<2->{\begin{tinfobox}{Možná využití BFS}
+                \visible<2->{\begin{tinfobox*}{Možná využití BFS}
                     \begin{itemize}
                         \visible<3->{\item určení vzdáleností od počátečního vrcholu,}
                         \visible<4->{\item hledání řešení s~minimálním počtem kroků,}
                         \visible<5->{\item procházení stavového prostoru po vrstvách,}
                         \visible<6->{\item nalezení souvislé komponenty počátečního vrcholu.}
                     \end{itemize}
-                \end{tinfobox}}
+                \end{tinfobox*}}
             \end{column}
 
             \begin{column}{0.48\textwidth}
-                \visible<7->{\begin{tinfobox}{Možná využití DFS}
+                \visible<7->{\begin{tinfobox*}{Možná využití DFS}
                     \begin{itemize}
                         \visible<8->{\item hledání souvislých komponent,}
                         \visible<9->{\item topologické uspořádání,}
                         \visible<10->{\item hledání mostů a~artikulací,}
                         \visible<11->{\item analýza struktury grafu pomocí DFS stromu.}
                     \end{itemize}
-                \end{tinfobox}}
+                \end{tinfobox*}}
             \end{column}
         \end{columns}
     \end{frame}

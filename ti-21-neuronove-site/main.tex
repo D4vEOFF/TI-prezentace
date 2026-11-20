@@ -57,11 +57,11 @@
 
 \begin{frame}{Co již víme\dots}
 
-    \visible<2->{\begin{tinfobox}{Připomenutí}
+    \visible<2->{\begin{tinfobox*}{Připomenutí}
         V~úlohách učení s~učitelem (anglicky
         \markdarkred{supervised learning}) pracujeme se statistickými soubory $\mathbf{X}_1,\mathbf{X}_2,\ldots,\mathbf{X}_p$
         a~se statistickým souborem očekávaných výstupů $\mathbf{Y}$.
-    \end{tinfobox}}
+    \end{tinfobox*}}
 
 
 
@@ -151,10 +151,10 @@
 
 
 
-    \visible<7->{\begin{tnoticebox}{Poznámka}
+    \visible<7->{\begin{tnoticebox*}{Poznámka}
         V~neuronové síti nejsou váhy předem pevně dané.
         Síť se je snaží nastavit během učení.
-    \end{tnoticebox}}
+    \end{tnoticebox*}}
 
 \end{frame}
 
@@ -302,10 +302,10 @@
 
 \begin{frame}{Perceptron}
 
-    \visible<2->{\begin{tinfoframe}
+    \visible<2->{\begin{tinfoframe*}
         Perceptron je nejjednodušší neuronová síť tvořená vstupní vrstvou
         a~jedním výstupním neuronem.
-    \end{tinfoframe}}
+    \end{tinfoframe*}}
 
 
 
@@ -425,9 +425,9 @@
                 \obrazek[0.4\textheight]{images/skokova-funkce-a-sigmoida-1.tex}
             \end{center}
 
-            \visible<3->{\begin{tnoticebox}{Skoková funkce}
+            \visible<3->{\begin{tnoticebox*}{Skoková funkce}
                 Vhodná pro jednoduché binární rozhodování.
-            \end{tnoticebox}}
+            \end{tnoticebox*}}
         }\end{column}
 
         \begin{column}{0.48\textwidth}\visible<4->{
@@ -439,9 +439,9 @@
                 \obrazek[0.4\textheight]{images/skokova-funkce-a-sigmoida-2.tex}
             \end{center}
 
-            \begin{tnoticebox}{Sigmoida}
+            \begin{tnoticebox*}{Sigmoida}
                 Hladká funkce s~výstupem v~intervalu \((0,1)\).
-            \end{tnoticebox}
+            \end{tnoticebox*}
         }\end{column}
     \end{columns}
 
@@ -665,11 +665,11 @@
 
 \begin{frame}{Zpětná propagace chyby}
 
-    \begin{tinfoframe}
+    \begin{tinfoframe*}
         Z~hodnoty chyby víme, jak přesný byl výstup celé sítě.
         Potřebujeme však určit, jak jednotlivé váhy a~prahové hodnoty
         k~této chybě přispěly.
-    \end{tinfoframe}
+    \end{tinfoframe*}
 
 
 
@@ -690,10 +690,10 @@
 
 \begin{frame}{Minimalizace chyby gradientním sestupem}
 
-    \begin{tinfobox}{Připomenutí}
+    \begin{tinfobox*}{Připomenutí}
         Gradientní sestup upravuje parametry modelu ve směru, ve kterém
         se hodnota chybové funkce zmenšuje.
-    \end{tinfobox}
+    \end{tinfobox*}
 
 
 
@@ -739,11 +739,11 @@
 
 
 
-    \visible<4->{\begin{tnoticebox}{Úloha zpětné propagace}
+    \visible<4->{\begin{tnoticebox*}{Úloha zpětné propagace}
         Zpětná propagace efektivně vypočítá derivace chybové funkce
         podle všech vah a~prahových hodnot neuronové sítě.
         Gradientní sestup následně tyto parametry upraví.
-    \end{tnoticebox}}
+    \end{tnoticebox*}}
 \end{frame}
 
 \subsection{Hluboké učení}
@@ -802,10 +802,10 @@
 
 
 
-    \visible<4->{\begin{tnoticebox}{Proč nepoužívat vždy celý soubor?}
+    \visible<4->{\begin{tnoticebox*}{Proč nepoužívat vždy celý soubor?}
         U~velkých trénovacích množin by výpočet chyby nad celým souborem
         mohl být pomalý. Proto se často používají menší dávky dat.
-    \end{tnoticebox}}
+    \end{tnoticebox*}}
 
 \end{frame}
 
@@ -942,11 +942,11 @@
 
 
 
-    \visible<3->{\begin{tnoticebox}{Interpretace}
+    \visible<3->{\begin{tnoticebox*}{Interpretace}
         Trénovací chyba obvykle s~počtem epoch klesá.
         Pokud však validační chyba začne růst, model se pravděpodobně
         začíná přizpůsobovat trénovacím datům až příliš.
-    \end{tnoticebox}}
+    \end{tnoticebox*}}
 
 \end{frame}
 
@@ -1041,10 +1041,10 @@
 
     \visible<4->{\begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{tnoticebox}{Synchronní aktualizace}
+            \begin{tnoticebox*}{Synchronní aktualizace}
                 Všechny neurony se přepočítají současně.
                 Tato varianta je jednoduchá, ale může vést k~oscilacím.
-            \end{tnoticebox}
+            \end{tnoticebox*}
         \end{column}
 
         \begin{column}{0.48\textwidth}
@@ -1089,7 +1089,7 @@
 
 
 
-    \visible<3->{\begin{tinfobox}{Hebbovo pravidlo}
+    \visible<3->{\begin{tinfobox*}{Hebbovo pravidlo}
         Váhu mezi \(i\)-tým a~\(j\)-tým neuronem určíme vztahem
         \[
             w_{ij}
@@ -1100,7 +1100,7 @@
             \qquad i\neq j,
         \]
         a~současně položíme $w_{ii}=0$.
-    \end{tinfobox}}
+    \end{tinfobox*}}
 
 
 

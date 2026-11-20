@@ -40,11 +40,11 @@
                 \visible<5->{\item \textbf{rekurzivní krok}, který úlohu převede na \textbf{menší} úlohu téhož druhu.}
             \end{itemize}
         \end{itemize}
-        \visible<6->{\begin{tinfoframe}
+        \visible<6->{\begin{tinfoframe*}
             \begin{center}
                 Rekurze je vlastně recept: \uv{umím-li vyřešit menší úlohu, umím vyřešit i tu svou}.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
     \end{frame}
 
     \begin{frame}{Rekurze}{Příklad: faktoriál}
@@ -64,11 +64,11 @@
             \visible<3->{\item Teprve na dně, u triviálních případů, se začnou skládat výsledky zpět nahoru.}
             \visible<4->{\item Tomuto směru výpočtu říkáme \markdarkred{shora dolů} (angl. \emph{top-down}).}
         \end{itemize}
-        \visible<5->{\begin{tnoticeframe}
+        \visible<5->{\begin{tnoticeframe*}
             \begin{center}
                 Rekurze \textbf{nijak neřeší}, zda tentýž podproblém neřešíme opakovaně.
             \end{center}
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
     \end{frame}
 
     % =================================================================
@@ -85,9 +85,9 @@
             \visible<3->{\item Navíc ale využívá toho, že se \textbf{tytéž podproblémy během rekurze opakují}.}
             \visible<4->{\item Místo opakovaného počítání si už jednou spočítané výsledky \markdarkred{pamatuje v tabulce}.}
         \end{itemize}
-        \visible<5->{\begin{tinfobox}{Odkud ten název?}
+        \visible<5->{\begin{tinfobox*}{Odkud ten název?}
             Termín zavedl Richard Bellman v~50. letech. \uv{Programováním} se tehdy mínilo \textbf{plánování} a \uv{dynamické} odkazuje na to, že optimální volba v~každém kroku závisí na krocích předchozích.
-        \end{tinfobox}}
+        \end{tinfobox*}}
     \end{frame}
 
     \begin{frame}{Kdy dynamické programování funguje?}
@@ -127,11 +127,11 @@
             \visible<3->{\item Při postupu zdola nahoru máme v~okamžiku, kdy nějaký podproblém řešíme, \textbf{už spočítané všechny menší}, na kterých závisí.}
             \visible<4->{\item Nepotřebujeme proto vůbec rekurzi -- stačí obyčejný cyklus a pole.}
         \end{itemize}
-        \visible<5->{\begin{tnoticeframe}
+        \visible<5->{\begin{tnoticeframe*}
             \begin{center}
                 Výpočet zdola nahoru bývá i~o~něco rychlejší -- odpadá režie volání funkcí.
             \end{center}
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
     \end{frame}
 
     \subsection{Kešování}
@@ -177,11 +177,11 @@
         \visible<3->{\begin{center}
             $0,\ 1,\ 1,\ 2,\ 3,\ 5,\ 8,\ 13,\ 21,\ 34,\ 55,\ 89,\dots$
         \end{center}}
-        \visible<4->{\begin{tinfoframe}
+        \visible<4->{\begin{tinfoframe*}
             \begin{center}
                 Definice je rekurzivní $\implies$ nabízí se ji rovnou přepsat do algoritmu.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
     \end{frame}
 
     \begin{frame}{Rekurzivní algoritmus}
@@ -195,11 +195,11 @@
                 \end{algorithm}
             \end{minipage}
         \end{center}
-        \visible<2->{\begin{tnoticeframe}
+        \visible<2->{\begin{tinfoframe}
             \begin{center}
                 Algoritmus je zjevně správný -- je to doslovný přepis definice. \textbf{Jak je ale rychlý?}
             \end{center}
-        \end{tnoticeframe}}
+        \end{tinfoframe}}
     \end{frame}
 
     \begin{frame}{Strom rekurze pro $F_5$}
@@ -246,11 +246,11 @@
                 \end{algorithm}
             \end{minipage}
         \end{center}
-        \visible<2->{\begin{tnoticeframe}
+        \visible<2->{\begin{tnoticeframe*}
             \begin{center}
                 Rekurze zůstala, přibyl jen pohled do tabulky a~zápis do ní.
             \end{center}
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
     \end{frame}
 
     \begin{frame}{Prořezaný strom rekurze}
@@ -264,11 +264,11 @@
             \visible<4->{\item Pod každým z~nich leží nejvýše dva listy $\implies$ strom má nejvýše $3(n+1)$ vrcholů.}
             \visible<5->{\item V~každém vrcholu strávíme konstantní čas, celkem tedy $\bigO(n)$.}
         \end{itemize}
-        \visible<6->{\begin{tnoticeframe}
+        \visible<6->{\begin{tnoticeframe*}
             \begin{center}
                 Z~$\bigO(\varphi^{n})$ jsme se dostali na $\bigO(n)$ -- a to jen díky tabulce.
             \end{center}
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
     \end{frame}
 
     \subsection{Výpočet zdola nahoru}
@@ -318,11 +318,11 @@
                 $50$ & $40\,730\,022\,147$         & $49$  \\ \hline
             \end{tabular}
         \end{center}}
-        \visible<3->{\begin{talertframe}
+        \visible<3->{\begin{talertframe*}
             \begin{center}
                 Pro $n=50$ je rozdíl \textbf{devíti řádů} -- zlomek sekundy proti hodinám výpočtu.
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
     \end{frame}
 
     \begin{frame}{Porovnání výsledků}
@@ -368,11 +368,11 @@
             \visible<4->{\item Ceny nemusí být úměrné délce -- proto se vyplatí přemýšlet, kde řezat.}
         \end{itemize}
         \visible<5->{\tyccenik}
-        \visible<6->{\begin{tinfoframe}
+        \visible<6->{\begin{tinfoframe*}
             \begin{center}
                 Anglicky se úloze říká \emph{rod cutting}.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
     \end{frame}
 
     \begin{frame}{Formální zadání}
@@ -381,20 +381,20 @@
         }{
             Jaký nejvyšší výnos $r_n$ lze získat rozřezáním tyče délky $n$ a~prodejem všech vzniklých kusů?
         }}
-        \visible<3->{\begin{tnoticeframe}
+        \visible<3->{\begin{tnoticeframe*}
             \begin{center}
                 Tyč délky $n$ lze rozřezat $2^{n-1}$ způsoby -- na každém z~$n-1$ vnitřních míst se nezávisle rozhodujeme, zda řezat.
             \end{center}
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
     \end{frame}
 
     \begin{frame}{Všech osm způsobů pro $n=4$}
         \obrazek[0.62\textheight]{images/tyc-rezy.tex}
-        \visible<2->{\begin{tnoticeframe}
+        \visible<2->{\begin{tnoticeframe*}
             \begin{center}
                 Nejlépe vyjde $4=2+2$ s~výnosem $r_4=10$, přestože celá tyč se prodá jen za $9$.
             \end{center}
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
     \end{frame}
 
     \subsection{Rekurzivní řešení}
@@ -417,11 +417,11 @@
             \visible<3->{\item Volba $i=n$ odpovídá tomu, že tyč vůbec neřežeme.}
             \visible<4->{\item Protože předem nevíme, které $i$ je nejlepší, \textbf{vyzkoušíme všechna}.}
         \end{itemize}
-        \visible<5->{\begin{tinfoframe}
+        \visible<5->{\begin{tinfoframe*}
             \begin{center}
                 Toto je přesně ta \textbf{optimální podstruktura}, o~které jsme mluvili.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
     \end{frame}
 
     \begin{frame}{Rekurzivní algoritmus}
@@ -523,11 +523,11 @@
                 \end{algorithm}
             \end{minipage}
         \end{center}
-        \visible<2->{\begin{tnoticeframe}
+        \visible<2->{\begin{tnoticeframe*}
             \begin{center}
                 Rekurze je pryč -- zbyly dva vnořené cykly a~jedno pole.
             \end{center}
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
     \end{frame}
 
     \begin{frame}{Výsledná tabulka pro náš ceník}
@@ -541,11 +541,11 @@
                 $r[j]$ & $0$ & $1$ & $5$ & $8$ & $10$ & $13$ & $17$ & $18$ & $22$ & $25$ & $30$ \\ \hline
             \end{tabular}
         \end{center}}
-        \visible<4->{\begin{tinfoframe}
+        \visible<4->{\begin{tinfoframe*}
             \begin{center}
                 Např. $r_7=18$ odpovídá rozřezání $7=1+6$, kdežto $r_{10}=30$ znamená tyč vůbec neřezat.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
     \end{frame}
 
     \subsection{Porovnání složitostí}
@@ -558,11 +558,11 @@
             iterací, každá v~konstantním čase.}
             \visible<4->{\item Prostorová složitost činí $\bigO(n)$ -- jedno pole délky $n+1$.}
         \end{itemize}
-        \visible<5->{\begin{tinfoframe}
+        \visible<5->{\begin{tinfoframe*}
             \begin{center}
                 Kešovaná rekurze má tutéž časovou složitost $\bigO(n^{2})$ -- řeší přesně tytéž podproblémy, jen v~jiném pořadí.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
     \end{frame}
 
     \begin{frame}{Porovnání složitostí}
@@ -592,11 +592,11 @@
             \visible<3->{\item Stačí si při vyplňování tabulky navíc pamatovat pole $s$, kde $s[j]$ je délka \textbf{prvního dílu} optimálního rozřezání tyče délky $j$.}
             \visible<4->{\item Řešení pak vypíšeme postupně: vytiskneme $s[n]$, zkrátíme tyč na $n-s[n]$ a~opakujeme, dokud něco zbývá.}
         \end{itemize}
-        \visible<5->{\begin{tinfoframe}
+        \visible<5->{\begin{tinfoframe*}
             \begin{center}
                 Je to táž myšlenka jako uchovávání předchůdců při hledání nejkratší cesty v~grafu.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
     \end{frame}
 
     % =================================================================

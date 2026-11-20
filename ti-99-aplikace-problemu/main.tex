@@ -82,11 +82,11 @@
 
     \begin{frame}{Intervalový graf}{Příklad: Největší množina nekolidujících aktivit}
         \obrazek{images/int-graf-2.tex}
-        \begin{talertframe}
+        \begin{talertframe*}
             \begin{center}
                 Nekolidující aktivity tvoří v~intervalovém grafu \textbf{nezávislou množinu}.
             \end{center}
-        \end{talertframe}
+        \end{talertframe*}
     \end{frame}
 
     \subsection{Převod Rozvrhování na NzMna}
@@ -119,11 +119,11 @@
 
     \begin{frame}{$C_4$ není intervalový graf}
         \visible<2->{\obrazek[0.55\textheight]{images/cyklus-c4.tex}}
-        \visible<3->{\begin{talertframe}
+        \visible<3->{\begin{talertframe*}
             \begin{center}
                 Interval $I_c$ má \textbf{neprázdný průnik} s~$I_a$, ale v~$C_4$ hrana $ac$ chybí.
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
     \end{frame}
 
     \begin{frame}{Intervalové grafy a~rozvrhování}
@@ -177,11 +177,11 @@
             \visible<3->{\item Seřazení stihneme v~čase $\bigO(n\log{n})$.}
             \visible<4->{\item Následně procházíme všechny intervaly, což potrvá $\bigO(n)$.}
         \end{itemize}
-        \visible<5->{\begin{talertframe}
+        \visible<5->{\begin{talertframe*}
             \begin{center}
                 To znamená, že v~případě intervalových grafů umíme rozhodnout problém $\NZMNA$ rychle.
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
     \end{frame}
 
     % =================================================================

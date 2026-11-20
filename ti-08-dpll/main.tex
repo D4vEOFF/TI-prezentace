@@ -106,22 +106,22 @@
             \visible<3->{\item Na vstupu máme formuli $\varphi$ a~nějaký její literál $\ell$.}
             \visible<4->{\item Pokud je $\ell=x_i$, pak $x_i=1$. Naopak pokud $\ell=\neg x_i$, pak $x_i=0$.}
             \visible<5->{\item V~takovém případě můžeme odstranit všechny ostatní klauzule obsahující $\ell$.}
-            \visible<6->{\begin{tnoticeframe}
+            \visible<6->{\begin{tnoticeframe*}
                 \begin{center}
                     Klauzule ve tvaru $(\ldots\lor \ell \lor \ldots)$ jsou splněny a~dále není třeba je uvažovat (můžeme je odstranit).
                 \end{center}
-            \end{tnoticeframe}}
+            \end{tnoticeframe*}}
         \end{itemize}
     \end{frame}
 
     \begin{frame}{Jednotková propagace}
         \begin{itemize}
             \visible<2->{\item Naopak pokud nějaká klauzule obsahuje $\ell$ \textbf{v~opačné polaritě} (tj. $\neg\ell$), pak jeho hodnota je $0$.}
-            \visible<3->{\begin{tnoticeframe}
+            \visible<3->{\begin{tnoticeframe*}
                 \begin{center}
                     Takový literál můžeme z~formule odstranit. Hodnota klauzule je závislá pouze na zbylých literálech.
                 \end{center}
-            \end{tnoticeframe}}
+            \end{tnoticeframe*}}
             \visible<4->{\item Zůstane-li klauzule bez literálů, vznikne \markdarkred{prázdná klauzule} a~formuli už nelze splnit.}
         \end{itemize}
     \end{frame}
@@ -137,11 +137,11 @@
             \visible<4->{\item V~takovém případě existuje jednoznačné ohodnocení literálu $\ell$ takové, že všechny klauzule jej obsahující jsou splněny.}
             \visible<5->{\item Resp. pokud $\ell=x_i$, pak nastavíme $x_i=1$. Jinak pokud $\ell=\neg x_i$, pak nastavíme $x_i=0$.}
         \end{itemize}
-        \visible<6->{\begin{tnoticeframe}
+        \visible<6->{\begin{tnoticeframe*}
             \begin{center}
                 Všechny klauzule obsahující $\ell$ můžeme z~$\varphi$ odstranit, protože už jsou splněny.
             \end{center}
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
     \end{frame}
 
     \begin{frame}{Postup algoritmu}
@@ -341,11 +341,11 @@
             \visible<4->{\item Můžeme předpokládat, že režií strávíme polynomiální čas, tzn. $r(n)=\bigO(n^{k})$, kde $k\in\R^{+}$.}
             \visible<5->{\item Tím dostáváme následující rovnici:
             \[T(n)=2\cdot T(n-1)+r(n)=2\cdot T(n-1)+\bigO(n^{k}).\]}
-            \visible<6->{\begin{tinfoframe}
+            \visible<6->{\begin{tinfoframe*}
                 \begin{center}
                     Tzv. \textbf{rekurentní rovnice}, kdy hodnota zkoumané funkce závisí na "sobě samotné".
                 \end{center}
-            \end{tinfoframe}}
+            \end{tinfoframe*}}
             \visible<7->{\item Lze ukázat, že $T(n)=\bigO(2^{n})$. Algoritmus DPLL je tedy v~nejhorším případě exponenciální.}
         \end{itemize}
     \end{frame}
@@ -355,11 +355,11 @@
             \visible<2->{\item Problém $\SAT$ dodnes neumíme řešit v~polynomiálním čase.}
             \visible<3->{\item Naštěstí u~"velké" části logických formulí však umíme rozhodnout rychle, zdali jsou splnitelné.}
         \end{itemize}
-        \visible<4->{\begin{talertframe}
+        \visible<4->{\begin{talertframe*}
             \begin{center}
                 Dodnes však není známý algoritmus pro $\SAT$, který by běžel nad libovolnou formulí \textbf{v~polynomiálním čase}.
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
     \end{frame}
 
     \zdrojeframe{mares-valla-labyrint, russell-norvig-aima}

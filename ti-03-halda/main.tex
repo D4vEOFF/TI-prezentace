@@ -77,11 +77,11 @@
         \begin{itemize}
             \visible<2->{\item Budeme pracovat s~binárním stromem $T=(V,E)$.}
             \visible<3->{\item Každému vrcholu $v$ přiřadíme tzv. \markdarkred{klíč}, který bude v~našem případě představovat libovolné celé číslo. Tuto hodnotu budeme značit $\key(v)$.}
-            \visible<4->{\begin{tinfoframe}
+            \visible<4->{\begin{tinfoframe*}
                 \begin{center}
                     Formálně se jedná o~zobrazení $\mapping{\key}{V}{\Z}$.
                 \end{center}
-            \end{tinfoframe}}
+            \end{tinfoframe*}}
         \end{itemize}
         \visible<5->{\begin{defblock}[Minimová binární halda]
             \markdarkred{Minimová binární halda} je datová struktura tvaru binárního stromu, v~jehož každém vrcholu je uložen jeden prvek. Přitom platí:
@@ -259,11 +259,11 @@
     \end{frame}
 
     \begin{frame}{Zpět k~operaci $\textsc{Insert}$}
-        \visible<2->{\begin{tinfoframe}
+        \visible<2->{\begin{tinfoframe*}
             \begin{center}
                 Stačí nám tedy přidat vrchol $v$ na první volné místo na poslední hladině, popř. vytvořit novou hladinu, a~následně zavolat $\textsc{BubbleUp}$.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
         \visible<3->{\begin{center}
             \begin{minipage}{0.8\textwidth}
                 \begin{algorithm}[H]
@@ -287,13 +287,13 @@
             \visible<2->{\item Již víme, že přečtení minima zvládneme v~konstantním čase (stačí se podívat na klíč v~kořeni haldy a~vrátit jej).}
             \visible<3->{\item Pokud budeme ale chtít odstranit minimum, bude situace již o~trochu složitější.}
         \end{itemize}
-        \visible<4->{\begin{tnoticeframe}
+        \visible<4->{\begin{tinfoframe}
             Musíme vyřešit dvě otázky:
             \begin{itemize}
                 \visible<5->{\item Co bude náš nový kořen?}
                 \visible<6->{\item Jak opravit haldu, aby platilo haldové uspořádání?}
             \end{itemize}
-        \end{tnoticeframe}}
+        \end{tinfoframe}}
     \end{frame}
 
     \begin{frame}{Operace $\textsc{ExtractMin}$}
@@ -393,16 +393,16 @@
     \end{frame}
 
     \begin{frame}{Rozdíl oproti poli}
-        \visible<2->{\begin{talertframe}
+        \visible<2->{\begin{talertframe*}
             \begin{center}
                 Vylepšili jsme časovou složitost z~\textbf{lineární} na \textbf{logaritmickou}!
             \end{center}
-        \end{talertframe}}
-        \visible<3->{\begin{tnoticeframe}
+        \end{talertframe*}}
+        \visible<3->{\begin{tinfoframe}
             \begin{center}
                 Nicméně jak můžeme efektivně haldu implementovat?
             \end{center}
-        \end{tnoticeframe}}
+        \end{tinfoframe}}
     \end{frame}
 
     % =================================================================
@@ -428,11 +428,11 @@
             \end{center}
         \end{tnoticeframe}}
         \visible<3->{\obrazek[0.34\textheight]{images/binarni-halda-indexy.tex}}
-        \visible<4->{\begin{tinfoframe}
+        \visible<4->{\begin{tinfoframe*}
             \begin{center}
                 Resp. indexy dětí budou $2i+1$ a~$2i+2$ v~případě indexace od nuly.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
     \end{frame}
 
     % =================================================================
@@ -463,11 +463,11 @@
             \visible<3->{\item Pokud zvýšíme hodnotu klíče vrcholu $v$, pak v~rodiči $r$ hodnota klíče stále splňuje požadovanou nerovnost:
             \[\key(r)<\key(v)<\key(v)+x.\]}
             \visible<4->{\item Ovšem mohlo se pokazit haldové uspořádání v~synech upraveného vrcholu $v$.}
-            \visible<5->{\begin{talertframe}
+            \visible<5->{\begin{talertframe*}
                 \begin{center}
                     To však již umíme vyřešit procedurou $\textsc{BubbleDown}$! Stačí nám tedy zavolat $\textsc{BubbleDown}(v)$ a~jsme hotovi.
                 \end{center}
-            \end{talertframe}}
+            \end{talertframe*}}
             \visible<6->{\item Podobně budeme postupovat v~případě operace $\textsc{Decrease}\implies$ zavoláme $\textsc{BubbleUp}(v)$.}
         \end{itemize}
     \end{frame}
@@ -495,11 +495,11 @@
                 $\textsc{ExtractMax}$   & $\bigO(n)$    & $\bigO(\log{n})$
             \end{tabular}
         \end{table}}
-        \visible<3->{\begin{tinfoframe}
+        \visible<3->{\begin{tinfoframe*}
             \begin{center}
                 Vidíme, že jsme si \markdarkred{polepšili} v~případě \textbf{hledání minima/maxima} a~jeho \textbf{odstranění}, ale na druhou stranu jsme si \markdarkred{pohoršili} při \textbf{vkládání nového vrcholu}.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
     \end{frame}
 
     \zdrojeframe{mares-valla-labyrint, cormen-algorithms}

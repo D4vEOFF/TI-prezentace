@@ -23,20 +23,20 @@
     \subsection{Proč rozhodovací problémy?}
 
     \begin{frame}{Proč rozhodovací problémy?}
-        \visible<2->{\begin{tnoticeframe}
+        \visible<2->{\begin{tinfoframe}
             \begin{center}
                 Nabízí se otázka, proč se omezujeme jen na rozhodovací problémy.
             \end{center}
-        \end{tnoticeframe}}
+        \end{tinfoframe}}
         \begin{itemize}
             \visible<3->{\item V~praxi nás přece jen běžně zajímá optimalizační varianta problému.}
             \visible<4->{\item Např. typicky nás nezajímá, jestli v~grafu $G$ existuje klika velikosti alespoň $k$, ale jaká je \textbf{největší klika v~grafu $G$}.}
         \end{itemize}
-        \visible<5->{\begin{talertframe}
+        \visible<5->{\begin{talertframe*}
             \begin{center}
                 Optimalizační problémy však dokážeme snadno řešit pomocí těch rozhodovacích.
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
     \end{frame}
 
     \subsection{Optimalizační varianta NzMna}
@@ -75,11 +75,11 @@
         \visible<2->{\begin{defblock}[Třída problémů $\classP$]
             Třída (množina) $\classP$ obsahuje rozhodovací problémy, které jsou řešitelné v~polynomiálním čase. Tzn. $L\in\classP$, pokud existuje algoritmus $A$ a~polynom $p$ takový, že pro každý vstup $x$ doběhne $A$ nejvýše v~čase $p(|x|)$ a~$A(x)=L(x)$.
         \end{defblock}}
-        \visible<3->{\begin{talertframe}
+        \visible<3->{\begin{talertframe*}
             \begin{center}
                 Třída $\classP$ představuje všechny problémy, které jsme schopni "efektivně" řešit.
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
         \visible<4->{Patří sem například problémy:}
         \begin{itemize}
             \visible<5->{\item "Existuje v~grafu $G$ cesta z~vrcholu $s$ do vrcholu $t$?"}
@@ -96,9 +96,9 @@
         \visible<2->{\begin{defblock}[Třída problémů $\classNP$]
             $\classNP$ je třída rozhodovacích problémů, v~níž problém $L$ leží právě tehdy, pokud existuje nějaký problém $K\in\classP$ a~polynom $g$, přičemž pro každý vstup $x$ je $L(x) = 1$ právě tehdy, pokud pro nějaký řetězec $y$ délky nejvýše $g(|x|)$ platí $K(x, y) = 1$.
         \end{defblock}}
-        \visible<3->{\begin{tinfobox}{Co to znamená?}
+        \visible<3->{\begin{tinfobox*}{Co to znamená?}
             Algoritmus $K$ řeší problém $L$, ale kromě vstupu $x$ má k~dispozici ještě \textbf{polynomiálně dlouhou nápovědu $y$}. Přitom má platit, že je-li $L(x) = 1$, musí existovat alespoň jedna nápověda, kterou algoritmus $K$ schválí. Pokud ovšem $L(x) = 0$, nesmí ho přesvědčit žádná nápověda.
-        \end{tinfobox}}
+        \end{tinfobox*}}
     \end{frame}
 
     \subsection{Hra Sudoku}
@@ -147,11 +147,11 @@
                 \item Stačí se přesvědčit, že vrcholy z~$M$ tvoří kliku a~$|M|\geqslant k$.
             \end{itemize}}
         \end{itemize}
-        \visible<5->{\begin{talertframe}
+        \visible<5->{\begin{talertframe*}
             \begin{center}
                 Řešení s~nápovědou $y$ ve všech případech lze provést \textbf{v~polynomiálním čase}.
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
     \end{frame}
 
     \subsection{Další problémy z~NP}
@@ -174,26 +174,26 @@
 
     \begin{frame}{Vztah tříd $\classP$ a~$\classNP$}
         \small
-        \begin{tnoticeframe}
+        \begin{tnoticeframe*}
             \begin{center}
                 Triviálně platí $\classP\subseteq\classNP$.
             \end{center}
-        \end{tnoticeframe}
+        \end{tnoticeframe*}
         \obrazek[0.3\textheight]{images/p-np.tex}
         Jsme-li schopni problém $L$ řešit \textbf{polynomiálně bez nápovědy} (tj. je ve třídě $\classP$), pak jej umíme řešit \textbf{polynomiálně i~s nápovědou} (tj. je i~ve třídě $\classNP$).
-        \begin{talertframe}
+        \begin{talertframe*}
             \begin{center}
                 Nápovědu $y$ zkrátka můžeme při řešení ignorovat.
             \end{center}
-        \end{talertframe}
+        \end{talertframe*}
     \end{frame}
 
     \begin{frame}{A~co varianta $\classP=\classNP$?}
-        \visible<2->{\begin{talertframe}
+        \visible<2->{\begin{talertframe*}
             \begin{center}
                 Dodnes \textbf{není známo}, zdali $\classP=\classNP$.
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
         \begin{itemize}
             \visible<3->{\item Taková skutečnost by měla řadu jak \textbf{příjemných}, tak i~\textbf{nepříjemných} důsledků.}
             \visible<4->{\item Všechny $\classNP$ problémy by byly řešitelné v~polynomiálním čase.}
@@ -218,11 +218,11 @@
         \visible<5->{\begin{defblock}[$\classNP$-úplnost]
             Řekneme, že problém $L$ je $\classNP$-úplný, pokud $L\in\classNP$ a~zároveň pro každý problém $A\in\classNP$ platí $A\rightarrow L$.
         \end{defblock}}
-        \visible<6->{\begin{talertframe}
+        \visible<6->{\begin{talertframe*}
             \begin{center}
                 $\classNP$-úplné problémy v~jistém smyslu představují ty "nejtěžší" problémy z~$\classNP$, protože kdybychom uměli řešit kterýkoliv z~nich rychle, umíme řešit \textbf{všechny problémy} z~$\classNP$ rychle.
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
     \end{frame}
 
     \begin{frame}{$\classNP$-úplné problémy v~kontextu}
@@ -239,11 +239,11 @@
         \visible<4->{\begin{thmblock}[Cookova-Levinova]
             $\SAT$ je $\classNP$-úplný problém.
         \end{thmblock}}
-        \visible<5->{\begin{tinfoframe}
+        \visible<5->{\begin{tinfoframe*}
             \begin{center}
                 Každý vstup $x$ pro problém $L\in\classNP$ lze polynomiálně převést na nějakou logickou formuli $\varphi$, pro kterou platí $L(x)=\SAT(\varphi)$.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
     \end{frame}
 
     \subsection{Převod Sudoku na SAT}
@@ -325,7 +325,7 @@
     \end{frame}
 
     \begin{frame}{Převod $\SUDOKU\rightarrow\SAT$}{Výsledná formule}
-        \visible<2->{\obrazek[0.72\textheight]{images/sudoku-formule.tex}}
+        \visible<2->{\obrazek[0.65\textheight]{images/sudoku-formule.tex}}
         \visible<3->{\begin{center}
             \footnotesize Indexy $r,c,d$ i~jejich čárkované varianty probíhají hodnoty $1,\dots,9$, $B$ probíhá všech 9 bloků a~$\mathcal{Z}$ obsahuje zadané trojice.
         \end{center}}
@@ -349,11 +349,11 @@
 
     \begin{frame}{Důsledek Cookovy-Levinovy věty}
         \visible<2->{\obrazek{images/cook-levin-dusledek.tex}}
-        \visible<3->{\begin{talertframe}
+        \visible<3->{\begin{talertframe*}
             \begin{center}
                 Všechny uvedené problémy jsou také $\classNP$-úplné podle předchozího tvrzení.
             \end{center}
-        \end{talertframe}}
+        \end{talertframe*}}
     \end{frame}
 
     \subsection{Proč je to důležité?}
