@@ -74,11 +74,11 @@
             \visible<3->{\item Zavedeme si tzv. \markdarkred{heuristickou funkci} $\mapping{\psi}{V}{\R_0^{+}}$ (nebo zkráceně jen \markdarkred{heuristika}).}
             \visible<4->{\item $\psi(v)$ = odhad délky cesty z~vrcholu $v$ do cíle $g$.}
         \end{itemize}
-        \visible<5->{\begin{tnoticeframe}
+        \visible<5->{\begin{tnoticeframe*}
             \begin{center}
                 Pro cílový vrchol $g$ předpokládáme, že $\psi(g)=0$.
             \end{center}
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
     \end{frame}
 
     \begin{frame}{Znázornění heuristiky}
@@ -393,8 +393,7 @@
         \end{propblock}}
         \begin{itemize}
             \visible<3->{\item Mějme libovolný nezáporně ohodnocený graf $G=(V,E,w)$ a~konzistentní heuristiku $\mapping{\psi}{V}{\R_0^{+}}$.}
-            \visible<4->{\item Předpokládejme pro \textbf{spor}, že algoritmus naopak vybere vrchol $v$, pro který platí
-            \[d(v_0,v)<D(v)\]
+            \visible<4->{\item Předpokládejme pro \textbf{spor}, že algoritmus naopak vybere vrchol $v$, pro který platí $d(v_0,v)<D(v)$
             $\implies$ $D(v)$ neodpovídá délce nejkratší cesty do $v$.}
             \visible<5->{\item Pak optimální cesta do $v$ musí vést přes nějaký jeho sousední vrchol $v^{\prime}$, tj.
             \[D(v)>D(v^{\prime})+w(v,v^{\prime})=d(v_0,v).\]}

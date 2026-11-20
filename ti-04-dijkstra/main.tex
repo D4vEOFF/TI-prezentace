@@ -24,9 +24,9 @@
             \visible<3->{\item Algoritmus BFS nalezne vždy nejkratší cestu do všech \textbf{dosažitelných vrcholů} v~\textbf{neohodnoceném grafu}.}
             \visible<4->{\item Časová i~prostorová složitost činí $\bigO(n+m)$.}
         \end{itemize}
-        \visible<5->{\begin{tnoticeframe}
+        \visible<5->{\begin{tinfoframe}
             Co když budeme hledat cestu v~\textbf{ohodnoceném grafu}?
-        \end{tnoticeframe}}
+        \end{tinfoframe}}
     \end{frame}
 
     % =================================================================
@@ -42,9 +42,9 @@
         \begin{defblock}[Ohodnocený graf]
             \markdarkred{Ohodnoceným grafem} rozumíme uspořádanou trojici $(V,E,w)$, přičemž $G=(V,E)$ je libovolný graf a~$\mapping{w}{E}{\R}$ je zobrazení přiřazující každé hraně $e\in E$ její \markdarkred{váhu} $w(e)$.
         \end{defblock}
-        \begin{tinfobox}{Poznámka}
+        \begin{tinfobox*}{Poznámka}
             Někdy je výhodnější se odkázat na samotné koncové vrcholy hrany $u,v$. Abychom si usnadnili zápis, budeme psát $w(u,v)$ místo $w(\set{u,v})$ v~případě \textbf{neorientovaného grafu}, resp. místo $w((u,v))$ v~případě \textbf{orientovaného grafu}.
-        \end{tinfobox}
+        \end{tinfobox*}
     \end{frame}
 
     \begin{frame}{Ohodnocený graf}{Příklad}
@@ -91,11 +91,11 @@
         \begin{itemize}
             \visible<2->{\item Edsger Dijkstra (1959)}
             \visible<3->{\item Na vstupu máme \textbf{nezáporně} ohodnocený graf $G=(V,E,w)$ a~počáteční vrchol $v_0\in V$.}
-            \visible<4->{\begin{tinfoframe}
+            \visible<4->{\begin{tinfoframe*}
                 \begin{center}
                     Zatím není zcela jasné, proč chceme, aby váhy hran byly nezáporné, ale později si to zdůvodníme.
                 \end{center}
-            \end{tinfoframe}}
+            \end{tinfoframe*}}
             \visible<5->{\item Stejně jako v~případě BFS i~zde bychom rádi \textbf{při uzavírání vrcholu} chtěli znát nejkratší cestu do něj.}
             \visible<6->{\item Nicméně již nemusí platit, že \textbf{první nalezená cesta} od libovolného vrcholu $v$ je nutně nejkratší.}
             \visible<7->{\begin{timportantframe}
@@ -467,11 +467,11 @@
                 Všimněte si, že právě díky \textbf{nezápornosti vah} hran grafu na vstupu algoritmus funguje!
             \end{center}
         \end{talertframe*}}
-        \visible<3->{\begin{tnoticeframe}
+        \visible<3->{\begin{tnoticeframe*}
             \begin{center}
                 Kdyby hrany mohly mít i~záporné váhy, nejkratší sled mezi některými dvojicemi vrcholů vůbec nemusí existovat!
             \end{center}
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
         \visible<4->{\obrazek[0.32\textheight]{images/zaporny-cyklus.tex}}
     \end{frame}
 
@@ -498,9 +498,9 @@
             \visible<2->{\item Zatím jsme vůbec nevyřešili, jak budeme ukládat hodnoty $D$.}
             \visible<3->{\item Jako první varianta se nabízí \markdarkred{obyčejný seznam/pole}.}
         \end{itemize}
-        \visible<4->{\begin{tnoticeframe}
+        \visible<4->{\begin{tnoticeframe*}
             Zkusíme určit \textbf{časovou} a~\textbf{prostorovou složitost}.
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
     \end{frame}
 
     \subsection{Složitost s~polem}
@@ -559,13 +559,13 @@
     \subsection{Shrnutí a~závěrečný rozbor}
 
     \begin{frame}{Shrnutí a~závěrečný rozbor}
-        \visible<2->{\begin{tinfoframe}
+        \visible<2->{\begin{tinfoframe*}
             Časová složitost \textbf{s~polem} vs. \textbf{s~haldou}:
             \begin{itemize}
                 \item Dijkstrův algoritmus s~polem: $\bigO(n^{2}+m)$
                 \item Dijkstrův algoritmus s~binární haldou: $\bigO((n+m)\log{n})$
             \end{itemize}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
         \visible<3->{Nyní se nabízí dvojice případů:}
         \begin{itemize}
             \visible<4->{\item Graf $G$ je řídký, tj. má \markdarkred{nejvýše lineárně mnoho} hran vzhledem k~počtu vrcholů, tj. $m=\bigO(n)$. Pak}

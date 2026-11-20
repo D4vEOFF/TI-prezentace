@@ -23,11 +23,11 @@
     \subsection{Proč rozhodovací problémy?}
 
     \begin{frame}{Proč rozhodovací problémy?}
-        \visible<2->{\begin{tnoticeframe}
+        \visible<2->{\begin{tinfoframe}
             \begin{center}
                 Nabízí se otázka, proč se omezujeme jen na rozhodovací problémy.
             \end{center}
-        \end{tnoticeframe}}
+        \end{tinfoframe}}
         \begin{itemize}
             \visible<3->{\item V~praxi nás přece jen běžně zajímá optimalizační varianta problému.}
             \visible<4->{\item Např. typicky nás nezajímá, jestli v~grafu $G$ existuje klika velikosti alespoň $k$, ale jaká je \textbf{největší klika v~grafu $G$}.}
@@ -96,9 +96,9 @@
         \visible<2->{\begin{defblock}[Třída problémů $\classNP$]
             $\classNP$ je třída rozhodovacích problémů, v~níž problém $L$ leží právě tehdy, pokud existuje nějaký problém $K\in\classP$ a~polynom $g$, přičemž pro každý vstup $x$ je $L(x) = 1$ právě tehdy, pokud pro nějaký řetězec $y$ délky nejvýše $g(|x|)$ platí $K(x, y) = 1$.
         \end{defblock}}
-        \visible<3->{\begin{tinfobox}{Co to znamená?}
+        \visible<3->{\begin{tinfobox*}{Co to znamená?}
             Algoritmus $K$ řeší problém $L$, ale kromě vstupu $x$ má k~dispozici ještě \textbf{polynomiálně dlouhou nápovědu $y$}. Přitom má platit, že je-li $L(x) = 1$, musí existovat alespoň jedna nápověda, kterou algoritmus $K$ schválí. Pokud ovšem $L(x) = 0$, nesmí ho přesvědčit žádná nápověda.
-        \end{tinfobox}}
+        \end{tinfobox*}}
     \end{frame}
 
     \subsection{Hra Sudoku}
@@ -174,11 +174,11 @@
 
     \begin{frame}{Vztah tříd $\classP$ a~$\classNP$}
         \small
-        \begin{tnoticeframe}
+        \begin{tnoticeframe*}
             \begin{center}
                 Triviálně platí $\classP\subseteq\classNP$.
             \end{center}
-        \end{tnoticeframe}
+        \end{tnoticeframe*}
         \obrazek[0.3\textheight]{images/p-np.tex}
         Jsme-li schopni problém $L$ řešit \textbf{polynomiálně bez nápovědy} (tj. je ve třídě $\classP$), pak jej umíme řešit \textbf{polynomiálně i~s nápovědou} (tj. je i~ve třídě $\classNP$).
         \begin{talertframe*}
@@ -239,11 +239,11 @@
         \visible<4->{\begin{thmblock}[Cookova-Levinova]
             $\SAT$ je $\classNP$-úplný problém.
         \end{thmblock}}
-        \visible<5->{\begin{tinfoframe}
+        \visible<5->{\begin{tinfoframe*}
             \begin{center}
                 Každý vstup $x$ pro problém $L\in\classNP$ lze polynomiálně převést na nějakou logickou formuli $\varphi$, pro kterou platí $L(x)=\SAT(\varphi)$.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
     \end{frame}
 
     \subsection{Převod Sudoku na SAT}
@@ -325,7 +325,7 @@
     \end{frame}
 
     \begin{frame}{Převod $\SUDOKU\rightarrow\SAT$}{Výsledná formule}
-        \visible<2->{\obrazek[0.72\textheight]{images/sudoku-formule.tex}}
+        \visible<2->{\obrazek[0.65\textheight]{images/sudoku-formule.tex}}
         \visible<3->{\begin{center}
             \footnotesize Indexy $r,c,d$ i~jejich čárkované varianty probíhají hodnoty $1,\dots,9$, $B$ probíhá všech 9 bloků a~$\mathcal{Z}$ obsahuje zadané trojice.
         \end{center}}

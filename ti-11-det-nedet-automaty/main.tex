@@ -328,11 +328,11 @@
             Nechť je dán automat $A$ nad abecedou $\Sigma$. Pak \markdarkred{jazykem automatu $A$} rozumíme množinu slov
             \[L(A)=\set{w\in\Sigma^{*}: \text{$A$ přijme slovo $w$}}.\]
         \end{defblock}}
-        \visible<4->{\begin{tnoticeframe}
+        \visible<4->{\begin{tinfoframe}
             \begin{center}
                 Jak vypadá $L(A)$ automatu z~minulého příkladu?
             \end{center}
-        \end{tnoticeframe}}
+        \end{tinfoframe}}
     \end{frame}
 
     \begin{frame}{Jazyk automatu $A$}
@@ -706,11 +706,11 @@
             \visible<3->{\item V~případě, že existuje pro $a$ více přechodů, automat spustí \textbf{více paralelních výpočtů najednou} (každý pro jeden přechod).}
             \visible<4->{\item Nedeterministický konečný automat budeme značit \markdarkred{NFA} (\textit{nondeterministic finite automaton}).}
         \end{itemize}
-        \visible<5->{\begin{tnoticeframe}
+        \visible<5->{\begin{tnoticeframe*}
             \begin{center}
                 Pokud \textbf{alespoň jeden} výpočet přijal vstupní slovo $w$, pak automat $w$ \markdarkred{přijímá}.
             \end{center}
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
         \visible<6->{\begin{talertframe*}
             \begin{center}
                 Pokud všechny výpočty slovo $w$ odmítnou, pak automat $w$ také \markdarkred{odmítá}.
@@ -753,11 +753,11 @@
             tzn. $A$ a~$N$ přijímají stejné jazyky.
             \item Triviálně každý DFA je zároveň i~NFA.
         \end{itemize}
-        \begin{tnoticeframe}
+        \begin{tnoticeframe*}
             \begin{center}
                 Algoritmus pro převod se nazývá \textbf{podmnožinová konstrukce}, ale tu pro jednoduchost vynecháme.
             \end{center}
-        \end{tnoticeframe}
+        \end{tnoticeframe*}
     \end{frame}
 
     % =================================================================
@@ -770,11 +770,11 @@
     \subsection{"Rozpoznávací" schopnost DFA}
 
     \begin{frame}{Co všechno DFA "rozpozná"?}
-        \visible<2->{\begin{tnoticeframe}
+        \visible<2->{\begin{tinfoframe}
             \begin{center}
                 Lze pro každý jazyk sestrojit deterministický automat?
             \end{center}
-        \end{tnoticeframe}}
+        \end{tinfoframe}}
         \visible<3->{\begin{talertframe}
             \textbf{Bohužel ne.} Dokonce existují takové jazyky, které nelze zpracovat žádným výpočetním modelem.
         \end{talertframe}}

@@ -30,11 +30,11 @@
             \visible<6->{\item Binární vyhledávání v~poli $\implies\bigO(\log{n})$.}
             \visible<7->{\item Vyhledávání v~textu $\implies\bigO((n-m)m)$, kde $m\leqslant n$ je délka hledaného slova.}
         \end{itemize}
-        \visible<8->{\begin{tnoticeframe}
+        \visible<8->{\begin{tnoticeframe*}
             \begin{center}
                 Všechny tyto problémy umíme řešit obecně v~čase $\bigO(n^{k})$, kde $k\in\R$.
             \end{center}
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
     \end{frame}
 
     \subsection{Formální pojetí problémů}
@@ -42,11 +42,11 @@
     \begin{frame}{Formální pojetí problémů}
         \begin{itemize}
             \visible<2->{\item Omezíme se na tzv. \markdarkred{rozhodovací problémy}.}
-            \visible<3->{\begin{tinfoframe}
+            \visible<3->{\begin{tinfoframe*}
                 \begin{center}
                     \markdarkred{Rozhodovací problém} je takový problém, jehož výstupními hodnotami jsou pouze \textbf{ANO} a~\textbf{NE}.
                 \end{center}
-            \end{tinfoframe}}
+            \end{tinfoframe*}}
             \visible<4->{\item Označme si $\set{0,1}^{*}$ \textbf{všechny konečné posloupnosti nul a~jedniček}.}
             \visible<5->{\item Rozhodovacím problémem formálně rozumíme zobrazení
             \[\mapping{L}{\set{0,1}^{*}}{\set{0,1}}.\]}
@@ -61,11 +61,11 @@
     \subsection{Polynomiální čas}
 
     \begin{frame}{Efektivně řešitelné problémy}
-        \visible<2->{\begin{tnoticeframe}
+        \visible<2->{\begin{tnoticeframe*}
             \begin{center}
                 S~jistou rezervou lze říci, že problémy, které lze řešit algoritmem, který běží v~polynomiálním čase vzhledem k~délce vstupu, jsou \textbf{"efektivně řešitelné"}.
             \end{center}
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
         \visible<3->{Co představuje zmíněnou rezervu?}
         \begin{itemize}
             \visible<4->{\item Algoritmus běžící v~čase $\bigO(n^{1000})$ je polynomiální, ale v~praxi nejspíše jen sotva použitelný.}
@@ -213,11 +213,11 @@
             \visible<2->{\item Existence "rychlého" (polynomiálního) řešení problému není vždy samozřejmostí.}
             \visible<3->{\item Některé problémy dokonce nelze řešit vůbec!}
         \end{itemize}
-        \visible<4->{\begin{tinfoframe}
+        \visible<4->{\begin{tinfoframe*}
             \begin{center}
                 Mezi různými problémy však lze nalézt zajímavé vztahy.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
     \end{frame}
 
     \zdrojeframe{papadimitriou-complexity, mares-valla-labyrint}

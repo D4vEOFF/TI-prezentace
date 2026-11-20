@@ -397,24 +397,24 @@
     \end{frame}
 
     \begin{frame}{Poznámky k~definici \textrm{II}}
-        \visible<2->{\begin{tinfobox}{Pozorování}
+        \visible<2->{\begin{tinfobox*}{Pozorování}
             Je-li $\mathbf{A}$ matice sousednosti, resp. $\mathbf{I}$ matice incidence, \textbf{neorientovaného} grafu $G$, pak pro libovolný jeho vrchol $v_i$ platí
             \[\deg{v_i}=\sum_{j=1}^{n}\mathbf{A}_{ij}=\sum_{k=1}^{m}\mathbf{I}_{ik},\]
             kde $n=|V|$ a~$m=|E|$.
-        \end{tinfobox}}
+        \end{tinfobox*}}
         \visible<3->{Tedy pro zvolený vrchol $v_i$ lze stanovit jeho stupeň jako součet jedniček v~příslušném řádku matice sousednosti, resp. matice incidence.}
     \end{frame}
 
     \begin{frame}{Poznámky k~definici \textrm{III}}
         \visible<2->{Obdobné jednoduché pozorování lze učinit i~pro \textbf{orientované} grafy.}
-        \visible<3->{\begin{tinfobox}{Pozorování}
+        \visible<3->{\begin{tinfobox*}{Pozorování}
             Je-li $G$ \textbf{orientovaný} graf, pak pro libovolný jeho vrchol $v_i$ platí
             \begin{align*}
                 \deg^{+}{v_i}&=\sum_{j=1}^{n}\mathbf{A}_{ij}=-\sum_{k=1}^{m}\min\set{\mathbf{I}_{ik},0},\\
                 \deg^{-}{v_i}&=\sum_{j=1}^{n}\mathbf{A}_{ji}=\sum_{k=1}^{m}\max\set{\mathbf{I}_{ik},0},
             \end{align*}
             kde $n=|V|$ a~$m=|E|$.
-        \end{tinfobox}}
+        \end{tinfobox*}}
     \end{frame}
 
     \subsection{Princip sudosti}

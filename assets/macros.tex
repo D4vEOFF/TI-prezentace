@@ -163,11 +163,11 @@
 
 \DeclareMathOperator{\regex}{RegE}
 
-%%% Ikony (vykřičník, otazník)
+%%% Ikony (vykřičník, otazník, žárovka)
 %
 % Lesklá koule s bílým znakem, kreslená v TikZ (vektorově, bez souborů
 % s obrázky). Volitelný argument je průměr ikony:
-%   \alerticon        \alerticon[2cm]        \questionicon[1.5em]
+%   \alerticon        \alerticon[2cm]        \questionicon[1.5em]     \ideaicon
 % Uvnitř obrázku je jednotka rovna poloměru kruhu.
 
 \definecolor{iconRlight}{HTML}{FFB3B3}
@@ -178,6 +178,10 @@
 \definecolor{iconBmid}{HTML}{8FCBF5}
 \definecolor{iconBdark}{HTML}{3D8FD6}
 \definecolor{iconBrim}{HTML}{1F5C99}
+\definecolor{iconGlight}{HTML}{DDFBCC}
+\definecolor{iconGmid}{HTML}{52C42E}
+\definecolor{iconGdark}{HTML}{218C00}
+\definecolor{iconGrim}{HTML}{115500}
 
 % Radiální stínování se středem posunutým doleva nahoru
 \pgfdeclareradialshading{iconRball}{\pgfpoint{-10bp}{12bp}}{%
@@ -186,10 +190,13 @@
 \pgfdeclareradialshading{iconBball}{\pgfpoint{-10bp}{12bp}}{%
   color(0bp)=(iconBlight); color(14bp)=(iconBmid);
   color(40bp)=(iconBdark); color(62bp)=(iconBrim); color(100bp)=(iconBrim)}
+\pgfdeclareradialshading{iconGball}{\pgfpoint{-10bp}{12bp}}{%
+  color(0bp)=(iconGlight); color(14bp)=(iconGmid);
+  color(40bp)=(iconGdark); color(62bp)=(iconGrim); color(100bp)=(iconGrim)}
 
 \newlength{\iconradius}
 
-% Pozadí: #1 = R (červené) / B (modré)
+% Pozadí: #1 = R (červené) / B (modré) / G (zelené)
 \newcommand{\iconball}[1]{%
   \shade[shading=icon#1ball] (0,0) circle[radius=1];
   \draw[icon#1rim, line width=0.07\iconradius] (0,0) circle[radius=0.965];
@@ -206,6 +213,17 @@
   (-0.33,0.31) arc[start angle=165, end angle=-28, radius=0.34]
   .. controls +(-0.06,-0.11) and (0,-0.04) .. (0,-0.17)}
 \def\iconquesdot{(0,-0.58) circle[radius=0.125]}
+% Žárovka: baňka s krčkem (střed baňky (0,0.22)), patice, paprsky
+\def\iconbulbglass{%
+  (-0.269,-0.049) arc[start angle=225, end angle=-45, radius=0.38]
+  .. controls (0.20,-0.12) and (0.15,-0.20) .. (0.15,-0.28)
+  -- (-0.15,-0.28) .. controls (-0.15,-0.20) and (-0.20,-0.12) .. cycle}
+\def\iconbulbbase{%
+  [rounded corners=0.03\iconradius] (-0.16,-0.42) rectangle (0.16,-0.33)
+  (-0.16,-0.55) rectangle (0.16,-0.46)
+  [sharp corners] (-0.08,-0.59) arc[start angle=180, end angle=360, radius=0.08] -- cycle}
+\def\iconbulbrays{%
+  \foreach \a in {0,45,90,135,180}{(0,0.22)+(\a:0.52) -- +(\a:0.66)}}
 
 % #1 = průměr, #2 = kresba
 \newcommand{\iconpicture}[2]{%
@@ -223,6 +241,15 @@
   \draw[iconBrim, line width=0.05\iconradius] \iconquesdot;
   \draw[white, line width=0.23\iconradius, line cap=round] \iconquesstroke;
   \fill[white] \iconquesdot;}}
+
+\newcommand{\ideaicon}[1][1cm]{\iconpicture{#1}{%
+  \iconball{G}%
+  \draw[iconGrim, line width=0.135\iconradius, line cap=round] \iconbulbrays;
+  \draw[white, line width=0.08\iconradius, line cap=round] \iconbulbrays;
+  \draw[iconGrim, line width=0.05\iconradius, line join=round] \iconbulbglass;
+  \draw[iconGrim, line width=0.05\iconradius, line join=round] \iconbulbbase;
+  \fill[white] \iconbulbglass;
+  \fill[white] \iconbulbbase;}}
 
 %%% Barevné boxíky (notice / info / important / alert)
 %
@@ -317,27 +344,53 @@
   \end{center}%
 }
 
-% Poznámky (notice)
+% Poznámky (notice) -- se žárovkou pro podstatný nápad či myšlenku
 \newenvironment{tnoticebox}[1]{%
-  \def\tboxtitletext{#1}\tboxcollect
+  \def\tboxtitletext{#1}\def\tboxicon{\ideaicon}\tboxcollect
 }{%
   \tboxrenderbox{tnoticeboxcolor}{\tboxtitletext}%
 }
 
 \newenvironment{tnoticeframe}{%
+  \def\tboxicon{\ideaicon}\tboxcollect
+}{%
+  \tboxrenderframe{tnoticeboxcolor}%
+}
+
+% Varianty bez ikony -- ostatní poznámky
+\newenvironment{tnoticebox*}[1]{%
+  \def\tboxtitletext{#1}\tboxcollect
+}{%
+  \tboxrenderbox{tnoticeboxcolor}{\tboxtitletext}%
+}
+
+\newenvironment{tnoticeframe*}{%
   \tboxcollect
 }{%
   \tboxrenderframe{tnoticeboxcolor}%
 }
 
-% Informační bloky (info)
+% Informační bloky (info) -- s otazníkem pro otázku
 \newenvironment{tinfobox}[1]{%
-  \def\tboxtitletext{#1}\tboxcollect
+  \def\tboxtitletext{#1}\def\tboxicon{\questionicon}\tboxcollect
 }{%
   \tboxrenderbox{tinfoboxcolor}{\tboxtitletext}%
 }
 
 \newenvironment{tinfoframe}{%
+  \def\tboxicon{\questionicon}\tboxcollect
+}{%
+  \tboxrenderframe{tinfoboxcolor}%
+}
+
+% Varianty bez ikony -- ostatní informace
+\newenvironment{tinfobox*}[1]{%
+  \def\tboxtitletext{#1}\tboxcollect
+}{%
+  \tboxrenderbox{tinfoboxcolor}{\tboxtitletext}%
+}
+
+\newenvironment{tinfoframe*}{%
   \tboxcollect
 }{%
   \tboxrenderframe{tinfoboxcolor}%

@@ -23,11 +23,11 @@
 
 \begin{frame}{Proč nás zajímá statistika?}
 
-\visible<2->{\begin{tinfoframe}
+\visible<2->{\begin{tinfoframe*}
 Umělá inteligence se učí z~\textbf{dat}. 
 Statistika nám pomáhá pochopit, co data skutečně říkají,
 a~odlišit užitečný vzor od náhody, šumu nebo chybné interpretace.
-\end{tinfoframe}}
+\end{tinfoframe*}}
 
 \visible<3->{\vspace{0.25cm}
 
@@ -62,11 +62,11 @@ Bez statistiky snadno zaměníme \textbf{náhodu za vzor},
 
 \vspace{0.2cm}
 
-\begin{tnoticeframe}
+\begin{tnoticeframe*}
 \begin{center}
     Například hodnota \textbf{85} sama o~sobě nic neříká.
 \end{center}
-\end{tnoticeframe}
+\end{tnoticeframe*}
 
 \vspace{0.1cm}
 
@@ -204,9 +204,9 @@ $52\,202$ Kč & $44\,337$ Kč
         \end{itemize}
     \end{defblock}}
 
-    \visible<3->{\begin{tnoticeframe}
+    \visible<3->{\begin{tnoticeframe*}
         Pokud je sledovaný znak pouze jeden, můžeme soubor $\mathbf{X}$ považovat za $n$-rozměrný vektor, tj. $\mathbf{X}=(x_1,\dots,x_n)$.
-    \end{tnoticeframe}}    
+    \end{tnoticeframe*}}    
 
 \end{frame}
 
@@ -384,9 +384,9 @@ aktivita & $70$ & $1$
 \]}
 
 
-\visible<5->{\begin{tinfoframe}
+\visible<5->{\begin{tinfoframe*}
 Projekt má na výsledek větší vliv než aktivita, protože má větší váhu.
-\end{tinfoframe}}
+\end{tinfoframe*}}
 
 \end{frame}
 
@@ -503,11 +503,11 @@ x_{\left((n+1)/2\right)}, & \text{je-li } n \text{ liché},\\[0.2cm]
 \]
 \end{defblock}}
 
-\visible<5->{\begin{tinfoframe}
+\visible<5->{\begin{tinfoframe*}
     \begin{center}
         Medián je "prostřední" hodnota uspořádaného souboru.
     \end{center}
-\end{tinfoframe}}
+\end{tinfoframe*}}
 
 \end{frame}
 
@@ -553,9 +553,9 @@ Mějme statistický soubor $\mathbf{X}=(x_1,\ldots,x_n)$. \markdarkred{Rozptyl} 
     \visible<5->{\item Pracujeme se \textbf{čtverci odchylek}, proto je rozptyl vždy nezáporný.}
 \end{itemize}}
 
-\visible<6->{\begin{tinfoframe}
+\visible<6->{\begin{tinfoframe*}
 Rozptyl je roven nule právě tehdy, když jsou všechny hodnoty stejné.
-\end{tinfoframe}}
+\end{tinfoframe*}}
 
 \end{frame}
 
@@ -607,10 +607,10 @@ od průměru vzdálenější, a~proto $\Var(\mathbf{X})<\Var(\mathbf{Y})$.
     &=\boxed{7{,}2}.
 \end{align*}}
 
-\visible<4->{\begin{tinfoframe}
+\visible<4->{\begin{tinfoframe*}
 Rozptyl teplot je $7{,}2\,^\circ\mathrm{C}^2$.
 Vyšší hodnota je způsobena hlavně dnem s~teplotou $26\,^\circ\mathrm{C}$.
-\end{tinfoframe}}
+\end{tinfoframe*}}
 
 \end{frame}
 
@@ -649,9 +649,9 @@ Pro libovolný statistický soubor $\mathbf{X}=(x_1,\dots,x_n)$ platí
     \visible<5->{\item Pokud jsou průměr a~medián daleko od sebe, data mají \textbf{velký rozptyl}.}
 \end{itemize}}
 
-\visible<6->{\begin{tinfoframe}
+\visible<6->{\begin{tinfoframe*}
 Směrodatná odchylka tedy říká i~to, jak daleko od sebe mohou být různé způsoby popisu "středu" dat.
-\end{tinfoframe}}
+\end{tinfoframe*}}
 
 \end{frame}
 
@@ -677,9 +677,9 @@ Standardizovaný soubor hodnot značíme $\mathbf{Z}=(z_1,\ldots,z_n)$.
 \end{defblock}}
 
 
-\visible<3->{\begin{tinfoframe}
+\visible<3->{\begin{tinfoframe*}
     Hodnota $z_i$ v~podstatě říká, o~kolik směrodatných odchylek $\sigma_\mathbf{X}$ je~$x_i$ vzdálena od průměru $\average{\mathbf{X}}$.
-\end{tinfoframe}}
+\end{tinfoframe*}}
 
 \end{frame}
 
@@ -827,10 +827,10 @@ a~připravit data pro některé metody umělé inteligence.
 \end{tabular}
 \end{center}
 
-\begin{tinfoframe}
+\begin{tinfoframe*}
 Po standardizaci už hodnoty ve sloupcích \textbf{věk} a~\textbf{příjem}
 nejsou v~tak rozdílném měřítku.
-\end{tinfoframe}
+\end{tinfoframe*}
 
 \end{frame}
 
@@ -902,10 +902,10 @@ m=18,\qquad M=26,\qquad M-m=8.
 \]}
 
 
-\visible<5->{\begin{tinfoframe}
+\visible<5->{\begin{tinfoframe*}
 Původní teploty ve~stupních Celsia jsme převedli na~bezrozměrné hodnoty
 v~intervalu $\langle 0,1\rangle$.
-\end{tinfoframe}}
+\end{tinfoframe*}}
 
 \end{frame}
 
@@ -924,9 +924,9 @@ v~intervalu $\langle 0,1\rangle$.
 \visible<2->{Dosud jsme pracovali hlavně s~jedním statistickým znakem.}
 
 
-\visible<3->{\begin{tinfoframe}
+\visible<3->{\begin{tinfoframe*}
 Někdy nás ale zajímá, zda spolu dva statistické znaky nějak souvisí.
-\end{tinfoframe}}
+\end{tinfoframe*}}
 
 
 \visible<4->{Například:
@@ -969,9 +969,9 @@ Cílem není pouze popsat jednotlivé znaky zvlášť, ale zjistit, zda mezi nim
 
     \begin{column}{0.48\textwidth}\visible<5->{
         \vspace{1cm}
-        \begin{tinfoframe}
+        \begin{tinfoframe*}
         Bodový graf často rychle ukáže, zda mezi dvěma znaky může být vztah.
-        \end{tinfoframe}
+        \end{tinfoframe*}
     }\end{column}
 \end{columns}}
 
@@ -1040,9 +1040,9 @@ $\sigma_{\mathbf{X}}>0$ a~$\sigma_{\mathbf{Y}}>0$.
 \]}
 
 
-\visible<4->{\begin{tinfoframe}
+\visible<4->{\begin{tinfoframe*}
 Korelační koeficient je standardizovaná kovariance. Nemá jednotky a~měří míru \markdarkred{lineární závislosti}.
-\end{tinfoframe}}
+\end{tinfoframe*}}
 
 \end{frame}
 
@@ -1156,9 +1156,9 @@ Znamená pouze, že mezi nimi není lineární korelace.
     \visible<5->{Celkově vychází $\rho_{\mathbf{V}\mathbf{H}}\approx 0{,}79$.}
 
 
-    \visible<6->{\begin{tinfoframe}
+    \visible<6->{\begin{tinfoframe*}
     Mezi výškou a~hmotností je v~tomto malém souboru \textbf{silná kladná lineární korelace}.
-    \end{tinfoframe}}
+    \end{tinfoframe*}}
 
 \end{frame}
 
@@ -1252,10 +1252,10 @@ Znamená pouze, že mezi nimi není lineární korelace.
     \footnotesize
 
 
-\visible<2->{\begin{tinfoframe}
+\visible<2->{\begin{tinfoframe*}
 Korelace znamená, že dvě veličiny se v~datech "mění společně".
 Kauzalita znamená, že \markdarkred{jedna veličina je příčinou změny druhé}.
-\end{tinfoframe}}
+\end{tinfoframe*}}
 
 
 \visible<3->{\[

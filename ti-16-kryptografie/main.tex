@@ -88,11 +88,11 @@
 \begin{frame}{Formulace problému}
     \centering
 
-    \begin{tnoticeframe}
+    \begin{tnoticeframe*}
         \begin{center}
             Alice chce Bobovi poslat tajnou zprávu $m \in \set{0,1}^{n}$.
         \end{center}
-    \end{tnoticeframe}
+    \end{tnoticeframe*}
 
     \obrazek[0.58\textheight]{images/formulace-problemu.tex}
 \end{frame}
@@ -120,12 +120,12 @@
 
     \visible<6->{\obrazek[0.2\textheight]{images/substitucni-metoda.tex}}
 
-    \visible<7->{\begin{tnoticeframe}
+    \visible<7->{\begin{tnoticeframe*}
         Například pro $k=3$ v~případě standardní abecedy:
         \begin{center}
             $\texttt{TAJNE}\longmapsto \texttt{WDMQH}$.
         \end{center}
-    \end{tnoticeframe}}
+    \end{tnoticeframe*}}
 
 \end{frame}
 
@@ -199,9 +199,9 @@
 
 \begin{frame}{Nevýhody obecné substituční šifry}
 
-    \visible<2->{\begin{tnoticeframe}
+    \visible<2->{\begin{tnoticeframe*}
         Obecná substituční šifra je teoreticky bezpečná, neboť pro abecedu o~$q$ znacích existuje $q!$ různých permutací.
-    \end{tnoticeframe}}
+    \end{tnoticeframe*}}
 
     \visible<3->{\begin{talertbox}{Hlavní problém}
         \begin{center}
@@ -361,13 +361,13 @@
 
     \vspace{0.15cm}}
 
-    \visible<4->{\begin{tinfobox}{Princip}
+    \visible<4->{\begin{tinfobox*}{Princip}
         Chce-li Alice poslat zprávu Bobovi, použije Bobův veřejný klíč:
         \[
             c = \mathbf{E}(m, k_V).
         \]
         Bob zprávu dešifruje svým soukromým klíčem $m = \mathbf{D}(c, k_S)$.
-    \end{tinfobox}}
+    \end{tinfobox*}}
 
 \end{frame}
 
@@ -419,12 +419,12 @@
 
     \vspace{0.25cm}}
 
-    \visible<3->{\begin{tnoticeframe}
+    \visible<3->{\begin{tnoticeframe*}
         Ekvivalentně lze psát, že pro každé \(a\in\mathbb{Z}\) platí
         \[
             a^{p} \bmod p = a \bmod p.
         \]
-    \end{tnoticeframe}}
+    \end{tnoticeframe*}}
 
 \end{frame}
 
@@ -445,9 +445,9 @@
         právě jedno řešení.
     \end{thmblock}}
 
-    \visible<3->{\begin{tnoticeframe}
+    \visible<3->{\begin{tnoticeframe*}
         Toto řešení je určeno jednoznačně modulo $M=m_1m_2\cdots m_k$.
-    \end{tnoticeframe}}
+    \end{tnoticeframe*}}
 
 \end{frame}
 
@@ -600,11 +600,11 @@
 
 \begin{frame}{Co víme o~faktorizaci?}
 
-    \visible<2->{\begin{tnoticeframe}
+    \visible<2->{\begin{tnoticeframe*}
         \begin{center}
             Víme, že $\FACTOR\in\classNP$.
         \end{center}
-    \end{tnoticeframe}}
+    \end{tnoticeframe*}}
 
     \visible<3->{\begin{talertbox*}{Otevřený problém}
         \begin{center}
@@ -646,7 +646,7 @@
 \begin{frame}{Nerozlišitelnost výstupu PRG}
     \small
 
-    \visible<2->{\begin{tinfobox}{Třetí podmínka}
+    \visible<2->{\begin{tinfobox*}{Třetí podmínka}
         Pro každý pravděpodobnostní polynomiální algoritmus \(\mathcal{A}\) platí:
         \[
         \left|
@@ -658,12 +658,12 @@
         \]
         kde \(\varepsilon(n)\) je \textbf{zanedbatelná} funkce, tj. pro každé
         \(k\in\mathbb{N}\) existuje \(n_k\) takové, že pro každé \(n>n_k\) platí \(\varepsilon(n) < 1/n^k\).
-    \end{tinfobox}}
+    \end{tinfobox*}}
 
-    \visible<3->{\begin{tnoticeframe}
+    \visible<3->{\begin{tnoticeframe*}
         Algoritmus \(\mathcal{A}\) dostane řetězec délky \(\ell(n)\) a~snaží se
         rozhodnout, zda je skutečně náhodný, nebo vznikl jako výstup \(G\).
-    \end{tnoticeframe}}
+    \end{tnoticeframe*}}
 
 \end{frame}
 
@@ -863,9 +863,9 @@
         \Pr[C>0]&=1-\prod_{i=0}^{n-1}\frac{365-i}{365}
     \end{align*}}
 
-    \visible<5->{\begin{tnoticeframe}
+    \visible<5->{\begin{tnoticeframe*}
         Už pro \(n=23\) vychází pravděpodobnost přibližně \(50{,}7\ \%\).
-    \end{tnoticeframe}}
+    \end{tnoticeframe*}}
 
 \end{frame}
 
@@ -957,11 +957,11 @@
 
     \obrazek[0.62\textheight]{images/hesovaci-funkce-vs-jednosmerna-funkce.tex}
 
-\begin{tnoticeframe}
+\begin{tnoticeframe*}
     \begin{center}
         \textbf{Bezpečná} hešovací funkce je tedy speciálním typem jednosměrné funkce.
     \end{center}
-\end{tnoticeframe}
+\end{tnoticeframe*}
 
 \end{frame}
 
@@ -992,13 +992,13 @@
         \end{tabular}
     \end{table}}
 
-    \visible<8->{\begin{tnoticeframe}
+    \visible<8->{\begin{tnoticeframe*}
         V~současnosti se pro nové kryptografické použití volí zejména
         \begin{center}
             \textbf{SHA-2} nebo \textbf{SHA-3}.
         \end{center}
         SHA-1 byla nahrazena.
-    \end{tnoticeframe}}
+    \end{tnoticeframe*}}
 
 \end{frame}
 
@@ -1089,10 +1089,10 @@
 
 \begin{frame}{Zpráva s~doručenkou}
 
-    \visible<2->{\begin{tinfobox}{Motivace}
+    \visible<2->{\begin{tinfobox*}{Motivace}
         Alice chce mít jistotu, že její zpráva pro Boba byla skutečně doručena
         adresátovi a~že ji Bob obdržel v~původním stavu.
-    \end{tinfobox}
+    \end{tinfobox*}
 
     \vspace{0.15cm}}
 
@@ -1195,9 +1195,9 @@
 
     \visible<4->{\vspace{0.15cm}}
 
-    \visible<5->{\begin{tnoticebox}{297/2016 Sb., § 13 odst. 3}
+    \visible<5->{\begin{tnoticebox*}{297/2016 Sb., § 13 odst. 3}
         \textit{Agentura zveřejňuje způsobem umožňujícím dálkový přístup důvěryhodné seznamy obsahující informace týkající se~kvalifikovaných poskytovatelů služeb vytvářejících důvěru spolu s~informacemi o~jimi poskytovaných kvalifikovaných službách vytvářejících důvěru.}
-    \end{tnoticebox}}
+    \end{tnoticebox*}}
 
 \end{frame}
 

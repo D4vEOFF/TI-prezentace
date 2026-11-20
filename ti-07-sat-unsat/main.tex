@@ -115,11 +115,11 @@
     \subsection{Literály a~klauzule}
 
     \begin{frame}{Literály a~klauzule}
-        \visible<2->{\begin{tnoticeframe}
+        \visible<2->{\begin{tnoticeframe*}
             \begin{center}
                 Nás budou zajímat logické výrazy v~tzv. \textbf{konjunktivní normální formě} (zkráceně \textbf{CNF}, z~anglického \emph{conjunctive normal form}).
             \end{center}
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
         \visible<3->{\begin{defblock}[Literál a~klauzule]
             \visible<3->{Mějme logické proměnné $x_1,x_2,\dots,x_n$. Pak definujeme následující:}
             \begin{itemize}
@@ -243,11 +243,11 @@
             \visible<3->{\item Obecně pokud podformule $\varphi_i$ je v~daném ohodnocení \textbf{pravdivá}, pak nastavíme $y_i=1$, jinak $y_i=0$.}
             \visible<4->{\item Pak $y_1$ bude odpovídat pravdivostní hodnotě celé formule $\varphi$.}
         \end{itemize}
-        \visible<5->{\begin{tinfoframe}
+        \visible<5->{\begin{tinfoframe*}
             \begin{center}
                 Není těžké si rozmyslet, že původní formule $\varphi$ je splnitelná právě tehdy, když je splnitelná i~nově vzniklá formule $\varphi^{\prime}$ v~CNF.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
     \end{frame}
 
     \begin{frame}{Tseitinova transformace}{Příklad}
@@ -331,11 +331,11 @@
     \end{frame}
 
     \begin{frame}{Rozbor Tseitinovy transformace}
-        \visible<2->{\begin{tnoticeframe}
+        \visible<2->{\begin{tnoticeframe*}
             \begin{center}
                 Tseitinova transformace je \textbf{podstatně rychlejší} oproti "tabulkové" metodě.
             \end{center}
-        \end{tnoticeframe}}
+        \end{tnoticeframe*}}
         \begin{itemize}
             \visible<3->{\item Lze ukázat, že Tseitinova transformace má \textbf{lineární časovou složitost} $\bigO(n)$ vzhledem k~počtu literálů ve formuli $\varphi$.}
             \visible<4->{\item Podformulí vznikne nejvýše lineárně mnoho.}
@@ -371,11 +371,11 @@
         \visible<3->{\decproblem{Nesplnitelnost formule v~CNF ($\UNSAT$)}{
             Logická formule $\varphi$ v~CNF.
         }{Je formule $\varphi$ nesplnitelná?}}
-        \visible<4->{\begin{tinfoframe}
+        \visible<4->{\begin{tinfoframe*}
             \begin{center}
                 Je nejspíše zjevné, že $\SAT(\varphi)=\neg \UNSAT(\varphi)$.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
         \visible<5->{\begin{talertframe*}
             \begin{center}
                 Formule $\varphi$ je \textbf{tautologie} (platí pro každé ohodnocení) právě tehdy, když je $\neg\varphi$ \textbf{nesplnitelná}.
@@ -391,11 +391,11 @@
                 Mnoho rozhodovacích problémů lze zredukovat na problém splnitelnosti nějaké vhodné formule $\varphi$ v~CNF.
             \end{center}
         \end{timportantframe}}
-        \visible<3->{\begin{tinfoframe}
+        \visible<3->{\begin{tinfoframe*}
             \begin{center}
                 Později uvidíme, že dokonce lze na SAT v~jistém smyslu "převést" každý rozhodovací problém z~\textbf{určité třídy problémů}.
             \end{center}
-        \end{tinfoframe}}
+        \end{tinfoframe*}}
     \end{frame}
     
     \zdrojeframe{papadimitriou-complexity, mares-valla-labyrint}
