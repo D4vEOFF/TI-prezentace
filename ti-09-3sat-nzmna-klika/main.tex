@@ -489,10 +489,10 @@
     \begin{frame}{Velikost množiny: lest s~očíslováním}
         \begin{itemize}
             \visible<2->{\item Vybrané vrcholy \textbf{očíslujeme} čísly $1,\dots,k$.}
-            \visible<3->{\item Zavedeme matici proměnných $X=(x_{i,j})$ typu $k\times n$, kde
+            \visible<3->{\item Zavedeme matici proměnných $\mathbf{X}=(x_{i,j})$ typu $k\times n$, kde
             \[x_{i,j}=1\iff\text{$i$-tým prvkem množiny je vrchol $j$}.\]}
             \visible<4->{\item Např. pro $n=4$ a~$k=2$ (řádky odpovídají pořadí prvku, sloupce vrcholům):
-            \[X=\begin{pmatrix}
+            \[\mathbf{X}=\begin{pmatrix}
                 0 & \markdarkred{1} & 0 & 0\\
                 0 & 0 & 0 & \markdarkred{1}
             \end{pmatrix}.\]}
@@ -505,7 +505,11 @@
         \end{tnoticeframe*}}
     \end{frame}
 
-    \begin{frame}{Podmínky kladené na matici $X$}
+    \begin{frame}{Schéma matice $\mathbf{X}$}
+        \obrazek[0.8\textheight]{images/nzmna-sat-matice.tex}
+    \end{frame}
+
+    \begin{frame}{Podmínky kladené na matici $\mathbf{X}$}
         \begin{enumerate}
             \visible<2->{\item V~každém řádku je \textbf{nejvýše jedna} jednička:
             \[(\neg x_{i,j}\lor\neg x_{i,j'})\quad\text{pro všechna $i$ a~$j\neq j'$}.\]}
@@ -536,7 +540,7 @@
             \visible<5->{\item[$\Leftarrow$] Nechť máme splňující ohodnocení formule $\varphi$ a~$M=\set{j\mid v_j=1}$.}
             \begin{itemize}
                 \visible<6->{\item Díky klauzulím pro hrany je $M$ nezávislá.}
-                \visible<7->{\item Každý řádek matice $X$ určuje jeden vrchol a~různé řádky určují různé vrcholy.}
+                \visible<7->{\item Každý řádek matice $\mathbf{X}$ určuje jeden vrchol a~různé řádky určují různé vrcholy.}
                 \visible<8->{\item Všechny tyto vrcholy leží v~$M$ $\implies$ $|M|\geqslant k$.}
             \end{itemize}
         \end{itemize}
@@ -590,7 +594,7 @@
     \begin{frame}{Převod \INDSET{} na \SAT}{Příklad}
         \begin{itemize}
             \visible<2->{\item Vrchol $2$ očíslujeme jako první, vrchol $4$ jako druhý prvek množiny:
-            \[X=\begin{pmatrix}
+            \[\mathbf{X}=\begin{pmatrix}
                 0 & \markdarkred{1} & 0 & 0\\
                 0 & 0 & 0 & \markdarkred{1}
             \end{pmatrix},\quad\text{tj. } x_{1,2}=x_{2,4}=1.\]}
