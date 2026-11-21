@@ -129,6 +129,10 @@ Skript [`compile.py`](compile.py):
 - přejmenuje výsledné PDF;
 - odstraní dočasné zdrojové a pomocné soubory.
 
+Každá varianta se překládá ve vlastním dočasném adresáři mimo repozitář, takže se jich překládá několik současně (ve výchozím nastavení tolik, kolik má počítač jader procesoru) a v adresářích prezentací nezůstávají žádné pomocné soubory.
+
+Varianty, jejichž zdroje se od minulého překladu nezměnily, se nepřekládají znovu, viz [Přeskakování nezměněných prezentací](#přeskakování-nezměněných-prezentací).
+
 Příkazy v následujících příkladech se spouštějí z kořenového adresáře repozitáře.
 
 ### Výstup skriptu
@@ -249,6 +253,29 @@ python compile.py --all --handout --move -ar 43 169 1610
 > [!NOTE]
 > Parametr `--all` zpracuje každý podadresář obsahující `main.tex`. Zahrne proto také doplňkové a rozpracované materiály označené číslem `99`.
 
+### Souběžný překlad
+
+Skript překládá několik variant současně, a to i varianty téže prezentace (poměry stran, handouty). Výchozí počet odpovídá počtu jader procesoru. Omezit jej lze parametrem `-j`, například `-j 1` překládá variantu po variantě:
+
+```bash
+python compile.py --all --handout -ar 43 1610 -j 4
+```
+
+Hlášení o každé variantě se vypíše vcelku až po jejím dokončení, pořadí řádků proto neodpovídá pořadí prezentací.
+
+### Přeskakování nezměněných prezentací
+
+Po úspěšném překladu si skript do adresáře `.compile-cache/` uloží otisky všech souborů, ze kterých PDF vzniklo: zdrojů prezentace, sdílených souborů z `assets/`, databáze zdrojů i balíčků a fontů z distribuce TeXu. Při dalším spuštění přeloží jen ty varianty, u nichž se některý z těchto souborů změnil nebo jejichž PDF chybí. Ostatní ohlásí jako aktuální:
+
+```text
+✔ Up to date ti-04-dijkstra_43.pdf
+✔ Done: 150 document(s) in 1.4 s, 150 of them up to date
+```
+
+Úprava jedné prezentace tak vyvolá překlad jen jejích variant, úprava souboru v `assets/` překlad všech prezentací, které jej používají. Rozhoduje obsah souborů, nikoli čas jejich změny. Aktuální PDF se hledá v adresáři prezentace a s parametrem `--move` také v adresáři, kam se PDF přesouvají.
+
+Překlad všeho bez ohledu na změny vynutí parametr `--force`. Adresář `.compile-cache/` lze kdykoli smazat; do repozitáře nepatří.
+
 ### Parametry skriptu
 
 | Parametr | Význam |
@@ -259,6 +286,8 @@ python compile.py --all --handout --move -ar 43 169 1610
 | `--handout` | Vytvoří také handout pro každý požadovaný poměr stran. |
 | `-ar`, `-ars`, `--aspect-ratios` | Určuje jeden nebo více poměrů stran. |
 | `--move` | Přesune všechna vytvořená PDF do aktuálního adresáře. |
+| `-j`, `--jobs` | Kolik variant překládat současně (výchozí: počet jader procesoru, s `--verbose` jedna). |
+| `--force` | Přeloží i varianty, jejichž zdroje se od minulého překladu nezměnily. |
 | `--verbose`, `-v` | Vypíše syrový výstup `pdflatexu` a `biberu` místo krátkého shrnutí. |
 | `-h`, `--help` | Vypíše nápovědu skriptu. |
 
