@@ -82,7 +82,6 @@
     \end{frame}
 
     \begin{frame}{Formální jazyky}{Příklady}
-        \small
         \visible<2->{Mějme abecedu znaků $\Sigma=\set{\texttt{a},\texttt{b}}$.}
         \begin{itemize}
             \visible<3->{\item Slovo $w=\texttt{abba}$ má délku $|w|=4$.}
@@ -93,7 +92,6 @@
     \end{frame}
 
     \begin{frame}{Formální jazyky}{Příklady jazyků}
-        \small
         \begin{itemize}
             \visible<2->{\item Další příklady jazyků nad $\Sigma=\set{\texttt{a},\texttt{b}}$:}
             \begin{align*}
@@ -110,21 +108,20 @@
     \subsection{Rozhodovací problém vs. jazyk}
 
     \begin{frame}{Poznámka k~rozhodovacím problémům}
-        \small
         \visible<2->{U~rozhodovacích problémů jsme kódovali vstupy pomocí $0$ a~$1$.}
         \begin{itemize}
             \visible<3->{\item Mějme \textbf{binární} abecedu $\Sigma=\set{0,1}$.}
             \visible<4->{\item Rozhodovací problémy lze chápat jako jazyky nad $\set{0,1}^{*}$.}
             \visible<5->{\item Označme si $\binary{x}$ binární zakódování libovolného objektu $x$.}
-            \visible<6->{\item Pak např. $\SAT$ lze chápat jako množinu všech \textbf{binárních řetězců} reprezentující takové logické formule $\varphi$, které jsou v~CNF a~jsou splnitelné. Tzn.
+            \visible<6->{\item Pak např. \SAT{} lze chápat jako množinu všech \textbf{binárních řetězců} reprezentující takové logické formule $\varphi$, které jsou v~CNF a~jsou splnitelné. Tzn.
             \[\SAT=\set{\binary{\varphi}: \text{$\varphi$ je v CNF a je splnitelná}}.\]}
             \visible<7->{\item Podobně:}
-            \begin{align*}
-                \visible<8->{\THREESAT&=\set{\binary{\varphi}: \text{$\varphi$ je v~3-CNF a~je splnitelná}},\\}
-                \visible<9->{\NZMNA&=\set{\binary{(G,k)}: \text{V~grafu $G$ existuje nez. mn. velikosti aspoň $k$}},\\}
-                \visible<10->{\KLIKA&=\set{\binary{(G,k)}: \text{V~grafu $G$ existuje klika velikosti aspoň $k$}}.}
-            \end{align*}
         \end{itemize}
+        \begin{align*}
+            \visible<8->{\THREESAT&=\set{\binary{\varphi}: \text{$\varphi$ je v~3-CNF a~je splnitelná}},\\}
+            \visible<9->{\INDSET&=\set{\binary{(G,k)}: \text{V~grafu $G$ existuje nez. mn. velikosti aspoň $k$}},\\}
+            \visible<10->{\CLIQUE&=\set{\binary{(G,k)}: \text{V~grafu $G$ existuje klika velikosti aspoň $k$}}.}
+        \end{align*}
     \end{frame}
 
     % =================================================================
@@ -155,7 +152,6 @@
     \end{frame}
 
     \begin{frame}{Deterministický konečný automat}{Příklad}
-        \small
         \visible<2->{\obrazek[0.25\textheight]{images/det-automat-1.tex}}
         \begin{itemize}
             \visible<3->{\item \textbf{Počáteční stav $q_0$} značíme šipkou vedoucí "odnikud".}
@@ -866,6 +862,6 @@
         \end{itemize}
     \end{frame}
 
-    \zdrojeframe{papadimitriou-complexity, hopcroft-automata}
+    \bibframe{papadimitriou-complexity, hopcroft-automata}
 
 \end{document}

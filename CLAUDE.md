@@ -86,7 +86,8 @@ Definována v `assets/macros.tex`:
 - `\decproblem{Název}{Vstup}{Otázka}` — tabulka rozhodovacího problému.
 - `\titleframe{...}` / `titleframeenv` — mezititulní snímek (nezvyšuje číslo snímku), `\tableofcontentsframe` — obsah.
 - Automaty: `\state`, `\acceptingstate`, `\initialstate`, `\transitionarrow` (verze s beamer overlay specifikací), TikZ styly `vertex`, `edge`, `diredge`, `state`.
-- Matematika: `\R`/`\N`/`\Z`, `\set`, `\mapping`, `\bigO`, operátory tříd složitosti (`\classP`, `\classNP`) a problémů (`\SAT`, `\THREESAT`, `\NZMNA`, `\KLIKA`), `\Astar`.
+- Matematika: `\R`/`\N`/`\Z`, `\set`, `\mapping`, `\bigO`, operátory tříd složitosti (`\classP`, `\classNP`), `\Astar`.
+- Názvy problémů: `\SAT`, `\THREESAT`, `\UNSAT`, `\INDSET` (NzMna), `\CLIQUE`, `\SCHEDULING`, `\SUDOKU`, `\HALT`, `\FACTOR`; nové přes `\newproblem{\MAKRO}{Název}`, jednorázově `\problem{Název}`. Makro rozhodne podle módu: v textu zelené kapitálky (barva `problemfg` z `theme.tex`), v matematice kapitálky písma matematiky se spacingem operátoru (`\mathsc`). Problém zmíněný v textu se proto píše **bez dolarů** (`Problém \SAT{} je …`, za makrem před mezerou `{}`), do matematiky patří jen ve vzorci (`$\INDSET(G,k)=\CLIQUE(\bar{G},k)$`, `$\SAT\in\classNP$`). Číslice v názvu jsou v matematickém módu (`$3$-SAT`). V zápatí a na titulní straně přebírá název barvu okolního textu.
 - Zvýrazňování: `\markred`, `\markdarkred`, `\markgreen`, `\markblue`, …; `\cmark`/`\xmark`; `\todo{...}` vysází červenou poznámku do slidu.
 - `algorithm2e` je počeštěné (`Vstup`, `Výstup`, `Funkce`) a číslování algoritmů je vypnuté.
 
@@ -99,8 +100,8 @@ Zdroje se **nepíší ručně do `itemize`**. Všechny jsou v jediné databázi 
 Závěrečný snímek se sází makrem z `assets/macros.tex`:
 
 ```latex
-\zdrojeframe{mares-valla-labyrint, cormen-algorithms, matousek-diskretni}
-\zdrojeframe[Doporučené zdroje]{mares-valla-labyrint, cormen-algorithms}
+\bibframe{mares-valla-labyrint, cormen-algorithms, matousek-diskretni}
+\bibframe[Doporučené zdroje]{mares-valla-labyrint, cormen-algorithms}
 ```
 
 Makro samo vytvoří sekci, provede `\nocite` a vysází `\printbibliography` ve snímku s `allowframebreaks`. Volitelný argument mění název sekce i snímku (výchozí je `Zdroje`). Na zdroj uprostřed výkladu se odkazuje běžným `\cite{klic}`.
@@ -108,7 +109,7 @@ Makro samo vytvoří sekci, provede `\nocite` a vysází `\printbibliography` ve
 Pravidla:
 
 - Nový zdroj patří do `assets/literatura.bib`, ne do konkrétní prezentace. Změna `.bib` se projeví ve všech prezentacích.
-- Řazení je `sorting=none`, tedy v pořadí prvního výskytu citace. Pokud je zdroj citován `\cite` uprostřed prezentace, dostane nižší číslo než zdroje uvedené až v `\zdrojeframe`.
+- Řazení je `sorting=none`, tedy v pořadí prvního výskytu citace. Pokud je zdroj citován `\cite` uprostřed prezentace, dostane nižší číslo než zdroje uvedené až v `\bibframe`.
 - Název s dvojtečkou se zapisuje jako `title` + `subtitle`, ne jako jeden řetězec.
 - Po přidání zdroje je nutná plná kompilace (`pdflatex`, `biber`, `pdflatex`, `pdflatex`); `compile.py` ji dělá sám.
 

@@ -80,7 +80,6 @@
     \subsection{Mezikód a~strojový kód}
 
     \begin{frame}{Mezikód a~strojový kód}
-        \small
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.49\textwidth}
                 \textbf{Strojový kód}
@@ -101,9 +100,13 @@
             \end{column}
         \end{columns}
 
+    \end{frame}
+
+    \begin{frame}{Mezikód a~strojový kód}
+
         \obrazek[0.28\textheight]{images/mezikod-a-strojovy-kod.tex}
 
-        \visible<9->{
+        \visible<4->{
             \begin{tinfoframe*}
                 Mezikód umožňuje přeložit program do společné podoby,
                 která se na konkrétním počítači převede až později.
@@ -161,7 +164,6 @@
     \subsection{Lexémy a~tokeny}
 
     \begin{frame}{Lexém a~token}
-        \small
 
         \begin{itemize}
             \visible<2->{\item \textbf{Lexém} je konkrétní část zdrojového textu.}
@@ -175,27 +177,30 @@
             \]
         }
 
+    \end{frame}
+
+    \begin{frame}{Lexém a~token}
+
         \obrazek[0.18\textheight]{images/lexem-a-token.tex}
 
-        \visible<5->{
+        \visible<2->{
             \begin{center}
-                \scriptsize
                 \renewcommand{\arraystretch}{1.25}
                 \begin{tabular}{|c|c|c|}
                     \hline
                     \textbf{lexém} & \textbf{typ tokenu} & \textbf{token} \\
                     \hline
-                    \visible<6->{\texttt{position}} & \visible<6->{identifikátor} & \visible<6->{\texttt{<id, position>}} \\
+                    \visible<3->{\texttt{position}} & \visible<3->{identifikátor} & \visible<3->{\texttt{<id, position>}} \\
                     \hline
-                    \visible<7->{\texttt{=}} & \visible<7->{operátor přiřazení} & \visible<7->{\texttt{<=>}} \\
+                    \visible<4->{\texttt{=}} & \visible<4->{operátor přiřazení} & \visible<4->{\texttt{<=>}} \\
                     \hline
-                    \visible<8->{\texttt{speed}} & \visible<8->{identifikátor} & \visible<8->{\texttt{<id, speed>}} \\
+                    \visible<5->{\texttt{speed}} & \visible<5->{identifikátor} & \visible<5->{\texttt{<id, speed>}} \\
                     \hline
-                    \visible<9->{\texttt{*}} & \visible<9->{operátor} & \visible<9->{\texttt{<*>}} \\
+                    \visible<6->{\texttt{*}} & \visible<6->{operátor} & \visible<6->{\texttt{<*>}} \\
                     \hline
-                    \visible<10->{\texttt{60}} & \visible<10->{číslo} & \visible<10->{\texttt{<num, 60>}} \\
+                    \visible<7->{\texttt{60}} & \visible<7->{číslo} & \visible<7->{\texttt{<num, 60>}} \\
                     \hline
-                    \visible<11->{\texttt{;}} & \visible<11->{oddělovač} & \visible<11->{\texttt{<;>}} \\
+                    \visible<8->{\texttt{;}} & \visible<8->{oddělovač} & \visible<8->{\texttt{<;>}} \\
                     \hline
                 \end{tabular}
             \end{center}
@@ -219,7 +224,6 @@
 
     \begin{frame}{Obecná konstrukce lexeru}
 
-        \small
         \begin{itemize}
             \visible<2->{\item Pro každý typ tokenu sestrojíme automat \(T_1,\dots,T_n\).}
             \visible<3->{\item Přidáme společný počáteční stav \(s\) a~\(\lambda\)-přechody;
@@ -368,7 +372,6 @@
 
         \visible<9->{
             \begin{center}
-                \scriptsize
                 Derivační strom slova $aabb$ podle předchozí gramatiky $G$.
             \end{center}
         }
@@ -446,7 +449,6 @@
             \end{column}
 
             \begin{column}{0.58\textwidth}
-                \small
                 \begin{align*}
                     E
                     &\visible<3->{\Rightarrow T}
@@ -584,7 +586,7 @@
 
         \vspace{0.3cm}
 
-        \centering\small
+        \centering
         \renewcommand{\arraystretch}{1.2}
         \begin{tabular}{|c|c|c|}
             \hline
@@ -604,7 +606,7 @@
             \hline
             \visible<7->{\texttt{x = y + 1;}} &
             \visible<7->{správně} &
-            \visible<7->{chyba, pokud \(x\) nebo \(y\) nejsou deklarované} \\
+            \visible<7->{\makecell{chyba, pokud \(x\) nebo \(y\)\\ nejsou deklarované}} \\
             \hline
         \end{tabular}
 
@@ -635,7 +637,6 @@
 
         \centering
         \visible<5->{
-            \small
             \renewcommand{\arraystretch}{1.2}
             \begin{tabular}{|c|c|c|}
                 \hline
@@ -821,7 +822,6 @@
 
         \visible<5->{
             \begin{center}
-                \scriptsize
                 Globální optimalizace řeší například živost proměnných,
                 optimalizace přes větve programu a~optimalizace cyklů.
             \end{center}
@@ -838,12 +838,11 @@
             \visible<4->{\item Blok, do kterého se program nikdy nemůže dostat, je \textbf{mrtvý}.}
         \end{itemize}
 
-        \vspace{0.05cm}
+    \end{frame}
 
-        \visible<5->{\scriptsize
-        \begin{center}
-            \begin{adjustbox}{max width=\linewidth, max totalheight=0.56\textheight}
-            \begin{minipage}{0.9\textwidth}
+    \begin{frame}{Živé a~mrtvé bloky programu}
+
+        \visible<2->{
                 \begin{algorithm}[H]
                     \caption{Detekce mrtvých bloků}
                     \KwIn{Graf toku řízení \(G=(B,E)\), počáteční blok \(B_0\)}
@@ -867,9 +866,7 @@
                         }
                     }
                 \end{algorithm}
-            \end{minipage}
-            \end{adjustbox}
-        \end{center}}
+        }
 
     \end{frame}
 
@@ -881,11 +878,11 @@
             lze některá přiřazení odstranit.}
         \end{itemize}
 
-        \vspace{0.1cm}
+    \end{frame}
 
-        \visible<4->{\scriptsize
-        \begin{center}
-            \begin{minipage}{0.9\textwidth}
+    \begin{frame}{Analýza živých proměnných}
+
+        \visible<2->{
                 \begin{algorithm}[H]
                     \caption{Zjednodušená analýza živých proměnných}
                     \KwIn{Základní blok instrukcí}
@@ -904,8 +901,7 @@
                         $\operatorname{liveBefore}(I)\gets L$
                     }
                 \end{algorithm}
-            \end{minipage}
-        \end{center}}
+        }
 
     \end{frame}
 
@@ -1091,6 +1087,6 @@
 
     \end{frame}
 
-    \zdrojeframe{ceska-prekladace, bryant-csapp}
+    \bibframe{ceska-prekladace, bryant-csapp}
 
 \end{document}

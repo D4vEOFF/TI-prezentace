@@ -7,7 +7,7 @@
 \input{../assets/listing.tex}
 
 \def\presentationtitle{Aplikace nezávislé množiny a~dalších problémů}
-\def\presentationtitlefooter{Aplikace $\NZMNA$ a~dalších}
+\def\presentationtitlefooter{Aplikace \INDSET{} a~dalších}
 
 \begin{document}
 
@@ -17,7 +17,7 @@
     \section{Aplikace nezávislé množiny}
     % =================================================================
 
-    \begin{titleframeenv}{Aplikace $\NZMNA$}
+    \begin{titleframeenv}{Aplikace \INDSET}
     \end{titleframeenv}
 
     \begin{frame}{Aplikace nezávislé množiny}
@@ -89,9 +89,9 @@
         \end{talertframe*}
     \end{frame}
 
-    \subsection{Převod Rozvrhování na NzMna}
+    \subsection{Převod \SCHEDULING{} na \INDSET}
 
-    \begin{frame}{Převod $\ROZVRH\rightarrow\NZMNA$}
+    \begin{frame}{Převod \SCHEDULING{} na \INDSET}
         \begin{itemize}
             \visible<2->{\item Na vstupu máme systém otevřených intervalů $\mathcal{I}$ a~číslo $k\in\N$.}
             \visible<3->{\item Sestrojíme intervalový graf $G_\mathcal{I}$.}
@@ -102,18 +102,18 @@
             \end{timportantframe}}
             \visible<5->{\item Převod je zjevně polynomiální, neboť graf $G_\mathcal{I}$ má maximálně $\bigO(n^{2})$ hran.}
             \visible<6->{\item Celkově
-            \[\ROZVRH(\mathcal{I},k)=\NZMNA(G_\mathcal{I},k).\]}
+            \[\SCHEDULING(\mathcal{I},k)=\INDSET(G_\mathcal{I},k).\]}
         \end{itemize}
     \end{frame}
 
-    \subsection{Převod NzMna na Rozvrhování}
+    \subsection{Převod \INDSET{} na \SCHEDULING}
 
-    \begin{frame}{Převod $\NZMNA\rightarrow\ROZVRH$}
+    \begin{frame}{Převod \INDSET{} na \SCHEDULING}
         \begin{itemize}
-            \visible<2->{\item Převod $\NZMNA\rightarrow\ROZVRH$ \textbf{neumíme provést}.}
+            \visible<2->{\item Převod \INDSET{} na \SCHEDULING{} \textbf{neumíme provést}.}
             \visible<3->{\item Obecný graf $G$ totiž \textbf{nemusí nutně představovat} nějaký intervalový graf.}
             \visible<4->{\item Např. cyklus $C_4$ nemůže představovat intervalový graf.}
-            \visible<5->{\item Navíc by z~takového převodu plynulo $\classP=\classNP$, protože $\ROZVRH$ umíme řešit polynomiálně a~$\NZMNA$ je $\classNP$-úplný.}
+            \visible<5->{\item Navíc by z~takového převodu plynulo $\classP=\classNP$, protože \SCHEDULING{} umíme řešit polynomiálně a~\INDSET{} je $\classNP$-úplný.}
         \end{itemize}
     \end{frame}
 
@@ -127,7 +127,6 @@
     \end{frame}
 
     \begin{frame}{Intervalové grafy a~rozvrhování}
-        \small
         \visible<2->{\obrazek[0.58\textheight]{images/vstupy-rozvrh-nzmna.tex}}
         \visible<3->{\begin{timportantframe}
             \begin{center}
@@ -179,7 +178,7 @@
         \end{itemize}
         \visible<5->{\begin{talertframe*}
             \begin{center}
-                To znamená, že v~případě intervalových grafů umíme rozhodnout problém $\NZMNA$ rychle.
+                To znamená, že v~případě intervalových grafů umíme rozhodnout problém \INDSET{} rychle.
             \end{center}
         \end{talertframe*}}
     \end{frame}
@@ -192,6 +191,6 @@
         \obrazek[0.74\textheight]{images/shrnuti.tex}
     \end{frame}
 
-    \zdrojeframe{mares-valla-labyrint, papadimitriou-complexity, cormen-algorithms}
+    \bibframe{mares-valla-labyrint, papadimitriou-complexity, cormen-algorithms}
 
 \end{document}

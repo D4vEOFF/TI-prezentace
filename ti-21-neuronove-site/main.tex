@@ -25,7 +25,6 @@
 \subsection{Motivace}
 
 \begin{frame}{Proč neuronové sítě?}
-    \small
 
     \visible<2->{\begin{columns}[T]
         \begin{column}{0.56\textwidth}
@@ -45,9 +44,11 @@
         }\end{column}
     \end{columns}}
 
+\end{frame}
 
+\begin{frame}{Proč neuronové sítě?}
 
-    \visible<6->{\begin{timportantbox}{Základní myšlenka}
+    \visible<2->{\begin{timportantbox}{Základní myšlenka}
         Neuronová síť je model složený z~mnoha jednoduchých výpočetních jednotek,
         jejichž propojení a~váhy se nastavují během učení.
     \end{timportantbox}}
@@ -244,7 +245,6 @@
 \subsection{Neuronová síť}
 
 \begin{frame}{Formální definice neuronové sítě}
-    \footnotesize
 
     \visible<2->{\begin{defblock}[Formální neuronová síť]
         Neuronovou síť budeme chápat jako uspořádanou sedmici
@@ -255,8 +255,7 @@
         \begin{itemize}
             \item $V$ je konečná množina \markdarkred{neuronů},
             \item $E$ je množina orientovaných hran (spojů),
-            \item $I$ je množina \markdarkred{vstupních neuronů},
-            \item $O$ je množina \markdarkred{výstupních neuronů},
+            \item $I$, resp. $O$ je množina \markdarkred{vstupních}, resp. \markdarkred{výstupních neuronů},
             \item $\mapping{w}{E}{\R}$ je tzv. \markdarkred{váhová funkce},
             \item $\mapping{\theta}{V\setminus I}{\R}$ je tzv. \markdarkred{prahová funkce} a
             \item $f$ je přenosová funkce.
@@ -566,7 +565,6 @@
 \subsection{Trénovací data}
 
 \begin{frame}{Trénovací množina}
-    \footnotesize
 
     \visible<2->{\begin{itemize}
         \item Uvažujme vstupní statistické soubory $\mathbf{X}_1,\mathbf{X}_2,\ldots,\mathbf{X}_p$
@@ -586,7 +584,14 @@
                 r\in\{1,\ldots,k\}.
             \end{aligned}
         \]}
-        \visible<4->{\item Pro \(i\)-tý datový záznam sestavíme vstupní a~výstupní vektor
+    \end{itemize}}
+
+\end{frame}
+
+\begin{frame}{Trénovací množina}
+
+    \visible<2->{\begin{itemize}
+        \item Pro \(i\)-tý datový záznam sestavíme vstupní a~výstupní vektor
         \[
             \mathbf{x}_i
             =
@@ -595,12 +600,12 @@
             \mathbf{y}_i
             =
             (y_{i1},y_{i2},\ldots,y_{ik}).
-        \]}
+        \]
     \end{itemize}}
 
 
 
-    \visible<5->{\begin{timportantframe}
+    \visible<3->{\begin{timportantframe}
         Trénovací množinu tvoří dvojice vstupních dat a~jejich očekávaných
         výstupů:
         \[
@@ -619,7 +624,6 @@
 \subsection{Měření chyby}
 
 \begin{frame}{Měření chyby neuronové sítě}
-    \footnotesize
 
     \visible<2->{Pro vstup \(\mathbf{x}_i\) neuronová síť $\mathcal{N}$ vypočítá odhad
     \[
@@ -635,9 +639,11 @@
         e_{ir}=y_{ir}-\hat{y}_{ir}.
     \]}
 
+\end{frame}
 
+\begin{frame}{Měření chyby neuronové sítě}
 
-    \visible<4->{\begin{itemize}
+    \visible<2->{\begin{itemize}
         \item Součet čtverců chyb (anglicky \markdarkred{sum of squared errors}) definujeme jako
         \[
             \SSE_{\mathbf{X}_1,\ldots,\mathbf{X}_p}^{\mathbf{Y}_1,\ldots,\mathbf{Y}_k}(\mathcal{N})
@@ -646,7 +652,7 @@
             \sum_{r=1}^{k}
             \left(y_{ir}-\hat{y}_{ir}\right)^2.
         \]
-        \visible<5->{\item Střední kvadratická chyba (anglicky \markdarkred{mean squared error}) je
+        \visible<3->{\item Střední kvadratická chyba (anglicky \markdarkred{mean squared error}) je
         \[
             \MSE_{\mathbf{X}_1,\ldots,\mathbf{X}_p}^{\mathbf{Y}_1,\ldots,\mathbf{Y}_k}(\mathcal{N})
             =
@@ -1006,8 +1012,7 @@
 
 \end{frame}
 
-\begin{frame}{Popis a~stav síťě}
-    \footnotesize
+\begin{frame}{Popis a~stav sítě}
 
     \visible<2->{\begin{itemize}
         \item Všechny neurony jsou vstupní i~výstupní.
@@ -1015,12 +1020,18 @@
         \visible<4->{\item Pro jednotlivé váhy hran platí
         \[w_{ij}=w_{ji}\quad\text{a}\quad w_{ii}=0.\]}
         \visible<5->{\item Pracujeme se skokovou přenosovou funkcí.}
-        \visible<6->{\item Pracujeme se vstupními (trénovacími) soubory $\mathbf{X}_1,\dots,\mathbf{X}_n$, kde
-        \[\mathbf{x}_i=(x_{i1},\dots,x_{in}),\quad x_{ij}\in\set{-1,1}.\]}
-        \visible<7->{\item Stav sítě $\mathcal{H}_n$ můžeme reprezentovat vektorem $\mathbf{s}=(s_1,\dots,s_n)$.}
+    \end{itemize}}
+\end{frame}
+
+\begin{frame}{Popis a~stav sítě}
+
+    \visible<2->{\begin{itemize}
+        \item Pracujeme se vstupními (trénovacími) soubory $\mathbf{X}_1,\dots,\mathbf{X}_n$, kde
+        \[\mathbf{x}_i=(x_{i1},\dots,x_{in}),\quad x_{ij}\in\set{-1,1}.\]
+        \visible<3->{\item Stav sítě $\mathcal{H}_n$ můžeme reprezentovat vektorem $\mathbf{s}=(s_1,\dots,s_n)$.}
     \end{itemize}}
 
-    \visible<8->{\begin{timportantframe}
+    \visible<4->{\begin{timportantframe}
         Hopfieldův model představuje \textbf{učení bez učitele}, neboť zde nemáme výstupní hodnoty. Fungováním představuje model asociativní paměti.
     \end{timportantframe}}
 \end{frame}
@@ -1083,7 +1094,6 @@
 \subsection{Učení Hopfieldovy sítě}
 
 \begin{frame}{Učení Hopfieldovy sítě}
-    \small
 
     \visible<2->{Do sítě s~$n$ neurony ukládáme $p$ vzorů $\mathbf{x}_1,\dots,\mathbf{x}_p$, přičemž $r$-tý vzor je $\mathbf{x}_r=(x_{r1},\dots,x_{rn})$.}
 
@@ -1102,15 +1112,17 @@
         a~současně položíme $w_{ii}=0$.
     \end{tinfobox*}}
 
+\end{frame}
 
+\begin{frame}{Učení Hopfieldovy sítě}
 
-    \visible<4->{\begin{itemize}
+    \visible<2->{\begin{itemize}
         \item Pokud mají dva neurony ve vzorech často stejnou hodnotu,
               jejich váha bude spíše kladná.
 
-        \visible<5->{\item Pokud mají často opačnou hodnotu, jejich váha bude spíše záporná.}
+        \visible<3->{\item Pokud mají často opačnou hodnotu, jejich váha bude spíše záporná.}
 
-        \visible<6->{\item Váhy tedy zachycují vztahy mezi jednotlivými složkami uložených vzorů.}
+        \visible<4->{\item Váhy tedy zachycují vztahy mezi jednotlivými složkami uložených vzorů.}
     \end{itemize}}
 
 \end{frame}
@@ -1177,6 +1189,6 @@
     \visible<4->{}}
 \end{frame}
 
-\zdrojeframe{russell-norvig-aima}
+\bibframe{russell-norvig-aima}
 
 \end{document}

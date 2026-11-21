@@ -31,11 +31,11 @@
         \end{defblock}}
     \end{frame}
 
-    \begin{frame}{Problémy SAT a~UNSAT}
-        \visible<2->{\decproblem{Splnitelnost formule v~CNF ($\SAT$)}{
+    \begin{frame}{Problémy \SAT{} a~\UNSAT}
+        \visible<2->{\decproblem{Splnitelnost formule v~CNF (\SAT)}{
             Logická formule $\varphi$ v~CNF.
         }{Je formule $\varphi$ splnitelná?}}
-        \visible<3->{\decproblem{Nesplnitelnost formule v~CNF ($\UNSAT$)}{
+        \visible<3->{\decproblem{Nesplnitelnost formule v~CNF (\UNSAT)}{
             Logická formule $\varphi$ v~CNF.
         }{Je formule $\varphi$ nesplnitelná?}}
     \end{frame}
@@ -51,7 +51,7 @@
 
     \begin{frame}{Úvod}
         \begin{itemize}
-            \visible<2->{\item Algoritmus řešící $\SAT$ (tzv. \textbf{SAT solver})}
+            \visible<2->{\item Algoritmus řešící \SAT{} (tzv. \textbf{SAT solver})}
             \visible<3->{\item Martin \markdarkred{D}avis, Hilary \markdarkred{P}utnam, George \markdarkred{L}ogemann, Donald W. \markdarkred{L}oveland (1961)}
             \visible<4->{\item Postup založený na rekurzivním "zkracování" logické formule v~CNF.}
         \end{itemize}
@@ -334,34 +334,38 @@
     \end{frame}
 
     \begin{frame}{Časová složitost DPLL}
-        \small
         \begin{itemize}
             \visible<2->{\item V~jednom volání DPLL strávíme $r(n)$ kroků eliminací \textbf{jednotkových klauzulí} a~\textbf{čistých literálů}.}
             \visible<3->{\item Na konci voláme dvakrát DPLL na vstup velikosti $n-1$, čímž strávíme $2\cdot T(n-1)$ kroků.}
             \visible<4->{\item Můžeme předpokládat, že režií strávíme polynomiální čas, tzn. $r(n)=\bigO(n^{k})$, kde $k\in\R^{+}$.}
-            \visible<5->{\item Tím dostáváme následující rovnici:
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Časová složitost DPLL}
+        \begin{itemize}
+            \visible<2->{\item Tím dostáváme následující rovnici:
             \[T(n)=2\cdot T(n-1)+r(n)=2\cdot T(n-1)+\bigO(n^{k}).\]}
-            \visible<6->{\begin{tinfoframe*}
+            \visible<3->{\begin{tinfoframe*}
                 \begin{center}
                     Tzv. \textbf{rekurentní rovnice}, kdy hodnota zkoumané funkce závisí na "sobě samotné".
                 \end{center}
             \end{tinfoframe*}}
-            \visible<7->{\item Lze ukázat, že $T(n)=\bigO(2^{n})$. Algoritmus DPLL je tedy v~nejhorším případě exponenciální.}
+            \visible<4->{\item Lze ukázat, že $T(n)=\bigO(2^{n})$. Algoritmus DPLL je tedy v~nejhorším případě exponenciální.}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Řešitelnost problému $\SAT$}
+    \begin{frame}{Řešitelnost problému \SAT}
         \begin{itemize}
-            \visible<2->{\item Problém $\SAT$ dodnes neumíme řešit v~polynomiálním čase.}
+            \visible<2->{\item Problém \SAT{} dodnes neumíme řešit v~polynomiálním čase.}
             \visible<3->{\item Naštěstí u~"velké" části logických formulí však umíme rozhodnout rychle, zdali jsou splnitelné.}
         \end{itemize}
         \visible<4->{\begin{talertframe*}
             \begin{center}
-                Dodnes však není známý algoritmus pro $\SAT$, který by běžel nad libovolnou formulí \textbf{v~polynomiálním čase}.
+                Dodnes však není známý algoritmus pro \SAT, který by běžel nad libovolnou formulí \textbf{v~polynomiálním čase}.
             \end{center}
         \end{talertframe*}}
     \end{frame}
 
-    \zdrojeframe{mares-valla-labyrint, russell-norvig-aima}
+    \bibframe{mares-valla-labyrint, russell-norvig-aima}
 
 \end{document}

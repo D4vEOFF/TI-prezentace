@@ -130,30 +130,38 @@
 \end{frame}
 
 \begin{frame}{Nevýhoda substituční šifry}
-    \small
 
     \visible<2->{\begin{talertframe}
         \textbf{Jednoduše prolomitelná!} Stačí zkusit všechna možná posunutí $k=1,\dots,q-1$.
     \end{talertframe}}
 
     \visible<3->{\centering
-    \small
     \begin{tabular}{c|c@{\qquad}c|c}
         \(k\) & dešifrování & \(k\) & dešifrování \\
         \hline
-        0  & \markdarkred{\texttt{XPTQF}} & 13 & \texttt{KCGDS} \\
-        1  & \texttt{WOSPE} & 14 & \texttt{JBFCR} \\
-        2  & \texttt{VNROD} & 15 & \texttt{IAEBQ} \\
-        3  & \texttt{UMQNC} & 16 & \texttt{HZDAP} \\
-        4  & \texttt{TLPMB} & 17 & \texttt{GYCZO} \\
-        5  & \markdarkgreen{\textbf{\texttt{SKOLA}}} & 18 & \texttt{FXBYN} \\
-        6  & \texttt{RJNKZ} & 19 & \texttt{EWAXM} \\
-        7  & \texttt{QIMJY} & 20 & \texttt{DVZWL} \\
-        8  & \texttt{PHLIX} & 21 & \texttt{CUYVK} \\
-        9  & \texttt{OGKHW} & 22 & \texttt{BTXUJ} \\
-        10 & \texttt{NFJGV} & 23 & \texttt{ASWTI} \\
-        11 & \texttt{MEIFU} & 24 & \texttt{ZRVSH} \\
-        12 & \texttt{LDHET} & 25 & \texttt{YQURG}
+        0  & \markdarkred{\texttt{XPTQF}} & 7  & \texttt{QIMJY} \\
+        1  & \texttt{WOSPE} & 8  & \texttt{PHLIX} \\
+        2  & \texttt{VNROD} & 9  & \texttt{OGKHW} \\
+        3  & \texttt{UMQNC} & 10 & \texttt{NFJGV} \\
+        4  & \texttt{TLPMB} & 11 & \texttt{MEIFU} \\
+        5  & \markdarkgreen{\textbf{\texttt{SKOLA}}} & 12 & \texttt{LDHET} \\
+        6  & \texttt{RJNKZ} & &
+    \end{tabular}}
+\end{frame}
+
+\begin{frame}{Nevýhoda substituční šifry}
+
+    \visible<2->{\centering
+    \begin{tabular}{c|c@{\qquad}c|c}
+        \(k\) & dešifrování & \(k\) & dešifrování \\
+        \hline
+        13 & \texttt{KCGDS} & 20 & \texttt{DVZWL} \\
+        14 & \texttt{JBFCR} & 21 & \texttt{CUYVK} \\
+        15 & \texttt{IAEBQ} & 22 & \texttt{BTXUJ} \\
+        16 & \texttt{HZDAP} & 23 & \texttt{ASWTI} \\
+        17 & \texttt{GYCZO} & 24 & \texttt{ZRVSH} \\
+        18 & \texttt{FXBYN} & 25 & \texttt{YQURG} \\
+        19 & \texttt{EWAXM} & &
     \end{tabular}}
 \end{frame}
 
@@ -465,7 +473,6 @@
 \subsection{Korektnost RSA}
 
 \begin{frame}{Korektnost RSA}
-    \footnotesize
 
     \visible<2->{Chceme ukázat, že $\mathbf{D}(\mathbf{E}(x, k_V), k_S)=x$, neboli že
     \[\left(x^{v}\bmod n\right)^{s}\bmod n=x^{vs}\bmod n=x.\]}
@@ -475,16 +482,24 @@
 
         \visible<4->{\item \textbf{$p$ dělí číslo $x$.} Pak platí
         \[x^{vs}\bmod p = 0 = x\bmod p.\]}
-        \visible<5->{\item \textbf{$p$ nedělí číslo $x$.} Protože platí $vs\bmod(p-1)(q-1)=1$, existuje $t\in\N$ takové, že
+    \end{enumerate}}
+
+\end{frame}
+
+\begin{frame}{Korektnost RSA}
+
+    \begin{enumerate}
+        \setcounter{enumi}{1}
+        \visible<2->{\item \textbf{$p$ nedělí číslo $x$.} Protože platí $vs\bmod(p-1)(q-1)=1$, existuje $t\in\N$ takové, že
         \[vs=1+t(p-1)(q-1).\]}
-        \visible<6->{Pak dostáváme
+        \visible<3->{Pak dostáváme
         \begin{align*}
             x^{vs}\bmod p&=x^{1+t(p-1)(q-1)}\bmod p\stackrel{\text{MFV}}{=}x(x^{p-1})^{t(q-1)}\bmod p\\
             &=x\cdot 1^{t(q-1)}\bmod p=x\bmod p.
         \end{align*}}
 
-        \visible<7->{Podobně pro $q$ dostaneme, že též platí $x^{vs}\bmod q=x\bmod q$.}
-    \end{enumerate}}
+        \visible<4->{Podobně pro $q$ dostaneme, že též platí $x^{vs}\bmod q=x\bmod q$.}
+    \end{enumerate}
 
 \end{frame}
 
@@ -551,26 +566,28 @@
 \end{frame}
 
 \begin{frame}{Faktorizace}
-    \small
 
     \visible<2->{\begin{talertbox*}{Základní předpoklad bezpečnosti}
         Je snadné spočítat součin \(n=pq\), ale je těžké z~čísla \(n\)
         zpětně zjistit prvočísla \(p\) a~\(q\).
     \end{talertbox*}}
 
-    \visible<3->{\decproblem{Faktorizace ($\FACTOR$)}{
+    \visible<3->{\decproblem{Faktorizace (\FACTOR)}{
         Přirozená čísla $n,b\in\N,b\leqslant n$.
     }{
         Existuje $d\in\N$ takové, že $1<d<b$ a~$d$ dělí $n$?
     }}
-
-    \visible<4->{Protože pracujeme s~binárními hodnotami $n$, platí
-    \[|\binary{n}|=\lceil\log_2{n}\rceil.\]}
-
-    \visible<5->{Naivní algoritmus by musel mít složitost $2^{|\binary{n}|}$.}
 \end{frame}
 
-\begin{frame}{Problém $\FACTOR$ patří do $\classNP$}
+\begin{frame}{Faktorizace}
+
+    \visible<2->{Protože pracujeme s~binárními hodnotami $n$, platí
+    \[|\binary{n}|=\lceil\log_2{n}\rceil.\]}
+
+    \visible<3->{Naivní algoritmus by musel mít složitost $2^{|\binary{n}|}$.}
+\end{frame}
+
+\begin{frame}{Problém \FACTOR{} patří do $\classNP$}
 
     \visible<2->{\begin{propblock}
         Platí $\FACTOR\in\classNP$.
@@ -608,7 +625,7 @@
 
     \visible<3->{\begin{talertbox*}{Otevřený problém}
         \begin{center}
-            Není známo, zdali $\FACTOR$ je $\classNP$-úplný problém nebo $\FACTOR\in\classP$.
+            Není známo, zdali \FACTOR{} je $\classNP$-úplný problém nebo $\FACTOR\in\classP$.
         \end{center}
     \end{talertbox*}}
 
@@ -644,7 +661,6 @@
 \subsection{Nerozlišitelnost výstupu PRG}
 
 \begin{frame}{Nerozlišitelnost výstupu PRG}
-    \small
 
     \visible<2->{\begin{tinfobox*}{Třetí podmínka}
         Pro každý pravděpodobnostní polynomiální algoritmus \(\mathcal{A}\) platí:
@@ -670,7 +686,6 @@
 \subsection{Existence PRG, když P=NP}
 
 \begin{frame}{Žádné PRG, pokud $\classP=\classNP$}
-    \small
 
     \visible<2->{\begin{timportantframe}
         Pokud by platilo $\classP=\classNP$, pak by žádné pseudonáhodné generátory neexistovaly.
@@ -683,13 +698,17 @@
         G(s)=y.
     \]}
 
-    \visible<4->{\begin{itemize}
+\end{frame}
+
+\begin{frame}{Žádné PRG, pokud $\classP=\classNP$}
+
+    \visible<2->{\begin{itemize}
         \item Uvažujme jazyk
         \[
             L_G =\set{y : \exists s\in\{0,1\}^n: G(s)=y}.
         \]
         Tento jazyk patří do \(\classNP\), protože certifikátem (nápovědou) je seed~\(s\).
-        \visible<5->{\item Rozlišovač \(\mapping{\mathcal{D}}{\set{0,1}^{\ell(n)}}{\set{0,1}}\) se vstupem \(y\) udělá:
+        \visible<3->{\item Rozlišovač \(\mapping{\mathcal{D}}{\set{0,1}^{\ell(n)}}{\set{0,1}}\) se vstupem \(y\) udělá:
         \[
             \mathcal{D}(y)=1
             \quad\Longleftrightarrow\quad
@@ -848,7 +867,6 @@
 \subsection{Narozeninový paradox a~hledání kolizí}
 
 \begin{frame}{Narozeninový paradox}
-    \footnotesize
 
     \visible<2->{\begin{tinfobox}{Otázka}
         Jaká je pravděpodobnost, že mezi \(n\) lidmi existují alespoň dva,
@@ -857,13 +875,17 @@
 
     \visible<3->{Nechť \(C\) značí počet dvojic lidí, které \markdarkred{mají narozeniny ve stejný den}.}
 
-    \visible<4->{\begin{align*}
+\end{frame}
+
+\begin{frame}{Narozeninový paradox}
+
+    \visible<2->{\begin{align*}
         \Pr[C>0]&=1-\Pr[C=0]\\
         \Pr[C=0]&=\frac{365}{365}\cdot\frac{364}{365}\cdot\frac{363}{365}\cdots\frac{365-n+1}{365}\\
         \Pr[C>0]&=1-\prod_{i=0}^{n-1}\frac{365-i}{365}
     \end{align*}}
 
-    \visible<5->{\begin{tnoticeframe*}
+    \visible<3->{\begin{tnoticeframe*}
         Už pro \(n=23\) vychází pravděpodobnost přibližně \(50{,}7\ \%\).
     \end{tnoticeframe*}}
 
@@ -876,7 +898,6 @@
 \end{frame}
 
 \begin{frame}{Narozeninový paradox a~kolize hashů}
-    \small
 
     \visible<2->{\begin{itemize}
         \item Uvažujme hešovací funkci $H_r:\set{0,1}^* \to \set{0,1}^r$. Možných hashů je~$2^r$.
@@ -894,7 +915,6 @@
 \end{frame}
 
 \begin{frame}{Narozeninový paradox a~kolize hashů}
-    \small
 
     \visible<2->{\obrazek[0.18\textheight]{images/narozeninovy-paradox-a-kolize-hashu.tex}}
 
@@ -902,11 +922,17 @@
         \item Pokud budeme předpokládat, že $k$ je "velké", potom řádově porovnáme
         \[\binom{k}{2}=\frac{k(k-1)}{2}=\frac{k^{2}-k}{2}\approx \frac{k^{2}}{2}\]
         dvojic.
-        \visible<4->{\item Kolize začne být pravděpodobná, pokud $\frac{k^{2}}{2}\approx 2^{r}$, neboli $k\approx 2^{r/2}$. Pak totiž
-        \[\Pr[C>0]=1-\exp\left(-\frac{2^{r/2}(2^{r/2}-1)}{2^{r+1}}\right)\approx 1-e^{-\frac{2^{r}}{2^{r+1}}}=1-e^{-1/2}\approx 0{,}3935.\]}
+    \end{itemize}}
+\end{frame}
+
+\begin{frame}{Narozeninový paradox a~kolize hashů}
+
+    \visible<2->{\begin{itemize}
+        \item Kolize začne být pravděpodobná, pokud $\frac{k^{2}}{2}\approx 2^{r}$, neboli $k\approx 2^{r/2}$. Pak totiž
+        \[\Pr[C>0]=1-\exp\left(-\frac{2^{r/2}(2^{r/2}-1)}{2^{r+1}}\right)\approx 1-e^{-\frac{2^{r}}{2^{r+1}}}=1-e^{-1/2}\approx 0{,}3935.\]
     \end{itemize}}
 
-    \visible<5->{\begin{talertframe*}
+    \visible<3->{\begin{talertframe*}
         \begin{center}
             Kolize v~$r$-bitovém hashi lze hrubou silou hledat přibližně v~čase $2^{r/2}$.
         \end{center}
@@ -916,7 +942,6 @@
 \subsection{Bezpečnostní vlastnosti hešovacích funkcí}
 
 \begin{frame}{Bezpečnostní vlastnosti hešovacích funkcí}
-    \small
 
     \visible<2->{Uvažujme hešovací funkci
     \[
@@ -925,7 +950,11 @@
 
     \visible<3->{Dále nechť $\varepsilon$ značí nějakou zanedbatelnou funkci a~$\mathcal{A}$ pravděpodobnostní polynomiální algoritmus (útočníka).}
 
-    \visible<4->{\begin{center}
+\end{frame}
+
+\begin{frame}{Bezpečnostní vlastnosti hešovacích funkcí}
+
+    \visible<2->{\begin{center}
         \begin{tabular}{@{}p{0.25\textwidth}@{\hspace{0.5em}}p{0.7\textwidth}@{}}
             \markdarkred{Odolnost vůči nalezení vzoru} &
             Z~hashe \(y\) je těžké najít nějaké \(x\), pro které
@@ -936,8 +965,8 @@
                 \right]\leqslant \varepsilon(n).
             \]
             pro každé $n\in\N$.\\
-            \visible<5->{\markdarkred{Odolnost vůči kolizím}} &
-            \visible<5->{Je těžké najít libovolnou dvojici \(x\neq y\), pro kterou $H_n(x)=H_n(y)$, tj.
+            \visible<3->{\markdarkred{Odolnost vůči kolizím}} &
+            \visible<3->{Je těžké najít libovolnou dvojici \(x\neq y\), pro kterou $H_n(x)=H_n(y)$, tj.
             \[
                 \Pr\left[
                 (x,y)\gets\mathcal{A}(n):\;
@@ -1107,7 +1136,6 @@
 \end{frame}
 
 \begin{frame}{Proč tento protokol nestačí?}
-    \small
 
     \visible<2->{\begin{talertbox}{Hlavní problém}
         Bob sice obdrží zprávu, kterou dokáže dešifrovat svým soukromým klíčem,
@@ -1120,9 +1148,12 @@
         \item Záškodník může zprávu zachytit, změnit připojený podpis a~vydávat se za jiného odesílatele.
         \visible<4->{\item Bob potom přečte správnou zprávu \(x\), ale mylně se domnívá, že ji poslal někdo jiný.}
     \end{itemize}}
-    \visible<4->{\vspace{0.15cm}}
 
-    \visible<5->{\begin{timportantbox}{Co zde chybí?}
+\end{frame}
+
+\begin{frame}{Proč tento protokol nestačí?}
+
+    \visible<2->{\begin{timportantbox}{Co zde chybí?}
         Podpis musí být kryptograficky "svázán" se zprávou.
         \begin{center}
             \markdarkred{Podpis závisí na obsahu zprávy i~na~soukromém klíči odesílatele.}
@@ -1150,7 +1181,6 @@
 \end{frame}
 
 \begin{frame}{Podpis hashe}
-    \small
 
     \visible<2->{Podepisovat přímo celou zprávu
     \[
@@ -1160,17 +1190,19 @@
 
     \visible<3->{\begin{talertframe}
         Zpráva může být dlouhá a~asymetrické operace jsou pomalé.
-    \end{talertframe}
+    \end{talertframe}}
 
-    \vspace{0.2cm}}
+\end{frame}
 
-    \visible<4->{Mějme libovolnou \markdarkred{hešovací funkci $\mapping{H_n}{\set{0,1}^{*}}{\set{0,1}^{n}}$}}
+\begin{frame}{Podpis hashe}
 
-    \visible<5->{\begin{itemize}
+    \visible<2->{Mějme libovolnou \markdarkred{hešovací funkci $\mapping{H_n}{\set{0,1}^{*}}{\set{0,1}^{n}}$}}
+
+    \visible<3->{\begin{itemize}
         \item Alice nejprve spočítá krátký otisk zprávy $h=H_n(m)$.
-        \visible<6->{\item Podepíše až tento hash: $\sigma=\mathbf{D}\left(H_n(m),k_S^A\right)$.}
-        \visible<7->{\item Bob spočítá hash přijaté zprávy a~porovná: $\mathbf{E}\left(\sigma,k_V^A\right)\stackrel{?}{=}H_n(m)$.}
-        \visible<8->{\item Pokud se zpráva změní, změní se i~její hash a~podpis přestane sedět.}
+        \visible<4->{\item Podepíše až tento hash: $\sigma=\mathbf{D}\left(H_n(m),k_S^A\right)$.}
+        \visible<5->{\item Bob spočítá hash přijaté zprávy a~porovná: $\mathbf{E}\left(\sigma,k_V^A\right)\stackrel{?}{=}H_n(m)$.}
+        \visible<6->{\item Pokud se zpráva změní, změní se i~její hash a~podpis přestane sedět.}
     \end{itemize}}
 
 \end{frame}
@@ -1213,6 +1245,6 @@
     \end{itemize}}
 \end{frame}
 
-\zdrojeframe{katz-lindell-crypto, menezes-handbook, nist-fips202, zakon-297-2016}
+\bibframe{katz-lindell-crypto, menezes-handbook, nist-fips202, zakon-297-2016}
 
 \end{document}

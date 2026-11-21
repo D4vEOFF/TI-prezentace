@@ -232,7 +232,6 @@
 
     \begin{frame}{Pseudokód BFS}
         \begin{center}
-            \begin{adjustbox}{max width=\linewidth, max totalheight=0.8\textheight}
             \begin{minipage}{0.9\textwidth}
                 \begin{algorithm}[H]
                     \caption{BFS (prohledávání do šířky)}
@@ -243,7 +242,18 @@
                         $D(v)\gets\infty$
                     }
                     $\operatorname{stav}(v_0)\gets\textit{otevřený},D(v_0)\gets 0$\\
-                    Založ frontu $Q$ a~přidej do ní vrchol $v_0$\\
+                    Založ frontu $Q$ a~přidej do ní vrchol $v_0$
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+    \end{frame}
+
+    \begin{frame}{Pseudokód BFS}
+        \begin{center}
+            \begin{minipage}{0.9\textwidth}
+                \begin{algorithm}[H]
+                    \caption{BFS (pokračování)}
+                    \setcounter{AlgoLine}{5}
                     \While{\textup{fronta $Q$ je neprázdná}}{
                         Odeber první vrchol ve frontě $Q$ a~označ jej $v$\\
                         % \tcp{Prozkomáváme všechny dosud neobjevené sousedy}
@@ -258,7 +268,6 @@
                     }
                 \end{algorithm}
             \end{minipage}
-            \end{adjustbox}
         \end{center}
     \end{frame}
 
@@ -817,7 +826,6 @@ def bfs(graph, start):
 
     \begin{frame}{Pseudokód DFS}
         \begin{center}
-            \begin{adjustbox}{max width=\linewidth, max totalheight=0.8\textheight}
             \begin{minipage}{0.9\textwidth}
                 \begin{algorithm}[H]
                     \caption{DFS (prohledávání do hloubky)}
@@ -827,7 +835,18 @@ def bfs(graph, start):
                         $\inlist(v),\outlist(v)\gets\textit{nedefinováno}$
                     }
                     $T\gets 0$\\
-                    Zavolej DFS2($v_0$)\\
+                    Zavolej DFS2($v_0$)
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+    \end{frame}
+
+    \begin{frame}{Pseudokód DFS}
+        \begin{center}
+            \begin{minipage}{0.9\textwidth}
+                \begin{algorithm}[H]
+                    \caption{DFS (pokračování)}
+                    \setcounter{AlgoLine}{5}
                     \Function{\textup{DFS2(vrchol $v\in V$)}}{
                         $\operatorname{stav}(v)\gets\textit{otevřený}$\\
                         $T\gets T+1,\,\inlist(v)\gets T$\\
@@ -841,18 +860,29 @@ def bfs(graph, start):
                     }
                 \end{algorithm}
             \end{minipage}
-            \end{adjustbox}
         \end{center}
     \end{frame}
 
     \subsection{Implementace DFS v~Pythonu}
 
     \begin{frame}[fragile]{Implementace DFS v~Pythonu}
-        \begin{lstlisting}[style=python, basicstyle=\scriptsize\ttfamily, aboveskip=0pt, belowskip=0pt]
+        \begin{lstlisting}[style=python]
 def dfs(graph):
     state, tin, tout = {v: Stav.UNDISCOVERED for v in graph}, {}, {}
     time = 0
 
+    def dfs2(v):
+        ...
+
+    for v in graph:
+        if state[v] == Stav.UNDISCOVERED: dfs2(v)
+
+    return tin, tout, state
+        \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Implementace DFS v~Pythonu}
+        \begin{lstlisting}[style=python]
     def dfs2(v):
         nonlocal time
         state[v] = Stav.OPEN
@@ -865,11 +895,6 @@ def dfs(graph):
         state[v] = Stav.CLOSED
         time += 1
         tout[v] = time
-
-    for v in graph:
-        if state[v] == Stav.UNDISCOVERED: dfs2(v)
-
-    return tin, tout, state
         \end{lstlisting}
     \end{frame}
 
@@ -1582,6 +1607,6 @@ def dfs(graph):
         \end{columns}
     \end{frame}
 
-    \zdrojeframe{mares-valla-labyrint, cormen-algorithms}
+    \bibframe{mares-valla-labyrint, cormen-algorithms}
 
 \end{document}

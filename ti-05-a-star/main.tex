@@ -160,7 +160,6 @@
 
     \begin{frame}{Pseudokód algoritmu \Astar}
         \begin{center}
-            \begin{adjustbox}{max width=\linewidth, max totalheight=0.8\textheight}
             \begin{minipage}{0.9\textwidth}
                 \begin{algorithm}[H]
                     \caption{\Astar}
@@ -169,7 +168,18 @@
                     \ForEach{\textup{vrchol $v\in V$}}{
                         $\operatorname{stav}(v)\gets\textit{nenalezený},\, D(v)\gets\infty,\,f(v)\gets\infty$
                     }
-                    $\operatorname{stav}(v_0)\gets\textit{otevřený},\, D(v_0)\gets 0,\,f(v_0)\gets\psi(v_0)$\\
+                    $\operatorname{stav}(v_0)\gets\textit{otevřený},\, D(v_0)\gets 0,\,f(v_0)\gets\psi(v_0)$
+                \end{algorithm}
+            \end{minipage}
+        \end{center}
+    \end{frame}
+
+    \begin{frame}{Pseudokód algoritmu \Astar}
+        \begin{center}
+            \begin{minipage}{0.9\textwidth}
+                \begin{algorithm}[H]
+                    \caption{\Astar{} (pokračování)}
+                    \setcounter{AlgoLine}{3}
                     \While{\textup{existují otevřené vrcholy}}{
                         $v\gets$ otevřený vrchol s~nejmenším $f$-skóre\\
                         \lIf{$v=g$}{\Return{$D(v)$}}
@@ -185,7 +195,6 @@
                     }
                 \end{algorithm}
             \end{minipage}
-            \end{adjustbox}
         \end{center}
     \end{frame}
 
@@ -405,7 +414,6 @@
     \end{frame}
 
     \begin{frame}{Správnost algoritmu \Astar}
-        \small
         \begin{columns}
             \column{40mm}
             \visible<2->{\obrazek[0.57\textheight]{images/spravnost-astar.tex}}
@@ -420,12 +428,23 @@
                     &\leqslant D(v^{\prime})+w(v,v^{\prime})+\psi(v) \\
                     &<D(v)+\psi(v)=f(v).
                 \end{align*}}
-                \visible<5->{\item Celkově $f(v^{\prime})<f(v)$.}
-                \visible<6->{\item To však znamená, že algoritmus by upřednostnil buď $v^{\prime}$, a~nebo jiný vrchol různý od $v$, což je \markdarkred{spor}.}
             \end{itemize}
         \end{columns}
     \end{frame}
 
-    \zdrojeframe{mares-valla-labyrint, russell-norvig-aima}
+    \begin{frame}{Správnost algoritmu \Astar}
+        \begin{columns}
+            \column{40mm}
+            \obrazek[0.57\textheight]{images/spravnost-astar.tex}
+
+            \column{\dimexpr\linewidth-40mm-5mm}
+            \begin{itemize}
+                \visible<2->{\item Celkově $f(v^{\prime})<f(v)$.}
+                \visible<3->{\item To však znamená, že algoritmus by upřednostnil buď $v^{\prime}$, a~nebo jiný vrchol různý od $v$, což je \markdarkred{spor}.}
+            \end{itemize}
+        \end{columns}
+    \end{frame}
+
+    \bibframe{mares-valla-labyrint, russell-norvig-aima}
 
 \end{document}
