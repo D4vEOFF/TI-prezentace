@@ -1,19 +1,9 @@
 % Schéma matice proměnných X v převodu NzMna na SAT. Řádky odpovídají pořadí
 % prvku množiny, sloupce vrcholům. Barvy podmínek jsou stejné jako v obrázku
 % nzmna-sat-formule.tex; podmínky se odkrývají v pořadí, v jakém jsou
-% uvedeny na snímku „Podmínky kladené na matici X“ (snímky 3-6).
-\input{images/nzmna-sat-barvy.tex}
+% uvedeny na snímku „Podmínky kladené na matici X“ (snímky 3-6). Bubliny
+% mají styl formulacallout z assets/macros.tex.
 \begin{tikzpicture}[
-    bublina/.style={
-        rectangle callout,
-        rounded corners=4pt,
-        line width=0.4pt,
-        inner xsep=5pt,
-        inner ysep=4pt,
-        callout pointer width=2.5mm,
-        align=center,
-        font=\small
-    },
     pruh/.style={rounded corners=4pt, line width=0.4pt}
 ]
 
@@ -21,13 +11,13 @@
     % Zvýrazněné řádky a sloupec (pod prvky matice)
     % ------------------------------------------------------------------
     % sloupec j: nejvýše jedna jednička v každém sloupci
-    \draw[pruh, visible on=<5->, fill=bublinaoranzovabg, draw=bublinaoranzovafg]
+    \draw[pruh, visible on=<5->, fill=calloutorangebg, draw=calloutorangefg]
         (3.15,0.38) rectangle (4.35,-4.13);
     % řádek i: nejvýše jedna jednička v každém řádku
-    \draw[pruh, fill opacity=0.8, visible on=<3->, fill=bublinacervenabg, draw=bublinacervenafg]
+    \draw[pruh, fill opacity=0.8, visible on=<3->, fill=calloutredbg, draw=calloutredfg]
         (-0.55,-1.93) rectangle (6.8,-2.57);
     % řádek 1: alespoň jedna jednička v každém řádku
-    \draw[pruh, fill opacity=0.8, visible on=<4->, fill=bublinazelenabg, draw=bublinazelenafg]
+    \draw[pruh, fill opacity=0.8, visible on=<4->, fill=calloutgreenbg, draw=calloutgreenfg]
         (-0.55,0.32) rectangle (6.8,-0.32);
 
     % ------------------------------------------------------------------
@@ -63,30 +53,26 @@
     % ------------------------------------------------------------------
     % Bubliny s podmínkami (texty jako v obrázku výsledné formule)
     % ------------------------------------------------------------------
-    \node[bublina, visible on=<3->, anchor=west,
-        fill=bublinacervenabg, draw=bublinacervenafg,
+    \node[formulacallout=red, visible on=<3->,
         callout absolute pointer={(6.8,-2.25)}]
-        at (7.7,-2.25) {Nejvýše jedna jednička\\v~každém řádku};
+        at (6.8,-2.25) {Nejvýše jedna jednička\\v~každém řádku};
 
-    \node[bublina, visible on=<4->, anchor=west,
-        fill=bublinazelenabg, draw=bublinazelenafg,
+    \node[formulacallout=green, visible on=<4->,
         callout absolute pointer={(6.8,0)}]
-        at (7.7,0) {Alespoň jedna jednička\\v~každém řádku};
+        at (6.8,0) {Alespoň jedna jednička\\v~každém řádku};
 
-    \node[bublina, visible on=<5->, anchor=north,
-        fill=bublinaoranzovabg, draw=bublinaoranzovafg,
+    \node[formulacallout=orange, visible on=<5->, anchor=north, xshift=0pt,
         callout absolute pointer={(3.75,-4.13)}]
         at (3.75,-4.8) {Nejvýše jedna jednička v~každém sloupci};
 
     % vazba x_{i,j} => v_j: jednička ve sloupci j vynutí vybrání vrcholu j
-    \draw[pruh, visible on=<6->, fill=bublinafialovabg, draw=bublinafialovafg]
+    \draw[pruh, visible on=<6->, fill=calloutpurplebg, draw=calloutpurplefg]
         (3.4,0.72) rectangle (4.1,1.28);
     \node[visible on=<6->] at (3.75,1.0) {$v_j$};
-    \draw[-latex, thick, visible on=<6->, draw=bublinafialovafg]
+    \draw[-latex, thick, visible on=<6->, draw=calloutpurplefg]
         (3.75,0.38) -- (3.75,0.72);
-    \node[bublina, visible on=<6->, anchor=west,
-        fill=bublinafialovabg, draw=bublinafialovafg,
+    \node[formulacallout=purple, visible on=<6->,
         callout absolute pointer={(4.1,1.1)}]
-        at (5.0,2.0) {Očíslované vrcholy\\jsou vybrané};
+        at (4.1,2.0) {Očíslované vrcholy\\jsou vybrané};
 
 \end{tikzpicture}

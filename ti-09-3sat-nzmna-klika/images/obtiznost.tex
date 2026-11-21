@@ -1,15 +1,7 @@
-% Složení převodu f a algoritmu pro B jako vývojový diagram
-% (makra \flow... z assets/macros.tex).
-\begin{tikzpicture}[
-    font=\small,
-    prob/.style={
-        draw,
-        circle,
-        thick,
-        minimum size=8mm,
-        inner sep=0pt
-    }
-]
+% Složení převodu f a algoritmu pro B jako vývojový diagram (makra \flow...)
+% nad převodem problémů A -> B (styly problem a reduction); vše
+% z assets/macros.tex.
+\begin{tikzpicture}[font=\small]
     % Konkretni vypocet
     \flowio{x}{(0,-0.8)}{vstup $x$}
     \flowstep{red}{(2.6,-0.8)}{převod $f$}
@@ -21,11 +13,10 @@
     \flowarrow{fx}{alg}
 
     % Abstraktni rovina
-    \node[prob] (A) at (0,0.9) {$A$};
-    \node[prob] (B) at (5.9,0.9) {$B$};
+    \node[problem] (A) at (0,1.0) {$A$};
+    \node[problem] (B) at (5.9,1.0) {$B$};
 
-    \draw[->, >=stealth, thick, bend left=18]
-        (A) to node[midway, above] {$f$} (B);
+    \draw[reduction] (A) to[bend left=18] node[above] {$f$} (B);
 
     % Propojeni abstraktni a konkretni roviny
     \draw[thick, densely dashed] (A) -- (x);
