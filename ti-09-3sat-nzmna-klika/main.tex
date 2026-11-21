@@ -436,12 +436,176 @@
         \visible<5->{Polynomialita převodu je zřejmá: Graf $G$ má maximálně $n$ vrcholů a~hran může mít maximálně \textbf{kvadraticky mnoho}.}
     \end{frame}
 
+    \subsection{Převod NzMna na SAT}
+
+    \begin{frame}{Převod $\NZMNA\rightarrow\SAT$}{Bonus}
+        \visible<2->{\begin{tinfoframe*}
+            \begin{center}
+                Bonusová část. Postup je převzat z~knihy \cite{mares-valla-labyrint}.
+            \end{center}
+        \end{tinfoframe*}}
+        \begin{itemize}
+            \visible<3->{\item Máme zadaný graf $G=(V,E)$ s~vrcholy očíslovanými $1,\dots,n$ a~číslo $k\in\N$. Chceme sestrojit formuli $\varphi$ v~CNF takovou, že platí:
+            \begin{center}
+                $\varphi$ je splnitelná právě tehdy, když v~grafu $G$ existuje nezávislá množina velikosti alespoň $k$.
+            \end{center}}
+            \visible<4->{\item Pro každý vrchol $j$ zavedeme proměnnou $v_j$ s~významem
+            \[v_j=1\iff\text{vrchol $j$ vybereme do množiny}.\]}
+        \end{itemize}
+        \visible<5->{\begin{tnoticeframe*}
+            \begin{center}
+                Ohodnocení proměnných $v_1,\dots,v_n$ tak popisuje množinu vrcholů $M=\set{j\mid v_j=1}$.
+            \end{center}
+        \end{tnoticeframe*}}
+    \end{frame}
+
+    \begin{frame}{Množina musí být nezávislá}
+        \begin{itemize}
+            \visible<2->{\item Žádné dva vybrané vrcholy nesmí být spojeny hranou.}
+            \visible<3->{\item Pro každou hranu $ij\in E$ proto přidáme klauzuli
+            \[(\neg v_i\lor\neg v_j).\]}
+            \visible<4->{\item Klauzule je splněna právě tehdy, když alespoň jeden z~vrcholů $i,j$ \textbf{není} vybrán.}
+        \end{itemize}
+        \visible<5->{\begin{timportantframe}
+            \begin{center}
+                Zbývá zajistit, aby byla množina \textbf{dostatečně velká}.
+            \end{center}
+        \end{timportantframe}}
+        \visible<6->{\begin{talertframe*}
+            \begin{center}
+                Formule však neumí přímo "spočítat", kolik proměnných $v_j$ je rovno jedné.
+            \end{center}
+        \end{talertframe*}}
+    \end{frame}
+
+    \begin{frame}{Velikost množiny: lest s~očíslováním}
+        \begin{itemize}
+            \visible<2->{\item Vybrané vrcholy \textbf{očíslujeme} čísly $1,\dots,k$.}
+            \visible<3->{\item Zavedeme matici proměnných $X=(x_{i,j})$ typu $k\times n$, kde
+            \[x_{i,j}=1\iff\text{$i$-tým prvkem množiny je vrchol $j$}.\]}
+            \visible<4->{\item Např. pro $n=4$ a~$k=2$ (řádky odpovídají pořadí prvku, sloupce vrcholům):
+            \[X=\begin{pmatrix}
+                0 & \markdarkred{1} & 0 & 0\\
+                0 & 0 & 0 & \markdarkred{1}
+            \end{pmatrix}.\]}
+            \visible<5->{\item Prvním prvkem množiny je vrchol $2$, druhým vrchol $4$.}
+        \end{itemize}
+        \visible<6->{\begin{tnoticeframe*}
+            \begin{center}
+                Je-li v~každém řádku \textbf{právě jedna} jednička a~v~každém sloupci \textbf{nejvýše jedna}, vybírá matice $k$ různých vrcholů.
+            \end{center}
+        \end{tnoticeframe*}}
+    \end{frame}
+
+    \begin{frame}{Podmínky kladené na matici $X$}
+        \small
+        \setlength{\abovedisplayskip}{3pt}
+        \setlength{\belowdisplayskip}{3pt}
+        \begin{enumerate}
+            \visible<2->{\item V~každém řádku je \textbf{nejvýše jedna} jednička:
+            \[(\neg x_{i,j}\lor\neg x_{i,j'})\quad\text{pro všechna $i$ a~$j\neq j'$}.\]}
+            \visible<3->{\item V~každém řádku je \textbf{alespoň jedna} jednička:
+            \[(x_{i,1}\lor x_{i,2}\lor\dots\lor x_{i,n})\quad\text{pro všechna $i$}.\]}
+            \visible<4->{\item V~každém sloupci je \textbf{nejvýše jedna} jednička:
+            \[(\neg x_{i,j}\lor\neg x_{i',j})\quad\text{pro všechna $j$ a~$i\neq i'$}.\]}
+            \visible<5->{\item Očíslované vrcholy musí být vybrané, tj. $x_{i,j}\Rightarrow v_j$. Implikaci $a\Rightarrow b$ zapíšeme jako klauzuli $(\neg a\lor b)$:
+            \[(\neg x_{i,j}\lor v_j)\quad\text{pro všechna $i$ a~$j$}.\]}
+        \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Výsledná formule}
+        \visible<2->{Formule $\varphi$ je konjunkcí všech dosud zavedených klauzulí:}
+        \visible<2->{\obrazek[0.66\textheight]{images/nzmna-sat-formule.tex}}
+        \visible<3->{\begin{center}
+            \footnotesize Formule $\varphi$ je v~CNF s~proměnnými $v_1,\dots,v_n$ a~$x_{1,1},\dots,x_{k,n}$.
+        \end{center}}
+    \end{frame}
+
+    \begin{frame}{Korektnost převodu}
+        \small
+        \begin{itemize}
+            \visible<2->{\item[$\Rightarrow$] Nechť $M$ je nezávislá množina, $|M|\geqslant k$. Vybereme z~ní $k$ vrcholů $u_1,\dots,u_k$.}
+            \begin{itemize}
+                \visible<3->{\item Nastavíme $v_j=1\iff j\in M$ a~$x_{i,j}=1\iff j=u_i$.}
+                \visible<4->{\item Snadno ověříme, že jsou splněny všechny klauzule.}
+            \end{itemize}
+            \visible<5->{\item[$\Leftarrow$] Nechť máme splňující ohodnocení formule $\varphi$ a~$M=\set{j\mid v_j=1}$.}
+            \begin{itemize}
+                \visible<6->{\item Díky klauzulím pro hrany je $M$ nezávislá.}
+                \visible<7->{\item Každý řádek matice $X$ určuje jeden vrchol a~různé řádky určují různé vrcholy.}
+                \visible<8->{\item Všechny tyto vrcholy leží v~$M$ $\implies$ $|M|\geqslant k$.}
+            \end{itemize}
+        \end{itemize}
+        \visible<9->{\begin{tinfoframe*}
+            \begin{center}
+                Množina $M$ může obsahovat i~\textbf{neočíslované} vrcholy. To nevadí, podstatné je, že obsahuje alespoň $k$ očíslovaných.
+            \end{center}
+        \end{tinfoframe*}}
+    \end{frame}
+
+    \begin{frame}{Převod je polynomiální}
+        \begin{itemize}
+            \visible<2->{\item Je-li $k>n$, nezávislá množina velikosti $k$ neexistuje $\implies$ vypíšeme nesplnitelnou formuli, např. $(y)\land(\neg y)$.}
+            \visible<3->{\item Jinak platí $k\leqslant n$ a~počty klauzulí jsou:}
+            \begin{itemize}
+                \visible<4->{\item nezávislost: $|E|\leqslant n^{2}$,}
+                \visible<5->{\item řádky: nejvýše $k\cdot n^{2}$ dvojic a~$k$ dlouhých klauzulí délky $n$,}
+                \visible<6->{\item sloupce: nejvýše $n\cdot k^{2}$,}
+                \visible<7->{\item vazba na $v_j$: $k\cdot n$.}
+            \end{itemize}
+            \visible<8->{\item Celkem tedy formule obsahuje $\bigO(n^{3})$ literálů.}
+        \end{itemize}
+        \visible<9->{\begin{tnoticeframe*}
+            \begin{center}
+                Formuli sestrojíme v~polynomiálním čase $\implies$ $\NZMNA\rightarrow\SAT$.
+            \end{center}
+        \end{tnoticeframe*}}
+    \end{frame}
+
+    \begin{frame}{Převod $\NZMNA\rightarrow\SAT$}{Příklad}
+        \begin{columns}[c]
+            \begin{column}{0.36\textwidth}
+                \obrazek[0.36\textheight]{images/nzmna-sat-priklad.tex}
+            \end{column}
+            \begin{column}{0.6\textwidth}
+                \visible<2->{Hledáme nezávislou množinu velikosti alespoň $k=2$.}
+
+                \visible<3->{Klauzule pro hrany:
+                \begin{align*}
+                    &(\neg v_1\lor\neg v_2)\land(\neg v_1\lor\neg v_3)\land(\neg v_1\lor\neg v_4)\\
+                    \land\;&(\neg v_2\lor\neg v_3)\land(\neg v_3\lor\neg v_4)
+                \end{align*}}
+            \end{column}
+        \end{columns}
+        \begin{itemize}
+            \visible<4->{\item Zvolíme nezávislou množinu $M=\set{2,4}$, tj. $v_2=v_4=1$ a~$v_1=v_3=0$.}
+            \visible<5->{\item Každá klauzule pro hranu obsahuje $\neg v_1$ nebo $\neg v_3$ $\implies$ je splněna.}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Převod $\NZMNA\rightarrow\SAT$}{Příklad}
+        \begin{itemize}
+            \visible<2->{\item Vrchol $2$ očíslujeme jako první, vrchol $4$ jako druhý prvek množiny:
+            \[X=\begin{pmatrix}
+                0 & \markdarkred{1} & 0 & 0\\
+                0 & 0 & 0 & \markdarkred{1}
+            \end{pmatrix},\quad\text{tj. } x_{1,2}=x_{2,4}=1.\]}
+            \visible<3->{\item V~každém řádku je právě jedna jednička a~v~každém sloupci nejvýše jedna. \cmark}
+            \visible<4->{\item Vazba na $v_j$: implikace $x_{1,2}\Rightarrow v_2$ a~$x_{2,4}\Rightarrow v_4$ platí, ostatní mají nepravdivý předpoklad. \cmark}
+        \end{itemize}
+        \visible<5->{\begin{tnoticeframe*}
+            \begin{center}
+                Našli jsme splňující ohodnocení formule $\varphi$, které odpovídá nezávislé množině $\set{2,4}$.
+            \end{center}
+        \end{tnoticeframe*}}
+    \end{frame}
+
     \subsection{Převod NzMna na 3-SAT}
 
     \begin{frame}{Převod $\NZMNA\rightarrow\THREESAT$}
         \begin{itemize}
-            \visible<2->{\item Tento převod je již trochu složitější $\implies$ vynecháme.}
-            \visible<3->{\item Myšlenka je taková, že problém převedeme na $\SAT$ a~pak využijeme nám již známý převod $\SAT$ na $\THREESAT$.}
+            \visible<2->{\item Převod dostaneme složením dvou převodů, které už známe.}
+            \visible<3->{\item Problém nejprve převedeme na $\SAT$ (viz bonusová část) a~pak využijeme převod $\SAT$ na $\THREESAT$. Díky tranzitivitě převoditelnosti platí $\NZMNA\rightarrow\THREESAT$.}
         \end{itemize}
         \visible<4->{\obrazek{images/nzmna-3sat.tex}}
     \end{frame}
@@ -539,7 +703,7 @@
         \visible<2->{\obrazek{images/shrnuti.tex}}
         \visible<3->{\begin{talertframe*}
             \begin{center}
-                Převod $\NZMNA\rightarrow\SAT$ jsme si pouze naznačili.
+                Převod $\NZMNA\rightarrow\SAT$ je součástí bonusové části.
             \end{center}
         \end{talertframe*}}
     \end{frame}

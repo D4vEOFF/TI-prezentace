@@ -4,7 +4,10 @@
     \node[vertex,minimum width=1.5cm] (threesat) at (10,0) {$\THREESAT$};
 
     \draw[diredge, bend left=25, color=green]
-        (nzmna) to (sat);
+        (nzmna) to
+        node[midway, above, align=center]
+        {$\mathcal{O}(n^{3})$}
+        (sat);
 
     \draw[diredge, bend left=25]
         (threesat) to
