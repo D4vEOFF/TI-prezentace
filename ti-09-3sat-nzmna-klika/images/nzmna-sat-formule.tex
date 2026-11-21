@@ -1,76 +1,51 @@
 % Výsledná formule převodu NzMna na SAT. Každá část formule je podbarvena
-% vlastní barvou a doplněna bublinou s vysvětlivkou.
-\input{images/nzmna-sat-barvy.tex}
-\begin{tikzpicture}[
-    cast/.style={
-        anchor=west,
-        rounded corners=4pt,
-        inner xsep=4pt,
-        inner ysep=3pt,
-        minimum height=11mm
-    },
-    spojka/.style={anchor=east},
-    bublina/.style={
-        rectangle callout,
-        anchor=west,
-        rounded corners=4pt,
-        line width=0.4pt,
-        inner xsep=5pt,
-        inner ysep=4pt,
-        callout pointer width=2.5mm,
-        text=black,
-        xshift=9mm
-    }
-]
+% vlastní barvou a doplněna bublinou s vysvětlivkou (styly formulapart,
+% formulaconn a formulacallout z assets/macros.tex).
+\begin{tikzpicture}
 
     % ------------------------------------------------------------------
     % Jednotlivé části formule
     % ------------------------------------------------------------------
-    \node[cast, fill=bublinamodrabg] (nezavislost) at (0.2,0)
+    \node[formulapart=blue] (nezavislost) at (0.2,0)
         {$\displaystyle\bigwedge_{ij\in E}(\neg v_i\lor\neg v_j)$};
 
-    \node[cast, fill=bublinacervenabg] (radkyN) at (0.2,-1.5)
+    \node[formulapart=red] (radkyN) at (0.2,-1.5)
         {$\displaystyle\bigwedge_{i=1}^{k}\;\bigwedge_{j<j^{\prime}}(\neg x_{i,j}\lor\neg x_{i,j^{\prime}})$};
 
-    \node[cast, fill=bublinazelenabg] (radkyA) at (0.2,-3)
+    \node[formulapart=green] (radkyA) at (0.2,-3)
         {$\displaystyle\bigwedge_{i=1}^{k}(x_{i,1}\lor x_{i,2}\lor\dots\lor x_{i,n})$};
 
-    \node[cast, fill=bublinaoranzovabg] (sloupce) at (0.2,-4.5)
+    \node[formulapart=orange] (sloupce) at (0.2,-4.5)
         {$\displaystyle\bigwedge_{j=1}^{n}\;\bigwedge_{i<i^{\prime}}(\neg x_{i,j}\lor\neg x_{i^{\prime},j})$};
 
-    \node[cast, fill=bublinafialovabg] (vazba) at (0.2,-6)
+    \node[formulapart=purple] (vazba) at (0.2,-6)
         {$\displaystyle\bigwedge_{i=1}^{k}\;\bigwedge_{j=1}^{n}(\neg x_{i,j}\lor v_j)$};
 
     % ------------------------------------------------------------------
     % Levý sloupec se spojkami
     % ------------------------------------------------------------------
-    \node[spojka] at (0.1,0)    {$\varphi\;=$};
-    \node[spojka] at (0.1,-1.5) {$\land$};
-    \node[spojka] at (0.1,-3)   {$\land$};
-    \node[spojka] at (0.1,-4.5) {$\land$};
-    \node[spojka] at (0.1,-6)   {$\land$};
+    \node[formulaconn] at (0.1,0)    {$\varphi\;=$};
+    \node[formulaconn] at (0.1,-1.5) {$\land$};
+    \node[formulaconn] at (0.1,-3)   {$\land$};
+    \node[formulaconn] at (0.1,-4.5) {$\land$};
+    \node[formulaconn] at (0.1,-6)   {$\land$};
 
     % ------------------------------------------------------------------
     % Bubliny s vysvětlivkami (zarovnané k nejširší části formule)
     % ------------------------------------------------------------------
-    \node[bublina, fill=bublinamodrabg, draw=bublinamodrafg,
-        callout absolute pointer={(nezavislost.east)}]
+    \node[formulacallout=blue, callout absolute pointer={(nezavislost.east)}]
         at (radkyA.east |- nezavislost) {Vybrané vrcholy tvoří nezávislou množinu};
 
-    \node[bublina, fill=bublinacervenabg, draw=bublinacervenafg,
-        callout absolute pointer={(radkyN.east)}]
+    \node[formulacallout=red, callout absolute pointer={(radkyN.east)}]
         at (radkyA.east |- radkyN) {Nejvýše jedna jednička v~každém řádku};
 
-    \node[bublina, fill=bublinazelenabg, draw=bublinazelenafg,
-        callout absolute pointer={(radkyA.east)}]
+    \node[formulacallout=green, callout absolute pointer={(radkyA.east)}]
         at (radkyA.east |- radkyA) {Alespoň jedna jednička v~každém řádku};
 
-    \node[bublina, fill=bublinaoranzovabg, draw=bublinaoranzovafg,
-        callout absolute pointer={(sloupce.east)}]
+    \node[formulacallout=orange, callout absolute pointer={(sloupce.east)}]
         at (radkyA.east |- sloupce) {Nejvýše jedna jednička v~každém sloupci};
 
-    \node[bublina, fill=bublinafialovabg, draw=bublinafialovafg,
-        callout absolute pointer={(vazba.east)}]
+    \node[formulacallout=purple, callout absolute pointer={(vazba.east)}]
         at (radkyA.east |- vazba) {Očíslované vrcholy jsou vybrané};
 
 \end{tikzpicture}

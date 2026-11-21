@@ -1,29 +1,22 @@
-\begin{tikzpicture}[>=stealth, thick, scale=0.8]
-    \node[vertex,minimum width=1.5cm] (nzmna) at (0,0) {\INDSET};
-    \node[vertex,minimum width=1.5cm] (sat) at (5,0) {\SAT};
-    \node[vertex,minimum width=1.5cm] (threesat) at (10,0) {\THREESAT};
+% Převod NzMna na 3-SAT složením převodů NzMna -> SAT -> 3-SAT (zvýrazněno)
+% (styly problem a reduction z assets/macros.tex).
+\begin{tikzpicture}[
+    font=\small,
+    composed/.style={draw=darkgreen, text=darkgreen}
+]
+    \node[problem] (nzmna) at (0,0) {\INDSET};
+    \node[problem] (sat) at (4,0) {\SAT};
+    \node[problem] (threesat) at (8,0) {\THREESAT};
 
-    \draw[diredge, bend left=25, color=green]
-        (nzmna) to
-        node[midway, above, align=center]
-        {$\mathcal{O}(n^{3})$}
-        (sat);
+    \draw[reduction, composed, bend left=25]
+        (nzmna) to node[midway, above] {$\bigO(n^{3})$} (sat);
 
-    \draw[diredge, bend left=25]
-        (threesat) to
-        node[midway, below, align=center]
-        {$\mathcal{O}(n^{2})$}
-        (nzmna);
+    \draw[reduction, composed, bend left=25]
+        (sat) to node[midway, above] {$\bigO(n)$} (threesat);
 
-    \draw[diredge, bend left=25, color=green]
-        (sat) to
-        node[midway, above, align=center]
-        {$\mathcal{O}(n)$}
-        (threesat);
+    \draw[reduction, bend left=25]
+        (threesat) to node[midway, above] {$\bigO(1)$} (sat);
 
-    \draw[diredge, bend left=25]
-        (threesat) to
-        node[midway, above, align=center]
-        {$\mathcal{O}(1)$}
-        (sat);
+    \draw[reduction, bend left=32]
+        (threesat) to node[midway, below] {$\bigO(n^{2})$} (nzmna);
 \end{tikzpicture}

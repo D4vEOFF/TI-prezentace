@@ -1,16 +1,17 @@
-\begin{tikzpicture}[>=stealth, thick, scale=1.2]
-    \node[vertex,minimum width=1.5cm] (sat) at (0,0) {\SAT};
-    \node[vertex,minimum width=1.5cm] (threesat) at (5,0) {\THREESAT};
+% Vzájemné převody SAT a 3-SAT (styly problem a reduction z assets/macros.tex).
+\begin{tikzpicture}[font=\small]
+    \node[problem] (sat) at (0,0) {\SAT};
+    \node[problem] (threesat) at (6,0) {\THREESAT};
 
-    \draw[diredge, bend left=25]
-        (sat) to
+    \draw[reduction]
+        (sat) to[bend left=25]
         node[midway, above, align=center]
-        {$\mathcal{O}(n)$\\\footnotesize převod na formuli v 3-CNF}
+        {$\bigO(n)$\\\footnotesize převod na formuli v~3-CNF}
         (threesat);
 
-    \draw[diredge, bend left=25]
-        (threesat) to
+    \draw[reduction]
+        (threesat) to[bend left=25]
         node[midway, below, align=center]
-        {$\mathcal{O}(1)$\\\footnotesize identita}
+        {$\bigO(1)$\\\footnotesize identita}
         (sat);
 \end{tikzpicture}

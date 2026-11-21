@@ -447,20 +447,15 @@
     \subsection{Převod \INDSET{} na \SAT}
 
     \begin{frame}{Převod \INDSET{} na \SAT}{Bonus}
-        \visible<2->{\begin{tinfoframe*}
-            \begin{center}
-                Bonusová část. Postup je převzat z~knihy \cite{mares-valla-labyrint}.
-            \end{center}
-        \end{tinfoframe*}}
         \begin{itemize}
-            \visible<3->{\item Máme zadaný graf $G=(V,E)$ s~vrcholy očíslovanými $1,\dots,n$ a~číslo $k\in\N$. Chceme sestrojit formuli $\varphi$ v~CNF takovou, že platí:
+            \visible<2->{\item Máme zadaný graf $G=(V,E)$ s~vrcholy očíslovanými $1,\dots,n$ a~číslo $k\in\N$. Chceme sestrojit formuli $\varphi$ v~CNF takovou, že platí:
             \begin{center}
                 $\varphi$ je splnitelná právě tehdy, když v~grafu $G$ existuje nezávislá množina velikosti alespoň $k$.
             \end{center}}
-            \visible<4->{\item Pro každý vrchol $j$ zavedeme proměnnou $v_j$ s~významem
+            \visible<3->{\item Pro každý vrchol $j$ zavedeme proměnnou $v_j$ s~významem
             \[v_j=1\iff\text{vrchol $j$ vybereme do množiny}.\]}
         \end{itemize}
-        \visible<5->{\begin{tnoticeframe*}
+        \visible<4->{\begin{tnoticeframe*}
             \begin{center}
                 Ohodnocení proměnných $v_1,\dots,v_n$ tak popisuje množinu vrcholů $M=\set{j\mid v_j=1}$.
             \end{center}
@@ -709,11 +704,6 @@
 
     \begin{frame}{Shrnutí}
         \visible<2->{\obrazek{images/shrnuti.tex}}
-        \visible<3->{\begin{talertframe*}
-            \begin{center}
-                Převod \INDSET{} na \SAT{} je součástí bonusové části.
-            \end{center}
-        \end{talertframe*}}
     \end{frame}
 
     \bibframe{papadimitriou-complexity, mares-valla-labyrint}

@@ -578,6 +578,55 @@
     \path (#2) edge[flowarrow,flowvisible={#6},#1] node[flowbranchlabel,#3] {#4} (#5);%
 }
 
+%% Schémata převodů mezi problémy
+% Problém je zaoblený obdélník, převod šipka popsaná složitostí převodu:
+%   \node[problem] (sat) at (0,0) {\SAT};
+%   \draw[reduction] (sat) to[bend left=18] node[above] {$\bigO(n)$} (tri);
+%
+%% Formule rozdělená na barevné části s vysvětlivkami v bublinách
+% Argumentem stylů je barva z palety v theme.tex (green, red, blue, orange,
+% purple, teal). Spojky (=, \land) se sázejí vlevo se stylem formulaconn.
+%   \node[formulapart=red] (a) at (0.2,0) {$\displaystyle ...$};
+%   \node[formulaconn] at (0.1,0) {$\varphi\;=$};
+%   \node[formulacallout=red, callout absolute pointer={(a.east)}]
+%       at (a.east) {Vysvětlivka};
+% Text bubliny lze zalomit pomocí \\.
+\tikzset{
+    problem/.style={
+        draw,
+        thick,
+        rounded corners=2pt,
+        minimum width=16mm,
+        minimum height=8mm,
+        inner sep=2pt,
+        align=center
+    },
+    reduction/.style={thick, ->, >=stealth},
+    formulapart/.style={
+        anchor=west,
+        rounded corners=4pt,
+        inner xsep=4pt,
+        inner ysep=3pt,
+        minimum height=11mm,
+        fill=callout#1bg
+    },
+    formulaconn/.style={anchor=east},
+    formulacallout/.style={
+        rectangle callout,
+        anchor=west,
+        rounded corners=4pt,
+        line width=0.4pt,
+        inner xsep=5pt,
+        inner ysep=4pt,
+        callout pointer width=2.5mm,
+        align=center,
+        text=black,
+        xshift=9mm,
+        fill=callout#1bg,
+        draw=callout#1fg
+    }
+}
+
 \tikzstyle{vertex}    = [thick, draw, circle, minimum size=4mm, inner sep=1pt, outer sep=1pt, align=center]
 \tikzstyle{vertexplain}    = [minimum size=4mm, inner sep=1pt, outer sep=1pt, align=center]
 \tikzstyle{verteximg}    = [draw, circle, minimum size=4mm, inner sep=0pt, outer sep=1pt, align=center, clip]
