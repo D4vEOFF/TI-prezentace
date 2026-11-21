@@ -1,42 +1,33 @@
+% Instrukční cyklus jako vývojový diagram
+% (makra \flow... z assets/macros.tex).
 \begin{tikzpicture}[
     x=1cm, y=1cm,
-    >=stealth,
-    every node/.style={font=\small},
-    stepbox/.style={
-        draw,
-        thick,
-        rounded corners,
-        align=center,
-        text width=3.0cm,
-        minimum height=1.15cm,
-        fill=blue!12
-    },
-    arr/.style={->, thick}
+    font=\small,
+    box/.style={text width=3.0cm, minimum height=1.15cm}
 ]
 
     % Kroky cyklu rozmístěné po obvodu
-    \node[stepbox] (fetch)     at (-3.7, 1.1)  {\textbf{Čtení instrukce}\\[-1pt] {\footnotesize\itshape\color{gray!40!black} fetch}};
-    \node[stepbox] (decode)    at ( 0.0, 2.1)  {\textbf{Dekódování}\\[-1pt] {\footnotesize\itshape\color{gray!40!black} decode}};
-    \node[stepbox] (operands)  at ( 3.7, 1.1)  {\textbf{Čtení operandů}\\[-1pt] {\footnotesize\itshape\color{gray!40!black} operand fetch}};
-    \node[stepbox] (execute)   at ( 3.7,-1.1)  {\textbf{Provedení}\\[-1pt] {\footnotesize\itshape\color{gray!40!black} execute}};
-    \node[stepbox] (writeback) at ( 0.0,-2.1)  {\textbf{Uložení výsledku}\\[-1pt] {\footnotesize\itshape\color{gray!40!black} write back}};
-    \node[stepbox, fill=orange!18] (interrupt) at (-3.7,-1.1) {\textbf{Kontrola přerušení}};
+    \flowstep[box]{fetch}{(-3.7, 1.1)}{\textbf{Čtení instrukce}\\[-1pt] {\footnotesize\itshape\color{gray!40!black}fetch}}
+    \flowstep[box]{decode}{( 0.0, 2.1)}{\textbf{Dekódování}\\[-1pt] {\footnotesize\itshape\color{gray!40!black}decode}}
+    \flowstep[box]{operands}{( 3.7, 1.1)}{\textbf{Čtení operandů}\\[-1pt] {\footnotesize\itshape\color{gray!40!black}operand fetch}}
+    \flowstep[box]{execute}{( 3.7,-1.1)}{\textbf{Provedení}\\[-1pt] {\footnotesize\itshape\color{gray!40!black}execute}}
+    \flowstep[box]{writeback}{( 0.0,-2.1)}{\textbf{Uložení výsledku}\\[-1pt] {\footnotesize\itshape\color{gray!40!black}write back}}
+    \flowdecision{interrupt}{(-3.7,-1.1)}{\textbf{Kontrola}\\\textbf{přerušení}}
 
     % Obsluha přerušení uprostřed
-    \node[stepbox, fill=red!10, text width=2.5cm, font=\footnotesize] (handler) at (0,0)
-        {uložení stavu,\\ skok na obsluhu\\ přerušení};
+    \flowstep[text width=2.5cm, font=\footnotesize]{handler}{(0,0)}
+        {uložení stavu,\\ skok na obsluhu\\ přerušení}
 
     % Šipky cyklu
-    \draw[<-, thick] (decode.west) -| (fetch.north);
-    \draw[arr] (decode.east) -| (operands.north);
-    \draw[arr] (operands.south) -- (execute.north);
-    \draw[<-, thick] (writeback.east) -| (execute.south);
-    \draw[arr] (writeback.west) -| (interrupt.south);
-    \draw[arr] (interrupt.north) -- node[left, font=\footnotesize] {ne} (fetch.south);
+    \flowarrow[flowvh]{fetch.north}{decode.west}
+    \flowarrow[flowhv]{decode.east}{operands.north}
+    \flowarrow{operands.south}{execute.north}
+    \flowarrow[flowvh]{execute.south}{writeback.east}
+    \flowarrow[flowhv]{writeback.west}{interrupt.south}
+    \flowbranch{interrupt.north}{left, font=\footnotesize}{ne}{fetch.south}
 
     % Větev s přerušením
-    \draw[arr, red!70!black] (interrupt.east) -- (handler.south west);
-    \node[font=\footnotesize, text=red!70!black] at (-1.5,-1.2) {ano};
-    \draw[arr, red!70!black] (handler.north west) -- (fetch.east);
+    \flowbranch[flowhv]{interrupt.east}{pos=0.3, below, font=\footnotesize}{ano}{handler.south}
+    \flowarrow[flowvh]{handler.north}{fetch.east}
 
 \end{tikzpicture}

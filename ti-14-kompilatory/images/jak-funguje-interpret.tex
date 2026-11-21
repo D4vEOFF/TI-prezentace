@@ -1,22 +1,17 @@
+% Činnost interpretu jako vývojový diagram
+% (makra \flow... z assets/macros.tex).
 \begin{tikzpicture}[
-    box/.style={
-        draw,
-        rounded corners,
-        thick,
-        minimum width=22mm,
-        minimum height=8mm,
-        align=center,
-        font=\scriptsize
-    },
-    arrow/.style={->, thick, >=stealth}
+    font=\scriptsize,
+    box/.style={minimum width=22mm}
 ]
-    \node<2->[box] (src) at (0,0) {zdrojový\\program};
-    \node<3->[box] (read) at (2.5,0) {načtení\\příkazu};
-    \node<4->[box] (exec) at (5.0,0) {vykonání};
-    \node<5->[box] (next) at (7.5,0) {další\\příkaz};
+    \flowio<2->{src}{(0,0)}{zdrojový\\program}
+    \flowstep<3->[box]{read}{(2.5,0)}{načtení\\příkazu}
+    \flowstep<4->[box]{exec}{(5.0,0)}{vykonání}
+    \flowstep<5->[box]{next}{(7.5,0)}{další\\příkaz}
 
-    \draw<3->[arrow] (src) -- (read);
-    \draw<4->[arrow] (read) -- (exec);
-    \draw<5->[arrow] (exec) -- (next);
-    \draw<5->[arrow] (next.south) to[out=-90,in=-90] (read.south);
+    \flowarrow<3->{src}{read}
+    \flowarrow<4->{read}{exec}
+    \flowarrow<5->{exec}{next}
+    \draw[flowarrow, visible on=<5->]
+        (next.south) -- ++(0,-0.4) -| (read.south);
 \end{tikzpicture}
