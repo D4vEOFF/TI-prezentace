@@ -6,7 +6,7 @@
 \input{../assets/macros.tex}
 \input{../assets/listing.tex}
 
-\def\presentationtitle{Problémy SAT a~UNSAT}
+\def\presentationtitle{Problémy \SAT{} a~\UNSAT}
 
 \begin{document}
 
@@ -132,13 +132,15 @@
     \subsection{Konjunktivní normální forma}
 
     \begin{frame}{Konjunktivní normální forma}
-        \small
         \visible<2->{\begin{defblock}[Konjunktivní normální forma]
             Mějme logickou formuli $\varphi$ s~proměnnými $x_1,x_2,\dots,x_n$. Pak řekneme, že $\varphi$ je v~\markdarkred{konjunktivní normální formě} (CNF), pokud sestává z~klauzulí oddělených spojkou $\land$ a~literály v~každé klauzuli jsou odděleny spojkou $\lor$.
         \end{defblock}}
         \visible<3->{Tzn. každá formule v~CNF je tvaru
         \[\varphi(x_1,\dots,x_n)=\overbrace{(\ell^{1}_1\lor\underbrace{\ell^{1}_2}_\text{literál} \dots \lor \ell^{1}_{m_1})}^{\text{klauzule}}\land\dots\land(\ell^{k}_1\lor\dots\lor\ell^{k}_{m_k}).\]}
-        \visible<4->{\begin{timportantframe}
+    \end{frame}
+
+    \begin{frame}{Konjunktivní normální forma}
+        \visible<2->{\begin{timportantframe}
             S~formulemi v~CNF se lépe pracuje než s~obecnými logickými výrazy. Aby to však mělo smysl, musíme umět každou obecnou formuli do CNF nějak rychle převést.
         \end{timportantframe}}
     \end{frame}
@@ -169,32 +171,36 @@
     \end{frame}
 
     \begin{frame}{Převod do CNF pomocí tabulky}{Příklad}
-        \small
         \visible<2->{Uvažujme formuli $\varphi(x,y,z)=(x\implies y)\implies z$.}
-        \visible<3->{\begin{table}
-            \centering
-            \begin{tabular}{ccc|cc}
-            $x$     & $y$   & $z$   & $x\implies y$     & $(x\implies y)\implies z$ \\ \hline
-            $0$     & $0$   & $0$   & $1$               & $\markdarkred{0}$                         \\
-            $0$     & $0$   & $1$   & $1$               & $1$                         \\
-            $0$     & $1$   & $0$   & $1$               & $\markdarkred{0}$                         \\
-            $0$     & $1$   & $1$   & $1$               & $1$                         \\
-            $1$     & $0$   & $0$   & $0$               & $1$                         \\
-            $1$     & $0$   & $1$   & $0$               & $1$                         \\
-            $1$     & $1$   & $0$   & $1$               & $\markdarkred{0}$                         \\
-            $1$     & $1$   & $1$   & $1$               & $1$
-            \end{tabular}
-        \end{table}}
-        \visible<4->{Formule $\varphi$ je nepravdivá pro
-        \begin{itemize}
-            \item $x=0,y=0,z=0$,
-            \item $x=0,y=1,z=0$ a
-            \item $x=1,y=1,z=0$.
-        \end{itemize}}
+
+        \begin{minipage}{0.6\textwidth}
+            \visible<3->{\begin{table}
+                \centering
+                \begin{tabular}{ccc|cc}
+                $x$     & $y$   & $z$   & $x\implies y$     & $(x\implies y)\implies z$ \\ \hline
+                $0$     & $0$   & $0$   & $1$               & $\markdarkred{0}$                         \\
+                $0$     & $0$   & $1$   & $1$               & $1$                         \\
+                $0$     & $1$   & $0$   & $1$               & $\markdarkred{0}$                         \\
+                $0$     & $1$   & $1$   & $1$               & $1$                         \\
+                $1$     & $0$   & $0$   & $0$               & $1$                         \\
+                $1$     & $0$   & $1$   & $0$               & $1$                         \\
+                $1$     & $1$   & $0$   & $1$               & $\markdarkred{0}$                         \\
+                $1$     & $1$   & $1$   & $1$               & $1$
+                \end{tabular}
+            \end{table}}
+        \end{minipage}\hfill
+        \begin{minipage}{0.38\textwidth}
+            \raggedright
+            \visible<4->{Formule $\varphi$ je nepravdivá pro
+            \begin{itemize}
+                \item $x=0,y=0,z=0$,
+                \item $x=0,y=1,z=0$ a
+                \item $x=1,y=1,z=0$.
+            \end{itemize}}
+        \end{minipage}
     \end{frame}
 
     \begin{frame}{Převod do CNF pomocí tabulky}{Příklad}
-        \small
         \visible<2->{Tedy celkově sestavíme 3~klauzule:}
         \begin{itemize}
             \visible<3->{\item \((\overbrace{x}^{x=0}\lor \underbrace{y}_{y=0}\lor \overbrace{z}^{z=0})\),}
@@ -251,7 +257,6 @@
     \end{frame}
 
     \begin{frame}{Tseitinova transformace}{Příklad}
-        \small
         \visible<2->{Mějme logickou formuli $\varphi(p,q,r) = ((p \lor q) \land r) \implies \neg p$.} \visible<3->{Pak její podformule jsou}
         \begin{itemize}
             \visible<3->{\item $\neg p$,}
@@ -262,7 +267,6 @@
     \end{frame}
 
     \begin{frame}{Tseitinova transformace}{Příklad}
-        \small
         \visible<2->{Pro jednotlivé podformule zavedeme proměnné $y_1,y_2,y_3,y_4$ a~sestavíme výrazy:}
         \begin{itemize}
             \visible<3->{\item $y_4\iff \neg p$,}
@@ -344,31 +348,31 @@
     \end{frame}
 
     % =================================================================
-    \section{Problémy SAT a~UNSAT}
+    \section{Problémy \SAT{} a~\UNSAT}
     % =================================================================
 
-    \begin{titleframeenv}{Problémy SAT a~UNSAT}
+    \begin{titleframeenv}{Problémy \SAT{} a~\UNSAT}
     \end{titleframeenv}
 
-    \subsection{Problém SAT}
+    \subsection{Problém \SAT}
 
-    \begin{frame}{Problém SAT}
+    \begin{frame}{Problém \SAT}
         \begin{itemize}
             \visible<2->{\item Máme již způsob, jak rychle (tj. v~polynomiálním čase) převést formuli $\varphi$ na formuli $\varphi^{\prime}$, která je splnitelná právě tehdy, když je splnitelná i~původní formule $\varphi$.}
             \visible<3->{\item Proto se odteď zaměříme pouze na formule, které jsou v~tomto speciálním tvaru.}
             \visible<4->{\item Bude nás zajímat, zdali je zadaná formule v~CNF splnitelná, nebo ne.}
             \visible<5->{\item \emph{SATisfiability (splnitelnost)}}
         \end{itemize}
-        \visible<6->{\decproblem{Splnitelnost formule v~CNF ($\SAT$)}{
+        \visible<6->{\decproblem{Splnitelnost formule v~CNF (\SAT)}{
             Logická formule $\varphi$ v~CNF.
         }{Je formule $\varphi$ splnitelná?}}
     \end{frame}
 
-    \subsection{Problém UNSAT}
+    \subsection{Problém \UNSAT}
 
-    \begin{frame}{Problém UNSAT}
+    \begin{frame}{Problém \UNSAT}
         \visible<2->{Podobně se můžeme ptát, zdali je zadaná formule $\varphi$ \textbf{nesplnitelná}, tzn. pro každé ohodnocení jejích proměnných je $\varphi=0$.}
-        \visible<3->{\decproblem{Nesplnitelnost formule v~CNF ($\UNSAT$)}{
+        \visible<3->{\decproblem{Nesplnitelnost formule v~CNF (\UNSAT)}{
             Logická formule $\varphi$ v~CNF.
         }{Je formule $\varphi$ nesplnitelná?}}
         \visible<4->{\begin{tinfoframe*}
@@ -383,9 +387,9 @@
         \end{talertframe*}}
     \end{frame}
 
-    \subsection{Proč je SAT důležitý?}
+    \subsection{Proč je \SAT{} důležitý?}
 
-    \begin{frame}{Proč je SAT důležitý?}
+    \begin{frame}{Proč je \SAT{} důležitý?}
         \visible<2->{\begin{timportantframe}
             \begin{center}
                 Mnoho rozhodovacích problémů lze zredukovat na problém splnitelnosti nějaké vhodné formule $\varphi$ v~CNF.
@@ -393,11 +397,11 @@
         \end{timportantframe}}
         \visible<3->{\begin{tinfoframe*}
             \begin{center}
-                Později uvidíme, že dokonce lze na SAT v~jistém smyslu "převést" každý rozhodovací problém z~\textbf{určité třídy problémů}.
+                Později uvidíme, že dokonce lze na \SAT{} v~jistém smyslu "převést" každý rozhodovací problém z~\textbf{určité třídy problémů}.
             \end{center}
         \end{tinfoframe*}}
     \end{frame}
     
-    \zdrojeframe{papadimitriou-complexity, mares-valla-labyrint}
+    \bibframe{papadimitriou-complexity, mares-valla-labyrint}
 
 \end{document}

@@ -500,20 +500,36 @@ Titulní strana bere všechny údaje z příkazů `\title`, `\subtitle`, `\autho
 
 Bez tohoto zápisu se použije výchozí hodnota `Teoretická informatika`.
 
+### Názvy problémů
+
+Názvy výpočetních problémů se nepíší ručně, ale makry z `assets/macros.tex` (`\SAT`, `\THREESAT`, `\UNSAT`, `\INDSET`, `\CLIQUE`, `\SCHEDULING`, `\SUDOKU`, `\HALT`, `\FACTOR`). Makro se samo přizpůsobí módu: v textu vysází název zelenými kapitálkami, v matematickém módu kapitálkami písma matematiky.
+
+```latex
+Problém \SAT{} je \classNP-úplný.        % text: zelené kapitálky
+\[\INDSET(G,k)=\CLIQUE(\bar{G},k)\]       % matematika: kapitálky
+```
+
+Nový problém se zavede makrem `\newproblem`, konstanty v názvu se píší v matematickém módu. Jednorázově lze použít `\problem{Název}`:
+
+```latex
+\newproblem{\VERTEXCOVER}{Vrcholové pokrytí}
+\newproblem{\THREECOL}{$3$-Barvení}
+```
+
 ## Citace a seznam zdrojů
 
 Citace se sázejí podle **ČSN ISO 690** balíčkem `biblatex` se stylem `iso-numeric` (`biblatex-iso690`). Všechny prezentace čerpají z jediné databáze [`assets/literatura.bib`](assets/literatura.bib), takže se údaje o zdroji píší jen jednou a jsou ve všech prezentacích shodné.
 
-Závěrečný snímek se seznamem zdrojů vytvoří makro `\zdrojeframe`, jehož argumentem je čárkou oddělený seznam klíčů z databáze:
+Závěrečný snímek se seznamem zdrojů vytvoří makro `\bibframe`, jehož argumentem je čárkou oddělený seznam klíčů z databáze:
 
 ```latex
-\zdrojeframe{mares-valla-labyrint, cormen-algorithms, matousek-diskretni}
+\bibframe{mares-valla-labyrint, cormen-algorithms, matousek-diskretni}
 ```
 
 Makro samo vytvoří sekci `Zdroje`, vysází snímek se seznamem a v případě potřeby jej rozdělí na více stránek. Volitelným argumentem lze název sekce i snímku změnit:
 
 ```latex
-\zdrojeframe[Doporučené zdroje]{mares-valla-labyrint, cormen-algorithms}
+\bibframe[Doporučené zdroje]{mares-valla-labyrint, cormen-algorithms}
 ```
 
 Na zdroj uprostřed výkladu se odkazuje příkazem `\cite`, který vysází pořadové číslo ze seznamu zdrojů:

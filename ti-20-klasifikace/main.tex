@@ -46,8 +46,6 @@
 
 \begin{frame}{Příklady klasifikačních úloh}
 
-    \small
-
     \visible<2->{\begin{center}
         \renewcommand{\arraystretch}{1.3}
         \begin{tabularx}{0.96\textwidth}{|>{\bfseries}l|X|X|}
@@ -65,6 +63,19 @@
             Schvalování žádosti
                 & žádost popsaná několika údaji
                 & schválit / zamítnout \\
+            \hline
+        \end{tabularx}
+    \end{center}}
+
+\end{frame}
+
+\begin{frame}{Příklady klasifikačních úloh}
+
+    \visible<2->{\begin{center}
+        \renewcommand{\arraystretch}{1.3}
+        \begin{tabularx}{0.96\textwidth}{|>{\bfseries}l|X|X|}
+            \hline
+            Úloha & Vstupní objekt & Možné třídy \\
             \hline
             Rozpoznávání číslic
                 & obrázek ručně psané číslice
@@ -102,7 +113,6 @@
 
                 \vspace{1mm}
 
-                \scriptsize
                 Např. cena domu, výše příjmu, teplota.
             \end{tinfobox*}
         }\end{column}
@@ -118,15 +128,17 @@
 
                 \vspace{1mm}
 
-                \scriptsize
                 Např. typ domu, kategorie příjmu, druh rostliny.
             \end{tnoticebox*}
         }\end{column}
 
     \end{columns}
 
+\end{frame}
 
-    \visible<4->{\begin{timportantframe}
+\begin{frame}{Regrese versus klasifikace}
+
+    \visible<2->{\begin{timportantframe}
         Rozdíl není v~tom, jak jsou data uložená, ale v~tom,
         jaký typ hodnoty chceme předpovídat.
     \end{timportantframe}}
@@ -136,7 +148,6 @@
 \subsection{Formální vymezení klasifikační úlohy}
 
 \begin{frame}{Dva pohledy na vstupní data}
-    \footnotesize
 
     \begin{columns}[T,onlytextwidth]
 
@@ -168,9 +179,11 @@
 
     \end{columns}
 
-    \visible<3->{\vspace{3mm}}
+\end{frame}
 
-    \visible<4->{\begin{center}
+\begin{frame}{Dva pohledy na vstupní data}
+
+    \visible<2->{\begin{center}
         \renewcommand{\arraystretch}{1.25}
         \begin{tabular}{c|cccc}
              & $\mathbf{X}_1$ & $\mathbf{X}_2$ & $\cdots$ & $\mathbf{X}_p$ \\
@@ -214,7 +227,6 @@
 \end{frame}
 
 \begin{frame}{Klasifikátor}
-    \small
 
     \visible<2->{\begin{defblock}[Klasifikátor]
         Nechť \(\mathcal{Y}\) je množina tříd.
@@ -228,7 +240,7 @@
     \vspace{2mm}}
 
     \visible<3->{\begin{center}
-        \obrazek[0.2\textheight]{images/klasifikator.tex}
+        \obrazek[0.17\textheight]{images/klasifikator.tex}
     \end{center}
 
     \vspace{1mm}}
@@ -320,9 +332,8 @@
 \subsection{Skóre a~rozhodování klasifikátoru}
 
 \begin{frame}{Skóre modelu}
-    \footnotesize
 
-    \visible<2->{\begin{defblock}{Skóre modelu}
+    \visible<2->{\begin{defblock}[Skóre modelu]
         Nechť jsou dány vstupní statistické soubory
         \[
             \mathbf{X}_1,\mathbf{X}_2,\ldots,\mathbf{X}_p
@@ -334,14 +345,18 @@
         Hodnotu $s(\mathbf{x})$ nazýváme \markdarkred{skóre} prvku $\mathbf{x}\in\R^{p}$.
     \end{defblock}}
 
-    \visible<3->{Pro $i$-tý objekt položíme
+\end{frame}
+
+\begin{frame}{Skóre modelu}
+
+    \visible<2->{Pro $i$-tý objekt položíme
     \[
         s_i=s(\mathbf{x}_i),
         \qquad
         \mathbf{x}_i=(x_{i1},x_{i2},\ldots,x_{ip}).
     \]}
 
-    \visible<4->{Skóre všech objektů tvoří statistický soubor
+    \visible<3->{Skóre všech objektů tvoří statistický soubor
     \[
         \mathbf{S}=(s_1,s_2,\ldots,s_n).
     \]}
@@ -367,7 +382,6 @@
 \end{frame}
 
 \begin{frame}{Od skóre k~předpovězené třídě}{Vícetřídní klasifikace}
-    \small
 
     \visible<2->{Pro množinu tříd $\mathcal{Y}=\set{c_1,c_2,\ldots,c_K}$ model vypočítá pro každý objekt skóre všech tříd:
     \[
@@ -387,14 +401,18 @@
         \end{aligned}
     \]}
 
-    \visible<4->{Predikované hodnoty všech objektů tvoří statistický soubor
+\end{frame}
+
+\begin{frame}{Od skóre k~předpovězené třídě}{Vícetřídní klasifikace}
+
+    \visible<2->{Predikované hodnoty všech objektů tvoří statistický soubor
     \[
         \hat{\mathbf{Y}}
         =
         (\hat y_1,\hat y_2,\ldots,\hat y_n).
     \]}
 
-    \visible<5->{\begin{tinfoframe*}
+    \visible<3->{\begin{tinfoframe*}
         \begin{center}
             Tedy pro soubory $\mathbf{X}_1,\dots,\mathbf{X}_p,\mathbf{Y}$ jsme získali soubor odhadů $\hat{\mathbf{Y}}$.
         \end{center}
@@ -464,41 +482,35 @@
 
 \begin{frame}{Lineární regrese pro třídy \(0\) a~\(1\)}
 
-    \begin{columns}[T,onlytextwidth]
+    \visible<2->{\begin{itemize}
+        \item U~binární klasifikace máme
+        \[
+            \mathbf{Y}=(y_1,\ldots,y_n),
+            \qquad
+            y_i\in\set{0,1}.
+        \]
 
-        \begin{column}{0.48\textwidth}
-            \footnotesize
+        \visible<3->{\item Lineární model můžeme formálně použít: $\hat y_i=f(x_i)$.}
 
-            \visible<2->{\begin{itemize}
-                \item U~binární klasifikace máme
-                \[
-                    \mathbf{Y}=(y_1,\ldots,y_n),
-                    \qquad
-                    y_i\in\set{0,1}.
-                \]
+        \visible<4->{\item Abychom získali třídu, mohli bychom zvolit práh:
+        \[
+            \hat c_i=
+            \begin{cases}
+                1, & \hat y_i\geqslant 0{,}5,\\
+                0, & \hat y_i<0{,}5.
+            \end{cases}
+        \]}
+    \end{itemize}}
 
-                \visible<3->{\item Lineární model můžeme formálně použít: $\hat y_i=f(x_i)$.}
+\end{frame}
 
-                \visible<4->{\item Abychom získali třídu, mohli bychom zvolit práh:
-                \[
-                    \hat c_i=
-                    \begin{cases}
-                        1, & \hat y_i\geqslant 0{,}5,\\
-                        0, & \hat y_i<0{,}5.
-                    \end{cases}
-                \]}
-            \end{itemize}}
-        \end{column}
+\begin{frame}{Lineární regrese pro třídy \(0\) a~\(1\)}
 
-        \begin{column}{0.50\textwidth}\visible<5->{
-            \begin{center}
-                \obrazek[0.50\textheight]{images/linearni-regrese-pro-tridy-0-a-1.tex}
-            \end{center}
-        }\end{column}
+    \visible<2->{\begin{center}
+        \obrazek[0.50\textheight]{images/linearni-regrese-pro-tridy-0-a-1.tex}
+    \end{center}}
 
-    \end{columns}
-
-    \visible<6->{\begin{timportantframe}
+    \visible<3->{\begin{timportantframe}
         Takový postup sice dá klasifikátor, ale výstupy lineárního modelu
         nejsou omezeny na interval \(\langle0,1\rangle\).
     \end{timportantframe}}
@@ -506,37 +518,30 @@
 \end{frame}
 
 \begin{frame}{Jaký výstup potřebujeme?}
-    \small
 
     \visible<2->{\begin{tnoticebox*}{Požadavek na model}
         Chceme zachovat lineární skóre $s(x)=ax+b$, ale převést jej na číslo z~intervalu \((0,1)\).
     \end{tnoticebox*}
 
-    \vspace{3mm}
+    \vspace{3mm}}
 
-    \begin{columns}[T,onlytextwidth]
+    \visible<3->{Hledáme funkci $\mapping{g}{\R}{(0,1)}$, která splňuje:
+    \begin{itemize}
+        \item záporná skóre převádí blízko k~\(0\),
+        \item kladná skóre převádí blízko k~\(1\),
+        \item hodnota \(z=0\) odpovídá středu:
+        \[
+            g(0)=0{,}5.
+        \]
+    \end{itemize}}
 
-        \begin{column}{0.48\textwidth}
+\end{frame}
 
-            \visible<3->{Hledáme funkci $\mapping{g}{\R}{(0,1)}$, která splňuje:
-            \begin{itemize}
-                \item záporná skóre převádí blízko k~\(0\),
-                \item kladná skóre převádí blízko k~\(1\),
-                \item hodnota \(z=0\) odpovídá středu:
-                \[
-                    g(0)=0{,}5.
-                \]
-            \end{itemize}}
-        \end{column}
+\begin{frame}{Jaký výstup potřebujeme?}
 
-        \begin{column}{0.50\textwidth}\visible<3->{
-
-            \visible<4->{\begin{center}
-                \obrazek[0.41\textheight]{images/jaky-vystup-potrebujeme.tex}
-            \end{center}}
-        }\end{column}
-
-    \end{columns}}
+    \visible<2->{\begin{center}
+        \obrazek[0.41\textheight]{images/jaky-vystup-potrebujeme.tex}
+    \end{center}}
 
 \end{frame}
 
@@ -550,36 +555,38 @@
             \sigma(z)=\frac{1}{1+e^{-z}},
             \qquad z\in\mathbb{R}.
         \]
-    \end{defblock}
+    \end{defblock}}
+
+    \visible<3->{Platí:
+    \[
+        \sigma(z)\in(0,1)\quad\text{a}\quad \sigma(0)=0{,}5.
+    \]}
+
+\end{frame}
+
+\begin{frame}{Logistická funkce}
 
     \begin{columns}[T,onlytextwidth]
 
-        \begin{column}{0.44\textwidth}\visible<3->{
-            \footnotesize
-            Platí:
-            \[
-                \sigma(z)\in(0,1)\quad\text{a}\quad \sigma(0)=0{,}5.
-            \]
-
+        \begin{column}{0.44\textwidth}\visible<2->{
             \begin{tinfoframe*}
                 Velmi záporné hodnoty převádí blízko k~\(0\),
                 velmi kladné hodnoty blízko k~\(1\).
             \end{tinfoframe*}
         }\end{column}
 
-        \begin{column}{0.54\textwidth}\visible<4->{
+        \begin{column}{0.54\textwidth}\visible<3->{
             \begin{center}
                 \obrazek[0.35\textheight]{images/logisticka-funkce.tex}
             \end{center}
         }\end{column}
-    \end{columns}}
+    \end{columns}
 
 \end{frame}
 
 \subsection{Od lineární k~logistické regresi}
 
 \begin{frame}{Od lineární k~logistické regresi}
-    \small
 
     \visible<2->{Nechť jsou dány statistické soubory
     \[
@@ -592,11 +599,13 @@
 
     \visible<3->{\begin{tnoticebox}{Myšlenka logistické regrese}
         Nejprve vypočítáme lineární skóre $z_i=ax_i+b$. Poté jej převedeme logistickou funkcí na $\hat p_i=\sigma(z_i)$.
-    \end{tnoticebox}
+    \end{tnoticebox}}
 
-    \vspace{1mm}}
+\end{frame}
 
-    \visible<4->{Tím dostaneme statistický soubor výstupů
+\begin{frame}{Od lineární k~logistické regresi}
+
+    \visible<2->{Tím dostaneme statistický soubor výstupů
     \[
         \hat{\mathbf{P}}
         =
@@ -605,7 +614,7 @@
         \hat p_i\in(0,1).
     \]}
 
-    \visible<5->{\begin{tinfoframe*}
+    \visible<3->{\begin{tinfoframe*}
         Hodnotu \(\hat p_i\) budeme chápat jako míru podpory modelu
         pro zařazení objektu do třídy~\(1\).
     \end{tinfoframe*}}
@@ -643,7 +652,6 @@
 \subsection{Rozhodovací pravidlo}
 
 \begin{frame}{Od výstupu modelu k~předpovězené třídě}
-    \small
 
     Nechť logistický model přiřadí hodnotě \(x_i\) výstup
     \[
@@ -668,7 +676,9 @@
         \]
     \end{tnoticebox*}
 
-    \vspace{1mm}
+\end{frame}
+
+\begin{frame}{Od výstupu modelu k~předpovězené třídě}
 
     Předpovězené třídy všech obektů z~$\mathbf{X}$ tvoří statistický soubor
     \[
@@ -731,7 +741,6 @@
 \subsection{Křížová entropie}
 
 \begin{frame}{Proč potřebujeme ztrátovou funkci?}
-    \footnotesize
 
     \visible<2->{Nechť logistický model pro statistické soubory
     \[
@@ -750,11 +759,13 @@
     \visible<3->{\begin{tnoticebox}{Myšlenka}
         Při trénování nechceme hodnotit pouze výslednou třídu
         \(h^{(t)}(x_i)\), ale také to, \textbf{jak jistý} si model byl.
-    \end{tnoticebox}
+    \end{tnoticebox}}
 
-    \vspace{1mm}}
+\end{frame}
 
-    \visible<4->{\begin{center}
+\begin{frame}{Proč potřebujeme ztrátovou funkci?}
+
+    \visible<2->{\begin{center}
         \renewcommand{\arraystretch}{1.25}
         \begin{tabular}{c|c|c}
             skutečnost & výstup modelu pro $t=0{,}5$ & komentář \\
@@ -838,7 +849,6 @@
     \begin{columns}[T,onlytextwidth]
 
         \begin{column}{0.48\textwidth}\visible<2->{
-            \small
             Pro objekt se skutečnou třídou \(y=1\) je ztráta
             \[
                 \ell(1,\hat p)=-\ln \hat p.
@@ -940,7 +950,6 @@
     \begin{columns}[T,onlytextwidth]
 
         \begin{column}{0.47\textwidth}\visible<2->{
-            \small
             Při trénování chceme minimalizovat ztrátovou funkci
             \(L(a,b)\).
 
@@ -958,7 +967,11 @@
 
     \end{columns}
 
-    \visible<4->{V~jednorozměrném případě:
+\end{frame}
+
+\begin{frame}{Myšlenka gradientního sestupu}
+
+    \visible<2->{V~jednorozměrném případě:
     \[
         \theta_{k+1}
         =
@@ -966,7 +979,7 @@
     \]
     kde \(\eta>0\) je velikost kroku.\\[1mm]}
 
-    \visible<5->{Pro logistickou regresi: $\displaystyle (a,b)\gets (a,b) - \eta\left(\frac{\partial L}{\partial a},\frac{\partial L}{\partial b}\right)$.}
+    \visible<3->{Pro logistickou regresi: $\displaystyle (a,b)\gets (a,b) - \eta\left(\frac{\partial L}{\partial a},\frac{\partial L}{\partial b}\right)$.}
 
 \end{frame}
 
@@ -1084,7 +1097,6 @@
 \subsection{Správné a~chybné klasifikace}
 
 \begin{frame}{Skutečná a~předpovězená třída}
-    \small
 
     \visible<2->{Nechť jsou dány soubory
     \[
@@ -1100,11 +1112,13 @@
     \visible<3->{\begin{tnoticebox*}{Co porovnáváme?}
         U~každého objektu porovnáváme skutečnou třídu \(y_i\)
         s~předpovězenou třídou $\hat y_i^{(t)}=h^{(t)}(x_i)$.
-    \end{tnoticebox*}
+    \end{tnoticebox*}}
 
-    \vspace{1mm}}
+\end{frame}
 
-    \visible<4->{\begin{center}
+\begin{frame}{Skutečná a~předpovězená třída}
+
+    \visible<2->{\begin{center}
         \renewcommand{\arraystretch}{1.25}
         \begin{tabular}{c|c|c|c}
             objekt & \(x_i\) & skutečnost \(y_i\) & předpověď \(\hat y_i^{(t)}\) \\
@@ -1119,7 +1133,6 @@
 \end{frame}
 
 \begin{frame}{Čtyři možné výsledky}
-    \small
 
     \visible<2->{U~binární klasifikace rozlišujeme čtyři případy podle toho,
     zda je skutečná a~předpovězená třída rovna \(0\) nebo \(1\).
@@ -1128,24 +1141,24 @@
 
     \visible<3->{\begin{center}
         \renewcommand{\arraystretch}{1.35}
+        \setcellgapes{2pt}\makegapedcells
         \begin{tabular}{c|c|c}
             skutečnost & předpověď & označení \\
             \hline
             \(y_i=1\) & \(\hat y_i^{(t)}=1\)
-                & {\small správně pozitivní výsledek (\markdarkred{true positive}, TP)} \\
+                & \makecell{správně pozitivní výsledek\\(\markdarkred{true positive}, TP)} \\
             \(y_i=0\) & \(\hat y_i^{(t)}=0\)
-                & {\small správně negativní výsledek (\markdarkred{true negative}, TN)} \\
+                & \makecell{správně negativní výsledek\\(\markdarkred{true negative}, TN)} \\
             \(y_i=0\) & \(\hat y_i^{(t)}=1\)
-                & {\small falešně pozitivní výsledek (\markdarkred{false positive}, FP)} \\
+                & \makecell{falešně pozitivní výsledek\\(\markdarkred{false positive}, FP)} \\
             \(y_i=1\) & \(\hat y_i^{(t)}=0\)
-                & {\small falešně negativní výsledek (\markdarkred{false negative}, FN)}
+                & \makecell{falešně negativní výsledek\\(\markdarkred{false negative}, FN)}
         \end{tabular}
     \end{center}}
 
 \end{frame}
 
 \begin{frame}{Počty jednotlivých výsledků}
-    \small
 
     \visible<2->{\begin{defblock}
         Pro statistické soubory \(\mathbf{X}=(x_1,\dots,x_n)\), \(\mathbf{Y}=(y_1,\dots,y_n)\) a~klasifikátor \(h^{(t)}\) definujeme:
@@ -1234,7 +1247,6 @@
 \end{frame}
 
 \begin{frame}{Příklad}{Výpočet správnosti}
-    \small
 
     \visible<2->{Předpokládejme, že pro daný práh \(t\) vyšlo
     \[
@@ -1273,7 +1285,6 @@
 \end{frame}
 
 \begin{frame}{Kdy může být správnost zavádějící?}
-    \footnotesize
 
     \visible<2->{\begin{exblock}[Nevyvážené třídy]
         Představme si test na vzácnou nemoc:
@@ -1283,11 +1294,13 @@
             10 \text{ osob je nemocných}.
         \]
         Klasifikátor vždy odpoví "zdravý".
-    \end{exblock}
+    \end{exblock}}
 
-    \vspace{1mm}}
+\end{frame}
 
-    \visible<3->{Dostaneme
+\begin{frame}{Kdy může být správnost zavádějící?}
+
+    \visible<2->{Dostaneme
     \[
         \TN_{\mathbf{X},\mathbf{Y}}^{(t)}=990,
         \quad
@@ -1298,7 +1311,7 @@
         \FP_{\mathbf{X},\mathbf{Y}}^{(t)}=0.
     \]}
 
-    \visible<4->{\[
+    \visible<3->{\[
         \Accuracy_{\mathbf{X},\mathbf{Y}}^{(t)}
         =
         \frac{990}{1000}
@@ -1306,7 +1319,7 @@
         0{,}99.
     \]}
 
-    \visible<5->{\begin{timportantframe}
+    \visible<4->{\begin{timportantframe}
         Správnost je \(99\,\%\), ale klasifikátor \textbf{nenašel ani jednoho nemocného člověka}.
     \end{timportantframe}}
 
@@ -1315,7 +1328,6 @@
 \subsection{Přesnost}
 
 \begin{frame}{Přesnost}
-    \small
 
     \visible<2->{\begin{defblock}[Přesnost]
         \markdarkred{Přesností} klasifikátoru \(h^{(t)}\) (anglicky \markdarkred{precision}) na statistických souborech
@@ -1336,7 +1348,6 @@
 
     \visible<3->{\begin{tinfoframe*}
         Přesnost odpovídá na otázku:
-
         \[
             \text{Kolik objektů označených jako třída~\(1\)
             skutečně patří do třídy~\(1\)?}
@@ -2005,8 +2016,7 @@
 
 \begin{frame}{Vliv hodnoty \(k\)}
 
-    \visible<2->{\small
-    Stejný nový objekt \(\mathbf{x}\) může být při různých hodnotách
+    \visible<2->{Stejný nový objekt \(\mathbf{x}\) může být při různých hodnotách
     \(k\) zařazen do různých tříd.
 
     \vspace{1mm}}
@@ -2023,7 +2033,6 @@
 \end{frame}
 
 \begin{frame}{Jak zvolit hodnotu \(k\)?}
-    \small
 
     \visible<2->{\begin{tnoticebox*}{Volba pomocí validačních dat}
         Hodnotu \(k\) obvykle nevolíme podle trénovacích dat, ale pomocí
@@ -2035,18 +2044,25 @@
     \visible<3->{\begin{itemize}
         \item Zvolíme množinu kandidátů $\mathcal{K}\subseteq \set{1,2,\ldots,n}$.
         \visible<4->{\item Pro každé \(k\in\mathcal{K}\) vytvoříme klasifikátor \(h^{(k)}\) a~spočítáme zvolenou metriku (správnost, přesnost, pokrytí, F-míra) na validačních datech.}
-        \visible<5->{\item Pokud tuto metriku označíme \(M_{\mathrm{val}}(h^{(k)})\), pak můžeme psát
+    \end{itemize}}
+
+\end{frame}
+
+\begin{frame}{Jak zvolit hodnotu \(k\)?}
+
+    \visible<2->{\begin{itemize}
+        \item Pokud tuto metriku označíme \(M_{\mathrm{val}}(h^{(k)})\), pak můžeme psát
         \[
             k^\ast
             \in
             \argmax_{k\in\mathcal{K}}\;
             M_{\mathrm{val}}(h^{(k)}).
-        \]}
+        \]
     \end{itemize}}
-    
-    \visible<5->{\vspace{1mm}}
 
-    \visible<6->{\begin{tinfoframe*}
+    \visible<2->{\vspace{1mm}}
+
+    \visible<3->{\begin{tinfoframe*}
         U~binární klasifikace se často volí liché hodnoty \(k\), protože
         tím snižujeme riziko nerozhodného hlasování.
     \end{tinfoframe*}}
@@ -2115,7 +2131,6 @@
 \end{frame}
 
 \begin{frame}{Problém různých měřítek}
-    \small
 
     \visible<2->{Uvažujme dva znaky:
     \[
@@ -2132,16 +2147,21 @@
     \[
         \mathbf{x}_A=(45,500\,000),
         \qquad
-        \mathbf{x}_B=(30,510\,000)
-    \]
-    dostaneme
+        \mathbf{x}_B=(30,510\,000).
+    \]}
+
+\end{frame}
+
+\begin{frame}{Problém různých měřítek}
+
+    \visible<2->{Pro tyto objekty dostaneme
     \[
         d_E(\mathbf{x},\mathbf{x}_A)=15,
         \qquad
         d_E(\mathbf{x},\mathbf{x}_B)=10\,000.
     \]}
 
-    \visible<4->{\begin{timportantframe}
+    \visible<3->{\begin{timportantframe}
         Číselně větší měřítko příjmu způsobí, že rozdíl \(10\,000\)~Kč
         zcela převáží rozdíl \(15\)~let věku. To lze vyřešit např. \markdarkred{min-max normalizací}.
     \end{timportantframe}}
@@ -2766,6 +2786,6 @@
 
 % \subsection{Vlastnosti rozhodovacích stromů}
 
-\zdrojeframe{russell-norvig-aima}
+\bibframe{russell-norvig-aima}
 
 \end{document}

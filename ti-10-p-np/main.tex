@@ -39,9 +39,9 @@
         \end{talertframe*}}
     \end{frame}
 
-    \subsection{Optimalizační varianta NzMna}
+    \subsection{Optimalizační varianta \INDSET}
 
-    \begin{frame}{Optimalizační $\NZMNA$}
+    \begin{frame}{Optimalizační \INDSET}
         \visible<2->{\begin{tnoticeframe}
             \begin{center}
                 Pokud bychom uměli řešit rychle rozhodovací variantu problému nezávislé množiny v~grafu, uměli bychom řešit i~optimalizační variantu.
@@ -50,10 +50,10 @@
         \visible<3->{\begin{center}
             \begin{minipage}{0.9\textwidth}
                 \begin{algorithm}[H]
-                    \caption{\textsc{Optimalizační $\NZMNA$}}
+                    \caption{\textsc{Optimalizační \INDSET}}
                     \KwIn{Graf $G=(V,E)$}
                     \For{$j=n,n-1,\dots,1$}{
-                        \lIf{$\NZMNA(G,j)=1$}{\Return{$j$}}
+                        \lIf{$\INDSET(G,j)=1$}{\Return{$j$}}
                     }
                 \end{algorithm}
             \end{minipage}
@@ -104,8 +104,10 @@
     \subsection{Hra Sudoku}
 
     \begin{frame}{Třída problémů $\classNP$}{Příklad: Sudoku}
-        \small
-        \obrazek[0.42\textheight]{images/sudoku.tex}
+        \obrazek{images/sudoku.tex}
+    \end{frame}
+
+    \begin{frame}{Třída problémů $\classNP$}{Příklad: Sudoku}
         \decproblem{Sudoku}{
             Počáteční tabulka, v~níž jsou některá pole již vyplněna.
         }{
@@ -127,21 +129,21 @@
         \obrazek{images/porovnani-p-np.tex}
     \end{frame}
 
-    \subsection{Problémy SAT, NzMna a~Klika}
+    \subsection{Problémy \SAT, \INDSET{} a~\CLIQUE}
 
-    \begin{frame}{Problémy $\SAT$, $\NZMNA$ a~$\KLIKA$}
+    \begin{frame}{Problémy \SAT, \INDSET{} a~\CLIQUE}
         \begin{itemize}
             \visible<2->{\item $\SAT,\THREESAT\in\classNP$
             \begin{itemize}
                 \item Určit, zdali je logická formule $\varphi$ v~CNF splnitelná v~obecném případě \textbf{těžké}.
                 \item Nicméně pokud nám někdo poskytne ohodnocení proměnných (což je naše nápověda $y$), pak nám stačí formuli vyhodnotit a~přesvědčit se, zdali $\varphi(y)=1$.
             \end{itemize}}
-            \visible<3->{\item $\NZMNA\in\classNP$
+            \visible<3->{\item $\INDSET\in\classNP$
             \begin{itemize}
                 \item Jako nápověda $y$ zde poslouží nějaká podmnožina vrcholů $M\subseteq V$.
                 \item Stačí nám ověřit, zdali $M$ je nezávislá a~$|M|\geqslant k$.
             \end{itemize}}
-            \visible<4->{\item $\KLIKA\in\classNP$
+            \visible<4->{\item $\CLIQUE\in\classNP$
             \begin{itemize}
                 \item Stejně jako u~nezávislé množiny zde poslouží jako nápověda podmnožina vrcholů $M\subseteq V$.
                 \item Stačí se přesvědčit, že vrcholy z~$M$ tvoří kliku a~$|M|\geqslant k$.
@@ -165,7 +167,7 @@
         \end{itemize}
         \visible<6->{\begin{timportantframe}
             \begin{center}
-                Všechny tyto problémy lze polynomiálně převést na $\SAT,\THREESAT,\NZMNA,\KLIKA$.
+                Všechny tyto problémy lze polynomiálně převést na \SAT, \THREESAT, \INDSET{} a~\CLIQUE.
             \end{center}
         \end{timportantframe}}
     \end{frame}
@@ -173,7 +175,6 @@
     \subsection{Vztah tříd P a~NP}
 
     \begin{frame}{Vztah tříd $\classP$ a~$\classNP$}
-        \small
         \begin{tnoticeframe*}
             \begin{center}
                 Triviálně platí $\classP\subseteq\classNP$.
@@ -237,7 +238,7 @@
             \visible<3->{\item V~roce 1971 dokázal \textsc{Stephen Cook} (a~později nezávisle i~\textsc{Leonid Levin} v~roce 1973) následující překvapivý fakt.}
         \end{itemize}
         \visible<4->{\begin{thmblock}[Cookova-Levinova]
-            $\SAT$ je $\classNP$-úplný problém.
+            \SAT{} je $\classNP$-úplný problém.
         \end{thmblock}}
         \visible<5->{\begin{tinfoframe*}
             \begin{center}
@@ -246,9 +247,9 @@
         \end{tinfoframe*}}
     \end{frame}
 
-    \subsection{Převod Sudoku na SAT}
+    \subsection{Převod \SUDOKU{} na \SAT}
 
-    \begin{frame}{Převod $\SUDOKU\rightarrow\SAT$}
+    \begin{frame}{Převod \SUDOKU{} na \SAT}
         \begin{itemize}
             \visible<2->{\item Na vstupu máme tabulku velikosti $9\times 9$, kde určitá pole jsou již vyplněná.}
             \visible<3->{\item Zavedeme si pro každé $1\leqslant r,c,d\leqslant 9$ proměnnou
@@ -267,7 +268,7 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Převod $\SUDOKU\rightarrow\SAT$}
+    \begin{frame}{Převod \SUDOKU{} na \SAT}
         \visible<2->{\begin{center}
             \markdarkred{Každá buňka obsahuje \textbf{alespoň} jednu číslici}
         \end{center}}
@@ -285,7 +286,7 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Převod $\SUDOKU\rightarrow\SAT$}
+    \begin{frame}{Převod \SUDOKU{} na \SAT}
         \visible<2->{\begin{center}
             \markdarkred{V~každém \textbf{řádku} se každá číslice objeví právě jednou}
         \end{center}}
@@ -298,7 +299,7 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Převod $\SUDOKU\rightarrow\SAT$}
+    \begin{frame}{Převod \SUDOKU{} na \SAT}
         \visible<2->{\begin{center}
             \markdarkred{V~každém \textbf{sloupci} se každá číslice objeví právě jednou}
         \end{center}}
@@ -311,7 +312,7 @@
         \[\bigvee_{(r,c)\in B}x_{r,c,d}\quad\text{a}\quad \bigwedge_{\substack{(r,c),(r^{\prime},c^{\prime})\in B\\ (r,c)\neq(r^{\prime},c^{\prime})}}(x_{r,c,d}\implies \neg x_{r^{\prime},c^{\prime},d})\]}
     \end{frame}
 
-    \begin{frame}{Převod $\SUDOKU\rightarrow\SAT$}
+    \begin{frame}{Převod \SUDOKU{} na \SAT}
         \visible<2->{\begin{center}
             \markdarkred{Zadané cifry}
         \end{center}}
@@ -324,10 +325,10 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Převod $\SUDOKU\rightarrow\SAT$}{Výsledná formule}
+    \begin{frame}{Převod \SUDOKU{} na \SAT}{Výsledná formule}
         \visible<2->{\obrazek[0.65\textheight]{images/sudoku-formule.tex}}
         \visible<3->{\begin{center}
-            \footnotesize Indexy $r,c,d$ i~jejich čárkované varianty probíhají hodnoty $1,\dots,9$, $B$ probíhá všech 9 bloků a~$\mathcal{Z}$ obsahuje zadané trojice.
+            Indexy $r,c,d$ i~jejich čárkované varianty probíhají hodnoty $1,\dots,9$, $B$ probíhá všech 9 bloků a~$\mathcal{Z}$ obsahuje zadané trojice.
         \end{center}}
     \end{frame}
 
@@ -371,6 +372,6 @@
         \end{itemize}
     \end{frame}
 
-    \zdrojeframe{papadimitriou-complexity, mares-valla-labyrint}
+    \bibframe{papadimitriou-complexity, mares-valla-labyrint}
 
 \end{document}

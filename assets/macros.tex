@@ -151,15 +151,41 @@
 \DeclareMathOperator{\classSpace}{SPACE}
 \DeclareMathOperator{\classNSpace}{NSPACE}
 
-\DeclareMathOperator{\SAT}{SAT}
-\DeclareMathOperator{\THREESAT}{3-SAT}
-\DeclareMathOperator{\UNSAT}{UNSAT}
-\DeclareMathOperator{\NZMNA}{NzMna}
-\DeclareMathOperator{\KLIKA}{Klika}
-\DeclareMathOperator{\ROZVRH}{Rozvrh}
-\DeclareMathOperator{\SUDOKU}{Sudoku}
-\newcommand{\HALT}{\ensuremath{\textsc{Halt}}}
-\newcommand{\FACTOR}{\ensuremath{\textsc{Factor}}}
+%%% Názvy problémů
+%
+% Název problému se sází kapitálkami. Mimo matematický mód je zelený (barva
+% problemfg z theme.tex), v matematickém módu se sází kapitálkami písma
+% matematiky v barvě matematiky a s mezerami jako u operátoru (\mathop).
+% Makra problémů fungují v obou módech:
+%   Problém \SAT{} neumíme řešit rychle.     $\INDSET(G,k)=\CLIQUE(\bar{G},k)$
+% Za makrem následovaným mezerou je nutné psát {} (\SAT{} je ...).
+% Číslice a jiné konstanty v názvu se píší v matematickém módu ($3$-SAT).
+%
+%   \problem{Název}             název problému; varianta podle módu
+%   \textproblem{Název}         vždy textová varianta (zelené kapitálky)
+%   \mathproblem{Název}         vždy matematická varianta
+%   \mathsc{Text}               kapitálky v matematickém módu (obdoba \mathrm)
+%   \newproblem{\MAKRO}{Název}  zavede makro pro nový problém
+
+\newcommand{\mathsc}[1]{\textnormal{\rmfamily\scshape #1}}
+\newcommand{\textproblem}[1]{\textcolor{problemfg}{\textsc{#1}}}
+\newcommand{\mathproblem}[1]{\mathop{\mathsc{#1}}\nolimits}
+\DeclareRobustCommand{\problem}[1]{%
+  \ifmmode\mathproblem{#1}\else\textproblem{#1}\fi}
+\newcommand{\newproblem}[2]{\newcommand{#1}{\problem{#2}}}
+
+% V záložkách a metadatech PDF zůstane jen holý název
+\pdfstringdefDisableCommands{\def\problem#1{#1}}
+
+\newproblem{\SAT}{SAT}
+\newproblem{\THREESAT}{\texorpdfstring{$3$}{3}-SAT}
+\newproblem{\UNSAT}{UNSAT}
+\newproblem{\INDSET}{NzMna}                 % nezávislá množina
+\newproblem{\CLIQUE}{Klika}
+\newproblem{\SCHEDULING}{Rozvrh}
+\newproblem{\SUDOKU}{Sudoku}
+\newproblem{\HALT}{Halt}
+\newproblem{\FACTOR}{Factor}
 
 \DeclareMathOperator{\regex}{RegE}
 
@@ -588,7 +614,7 @@
 % Závěrečný snímek se seznamem zdrojů. Prvním (volitelným) argumentem je název
 % sekce i snímku, druhým čárkou oddělený seznam klíčů z ../assets/literatura.bib.
 % Citace se sázejí podle ČSN ISO 690, v pořadí, v jakém jsou klíče uvedeny.
-\newcommand{\zdrojeframe}[2][Zdroje]{%
+\newcommand{\bibframe}[2][Zdroje]{%
     \section{#1}
     \nocite{#2}%
     \begin{frame}[allowframebreaks]{#1}

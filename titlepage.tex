@@ -58,12 +58,13 @@
      \hyphenchar\font=`\-\relax}%
 }
 
-% Text sázený na barevném podkladu: matematika i makro \Astar musí být
-% bílé, ne tmavě modré, resp. černé.
+% Text sázený na barevném podkladu: matematika, názvy problémů i makro
+% \Astar musí být bílé, ne tmavě modré, zelené, resp. černé.
 \makeatletter
 \newcommand{\tpinverse}{%
     \tpnohyphen
     \setbeamercolor{math text}{fg=white}%
+    \colorlet{problemfg}{white}%
     \@ifundefined{Astar}{}{\renewcommand{\Astar}{\textup{A}\textsuperscript{*}}}%
 }
 \makeatother

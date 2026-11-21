@@ -22,7 +22,6 @@
     \subsection{Rekapitulace}
 
     \begin{frame}{Rekapitulace}
-        \small
         \begin{itemize}
             \visible<2->{\item Již víme, že jazyky můžeme popsat pomocí}
             \begin{itemize}
@@ -154,7 +153,6 @@
     \end{frame}
 
     \begin{frame}{Příklad}{jazyk \texorpdfstring{\(a^nb^m\)}{anbm}}
-        \small
         \visible<2->{Uvažujme gramatiku $G=(V,T,P,S)$, kde
         \[
             V=\set{S,A,B}, \qquad T=\set{a,b}
@@ -182,7 +180,6 @@
     \subsection{Gramatiky a~přirozený jazyk}
 
     \begin{frame}{Gramatiky a~přirozený jazyk}
-        \small
         \visible<2->{Gramatiky vznikly také jako pokus formálně popsat strukturu přirozeného jazyka.}
 
         \visible<3->{Například jednoduchá anglická (formální) gramatika může obsahovat pravidla:
@@ -194,13 +191,15 @@
             \text{noun}&\to \text{dog}\mid \text{bone}\\
             \text{verb}&\to \text{ate}
         \end{align*}}
+    \end{frame}
 
-        \visible<4->{Tato gramatika například generuje větu
+    \begin{frame}{Gramatiky a~přirozený jazyk}
+        \visible<2->{Tato gramatika například generuje větu
         \[
             \text{the dog ate the bone}.
         \]}
 
-        \visible<5->{Gramatika ale popisuje \textbf{strukturu}, nikoli \textbf{význam}.}
+        \visible<3->{Gramatika ale popisuje \textbf{strukturu}, nikoli \textbf{význam}.}
     \end{frame}
 
     \begin{frame}{Příklad gramatiky pro anglickou větu}
@@ -215,7 +214,6 @@
     \end{titleframeenv}
 
     \begin{frame}{Regulární gramatiky}
-        \small
         \visible<2->{\begin{defblock}[Regulární gramatika]
             Gramatika $G=(V,T,P,S)$ je \markdarkred{regulární}, pokud každé přepisovací pravidlo z~$P$ má tvar
             \[A\to \omega B\quad\text{nebo}\quad A\to\omega,\]
@@ -252,7 +250,6 @@
     \end{frame}
 
     \begin{frame}{Konečný automat \(\Rightarrow\) regulární gramatika}
-        \small
         \visible<2->{Mějme DFA $A=(Q,\Sigma,\delta,q_0,F)$. Sestrojíme gramatiku $G=(V,T,P,S)$, kde
         \[
             V=Q,\qquad T=\Sigma,\qquad S=q_0.
@@ -267,8 +264,10 @@
             \quad &\Longrightarrow \quad
             p\to \lambda.
         \end{align*}}
+    \end{frame}
 
-        \visible<4->{Přijímající výpočet automatu
+    \begin{frame}{Konečný automat \(\Rightarrow\) regulární gramatika}
+        \visible<2->{Přijímající výpočet automatu
         \[
             q_0 \xrightarrow{a_1} q_1
             \xrightarrow{a_2} \cdots
@@ -283,7 +282,7 @@
             \Rightarrow a_1\cdots a_n.
         \]}
 
-        \visible<5->{Tedy $L(A)=L(G)$.}
+        \visible<3->{Tedy $L(A)=L(G)$.}
     \end{frame}
 
     \begin{frame}{Znázornění převodu automatu na regulární gramatiku}
@@ -291,7 +290,6 @@
     \end{frame}
 
     \begin{frame}{Jeden jazyk třemi způsoby}
-        \small
         Uvažujme jazyk $L=\set{w\in\set{a,b}^{*} : w \text{ končí na } ab}$.
 
         \begin{columns}[T]
@@ -333,6 +331,6 @@
         \end{columns}
     \end{frame}
 
-    \zdrojeframe{papadimitriou-complexity, hopcroft-automata}
+    \bibframe{papadimitriou-complexity, hopcroft-automata}
 
 \end{document}

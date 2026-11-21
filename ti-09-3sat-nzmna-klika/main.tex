@@ -6,39 +6,39 @@
 \input{../assets/macros.tex}
 \input{../assets/listing.tex}
 
-\def\presentationtitle{Problém 3-SAT, problém nezávislé množiny a~kliky}
-\def\presentationtitlefooter{3-SAT, NzMna a~klika}
+\def\presentationtitle{Problém \THREESAT, problém nezávislé množiny a~kliky}
+\def\presentationtitlefooter{\THREESAT, \INDSET{} a~klika}
 
 \begin{document}
 
     \input{../titlepage.tex}
 
     % =================================================================
-    \section{Problém 3-SAT}
+    \section{Problém \THREESAT}
     % =================================================================
 
-    \begin{titleframeenv}{Problém $\THREESAT$}
+    \begin{titleframeenv}{Problém \THREESAT}
     \end{titleframeenv}
 
-    \begin{frame}{Problém $\THREESAT$}
+    \begin{frame}{Problém \THREESAT}
         \begin{itemize}
-            \visible<2->{\item Problém $\SAT$ neumíme řešit v~polynomiálním čase.}
+            \visible<2->{\item Problém \SAT{} neumíme řešit v~polynomiálním čase.}
             \visible<3->{\item Zkusíme proto původní problém trochu zjednodušit, a~to tak, že budeme uvažovat formule v~CNF, kde každá klauzule má maximálně 3 literály.}
         \end{itemize}
         \visible<4->{\begin{defblock}[3-CNF]
             Formule $\varphi$ je v~3-CNF právě tehdy, když je v~CNF a~každá klauzule obsahuje maximálně 3 literály.
         \end{defblock}}
-        \visible<5->{\decproblem{Problém $\THREESAT$}{
+        \visible<5->{\decproblem{Problém \THREESAT}{
             Formule $\varphi$ v~3-CNF.
         }{
             Je $\varphi$ splnitelná?
         }}
     \end{frame}
 
-    \begin{frame}{Problém $\THREESAT$}
+    \begin{frame}{Problém \THREESAT}
         \visible<2->{\begin{tinfoframe*}
             \begin{center}
-                Ukážeme, že problém $\THREESAT$ je "stejně těžký" jako původní $\SAT$.
+                Ukážeme, že problém \THREESAT{} je "stejně těžký" jako původní \SAT.
             \end{center}
         \end{tinfoframe*}}
         \begin{itemize}
@@ -108,10 +108,10 @@
         \end{itemize}
     \end{frame}
 
-    \subsection{Příklad: Převod mezi SAT a~HALT}
+    \subsection{Příklad: Převod mezi \SAT{} a~\HALT}
 
-    \begin{frame}{Převod $\SAT\rightarrow\HALT$}
-        \visible<2->{Převod $\SAT$ na $\HALT$ lze provést jednoduše: Sestrojíme program $P$ se vstupem $\varphi$, který}
+    \begin{frame}{Převod \SAT{} na \HALT}
+        \visible<2->{Převod \SAT{} na \HALT{} lze provést jednoduše: Sestrojíme program $P$ se vstupem $\varphi$, který}
         \begin{enumerate}
             \visible<3->{\item postupně zkouší všechna ohodnocení proměnných formule $\varphi$,}
             \visible<4->{\item pokud najde splňující ohodnocení, \textbf{zastaví se},}
@@ -126,10 +126,10 @@
         \end{tnoticeframe*}}
     \end{frame}
 
-    \begin{frame}{Převod $\HALT\rightarrow\SAT$ není možný}
+    \begin{frame}{Převod \HALT{} na \SAT{} není možný}
         \begin{itemize}
             \visible<2->{\item Už jsme si zdůvodnili, že ne pro všechny páry $(P,x)$ lze rozhodnout, zda se program $P$ nad $x$ zastaví.}
-            \visible<3->{\item Konkrétně myšlenka byla založena na konstrukci programu $D$, který invertoval výstup $\HALT$.}
+            \visible<3->{\item Konkrétně myšlenka byla založena na konstrukci programu $D$, který invertoval výstup \HALT.}
             \visible<4->{\item Pro spor předpokládejme, že umíme převést \textbf{problém zastavení} na \textbf{problém splnitelnosti formule v~CNF}.}
             \begin{enumerate}
                 \visible<5->{\item Instanci $(P,x)$ převedeme polynomiálně na formuli $\varphi=f(P,x)$.}
@@ -144,15 +144,15 @@
     \end{frame}
 
     % =================================================================
-    \section{Převod mezi SAT a~3-SAT}
+    \section{Převod mezi \SAT{} a~\THREESAT}
     % =================================================================
 
-    \begin{titleframeenv}{Převod mezi $\SAT$ a~$\THREESAT$}
+    \begin{titleframeenv}{Převod mezi \SAT{} a~\THREESAT}
     \end{titleframeenv}
 
-    \subsection{Převod 3-SAT na SAT}
+    \subsection{Převod \THREESAT{} na \SAT}
 
-    \begin{frame}{Převod $\THREESAT\rightarrow\SAT$}
+    \begin{frame}{Převod \THREESAT{} na \SAT}
         \begin{itemize}
             \visible<2->{\item Na začátku máme formuli $\varphi$ v~3-CNF a~chceme k~ní sestrojit formuli $\psi$ v~CNF, která je splnitelná právě tehdy, když je splnitelná i~$\varphi$.}
             \visible<3->{\begin{talertframe*}
@@ -164,9 +164,9 @@
         \end{itemize}
     \end{frame}
 
-    \subsection{Převod SAT na 3-SAT}
+    \subsection{Převod \SAT{} na \THREESAT}
 
-    \begin{frame}{Převod $\SAT\rightarrow\THREESAT$}
+    \begin{frame}{Převod \SAT{} na \THREESAT}
         \begin{itemize}
             \visible<2->{\item Zde je již zjevné, že ne každá formule $\varphi$ v~CNF je automaticky i~v 3-CNF.}
             \visible<3->{\item U~vstupní formule proto musíme rozdělit "dlouhé" klauzule na menší.}
@@ -210,7 +210,7 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Závěrem k~převodu $\SAT\rightarrow\THREESAT$}
+    \begin{frame}{Závěrem k~převodu \SAT{} na \THREESAT}
         \begin{itemize}
             \visible<2->{\item Opakovanou aplikací tohoto postupu dostaneme formuli $\psi$, která je v~3-CNF a~je splnitelná právě tehdy, když i~$\varphi$ je splnitelná.}
             \visible<3->{\item Rozdělení klauzule
@@ -226,12 +226,11 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{$\SAT$ a~$\THREESAT$ jsou vzájemně převoditelné}
+    \begin{frame}{\SAT{} a~\THREESAT{} jsou vzájemně převoditelné}
         \obrazek{images/sat-3sat.tex}
     \end{frame}
 
-    \begin{frame}{Převod $\SAT\rightarrow\THREESAT$}{Příklad}
-        \small
+    \begin{frame}{Převod \SAT{} na \THREESAT}{Příklad}
         Mějme formuli $\varphi$ v~CNF s~jednou klauzulí:
         \[\varphi=a\lor b\lor \neg c\lor \neg b\lor d\lor \neg d.\]
         \begin{itemize}
@@ -242,8 +241,7 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Převod $\SAT\rightarrow\THREESAT$}{Příklad}
-        \small
+    \begin{frame}{Převod \SAT{} na \THREESAT}{Příklad}
         \begin{itemize}
             \item A~nyní ještě poslední klauzuli rozdělíme pomocí nové proměnné $z$:
             \[(a\lor b\lor x)\land(\neg c\lor \neg b\lor y)\land(d\lor \neg d\lor \markdarkred{z})\land(\neg x\lor \neg y\lor \markdarkred{\neg z}).\]
@@ -251,7 +249,7 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Převod $\SAT\rightarrow\THREESAT$}{Příklad}
+    \begin{frame}{Převod \SAT{} na \THREESAT}{Příklad}
         \visible<2->{Výsledná formule v~3-CNF je tedy
         \[\psi=(a\lor b\lor x)\land(\neg c\lor \neg b\lor y)\land(d\lor \neg d\lor z)\land(\neg x\lor \neg y\lor \neg z).\]}
         \visible<3->{Zkusíme ohodnocení proměnných $a=0,b=1,c=1,d=1$. Jak musíme nastavit $x,y,z$?}
@@ -307,7 +305,7 @@
     \begin{frame}{Co z~toho plyne?}
         \visible<2->{\begin{tnoticeframe*}
             \begin{center}
-                Speciálně to znamená, že problém $\THREESAT$ a~$\SAT$ jsou \textbf{stejně těžké problémy}.
+                Speciálně to znamená, že problém \THREESAT{} a~\SAT{} jsou \textbf{stejně těžké problémy}.
             \end{center}
         \end{tnoticeframe*}}
         \visible<3->{\begin{tinfoframe*}
@@ -380,21 +378,21 @@
     \subsection{Problém nezávislé množiny v~grafu}
 
     \begin{frame}{Problém nezávislé množiny v~grafu}
-        \visible<2->{\decproblem{Problém nezávislé množiny v~grafu ($\NZMNA$)}{
+        \visible<2->{\decproblem{Problém nezávislé množiny v~grafu (\INDSET)}{
             Graf $G$ a~číslo $k\in\N$.
         }{
             Existuje v~grafu $G$ nezávislá množina velikosti alespoň $k$?
         }}
         \visible<3->{\begin{talertframe*}
             \begin{center}
-                Ukážeme, že problém $\NZMNA$ je \textbf{stejně těžký} jako $\SAT$.
+                Ukážeme, že problém \INDSET{} je \textbf{stejně těžký} jako \SAT.
             \end{center}
         \end{talertframe*}}
     \end{frame}
 
-    \subsection{Převod 3-SAT na NzMna}
+    \subsection{Převod \THREESAT{} na \INDSET}
 
-    \begin{frame}{Převod $\THREESAT\rightarrow\NZMNA$}
+    \begin{frame}{Převod \THREESAT{} na \INDSET}
         \begin{itemize}
             \visible<2->{\item Máme zadanou formuli $\varphi$ v~3-CNF s~$n$ literály. Chceme pro ni sestrojit graf $G$ a~číslo $k$ takové, že platí:
             \begin{center}
@@ -436,9 +434,9 @@
         \visible<5->{Polynomialita převodu je zřejmá: Graf $G$ má maximálně $n$ vrcholů a~hran může mít maximálně \textbf{kvadraticky mnoho}.}
     \end{frame}
 
-    \subsection{Převod NzMna na SAT}
+    \subsection{Převod \INDSET{} na \SAT}
 
-    \begin{frame}{Převod $\NZMNA\rightarrow\SAT$}{Bonus}
+    \begin{frame}{Převod \INDSET{} na \SAT}{Bonus}
         \visible<2->{\begin{tinfoframe*}
             \begin{center}
                 Bonusová část. Postup je převzat z~knihy \cite{mares-valla-labyrint}.
@@ -498,9 +496,6 @@
     \end{frame}
 
     \begin{frame}{Podmínky kladené na matici $X$}
-        \small
-        \setlength{\abovedisplayskip}{3pt}
-        \setlength{\belowdisplayskip}{3pt}
         \begin{enumerate}
             \visible<2->{\item V~každém řádku je \textbf{nejvýše jedna} jednička:
             \[(\neg x_{i,j}\lor\neg x_{i,j'})\quad\text{pro všechna $i$ a~$j\neq j'$}.\]}
@@ -517,12 +512,11 @@
         \visible<2->{Formule $\varphi$ je konjunkcí všech dosud zavedených klauzulí:}
         \visible<2->{\obrazek[0.66\textheight]{images/nzmna-sat-formule.tex}}
         \visible<3->{\begin{center}
-            \footnotesize Formule $\varphi$ je v~CNF s~proměnnými $v_1,\dots,v_n$ a~$x_{1,1},\dots,x_{k,n}$.
+            Formule $\varphi$ je v~CNF s~proměnnými $v_1,\dots,v_n$ a~$x_{1,1},\dots,x_{k,n}$.
         \end{center}}
     \end{frame}
 
     \begin{frame}{Korektnost převodu}
-        \small
         \begin{itemize}
             \visible<2->{\item[$\Rightarrow$] Nechť $M$ je nezávislá množina, $|M|\geqslant k$. Vybereme z~ní $k$ vrcholů $u_1,\dots,u_k$.}
             \begin{itemize}
@@ -557,12 +551,12 @@
         \end{itemize}
         \visible<9->{\begin{tnoticeframe*}
             \begin{center}
-                Formuli sestrojíme v~polynomiálním čase $\implies$ $\NZMNA\rightarrow\SAT$.
+                Formuli sestrojíme v~polynomiálním čase $\implies$ $\INDSET\rightarrow\SAT$.
             \end{center}
         \end{tnoticeframe*}}
     \end{frame}
 
-    \begin{frame}{Převod $\NZMNA\rightarrow\SAT$}{Příklad}
+    \begin{frame}{Převod \INDSET{} na \SAT}{Příklad}
         \begin{columns}[c]
             \begin{column}{0.36\textwidth}
                 \obrazek[0.36\textheight]{images/nzmna-sat-priklad.tex}
@@ -583,7 +577,7 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Převod $\NZMNA\rightarrow\SAT$}{Příklad}
+    \begin{frame}{Převod \INDSET{} na \SAT}{Příklad}
         \begin{itemize}
             \visible<2->{\item Vrchol $2$ očíslujeme jako první, vrchol $4$ jako druhý prvek množiny:
             \[X=\begin{pmatrix}
@@ -600,12 +594,12 @@
         \end{tnoticeframe*}}
     \end{frame}
 
-    \subsection{Převod NzMna na 3-SAT}
+    \subsection{Převod \INDSET{} na \THREESAT}
 
-    \begin{frame}{Převod $\NZMNA\rightarrow\THREESAT$}
+    \begin{frame}{Převod \INDSET{} na \THREESAT}
         \begin{itemize}
             \visible<2->{\item Převod dostaneme složením dvou převodů, které už známe.}
-            \visible<3->{\item Problém nejprve převedeme na $\SAT$ (viz bonusová část) a~pak využijeme převod $\SAT$ na $\THREESAT$. Díky tranzitivitě převoditelnosti platí $\NZMNA\rightarrow\THREESAT$.}
+            \visible<3->{\item Problém nejprve převedeme na \SAT{} (viz bonusová část) a~pak využijeme převod \SAT{} na \THREESAT. Díky tranzitivitě převoditelnosti platí $\INDSET\rightarrow\THREESAT$.}
         \end{itemize}
         \visible<4->{\obrazek{images/nzmna-3sat.tex}}
     \end{frame}
@@ -644,7 +638,7 @@
     \subsection{Problém kliky v~grafu}
 
     \begin{frame}{Problém kliky v~grafu}
-        \visible<2->{\decproblem{Problém kliky v~grafu ($\KLIKA$)}{
+        \visible<2->{\decproblem{Problém kliky v~grafu (\CLIQUE)}{
             Graf $G$ a~číslo $k\in\N$.
         }{
             Obsahuje $G$ kliku o~alespoň $k$ vrcholech?
@@ -656,9 +650,9 @@
         \end{talertframe*}}
     \end{frame}
 
-    \subsection{Převody mezi Klika a~NzMna}
+    \subsection{Převody mezi \CLIQUE{} a~\INDSET}
 
-    \begin{frame}{Převody mezi $\KLIKA$ a~$\NZMNA$}
+    \begin{frame}{Převody mezi \CLIQUE{} a~\INDSET}
         \begin{itemize}
             \visible<2->{\item Jeden problém lze převést na druhý jednoduše sestrojením \textbf{doplňku grafu}.}
             \visible<3->{\item Jsou-li libovolné vrcholy spojeny v~$G$ hranou, pak v~$\bar{G}$ již nejsou spojeny hranou.}
@@ -671,7 +665,7 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Převody mezi $\KLIKA$ a~$\NZMNA$}
+    \begin{frame}{Převody mezi \CLIQUE{} a~\INDSET}
         \begin{itemize}
             \visible<2->{\item Máme zadaný graf $G$ a~číslo $k\in\N$.}
             \visible<3->{\item Sestrojíme doplněk $\bar{G}$ grafu $G$ a~ponecháme číslo $k$.}
@@ -683,7 +677,7 @@
             \end{center}
         \end{tinfoframe*}}
         \visible<6->{Zjevně platí
-        \[\KLIKA(G,k)=\NZMNA(\bar{G},k),\;\text{resp.}\;\NZMNA(G,k)=\KLIKA(\bar{G},k).\]}
+        \[\CLIQUE(G,k)=\INDSET(\bar{G},k),\;\text{resp.}\;\INDSET(G,k)=\CLIQUE(\bar{G},k).\]}
     \end{frame}
 
     \begin{frame}{Převod je polynomiální}
@@ -703,11 +697,11 @@
         \visible<2->{\obrazek{images/shrnuti.tex}}
         \visible<3->{\begin{talertframe*}
             \begin{center}
-                Převod $\NZMNA\rightarrow\SAT$ je součástí bonusové části.
+                Převod \INDSET{} na \SAT{} je součástí bonusové části.
             \end{center}
         \end{talertframe*}}
     \end{frame}
 
-    \zdrojeframe{papadimitriou-complexity, mares-valla-labyrint}
+    \bibframe{papadimitriou-complexity, mares-valla-labyrint}
 
 \end{document}

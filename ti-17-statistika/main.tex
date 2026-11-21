@@ -122,7 +122,7 @@ $52\,202$ Kč & $44\,337$ Kč
 \begin{frame}{Příklad}{nižší inflace $\neq$ nižší ceny}
 
 \visible<2->{\begin{center}
-    \textbf{\small Míra inflace vyjádřená přírůstkem průměrného ročního indexu spotřebitelských cen (ČSÚ)}
+    \textbf{Míra inflace vyjádřená přírůstkem průměrného ročního indexu spotřebitelských cen (ČSÚ)}
 \end{center}
 \begin{figure}
     \centering
@@ -186,7 +186,6 @@ $52\,202$ Kč & $44\,337$ Kč
 \subsection{Statistický soubor a~statistický znak}
 
 \begin{frame}{Statistický soubor a~statistický znak}
-    \small
 
     \visible<2->{\begin{defblock}
         \begin{itemize}
@@ -204,28 +203,32 @@ $52\,202$ Kč & $44\,337$ Kč
         \end{itemize}
     \end{defblock}}
 
-    \visible<3->{\begin{tnoticeframe*}
+\end{frame}
+
+\begin{frame}{Statistický soubor a~statistický znak}
+
+    \visible<2->{\begin{tnoticeframe*}
         Pokud je sledovaný znak pouze jeden, můžeme soubor $\mathbf{X}$ považovat za $n$-rozměrný vektor, tj. $\mathbf{X}=(x_1,\dots,x_n)$.
-    \end{tnoticeframe*}}    
+    \end{tnoticeframe*}}
+
+    \visible<3->{\begin{itemize}
+        \item řádky odpovídají jednotlivým \markdarkred{objektům},
+        \visible<4->{\item sloupce odpovídají sledovaným \markdarkred{statistickým znakům},}
+        \visible<5->{\item hodnota $x_{ij}$ je hodnota $j$-tého znaku u~$i$-tého objektu.}
+    \end{itemize}}
 
 \end{frame}
 
 \begin{frame}{Statistický soubor a~statistický znak}
 
-    \visible<2->{\begin{itemize}
-        \item řádky odpovídají jednotlivým \markdarkred{objektům},
-        \visible<3->{\item sloupce odpovídají sledovaným \markdarkred{statistickým znakům},}
-        \visible<4->{\item hodnota $x_{ij}$ je hodnota $j$-tého znaku u~$i$-tého objektu.}
-    \end{itemize}}
-
-    \visible<5->{\begin{timportantframe}
+    \visible<2->{\begin{timportantframe}
         My ale budeme typicky pracovat se soubory \textbf{sledující jeden statistický znak}. Resp. jeden sloupec většího souboru budeme považovat za samostatný (pod)soubor.
     \end{timportantframe}}
 
-    \visible<6->{Dále budeme pro statistické soubory $\mathbf{X}=(x_1,\dots,x_n),\mathbf{Y}=(y_1,\dots,y_n)$ a~$a\in\R$ značit
+    \visible<3->{Dále budeme pro statistické soubory $\mathbf{X}=(x_1,\dots,x_n),\mathbf{Y}=(y_1,\dots,y_n)$ a~$a\in\R$ značit
     \begin{itemize}
         \item $\mathbf{X}+\mathbf{Y}=(x_1+y_1,\dots,x_n+y_n)$ a
-        \visible<7->{\item $a\mathbf{X}=(ax_1,\dots,ax_n)$.}
+        \visible<4->{\item $a\mathbf{X}=(ax_1,\dots,ax_n)$.}
     \end{itemize}}
 \end{frame}
 
@@ -259,7 +262,6 @@ $52\,202$ Kč & $44\,337$ Kč
 \subsection{Vlastnosti aritmetického průměru}
 
 \begin{frame}{Vlastnosti aritmetického průměru}
-    \footnotesize
 
 Pro pevně zvolený statistický znak pišme jednoduše
 \[
@@ -273,6 +275,17 @@ Pro pevně zvolený statistický znak pišme jednoduše
     \begin{enumerate}
         \item $\displaystyle \sum_{i=1}^{n}(x_i-\average{\mathbf{X}})=0.$
         \item Pro soubory $\mathbf{X},\mathbf{Y}$ a~čísla $a,b\in\R$ je $\average{a\mathbf{X}+b\mathbf{Y}}=a\average{\mathbf{X}}+b\average{\mathbf{Y}}$.
+    \end{enumerate}
+\end{propblock}
+
+\end{frame}
+
+\begin{frame}{Vlastnosti aritmetického průměru}
+
+\begin{propblock}[pokračování]
+    Pro statistický soubor $\mathbf{X}$ dále platí:
+    \begin{enumerate}
+        \setcounter{enumi}{2}
         \item Aritmetický průměr minimalizuje hodnotu výrazu $\sum_{i=1}^{n}(x_i-a)^2$,
         nebo-li
         \[\average{\mathbf{X}}=\argmin\limits_{a\in\mathbb{R}}\sum_{i=1}^{n}(x_i-a)^2.\]
@@ -309,7 +322,6 @@ Pro pevně zvolený statistický znak pišme jednoduše
 \end{frame}
 
 \begin{frame}{Důkaz bodu 3}{minimalizace $\sum_{i=1}^{n}(x_i-a)^2$}
-    \footnotesize
 
 \visible<2->{Mějme libovolné $a\in\mathbb{R}$. Pak upravíme:
 \[
@@ -319,11 +331,19 @@ x_i-a=(x_i-\average{\mathbf{X}})+(\average{\mathbf{X}}-a).
 \visible<3->{Tedy po dosazení, roznásobení a~aplikaci prvního bodu máme:
 \begin{align*}
     \sum_{i=1}^{n}(x_i-a)^2&=\sum_{i=1}^{n}\left((x_i-\average{\mathbf{X}})+(\average{\mathbf{X}}-a)\right)^{2}\\
-    &=\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})^2+2(\average{\mathbf{X}}-a)\overbrace{\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})}^{0}+n(\average{\mathbf{X}}-a)^2\\
-    &=\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})^2+n(\average{\mathbf{X}}-a)^2.
+    &=\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})^2+2(\average{\mathbf{X}}-a)\overbrace{\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})}^{0}+n(\average{\mathbf{X}}-a)^2.
 \end{align*}}
 
-\visible<4->{Minimum nastává právě pro $a=\average{\mathbf{X}}$.}
+\end{frame}
+
+\begin{frame}{Důkaz bodu 3}{minimalizace $\sum_{i=1}^{n}(x_i-a)^2$}
+
+\visible<2->{Celkem tedy
+\[
+    \sum_{i=1}^{n}(x_i-a)^2=\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})^2+n(\average{\mathbf{X}}-a)^2.
+\]}
+
+\visible<3->{Minimum nastává právě pro $a=\average{\mathbf{X}}$.}
 
 \end{frame}
 
@@ -350,7 +370,6 @@ Mějme statistický soubor $\mathbf{X}=(x_1,\ldots,x_n)$ a~vektor \textbf{kladn�
 \end{frame}
 
 \begin{frame}{Příklad}{Výpočet váženého průměru}
-    \small
 
 
 \visible<2->{Výsledná známka z~předmětu může být určena z~několika částí:
@@ -383,8 +402,11 @@ aktivita & $70$ & $1$
 \approx 85{,}83.
 \]}
 
+\end{frame}
 
-\visible<5->{\begin{tinfoframe*}
+\begin{frame}{Příklad}{Výpočet váženého průměru}
+
+\visible<2->{\begin{tinfoframe*}
 Projekt má na výsledek větší vliv než aktivita, protože má větší váhu.
 \end{tinfoframe*}}
 
@@ -479,7 +501,6 @@ $\mathbf{w}=(w_1,\ldots,w_n)$ platí
 \subsection{Medián}
 
 \begin{frame}{Medián}
-    \footnotesize
 
 \visible<2->{Pro pevně zvolený statistický znak pišme jeho hodnoty jako
 \[
@@ -503,7 +524,11 @@ x_{\left((n+1)/2\right)}, & \text{je-li } n \text{ liché},\\[0.2cm]
 \]
 \end{defblock}}
 
-\visible<5->{\begin{tinfoframe*}
+\end{frame}
+
+\begin{frame}{Medián}
+
+\visible<2->{\begin{tinfoframe*}
     \begin{center}
         Medián je "prostřední" hodnota uspořádaného souboru.
     \end{center}
@@ -561,8 +586,6 @@ Rozptyl je roven nule právě tehdy, když jsou všechny hodnoty stejné.
 
 \begin{frame}{Malý a~velký rozptyl}
 
-\small
-
 \visible<2->{\begin{columns}[T]
     \begin{column}{0.48\textwidth}
         \begin{center}
@@ -593,7 +616,6 @@ od průměru vzdálenější, a~proto $\Var(\mathbf{X})<\Var(\mathbf{Y})$.
 \end{frame}
 
 \begin{frame}{Příklad}{Výpočet rozptylu}
-    \small
 
 \visible<2->{Během pěti dnů jsme naměřili polední teploty ve stupních Celsia:
 \[
@@ -607,7 +629,11 @@ od průměru vzdálenější, a~proto $\Var(\mathbf{X})<\Var(\mathbf{Y})$.
     &=\boxed{7{,}2}.
 \end{align*}}
 
-\visible<4->{\begin{tinfoframe*}
+\end{frame}
+
+\begin{frame}{Příklad}{Výpočet rozptylu}
+
+\visible<2->{\begin{tinfoframe*}
 Rozptyl teplot je $7{,}2\,^\circ\mathrm{C}^2$.
 Vyšší hodnota je způsobena hlavně dnem s~teplotou $26\,^\circ\mathrm{C}$.
 \end{tinfoframe*}}
@@ -700,8 +726,6 @@ Standardizace posune průměr do nuly a~změní měřítko tak, aby jedna jednot
 \subsection{Vlastnosti standardizovaných dat}
 
 \begin{frame}{Vlastnosti standardizovaných dat}
-
-\small
 
 \visible<2->{\begin{propblock}
 Mějme statistický soubor $\mathbf{X}=(x_1,\ldots,x_n)$, kde $\sigma_{\mathbf{X}}>0$.
@@ -808,8 +832,6 @@ a~připravit data pro některé metody umělé inteligence.
 
 \begin{frame}{Příklad}{standardizovaný soubor}
 
-\small
-
 \begin{center}
 \begin{tabular}{c|c|c}
 \textbf{Osoba} & \textbf{Věk} & \textbf{Příjem} \\
@@ -827,6 +849,10 @@ a~připravit data pro některé metody umělé inteligence.
 \end{tabular}
 \end{center}
 
+\end{frame}
+
+\begin{frame}{Příklad}{standardizovaný soubor}
+
 \begin{tinfoframe*}
 Po standardizaci už hodnoty ve sloupcích \textbf{věk} a~\textbf{příjem}
 nejsou v~tak rozdílném měřítku.
@@ -842,7 +868,6 @@ nejsou v~tak rozdílném měřítku.
 \end{titleframeenv}
 
 \begin{frame}{Min-max normalizace}
-    \footnotesize
 
 
 \visible<2->{\begin{defblock}[Min-max normalizace]
@@ -863,15 +888,17 @@ u_i=\frac{x_i-m}{M-m}.
     \item Všechny ostatní hodnoty leží mezi nimi.
 \end{itemize}}
 
+\end{frame}
 
-\visible<4->{\begin{timportantframe}
+\begin{frame}{Min-max normalizace}
+
+\visible<2->{\begin{timportantframe}
 Min-max normalizace převádí data do intervalu $\langle 0,1\rangle$.
 \end{timportantframe}}
 
 \end{frame}
 
 \begin{frame}{Příklad}{Min-max normalizace}
-    \small
 
 
 \visible<2->{Použijme opět soubor poledních teplot:
@@ -901,8 +928,11 @@ m=18,\qquad M=26,\qquad M-m=8.
 \end{aligned}
 \]}
 
+\end{frame}
 
-\visible<5->{\begin{tinfoframe*}
+\begin{frame}{Příklad}{Min-max normalizace}
+
+\visible<2->{\begin{tinfoframe*}
 Původní teploty ve~stupních Celsia jsme převedli na~bezrozměrné hodnoty
 v~intervalu $\langle 0,1\rangle$.
 \end{tinfoframe*}}
@@ -980,7 +1010,6 @@ Cílem není pouze popsat jednotlivé znaky zvlášť, ale zjistit, zda mezi nim
 \subsection{Kovariance}
 
 \begin{frame}{Kovariance}
-    \footnotesize
 
 
 \visible<2->{\begin{defblock}[Kovariance]
@@ -1000,7 +1029,11 @@ Mějme statistické soubory $\mathbf{X}=(x_1,\ldots,x_n),\mathbf{Y}=(y_1,\ldots,
     \visible<5->{\item Záporná kovariance: větší hodnoty $\mathbf{X}$ často odpovídají menším hodnotám $\mathbf{Y}$.}
 \end{itemize}}
 
-\visible<6->{\begin{talertbox}{Problém}
+\end{frame}
+
+\begin{frame}{Kovariance}
+
+\visible<2->{\begin{talertbox}{Problém}
     \begin{center}
         Kovariance závisí na jednotkách a~"měřítku" dat.
     \end{center}
@@ -1011,7 +1044,6 @@ Mějme statistické soubory $\mathbf{X}=(x_1,\ldots,x_n),\mathbf{Y}=(y_1,\ldots,
 \subsection{Korelační koeficient}
 
 \begin{frame}{Korelační koeficient}
-    \small
 
 
 \visible<2->{\begin{defblock}[Korelační koeficient]
@@ -1039,8 +1071,11 @@ $\sigma_{\mathbf{X}}>0$ a~$\sigma_{\mathbf{Y}}>0$.
 }=\frac{1}{n\sigma_\mathbf{X}\sigma_\mathbf{Y}}\left(\sum_{i=1}^{n}x_iy_i-n\average{\mathbf{X}}\average{\mathbf{Y}}\right).
 \]}
 
+\end{frame}
 
-\visible<4->{\begin{tinfoframe*}
+\begin{frame}{Korelační koeficient}
+
+\visible<2->{\begin{tinfoframe*}
 Korelační koeficient je standardizovaná kovariance. Nemá jednotky a~měří míru \markdarkred{lineární závislosti}.
 \end{tinfoframe*}}
 
@@ -1122,8 +1157,6 @@ Znamená pouze, že mezi nimi není lineární korelace.
 
 \begin{frame}{Příklad}{Výška a~hmotnost}
 
-    \footnotesize
-
     \visible<2->{Mějme data osmi studentů:
 
     \begin{center}
@@ -1152,11 +1185,14 @@ Znamená pouze, že mezi nimi není lineární korelace.
     \sigma_{\mathbf{H}}\approx 13{,}11.
     \]}
 
+\end{frame}
 
-    \visible<5->{Celkově vychází $\rho_{\mathbf{V}\mathbf{H}}\approx 0{,}79$.}
+\begin{frame}{Příklad}{Výška a~hmotnost}
+
+    \visible<2->{Celkově vychází $\rho_{\mathbf{V}\mathbf{H}}\approx 0{,}79$.}
 
 
-    \visible<6->{\begin{tinfoframe*}
+    \visible<3->{\begin{tinfoframe*}
     Mezi výškou a~hmotností je v~tomto malém souboru \textbf{silná kladná lineární korelace}.
     \end{tinfoframe*}}
 
@@ -1166,7 +1202,7 @@ Znamená pouze, že mezi nimi není lineární korelace.
 
 
     \visible<2->{\begin{center}
-    \obrazek[0.4\textheight]{images/korelace-meri-linearni-vztah.tex}
+    \obrazek[0.33\textheight]{images/korelace-meri-linearni-vztah.tex}
     \end{center}}
 
 
@@ -1183,7 +1219,6 @@ Znamená pouze, že mezi nimi není lineární korelace.
 \end{frame}
 
 \begin{frame}{Příklad}{Nelineární vztah s~nulovou korelací}
-    \small
 
 
     \visible<2->{\begin{itemize}
@@ -1196,14 +1231,18 @@ Znamená pouze, že mezi nimi není lineární korelace.
         \item Z~toho ihned plyne, že $\average{\mathbf{X}}=0$ a~$\sum_{i=1}^{n}x_i^{3}=0$.}
     \end{itemize}}
 
-    \visible<4->{Kovariance tedy vychází nulová:
+\end{frame}
+
+\begin{frame}{Příklad}{Nelineární vztah s~nulovou korelací}
+
+    \visible<2->{Kovariance tedy vychází nulová:
     \begin{align*}
         \Cov(\mathbf{X},\mathbf{Y})&=\frac{1}{n}\sum_{i=1}^{n}(x_i-\average{\mathbf{X}})(y_i-\average{\mathbf{Y}})=\frac{1}{n}\left(\sum_{i=1}^{n}x_i^{3}-\average{\mathbf{Y}}\sum_{i=1}^{n}x_i\right)\\
         &=\frac{1}{n}\left(0-\average{\mathbf{Y}}\cdot 0\right)=0.
     \end{align*}}
 
 
-    \visible<5->{Pokud navíc $\sigma_{\mathbf{X}}>0$ a~$\sigma_{\mathbf{Y}}>0$, pak $\rho_{\mathbf{X}\mathbf{Y}}=0$.}
+    \visible<3->{Pokud navíc $\sigma_{\mathbf{X}}>0$ a~$\sigma_{\mathbf{Y}}>0$, pak $\rho_{\mathbf{X}\mathbf{Y}}=0$.}
 
 \end{frame}
 
@@ -1249,7 +1288,6 @@ Znamená pouze, že mezi nimi není lineární korelace.
 \subsection{Korelace není kauzalita}
 
 \begin{frame}{Korelace není kauzalita}
-    \footnotesize
 
 
 \visible<2->{\begin{tinfoframe*}
@@ -1264,24 +1302,27 @@ Kauzalita znamená, že \markdarkred{jedna veličina je příčinou změny druh�
 \text{kauzalita}
 \]}
 
+\end{frame}
 
-\visible<4->{\begin{exblock}
+\begin{frame}{Korelace není kauzalita}
+
+\visible<2->{\begin{exblock}
 V~létě roste prodej zmrzliny a~zároveň počet případů úpalu.
 \end{exblock}}
 
 
-\visible<5->{\begin{talertbox}{Chybný závěr}
+\visible<3->{\begin{talertbox}{Chybný závěr}
 Zmrzlina způsobuje úpal.
 \end{talertbox}}
 
 
-\visible<6->{\begin{timportantframe}
+\visible<4->{\begin{timportantframe}
 Obě veličiny mohou růst kvůli třetí proměnné:
 například kvůli vyšší teplotě.
 \end{timportantframe}}
 
 \end{frame}
 
-\zdrojeframe{russell-norvig-aima, james-isl-python, csu-volby-snemovna, volby-ps2025}
+\bibframe{russell-norvig-aima, james-isl-python, csu-volby-snemovna, volby-ps2025}
 
 \end{document}

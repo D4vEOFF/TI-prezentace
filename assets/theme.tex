@@ -43,6 +43,9 @@
 
 \definecolor{mathfg}{HTML}{00185E}
 
+% Názvy problémů v textu (makro \problem a odvozená v macros.tex)
+\definecolor{problemfg}{HTML}{1C8C1C}
+
 \colorlet{bulletbg}{maincolor}
 % \definecolor{bulletbg}{HTML}{}
 
@@ -60,6 +63,9 @@
 \setbeamercolor{author in head/foot}{bg=authorfooterbg,fg=white}
 \setbeamercolor{title in head/foot}{bg=titlefooterbg,fg=titlefooterfg}
 \setbeamercolor{date in head/foot}{bg=datefooterbg,fg=black}
+% Názvy problémů v zápatí přebírají barvu textu zápatí (zelená by na jeho
+% podkladu zanikla)
+\addtobeamertemplate{footline}{\colorlet{problemfg}{titlefooterfg}}{}
 % \setbeamercolor{title}{bg=datefooterbg}
 \setbeamerfont{title}{series=\bfseries}
 \setbeamercolor{frametitle}{bg=datefooterbg}

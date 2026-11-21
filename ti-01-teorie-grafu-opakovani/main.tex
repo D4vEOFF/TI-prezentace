@@ -130,13 +130,19 @@
         \visible<3->{\begin{talertframe}
             Přímá definice není moc praktická.
         \end{talertframe}}
-        \visible<4->{\obrazek[0.28\textheight]{images/graf-matice-sousednosti.tex}}
-        \visible<5->{Grafy můžeme reprezentovat třemi způsoby:}
-        \visible<6->{\begin{itemize}
-            \visible<6->{\item \markdarkred{maticí sousednosti},}
-            \visible<7->{\item \markdarkred{maticí incidence} a}
-            \visible<8->{\item \markdarkred{seznamy sousedních vrcholů}.}
-        \end{itemize}}
+        \begin{columns}[c]
+            \begin{column}{0.55\textwidth}
+                \visible<5->{Grafy můžeme reprezentovat třemi způsoby:}
+                \visible<6->{\begin{itemize}
+                    \visible<6->{\item \markdarkred{maticí sousednosti},}
+                    \visible<7->{\item \markdarkred{maticí incidence} a}
+                    \visible<8->{\item \markdarkred{seznamy sousedních vrcholů}.}
+                \end{itemize}}
+            \end{column}
+            \begin{column}{0.4\textwidth}
+                \visible<4->{\obrazek[0.3\textheight]{images/graf-matice-sousednosti.tex}}
+            \end{column}
+        \end{columns}
     \end{frame}
 
     \subsection{Matice sousednosti}
@@ -155,7 +161,6 @@
     \end{frame}
 
     \begin{frame}{Matice sousednosti}{Příklad \textrm{I}}
-        \small
         \visible<2->{\begin{minipage}[t]{0.44\textwidth}
             Graf $G$
             \obrazek[0.30\textheight]{images/graf-matice-sousednosti.tex}
@@ -174,7 +179,10 @@
                 \end{tabular}
             \end{table}
         \end{minipage}}
-        \visible<10->{Výsledná matice sousednosti grafu $G$:
+    \end{frame}
+
+    \begin{frame}{Matice sousednosti}{Příklad \textrm{I}}
+        \visible<2->{Výsledná matice sousednosti grafu $G$:
         \[\mathbf{A}_G=\left(\begin{matrix}
             0 & 1 & 0 & 0 & 0 & 0 \\
             1 & 0 & 1 & 1 & 0 & 1 \\
@@ -236,7 +244,6 @@
     \subsection{Matice incidence}
 
     \begin{frame}{Matice incidence}
-        \small
         \visible<2->{\begin{itemize}
             \visible<2->{\item Mějme graf $G=(V,E)$, kde
             \[V=\set{v_1,v_2,\dots,v_n}\quad\text{a}\quad E=\set{e_1,e_2,\dots,e_m}.\]}
@@ -248,18 +255,22 @@
                     1 & \text{vede-li \textbf{do} vrcholu $v_i$ hrana $e_j$}, \\
                     0 & \text{jinak}.
                 \end{cases}\]}
-                \visible<5->{\item Je-li graf $G$ \markdarkred{neorientovaný}, pak
-                \[\mathbf{I}_{ij}=\begin{cases}
-                    1 & \text{je-li hrana $e_j$ incidentní s~vrcholem $v_i$}, \\
-                    0 & \text{jinak}.
-                \end{cases}\]}
             \end{itemize}}
         \end{itemize}}
-        \visible<6->{Matice $\mathbf{I}$ je tzv. \markdarkred{maticí incidence} grafu $G$.}
+    \end{frame}
+
+    \begin{frame}{Matice incidence}
+        \begin{itemize}
+            \visible<2->{\item Je-li graf $G$ \markdarkred{neorientovaný}, pak
+            \[\mathbf{I}_{ij}=\begin{cases}
+                1 & \text{je-li hrana $e_j$ incidentní s~vrcholem $v_i$}, \\
+                0 & \text{jinak}.
+            \end{cases}\]}
+        \end{itemize}
+        \visible<3->{Matice $\mathbf{I}$ je tzv. \markdarkred{maticí incidence} grafu $G$.}
     \end{frame}
 
     \begin{frame}{Matice incidence}{Příklad \textrm{I}}
-        \small
         \visible<2->{\begin{minipage}[t]{0.44\textwidth}
             Graf $G$
             \obrazek[0.30\textheight]{images/graf-matice-incidence.tex}
@@ -278,7 +289,10 @@
                 \end{tabular}
             \end{table}
         \end{minipage}}
-        \visible<10->{Výsledná matice incidence grafu $G$:
+    \end{frame}
+
+    \begin{frame}{Matice incidence}{Příklad \textrm{I}}
+        \visible<2->{Výsledná matice incidence grafu $G$:
         \[\mathbf{I}_G=\left(\begin{matrix}
             -1 & -1 & 0 & 0 & 0 & 0 \\
             1 & 0 & -1 & 0 & 0 & 0 \\
@@ -302,7 +316,6 @@
     \begin{frame}{Seznamy sousedů}{Příklad \textrm{II}}
         \visible<2->{Prasátkový graf a~seznamy sousedů jeho vrcholů
         \obrazek[0.28\textheight]{images/graf-prasatko.tex}}
-        \small
         \begin{minipage}[t]{0.32\textwidth}
             \begin{align*}
                 \visible<3->{S[v_0]&=\set{v_1,v_3,v_9} \\ }
@@ -522,10 +535,14 @@ def has_edge_adjacency(i: int, j: int) -> bool:
             \visible<2->{\item Máme zadaná čísla vrcholů $i,j$. Potřebujeme zjistit, jestli některá z~hran
             \[e_1,e_2,\dots,e_m\]
             obsahuje za koncové vrcholy právě $v_i$ a~$v_j$.}
-            \visible<3->{\item Každá hrana má právě dva koncové vrcholy $\implies$ v~každém sloupci jsou \textbf{právě dvě nenulové hodnoty}.}
-            \visible<4->{\begin{table}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Hledání hrany v~matici incidence}
+        \begin{itemize}
+            \visible<2->{\item Každá hrana má právě dva koncové vrcholy $\implies$ v~každém sloupci jsou \textbf{právě dvě nenulové hodnoty}.}
+            \visible<3->{\begin{table}
                 \centering
-                \small
                 \begin{tabular}{c|cccccc}
                     $\mathbf{I}$                    & $e_1$     & $e_2$     & $e_3$     & $e_4$     & $\cdots$ & $e_m$      \\ \hline
                     $v_1$                           & $1$       & $0$       & $1$       & $0$       & $\cdots$ & $0$        \\
@@ -601,7 +618,6 @@ def has_edge_adjacency_list(i: int, j: int) -> bool:
     \begin{frame}{Shrnutí}
         \visible<2->{\begin{table}
             \centering
-            \small
             \begin{tabular}{c|ccc}
                                         & Prostorová složitost      & Nalezení hrany    \\ \hline
                 Matice sousednosti      & $\bigO(n^{2})$            & $\bigO(1)$        \\
@@ -612,8 +628,13 @@ def has_edge_adjacency_list(i: int, j: int) -> bool:
         \begin{itemize}
             \visible<3->{\item \textbf{Matice sousednosti} se hodí pro \markdarkred{husté grafy}, tzn.~obsahující řádově kvadraticky mnoho hran.}
             \visible<4->{\item \textbf{Matice incidence} má svůj užitek spíše v~teoretických výpočtech, nicméně v~algoritmech se skoro vůbec nepoužívá (příliš velká a~základní grafové operace jsou s~ní pomalé).}
-            \visible<5->{\item \textbf{Seznamy sousedů} se hodí pro \markdarkred{řídké grafy}, tzn.~obsahující méně než kvadraticky mnoho hran.}
-            \visible<6->{\begin{talertframe*}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Shrnutí}
+        \begin{itemize}
+            \visible<2->{\item \textbf{Seznamy sousedů} se hodí pro \markdarkred{řídké grafy}, tzn.~obsahující méně než kvadraticky mnoho hran.}
+            \visible<3->{\begin{talertframe*}
                 S~takovými grafy se setkáváme překvapivě často. Např. pro \textbf{stromy} platí, že $|E|=|V|-1$.
             \end{talertframe*}}
         \end{itemize}
@@ -664,6 +685,6 @@ def has_edge_adjacency_list(i: int, j: int) -> bool:
         \end{thmblock}
     \end{frame}
 
-    \zdrojeframe{mares-valla-labyrint, cormen-algorithms, matousek-diskretni}
+    \bibframe{mares-valla-labyrint, cormen-algorithms, matousek-diskretni}
 
 \end{document}
