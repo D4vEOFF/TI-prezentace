@@ -30,9 +30,13 @@ Neexistují testy ani linter. Ověřením změny je úspěšná kompilace a vizu
 
 ## Jak compile.py funguje
 
-Pro každou variantu kromě té úplně základní skript **vygeneruje dočasnou kopii** `main.tex` (`main_<aspect>[_handout].tex`), v ní regulárním výrazem přepíše volby v řádku `\documentclass` (nahradí `aspectratio=`, přidá/odebere `handout`), zkompiluje ji v pořadí `pdflatex`, `biber`, `pdflatex`, `pdflatex`, přejmenuje výsledek, dočasný `.tex` smaže a uklidí pomocné soubory (`.aux`, `.nav`, `.snm`, `.bbl`, `.bcf`, …).
+Každá varianta se překládá v **dočasné pracovní kopii** mimo repozitář (`create_workspace()`): adresář v systémovém `tmp`, který zrcadlí kořen repozitáře symbolickými odkazy (bez nich, typicky na Windows, kopiemi). Adresář prezentace je v kopii skutečný a pdflatex do něj zapisuje; v repozitáři tak nevznikají žádné pomocné soubory ani `pdfa.xmpi`. Pro každou variantu kromě té úplně základní se do kopie vygeneruje `main_<aspect>[_handout].tex`, v němž se regulárním výrazem přepíšou volby v řádku `\documentclass` (nahradí `aspectratio=`, přidá/odebere `handout`). Varianta se zkompiluje v pořadí `pdflatex`, `biber`, `pdflatex`, `pdflatex`, PDF se přesune do adresáře prezentace pod výsledným jménem a kopie se smaže.
 
-`biber` se spouští s pracovním adresářem prezentace (`cwd=folder`), aby se relativní cesta `../assets/literatura.bib` z `\addbibresource` rozřešila stejně jako při běhu `pdflatexu` — ten se naopak volá z kořene repozitáře s `-output-directory`.
+`pdflatex` běží v kořeni pracovní kopie s `-output-directory <adresář prezentace>`, `biber` s pracovním adresářem prezentace. Relativní cesty ve zdrojích (`../assets/...`, `images/...`, `ti-16-kryptografie/images/...`) se proto řeší stejně jako při překladu z kořene repozitáře a do PDF se nedostane absolutní cesta z disku.
+
+Izolace je důvod, proč se smí překládat souběžně i varianty téže prezentace: `pdfx` při každém průchodu zapisuje `pdfa.xmpi` pod pevným jménem a ve sdíleném adresáři by si jej varianty přepisovaly. Počet souběžných překladů určuje `-j` (výchozí je počet jader; s `--verbose` jedna). Hlášení o variantě se vypisuje vcelku až po jejím dokončení.
+
+Nezměněné varianty se nepřekládají. Po úspěšném překladu se do `.compile-cache/<adresář>/<pdf>.json` uloží otisky (SHA-256 obsahu) všech souborů, které pdflatex přečetl (seznam dává `-recorder`, soubor `.fls`), databáze `.bib` z `.bcf`, samotného `compile.py` a výsledného PDF. Varianta se přeskočí, jen když sedí všechny otisky a PDF existuje v adresáři prezentace nebo (s `--move`) v cílovém adresáři. `--force` přeloží vše. Při podezření na zastaralý výstup stačí `.compile-cache/` smazat.
 
 Výstup nástrojů se zachytává; skript tiskne jen řádek na variantu (počet stran, velikost, čas) a po neúspěchu vypíše z `.log` místo chyby s okolními řádky vstupu. Nerozřešené odkazy a citace hlásí jako varování. Neúspěšná varianta překlad dalších nezastaví, skript ale skončí s návratovým kódem `1`. Syrový výstup vrátí `--verbose`.
 
@@ -40,7 +44,7 @@ Důsledky pro editaci zdrojů:
 
 - `\documentclass[...]{beamer}` musí zůstat na **jednom řádku**; jinak jej regulární výraz v `update_documentclass_options()` nerozpozná a varianta se vygeneruje beze změny voleb.
 - Volbu `handout` nepiš natvrdo do `main.tex` — skript ji u generovaných variant vždy odstraní a doplní podle `--handout`.
-- Pokud kompilace spadne uprostřed, může v adresáři zůstat dočasný `main_*.tex` (v `ti-00-informace/` takový zbytek je). Do commitu nepatří.
+- Dočasný `main_*.tex` vzniká jen v pracovní kopii. Pokud takový soubor v adresáři prezentace je, jde o zbytek po starší verzi skriptu a do commitu nepatří.
 
 ## Struktura prezentace
 
@@ -64,7 +68,7 @@ Důsledky pro editaci zdrojů:
 
 Sdílené soubory a jejich role:
 
-- `assets/packages.tex` — balíčky. Pozor na `pdfx` s volbou `a-2u`: vyžaduje v adresáři prezentace soubor `pdfa.xmpi` s metadaty PDF/A. Nový adresář prezentace musí `pdfa.xmpi` obsahovat, jinak kompilace selže.
+- `assets/packages.tex` — balíčky. `pdfx` s volbou `a-2u` si při každém průchodu sám vytváří soubor `pdfa.xmpi` s metadaty PDF/A ve výstupním adresáři; do repozitáře nepatří a nový adresář prezentace jej obsahovat nemusí.
 - `assets/theme.tex` — barvy (`maincolor` a od ní odvozené), motiv Beameru, styl bloků, odrážek a záhlaví.
 - `assets/macros.tex` — společná makra (viz níže).
 - `assets/listing.tex` — styly `listings` pro C (výchozí), Python, C#, Rust; `escapeinside={(*}{*)}`.

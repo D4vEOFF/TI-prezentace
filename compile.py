@@ -1,12 +1,18 @@
 import argparse
+import contextlib
 import glob
+import hashlib
+import json
 import os
 import platform
 import re
 import shutil
 import subprocess
 import sys
+import tempfile
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
 
 
 # Prezentace jsou pouze v adresářích ti-* přímo v kořeni repozitáře. Rekurzivní
@@ -91,9 +97,52 @@ SYMBOLS = pick_symbols()
 # Syrový výstup spouštěných programů se vypisuje místo krátkého shrnutí
 VERBOSE = False
 
+# Překládá se i to, co se od minulého překladu nezměnilo (--force)
+FORCE = False
+
+# Adresář, kam --move přesouvá hotová PDF; nezměněné PDF se hledá i tam
+MOVE_TARGET = None
+
+# Prezentace se překládají souběžně ve více vláknech (viz compile_all). Zámek
+# brání tomu, aby se řádky z různých vláken slily do jednoho, a vyrovnávací
+# paměť vlákna drží pohromadě všechna hlášení o jedné variantě.
+_output_lock = threading.Lock()
+_thread_state = threading.local()
+
+# Nastaví se po Ctrl+C; rozpracované překlady pak už nespouštějí další programy.
+STOP = threading.Event()
+
 
 def say(message=''):
-    print(message, flush=True)
+    buffer = getattr(_thread_state, 'buffer', None)
+    if buffer is not None:
+        buffer.append(message)
+        return
+    with _output_lock:
+        sys.stdout.write(message + '\n')
+        sys.stdout.flush()
+
+
+@contextlib.contextmanager
+def grouped_output():
+    """Vypíše hlášení vzniklá uvnitř bloku najednou, až blok skončí.
+
+    S --verbose se nic nezdržuje: hlášení musí zůstat ve správném pořadí vůči
+    syrovému výstupu programů, který jde rovnou na terminál.
+    """
+    if VERBOSE:
+        yield
+        return
+    _thread_state.buffer = []
+    try:
+        yield
+    finally:
+        lines = _thread_state.buffer
+        _thread_state.buffer = None
+        if lines:
+            with _output_lock:
+                sys.stdout.write('\n'.join(lines) + '\n')
+                sys.stdout.flush()
 
 
 def step_started(what):
@@ -104,6 +153,10 @@ def step_succeeded(what, details):
     suffix = ' %s(%s)%s' % (Style.DIM, details, Style.RESET) if details else ''
     say('%s%s Successfully compiled %s%s%s'
         % (Style.GREEN, SYMBOLS['ok'], what, Style.RESET, suffix))
+
+
+def step_skipped(what):
+    say('%s%s Up to date %s%s' % (Style.GREEN, SYMBOLS['ok'], what, Style.RESET))
 
 
 def step_failed(what, reason):
@@ -295,9 +348,11 @@ def run_tool(command, cwd=None):
     """Spustí jeden program řetězce a zachytí jeho výstup, není-li --verbose."""
     if VERBOSE:
         return subprocess.run(command, cwd=cwd or None)
+    # Souběžně běžící programy se nesmějí přetahovat o vstup z terminálu.
     return subprocess.run(
         command,
         cwd=cwd or None,
+        stdin=subprocess.DEVNULL,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
     )
@@ -339,31 +394,123 @@ def delete_if_exists(file_path):
         os.remove(file_path)
 
 
-def cleanup_files(folder):
-    folder = fix_path_for_windows(folder)
-    extensions = [
-        "*.aux",
-        "*.out",
-        "*.log",
-        "*.synctex.gz",
-        "*.toc",
-        "*.nav",
-        "*.snm",
-        "*.vrb",
-        "*.bbl",
-        "*.bcf",
-        "*.blg",
-        "*.run.xml",
-    ]
+# Pomocné soubory, které po sobě zanechává pdflatex a biber
+AUXILIARY_SUFFIXES = (
+    ".aux",
+    ".out",
+    ".log",
+    ".synctex.gz",
+    ".toc",
+    ".nav",
+    ".snm",
+    ".vrb",
+    ".bbl",
+    ".bcf",
+    ".blg",
+    ".run.xml",
+)
 
-    for ext in extensions:
-        for file in glob.glob(os.path.join(folder, ext)):
+# Co se do pracovní kopie nepřenáší: pomocné soubory, hotová PDF a metadata
+# PDF/A, která si pdfx při každém průchodu vytváří znovu.
+GENERATED_SUFFIXES = AUXILIARY_SUFFIXES + (".pdf", ".xmpi")
+
+
+def cleanup_files(folder):
+    """Smaže z adresáře prezentace pomocné soubory, např. po překladu v editoru."""
+    folder = fix_path_for_windows(folder)
+
+    for suffix in AUXILIARY_SUFFIXES:
+        for file in glob.glob(os.path.join(folder, "*" + suffix)):
             if VERBOSE:
                 detail(f"Deleting {file}")
             try:
                 os.remove(file)
             except OSError as e:
                 note(f"could not remove {file}: {e}")
+
+
+# ---------------------------------------------------------------------------
+# Pracovní kopie
+# ---------------------------------------------------------------------------
+#
+# Každá varianta se překládá ve vlastním dočasném adresáři, který zrcadlí
+# kořen repozitáře. Varianty téže prezentace se díky tomu mohou překládat
+# souběžně: jinak by si navzájem přepisovaly soubor pdfa.xmpi, který pdfx
+# zapisuje při každém průchodu pod pevným jménem. Zdroje se nekopírují, vedou
+# na ně symbolické odkazy; všechny relativní cesty ve zdrojích (../assets,
+# images/..., ti-16-kryptografie/images/...) proto znějí stejně jako při
+# překladu přímo v repozitáři a výsledné PDF se neliší.
+
+def symlinks_available():
+    """Zjistí, zda lze vytvářet symbolické odkazy (na Windows ne vždy)."""
+    probe = tempfile.mkdtemp(prefix="compile-")
+    try:
+        os.symlink(probe, os.path.join(probe, "link"), target_is_directory=True)
+        return True
+    except (OSError, NotImplementedError, AttributeError):
+        return False
+    finally:
+        shutil.rmtree(probe, ignore_errors=True)
+
+
+SYMLINKS = symlinks_available()
+
+
+def mirror_entry(source, target):
+    """Zpřístupní soubor či adresář v pracovní kopii odkazem, jinak kopií."""
+    if SYMLINKS:
+        os.symlink(source, target, target_is_directory=os.path.isdir(source))
+    elif os.path.isdir(source):
+        shutil.copytree(source, target)
+    else:
+        shutil.copy2(source, target)
+
+
+def is_mirrored(directory, name):
+    """Rozhodne, zda položka adresáře patří do pracovní kopie."""
+    if name.startswith("."):
+        return False
+    if name.endswith(GENERATED_SUFFIXES):
+        return not os.path.isfile(os.path.join(directory, name))
+    return True
+
+
+def create_workspace(folder):
+    """
+    Vytvoří pracovní kopii pro překlad prezentace v adresáři `folder` a vrátí
+    dvojici (kořen kopie, jméno adresáře prezentace v ní).
+
+    Kořen zrcadlí nadřazený adresář prezentace, tedy kořen repozitáře. Adresář
+    prezentace je v kopii skutečný, protože do něj pdflatex zapisuje; odkazy
+    vedou až na jeho položky.
+    """
+    folder = os.path.abspath(folder)
+    parent = os.path.dirname(folder)
+    name = os.path.basename(folder)
+
+    # Skutečná cesta bez odkazů, aby odpovídala cestám v záznamu pdflatexu
+    workspace = os.path.realpath(tempfile.mkdtemp(prefix="compile-"))
+    try:
+        for entry in os.listdir(parent):
+            source = os.path.join(parent, entry)
+            if entry == name or not is_mirrored(parent, entry):
+                continue
+            # Bez symbolických odkazů by se s každou variantou kopírovaly
+            # i všechny ostatní prezentace; ty k překladu potřeba nejsou.
+            if not SYMLINKS and os.path.isfile(os.path.join(source, "main.tex")):
+                continue
+            mirror_entry(source, os.path.join(workspace, entry))
+
+        os.mkdir(os.path.join(workspace, name))
+        for entry in os.listdir(folder):
+            if is_mirrored(folder, entry):
+                mirror_entry(os.path.join(folder, entry),
+                             os.path.join(workspace, name, entry))
+    except BaseException:
+        shutil.rmtree(workspace, ignore_errors=True)
+        raise
+
+    return workspace, name
 
 
 def normalize_aspect_ratio(aspect):
@@ -438,11 +585,176 @@ def create_variant_tex(main_file, variant_file, aspect=None, handout=False):
         for line in lines
     ]
 
+    # V pracovní kopii může být pod tímto jménem odkaz na zbytek po dřívějším
+    # nedokončeném překladu; zápis skrz něj by přepsal soubor v repozitáři.
+    if os.path.lexists(variant_file):
+        os.remove(variant_file)
+
     with open(variant_file, "w", encoding="utf8") as fout:
         fout.writelines(new_lines)
 
     if VERBOSE:
         detail(f"Created TeX file: {variant_file}")
+
+
+# ---------------------------------------------------------------------------
+# Přeskakování nezměněných variant
+# ---------------------------------------------------------------------------
+#
+# Po úspěšném překladu se k výslednému PDF uloží otisky všech souborů, které
+# pdflatex a biber přečetly: zdrojů prezentace, sdílených souborů z assets/
+# i balíčků a fontů z distribuce TeXu. Seznam přečtených souborů zapisuje sám
+# pdflatex (přepínač -recorder, soubor .fls). Dokud se žádný z těch souborů
+# nezmění a PDF je stále na místě, není co překládat a varianta se přeskočí.
+# Otisky se počítají z obsahu, takže pouhá změna času souboru (např. po
+# git checkout) nový překlad nevyvolá.
+
+CACHE_DIR = ".compile-cache"
+
+_hash_lock = threading.Lock()
+_hash_cache = {}
+
+
+def file_hash(path, cached=True):
+    """Otisk obsahu souboru, nebo None, pokud soubor nelze přečíst."""
+    if cached:
+        with _hash_lock:
+            if path in _hash_cache:
+                return _hash_cache[path]
+    try:
+        digest = hashlib.sha256()
+        with open(path, "rb") as file:
+            for block in iter(lambda: file.read(1 << 20), b""):
+                digest.update(block)
+        result = digest.hexdigest()
+    except OSError:
+        result = None
+    if cached:
+        with _hash_lock:
+            _hash_cache[path] = result
+    return result
+
+
+# Změna skriptu může změnit způsob překladu, proto zneplatní všechny záznamy.
+SCRIPT_HASH = file_hash(os.path.abspath(__file__))
+
+
+def manifest_file(folder, output_name):
+    """Cesta k záznamu o překladu daného PDF."""
+    folder = os.path.abspath(folder)
+    return os.path.join(os.path.dirname(folder), CACHE_DIR,
+                        os.path.basename(folder), output_name + ".json")
+
+
+def dependency_key(path, workspace):
+    """
+    Převede cestu přečteného souboru na klíč záznamu: soubory z repozitáře
+    mají cestu relativní ke kořeni (pracovní kopie jej zrcadlí), ostatní,
+    tedy soubory distribuce TeXu, cestu absolutní.
+    """
+    path = os.path.normpath(os.path.join(workspace, path))
+    try:
+        relative = os.path.relpath(path, workspace)
+    except ValueError:  # jiný disk ve Windows
+        return path
+    if relative == os.pardir or relative.startswith(os.pardir + os.sep):
+        return path
+    return relative
+
+
+def read_dependencies(workspace, name, stem):
+    """Vrátí klíče souborů, které pdflatex a biber při překladu přečetly."""
+    work_folder = os.path.join(workspace, name)
+    inputs = {os.path.join(name, "main.tex")}
+    outputs = set()
+
+    with open(os.path.join(work_folder, stem + ".fls"), "r", encoding="utf-8",
+              errors="surrogateescape") as fls:
+        for line in fls:
+            kind, _, path = line.rstrip("\r\n").partition(" ")
+            if kind == "INPUT":
+                inputs.add(dependency_key(path, workspace))
+            elif kind == "OUTPUT":
+                outputs.add(dependency_key(path, workspace))
+
+    # Databázi zdrojů čte biber, v záznamu pdflatexu proto chybí; její cestu
+    # zapisuje biblatex do souboru .bcf relativně k adresáři prezentace.
+    bcf = os.path.join(work_folder, stem + ".bcf")
+    if os.path.exists(bcf):
+        with open(bcf, "r", encoding="utf-8", errors="replace") as file:
+            for source in re.findall(
+                    r"<bcf:datasource[^>]*>([^<]+)</bcf:datasource>", file.read()):
+                inputs.add(dependency_key(os.path.join(name, source), workspace))
+
+    return inputs - outputs
+
+
+def save_manifest(folder, output_pdf, variant, workspace, name, stem, report,
+                  started_at):
+    """Uloží záznam o úspěšném překladu; při potížích se jen neuloží nic."""
+    parent = os.path.dirname(os.path.abspath(folder))
+    path = manifest_file(folder, os.path.basename(output_pdf))
+    try:
+        hashes = {}
+        for key in sorted(read_dependencies(workspace, name, stem)):
+            real = key if os.path.isabs(key) else os.path.join(parent, key)
+            digest = file_hash(real)
+            # Co v repozitáři není, vzniklo až při překladu v pracovní kopii
+            # (např. main_43.tex) a závislostí není.
+            if digest is None and not os.path.isabs(key):
+                continue
+            # Zdroj upravený během překladu: není jisté, kterou jeho podobu
+            # pdflatex četl, takže se varianta příště přeloží znovu.
+            if not os.path.isabs(key) and os.path.getmtime(real) >= started_at - 2:
+                raise ValueError("%s changed during the build" % key)
+            hashes[key] = digest
+        manifest = {
+            "script": SCRIPT_HASH,
+            "variant": variant,
+            "pdf": file_hash(output_pdf, cached=False),
+            "pages": report["pages"],
+            "undefined_refs": report["undefined_refs"],
+            "undefined_cites": report["undefined_cites"],
+            "inputs": hashes,
+        }
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path + ".tmp", "w", encoding="utf-8") as file:
+            json.dump(manifest, file, ensure_ascii=False, separators=(",", ":"))
+        os.replace(path + ".tmp", path)
+    except (OSError, ValueError) as error:
+        delete_if_exists(path)
+        if VERBOSE:
+            detail("Build record not saved: %s" % error)
+
+
+def find_up_to_date(folder, output_pdf, variant):
+    """
+    Vrátí dvojici (cesta k PDF, záznam), pokud PDF z minulého překladu stále
+    existuje a nic z toho, z čeho vzniklo, se nezměnilo; jinak (None, None).
+    """
+    parent = os.path.dirname(os.path.abspath(folder))
+    try:
+        with open(manifest_file(folder, os.path.basename(output_pdf)), "r",
+                  encoding="utf-8") as file:
+            manifest = json.load(file)
+        if manifest["script"] != SCRIPT_HASH or manifest["variant"] != variant:
+            return None, None
+
+        candidates = [output_pdf]
+        if MOVE_TARGET is not None:
+            candidates.append(os.path.join(MOVE_TARGET, os.path.basename(output_pdf)))
+        existing = [pdf for pdf in candidates
+                    if file_hash(pdf, cached=False) == manifest["pdf"]]
+        if not existing:
+            return None, None
+
+        for key, digest in manifest["inputs"].items():
+            real = key if os.path.isabs(key) else os.path.join(parent, key)
+            if digest is None or file_hash(real) != digest:
+                return None, None
+        return existing[0], manifest
+    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+        return None, None
 
 
 def run_biber(folder, stem):
@@ -460,38 +772,55 @@ def run_biber(folder, stem):
     return None
 
 
-def run_pdflatex(folder, tex_file, stem):
+def run_pdflatex(workspace, name, stem):
     """
     Zkompiluje dokument v pořadí pdflatex, biber, pdflatex, pdflatex.
     Tři průchody pdflatexem jsou potřeba, aby se ustálily jak citace, tak
     odkazy a osnova Beameru.
 
+    pdflatex běží v kořeni pracovní kopie `workspace` a zapisuje do adresáře
+    prezentace `name`, stejně jako by běžel v kořeni repozitáře.
+
     Vrátí popis chyby, nebo None, pokud vše proběhlo v pořádku.
     """
     # -file-line-error nechá pdflatex hlásit chyby ve tvaru 'file.tex:12: ...',
-    # takže lze místo chyby ukázat bez hádání.
+    # takže lze místo chyby ukázat bez hádání. -recorder zapíše seznam
+    # přečtených souborů (.fls), podle něhož se pozná, kdy je třeba překládat
+    # znovu; na výsledné PDF vliv nemá.
     command = [
         "pdflatex",
         "-interaction=nonstopmode",
         "-halt-on-error",
         "-file-line-error",
+        "-recorder",
         "-output-directory",
-        folder,
-        tex_file,
+        name,
+        "%s/%s.tex" % (name, stem),
     ]
 
     for i in range(3):
-        result = run_tool(command)
+        if STOP.is_set():
+            return INTERRUPTED
+        result = run_tool(command, workspace)
+        if STOP.is_set():
+            return INTERRUPTED
         if result.returncode != 0:
             return ('pdflatex exited with status %d on pass %d of 3'
                     % (result.returncode, i + 1))
 
         if i == 0:
-            reason = run_biber(folder, stem)
+            reason = run_biber(os.path.join(workspace, name), stem)
             if reason is not None:
                 return reason
 
     return None
+
+
+# Důvod neúspěchu varianty, jejíž překlad přerušil uživatel klávesami Ctrl+C
+INTERRUPTED = 'interrupted'
+
+# PDF, která nebylo třeba překládat znovu (kvůli závěrečnému shrnutí)
+UP_TO_DATE = []
 
 
 def compile_variant(folder, title, aspect=None, handout=False):
@@ -525,16 +854,17 @@ def compile_variant(folder, title, aspect=None, handout=False):
     output_stem = "_".join(output_parts)
     output_name = output_stem + ".pdf"
 
-    # Původní main.tex lze použít přímo pouze pro základní standardní variantu.
-    is_original_main = aspect is None and not handout
-    if is_original_main:
-        tex_file = main_file
-    else:
-        tex_file = fix_path_for_windows(os.path.join(folder, f"{source_stem}.tex"))
-        create_variant_tex(main_file, tex_file, aspect=aspect, handout=handout)
-
     output_pdf = fix_path_for_windows(os.path.join(folder, output_name))
-    source_pdf = fix_path_for_windows(os.path.join(folder, f"{source_stem}.pdf"))
+    variant = [aspect_suffix, bool(handout)]
+
+    if not FORCE:
+        existing, manifest = find_up_to_date(folder, output_pdf, variant)
+        if existing is not None:
+            with grouped_output():
+                step_skipped(output_name)
+                report_undefined(manifest, output_name)
+            UP_TO_DATE.append(existing)
+            return existing
 
     delete_if_exists(output_pdf)
 
@@ -547,70 +877,147 @@ def compile_variant(folder, title, aspect=None, handout=False):
     step_started('%s (%s)' % (title, description))
     started_at = time.time()
 
-    try:
-        reason = run_pdflatex(folder, tex_file, source_stem)
+    # Hlášení o variantě se vypíše vcelku, i když se souběžně překládají
+    # další varianty.
+    with grouped_output():
+        workspace, name = create_workspace(folder)
+        try:
+            work_folder = os.path.join(workspace, name)
 
-        # Prázdný dokument nechá pdflatex vypsat 'No pages of output' a přesto
-        # skončit s nulou, proto se ověřuje, že PDF opravdu vzniklo.
-        if reason is None and not os.path.exists(source_pdf):
-            reason = 'no PDF was produced'
+            # Původní main.tex lze použít přímo pouze pro základní standardní
+            # variantu; ostatní dostanou kopii s upravenými volbami třídy.
+            if aspect is not None or handout:
+                create_variant_tex(
+                    main_file,
+                    os.path.join(work_folder, source_stem + ".tex"),
+                    aspect=aspect,
+                    handout=handout,
+                )
 
-        # Log posledního průchodu popisuje dokument, který byl skutečně zapsán;
-        # čte se ještě před úklidem pomocných souborů.
-        report = parse_log(read_log(folder, source_stem))
+            reason = run_pdflatex(workspace, name, source_stem)
 
-        if reason is not None:
-            step_failed(output_name, reason)
-            report_errors(report)
-            return None
+            if reason == INTERRUPTED:
+                step_failed(output_name, reason)
+                return None
 
-        os.replace(source_pdf, output_pdf)
+            # Prázdný dokument nechá pdflatex vypsat 'No pages of output'
+            # a přesto skončit s nulou, proto se ověřuje, že PDF opravdu vzniklo.
+            source_pdf = os.path.join(work_folder, source_stem + ".pdf")
+            if reason is None and not os.path.exists(source_pdf):
+                reason = 'no PDF was produced'
 
-        facts = []
-        if report['pages']:
-            facts.append('%d pages' % report['pages'])
-        facts.append(human_size(os.path.getsize(output_pdf)))
-        facts.append('%.1f s' % (time.time() - started_at))
-        step_succeeded(output_name, ', '.join(facts))
-        report_undefined(report, output_name)
-        return output_pdf
-    finally:
-        if not is_original_main:
-            delete_if_exists(tex_file)
-        cleanup_files(folder)
+            # Log posledního průchodu popisuje dokument, který byl skutečně
+            # zapsán; čte se ještě před smazáním pracovní kopie.
+            report = parse_log(read_log(work_folder, source_stem))
+
+            if reason is not None:
+                step_failed(output_name, reason)
+                report_errors(report)
+                return None
+
+            shutil.move(source_pdf, output_pdf)
+            save_manifest(folder, output_pdf, variant, workspace, name,
+                          source_stem, report, started_at)
+
+            facts = []
+            if report['pages']:
+                facts.append('%d pages' % report['pages'])
+            facts.append(human_size(os.path.getsize(output_pdf)))
+            facts.append('%.1f s' % (time.time() - started_at))
+            step_succeeded(output_name, ', '.join(facts))
+            report_undefined(report, output_name)
+            return output_pdf
+        finally:
+            shutil.rmtree(workspace, ignore_errors=True)
 
 
-def compile_latex(folder, title, handout=False, aspect_ratios=None):
+def list_variants(handout=False, aspect_ratios=None):
     """
-    Zkompiluje požadované varianty a vrátí seznam výsledků; neúspěšná varianta
-    je v něm zastoupena hodnotou None.
+    Vrátí varianty jedné prezentace jako dvojice (poměr stran, handout).
 
     Pokud jsou zadány poměry stran, vytvoří se standardní varianta pro každý
     z nich a při --handout také odpovídající handout varianta pro každý poměr.
     Pokud poměry stran zadány nejsou, zachovává se původní chování:
     title.pdf a případně title_handout.pdf.
     """
-    results = []
-    aspect_ratios = aspect_ratios or []
-
     if aspect_ratios:
         # Odstranění duplicit při zachování pořadí.
-        normalized_aspects = list(
+        aspects = list(
             dict.fromkeys(normalize_aspect_ratio(aspect) for aspect in aspect_ratios)
         )
-
-        for aspect in normalized_aspects:
-            results.append(compile_variant(folder, title, aspect=aspect, handout=False))
-            if handout:
-                results.append(
-                    compile_variant(folder, title, aspect=aspect, handout=True)
-                )
     else:
-        results.append(compile_variant(folder, title, aspect=None, handout=False))
-        if handout:
-            results.append(compile_variant(folder, title, aspect=None, handout=True))
+        aspects = [None]
 
-    return results
+    variants = []
+    for aspect in aspects:
+        variants.append((aspect, False))
+        if handout:
+            variants.append((aspect, True))
+
+    return variants
+
+
+def source_size(folder):
+    """Celková velikost zdrojů .tex v adresáři, hrubý odhad délky překladu."""
+    total = 0
+    for directory, _, files in os.walk(folder):
+        for name in files:
+            if name.endswith('.tex'):
+                total += os.path.getsize(os.path.join(directory, name))
+    return total
+
+
+def compile_all(presentations, jobs, handout=False, aspect_ratios=None):
+    """
+    Zkompiluje všechny varianty prezentací zadaných dvojicemi (adresář, název),
+    nejvýše `jobs` variant najednou. Vrátí seznam výsledků v pořadí prezentací
+    a jejich variant; neúspěšná varianta je v něm zastoupena hodnotou None.
+
+    Každý pdflatex využije jediné jádro, takže souběh více překladů zkrátí
+    celkovou dobu zhruba úměrně počtu jader.
+    """
+    variants = list_variants(handout=handout, aspect_ratios=aspect_ratios)
+    tasks = [(folder, title, aspect, is_handout)
+             for folder, title in presentations
+             for aspect, is_handout in variants]
+
+    def compile_task(task):
+        if STOP.is_set():
+            return None
+        folder, title, aspect, is_handout = task
+        return compile_variant(folder, title, aspect=aspect, handout=is_handout)
+
+    try:
+        if jobs <= 1 or len(tasks) <= 1:
+            return [compile_task(task) for task in tasks]
+
+        # Nejdelší překlady se zahajují první, aby na konci nečekala ostatní
+        # vlákna na jeden dlouhý překlad, který se dostal na řadu pozdě.
+        # Handout nemá postupné odkrývání, a tedy výrazně méně stran.
+        sizes = {folder: source_size(folder) for folder, _ in presentations}
+        order = sorted(
+            range(len(tasks)),
+            key=lambda index: sizes[tasks[index][0]] / (3 if tasks[index][3] else 1),
+            reverse=True,
+        )
+
+        executor = ThreadPoolExecutor(max_workers=jobs)
+        try:
+            futures = {index: executor.submit(compile_task, tasks[index])
+                       for index in order}
+            return [futures[index].result() for index in range(len(tasks))]
+        except KeyboardInterrupt:
+            # Ctrl+C dostanou i běžící pdflatexy a skončí; vlákna pak už další
+            # programy nespouštějí a jen po sobě uklidí.
+            STOP.set()
+            raise
+        finally:
+            executor.shutdown(wait=True, cancel_futures=True)
+    finally:
+        # Překlad sám v adresářích prezentací nic nezanechává; uklízí se po
+        # překladech spuštěných jinak, např. z editoru.
+        for folder, _ in presentations:
+            cleanup_files(folder)
 
 
 def main():
@@ -671,6 +1078,24 @@ def main():
         ),
     )
     parser.add_argument(
+        "-j",
+        "--jobs",
+        type=int,
+        help=(
+            "How many documents to compile at the same time (default: "
+            "number of CPU cores, or 1 with --verbose so that the raw output "
+            "of the programs does not interleave)."
+        ),
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help=(
+            "Compile everything, even documents whose sources have not "
+            "changed since they were last compiled"
+        ),
+    )
+    parser.add_argument(
         "--verbose",
         "-v",
         action="store_true",
@@ -682,8 +1107,11 @@ def main():
 
     args = parser.parse_args()
 
-    global VERBOSE
+    global VERBOSE, FORCE, MOVE_TARGET
     VERBOSE = args.verbose
+    FORCE = args.force
+    if args.move:
+        MOVE_TARGET = os.getcwd()
     setup_colors()
 
     if not args.all:
@@ -694,43 +1122,32 @@ def main():
     elif not args.folder:
         args.folder = os.getcwd()
 
-    compiled_files = []
-    documents = 0
-    failures = 0
-    started_at = time.time()
+    if args.jobs is not None and args.jobs < 1:
+        parser.error("The --jobs argument must be at least 1.")
+    if args.jobs is not None:
+        jobs = args.jobs
+    elif VERBOSE:
+        jobs = 1
+    else:
+        jobs = os.cpu_count() or 1
 
-    def record(results):
-        nonlocal documents, failures
-        documents += len(results)
-        failures += sum(1 for pdf in results if pdf is None)
-        compiled_files.extend(pdf for pdf in results if pdf is not None)
+    started_at = time.time()
 
     if args.all:
         folders = find_presentation_folders(args.folder)
-
-        for folder in folders:
-            title = os.path.basename(os.path.abspath(folder))
-            record(
-                compile_latex(
-                    folder,
-                    title,
-                    handout=args.handout,
-                    aspect_ratios=args.aspect_ratios,
-                )
-            )
-
+        presentations = [(folder, os.path.basename(os.path.abspath(folder)))
+                         for folder in folders]
         if not folders:
             note("no %s folder with main.tex was found in %s."
                  % (PRESENTATION_DIR_PATTERN, args.folder))
     else:
-        record(
-            compile_latex(
-                args.folder,
-                args.title,
-                handout=args.handout,
-                aspect_ratios=args.aspect_ratios,
-            )
-        )
+        presentations = [(args.folder, args.title)]
+
+    results = compile_all(presentations, jobs, handout=args.handout,
+                          aspect_ratios=args.aspect_ratios)
+    documents = len(results)
+    failures = sum(1 for pdf in results if pdf is None)
+    compiled_files = [pdf for pdf in results if pdf is not None]
 
     if args.move and compiled_files:
         dest = os.getcwd()
@@ -757,9 +1174,15 @@ def main():
                Style.RESET))
         raise SystemExit(1)
 
-    say('%s%s Done: %d document(s) in %.1f s%s'
-        % (Style.GREEN, SYMBOLS['ok'], documents, elapsed, Style.RESET))
+    unchanged = ', %d of them up to date' % len(UP_TO_DATE) if UP_TO_DATE else ''
+    say('%s%s Done: %d document(s) in %.1f s%s%s'
+        % (Style.GREEN, SYMBOLS['ok'], documents, elapsed, unchanged,
+           Style.RESET))
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        say('%s%s Interrupted%s' % (Style.RED, SYMBOLS['fail'], Style.RESET))
+        raise SystemExit(130)
