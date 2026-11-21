@@ -1,65 +1,72 @@
 % Průběh algoritmu DPLL jako vývojový diagram v mřížce 3 x 3 (tok „hadem“:
 % první řádek zleva doprava, druhý zprava doleva, výsledky ve třetím).
-% Šířky sloupců jsou pevné, mezery mezi nimi se dopočítají z \linewidth,
-% takže diagram vyplní šířku snímku v libovolném poměru stran a písmo
-% zůstane stejně velké.
+% Makra \flow... jsou v assets/macros.tex.
+%
+% Sloupce určuje druhý řádek (rekurzivní krok a dvě podmínky), uzly prvního
+% a třetího řádku se zarovnají pod ně. Mezera mezi sloupci se dopočítá
+% z \linewidth a odhadu šířek sloupců, takže diagram vyplní šířku snímku
+% v libovolném poměru stran a písmo zůstane stejně velké.
 \begingroup
-\def\dpllwA{32mm}% šířka uzlů ve sloupci A
-\def\dpllwB{30mm}% šířka uzlů ve sloupci B
-\def\dpllwC{32mm}% šířka uzlů ve sloupci C
-% Mezera mezi sloupci: zbytek šířky řádku po odečtení uzlů a přesahu
-% popisků vpravo, nejméně však 11 mm.
-\pgfmathsetlengthmacro{\dpllgap}{max(11mm, (\linewidth - \dpllwA - \dpllwB - \dpllwC - 8mm) / 2)}%
-\pgfmathsetlengthmacro{\dpllxB}{\dpllwA / 2 + \dpllgap + \dpllwB / 2}%
-\pgfmathsetlengthmacro{\dpllxC}{\dpllxB + \dpllwB / 2 + \dpllgap + \dpllwC / 2}%
+\def\dpllwA{34mm}% odhad šířky sloupce A (rekurzivní krok)
+\def\dpllwB{46mm}% odhad šířky sloupce B (podmínka s prázdnou klauzulí)
+\def\dpllwC{34mm}% odhad šířky sloupce C (eliminace, podmínka s prázdnou formulí)
+% Mezera mezi sloupci: zbytek šířky řádku po odečtení sloupců a přesahu
+% popisků vpravo, nejméně však 8 mm.
+\pgfmathsetlengthmacro{\dpllgap}{max(8mm, (\linewidth - \dpllwA - \dpllwB - \dpllwC - 6mm) / 2)}%
 \begin{tikzpicture}[
     font=\normalsize,
-    lbl/.style={font=\small, align=center, inner sep=2pt},
-    nodeA/.style={task, minimum width=\dpllwA, minimum height=12mm},
-    nodeB/.style={task, minimum width=\dpllwB, minimum height=12mm},
-    nodeC/.style={task, minimum width=\dpllwC, minimum height=12mm},
+    lbl/.style={font=\small},
 ]
 
-    % Uzly
-    \node[nodeA] (input) at (0, 0) {$\varphi$ v CNF};
-    \node[nodeB] (unit) at (\dpllxB, 0) {Jednotková\\propagace};
-    \node[nodeC] (pure) at (\dpllxC, 0) {Eliminace\\čistých literálů};
+    % Výšky řádků
+    \coordinate (row1) at (0, 0);
+    \coordinate (row3) at (0, -51mm);
 
-    \node[nodeC] (testempty) at (\dpllxC, -26mm) {Je $\varphi$\\prázdná?};
-    \node[nodeB] (testclause) at (\dpllxB, -26mm) {Obsahuje $\varphi$\\prázdnou klauzuli?};
-    \node[nodeA, minimum height=17mm] (branch) at (0, -26mm)
-        {Rekurzivní krok:\\zvol $\ell$, opakuj\\pro $\varphi\land\ell$ a $\varphi\land\neg \ell$};
+    % Druhý řádek: rekurzivní krok a podmínky
+    \flowstep[minimum height=17mm]{branch}{(0, -27mm)}
+        {Rekurzivní krok:\\zvol $\ell$, opakuj\\pro $\varphi\land\ell$ a $\varphi\land\neg \ell$}
+    \flowdecision[right=\dpllgap of branch]{testclause}{}
+        {Obsahuje $\varphi$\\prázdnou\\klauzuli?}
+    \flowdecision[right=\dpllgap of testclause]{testempty}{}
+        {Je $\varphi$\\prázdná?}
 
-    \node[nodeC] (sat) at (\dpllxC, -48mm) {$\varphi$ je\\splnitelná};
-    \node[nodeB] (unsat) at (\dpllxB, -48mm) {$\varphi$ je\\nesplnitelná};
+    % První řádek
+    \flowio{input}{(row1 -| branch)}{$\varphi$ v CNF}
+    \flowstep[minimum height=12mm]{unit}{(row1 -| testclause)}
+        {Jednotková\\propagace}
+    \flowstep[minimum height=12mm]{pure}{(row1 -| testempty)}
+        {Eliminace\\čistých literálů}
+
+    % Třetí řádek: výsledky
+    \flowio{unsat}{(row3 -| testclause)}{$\varphi$ je\\nesplnitelná}
+    \flowio{sat}{(row3 -| testempty)}{$\varphi$ je\\splnitelná}
 
     % Jednotková propagace a eliminace čistých literálů se opakují,
     % dokud je co dělat.
-    \draw[diredge] ($(unit.north)+(-4mm,0)$)
+    \draw[flowarrow] ($(unit.north)+(-4mm,0)$)
         .. controls +(100:10mm) and +(80:10mm) ..
-        node[lbl, above] {existuje\\jednotková klauzule} ($(unit.north)+(4mm,0)$);
-    \draw[diredge] ($(pure.north)+(-4mm,0)$)
+        node[flowlabel, lbl, above] {existuje\\jednotková klauzule}
+        ($(unit.north)+(4mm,0)$);
+    \draw[flowarrow] ($(pure.north)+(-4mm,0)$)
         .. controls +(100:10mm) and +(80:10mm) ..
-        node[lbl, above] {existuje\\čistý literál} ($(pure.north)+(4mm,0)$);
+        node[flowlabel, lbl, above] {existuje\\čistý literál}
+        ($(pure.north)+(4mm,0)$);
 
     % Hlavní tok
-    \draw[diredge] (input) -- (unit);
-    \draw[diredge] (unit) -- (pure);
-    \node[lbl, anchor=north] at ($(unit.south east)!0.5!(pure.south west)$)
-        {žádná\\jednotková\\klauzule};
-
-    \draw[diredge] (pure) -- node[lbl, right] {žádný\\čistý literál} (testempty);
+    \flowarrow{input}{unit}
+    \flowarrowlabel{unit}{lbl, below}{žádná\\jednotková\\klauzule}{pure}
+    \flowarrowlabel{pure}{lbl, right}{žádný\\čistý literál}{testempty}
 
     % Test prázdné formule
-    \draw[diredge] (testempty) -- node[lbl, right] {ano} (sat);
-    \draw[diredge] (testempty) -- node[lbl, above] {ne} (testclause);
+    \flowbranch{testempty}{lbl, right}{ano}{sat}
+    \flowbranch{testempty}{lbl, above}{ne}{testclause}
 
     % Test prázdné klauzule
-    \draw[diredge] (testclause) -- node[lbl, right] {ano} (unsat);
-    \draw[diredge] (testclause) -- node[lbl, above] {ne} (branch);
+    \flowbranch{testclause}{lbl, right}{ano}{unsat}
+    \flowbranch{testclause}{lbl, above}{ne}{branch}
 
     % Rekurzivní volání na nové instanci
-    \draw[diredge] (branch) -- node[lbl, right] {rekurzivně\\na nové instanci} (input);
+    \flowarrowlabel{branch}{lbl, right}{rekurzivně\\na nové instanci}{input}
 
 \end{tikzpicture}%
 \endgroup

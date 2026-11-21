@@ -86,6 +86,7 @@ Definována v `assets/macros.tex`:
 - `\decproblem{Název}{Vstup}{Otázka}` — tabulka rozhodovacího problému.
 - `\titleframe{...}` / `titleframeenv` — mezititulní snímek (nezvyšuje číslo snímku), `\tableofcontentsframe` — obsah.
 - Automaty: `\state`, `\acceptingstate`, `\initialstate`, `\transitionarrow` (verze s beamer overlay specifikací), TikZ styly `vertex`, `edge`, `diredge`, `state`.
+- Vývojové diagramy (schémata algoritmů): `\flowio` (vstup/výstup jako holý text), `\flowstep` (krok, obdélník), `\flowdecision` (podmínka, kosočtverec) se signaturou `\flowstep[volby]{jméno}{(x,y)}{text}` (prázdná pozice = umístění volbami, např. `below=of x`); šipky `\flowarrow[volby]{odkud}{kam}`, `\flowarrowlabel[volby]{odkud}{umístění}{popisek}{kam}` a `\flowbranch` (totéž s červeným popiskem větve ano/ne). Zalomení do pravého úhlu styly `flowhv`/`flowvh`, složitější trasy přes `\draw[flowarrow]`. Makra berou overlay `<2->`; skrytý prvek zabírá místo, obrázek se mezi snímky neposouvá. Barvy `flowbg`, `flowborder`, `flowbranchfg` jsou v `theme.tex`. Vzorem jsou `ti-06-*/images/halt*.tex` a `ti-08-dpll/images/dpll-automat.tex`. Lokální styl nepojmenovávej `step` — koliduje s klíčem TikZu.
 - Matematika: `\R`/`\N`/`\Z`, `\set`, `\mapping`, `\bigO`, operátory tříd složitosti (`\classP`, `\classNP`), `\Astar`.
 - Názvy problémů: `\SAT`, `\THREESAT`, `\UNSAT`, `\INDSET` (NzMna), `\CLIQUE`, `\SCHEDULING`, `\SUDOKU`, `\HALT`, `\FACTOR`; nové přes `\newproblem{\MAKRO}{Název}`, jednorázově `\problem{Název}`. Makro rozhodne podle módu: v textu zelené kapitálky (barva `problemfg` z `theme.tex`), v matematice kapitálky písma matematiky se spacingem operátoru (`\mathsc`). Problém zmíněný v textu se proto píše **bez dolarů** (`Problém \SAT{} je …`, za makrem před mezerou `{}`), do matematiky patří jen ve vzorci (`$\INDSET(G,k)=\CLIQUE(\bar{G},k)$`, `$\SAT\in\classNP$`). Číslice v názvu jsou v matematickém módu (`$3$-SAT`). V zápatí a na titulní straně přebírá název barvu okolního textu.
 - Zvýrazňování: `\markred`, `\markdarkred`, `\markgreen`, `\markblue`, …; `\cmark`/`\xmark`; `\todo{...}` vysází červenou poznámku do slidu.
@@ -116,6 +117,8 @@ Pravidla:
 ## Obrázky
 
 Schémata jsou většinou TikZ zdroje v `ti-NN-*/images/*.tex`, vkládané z `main.tex` přes `\input{images/....tex}`; složitější kresby se vkládají už v preambuli.
+
+Čeština v `babel` dělá ze znaku `-` aktivní znak. V těle dokumentu proto v TikZu selže operace cesty `|-` (`\draw (a) -- ++(1,0) |- (b);`) i záporný posun kotvy (`([xshift=-4mm]a)`). Funguje `-|`, souřadnice `(a -| b)` i `(a |- b)`, styly `flowhv`/`flowvh` a `($(a)+(-4mm,0)$)`.
 
 Cesty v `\includegraphics` nejsou v repozitáři jednotné: většina prezentací používá `images/soubor.pdf` (relativně k adresáři prezentace), `ti-16-kryptografie` používá plnou cestu `ti-16-kryptografie/images/soubor.pdf`. Při úpravách cest v jedné prezentaci nepřepisuj konvenci ostatních — commit 42036c9 tímhle způsobem rozbil ikony a musel se opravovat.
 

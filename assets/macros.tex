@@ -499,10 +499,84 @@
 \renewcommand{\thealgocf}{}     % Vypnutí číslování algoritmů
 
 % Definice stylů pro uzly
-\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black, fill=red!30]
-\tikzstyle{process}   = [rectangle, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black, fill=orange!30]
-\tikzstyle{decision}  = [diamond, aspect=2, text centered, draw=black, fill=green!30]
 \tikzstyle{arrow}     = [thick,->,>=stealth]
+
+%% Vývojové diagramy
+% Vstup a výstup se sází holým textem, krok algoritmu obdélníkem, podmínka
+% kosočtvercem, šipky mají plný hrot. Barvy jsou v theme.tex (flowbg,
+% flowborder, flowbranchfg). Velikost písma určuje obrázek (font=...).
+%
+%   \flowio[volby]{jméno}{pozice}{text}             vstup / výstup
+%   \flowstep[volby]{jméno}{pozice}{text}           krok algoritmu
+%   \flowdecision[volby]{jméno}{pozice}{text}       podmínka
+%   \flowarrow[volby]{odkud}{kam}                   šipka
+%   \flowarrowlabel[volby]{odkud}{umístění}{popisek}{kam}   šipka s popiskem
+%   \flowbranch[volby]{odkud}{umístění}{popisek}{kam}       větev podmínky
+%
+% Pozice je souřadnice, např. (0,-2); zůstane-li prázdná, umístí se uzel
+% volbami (below=of vstup apod.). Volby se předají uzlu, resp. šipce.
+% Šipka vede po přímce, styl flowhv ji zalomí (nejdřív vodorovně, pak svisle),
+% flowvh naopak; u zalomené šipky leží popisek s pos=0.5 v rohu. Místo jména
+% uzlu lze uvést kotvu (cyklus.south). Složitější trasu nakresli přímo:
+% \draw[flowarrow] (a) -- ++(0,-1) -| (b);
+% Čeština v babelu dělá ze znaku - aktivní znak, proto v obrázku selže
+% operace cesty |- i záporný posun kotvy ([xshift=-4mm]a). Použij -|, styl
+% flowvh, souřadnici (a -| b), resp. ($(a)+(-4mm,0)$).
+%
+% Všechna makra přijímají specifikaci překryvu (\flowstep<2->{...}). Skrytý
+% prvek zabírá místo, takže se obrázek mezi snímky neposouvá.
+\tikzset{
+    flowio/.style={align=center, inner sep=2pt},
+    flowstep/.style={
+        rectangle,
+        draw=flowborder,
+        fill=flowbg,
+        align=center,
+        inner xsep=1.2ex,
+        inner ysep=0.8ex,
+        minimum height=8mm
+    },
+    flowdecision/.style={
+        diamond,
+        aspect=2,
+        draw=flowborder,
+        fill=flowbg,
+        align=center,
+        inner sep=1pt
+    },
+    flowarrow/.style={thick, -latex},
+    flowlabel/.style={align=center, inner sep=2pt},
+    flowbranchlabel/.style={flowlabel, text=flowbranchfg},
+    flowhv/.style={to path={-| (\tikztotarget) \tikztonodes}},
+    flowvh/.style={to path={|- (\tikztotarget) \tikztonodes}},
+    % visible on=<...>, ale jen pro neprázdnou specifikaci překryvu
+    flowvisible/.code={\ifx\relax#1\relax\else\pgfkeysalso{visible on=#1}\fi},
+    % Původní názvy stylů vývojového diagramu
+    process/.style={flowstep},
+    decision/.style={flowdecision}
+}
+
+% Společné jádro uzlových maker: {styl}{volby}{jméno}{pozice}{text}{překryv}
+\newcommand{\flowchartnode}[6]{%
+    \ifx\relax#4\relax
+        \node[#1,flowvisible={#6},#2] (#3) {#5};%
+    \else
+        \node[#1,flowvisible={#6},#2] (#3) at #4 {#5};%
+    \fi
+}
+\newcommand<>{\flowio}[4][]{\flowchartnode{flowio}{#1}{#2}{#3}{#4}{#5}}
+\newcommand<>{\flowstep}[4][]{\flowchartnode{flowstep}{#1}{#2}{#3}{#4}{#5}}
+\newcommand<>{\flowdecision}[4][]{\flowchartnode{flowdecision}{#1}{#2}{#3}{#4}{#5}}
+
+\newcommand<>{\flowarrow}[3][]{%
+    \path (#2) edge[flowarrow,flowvisible={#4},#1] (#3);%
+}
+\newcommand<>{\flowarrowlabel}[5][]{%
+    \path (#2) edge[flowarrow,flowvisible={#6},#1] node[flowlabel,#3] {#4} (#5);%
+}
+\newcommand<>{\flowbranch}[5][]{%
+    \path (#2) edge[flowarrow,flowvisible={#6},#1] node[flowbranchlabel,#3] {#4} (#5);%
+}
 
 \tikzstyle{vertex}    = [thick, draw, circle, minimum size=4mm, inner sep=1pt, outer sep=1pt, align=center]
 \tikzstyle{vertexplain}    = [minimum size=4mm, inner sep=1pt, outer sep=1pt, align=center]

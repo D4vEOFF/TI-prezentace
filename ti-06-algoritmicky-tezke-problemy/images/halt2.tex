@@ -1,43 +1,28 @@
-\begin{tikzpicture}[
-    >=stealth,
-    every node/.style={font=\small},
-    box/.style={
-        draw,
-        rounded corners=2pt,
-        align=center,
-        minimum height=8mm
-    }
-]
+% Diagonální program D jako vývojový diagram
+% (makra \flow... z assets/macros.tex).
+\begin{tikzpicture}[font=\small]
 
-% horní řada
-\node[box, fill=blue!10, text width=2.7cm] (halt) at (0,0)
-    {$\HALT(P,P)$};
+    % horní řada
+    \flowstep[text width=2.7cm]{halt}{(0,0)}{$\HALT(P,P)$}
 
-\node[box, fill=yellow!15, text width=5.9cm] (diag) at (6.9,0)
-    {program $D(P)$\\[0.8mm]
-     pokud $\HALT(P,P)=\text{ANO}$, pak cyklí\\
-     pokud $\HALT(P,P)=\text{NE}$, pak skončí};
+    \flowstep[text width=5.9cm]{diag}{(6.9,0)}
+        {program $D(P)$\\[0.8mm]
+         pokud $\HALT(P,P)=\text{ANO}$, pak cyklí\\
+         pokud $\HALT(P,P)=\text{NE}$, pak skončí}
 
-% dolní blok
-\node[box, fill=orange!15, text width=1.9cm] (self) at (6.9,-2.3)
-    {$D(D)$};
+    % dolní blok
+    \flowstep[text width=1.9cm]{self}{(6.9,-2.3)}{$D(D)$}
 
-% vodorovná šipka z HALT do D(P)
-\draw[->, thick] (halt.east) -- node[above] {výsledek} (diag.west);
+    % výsledek HALT(P,P) předáme programu D(P)
+    \flowarrowlabel{halt.east}{above}{výsledek}{diag.west}
 
-% lomená šipka z D(P) do D(D)
-\draw[->, thick]
-    (diag.south) -- (self.north);
+    \flowarrow{diag.south}{self.north}
 
-% lomená šipka z D(D) zpět do HALT
-\draw[->, thick]
-    (self.west) -- (2.4,-2.3) -| (halt.south);
+    % návrat z D(D) do HALT
+    \flowarrowlabel[flowhv]{self.west}{pos=0.25, above}{dosadíme $P=D$}{halt.south}
 
-% popisek k návratu
-\node[align=center] at (2.9,-1.8) {dosadíme $P=D$};
-
-% závěr
-% \node[align=center] at (4.1,-3.35)
-%     {Spor: $D(D)$ se zastaví právě tehdy, když se nezastaví.};
+    % závěr
+    % \node[align=center] at (4.1,-3.35)
+    %     {Spor: $D(D)$ se zastaví právě tehdy, když se nezastaví.};
 
 \end{tikzpicture}

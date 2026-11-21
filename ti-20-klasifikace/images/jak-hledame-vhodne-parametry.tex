@@ -1,48 +1,23 @@
+% Hledání parametrů jako vývojový diagram
+% (makra \flow... z assets/macros.tex).
 \begin{tikzpicture}[
-    >=stealth,
-    box/.style={
-        draw,
-        rounded corners=2mm,
-        minimum width=25mm,
-        minimum height=11mm,
-        align=center
-    },
-    arr/.style={
-        ->,
-        thick,
-        rounded corners=2mm
-    }
+    box/.style={minimum width=25mm, minimum height=11mm}
 ]
-    \node[box, fill=blue!8] (parameters) at (0,0)
-        {zvolíme\\\(a,b\)};
+    \flowstep[box]{parameters}{(0,0)}
+        {zvolíme\\\(a,b\)}
 
-    \node[box, fill=orange!10] (outputs) at (3.3,0)
+    \flowstep[box]{outputs}{(3.3,0)}
         {vypočítáme\\
-        \(\hat p_1,\ldots,\hat p_n\)};
+        \(\hat p_1,\ldots,\hat p_n\)}
 
-    \node[box, fill=red!8] (loss) at (6.8,0)
-        {vypočítáme\\\(L(a,b)\)};
+    \flowstep[box]{loss}{(6.8,0)}
+        {vypočítáme\\\(L(a,b)\)}
 
-    \node[box, fill=green!10] (change) at (5.05,-1.8)
-        {upravíme\\\(a,b\)};
+    \flowstep[box]{change}{(5.05,-1.8)}
+        {upravíme\\\(a,b\)}
 
-    % Pomocné body pro pravoúhlé šipky
-    \coordinate (rightturn) at (6.8,-1.8);
-    \coordinate (leftturn) at (3.3,-1.8);
-
-    \draw[arr]
-        (parameters.east) -- (outputs.west);
-
-    \draw[arr]
-        (outputs.east) -- (loss.west);
-
-    \draw[arr]
-        (loss.south) --
-        (rightturn) --
-        (change.east);
-
-    \draw[arr]
-        (change.west) --
-        (leftturn) --
-        (outputs.south);
+    \flowarrow{parameters}{outputs}
+    \flowarrow{outputs}{loss}
+    \flowarrow[flowvh]{loss.south}{change.east}
+    \flowarrow[flowhv]{change.west}{outputs.south}
 \end{tikzpicture}
