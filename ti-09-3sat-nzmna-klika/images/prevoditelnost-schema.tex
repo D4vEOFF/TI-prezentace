@@ -1,0 +1,16 @@
+% Rozhodnutí problému A pomocí převodu A -> B jako vývojový diagram
+% (makra \flow... z assets/macros.tex). Odkrývá se postupně na snímcích 2-4.
+\begin{tikzpicture}[font=\normalsize]
+
+    \flowio<2->{x}{(0,0)}{Vstup $x$}
+    \flowstep<2->{f}{(0,-1.5)}{\markdarkred{polynomiální}\\převodní algoritmus $f$}
+    \flowdecision<3->{q}{(0,-3.9)}{$B(y)=1$?}
+    \flowio<4->[anchor=west]{no}{(2.3,-3.9)}{\markdarkred{ne} $\iff A(x)=0$}
+    \flowio<4->{yes}{(0,-5.6)}{\markdarkred{ano} $\iff A(x)=1$}
+
+    \flowarrow<2->{x}{f}
+    \flowarrowlabel<3->{f}{left}{Upravený vstup $y=f(x)$}{q}
+    \flowarrow<4->{q}{no}
+    \flowarrow<4->{q}{yes}
+
+\end{tikzpicture}
