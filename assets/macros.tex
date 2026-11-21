@@ -586,8 +586,14 @@
 %% Formule rozdělená na barevné části s vysvětlivkami v bublinách
 % Argumentem stylů je barva z palety v theme.tex (green, red, blue, orange,
 % purple, teal). Spojky (=, \land) se sázejí vlevo se stylem formulaconn.
+% Další část se klade pod předchozí stylem formulabelow, takže mezery mezi
+% částmi jsou stejné bez ohledu na jejich výšku; spojku a bublinu zarovnej
+% na střed části souřadnicí (x |- část).
+%   \coordinate (spojky) at (0.1,0);
 %   \node[formulapart=red] (a) at (0.2,0) {$\displaystyle ...$};
-%   \node[formulaconn] at (0.1,0) {$\varphi\;=$};
+%   \node[formulapart=blue, formulabelow=a] (b) {$\displaystyle ...$};
+%   \node[formulaconn] at (spojky |- a) {$\varphi\;=$};
+%   \node[formulaconn] at (spojky |- b) {$\land$};
 %   \node[formulacallout=red, callout absolute pointer={(a.east)}]
 %       at (a.east) {Vysvětlivka};
 % Text bubliny lze zalomit pomocí \\.
@@ -610,6 +616,7 @@
         minimum height=11mm,
         fill=callout#1bg
     },
+    formulabelow/.style={below=2.5mm of #1.south west, anchor=north west},
     formulaconn/.style={anchor=east},
     formulacallout/.style={
         rectangle callout,

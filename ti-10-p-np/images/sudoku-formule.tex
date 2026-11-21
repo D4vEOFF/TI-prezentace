@@ -1,39 +1,40 @@
 % Výsledná formule převodu Sudoku na SAT. Každá část podmínky je podbarvena
 % vlastní barvou a doplněna bublinou s vysvětlivkou (styly formulapart,
-% formulaconn a formulacallout z assets/macros.tex, stejně jako výsledná
-% formule převodu NzMna na SAT v ti-09).
+% formulabelow, formulaconn a formulacallout z assets/macros.tex, stejně jako
+% výsledná formule převodu NzMna na SAT v ti-09).
 \begin{tikzpicture}
 
     % ------------------------------------------------------------------
-    % Jednotlivé části formule
+    % Jednotlivé části formule (pod sebou se stejnými mezerami)
     % ------------------------------------------------------------------
     \node[formulapart=green] (bunkyA) at (0.2,0)
         {$\displaystyle\bigwedge_{r,c}\;\bigvee_{d}x_{r,c,d}$};
 
-    \node[formulapart=red] (bunkyN) at (0.2,-1.45)
+    \node[formulapart=red, formulabelow=bunkyA] (bunkyN)
         {$\displaystyle\bigwedge_{r,c}\;\bigwedge_{d\neq d^{\prime}}(\neg x_{r,c,d}\lor\neg x_{r,c,d^{\prime}})$};
 
-    \node[formulapart=blue] (radky) at (0.2,-3.05)
+    \node[formulapart=blue, formulabelow=bunkyN] (radky)
         {$\displaystyle\bigwedge_{r,d}\left[\bigvee_{c}x_{r,c,d}\;\land\bigwedge_{c\neq c^{\prime}}(\neg x_{r,c,d}\lor\neg x_{r,c^{\prime},d})\right]$};
 
-    \node[formulapart=orange] (sloupce) at (0.2,-4.75)
+    \node[formulapart=orange, formulabelow=radky] (sloupce)
         {$\displaystyle\bigwedge_{c,d}\left[\bigvee_{r}x_{r,c,d}\;\land\bigwedge_{r\neq r^{\prime}}(\neg x_{r,c,d}\lor\neg x_{r^{\prime},c,d})\right]$};
 
-    \node[formulapart=purple] (bloky) at (0.2,-6.5)
+    \node[formulapart=purple, formulabelow=sloupce] (bloky)
         {$\displaystyle\bigwedge_{B,d}\left[\bigvee_{(r,c)\in B}x_{r,c,d}\;\land\bigwedge_{\substack{(r,c),(r^{\prime},c^{\prime})\in B\\ (r,c)\neq(r^{\prime},c^{\prime})}}(\neg x_{r,c,d}\lor\neg x_{r^{\prime},c^{\prime},d})\right]$};
 
-    \node[formulapart=teal] (zadani) at (0.2,-8.2)
+    \node[formulapart=teal, formulabelow=bloky] (zadani)
         {$\displaystyle\bigwedge_{(r,c,d)\in\mathcal{Z}}x_{r,c,d}$};
 
     % ------------------------------------------------------------------
-    % Levý sloupec se spojkami
+    % Levý sloupec se spojkami (na středu jednotlivých částí)
     % ------------------------------------------------------------------
-    \node[formulaconn] at (0.1,0)     {$\varphi\;=$};
-    \node[formulaconn] at (0.1,-1.45) {$\land$};
-    \node[formulaconn] at (0.1,-3.05) {$\land$};
-    \node[formulaconn] at (0.1,-4.75) {$\land$};
-    \node[formulaconn] at (0.1,-6.5)  {$\land$};
-    \node[formulaconn] at (0.1,-8.2)  {$\land$};
+    \coordinate (spojky) at (0.1,0);
+    \node[formulaconn] at (spojky |- bunkyA)  {$\varphi\;=$};
+    \node[formulaconn] at (spojky |- bunkyN)  {$\land$};
+    \node[formulaconn] at (spojky |- radky)   {$\land$};
+    \node[formulaconn] at (spojky |- sloupce) {$\land$};
+    \node[formulaconn] at (spojky |- bloky)   {$\land$};
+    \node[formulaconn] at (spojky |- zadani)  {$\land$};
 
     % ------------------------------------------------------------------
     % Bubliny s vysvětlivkami (zarovnané k nejširší části formule)
